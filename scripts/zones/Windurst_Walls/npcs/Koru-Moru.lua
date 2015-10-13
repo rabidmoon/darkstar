@@ -190,14 +190,14 @@ function onEventFinish(player,csid,option)
 		player:needToZone(true);
 	elseif (csid == 0x0194) then
 		if (player:getFreeSlotsCount() ~= 0) then
-			player:addItem(17532);
-			player:messageSpecial(ITEM_OBTAINED,17532);
+			player:addItem(17597);
+			player:messageSpecial(ITEM_OBTAINED,17597);
 			player:completeQuest(WINDURST,THE_PUPPET_MASTER);
 			player:setVar("ThePuppetMasterProgress",0);
 			player:needToZone(true);
 			player:addFame(WINDURST,WIN_FAME*AF1_FAME);
 		else
-			player:messageSpecial(ITEM_CANNOT_BE_OBTAINED,17532);
+			player:messageSpecial(ITEM_CANNOT_BE_OBTAINED,17597);
 		end;
 	elseif (csid == 0x019c) then
 		player:delKeyItem(CARBUNCLES_TEAR);
