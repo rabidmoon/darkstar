@@ -8,11 +8,11 @@ require("scripts/globals/status");
 -- onEffectGain Action
 -----------------------------------
 
-function onEffectGain(target,effect) --power=30 initially, subpower=20 for enmity
-    target:addMod(MOD_ACC,-effect:getPower());
-    target:addMod(MOD_EVA,effect:getPower());
-    target:addMod(MOD_NINJA_TOOL,effect:getPower());
-    target:addMod(MOD_ENMITY,effect:getSubPower());
+function onEffectGain(target,effect) --power=30 initially
+	target:addMod(MOD_DEFP,10);
+	target:addMod(MOD_UDMGMAGIC,-10);
+	target:addMod(MOD_ENMITY,15);
+	target:addMod(MOD_NINJA_TOOL,50);
 end;
 
 -----------------------------------
@@ -20,15 +20,7 @@ end;
 -----------------------------------
 
 function onEffectTick(target,effect)
-    --tick down the effect and reduce the overall power
-    effect:setPower(effect:getPower()-1);
-    target:delMod(MOD_ACC,-1);
-    target:delMod(MOD_EVA,1);
-    target:delMod(MOD_NINJA_TOOL,1);
-    if (effect:getPower() % 2 == 0) then -- enmity+ decays from 20 to 10, so half as often as the rest.
-        effect:setSubPower(effect:getSubPower()-1);
-        target:delMod(MOD_ENMITY,1);
-    end;
+
 end;
 
 -----------------------------------
@@ -36,9 +28,8 @@ end;
 -----------------------------------
 
 function onEffectLose(target,effect)
-    --remove the remaining power
-    target:delMod(MOD_ACC,-effect:getPower());
-    target:delMod(MOD_EVA,effect:getPower());
-    target:delMod(MOD_NINJA_TOOL,effect:getPower());
-    target:delMod(MOD_ENMITY,effect:getSubPower());
+    target:delMod(MOD_DEFP,10);
+	target:delMod(MOD_UDMGMAGIC,-10);
+	target:delMod(MOD_ENMITY,15);
+	target:delMod(MOD_NINJA_TOOL,50);
 end;
