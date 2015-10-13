@@ -18,8 +18,20 @@ require("scripts/globals/status");
 -----------------------------------
 
 function onEffectGain(target,effect)
+    local level = target:getMainLvl();
+	if (level < 49) then
+	target:setVar("SignetBoost",1);
+	else if (level < 99) then
+	target:setVar("SignetBoost",2);
+	end
+	end
+	local modboost = target:getVar("SignetBoost");
+	local regain = modboost * 5;
 	target:addMod(MOD_DEF,15);
 	target:addMod(MOD_EVA,15);
+	target:addMod(MOD_REFRESH,modboost);
+	target:addMod(MOD_REGEN,modboost);
+	target:addMod(MOD_REGAIN,regain);
 end;
 
 -----------------------------------
@@ -34,6 +46,11 @@ end;
 -----------------------------------
 
 function onEffectLose(target,effect)
+    local modboost = target:getVar("SignetBoost");
+	local regain = modboost * 5;
 	target:delMod(MOD_DEF,15);
 	target:delMod(MOD_EVA,15);
+	target:addMod(MOD_REFRESH,modboost);
+	target:addMod(MOD_REGEN,modboost);
+	target:addMod(MOD_REGAIN,regain);
 end;
