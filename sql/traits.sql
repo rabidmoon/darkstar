@@ -98,6 +98,9 @@ INSERT INTO `traits` VALUES ('5','magic atk. bonus','4','91','6','28','40','ABYS
 INSERT INTO `traits` VALUES ('5','magic atk. bonus','5','20','1','28','20','WOTG');
 INSERT INTO `traits` VALUES ('5','magic atk. bonus','5','40','2','28','24','WOTG');
 INSERT INTO `traits` VALUES ('5','magic atk. bonus','5','86','3','28','28','ABYSSEA');
+INSERT INTO `traits` VALUES ('5','magic atk. bonus','13','15','1','28','20',null); -- NIN MAB
+INSERT INTO `traits` VALUES ('5','magic atk. bonus','13','45','2','28','24',null); -- NIN MAB
+INSERT INTO `traits` VALUES ('5','magic atk. bonus','13','90','3','28','28',null); -- NIN MAB
 INSERT INTO `traits` VALUES ('6','magic def. bonus','3','10','1','29','10',null);
 INSERT INTO `traits` VALUES ('6','magic def. bonus','3','30','2','29','12',null);
 INSERT INTO `traits` VALUES ('6','magic def. bonus','3','50','3','29','14',null);
@@ -139,9 +142,22 @@ INSERT INTO `traits` VALUES ('8','max mp boost','20','30','1','5','10','WOTG');
 INSERT INTO `traits` VALUES ('8','max mp boost','20','88','2','5','20','ABYSSEA');
 INSERT INTO `traits` VALUES ('9','auto regen','3','25','1','370','1',null);
 INSERT INTO `traits` VALUES ('9','auto regen','3','76','2','370','2','ABYSSEA');
-INSERT INTO `traits` VALUES ('10','auto refresh','7','35','1','369','1',null);
-INSERT INTO `traits` VALUES ('10','auto refresh','15','25','1','369','1',null);
-INSERT INTO `traits` VALUES ('10','auto refresh','15','90','2','369','2','ABYSSEA');
+INSERT INTO `traits` VALUES ('10','auto refresh','7','35','1','369','1',null);  -- PLD Auto Ref
+INSERT INTO `traits` VALUES ('10','auto refresh','15','20','1','369','1',null); -- SMN Auto Ref
+INSERT INTO `traits` VALUES ('10','auto refresh','3','30','1','369','1',null); -- WHM Auto Ref
+INSERT INTO `traits` VALUES ('10','auto refresh','4','30','1','369','1',null); -- BLM Auto Ref
+INSERT INTO `traits` VALUES ('10','auto refresh','5','30','1','369','1',null); -- RDM Auto Ref
+INSERT INTO `traits` VALUES ('10','auto refresh','21','25','1','369','1',null); -- GEO Auto Ref
+INSERT INTO `traits` VALUES ('10','auto refresh','22','35','1','369','1','SOA'); -- RUN Auto Ref
+INSERT INTO `traits` VALUES ('10','auto refresh','7','95','2','369','2',null);  -- PLD Auto Ref II
+INSERT INTO `traits` VALUES ('10','auto refresh','3','90','2','369','2',null); -- WHM Auto Ref II
+INSERT INTO `traits` VALUES ('10','auto refresh','4','90','2','369','2',null); -- BLM Auto Ref II
+INSERT INTO `traits` VALUES ('10','auto refresh','5','90','2','369','2',null); -- RDM Auto Ref II
+INSERT INTO `traits` VALUES ('10','auto refresh','21','60','2','369','2',null); -- GEO Auto Ref II
+INSERT INTO `traits` VALUES ('10','auto refresh','22','95','2','369','2','SOA'); -- RUN Auto Ref II
+INSERT INTO `traits` VALUES ('10','auto refresh','15','55','2','369','2','ABYSSEA');  -- SMN Auto Ref II
+INSERT INTO `traits` VALUES ('10','auto refresh','21','95','3','369','3',null); -- GEO Auto Ref III
+INSERT INTO `traits` VALUES ('10','auto refresh','15','90','3','369','3','ABYSSEA');  -- SMN Auto Ref III
 INSERT INTO `traits` VALUES ('11','rapid shot','11','15','1','359','10',null);
 INSERT INTO `traits` VALUES ('11','rapid shot','17','15','1','359','10','TOAU');
 INSERT INTO `traits` VALUES ('12','fast cast','5','15','1','170','10',null);
@@ -149,6 +165,10 @@ INSERT INTO `traits` VALUES ('12','fast cast','5','35','2','170','15',null);
 INSERT INTO `traits` VALUES ('12','fast cast','5','55','3','170','20',null);
 INSERT INTO `traits` VALUES ('12','fast cast','5','76','4','170','25','ABYSSEA');
 INSERT INTO `traits` VALUES ('12','fast cast','5','89','5','170','30','ABYSSEA');
+INSERT INTO `traits` VALUES ('12','fast cast','13','25','1','170','10',null); -- NIN Fast Cast I
+INSERT INTO `traits` VALUES ('12','fast cast','13','70','2','170','15',null); -- NIN Fast Cast II
+INSERT INTO `traits` VALUES ('12','fast cast','7','30','1','170','10',null); -- PLD Fast Cast I
+INSERT INTO `traits` VALUES ('12','fast cast','7','75','2','170','15',null); -- PLD Fast Cast II
 INSERT INTO `traits` VALUES ('13','conserve mp','4','20','1','296','25',null);
 INSERT INTO `traits` VALUES ('13','conserve mp','20','25','1','296','25','WOTG');
 INSERT INTO `traits` VALUES ('14','store tp','12','10','1','73','10',null); -- ROTZ
@@ -157,13 +177,13 @@ INSERT INTO `traits` VALUES ('14','store tp','12','50','3','73','20',null); -- R
 INSERT INTO `traits` VALUES ('14','store tp','12','70','4','73','25',null); -- ROTZ
 INSERT INTO `traits` VALUES ('14','store tp','12','90','5','73','30','ABYSSEA');
 INSERT INTO `traits` VALUES ('15','double attack','1','25','1','288','10',null);
-INSERT INTO `traits` VALUES ('16','triple attack','6','55','1','302','5',null);
-INSERT INTO `traits` VALUES ('16','triple attack','6','96','2','302','6','ABYSSEA');
+INSERT INTO `traits` VALUES ('16','triple attack','6','40','1','302','5',null);
+INSERT INTO `traits` VALUES ('16','triple attack','6','70','2','302','6','ABYSSEA');
 INSERT INTO `traits` VALUES ('17','counter','2','10','1','291','10',null);
 INSERT INTO `traits` VALUES ('17','counter','2','81','2','291','13','ABYSSEA');
-INSERT INTO `traits` VALUES ('18','dual wield','6','83','1','259','10','ABYSSEA');
-INSERT INTO `traits` VALUES ('18','dual wield','6','87','2','259','15','ABYSSEA');
-INSERT INTO `traits` VALUES ('18','dual wield','6','98','3','259','25','ABYSSEA');
+INSERT INTO `traits` VALUES ('18','dual wield','6','30','1','259','10','ABYSSEA');
+INSERT INTO `traits` VALUES ('18','dual wield','6','60','2','259','15','ABYSSEA');
+INSERT INTO `traits` VALUES ('18','dual wield','6','90','3','259','25','ABYSSEA');
 INSERT INTO `traits` VALUES ('18','dual wield','13','10','1','259','10',null); -- ROTZ
 INSERT INTO `traits` VALUES ('18','dual wield','13','25','2','259','15',null); -- ROTZ
 INSERT INTO `traits` VALUES ('18','dual wield','13','45','3','259','25',null); -- ROTZ
@@ -185,11 +205,12 @@ INSERT INTO `traits` VALUES ('23','martial arts','2','46','4','173','140',null);
 INSERT INTO `traits` VALUES ('23','martial arts','2','61','5','173','160',null);
 INSERT INTO `traits` VALUES ('23','martial arts','2','75','6','173','180',null);
 INSERT INTO `traits` VALUES ('23','martial arts','2','82','7','173','200','ABYSSEA');
-INSERT INTO `traits` VALUES ('23','martial arts','18','25','1','173','80','TOAU');
-INSERT INTO `traits` VALUES ('23','martial arts','18','50','2','173','100','TOAU');
-INSERT INTO `traits` VALUES ('23','martial arts','18','75','3','173','120','TOAU');
-INSERT INTO `traits` VALUES ('23','martial arts','18','86','4','173','140','ABYSSEA');
-INSERT INTO `traits` VALUES ('23','martial arts','18','97','5','173','160','ABYSSEA');
+INSERT INTO `traits` VALUES ('23','martial arts','18','15','1','173','80','TOAU');
+INSERT INTO `traits` VALUES ('23','martial arts','18','25','2','173','100','TOAU');
+INSERT INTO `traits` VALUES ('23','martial arts','18','45','3','173','120','TOAU');
+INSERT INTO `traits` VALUES ('23','martial arts','18','60','4','173','140','ABYSSEA');
+INSERT INTO `traits` VALUES ('23','martial arts','18','75','5','173','160','ABYSSEA');
+INSERT INTO `traits` VALUES ('23','martial arts','18','95','6','173','180','ABYSSEA');
 INSERT INTO `traits` VALUES ('24','clear mind','3','20','1','71','3',null);
 INSERT INTO `traits` VALUES ('24','clear mind','3','35','2','71','6',null);
 INSERT INTO `traits` VALUES ('24','clear mind','3','50','3','71','9',null);
@@ -344,7 +365,7 @@ INSERT INTO `traits` VALUES ('67','subtle blow','19','45','2','289','10','WOTG')
 INSERT INTO `traits` VALUES ('67','subtle blow','19','65','3','289','15','WOTG');
 INSERT INTO `traits` VALUES ('67','subtle blow','19','86','4','289','20','ABYSSEA');
 INSERT INTO `traits` VALUES ('68','assassin','6','60','1','0','0','COP');
-INSERT INTO `traits` VALUES ('69','divine veil','3','50','1','0','0','COP');
+INSERT INTO `traits` VALUES ('69','divine veil','3','15','1','0','0','COP');
 INSERT INTO `traits` VALUES ('70','zanshin','12','20','1','306','15','COP');
 INSERT INTO `traits` VALUES ('70','zanshin','12','35','2','306','25','COP');
 INSERT INTO `traits` VALUES ('70','zanshin','12','50','3','306','35','COP');
@@ -363,11 +384,17 @@ INSERT INTO `traits` VALUES ('80','desperate blows','8','75','1','0','0','TOAU')
 INSERT INTO `traits` VALUES ('81','beast affinity ','9','75','1','0','0','TOAU');
 INSERT INTO `traits` VALUES ('82','beast healer','9','75','1','0','0','TOAU');
 INSERT INTO `traits` VALUES ('83','snapshot','11','75','1','0','0','TOAU');
-INSERT INTO `traits` VALUES ('84','recycle','11','20','1','305','10','TOAU');
+INSERT INTO `traits` VALUES ('84','recycle','11','10','1','305','10','TOAU'); -- RNG Recycle
+INSERT INTO `traits` VALUES ('84','recycle','11','30','2','305','25','TOAU');
+INSERT INTO `traits` VALUES ('84','recycle','11','50','3','305','45','TOAU');
+INSERT INTO `traits` VALUES ('84','recycle','11','70','4','305','55','TOAU');
+INSERT INTO `traits` VALUES ('84','recycle','11','90','5','305','65','TOAU');
 INSERT INTO `traits` VALUES ('84','recycle','17','35','1','305','10','TOAU');
 INSERT INTO `traits` VALUES ('85','ikishoten','12','75','1','0','0','TOAU');
 INSERT INTO `traits` VALUES ('86','overwhelm','12','75','1','0','0','TOAU');
-INSERT INTO `traits` VALUES ('87','ninja tool expert.','13','75','1','308','0','TOAU');
+INSERT INTO `traits` VALUES ('87','ninja tool expert.','13','15','1','308','10','TOAU'); -- NIN Tool Exp
+INSERT INTO `traits` VALUES ('87','ninja tool expert.','13','35','2','308','25','TOAU');
+INSERT INTO `traits` VALUES ('87','ninja tool expert.','13','55','3','308','45','TOAU');
 INSERT INTO `traits` VALUES ('88','empathy','14','75','1','0','0','TOAU');
 INSERT INTO `traits` VALUES ('89','strafe','14','75','1','0','0','TOAU');
 INSERT INTO `traits` VALUES ('90','enchainment','16','75','1','0','0','TOAU');
