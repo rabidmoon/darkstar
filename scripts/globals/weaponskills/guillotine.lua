@@ -15,7 +15,7 @@ function onUseWeaponSkill(player, target, wsID)
 	local params = {};
 	params.numHits = 4;
 	--ftp damage mods (for Damage Varies with TP; lines are calculated in the function
-	params.ftp100 = 0.875; params.ftp200 = 0.875; params.ftp300 = 0.875;
+	params.ftp100 = 1.25; params.ftp200 = 1.25; params.ftp300 = 1.25;
 	--wscs are in % so 0.2=20%
 	params.str_wsc = 0.25; params.dex_wsc = 0.0; params.vit_wsc = 0.0; params.agi_wsc = 0.0; params.int_wsc = 0.0; params.mnd_wsc = 0.25; params.chr_wsc = 0.0;
 	--critical mods, again in % (ONLY USE FOR critICAL HIT VARIES WITH TP)
@@ -35,7 +35,7 @@ function onUseWeaponSkill(player, target, wsID)
 	if damage > 0 then
 		local tp = player:getTP();
 		local duration = (tp/100 * 30) + 30;
-		if (target:hasStatusEffect(EFFECT_SILENCE) == false) then
+		if(target:hasStatusEffect(EFFECT_SILENCE) == false) then
 			target:addStatusEffect(EFFECT_SILENCE, 1, 0, duration);
 		end
 	end

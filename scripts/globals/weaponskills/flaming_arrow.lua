@@ -34,6 +34,14 @@ function onUseWeaponSkill(player, target, wsID)
 
 	local damage, tpHits, extraHits = doRangedWeaponskill(player, target, params);
 	damage = damage * WEAPON_SKILL_POWER
+	
+		 if (damage > 0 and target:getStatusEffect(EFFECT_BURN) == nil) then
+        local DOT = math.floor(player:getMainLvl()/10) + 2;
+        local duration = (30 * (player:getTP() / 100));
+        target:addStatusEffect(EFFECT_BURN, DOT, 3, duration, FLAG_ERASBLE);
+    end
+	
+	
 	return tpHits, extraHits, criticalHit, damage;
 
 end

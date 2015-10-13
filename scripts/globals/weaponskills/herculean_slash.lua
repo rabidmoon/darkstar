@@ -20,7 +20,7 @@ require("scripts/globals/weaponskills");
 function onUseWeaponSkill(player, target, wsID)
 
 	local params = {};
-	params.ftp100 = 3.5; params.ftp200 = 3.5; params.ftp300 = 3.5;
+	params.ftp100 = 5.5; params.ftp200 = 5.5; params.ftp300 = 5.5;
 	params.str_wsc = 0.0; params.dex_wsc = 0.0; params.vit_wsc = 0.6; params.agi_wsc = 0.0; params.int_wsc = 0.0; params.mnd_wsc = 0.0; params.chr_wsc = 0.0;
 	params.ele = ELE_ICE;
 	params.skill = SKILL_GSD;
@@ -35,7 +35,7 @@ function onUseWeaponSkill(player, target, wsID)
 	if damage > 0 then
 		local tp = player:getTP();
 		local duration = (tp/100 * 60)
-		if (target:hasStatusEffect(EFFECT_PARALYSIS) == false) then
+		if(target:hasStatusEffect(EFFECT_PARALYSIS) == false) then
 			target:addStatusEffect(EFFECT_PARALYSIS, 30, 0, duration);
 		end
 	end

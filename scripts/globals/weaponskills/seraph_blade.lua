@@ -2,7 +2,7 @@
 -- Seraph Blade
 -- Sword weapon skill
 -- Skill Level: 125
--- Deals light elemental damage to enemy. Damage varies with TP.
+-- Deals light elemental damage to enemy and lowers defense. Damage and defense down amount varies with TP.
 -- Ignores shadows.
 -- Aligned with the Soil Gorget.
 -- Aligned with the Soil Belt.
@@ -27,12 +27,19 @@ function onUseWeaponSkill(player, target, wsID)
 	params.includemab = true;
 
 	if (USE_ADOULIN_WEAPON_SKILL_CHANGES == true) then
-		params.ftp100 = 1.125; params.ftp200 = 2.625; params.ftp300 = 4.125;
+		params.ftp100 = 1.5; params.ftp200 = 2.625; params.ftp300 = 4.125;
 		params.str_wsc = 0.4; params.mnd_wsc = 0.4;
 	end
 
 	local damage, criticalHit, tpHits, extraHits = doMagicWeaponskill(player, target, params);
 	damage = damage * WEAPON_SKILL_POWER
+	
+	if (damage > 0 and target:getStatusEffect(EFFECT_DEFENSE_DOWN) == nil) then
+        local DEFD = math.floor(player:getTP() / 50) + 4;
+        target:addStatusEffect(EFFECT_DEFENSE_DOWN, DEFD, 0, 30);
+    end
+	
+	
 	return tpHits, extraHits, criticalHit, damage;
 
 end

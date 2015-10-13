@@ -2,7 +2,7 @@
 -- Fast Blade
 -- Sword weapon skill
 -- Skill Level: 5
--- Delivers a two-hit attack. Damage varies with TP.
+-- Delivers a two-hit attack and Evason Down. Damage and Eva Down varies with TP.
 -- Will stack with Sneak Attack.
 -- Aligned with the Soil Gorget.
 -- Aligned with the Soil Belt.
@@ -33,6 +33,16 @@ function onUseWeaponSkill(player, target, wsID)
 	end
 
 	local damage, criticalHit, tpHits, extraHits = doPhysicalWeaponskill(player, target, params);
+	
+		if damage > 0 then
+		local tp = player:getTP();
+		local duration = (tp/100 * 30);
+		if(target:hasStatusEffect(EFFECT_EVASION_DOWN) == false) then
+			target:addStatusEffect(EFFECT_EVASION_DOWN, 10, 0, duration);
+		end
+	end
+	
+	
 	damage = damage * WEAPON_SKILL_POWER
 	return tpHits, extraHits, criticalHit, damage;
 

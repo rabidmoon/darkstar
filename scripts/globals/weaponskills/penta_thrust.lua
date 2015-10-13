@@ -26,9 +26,19 @@ function onUseWeaponSkill(player, target, wsID)
 	params.str_wsc = 0.2; params.dex_wsc = 0.2; params.vit_wsc = 0.0; params.agi_wsc = 0.0; params.int_wsc = 0.0; params.mnd_wsc = 0.0; params.chr_wsc = 0.0;
 	params.crit100 = 0.0; params.crit200 = 0.0; params.crit300 = 0.0;
 	params.canCrit = false;
-	params.acc100 = 0.8; params.acc200= 0.9; params.acc300= 1;
-	params.atkmulti = 0.875;
+	params.acc100 = 0.9; params.acc200= 0.95; params.acc300= 1;
+	params.atkmulti = 1;
 	local damage, criticalHit, tpHits, extraHits = doPhysicalWeaponskill(player, target, params);
+	
+		if damage > 0 then
+		local tp = player:getTP();
+		local duration = (tp/100 * 30);
+		if(target:hasStatusEffect(EFFECT_DEFENSE_DOWN) == false) then
+			target:addStatusEffect(EFFECT_DEFENSE_DOWN, 10, 0, duration);
+		end
+	end
+	
+	
 	damage = damage * WEAPON_SKILL_POWER
 	return tpHits, extraHits, criticalHit, damage;
 

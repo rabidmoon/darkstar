@@ -24,7 +24,7 @@ function onUseWeaponSkill(player, target, wsID)
 
 	local params = {};
 	params.numHits = 1;
-	params.ftp100 = 1; params.ftp200 = 1; params.ftp300 = 1;
+	params.ftp100 = 3; params.ftp200 = 3; params.ftp300 = 3;
 	params.str_wsc = 0.5; params.dex_wsc = 0.0; params.vit_wsc = 0.5; params.agi_wsc = 0.0; params.int_wsc = 0.0; params.mnd_wsc = 0.0; params.chr_wsc = 0.0;
 	params.crit100 = 0.0; params.crit200 = 0.0; params.crit300 = 0.0;
 	params.canCrit = false;
@@ -35,16 +35,16 @@ function onUseWeaponSkill(player, target, wsID)
 	if damage > 0 then
 		local tp = player:getTP();
 		local duration = (tp/100 * 30) + 60;
-		if (target:hasStatusEffect(EFFECT_DEFENSE_DOWN) == false) then
+		if(target:hasStatusEffect(EFFECT_DEFENSE_DOWN) == false) then
 			target:addStatusEffect(EFFECT_DEFENSE_DOWN, 12.5, 0, duration);
 		end
-		if (target:hasStatusEffect(EFFECT_ATTACK_DOWN) == false) then
+		if(target:hasStatusEffect(EFFECT_ATTACK_DOWN) == false) then
 			target:addStatusEffect(EFFECT_ATTACK_DOWN, 12.5, 0, duration);
 		end
-		if (target:hasStatusEffect(EFFECT_EVASION_DOWN) == false) then
+		if(target:hasStatusEffect(EFFECT_EVASION_DOWN) == false) then
 			target:addStatusEffect(EFFECT_EVASION_DOWN, 20, 0, duration);
 		end
-		if (target:hasStatusEffect(EFFECT_ACCURACY_DOWN) == false) then
+		if(target:hasStatusEffect(EFFECT_ACCURACY_DOWN) == false) then
 			target:addStatusEffect(EFFECT_ACCURACY_DOWN, 20, 0, duration);
 		end
 	end

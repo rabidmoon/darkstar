@@ -26,7 +26,7 @@ function onUseWeaponSkill(player, target, wsID)
 	params.includemab = true;
 
 	if (USE_ADOULIN_WEAPON_SKILL_CHANGES == true) then
-		params.ftp100 = 2.125; params.ftp200 = 3.675; params.ftp300 = 6.125;
+		params.ftp100 = 2.75; params.ftp200 = 4.0; params.ftp300 = 6.125;
 		params.str_wsc = 0.4; params.mnd_wsc = 0.4;
 	end
 

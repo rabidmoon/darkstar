@@ -6,7 +6,7 @@
 -- Aligned with the Soil Gorget.
 -- Aligned with the Soil Belt.
 -- Element: Light
--- Modifiers: STR:40% ; MND:40%
+-- Modifiers: STR:50% ; MND:50%
 -- 100%TP    200%TP    300%TP
 -- 1.125      2.222      3.523
 -----------------------------------
@@ -21,7 +21,7 @@ function onUseWeaponSkill(player, target, wsID)
 	local params = {};
 	params.numHits = 1;
 	params.ftp100 = 1; params.ftp200 = 2; params.ftp300 = 2.5;
-	params.str_wsc = 0.2; params.dex_wsc = 0.0; params.vit_wsc = 0.0; params.agi_wsc = 0.0; params.int_wsc = 0.0; params.mnd_wsc = 0.2; params.chr_wsc = 0.0;
+	params.str_wsc = 0.5; params.dex_wsc = 0.0; params.vit_wsc = 0.0; params.agi_wsc = 0.0; params.int_wsc = 0.0; params.mnd_wsc = 0.5; params.chr_wsc = 0.0;
 	params.ele = ELE_LIGHT;
 	params.skill = SKILL_SWD;
 	params.includemab = true;
