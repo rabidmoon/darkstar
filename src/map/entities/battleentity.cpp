@@ -429,7 +429,7 @@ int16 CBattleEntity::addTP(int16 tp)
         }
         else if (objtype == TYPE_PET)
         {
-            TPMulti = map_config.mob_tp_multiplier * 3;
+            TPMulti = map_config.mob_tp_multiplier;
         }
 
         tp = tp * TPMulti;
