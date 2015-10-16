@@ -259,6 +259,24 @@ INSERT INTO `mob_pool_mods` VALUES (2032,34,20,1);
 INSERT INTO `mob_pool_mods` VALUES (2032,35,0,1);
 INSERT INTO `mob_pool_mods` VALUES (2032,244,15,0);
 
+INSERT INTO `mob_pool_mods` VALUES (236,30,476,1);
+INSERT INTO `mob_pool_mods` VALUES (236,33,60,1);
+
+-- Scale Maat's pets HP down
+INSERT INTO `mob_pool_mods` VALUES (2461,61,25,1);
+INSERT INTO `mob_pool_mods` VALUES (2462,61,25,1);
+INSERT INTO `mob_pool_mods` VALUES (2463,61,20,1);
+
+-- Qiqirn standback forever
+INSERT INTO `mob_pool_mods` VALUES (3245,56,1,1);
+INSERT INTO `mob_pool_mods` VALUES (3252,56,1,1);
+INSERT INTO `mob_pool_mods` VALUES (3257,56,1,1);
+INSERT INTO `mob_pool_mods` VALUES (3262,56,1,1);
+INSERT INTO `mob_pool_mods` VALUES (3264,56,1,1);
+INSERT INTO `mob_pool_mods` VALUES (3265,56,1,1);
+INSERT INTO `mob_pool_mods` VALUES (3268,56,1,1);
+INSERT INTO `mob_pool_mods` VALUES (1750,56,1,1);
+
 /*!40000 ALTER TABLE `mob_pool_mods` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
