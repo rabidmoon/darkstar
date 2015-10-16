@@ -110,7 +110,7 @@ void CAutomatonEntity::burdenTick()
 uint8 CAutomatonEntity::addBurden(uint8 element, uint8 burden)
 {
     //TODO: tactical processor attachment
-    uint8 thresh = 30 + PMaster->getMod(MOD_OVERLOAD_THRESH);
+    uint8 thresh = 120 + PMaster->getMod(MOD_OVERLOAD_THRESH);
     m_Burden[element] += burden;
     //check for overload
     if (m_Burden[element] > thresh)

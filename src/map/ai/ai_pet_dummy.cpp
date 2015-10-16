@@ -333,12 +333,16 @@ void CAIPetDummy::preparePetAbility(CBattleEntity* PTarg) {
         Action.speceffect = SPECEFFECT_HIT;
         Action.animation = 0;
         Action.param = m_PMobSkill->getMsgForAction();
+		if (m_PMobSkill->getID() != 1693)  //Prevents readies message on Ranged Attacks
+		{
         Action.messageID = 43; //readies message
+		}
         Action.knockback = 0;
-
         m_skillTP = m_PPet->health.tp;
+		if (m_PMobSkill->getID() != 1693 && m_PMobSkill->getID() != 1686)  //Prevents Ranged Attacks from resetting TP since they are considered an ability
+		{
         m_PPet->health.tp = 0;
-
+        }
         m_PPet->m_ActionList.push_back(Action);
         m_PPet->loc.zone->PushPacket(m_PPet, CHAR_INRANGE, new CActionPacket(m_PPet));
 
@@ -495,6 +499,7 @@ void CAIPetDummy::ActionAbilityFinish() {
     uint16 totalTargets = m_PTargetFind->m_targets.size();
     //call the script for each monster hit
     m_PMobSkill->setTotalTargets(totalTargets);
+	m_PMobSkill->setTP(m_skillTP);
 
     float bonusTP = m_PPet->getMod(MOD_TP_BONUS);
 
@@ -503,7 +508,7 @@ void CAIPetDummy::ActionAbilityFinish() {
     else
        m_skillTP += bonusTP;
 
-    m_PMobSkill->setTP(m_skillTP);
+   
 
     // TODO: this is totally a hack
     // override mob animation ids with valid pet animation id
@@ -1030,6 +1035,9 @@ void CAIPetDummy::ActionSpawn()
     {
         m_ActionType = ACTION_ROAMING;
     }
+	
+	
+	
 }
 
 /************************************************************************

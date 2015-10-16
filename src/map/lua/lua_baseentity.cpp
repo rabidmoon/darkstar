@@ -9748,6 +9748,17 @@ inline int32 CLuaBaseEntity::getActiveManeuvers(lua_State* L)
     return 1;
 }
 
+inline int32 CLuaBaseEntity::getEffectsCount(lua_State* L)
+{
+    DSP_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
+    DSP_DEBUG_BREAK_IF(lua_isnil(L, 1) || !lua_isnumber(L, 1));
+    
+    CBattleEntity* PEntity = (CBattleEntity*)m_PBaseEntity;
+    
+    lua_pushinteger(L, PEntity->StatusEffectContainer->GetEffectsCount((EFFECT)lua_tointeger(L, 1)));
+    return 1;
+}
+
 inline int32 CLuaBaseEntity::removeOldestManeuver(lua_State* L)
 {
     DSP_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
@@ -10438,6 +10449,7 @@ Lunar<CLuaBaseEntity>::Register_t CLuaBaseEntity::methods[] =
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,unsetAggroFlag),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,instantiateMob),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,getActiveManeuvers),
+	LUNAR_DECLARE_METHOD(CLuaBaseEntity,getEffectsCount),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,removeOldestManeuver),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,removeAllManeuvers),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,addBurden),
