@@ -26,10 +26,10 @@ end;
 function onPetAbility(target, pet, skill)
     local numhits = 1;
     local accmod = 1;
-	local str_wsc = 0.25;
+	local str_wsc = 0.15;
 	local dex_wsc = 0;
 	local agi_wsc = 0;
-	local vit_wsc = 0.25;
+	local vit_wsc = 0.15;
 	skill:setSkillchain(150);
 	
 	
@@ -42,7 +42,7 @@ function onPetAbility(target, pet, skill)
 	
 	   if (dmg > 0) then
        target:addTP(2);
-       pet:setTP(16);
+       pet:setTP(8);
     end
 
     target:delHP(dmg);

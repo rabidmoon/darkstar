@@ -16,4 +16,5 @@ end;
 
 function onPetAbility(target, pet, skill)
  target:addEnmity(pet, 0, 1800);
+ return EFFECT_PROVOKE;
 end;

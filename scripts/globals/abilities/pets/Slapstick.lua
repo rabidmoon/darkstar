@@ -38,7 +38,7 @@ function onPetAbility(target, pet, skill)
 	
 	local info = AutoPhysicalMove(pet,target,skill,numhits,accmod,str_wsc,dex_wsc,agi_wsc,vit_wsc,TP_DMG_BONUS,1.5,2.25,3);
  
-    local dmg = MobFinalAdjustments(info.dmg,pet,skill,target,scattr,MOBSKILL_PHYSICAL,MOBPARAM_BLUNT,info.hitslanded);
+    local dmg = MobFinalAdjustments(info.dmg,pet,skill,target,MOBSKILL_PHYSICAL,MOBPARAM_BLUNT,info.hitslanded);
 	
 	local hits = automatonhitslanded;
 	local firsthit = 0;

@@ -1,7 +1,6 @@
 ---------------------------------------------------
--- Chimera Ripper
--- Deals damage to a single target
--- Can only be used when Fire Maneuver is present
+-- String Clipper
+-- Deals two hits to a single target
 -- Damage Varries with TP
 -- 100% TP - 1.5
 -- 200% TP - 2.0
@@ -24,18 +23,18 @@ function onMobSkillCheck(target,mob,skill)
 end;
 
 function onPetAbility(target, pet, skill)
-    local numhits = 1;
+    local numhits = 2;
     local accmod = 1;
-	local str_wsc = 0.25;
+	local str_wsc = 0.10;
 	local dex_wsc = 0;
 	local agi_wsc = 0;
-	local vit_wsc = 0.25;
+	local vit_wsc = 0.10;
     skill:setSkillchain(129);
 	
 
 
 	
-	local info = AutoPhysicalMove(pet,target,skill,numhits,accmod,str_wsc,dex_wsc,agi_wsc,vit_wsc,scattr,TP_DMG_BONUS,1.5,2,3);
+	local info = AutoPhysicalMove(pet,target,skill,numhits,accmod,str_wsc,dex_wsc,agi_wsc,vit_wsc,TP_DMG_BONUS,1.5,2,3);
  
     local dmg = MobFinalAdjustments(info.dmg,pet,skill,target,MOBSKILL_PHYSICAL,MOBPARAM_SLASH,info.hitslanded);
 	

@@ -191,6 +191,10 @@ function AutoRangedMove(mob,target,skill,numberofhits,accmod,str_wsc,dex_wsc,agi
     if (tpeffect==TP_DMG_BONUS) then
         hitdamage = hitdamage * fTP(tp, mtp000, mtp150, mtp300);
     end
+	
+	if (tpeffect==TP_ATK_VARIES) then
+        hitdamage = hitdamage * AutoIgnoredDef(skill:getTP(), mtp000, mtp150, mtp300);
+    end
 
     --work out min and max cRatio
     local maxRatio = 1;
@@ -383,7 +387,18 @@ function AutoPhysicalMove(mob,target,skill,numberofhits,accmod,str_wsc,dex_wsc,a
         hitdamage = 1;
     end
 -- change to get stats
-    hitdamage = hitdamage * MobTPMod(skill:getTP());
+
+   local tp = mob:getTP();
+
+    --apply ftp (assumes 1~3 scalar linear mod)
+    if (tpeffect==TP_DMG_BONUS) then
+        hitdamage = hitdamage * fTP(tp, mtp000, mtp150, mtp300);
+    end
+	
+	if (tpeffect==TP_ATK_VARIES) then
+        hitdamage = hitdamage * AutoIgnoredDef(skill:getTP(), mtp000, mtp150, mtp300);
+    end
+
 
     --work out min and max cRatio
     local maxRatio = 1;
@@ -418,14 +433,6 @@ function AutoPhysicalMove(mob,target,skill,numberofhits,accmod,str_wsc,dex_wsc,a
         minRatio = ratio - 0.375;
     end
 
-    --apply ftp (assumes 1~3 scalar linear mod)
-    if (tpeffect==TP_DMG_BONUS) then
-        hitdamage = hitdamage * fTP(skill:getTP(), mtp000, mtp150, mtp300);
-    end
-	
-	if (tpeffect==TP_ATK_VARIES) then
-        hitdamage = hitdamage * AutoIgnoredDef(skill:getTP(), mtp000, mtp150, mtp300);
-    end
 
     --Applying pDIF
     local pdif = 0;
