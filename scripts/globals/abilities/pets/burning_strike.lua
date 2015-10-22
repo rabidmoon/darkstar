@@ -20,6 +20,7 @@ function onPetAbility(target, pet, skill)
 	local dmgmod = 6;
 
 	local totaldamage = 0;
+	skill:setSkillchain(160);	
 	local damage = AvatarPhysicalMove(pet,target,skill,numhits,accmod,dmgmod,0,TP_NO_EFFECT,1,2,3);
 	--get resist multiplier (1x if no resist)
 	local resist = applyPlayerResistance(pet,-1,target,pet:getStat(MOD_INT)-target:getStat(MOD_INT),ELEMENTAL_MAGIC_SKILL, ELE_FIRE);

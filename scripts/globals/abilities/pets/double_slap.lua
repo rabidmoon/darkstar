@@ -18,7 +18,7 @@ function onPetAbility(target, pet, skill)
 	local accmod = 1;
 	local dmgmod = 6;
 	local dmgmodsubsequent = 2;
-
+	skill:setSkillchain(69);
 	local totaldamage = 0;
 	local damage = AvatarPhysicalMove(pet,target,skill,numhits,accmod,dmgmod,dmgmodsubsequent,TP_NO_EFFECT,1,2,3);
 	totaldamage = AvatarFinalAdjustments(damage.dmg,pet,skill,target,MOBSKILL_PHYSICAL,MOBPARAM_H2H,numhits);
