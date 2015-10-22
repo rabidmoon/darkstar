@@ -1862,9 +1862,28 @@ INSERT INTO `mob_skill_lists` VALUES ('',246,1490);
 -- Automatons (PUP ver.)
 
 -- Harlequin Frame
-INSERT INTO `mob_skill_lists` VALUES ('',363,1687);
-INSERT INTO `mob_skill_lists` VALUES ('',363,1811);
-INSERT INTO `mob_skill_lists` VALUES ('',363,2045);
+INSERT INTO `mob_skill_lists` VALUES ('',363,1178);  -- Barrage
+INSERT INTO `mob_skill_lists` VALUES ('',363,1684);  -- Chimera Ripper
+INSERT INTO `mob_skill_lists` VALUES ('',363,1685);  -- String Clipper
+INSERT INTO `mob_skill_lists` VALUES ('',363,1686);  -- Arcuballista
+INSERT INTO `mob_skill_lists` VALUES ('',363,1687);  -- Slapstick
+INSERT INTO `mob_skill_lists` VALUES ('',363,1688);  -- Shield Bash
+INSERT INTO `mob_skill_lists` VALUES ('',363,1689);  -- Provoke
+INSERT INTO `mob_skill_lists` VALUES ('',363,1690);  -- Shock Abosrber
+INSERT INTO `mob_skill_lists` VALUES ('',363,1691);  -- Flashbulb
+INSERT INTO `mob_skill_lists` VALUES ('',363,1692);  -- Mana Converter
+INSERT INTO `mob_skill_lists` VALUES ('',363,1693);  -- Ranged Attack
+INSERT INTO `mob_skill_lists` VALUES ('',363,1809);  -- Cannibal Blade
+INSERT INTO `mob_skill_lists` VALUES ('',363,1810);  -- Daze
+INSERT INTO `mob_skill_lists` VALUES ('',363,1811);  -- Knockout
+INSERT INTO `mob_skill_lists` VALUES ('',363,2043);  -- Bone Crusher
+INSERT INTO `mob_skill_lists` VALUES ('',363,2044);  -- Armor Piercer
+INSERT INTO `mob_skill_lists` VALUES ('',363,2045);  -- Magic Mortar
+INSERT INTO `mob_skill_lists` VALUES ('',363,2487);  -- String Shredder
+INSERT INTO `mob_skill_lists` VALUES ('',363,2488);  -- Armor Shatterer
+INSERT INTO `mob_skill_lists` VALUES ('',363,2489);  -- Heat Capacitor
+INSERT INTO `mob_skill_lists` VALUES ('',363,2490);  -- Barrage Turbine
+INSERT INTO `mob_skill_lists` VALUES ('',363,2522);  -- Reactive Shield
 -- INSERT INTO `mob_skill_lists` VALUES ('',363,1689);
 -- INSERT INTO `mob_skill_lists` VALUES ('',363,1691);
 -- INSERT INTO `mob_skill_lists` VALUES ('',363,1692);

@@ -80,6 +80,20 @@ void CAIGeneral::Reset()
 	m_LastActionTime = 0;
     m_LastMeleeTime = 0;
     m_LastMagicTime = 0;
+	
+	m_LastStrobeTime = 0;
+	m_LastRangedTime = 0;
+	m_LastAttachmentTime = 0;
+	m_LastBashTime = 0;
+	m_LastFlashTime = 0;
+	m_LastConvertTime = 0;
+	m_LastStoneskinTime = 0;
+	m_LastBarrageTime = 0;
+	m_LastMagicTimeHeal = 0;
+	m_LastMagicTimeEnf = 0;
+	m_LastMagicTimeStatus = 0;
+	m_LastMagicTimeEle = 0;
+	m_LastMagicTimeEnhance = 0;
 
     m_WaitTime = 0;
     m_LastWaitTime = 0;
@@ -253,9 +267,75 @@ void CAIGeneral::SetLastActionTime(uint32 time)
 	m_LastActionTime = time;
 }
 
+
 void CAIGeneral::SetLastMagicTime(uint32 time)
 {
 	m_LastMagicTime = time;
+}
+
+void CAIGeneral::SetLastStrobeTime(uint32 time)
+{
+	m_LastStrobeTime = time;
+}
+
+void CAIGeneral::SetLastRangedTime(uint32 time)
+{
+	m_LastRangedTime = time;
+}
+
+void CAIGeneral::SetLastAttachmentTime(uint32 time)
+{
+	m_LastAttachmentTime = time;
+}
+
+void CAIGeneral::SetLastBashTime(uint32 time)
+{
+	m_LastBashTime = time;
+}
+
+void CAIGeneral::SetLastFlashTime(uint32 time)
+{
+	m_LastFlashTime = time;
+}
+
+void CAIGeneral::SetLastConvertTime(uint32 time)
+{
+	m_LastConvertTime = time;
+}
+
+void CAIGeneral::SetLastStoneskinTime(uint32 time)
+{
+	m_LastStoneskinTime = time;
+}
+
+void CAIGeneral::SetLastBarrageTime(uint32 time)
+{
+	m_LastBarrageTime = time;
+}
+
+void CAIGeneral::SetLastMagicTimeHeal(uint32 time)
+{
+	m_LastMagicTimeHeal = time;
+}
+
+void CAIGeneral::SetLastMagicTimeEnf(uint32 time)
+{
+	m_LastMagicTimeEnf = time;
+}
+
+void CAIGeneral::SetLastMagicTimeStatus(uint32 time)
+{
+	m_LastMagicTimeStatus = time;
+}
+
+void CAIGeneral::SetLastMagicTimeEle(uint32 time)
+{
+	m_LastMagicTimeEle = time;
+}
+
+void CAIGeneral::SetLastMagicTimeEnhance(uint32 time)
+{
+	m_LastMagicTimeEnhance = time;
 }
 
 void CAIGeneral::SetBattleTarget(CBattleEntity* PEntity)

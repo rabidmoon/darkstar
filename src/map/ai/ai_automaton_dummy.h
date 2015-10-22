@@ -26,6 +26,7 @@ This file is part of DarkStar-server source code.
 
 #include "../../common/cbasetypes.h"
 
+#include "ai_general.h"
 #include "ai_pet_dummy.h"
 
 /************************************************************************
@@ -52,19 +53,53 @@ private:
 
     uint32 m_magicRecast;
     uint32 m_magicEnfeebleRecast;
+	uint32 m_magicEnfeebCast;
     uint32 m_magicElementalRecast;
+	uint32 m_magicElementCast;
     uint32 m_magicHealRecast;
+	uint32 m_magicHealCast;
     uint32 m_magicEnhanceRecast;
+	uint32 m_magicEnhanceCast;
     uint32 m_magicStatusRecast;
+	uint32 m_rangedRecast;
+	
+	
+	uint32 m_magicStatusCast;
+	uint32 m_attachmentRecast;
 
-    uint32 m_LastRangedTime;
+	uint32 m_damageGauge;
+	
+	uint32 m_strobeRecast;
+	uint32 m_bashRecast;
+	uint32 m_flashRecast;
+	uint32 m_barrageRecast;
+	uint32 m_convertRecast;
+	uint32 m_stoneskinRecast;
+	
+	
+	
 
     void ActionFall();
     void ActionAttack();
+	void ActionSpawn();
+	void ActionAbilityStart();
+	void ActionAbilityFinish();
+	void ActionMagicStart();
+	void ActionMagicCasting();
+	void ActionMagicFinish();
+	void ActionMagicInterrupt();
+	
 
     bool CheckSpellcast();
     bool CheckTPMove();
     bool CheckRangedAttack();
+
+	int16 BlackMageAttack();	
+	int16 LightAttack();
+	int16 LightEnfeeb();
+	int16 SharpshotAttack();
+	int16 HarleAttack();
+	CBattleEntity* getWounded(uint8 threshold);
 
     virtual void TransitionBack(bool skipWait = false) override;
 

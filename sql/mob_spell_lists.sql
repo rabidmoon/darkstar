@@ -1438,6 +1438,31 @@ INSERT INTO `mob_spell_lists` VALUES ('Charming_Trio', 142, 247, 1, 255);
 
 INSERT INTO `mob_spell_lists` VALUES ('Onki', 143, 288, 1, 255);
 
+-- Stormwaker Automaton
+INSERT INTO `mob_spell_lists` VALUES ('Automaton_Stormwaker', 260, 1, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES ('Automaton_Stormwaker', 260, 2, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES ('Automaton_Stormwaker', 260, 3, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES ('Automaton_Stormwaker', 260, 4, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES ('Automaton_Stormwaker', 260, 14, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES ('Automaton_Stormwaker', 260, 15, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES ('Automaton_Stormwaker', 260, 16, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES ('Automaton_Stormwaker', 260, 17, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES ('Automaton_Stormwaker', 260, 18, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES ('Automaton_Stormwaker', 260, 19, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES ('Automaton_Stormwaker', 260, 20, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES ('Automaton_Stormwaker', 260, 23, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES ('Automaton_Stormwaker', 260, 24, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES ('Automaton_Stormwaker', 260, 28, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES ('Automaton_Stormwaker', 260, 29, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES ('Automaton_Stormwaker', 260, 58, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES ('Automaton_Stormwaker', 260, 108, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES ('Automaton_Stormwaker', 260, 110, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES ('Automaton_Stormwaker', 260, 111, 1, 255);
+
+
+
+
+
 /*!40000 ALTER TABLE `mob_spell_lists` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;

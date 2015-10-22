@@ -22,6 +22,7 @@ function onGameIn(player, firstlogin, zoning)
         if (firstlogin) then
             CharCreate(player);
         end
+		player:PrintToServer(string.format("%s has logged in...", player:getName()), 0x1C);
     end
 
     if (zoning) then -- Things checked ONLY during zone in go here.

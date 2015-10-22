@@ -376,7 +376,12 @@ uint16 getSkillCap(CCharEntity* PChar, SKILLTYPE skill, uint8 level)
     switch (PChar->PAutomaton->getFrame())
     {
         case FRAME_HARLEQUIN:
-            rank = 5;
+            if (skill == SKILL_AME)
+                rank = 3;
+			else if (skill == SKILL_ARA)
+                rank = 3;
+            else if (skill == SKILL_AMA)
+                rank = 3;
             break;
         case FRAME_VALOREDGE:
             if (skill == SKILL_AME)

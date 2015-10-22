@@ -139,6 +139,19 @@ public:
 	void			SetCurrentMobSkill(CMobSkill* skill); // DEBUG
     void            SetLastActionTime(uint32 time);
 	void			SetLastMagicTime(uint32 time);
+    void			SetLastStrobeTime(uint32 time);
+	void			SetLastRangedTime(uint32 time);	
+	void			SetLastAttachmentTime(uint32 time);	
+	void			SetLastBashTime(uint32 time);
+	void			SetLastFlashTime(uint32 time);	
+	void			SetLastConvertTime(uint32 time);	
+	void			SetLastStoneskinTime(uint32 time);
+	void			SetLastBarrageTime(uint32 time);
+	void			SetLastMagicTimeHeal(uint32 time);
+	void			SetLastMagicTimeEnf(uint32 time);	
+	void			SetLastMagicTimeStatus(uint32 time);
+	void			SetLastMagicTimeEle(uint32 time);	
+	void			SetLastMagicTimeEnhance(uint32 time);		
 	void			SetCurrentAction(ACTIONTYPE Action, uint16 TargetID = 0);
 	void			SetLastCorsairRoll(uint16 ability);
 	void			SetAutoAttackEnabled(bool enabled);
@@ -172,6 +185,21 @@ protected:
 	uint32			m_LastActionTime;		// время начала любого действия
 	uint32			m_LastMeleeTime;		// Last time melee hit occurred
 	uint32			m_LastMagicTime;		// Last time magic spell was -attempted-
+	uint32			m_LastStrobeTime;       // Last time strobe was attempted
+	uint32			m_LastRangedTime;       // Last time a ranged attack was attempted
+	uint32			m_LastAttachmentTime;   // Last time an attachment was attempted to be used
+	uint32			m_LastBashTime;         // Last time Shield bash was used
+	uint32			m_LastFlashTime;
+	uint32			m_LastConvertTime;
+	uint32			m_LastStoneskinTime;
+	uint32			m_LastBarrageTime;
+	uint32			m_LastMagicTimeHeal;
+	uint32			m_LastMagicTimeEnf;
+	uint32			m_LastMagicTimeStatus;
+	uint32			m_LastMagicTimeEle;
+	uint32			m_LastMagicTimeEnhance;	
+
+
     uint32			m_Tick;					// текущее значение времени
     uint32			m_StartBattle;			// Battle start time
 	uint16			m_CorsairDoubleUp;		// Last used corsair roll eligible for DU

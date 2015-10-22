@@ -1223,7 +1223,7 @@ INSERT INTO `mob_skills` VALUES (1143,1035,'noname2',0,15.0,2000,1500,4,0,0,0); 
 INSERT INTO `mob_skills` VALUES (1175,803,'Shield_Bash',0,7.0,2000,1500,4,0,0,0);
 -- INSERT INTO `mob_skills` VALUES (1176,1176,'Weapon_Bash',0,7.0,2000,1500,4,0,0,0);
 -- INSERT INTO `mob_skills` VALUES (1177,1177,'Sic',0,7.0,2000,1500,4,0,0,0);
-INSERT INTO `mob_skills` VALUES (1178,1178,'Barrage',0,7.0,2000,1500,4,0,0,0);
+INSERT INTO `mob_skills` VALUES (1178,16,'Barrage',0,7.0,2000,1500,4,0,0,0);
 -- INSERT INTO `mob_skills` VALUES (1179,1179,'.',0,7.0,2000,1500,4,0,0,0);
 -- INSERT INTO `mob_skills` VALUES (1180,1180,'Meditate',0,7.0,2000,1500,4,0,0,0);
 -- INSERT INTO `mob_skills` VALUES (1181,1181,'Jump',0,7.0,2000,1500,4,0,0,0);
@@ -1733,7 +1733,7 @@ INSERT INTO `mob_skills` VALUES (1684,1304,'Chimera_Ripper',0,7.0,2000,0,4,0,0,0
 INSERT INTO `mob_skills` VALUES (1685,1305,'String_Clipper',0,7.0,2000,0,4,0,0,0);
 INSERT INTO `mob_skills` VALUES (1686,1303,'Arcuballista',0,15.0,2000,0,4,0,0,0);
 INSERT INTO `mob_skills` VALUES (1687,1306,'Slapstick',0,7.0,2000,0,4,0,0,0);
-INSERT INTO `mob_skills` VALUES (1688,1688,'Shield_Bash',0,7.0,2000,1500,4,0,0,0);
+INSERT INTO `mob_skills` VALUES (1688,803,'Shield_Bash',0,7.0,2000,1500,4,0,0,0);
 INSERT INTO `mob_skills` VALUES (1689,1689,'Provoke',0,7.0,2000,1500,4,0,0,0);
 INSERT INTO `mob_skills` VALUES (1690,436,'Shock_Absorber',0,7.0,2000,1500,4,0,0,0);
 INSERT INTO `mob_skills` VALUES (1691,436,'Flashbulb',0,7.0,2000,1500,4,0,0,0);

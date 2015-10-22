@@ -333,12 +333,21 @@ void CAIPetDummy::preparePetAbility(CBattleEntity* PTarg) {
         Action.speceffect = SPECEFFECT_HIT;
         Action.animation = 0;
         Action.param = m_PMobSkill->getMsgForAction();
+        if (m_PMobSkill->getID() != 1688 && m_PMobSkill->getID() != 1689 && m_PMobSkill->getID() != 1690 && 
+		m_PMobSkill->getID() != 1691 && m_PMobSkill->getID() != 1692 && m_PMobSkill->getID() != 1693 &&
+        m_PMobSkill->getID() != 1178)  //Prevents readies message on Ranged Attacks
+		{
         Action.messageID = 43; //readies message
+		}
         Action.knockback = 0;
-
         m_skillTP = m_PPet->health.tp;
+		if (m_PMobSkill->getID() != 1693 && m_PMobSkill->getID() != 1686 && m_PMobSkill->getID() != 1687 && 
+		m_PMobSkill->getID() != 1811 && m_PMobSkill->getID() != 2488 && 
+		m_PMobSkill->getID() != 2044 && m_PMobSkill->getID() != 1810 && m_PMobSkill->getID() != 1686 &&
+        m_PMobSkill->getID() != 1684 && m_PMobSkill->getID() != 1809)  //Prevents Ranged Attacks and WS's from resetting TP since they are considered an ability
+		{
         m_PPet->health.tp = 0;
-
+        }
         m_PPet->m_ActionList.push_back(Action);
         m_PPet->loc.zone->PushPacket(m_PPet, CHAR_INRANGE, new CActionPacket(m_PPet));
 
@@ -541,6 +550,55 @@ void CAIPetDummy::ActionAbilityFinish() {
         }
 
         Action.messageID = msg;
+		
+		//Test Begin for SC
+		
+		        if (m_PMobSkill->hasMissMsg())
+        {
+            Action.reaction   = REACTION_MISS;
+            Action.speceffect = SPECEFFECT_NONE;
+            if (msg = m_PMobSkill->getAoEMsg())
+                msg = 282;
+        }
+        else
+        {
+            Action.reaction   = REACTION_HIT;
+        }
+
+        if (Action.speceffect & SPECEFFECT_HIT)
+        {
+            Action.speceffect = SPECEFFECT_RECOIL;
+            Action.knockback = m_PMobSkill->getKnockback();
+            if (it == m_PTargetFind->m_targets.begin() && (m_PMobSkill->getSkillchain() != 0))
+            {
+                CWeaponSkill* PWeaponSkill = battleutils::GetWeaponSkill(m_PMobSkill->getSkillchain());
+                if (PWeaponSkill)
+                {
+                    SUBEFFECT effect = battleutils::GetSkillChainEffect(m_PBattleSubTarget, PWeaponSkill);
+                    if (effect != SUBEFFECT_NONE)
+                    {
+                        int32 skillChainDamage = battleutils::TakeSkillchainDamage(m_PPet, PTarget, Action.param);
+                        if (skillChainDamage < 0)
+                        {
+                            Action.addEffectParam = -skillChainDamage;
+                            Action.addEffectMessage = 384 + effect;
+                        }
+                        else
+                        {
+                            Action.addEffectParam = skillChainDamage;
+                            Action.addEffectMessage = 287 + effect;
+                        }
+                        Action.additionalEffect = effect;
+                    }
+                }
+            }
+        }
+		
+		//Test End for SC
+		
+		
+		
+		
 
         battleutils::ClaimMob(m_PBattleSubTarget, m_PPet);
 

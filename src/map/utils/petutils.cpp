@@ -486,7 +486,9 @@ namespace petutils
         // Расчет бонусных HP
         bonusStat = (mainLevelOver10 + mainLevelOver50andUnder60) * 2;
         PPet->health.maxhp = (int16)(raceStat + jobStat + bonusStat + sJobStat) * petStats->HPscale;
-        PPet->health.hp = PPet->health.maxhp;
+        
+		
+		PPet->health.hp = PPet->health.maxhp;
 
         //Начало расчера MP
         raceStat = 0;
@@ -523,7 +525,8 @@ namespace petutils
         }
 
         PPet->health.maxmp = (int16)(raceStat + jobStat + sJobStat) * petStats->MPscale;
-        PPet->health.mp = PPet->health.maxmp;
+		PPet->health.mp = PPet->health.maxmp;
+		
 
         uint16 fSTR = GetBaseToRank(petStats->strRank, PPet->GetMLevel());
         uint16 fDEX = GetBaseToRank(petStats->dexRank, PPet->GetMLevel());
@@ -559,7 +562,7 @@ namespace petutils
 
         PPet->m_Weapons[SLOT_MAIN]->setSkillType(SKILL_AME);
         PPet->m_Weapons[SLOT_MAIN]->setDelay(floor(1000.0f*(petStats->cmbDelay / 60.0f))); //every pet should use this eventually
-        PPet->m_Weapons[SLOT_MAIN]->setDamage((PPet->GetSkill(SKILL_AME) / 9) * 2 + 3);
+        PPet->m_Weapons[SLOT_MAIN]->setDamage((PPet->GetSkill(SKILL_AME) / 10) + 3);
 
         PPet->m_Weapons[SLOT_RANGED]->setSkillType(SKILL_ARA);
         PPet->m_Weapons[SLOT_RANGED]->setDamage((PPet->GetSkill(SKILL_ARA) / 9) * 2 + 3);
@@ -570,10 +573,13 @@ namespace petutils
         case FRAME_HARLEQUIN:
             PPet->WorkingSkills.evasion = battleutils::GetMaxSkill(2, PPet->GetMLevel());
             PPet->setModifier(MOD_DEF, battleutils::GetMaxSkill(10, PPet->GetMLevel()));
+			PPet->health.maxmp = ((int16)(raceStat + jobStat + sJobStat) * petStats->MPscale) /2;
+		    PPet->health.mp = PPet->health.maxmp;
             break;
         case FRAME_VALOREDGE:
             PPet->WorkingSkills.evasion = battleutils::GetMaxSkill(5, PPet->GetMLevel());
             PPet->setModifier(MOD_DEF, battleutils::GetMaxSkill(5, PPet->GetMLevel()));
+			PPet->setModifier(MOD_MP, 0);
             break;
         case FRAME_SHARPSHOT:
             PPet->WorkingSkills.evasion = battleutils::GetMaxSkill(1, PPet->GetMLevel());
@@ -1364,8 +1370,8 @@ namespace petutils
             switch (PAutomaton->getFrame())
             {
             case FRAME_HARLEQUIN:
-                PPet->SetMJob(JOB_WAR);
-                PPet->SetSJob(JOB_RDM);
+                PPet->SetMJob(JOB_RDM);
+                PPet->SetSJob(JOB_WAR);
                 break;
             case FRAME_VALOREDGE:
                 PPet->SetMJob(JOB_PLD);
@@ -1376,8 +1382,8 @@ namespace petutils
                 PPet->SetSJob(JOB_PUP);
                 break;
             case FRAME_STORMWAKER:
-                PPet->SetMJob(JOB_RDM);
-                PPet->SetSJob(JOB_WHM);
+                PPet->SetMJob(JOB_WHM);
+                PPet->SetSJob(JOB_RDM);
                 break;
             }
             //TEMP: should be MLevel when unsummoned, and PUP level when summoned

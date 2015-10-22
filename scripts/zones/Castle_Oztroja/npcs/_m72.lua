@@ -15,7 +15,7 @@ require("scripts/globals/settings");
 -----------------------------------
 
 function onTrigger(player,npc)
-
+    player:PrintToPlayer("Correct Torch");
 	DoorID = npc:getID() - 2;
 	Torch1 = npc:getID();	
 	Torch2 = npc:getID() + 1;		
@@ -55,7 +55,8 @@ function onEventFinish(player,csid,option)
 	if (option == 1) then
 		GetNPCByID(Torch1):openDoor(55);
 		if ((DoorA == 9) and (TorchStand2A == 8) and (TorchStand3A == 8) and (TorchStand4A == 8)) then
-			GetNPCByID(DoorID):openDoor(35); -- confirmed retail tested
+		    
+			
 			-- The lamps shouldn't go off here, but I couldn't get the torches to update animation times without turning them off first 
 			-- They need to be reset to the door open time(35s) + 4s (39 seconds)
 			GetNPCByID(Torch1):setAnimation(9);
@@ -65,9 +66,12 @@ function onEventFinish(player,csid,option)
 			GetNPCByID(Torch1):openDoor(39); -- confirmed retail tested
 			GetNPCByID(Torch2):openDoor(39);
 			GetNPCByID(Torch3):openDoor(39);
-			GetNPCByID(Torch4):openDoor(39);	
+			GetNPCByID(Torch4):openDoor(39);
+           		
 		end	
+			GetNPCByID(DoorID):openDoor(35); -- confirmed retail tested
 	end	
+	
 end;
 
 

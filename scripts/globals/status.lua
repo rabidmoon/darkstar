@@ -1,4 +1,5 @@
 ------------------------------------
+------------------------------------
 --
 -- STATUSES AND MODS
 --
@@ -1959,7 +1960,9 @@ SKILL_GKT = 10
 SKILL_CLB = 11
 SKILL_STF = 12
 -- 13~21 unused
--- 22~24 pup's Automaton skills
+SKILL_AME = 22
+SKILL_ARA = 23
+SKILL_AMA = 24
 SKILL_ARC = 25
 SKILL_MRK = 26
 SKILL_THR = 27

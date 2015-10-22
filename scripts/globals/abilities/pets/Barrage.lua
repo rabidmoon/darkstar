@@ -1,8 +1,7 @@
 ---------------------------------------------------
--- Ranged Attack
--- Deals a ranged attack to a single target.
--- Dex causes extra damage as noted by using Thunder maneuver
--- 
+-- Barrage Turbine
+-- Deals multiple ranged attacks at once based
+-- on maneuvers present
 ---------------------------------------------------
 
 require("/scripts/globals/settings");
@@ -16,7 +15,23 @@ function onMobSkillCheck(target,mob,skill)
 end;
 
 function onPetAbility(target, pet, skill)
-    local numhits = 1;
+local barrage = 0;
+local player = pet:getMaster();
+local wind = player:getEffectsCount(EFFECT_WIND_MANEUVER);
+if (wind == 1) then
+barrage = 4;
+elseif (wind == 2) then
+barrage = 6;
+elseif (wind == 3) then
+barrage = 8;
+else
+barrage = 0;
+end
+
+
+
+
+    local numhits = barrage;
     local accmod = 1;
 	local str_wsc = 0;
 	local dex_wsc = 0.5;
@@ -28,11 +43,22 @@ function onPetAbility(target, pet, skill)
  
     local dmg = MobFinalAdjustments(info.dmg,pet,skill,target,MOBSKILL_RANGED,MOBPARAM_PIERCE,info.hitslanded);
 	
+    local hits = barrage;
+	local finaltp = 0;
+	local mobtp = hits * 2;
+	
 	   if (dmg > 0) then
-       target:addTP(2);
-       pet:addTP(16);
-    end
-
+	   if (hits > 1) then
+	   finaltp = (hits * 16);
+       pet:setTP(finaltp);
+	   target:addTP(mobtp);
+	   elseif (hits == 1) then
+	   pet:setTP(16);
+	   target:addTP(2);
+	   end
+	   end
+	
+	
     target:delHP(dmg);
     return dmg;
 end;
