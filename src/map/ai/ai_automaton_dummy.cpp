@@ -805,6 +805,16 @@ void CAIAutomatonDummy::ActionAttack()
                     {
                         puppetutils::TrySkillUP((CAutomatonEntity*)m_PPet, SKILL_AME, m_PBattleTarget->GetMLevel());
                     }
+					
+					if (m_PPet->PMaster && m_PPet->PMaster->objtype == TYPE_PC)
+                    {
+                        puppetutils::TrySkillUP((CAutomatonEntity*)m_PPet, SKILL_AMA, m_PBattleTarget->GetMLevel());
+                    }
+					
+					if (m_PPet->PMaster && m_PPet->PMaster->objtype == TYPE_PC)
+                    {
+                        puppetutils::TrySkillUP((CAutomatonEntity*)m_PPet, SKILL_ARA, m_PBattleTarget->GetMLevel());
+                    }
 
                     bool isBlocked = (dsprand::GetRandomNumber(100) < battleutils::GetBlockRate(m_PPet, m_PBattleTarget));
                     if (isBlocked){ Action.reaction = REACTION_BLOCK; }
