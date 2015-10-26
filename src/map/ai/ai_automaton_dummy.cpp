@@ -452,7 +452,11 @@ void CAIAutomatonDummy::ActionAttack()
                                             
 					}
 				preparePetAbility(m_PBattleSubTarget);
-				 m_LastRangedTime = m_Tick;
+				m_LastRangedTime = m_Tick;
+				if (m_PPet->PMaster && m_PPet->PMaster->objtype == TYPE_PC)
+                  {
+                  puppetutils::TrySkillUP((CAutomatonEntity*)m_PPet, SKILL_ARA, m_PBattleTarget->GetMLevel());
+                  }	 
                 return;	
 				}
 				
@@ -556,6 +560,10 @@ void CAIAutomatonDummy::ActionAttack()
                         }
 			        }
 				preparePetAbility(m_PBattleSubTarget);
+			    if (m_PPet->PMaster && m_PPet->PMaster->objtype == TYPE_PC)
+				{
+				puppetutils::TrySkillUP((CAutomatonEntity*)m_PPet, SKILL_ARA, m_PBattleTarget->GetMLevel());
+				}	
 				m_LastBarrageTime = m_Tick;
 				m_LastAttachmentTime = m_Tick;
 				m_LastMagicTime = m_Tick;
@@ -806,15 +814,6 @@ void CAIAutomatonDummy::ActionAttack()
                         puppetutils::TrySkillUP((CAutomatonEntity*)m_PPet, SKILL_AME, m_PBattleTarget->GetMLevel());
                     }
 					
-					if (m_PPet->PMaster && m_PPet->PMaster->objtype == TYPE_PC)
-                    {
-                        puppetutils::TrySkillUP((CAutomatonEntity*)m_PPet, SKILL_AMA, m_PBattleTarget->GetMLevel());
-                    }
-					
-					if (m_PPet->PMaster && m_PPet->PMaster->objtype == TYPE_PC)
-                    {
-                        puppetutils::TrySkillUP((CAutomatonEntity*)m_PPet, SKILL_ARA, m_PBattleTarget->GetMLevel());
-                    }
 
                     bool isBlocked = (dsprand::GetRandomNumber(100) < battleutils::GetBlockRate(m_PPet, m_PBattleTarget));
                     if (isBlocked){ Action.reaction = REACTION_BLOCK; }
@@ -1520,7 +1519,12 @@ int16 CAIAutomatonDummy::HarleAttack()
 	}
 
 
-		
+	//Try to skill up Magic
+
+     if (m_PPet->PMaster && m_PPet->PMaster->objtype == TYPE_PC)
+        {
+         puppetutils::TrySkillUP((CAutomatonEntity*)m_PPet, SKILL_AMA, m_PBattleTarget->GetMLevel());
+        }	
 	
     
 	
