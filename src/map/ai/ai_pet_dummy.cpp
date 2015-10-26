@@ -342,7 +342,7 @@ void CAIPetDummy::preparePetAbility(CBattleEntity* PTarg) {
         Action.knockback = 0;
         m_skillTP = m_PPet->health.tp;
 		if (m_PMobSkill->getID() != 1693 && m_PMobSkill->getID() != 1684 && m_PMobSkill->getID() != 1685 &&
-        m_PMobSkill->getID() != 1686 && m_PMobSkill->getID() != 1697 && m_PMobSkill->getID() != 1688 &&
+        m_PMobSkill->getID() != 1686 && m_PMobSkill->getID() != 1687 && m_PMobSkill->getID() != 1688 &&
         m_PMobSkill->getID() != 1689 && m_PMobSkill->getID() != 1690 && m_PMobSkill->getID() != 1691 &&
 		m_PMobSkill->getID() != 1811 && m_PMobSkill->getID() != 2488 && m_PMobSkill->getID() != 1692 &&
 		m_PMobSkill->getID() != 2044 && m_PMobSkill->getID() != 1810 && m_PMobSkill->getID() != 1809)  //Prevents Ranged Attacks and WS's from resetting TP since they are considered an ability

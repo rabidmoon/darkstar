@@ -700,7 +700,7 @@ void CAIAutomatonDummy::ActionAttack()
     // Create temporary distance calculation to keep specific Automatons at a distance.  
 	// This Hack is only temporary so Sharpshot and Harlequin stay where they are deployed		
     //go to target if its too far away
-	    if (currentDistance > 15 && m_PPet->speed != 0 && m_PPet->getFrame() != FRAME_VALOREDGE)
+	    if (currentDistance > 15 && m_PPet->speed != 0 && m_PPet->getHead() != HEAD_VALOREDGE)
     {
         if (m_PPathFind->PathAround(m_PBattleTarget->loc.p, 2.0f, PATHFLAG_RUN | PATHFLAG_WALLHACK))
         {
@@ -712,7 +712,7 @@ void CAIAutomatonDummy::ActionAttack()
     }
 	
 	
-	if (currentDistance > m_PBattleTarget->m_ModelSize && m_PPet->speed != 0 && m_PPet->getFrame() == FRAME_VALOREDGE)
+	if (currentDistance > m_PBattleTarget->m_ModelSize && m_PPet->speed != 0 && m_PPet->getHead() == HEAD_VALOREDGE || m_PPet->health.mp < 7)
     {
         if (m_PPathFind->PathAround(m_PBattleTarget->loc.p, 2.0f, PATHFLAG_RUN | PATHFLAG_WALLHACK))
         {
@@ -1400,7 +1400,7 @@ int16 CAIAutomatonDummy::HarleAttack()
 			    {
 				 spellID = -1;
 				}
-        else if (mskill > 0)
+        else if (mskill >= 0)
 		    if (m_PPet->health.mp >= 7)  	
 			    {
 				 spellID = 23;
