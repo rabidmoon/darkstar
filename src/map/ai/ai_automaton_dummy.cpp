@@ -1520,11 +1520,12 @@ int16 CAIAutomatonDummy::HarleAttack()
 
 
 	//Try to skill up Magic
-
+    if (skillID != -1) {
      if (m_PPet->PMaster && m_PPet->PMaster->objtype == TYPE_PC)
         {
          puppetutils::TrySkillUP((CAutomatonEntity*)m_PPet, SKILL_AMA, m_PBattleTarget->GetMLevel());
-        }	
+        }
+    }		
 	
     
 	
