@@ -31,6 +31,59 @@ function onGameIn(player, firstlogin, zoning)
 
     -- Things checked BOTH during logon AND zone in below this line.
     checkForGearSet(player);
+	
+	
+	---------- Feretory Boons -------
+	
+	---- Mage Boons ----
+	
+	local boonpower = player:getVar("FerretoryMageBoonPower");
+	local plvl = player:getMainLvl();
+	local plvladj = (math.floor(plvl / 10)) +1;
+	if (boonpower > (plvladj)) then
+	boonpower = plvladj;
+	else
+	boonpower = boonpower;
+	end
+	
+	
+	local mpboon = boonpower * 10;
+	local mabboon = boonpower * 2;
+	local fcboon = math.floor(boonpower * 1.5);
+	local curepotboon = boonpower;
+	
+	player:addMod(MOD_MP,mpboon);
+	player:addMod(MOD_MATT,mabboon);
+	player:addMod(MOD_FASTCAST,fcboon);
+	player:addMod(MOD_CURE_POTENCY,curepotboon);
+	
+	
+	---- Melee Boons ----
+	
+	 local meleeboonpower = player:getVar("FerretoryMeleeBoonPower");
+	
+	 if (meleeboonpower > (plvladj)) then
+	 local plvladj1 = (math.floor(plvl / 10)) +1;
+	 meleeboonpower = plvladj1;
+	 else
+	 meleeboonpower = meleeboonpower;
+	 end
+	
+	
+	 local hpboon = meleeboonpower * 10;
+	 local attboon = meleeboonpower * 5;
+	 local rattboon = meleeboonpower * 5;
+	 local storetpboon = meleeboonpower * 1;
+	 local hasteboon = math.floor(meleeboonpower * 0.5);
+	
+	
+	 player:addMod(MOD_HP,hpboon);
+	 player:addMod(MOD_ATT,attboon);
+	 player:addMod(MOD_RATT,rattboon);
+	 player:addMod(MOD_STORETP,storetpboon);
+	 player:addMod(MOD_HASTE_ABILITY,hasteboon);
+	
+	
 
     if (player:getVar("GodMode") == 1) then
         -- Add bonus effects to the player..
