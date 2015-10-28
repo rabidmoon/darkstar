@@ -188,7 +188,7 @@ void CAIAutomatonDummy::ActionSpawn()
 	
 // Attack Fix for missing calculations for STR which isn't added to battleutils.cpp
 
-    strfix = ((m_PPet->getMod(MOD_STR) * 3) / 4)
+    strfix = ((m_PPet->getMod(MOD_STR) * 3) / 4);
 
 
 //Attachment Stats are built into the core for now TODO move to lua script on activate
