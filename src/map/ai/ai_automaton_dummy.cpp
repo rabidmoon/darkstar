@@ -183,7 +183,12 @@ void CAIAutomatonDummy::ActionSpawn()
 	uint8 tenshii = 0;
 	uint8 turbo = 0;
 	uint8 turboi = 0;
+	uint16 strfix = 0;
 
+	
+// Attack Fix for missing calculations for STR which isn't added to battleutils.cpp
+
+    strfix = ((m_PPet->getMod(MOD_STR) * 3) / 4)
 
 
 //Attachment Stats are built into the core for now TODO move to lua script on activate
@@ -363,7 +368,7 @@ void CAIAutomatonDummy::ActionSpawn()
 	   manatank = manatanki + manatankii;
 	   scope = scopei;
 	   stab = stabi + stabii;
-	   tensh = tenshi + tenshii;
+	   tensh = tenshi + tenshii + strfix;
 		
 		
 		
@@ -452,11 +457,11 @@ void CAIAutomatonDummy::ActionAttack()
                                             
 					}
 				preparePetAbility(m_PBattleSubTarget);
-				m_LastRangedTime = m_Tick;
 				if (m_PPet->PMaster && m_PPet->PMaster->objtype == TYPE_PC)
-                  {
-                  puppetutils::TrySkillUP((CAutomatonEntity*)m_PPet, SKILL_ARA, m_PBattleTarget->GetMLevel());
-                  }	 
+                    {
+                        puppetutils::TrySkillUP((CAutomatonEntity*)m_PPet, SKILL_ARA, m_PBattleTarget->GetMLevel());
+                    }
+				m_LastRangedTime = m_Tick;
                 return;	
 				}
 				
@@ -560,10 +565,10 @@ void CAIAutomatonDummy::ActionAttack()
                         }
 			        }
 				preparePetAbility(m_PBattleSubTarget);
-			    if (m_PPet->PMaster && m_PPet->PMaster->objtype == TYPE_PC)
-				{
-				puppetutils::TrySkillUP((CAutomatonEntity*)m_PPet, SKILL_ARA, m_PBattleTarget->GetMLevel());
-				}	
+				if (m_PPet->PMaster && m_PPet->PMaster->objtype == TYPE_PC)
+                    {
+                        puppetutils::TrySkillUP((CAutomatonEntity*)m_PPet, SKILL_ARA, m_PBattleTarget->GetMLevel());
+                    }
 				m_LastBarrageTime = m_Tick;
 				m_LastAttachmentTime = m_Tick;
 				m_LastMagicTime = m_Tick;
@@ -720,7 +725,7 @@ void CAIAutomatonDummy::ActionAttack()
     }
 	
 	
-	if (currentDistance > m_PBattleTarget->m_ModelSize && m_PPet->speed != 0 && m_PPet->getHead() == HEAD_VALOREDGE || m_PPet->health.mp < 7)
+	if (currentDistance > m_PBattleTarget->m_ModelSize && m_PPet->speed != 0 && m_PPet->getHead() == HEAD_VALOREDGE || m_PPet->health.mp < 8)
     {
         if (m_PPathFind->PathAround(m_PBattleTarget->loc.p, 2.0f, PATHFLAG_RUN | PATHFLAG_WALLHACK))
         {
@@ -888,6 +893,10 @@ void CAIAutomatonDummy::ActionAbilityStart()
                         }
                     
 					}
+					if (m_PPet->PMaster && m_PPet->PMaster->objtype == TYPE_PC)
+                    {
+                        puppetutils::TrySkillUP((CAutomatonEntity*)m_PPet, SKILL_AME, m_PBattleTarget->GetMLevel());
+                    }
 				}
 				
 				
@@ -918,6 +927,10 @@ void CAIAutomatonDummy::ActionAbilityStart()
                             break;
                         }
 					}
+					if (m_PPet->PMaster && m_PPet->PMaster->objtype == TYPE_PC)
+                    {
+                    puppetutils::TrySkillUP((CAutomatonEntity*)m_PPet, SKILL_ARA, m_PBattleTarget->GetMLevel());
+                    }	
 				}
 				
 			else if (m_PPet->getFrame() == FRAME_VALOREDGE){
@@ -947,6 +960,10 @@ void CAIAutomatonDummy::ActionAbilityStart()
                         }
                     
 					}
+					if (m_PPet->PMaster && m_PPet->PMaster->objtype == TYPE_PC)
+                    {
+                        puppetutils::TrySkillUP((CAutomatonEntity*)m_PPet, SKILL_AME, m_PBattleTarget->GetMLevel());
+                    }
 				}
 				
 				
@@ -1151,6 +1168,13 @@ void CAIAutomatonDummy::ActionMagicFinish()
 
     m_PSpell = nullptr;
     m_PBattleSubTarget = nullptr;
+
+		if (m_PPet->PMaster && m_PPet->PMaster->objtype == TYPE_PC)
+		
+		{
+         puppetutils::TrySkillUP((CAutomatonEntity*)m_PPet, SKILL_AMA, m_PBattleTarget->GetMLevel());
+        }	
+		
 
     TransitionBack();
 }
@@ -1518,16 +1542,6 @@ int16 CAIAutomatonDummy::HarleAttack()
 	}	
 	}
 
-
-	//Try to skill up Magic
-    if (skillID != -1) {
-     if (m_PPet->PMaster && m_PPet->PMaster->objtype == TYPE_PC)
-        {
-         puppetutils::TrySkillUP((CAutomatonEntity*)m_PPet, SKILL_AMA, m_PBattleTarget->GetMLevel());
-        }
-    }		
-	
-    
 	
 	return spellID;
 }
