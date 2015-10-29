@@ -555,7 +555,7 @@ uint16 CBattleEntity::ATT()
     }
     else if (this->objtype == TYPE_PET && ((CPetEntity*)this)->getPetType() == PETTYPE_AUTOMATON)
     {
-        ATT += PMaster->GetSkill(SKILL_AME);
+        ATT += (STR() * 3) / 4 + PMaster->GetSkill(SKILL_AME);
         return ATT + (ATT * (m_modStat[MOD_ATTP] + ((CCharEntity*)PMaster)->PMeritPoints->GetMeritValue(MERIT_OPTIMIZATION, (CCharEntity*)PMaster)) / 100) +
             dsp_min((ATT * m_modStat[MOD_FOOD_ATTP] / 100), m_modStat[MOD_FOOD_ATT_CAP]);
     }
