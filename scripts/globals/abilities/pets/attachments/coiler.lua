@@ -15,6 +15,7 @@ require("scripts/globals/status");
 -----------------------------------
 
 function onManeuverGain(player,maneuvers)
+local pet = player:getPet();
 local power = 0;
 local thunder = player:getEffectsCount(EFFECT_THUNDER_MANEUVER);
 if (thunder == 1) then
@@ -33,6 +34,7 @@ pet:addMod(MOD_DOUBLE_ATTACK, power);
 end
 
 function onManeuverLose(player,maneuvers)
+local pet = player:getPet();
 local power = 0;
 local thunder = player:getEffectsCount(EFFECT_THUNDER_MANEUVER);
 local newthunder = thunder - 1;
