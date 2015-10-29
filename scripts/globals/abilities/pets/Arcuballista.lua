@@ -2,11 +2,11 @@
 -- Arcuballista
 -- Deals a ranged attack to a single target.
 -- Damage Varries with TP
--- 100% TP - 2.5
+-- 100% TP - 1
 -- 200% TP - 3.0
--- 300% TP - 4.0
+-- 300% TP - 6.0
 
--- TP Mods unknown
+-- TP Mods: DEX: 50%
 ---------------------------------------------------
 
 require("/scripts/globals/settings");
@@ -20,18 +20,22 @@ function onMobSkillCheck(target,mob,skill)
 end;
 
 function onPetAbility(target, pet, skill)
+    local basemod = 6;
     local numhits = 1;
-    local accmod = 1;
-	local str_wsc = 0.5;
+	local attmod = 1;
+    local accmod = 100;
+	local defignore = 1;
+	local str_wsc = 0;
 	local dex_wsc = 0.5;
 	local agi_wsc = 0;
 	local vit_wsc = 0;
+	local mnd_wsc = 0;	
 	skill:setSkillchain(192);
 	
 
 
 	
-	local info = AutoRangedMove(pet,target,skill,numhits,accmod,str_wsc,dex_wsc,agi_wsc,vit_wsc,TP_DMG_BONUS,2.5,3,4);
+	local info = AutoRangedMove(pet,target,skill,basemod,numhits,attmod,accmod,defignore,str_wsc,dex_wsc,agi_wsc,vit_wsc,mnd_wsc,TP_DMG_BONUS,1,3,6);
  
     local dmg = MobFinalAdjustments(info.dmg,pet,skill,target,MOBSKILL_RANGED,MOBPARAM_PIERCE,info.hitslanded);
 	

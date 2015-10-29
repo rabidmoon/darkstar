@@ -16,15 +16,18 @@ function onMobSkillCheck(target,mob,skill)
 end;
 
 function onPetAbility(target, pet, skill)
+    local basemod = 1;
     local numhits = 1;
-    local accmod = 1;
+	local attmod = 1;
+    local accmod = 0;
+	local defignore = 1;
 	local str_wsc = 0;
-	local dex_wsc = 0.5;
+	local dex_wsc = 0.75;
 	local agi_wsc = 0;
 	local vit_wsc = 0;
-
+	local mnd_wsc = 0;
 	
-	local info = AutoRangedMove(pet,target,skill,numhits,accmod,str_wsc,dex_wsc,agi_wsc,vit_wsc,TP_NO_EFFECT);
+	local info = AutoRangedMove(pet,target,skill,basemod,numhits,attmod,accmod,defignore,str_wsc,dex_wsc,agi_wsc,vit_wsc,mnd_wsc,TP_NO_EFFECT,1,1,1);
  
     local dmg = MobFinalAdjustments(info.dmg,pet,skill,target,MOBSKILL_RANGED,MOBPARAM_PIERCE,info.hitslanded);
 	
@@ -35,4 +38,5 @@ function onPetAbility(target, pet, skill)
 
     target:delHP(dmg);
     return dmg;
+
 end;

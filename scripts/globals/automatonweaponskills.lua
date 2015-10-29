@@ -101,7 +101,7 @@ SC_GRAVITATION = 11;
 SC_DARK = 12;
 SC_LIGHT = 13;
 
-function AutoRangedMove(mob,target,skill,numberofhits,accmod,str_wsc,dex_wsc,agi_wsc,vit_wsc,tpeffect,mtp000,mtp150,mtp300,offcratiomod)
+function AutoRangedMove(mob,target,skill,basemod,numhits,attmod,accmod,defignore,str_wsc,dex_wsc,agi_wsc,vit_wsc,mnd_wsc,tpeffect,mtp000,mtp150,mtp300,offcratiomod)
     local returninfo = {};
 
     --get dstr (bias to monsters, so no fSTR)
@@ -126,12 +126,14 @@ function AutoRangedMove(mob,target,skill,numberofhits,accmod,str_wsc,dex_wsc,agi
 		fstr2 = ((dstr+13)/2);
 	end	
 	
+	
 	-- Apply the fstr1 caps
 	if (fstr2<(7+((weaponbase/9)*2)*(-2))) then
 		fstr2 = (weaponbase/9)*(-1);
 	elseif (fstr2>((((weaponbase/9)*2)+14)*2)) then
 		fstr2 = ((((weaponbase/9)*2)+14)*2);
 	end
+
 	
 
     local lvluser = mob:getMainLvl();
@@ -142,33 +144,67 @@ function AutoRangedMove(mob,target,skill,numberofhits,accmod,str_wsc,dex_wsc,agi
 	
 	-- Calculate WSC
 	local wsc = (mob:getStat(MOD_STR) * str_wsc) + (mob:getStat(MOD_DEX) * dex_wsc) +
-		 (mob:getStat(MOD_VIT) * vit_wsc) + (mob:getStat(MOD_AGI) * agi_wsc);
+		 (mob:getStat(MOD_VIT) * vit_wsc) + (mob:getStat(MOD_AGI) * agi_wsc) +
+		 (mob:getStat(MOD_MND) * mnd_wsc);
 	
 	
     --apply WSC
-    local base = mob:getWeaponDmg() + fstr2 + wsc; 
+    local base = (mob:getRangedDmg() * basemod) + fstr2 + wsc; 
     if (base < 1) then
         base = 1;
     end
+	
+	print("Calculated WSC");
+	print(wsc);
+	print("Final FSTR2");
+	print(fstr2);
+	print("Weapon Bas Damage");
+	print(weaponbase);
+	print("Final Base Damage");
+	print(base);
 
     --work out and cap ratio
     if (offcratiomod == nil) then -- default to attack. Pretty much every physical mobskill will use this, Cannonball being the exception.
-        offcratiomod = mob:getStat(MOD_ATT);
+        offcratiomod = (mob:getStat(MOD_ATT) * attmod);
         -- print ("Nothing passed, defaulting to attack");
     end;
     local ratio = offcratiomod/target:getStat(MOD_DEF);
-    ratio = utils.clamp(ratio, 0, 2);
+    ratio = utils.clamp(ratio, 0, 3);
+    print("pDIF before correction");
+	print(ratio);
+	
+	
 
     local lvldiff = lvluser - lvltarget;
-    if lvldiff < 0 then
+    if (lvldiff >= 0) then
         lvldiff = 0;
     end;
 
-    ratio = ratio + lvldiff * 0.05;
-    ratio = utils.clamp(ratio, 0, 4);
+    ratio = ratio + (lvldiff * 0.025);
+    ratio = utils.clamp(ratio, 0, 3);
+	
+	-- special circumstance for armor piercer
+	if (defignore < 1) then
+	local defratio = offcratiomod/(target:getStat(MOD_DEF) * defignore);
+	defratio = defratio + (lvldiff * 0.025);
+	defratio = utils.clamp(defratio, 0, 6); -- amount of defense ignored cannot cause the ratio to be more than 6.0
+	ratio = ratio + (defratio - ratio);
+	end
     
+    print("Pdif calculation Corrected");
+	print(ratio);
+	
+	
+	local tp = mob:getTP();
+	
     --work out hit rate ignore level difference for now
-    local hitrate = (((acc*accmod) - eva) / 2 ) + 75;
+   local hitrate = acc + accmod;
+	
+	if (tpeffect==TP_ACC_VARIES) then
+		hitrate = hitrate + AutoAccBonus(tp, mtp000, mtp150, mtp300);  
+	end   
+
+    hitrate = ((hitrate - eva) / 2 ) + 75;	
 
     -- printf("acc: %f, eva: %f, hitrate: %f", acc, eva, hitrate);
     if (hitrate > 95) then
@@ -185,7 +221,7 @@ function AutoRangedMove(mob,target,skill,numberofhits,accmod,str_wsc,dex_wsc,agi
     end
 -- change to get stats
     
-    local tp = mob:getTP();
+
 
     --apply ftp (assumes 1~3 scalar linear mod)
     if (tpeffect==TP_DMG_BONUS) then
@@ -195,6 +231,13 @@ function AutoRangedMove(mob,target,skill,numberofhits,accmod,str_wsc,dex_wsc,agi
 	if (tpeffect==TP_ATK_VARIES) then
         hitdamage = hitdamage * AutoIgnoredDef(skill:getTP(), mtp000, mtp150, mtp300);
     end
+	
+	if (tpeffect==TP_NO_EFFECT) then
+        hitdamage = hitdamage * 1;
+    end
+	
+	print("Final Damage before pDIF");
+	print(hitdamage);
 
     --work out min and max cRatio
     local maxRatio = 1;
@@ -257,7 +300,7 @@ function AutoRangedMove(mob,target,skill,numberofhits,accmod,str_wsc,dex_wsc,agi
         finaldmg = finaldmg + hitdamage * pdif;
         hitslanded = hitslanded + 1;
     end
-    while (hitsdone < numberofhits) do
+    while (hitsdone < numhits) do
         chance = math.random();
         if ((chance*100)<=hitrate) then --it hit
             pdif = math.random((minRatio*1000),(maxRatio*1000)) --generate random PDIF
@@ -304,7 +347,7 @@ end;
 -- if TP_ATK_VARIES -> three values are attack multiplier (1.5x 0.5x etc)
 -- if TP_DMG_VARIES -> three values are
 
-function AutoPhysicalMove(mob,target,skill,numberofhits,accmod,str_wsc,dex_wsc,agi_wsc,vit_wsc,tpeffect,mtp000,mtp150,mtp300,offcratiomod)
+function AutoPhysicalMove(mob,target,skill,basemod,numhits,attmod,accmod,str_wsc,dex_wsc,agi_wsc,vit_wsc,mnd_wsc,tpeffect,mtp000,mtp150,mtp300,offcratiomod)
     local returninfo = {};
 
     --get dstr (bias to monsters, so no fSTR)
@@ -345,34 +388,45 @@ function AutoPhysicalMove(mob,target,skill,numberofhits,accmod,str_wsc,dex_wsc,a
 	
 	-- Calculate WSC
 	local wsc = (mob:getStat(MOD_STR) * str_wsc) + (mob:getStat(MOD_DEX) * dex_wsc) +
-		 (mob:getStat(MOD_VIT) * vit_wsc) + (mob:getStat(MOD_AGI) * agi_wsc);
+		 (mob:getStat(MOD_VIT) * vit_wsc) + (mob:getStat(MOD_AGI) * agi_wsc) +
+		 (mob:getStat(MOD_MND) * mnd_wsc);
 	
 	
     --apply WSC
-    local base = mob:getWeaponDmg() + fstr1 + wsc; 
+    local base = (mob:getWeaponDmg() * basemod) + fstr1 + wsc; 
     if (base < 1) then
         base = 1;
     end
 
     --work out and cap ratio
     if (offcratiomod == nil) then -- default to attack. Pretty much every physical mobskill will use this, Cannonball being the exception.
-        offcratiomod = mob:getStat(MOD_ATT);
+        offcratiomod = (mob:getStat(MOD_ATT) * attmod);
         -- print ("Nothing passed, defaulting to attack");
     end;
     local ratio = offcratiomod/target:getStat(MOD_DEF);
-    ratio = utils.clamp(ratio, 0, 2);
+    ratio = utils.clamp(ratio, 0, 2.25);
 
     local lvldiff = lvluser - lvltarget;
-    if lvldiff < 0 then
+    if (lvldiff >= 0) then
         lvldiff = 0;
     end;
 
     ratio = ratio + lvldiff * 0.05;
-    ratio = utils.clamp(ratio, 0, 4);
+    ratio = utils.clamp(ratio, 0, 2.25);
+	
+	
+	local tp = mob:getTP();
     
     --work out hit rate ignore level difference for now
-    local hitrate = (((acc*accmod) - eva) / 2 ) + 75;
+	local hitrate = acc + accmod;
+	
+	if (tpeffect==TP_ACC_VARIES) then
+		hitrate = hitrate + AutoAccBonus(tp, mtp000, mtp150, mtp300);  
+	end   
 
+    hitrate = ((hitrate - eva) / 2 ) + 75;	
+
+	
     -- printf("acc: %f, eva: %f, hitrate: %f", acc, eva, hitrate);
     if (hitrate > 95) then
         hitrate = 95;
@@ -388,7 +442,7 @@ function AutoPhysicalMove(mob,target,skill,numberofhits,accmod,str_wsc,dex_wsc,a
     end
 -- change to get stats
 
-   local tp = mob:getTP();
+
 
     --apply ftp (assumes 1~3 scalar linear mod)
     if (tpeffect==TP_DMG_BONUS) then
@@ -398,6 +452,10 @@ function AutoPhysicalMove(mob,target,skill,numberofhits,accmod,str_wsc,dex_wsc,a
 	if (tpeffect==TP_ATK_VARIES) then
         hitdamage = hitdamage * AutoIgnoredDef(skill:getTP(), mtp000, mtp150, mtp300);
     end
+
+    if (tpeffect==TP_NO_EFFECT) then
+        hitdamage = hitdamage * 1;
+    end	
 
 
     --work out min and max cRatio
@@ -460,7 +518,7 @@ function AutoPhysicalMove(mob,target,skill,numberofhits,accmod,str_wsc,dex_wsc,a
         finaldmg = finaldmg + hitdamage * pdif;
         hitslanded = hitslanded + 1;
     end
-    while (hitsdone < numberofhits) do
+    while (hitsdone < numhits) do
         chance = math.random();
         if ((chance*100)<=hitrate) then --it hit
             pdif = math.random((minRatio*1000),(maxRatio*1000)) --generate random PDIF
@@ -912,10 +970,27 @@ function fTP(tp,ftp1,ftp2,ftp3)
 		--generate a straight line between ftp2 and ftp3 and find point @ tp
 		return ftp2 + ( ((ftp3-ftp2)/100) * (tp-200));
 	else
-		print("fTP error: TP value is", tp);
+		return ftp1;
 	end
 	return 1; --no ftp mod
 end;
+
+
+function AutoAccBonus(tp,ftp1,ftp2,ftp3)
+	if (tp>=100 and tp<200) then
+		return ftp1 + ( ((ftp2-ftp1)/100) * (tp-100));
+	elseif (tp>=200 and tp<=300) then
+		--generate a straight line between ftp2 and ftp3 and find point @ tp
+		return ftp2 + ( ((ftp3-ftp2)/100) * (tp-200));
+	else
+		return ftp1;
+	end
+	return 1; --no ftp mod
+end;
+
+
+
+
 
 function getAlpha(level)
     alpha = 1.00;
