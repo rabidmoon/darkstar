@@ -68,7 +68,7 @@ CAIAutomatonDummy::CAIAutomatonDummy(CPetEntity* PPet)
 	m_magicElementalRecast = 0;
 	m_magicElementCast = 0;
 	
-	m_rangedRecast = 18000;
+	m_rangedRecast = 2000;
 	m_attachmentRecast = 5000;
 	 
 	m_damageGauge = 0;
@@ -188,7 +188,7 @@ void CAIAutomatonDummy::ActionSpawn()
 	
 // Attack Fix for missing calculations for STR which isn't added to battleutils.cpp
 
-    strfix = ((m_PPet->getMod(MOD_STR) * 3) / 4);
+    // strfix = ((m_PPet->getModifier(MOD_STR) * 3) / 4);
 
 
 //Attachment Stats are built into the core for now TODO move to lua script on activate
@@ -419,28 +419,7 @@ void CAIAutomatonDummy::ActionAttack()
 	float currentDistance = distance(m_PPet->loc.p, m_PBattleTarget->loc.p);
 	
 	
-	
-	
-	// Drum Magazine
-	if (m_PPet->PMaster->StatusEffectContainer->GetEffectsCount(EFFECT_WIND_MANEUVER) == 0 && m_PPet->hasAttachment(8517)) 
-		{
-		m_rangedRecast = 18000;
-		}
-	if (m_PPet->PMaster->StatusEffectContainer->GetEffectsCount(EFFECT_WIND_MANEUVER) == 1 && m_PPet->hasAttachment(8517)) 
-		{
-		m_rangedRecast = 14000;
-		}	
-	if (m_PPet->PMaster->StatusEffectContainer->GetEffectsCount(EFFECT_WIND_MANEUVER) == 2 && m_PPet->hasAttachment(8517)) 
-		{
-		m_rangedRecast = 12000;
-		}	
-	if (m_PPet->PMaster->StatusEffectContainer->GetEffectsCount(EFFECT_WIND_MANEUVER) == 3 && m_PPet->hasAttachment(8517)) 
-		{
-		m_rangedRecast = 5000;
-		}
-	
-	
-	 if (m_PPet->getFrame() == FRAME_SHARPSHOT)
+    if (m_PPet->getFrame() == FRAME_SHARPSHOT)
         {
 			if (m_Tick >= m_LastRangedTime + m_rangedRecast)
 			   {
@@ -462,13 +441,38 @@ void CAIAutomatonDummy::ActionAttack()
                         puppetutils::TrySkillUP((CAutomatonEntity*)m_PPet, SKILL_ARA, m_PBattleTarget->GetMLevel());
                     }
 				m_LastRangedTime = m_Tick;
+				m_rangedRecast = 18000;
                 return;	
 				}
 				
 
 
-			}
-		
+		}
+	
+	
+
+	
+   	// Drum Magazine
+	if (m_PPet->PMaster->StatusEffectContainer->GetEffectsCount(EFFECT_WIND_MANEUVER) == 0 && m_PPet->hasAttachment(8517)) 
+		{
+		m_rangedRecast = 18000;
+		}
+	if (m_PPet->PMaster->StatusEffectContainer->GetEffectsCount(EFFECT_WIND_MANEUVER) == 1 && m_PPet->hasAttachment(8517)) 
+		{
+		m_rangedRecast = 14000;
+		}	
+	if (m_PPet->PMaster->StatusEffectContainer->GetEffectsCount(EFFECT_WIND_MANEUVER) == 2 && m_PPet->hasAttachment(8517)) 
+		{
+		m_rangedRecast = 12000;
+		}	
+	if (m_PPet->PMaster->StatusEffectContainer->GetEffectsCount(EFFECT_WIND_MANEUVER) == 3 && m_PPet->hasAttachment(8517)) 
+		{
+		m_rangedRecast = 5000;
+		}
+
+
+
+	
 		
         // Attachments and WS
 	if (m_Tick >= m_LastAttachmentTime + m_attachmentRecast)  // 5 second check for both Attachments and TP
@@ -713,8 +717,21 @@ void CAIAutomatonDummy::ActionAttack()
     // Create temporary distance calculation to keep specific Automatons at a distance.  
 	// This Hack is only temporary so Sharpshot and Harlequin stay where they are deployed		
     //go to target if its too far away
-	    if (currentDistance > 15 && m_PPet->speed != 0 && m_PPet->getHead() != HEAD_VALOREDGE)
+	if (currentDistance > 15 && m_PPet->speed != 0 && m_PPet->getHead() == HEAD_SHARPSHOT)
     {
+	    ShowMessage("\t\t - " CL_GREEN"DEBUG:  SHARPSHOT STANDING BACK" CL_RESET"\n");
+        if (m_PPathFind->PathAround(m_PBattleTarget->loc.p, 2.0f, PATHFLAG_RUN | PATHFLAG_WALLHACK))
+        {
+            m_PPathFind->FollowPath();
+
+            // recalculate
+            currentDistance = distance(m_PPet->loc.p, m_PBattleTarget->loc.p);
+        }
+    }
+	
+    if (currentDistance > 15 && m_PPet->speed != 0 && m_PPet->getHead() == HEAD_HARLEQUIN)
+    {
+	    ShowMessage("\t\t - " CL_GREEN"DEBUG:  HARLEQUIN STANDING BACK" CL_RESET"\n");
         if (m_PPathFind->PathAround(m_PBattleTarget->loc.p, 2.0f, PATHFLAG_RUN | PATHFLAG_WALLHACK))
         {
             m_PPathFind->FollowPath();
@@ -725,8 +742,9 @@ void CAIAutomatonDummy::ActionAttack()
     }
 	
 	
-	if (currentDistance > m_PBattleTarget->m_ModelSize && m_PPet->speed != 0 && m_PPet->getHead() == HEAD_VALOREDGE || m_PPet->health.mp < 8)
+	if (currentDistance > m_PBattleTarget->m_ModelSize && m_PPet->speed != 0 && m_PPet->getHead() == HEAD_VALOREDGE)
     {
+	    ShowMessage("\t\t - " CL_GREEN"DEBUG:  VALOREDGE MOVING TO TARGET" CL_RESET"\n");
         if (m_PPathFind->PathAround(m_PBattleTarget->loc.p, 2.0f, PATHFLAG_RUN | PATHFLAG_WALLHACK))
         {
             m_PPathFind->FollowPath();
@@ -1283,6 +1301,7 @@ void CAIAutomatonDummy::TransitionBack(bool skipWait /*= false*/)
 
 
 // Harlequin Automaton AI
+
 
 int16 CAIAutomatonDummy::HarleAttack()
 {
