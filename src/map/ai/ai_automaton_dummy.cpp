@@ -719,7 +719,6 @@ void CAIAutomatonDummy::ActionAttack()
     //go to target if its too far away
 	if (currentDistance > 15 && m_PPet->speed != 0 && m_PPet->getHead() == HEAD_SHARPSHOT)
     {
-	    ShowMessage("\t\t - " CL_GREEN"DEBUG:  SHARPSHOT STANDING BACK" CL_RESET"\n");
         if (m_PPathFind->PathAround(m_PBattleTarget->loc.p, 2.0f, PATHFLAG_RUN | PATHFLAG_WALLHACK))
         {
             m_PPathFind->FollowPath();
@@ -731,7 +730,6 @@ void CAIAutomatonDummy::ActionAttack()
 	
     if (currentDistance > 15 && m_PPet->speed != 0 && m_PPet->getHead() == HEAD_HARLEQUIN)
     {
-	    ShowMessage("\t\t - " CL_GREEN"DEBUG:  HARLEQUIN STANDING BACK" CL_RESET"\n");
         if (m_PPathFind->PathAround(m_PBattleTarget->loc.p, 2.0f, PATHFLAG_RUN | PATHFLAG_WALLHACK))
         {
             m_PPathFind->FollowPath();
@@ -742,9 +740,22 @@ void CAIAutomatonDummy::ActionAttack()
     }
 	
 	
+	if (currentDistance > m_PBattleTarget->m_ModelSize && m_PPet->speed != 0 && m_PPet->getHead() == HEAD_HARLEQUIN && m_PPet->health.mp < 8)
+    {
+        if (m_PPathFind->PathAround(m_PBattleTarget->loc.p, 2.0f, PATHFLAG_RUN | PATHFLAG_WALLHACK))
+        {
+            m_PPathFind->FollowPath();
+
+            // recalculate
+            currentDistance = distance(m_PPet->loc.p, m_PBattleTarget->loc.p);
+        }
+    }
+	
+	
+	
+	
 	if (currentDistance > m_PBattleTarget->m_ModelSize && m_PPet->speed != 0 && m_PPet->getHead() == HEAD_VALOREDGE)
     {
-	    ShowMessage("\t\t - " CL_GREEN"DEBUG:  VALOREDGE MOVING TO TARGET" CL_RESET"\n");
         if (m_PPathFind->PathAround(m_PBattleTarget->loc.p, 2.0f, PATHFLAG_RUN | PATHFLAG_WALLHACK))
         {
             m_PPathFind->FollowPath();
