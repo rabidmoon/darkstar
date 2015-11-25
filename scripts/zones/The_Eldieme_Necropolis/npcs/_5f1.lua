@@ -7,6 +7,7 @@ package.loaded["scripts/zones/The_Eldieme_Necropolis/TextIDs"] = nil;
 -----------------------------------
 
 require("scripts/zones/The_Eldieme_Necropolis/TextIDs");
+require("scripts/globals/keyitems");
 
 -----------------------------------
 -- onTrade Action
