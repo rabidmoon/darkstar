@@ -110,7 +110,7 @@ function onEventFinish(player,csid,option)
 			end
 
 			player:tradeComplete();
-			player:addItem(17423);
+			player:addItem(17572);
 			player:messageSpecial(ITEM_OBTAINED, 17572); -- Casting Wand
 			player:needToZone(true);
 			player:setVar("theThreeMagiSupport",0);
