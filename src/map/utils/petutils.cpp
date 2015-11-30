@@ -1387,8 +1387,16 @@ namespace petutils
                 break;
             }
             //TEMP: should be MLevel when unsummoned, and PUP level when summoned
-            PPet->SetMLevel(PMaster->GetMLevel());
-            PPet->SetSLevel(PMaster->GetMLevel() / 2);
+			
+            if (PMaster->GetMJob() == JOB_PUP){
+                PPet->SetMLevel(PMaster->GetMLevel());
+				PPet->SetSLevel(PMaster->GetMLevel() / 2);
+            }
+            else if (PMaster->GetSJob() == JOB_PUP){
+                PPet->SetMLevel(PMaster->GetSLevel());
+				PPet->SetSLevel(PMaster->GetSLevel() / 2);
+            }
+            
             LoadAutomatonStats((CCharEntity*)PMaster, PPet, g_PPetList.at(PetID)); //temp
         }
 
