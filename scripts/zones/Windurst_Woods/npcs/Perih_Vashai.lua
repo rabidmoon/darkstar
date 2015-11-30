@@ -49,6 +49,10 @@ function onTrigger(player,npc)
 	local LvL = player:getMainLvl();
 	local Job = player:getMainJob();
 	
+	local wsnm = player:getVar("EMPYREAL_ARROW");
+	local mainlvl = player:getMainLvl();
+	local skill = player:getSkillLevel(25);
+	
 	-- COP mission
 	if(player:getCurrentMission(COP) == THREE_PATHS and player:getVar("COP_Louverance_s_Path") == 1) then
 	        player:startEvent(0x02AE);		
@@ -91,7 +95,19 @@ function onTrigger(player,npc)
 		player:startEvent(0x021e);	-- during RNG AF3			
 	elseif(UnbridledPassionCS == 7) then
 		player:startEvent(0x0222, 0, 14099); -- complete RNG AF3		
-		
+	elseif (mainlvl >= 71 and skill >= 250 and player:getQuestStatus(WINDURST,FROM_SAPLINGS_GROW) ~= QUEST_ACCEPTED) then
+	   player:PrintToPlayer("Perih Vashai : Empyreal Arrow?  Use it 100 times and then come see me afterwards.",0x0D);
+	   player:setVar("EMPYREAL_ARROW",100);
+	   player:addQuest(WINDURST,FROM_SAPLINGS_GROW);
+	elseif (wsnm <= 0 and player:getQuestStatus(WINDURST,FROM_SAPLINGS_GROW) == true) then
+	   player:PrintToPlayer("Perih Vashai :  Grrreat!!.  Travel to Cape Terrigan and fight the monster that dwells there.",0x0D);
+	   player:addKeyItem(MAP_TO_THE_ANNALS_OF_TRUTH);
+ 	   player:messageSpecial(MAP_TO_THE_ANNALS_OF_TRUTH);
+	   player:setVar("EMPYREAL_ARROW_WIN",1);
+	elseif (player:hasKeyItem(ANNALS_OF_TRUTH) and player:getVar("EMPYREAL_ARROW_WIN") == 2) then
+	   player:PrintToPlayer("Perih Vashai : You have done well.  Empyreal Arrow is now at full power!",0x0D);
+	   player:delKeyItem(ANNALS_OF_TRUTH);
+	   player:completeQuest(WINDURST,FROM_SAPLINGS_GROW);	
 	-- standard dialog
 	else
 		player:startEvent(0x0152);
