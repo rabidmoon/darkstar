@@ -215,56 +215,68 @@ int32 login_parse(int32 fd)
                 return -1;
             }
 
-            if (Sql_NumRows(SqlHandle) == 0)
-            {
-                //creating new account_id
-                char *fmtQuery = "SELECT max(accounts.id) FROM accounts;";
+			if (Sql_NumRows(SqlHandle) == 0)
+			{
 
-                uint32 accid = 0;
+				const int8 accmax = (Sql_Query(SqlHandle, "SELECT COUNT(*) FROM accounts"));
 
-                if (Sql_Query(SqlHandle, fmtQuery) != SQL_ERROR  && Sql_NumRows(SqlHandle) != 0)
-                {
-                    Sql_NextRow(SqlHandle);
+				//creating new account_id
 
-                    accid = Sql_GetUIntData(SqlHandle, 0) + 1;
-                }
-                else {
-                    WBUFB(session[fd]->wdata, 0) = LOGIN_ERROR_CREATE;
-                    WFIFOSET(fd, 1);
-                    do_close_login(sd, fd);
-                    return -1;
-                }
+				char *fmtQuery = "SELECT max(accounts.id) FROM accounts;";
 
-                accid = (accid < 1000 ? 1000 : accid);
+				uint32 accid = 0;
 
-                //creating new account
-                time_t timecreate;
-                tm*	   timecreateinfo;
+				if (Sql_Query(SqlHandle, fmtQuery) != SQL_ERROR  && Sql_NumRows(SqlHandle) != 0)
+				{
+					Sql_NextRow(SqlHandle);
 
-                time(&timecreate);
-                timecreateinfo = localtime(&timecreate);
+					accid = Sql_GetUIntData(SqlHandle, 0) + 1;
+				}
+				else {
+					WBUFB(session[fd]->wdata, 0) = LOGIN_ERROR_CREATE;
+					WFIFOSET(fd, 1);
+					do_close_login(sd, fd);
+					return -1;
+				}
 
-                char strtimecreate[128];
-                strftime(strtimecreate, sizeof(strtimecreate), "%Y:%m:%d %H:%M:%S", timecreateinfo);
-                fmtQuery = "INSERT INTO accounts(id,login,password,timecreate,timelastmodify,status,priv)\
+				accid = (accid < 1000 ? 1000 : accid);
+
+				//creating new account
+				if (accmax < 6)
+				{
+					time_t timecreate;
+					tm*	   timecreateinfo;
+
+					time(&timecreate);
+					timecreateinfo = localtime(&timecreate);
+
+					char strtimecreate[128];
+					strftime(strtimecreate, sizeof(strtimecreate), "%Y:%m:%d %H:%M:%S", timecreateinfo);
+					fmtQuery = "INSERT INTO accounts(id,login,password,timecreate,timelastmodify,status,priv)\
 									   VALUES(%d,'%s',PASSWORD('%s'),'%s',NULL,%d,%d);";
 
-                if (Sql_Query(SqlHandle, fmtQuery, accid, name.c_str(), password.c_str(),
-                    strtimecreate, ACCST_NORMAL, ACCPRIV_USER) == SQL_ERROR)
-                {
-                    WBUFB(session[fd]->wdata, 0) = LOGIN_ERROR_CREATE;
-                    WFIFOSET(fd, 1);
-                    do_close_login(sd, fd);
-                    return -1;
-                }
 
-                ShowStatus(CL_WHITE"login_parse" CL_RESET": account<" CL_WHITE"%s" CL_RESET"> was created\n", name.c_str());
-                WBUFB(session[fd]->wdata, 0) = LOGIN_SUCCESS_CREATE;
-                WFIFOSET(fd, 1);
-                do_close_login(sd, fd);
-            }
+					if (Sql_Query(SqlHandle, fmtQuery, accid, name.c_str(), password.c_str(),
+						strtimecreate, ACCST_NORMAL, ACCPRIV_USER) == SQL_ERROR)
+					{
+						WBUFB(session[fd]->wdata, 0) = LOGIN_ERROR_CREATE;
+						WFIFOSET(fd, 1);
+						do_close_login(sd, fd);
+						return -1;
+					}
+
+
+
+
+
+					ShowStatus(CL_WHITE"login_parse" CL_RESET": account<" CL_WHITE"%s" CL_RESET"> was created\n", name.c_str());
+					WBUFB(session[fd]->wdata, 0) = LOGIN_SUCCESS_CREATE;
+					WFIFOSET(fd, 1);
+					do_close_login(sd, fd);
+				}
+			}
             else {
-                ShowWarning(CL_WHITE"login_parse" CL_RESET": account<" CL_WHITE"%s" CL_RESET"> already exists\n", name.c_str());
+                ShowWarning(CL_WHITE"login_parse" CL_RESET": account<" CL_WHITE"%s" CL_RESET"> already exists or max login reached\n", name.c_str());
                 WBUFB(session[fd]->wdata, 0) = LOGIN_ERROR_CREATE;
                 WFIFOSET(fd, 1);
                 do_close_login(sd, fd);

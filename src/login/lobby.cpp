@@ -308,8 +308,18 @@ int32 lobbydata_parse(int32 fd)
             int8 session_key[sizeof(key3) * 2 + 1];
             bin2hex(session_key, key3, sizeof(key3));
 
-            fmtQuery = "INSERT INTO accounts_sessions(accid,charid,session_key,server_addr,server_port,client_addr) VALUES(%u,%u,x'%s',%u,%u,%u)";
-
+			// My Test to Limit accounts for Beta testing
+	
+			const int8 acclimit = (Sql_Query(SqlHandle, "SELECT COUNT(*) FROM accounts_sessions"));
+		
+			if (acclimit < 26)
+			{
+				fmtQuery = "INSERT INTO accounts_sessions(accid,charid,session_key,server_addr,server_port,client_addr) VALUES(%u,%u,x'%s',%u,%u,%u)";
+			}
+			else
+			{
+			ShowError(CL_RED"recv_parse: Maximum Logins reached (25)\n" CL_RESET);
+		    }
             if (Sql_Query(SqlHandle, fmtQuery, sd->accid, charid, session_key, ZoneIP, ZonePort, sd->client_addr) == SQL_ERROR)
             {
                 //отправляем клиенту сообщение об ошибке
