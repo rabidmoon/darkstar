@@ -33,6 +33,9 @@ function onTrigger(player,npc)
 	
 	mLvl = player:getMainLvl();
 	mJob = player:getMainJob();
+	local wsnm = player:getVar("BLADE_KU");
+    local mainlvl = player:getMainLvl();
+    local skill = player:getSkillLevel(9);
 	
 	if (player:getQuestStatus(BASTOK,AYAME_AND_KAEDE) == QUEST_ACCEPTED) then
 		if (player:getVar("AyameAndKaede_Event") == 3) then
@@ -52,6 +55,19 @@ function onTrigger(player,npc)
 		player:startEvent(0x0089);
 	elseif (player:getVar("trueWillCS") == 1) then
 		player:startEvent(0x008a);
+	elseif (mainlvl >= 71 and skill >= 250 and player:getQuestStatus(OUTLANDS,BUGI_SODEN) ~= QUEST_ACCEPTED) then
+	   player:PrintToPlayer("Ryoma : Blade: Ku eh?  Use it 100 times and then come see me afterwards.",0x0D);
+	   player:setVar("BLADE_KU",100);
+	   player:addQuest(OUTLANDS,BUGI_SODEN);
+    elseif (wsnm <= 0 and player:getQuestStatus(OUTLANDS,BUGI_SODEN) == true) then
+	   player:PrintToPlayer("Ryoma : Good Job.  Go to the Labrynth of Onzozo and fight the monster that dwells there.",0x0D);
+	   player:addKeyItem(MAP_TO_THE_ANNALS_OF_TRUTH);
+ 	   player:messageSpecial(MAP_TO_THE_ANNALS_OF_TRUTH);
+	   player:setVar("BLADE_KU_WIN",1);
+    elseif (player:hasKeyItem(ANNALS_OF_TRUTH) and player:getVar("BLADE_KU_WIN") == 2) then
+	   player:PrintToPlayer("Ryoma : You have done well.  Blade: Ku is now at full power!",0x0D);
+	   player:delKeyItem(ANNALS_OF_TRUTH);
+	   player:completeQuest(OUTLANDS,BUGI_SODEN);
 	else
 		player:startEvent(0x005e);
 	end

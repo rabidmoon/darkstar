@@ -17,6 +17,7 @@
 require("scripts/globals/status");
 require("scripts/globals/settings");
 require("scripts/globals/weaponskills");
+require("scripts/globals/quests");
 -----------------------------------
 
 function onUseWeaponSkill(player, target, wsID)
@@ -38,10 +39,42 @@ function onUseWeaponSkill(player, target, wsID)
 
 	local damage, criticalHit, tpHits, extraHits = doPhysicalWeaponskill(player, target, params);
 
+		
+	local wsnm = player:getVar("KASHA");
+	local unlock = 0;
+    if (player:hasCompleteQuest(OUTLANDS,THE_POTENTIAL_WITHIN) == true) then -- Tachi:Kasha Quest is done
+	unlock = 1;
+	elseif (player:getQuestStatus(OUTLANDS,THE_POTENTIAL_WITHIN) == QUEST_ACCEPTED and wsnm > 0) then -- Tachi:Kasha Quest Active
+	unlock = 0.05;
+	wsnm = wsnm - 1;
+	player:setVar("KASHA",wsnm);
+	elseif (player:getQuestStatus(OUTLANDS,THE_POTENTIAL_WITHIN) == QUEST_ACCEPTED and wsnm <= 0) then -- Tachi:Kasha powered up
+	unlock = 0.30;
+	else
+	unlock = 0.05;
+	end
+	
+	
+	
+	
+	
 	if damage > 0 and (target:hasStatusEffect(EFFECT_PARALYSIS) == false) then
 		target:addStatusEffect(EFFECT_PARALYSIS, 25, 0, 60);
-	end
-	damage = damage * WEAPON_SKILL_POWER
+	end	
+	
+	if (player:getEquipID(SLOT_MAIN) == 21052 and damage > 0) then
+	unlock = 1.50; -- High Artifact Multiplier
+
+			if (player:getTP() >= 100 and player:getTP() <200) then
+				player:addStatusEffect(EFFECT_AFTERMATH, 20, 0, 20, 0, 13);
+			elseif (player:getTP() >= 200 and player:getTP() <300) then
+				player:addStatusEffect(EFFECT_AFTERMATH, 20, 0, 40, 0, 13);
+			elseif (player:getTP() == 300) then
+				player:addStatusEffect(EFFECT_AFTERMATH, 20, 0, 60, 0, 13);
+			end
+		end
+
+	damage = damage * WEAPON_SKILL_POWER * unlock;
 	return tpHits, extraHits, criticalHit, damage;
 
 end

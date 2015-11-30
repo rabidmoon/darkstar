@@ -68,6 +68,9 @@ function onTrigger(player,npc)
 	local TheHolyCrest = player:getVar("TheHolyCrest_Event");
 	local tatsVar = player:getVar("troubleAtTheSluiceVar");
 	local theRumor = player:getQuestStatus(SANDORIA,THE_RUMOR);
+	local wsnm = player:getVar("SPIRAL_HELL");
+    local mainlvl = player:getMainLvl();
+    local skill = player:getSkillLevel(7);
 
 	npc:wait(-1);
 
@@ -89,6 +92,19 @@ function onTrigger(player,npc)
 		player:startEvent(0x000b);
 	elseif (theRumor == QUEST_COMPLETED) then
 		player:startEvent(0x000e); -- Standard dialog after "The Rumor"
+	elseif (mainlvl >= 71 and skill >= 250 and player:getQuestStatus(SANDORIA,SOULS_IN_SHADOWS) ~= QUEST_ACCEPTED) then
+	   player:PrintToPlayer("Novalmauge : Spiral Hell eh?  Use it 100 times and then come see me afterwards.",0x0D);
+	   player:setVar("SPIRAL_HELL",100);
+	   player:addQuest(SANDORIA,SOULS_IN_SHADOWS);
+    elseif (wsnm <= 0 and player:getQuestStatus(SANDORIA,SOULS_IN_SHADOWS) == true) then
+	   player:PrintToPlayer("Novalmauge :  Good Job.  Go to the Den of Rancor and fight the monster that dwells there.",0x0D);
+	   player:addKeyItem(MAP_TO_THE_ANNALS_OF_TRUTH);
+ 	   player:messageSpecial(MAP_TO_THE_ANNALS_OF_TRUTH);
+	   player:setVar("SPIRAL_HELL_WIN",1);
+    elseif (player:hasKeyItem(ANNALS_OF_TRUTH) and player:getVar("SPIRAL_HELL_WIN") == 2) then
+	   player:PrintToPlayer("Novalmauge : You have done well.  Spiral Hell is now at full power!",0x0D);
+	   player:delKeyItem(ANNALS_OF_TRUTH);
+	   player:completeQuest(SANDORIA,SOULS_IN_SHADOWS);	
 	else
 		player:startEvent(0x000a); -- Standard dialog
 	end

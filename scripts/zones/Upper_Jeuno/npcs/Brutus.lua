@@ -28,11 +28,14 @@ end;
 function onTrigger(player,npc)
 
         local chocoboOnTheLoose = player:getQuestStatus(JEUNO,CHOCOBO_ON_THE_LOOSE);
-            local chocoboOnTheLooseStatus = player:getVar("ChocoboOnTheLoose");
+        local chocoboOnTheLooseStatus = player:getVar("ChocoboOnTheLoose");
         local ChocobosWounds = player:getQuestStatus(JEUNO,CHOCOBO_S_WOUNDS);
         local saveMySon = player:getQuestStatus(JEUNO,SAVE_MY_SON);
         local wingsOfGold = player:getQuestStatus(JEUNO,WINGS_OF_GOLD);
         local scatIntoShadow = player:getQuestStatus(JEUNO,SCATTERED_INTO_SHADOW);
+		local wsnm = player:getVar("DECIMATION");
+        local mainlvl = player:getMainLvl();
+        local skill = player:getSkillLevel(5);
 
         local mLvl = player:getMainLvl();
         local mJob = player:getMainJob();
@@ -102,6 +105,19 @@ function onTrigger(player,npc)
                 player:startEvent(0x0097);
         elseif (player:getQuestStatus(JEUNO,PATH_OF_THE_BEASTMASTER) == QUEST_COMPLETED) then
                 player:startEvent(0x0014);
+		elseif (mainlvl >= 71 and skill >= 240 and player:getQuestStatus(BASTOK,AXE_THE_COMPETITION) ~= QUEST_ACCEPTED) then
+	    player:PrintToPlayer("Brutus : Decimation eh?  Use it 100 times and then come see me afterwards.",0x0D);
+	    player:setVar("DECIMATION",100);
+	    player:addQuest(BASTOK,AXE_THE_COMPETITION);
+        elseif (wsnm <= 0 and player:getQuestStatus(BASTOK,AXE_THE_COMPETITION) == true) then
+	    player:PrintToPlayer("Brutus :  Good Job.  Now go to the Temple of Uggalepih and fight the monster that dwells there.",0x0D);
+	    player:addKeyItem(MAP_TO_THE_ANNALS_OF_TRUTH);
+ 	    player:messageSpecial(MAP_TO_THE_ANNALS_OF_TRUTH);
+	    player:setVar("DECIMATION_WIN",1);
+        elseif (player:hasKeyItem(ANNALS_OF_TRUTH) and player:getVar("DECIMATION_WIN") == 2) then
+	    player:PrintToPlayer("Brutus : You have done well.  Decimation is now at full power!",0x0D);
+	    player:delKeyItem(ANNALS_OF_TRUTH);
+	    player:completeQuest(BASTOK,AXE_THE_COMPETITION);		
         else
                 player:startEvent(0x0042, player:getMainLvl());
         end

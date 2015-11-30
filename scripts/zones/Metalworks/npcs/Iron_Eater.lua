@@ -27,6 +27,9 @@ function onTrigger(player,npc)
 
     local currentMission = player:getCurrentMission(BASTOK);
     local missionStatus = player:getVar("MissionStatus");
+	local wsnm = player:getVar("STEEL_CYCLONE");
+    local mainlvl = player:getMainLvl();
+    local skill = player:getSkillLevel(6);
 
     if (currentMission == THE_FOUR_MUSKETEERS and missionStatus == 0) then -- Four Musketeers
         player:startEvent(0x02cb);
@@ -56,7 +59,20 @@ function onTrigger(player,npc)
         else
             player:startEvent(0x03BD);
         end
-    else
+    elseif (mainlvl >= 71 and skill >= 240 and player:getQuestStatus(BASTOK,THE_WEIGHT_OF_YOUR_LIMITS) ~= QUEST_ACCEPTED) then
+	   player:PrintToPlayer("Iron Eater : Steel Cyclone eh?  Use it 100 times and then come see me afterwards.",0x0D);
+	   player:setVar("STEEL_CYCLONE",100);
+	   player:addQuest(BASTOK,THE_WEIGHT_OF_YOUR_LIMITS);
+    elseif (wsnm <= 0 and player:getQuestStatus(BASTOK,THE_WEIGHT_OF_YOUR_LIMITS) == true) then
+	   player:PrintToPlayer("Iron Eater :  Good Job.  Go to The Sanctuary of Zi'Tah and fight the monster that dwells there.",0x0D);
+	   player:addKeyItem(MAP_TO_THE_ANNALS_OF_TRUTH);
+ 	   player:messageSpecial(MAP_TO_THE_ANNALS_OF_TRUTH);
+	   player:setVar("STEEL_CYCLONE_WIN",1);
+    elseif (player:hasKeyItem(ANNALS_OF_TRUTH) and player:getVar("STEEL_CYCLONE_WIN") == 2) then
+	   player:PrintToPlayer("Iron Eater : You have done well.  Steel Cyclone is now at full power!",0x0D);
+	   player:delKeyItem(ANNALS_OF_TRUTH);
+	   player:completeQuest(BASTOK,THE_WEIGHT_OF_YOUR_LIMITS);
+	else
         player:startEvent(0x025c);
     end
     

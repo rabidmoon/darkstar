@@ -38,6 +38,9 @@ function onTrigger(player,npc)
 	local ASquiresTest = player:getQuestStatus(SANDORIA, A_SQUIRE_S_TEST);
 	local ASquiresTestII = player:getQuestStatus(SANDORIA,A_SQUIRE_S_TEST_II);
 	local AKnightsTest = player:getQuestStatus(SANDORIA, A_KNIGHT_S_TEST);
+	local wsnm = player:getVar("IMPULSE_DRIVE");
+	local mainlvl = player:getMainLvl();
+	local skill = player:getSkillLevel(8);
 
 	if (player:getQuestStatus(SANDORIA,KNIGHT_STALKER) == QUEST_ACCEPTED and player:getVar("KnightStalker_Progress") == 2) then
 		player:startEvent(63); -- DRG AF3 cutscene, doesn't appear to have a follow up.
@@ -81,6 +84,19 @@ function onTrigger(player,npc)
 		else
 			player:startEvent(0x029d);
 		end
+	elseif (mainlvl >= 71 and skill >= 250 and player:getQuestStatus(SANDORIA,METHODS_CREATE_MADNESS) ~= QUEST_ACCEPTED) then
+	   player:PrintToPlayer("Balasiel : Impulse Drive eh?  Use it 100 times and then come see me afterwards.",0x0D);
+	   player:setVar("IMPULSE_DRIVE",100);
+	   player:addQuest(SANDORIA,METHODS_CREATE_MADNESS);
+	elseif (wsnm <= 0 and player:getQuestStatus(SANDORIA,METHODS_CREATE_MADNESS) == true) then
+	   player:PrintToPlayer("Balasiel :  Good Job.  Go to Sea Serpent Grotto and fight the monster that dwells there.",0x0D);
+	   player:addKeyItem(MAP_TO_THE_ANNALS_OF_TRUTH);
+ 	   player:messageSpecial(MAP_TO_THE_ANNALS_OF_TRUTH);
+	   player:setVar("IMPULSE_DRIVE_WIN",1);
+	elseif (player:hasKeyItem(ANNALS_OF_TRUTH) and player:getVar("IMPULSE_DRIVE_WIN") == 2) then
+	   player:PrintToPlayer("Balasiel : You have done well.  Impulse Drive is now at full power!",0x0D);
+	   player:delKeyItem(ANNALS_OF_TRUTH);
+	   player:completeQuest(SANDORIA,METHODS_CREATE_MADNESS);
 	else
 		player:startEvent(0x029b);
 	end

@@ -50,6 +50,9 @@ function onTrigger(player,npc)
 	local theSacredKatana = player:getQuestStatus(OUTLANDS,THE_SACRED_KATANA);
 	local yomiOkuri = player:getQuestStatus(OUTLANDS,YOMI_OKURI);
 	local aThiefinNorg = player:getQuestStatus(OUTLANDS,A_THIEF_IN_NORG);
+	local wsnm = player:getVar("TACHI_KASHA");
+    local mainlvl = player:getMainLvl();
+    local skill = player:getSkillLevel(10);
 	
 	local mLvl = player:getMainLvl();
 	local mJob = player:getMainJob();
@@ -126,8 +129,21 @@ function onTrigger(player,npc)
 		elseif (aThiefinNorgCS == 9) then
 			player:startEvent(0x00a4); -- Finish Quest "A Thief in Norg!?"
 		end
+	elseif (mainlvl >= 71 and skill >= 250 and player:getQuestStatus(OUTLANDS,THE_POTENTIAL_WITHIN) ~= QUEST_ACCEPTED) then
+	   player:PrintToPlayer("Jaucribaix : Tachi: Kasha eh?  Use it 100 times and then come see me afterwards.",0x0D);
+	   player:setVar("TACHI_KASHA",100);
+	   player:addQuest(OUTLANDS,THE_POTENTIAL_WITHIN);
+	elseif (wsnm <= 0 and player:getQuestStatus(OUTLANDS,THE_POTENTIAL_WITHIN) == true) then
+	   player:PrintToPlayer("Jaucribaix :  Good Job.  Travel to Kuftal Tunnel and fight the monster that dwells there.",0x0D);
+	   player:addKeyItem(MAP_TO_THE_ANNALS_OF_TRUTH);
+ 	   player:messageSpecial(MAP_TO_THE_ANNALS_OF_TRUTH);
+	   player:setVar("TACHI_KASHA_WIN",1);
+	elseif (player:hasKeyItem(ANNALS_OF_TRUTH) and player:getVar("TACHI_KASHA_WIN") == 2) then
+	   player:PrintToPlayer("Jaucribaix : You have done well.  Tachi: Kasha is now at full power!",0x0D);
+	   player:delKeyItem(ANNALS_OF_TRUTH);
+	   player:completeQuest(OUTLANDS,THE_POTENTIAL_WITHIN);	
 	elseif (aThiefinNorg == QUEST_COMPLETED) then
-		player:startEvent(0x00a5); -- New Standard dialog
+		player:startEvent(0x00a5); -- New Standard dialog		
 	else
 		player:startEvent(0x0047); -- Standard dialog
 	end

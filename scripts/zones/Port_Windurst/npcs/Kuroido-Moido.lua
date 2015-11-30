@@ -33,9 +33,25 @@ function onTrigger(player,npc)
 	pfame = player:getFameLevel(WINDURST);
 	needToZone = player:needToZone();	
 	BrokenWand = player:hasKeyItem(128);
+	local wsnm = player:getVar("BLACK_HALO");
+    local mainlvl = player:getMainLvl();
+    local skill = player:getSkillLevel(11);
 	
 	if (MakingAmends == QUEST_ACCEPTED) then -- MAKING AMENDS: During Quest
 		player:startEvent(0x0114); 
+	elseif (mainlvl >= 71 and skill >= 230 and player:getQuestStatus(WINDURST,ORASTARY_WOES) ~= QUEST_ACCEPTED) then
+	   player:PrintToPlayer("Kuroido-Moido : Black Halo not to your liking?  Use it 100 times and then come see me afterwards.",0x0D);
+	   player:setVar("BLAC_HALO",100);
+	   player:addQuest(WINDURST,ORASTARY_WOES);
+    elseif (wsnm <= 0 and player:getQuestStatus(WINDURST,ORASTARY_WOES) == true) then
+	   player:PrintToPlayer("Kuroido-Moido : Good Job.  Take this to Ro'Maeve and kill the monster there.",0x0D);
+	   player:addKeyItem(MAP_TO_THE_ANNALS_OF_TRUTH);
+ 	   player:messageSpecial(MAP_TO_THE_ANNALS_OF_TRUTH);
+	   player:setVar("BLACK_HALO_WIN",1);
+    elseif (player:hasKeyItem(ANNALS_OF_TRUTH) and player:getVar("BLACK_HALO_WIN") == 2) then
+	   player:PrintToPlayer("Kuroido-Moido : I knew you could do it.  Black Halo is now at full power!",0x0D);
+	   player:delKeyItem(ANNALS_OF_TRUTH);
+	   player:completeQuest(WINDURST,ORASTARY_WOES);	
 	elseif (MakingAmends == QUEST_COMPLETED and MakingAmens ~= QUEST_COMPLETED and WonderWands ~= QUEST_COMPLETED and needToZone) then -- MAKING AMENDS: After Quest  
 		player:startEvent(0x0117); 
 	elseif (MakingAmends == QUEST_COMPLETED and MakingAmens == QUEST_AVAILABLE) then 

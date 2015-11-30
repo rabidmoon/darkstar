@@ -52,6 +52,10 @@ function onTrigger(player,npc)
 	local FoiledAGolem = player:getQuestStatus(WINDURST,CURSES_FOILED_A_GOLEM);
 	local golemdelivery = player:getVar("foiledagolemdeliverycomplete");
 	local WildcatWindurst = player:getVar("WildcatWindurst");
+	local wsnm = player:getVar("RETRIBUTION");
+	local mainlvl = player:getMainLvl();
+	local skill = player:getSkillLevel(13);
+
 
 	if (player:getCurrentMission(WINDURST) == THE_JESTER_WHO_D_BE_KING and player:getVar("MissionStatus") == 7) then
 		player:startEvent(0x18d,0,0,0,282);
@@ -97,7 +101,19 @@ function onTrigger(player,npc)
 		player:startEvent(0x0156);  -- finish
 	elseif (FoiledAGolem == QUEST_ACCEPTED) then
 		player:startEvent(0x0155);  -- reminder dialog
-	
+	elseif (mainlvl >= 71 and skill >= 250 and player:getQuestStatus(WINDURST,BLOOD_AND_GLORY) ~= QUEST_ACCEPTED) then
+	   player:PrintToPlayer("Shantotto : Full power Retribution you say?  100 enemies with it you must slay!",0x0D);
+	   player:setVar("RETRIBUTION",100);
+	   player:addQuest(WINDURST,BLOOD_AND_GLORY);
+	elseif (wsnm <= 0 and player:getQuestStatus(WINDURST,BLOOD_AND_GLORY) == true) then
+	   player:PrintToPlayer("Shantotto : You finished your task with such flair. Now defeat the monster near Ifrit's Lair!",0x0D);
+	   player:addKeyItem(MAP_TO_THE_ANNALS_OF_TRUTH);
+ 	   player:messageSpecial(MAP_TO_THE_ANNALS_OF_TRUTH);
+	   player:setVar("RETRIBUTION_WIN",1);
+	elseif (player:hasKeyItem(ANNALS_OF_TRUTH) and player:getVar("RETRIBUTION_WIN") == 2) then
+	   player:PrintToPlayer("Shantotto : You have done well to make the moster cower.  Retribution is now at the fullest of power!",0x0D);
+	   player:delKeyItem(ANNALS_OF_TRUTH);
+	   player:completeQuest(WINDURST,BLOOD_AND_GLORY);
 	
 	-- Standard dialog
 	elseif (FoiledAGolem == QUEST_COMPLETED) then

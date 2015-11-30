@@ -37,6 +37,9 @@ function onTrigger(player,npc)
 	theFirstMeeting = player:getQuestStatus(BASTOK,THE_FIRST_MEETING);
 	mLvl = player:getMainLvl();
 	mJob = player:getMainJob();
+	local wsnm = player:getVar("ASURAN_FISTS");
+	local mainlvl = player:getMainLvl();
+	local skill = player:getSkillLevel(1);
 	
 	if (ghostsOfThePast == QUEST_AVAILABLE and mJob == 2 and mLvl >= 40) then
 		player:startEvent(0x00e7); -- Start Quest "Ghosts of the Past"
@@ -44,6 +47,19 @@ function onTrigger(player,npc)
 		player:startEvent(0x00e9); -- Start Quest "The First Meeting"
 	elseif (player:hasKeyItem(LETTER_FROM_DALZAKK) and player:hasKeyItem(SANDORIAN_MARTIAL_ARTS_SCROLL)) then 
 		player:startEvent(0x00ea); -- Finish Quest "The First Meeting"
+	elseif (mainlvl >= 71 and skill >= 250 and player:getQuestStatus(BASTOK,THE_WALLS_OF_YOUR_MIND) ~= QUEST_ACCEPTED) then
+	   player:PrintToPlayer("Oggbi : Asuran Fists?  Use it 100 times and then come see me afterwards.",0x0D);
+	   player:setVar("ASURAN_FISTS",100);
+	   player:addQuest(BASTOK,THE_WALLS_OF_YOUR_MIND);
+	elseif (wsnm <= 0 and player:getQuestStatus(BASTOK,THE_WALLS_OF_YOUR_MIND) == true) then
+	   player:PrintToPlayer("Oggbi : Good Job.  Travel to Bostaunieux Oubliette and fight the monster that dwells there.",0x0D);
+	   player:addKeyItem(MAP_TO_THE_ANNALS_OF_TRUTH);
+ 	   player:messageSpecial(MAP_TO_THE_ANNALS_OF_TRUTH);
+	   player:setVar("ASURAN_FISTS_WIN",1);
+	elseif (player:hasKeyItem(ANNALS_OF_TRUTH) and player:getVar("ASURAN_FISTS_WIN") == 2) then
+	   player:PrintToPlayer("Oggbi : You have done well.  Asuran Fists is now at full power!",0x0D);
+	   player:delKeyItem(ANNALS_OF_TRUTH);
+	   player:completeQuest(BASTOK,THE_WALLS_OF_YOUR_MIND);
 	else
 		player:startEvent(0x00e6); -- Standard Dialog
 	end

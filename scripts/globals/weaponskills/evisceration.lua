@@ -16,6 +16,7 @@
 require("scripts/globals/status");
 require("scripts/globals/settings");
 require("scripts/globals/weaponskills");
+require("scripts/globals/quests");
 -----------------------------------
 
 function onUseWeaponSkill(player, target, wsID)
@@ -35,7 +36,45 @@ function onUseWeaponSkill(player, target, wsID)
 	end
 
 	local damage, criticalHit, tpHits, extraHits = doPhysicalWeaponskill(player, target, params);
-	damage = damage * WEAPON_SKILL_POWER
+	
+	
+	local wsnm = player:getVar("EVISCERATION");
+	local unlock = 0;
+    if (player:hasCompleteQuest(OUTLANDS,CLOAK_AND_DAGGER) == true) then -- Evisceration Quest is done
+	unlock = 1;
+	elseif (player:getQuestStatus(OUTLANDS,CLOAK_AND_DAGGER) == QUEST_ACCEPTED and wsnm > 0) then -- Evisceration Quest Active
+	unlock = 0.05;
+	wsnm = wsnm - 1;
+	player:setVar("EVISCERATION",wsnm);
+	elseif (player:getQuestStatus(OUTLANDS,CLOAK_AND_DAGGER) == QUEST_ACCEPTED and wsnm <= 0) then -- Evisceration powered up
+	unlock = 0.30;
+	else
+	unlock = 0.05;
+	end
+	
+	
+	
+	
+	
+	
+	if (damage > 0) then
+	if ((player:getEquipID(SLOT_MAIN) == 20618) and (player:getMainJob() == JOB_THF)) then
+		
+		unlock = 1.50; -- High Artifact Multiplier
+
+			if (player:getTP() >= 100 and player:getTP() <200) then
+				player:addStatusEffect(EFFECT_AFTERMATH, 20, 0, 20, 0, 13);
+			elseif (player:getTP() >= 200 and player:getTP() <300) then
+				player:addStatusEffect(EFFECT_AFTERMATH, 20, 0, 40, 0, 13);
+			elseif (player:getTP() == 300) then
+				player:addStatusEffect(EFFECT_AFTERMATH, 20, 0, 60, 0, 13);
+			end
+		end
+	end
+	
+	
+	
+	damage = damage * WEAPON_SKILL_POWER * unlock;
 	return tpHits, extraHits, criticalHit, damage;
 
 end

@@ -17,6 +17,7 @@
 require("scripts/globals/status");
 require("scripts/globals/settings");
 require("scripts/globals/weaponskills");
+require("scripts/globals/quests");
 -----------------------------------
 
 function onUseWeaponSkill(player, target, wsID)
@@ -35,7 +36,23 @@ function onUseWeaponSkill(player, target, wsID)
 	end
 
 	local damage, criticalHit, tpHits, extraHits = doPhysicalWeaponskill(player, target, params);
-	damage = damage * WEAPON_SKILL_POWER
+	
+	local wsnm = player:getVar("ASURAN_FISTS");
+	local unlock = 0;
+    if (player:hasCompleteQuest(BASTOK,THE_WALLS_OF_YOUR_MIND) == true) then -- Asuran Fists Quest is done
+	unlock = 1;
+	elseif (player:getQuestStatus(BASTOK,THE_WALLS_OF_YOUR_MIND) == QUEST_ACCEPTED and wsnm > 0) then -- Asuran Fists Quest Active
+	unlock = 0.05;
+	wsnm = wsnm - 1;
+	player:setVar("ASURAN_FISTS",wsnm);
+	elseif (player:getQuestStatus(BASTOK,THE_WALLS_OF_YOUR_MIND) == QUEST_ACCEPTED and wsnm <= 0) then -- Asuran Fists powered up
+	unlock = 0.30;
+	else
+	unlock = 0.05;
+	end
+	
+	
+	damage = damage * WEAPON_SKILL_POWER * unlock
 	return tpHits, extraHits, criticalHit, damage;
 
 end

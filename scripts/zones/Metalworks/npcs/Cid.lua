@@ -44,6 +44,10 @@ function onTrigger(player,npc)
 	local TenzenPath = player:getVar("COP_Tenzen_s_Path");
 	local LouverancePath = player:getVar("COP_Louverance_s_Path");
 	local TreePathAv=0;
+	local wsnm = player:getVar("DETONATOR");
+	local mainlvl = player:getMainLvl();
+	local skill = player:getSkillLevel(26);
+	
 	if (currentCOPMission == DAWN and player:getVar("PromathiaStatus")==3 and player:getVar("Promathia_kill_day")~=currentday and player:getVar("COP_tenzen_story")== 0 ) then
 	       player:startEvent(0x0381); -- COP event 
 	elseif (currentCOPMission == CALM_BEFORE_THE_STORM and player:hasKeyItem(LETTERS_FROM_ULMIA_AND_PRISHE) == false and player:getVar("COP_Dalham_KILL") == 2 and player:getVar("COP_Boggelmann_KILL") == 2 and player:getVar("Cryptonberry_Executor_KILL")==2) then
@@ -126,7 +130,20 @@ function onTrigger(player,npc)
 	elseif (CidsSecret == QUEST_ACCEPTED and LetterKeyItem) then
 		player:startEvent(0x01fd);
 	--End Cid's Secret
-    else
+    elseif (mainlvl >= 71 and skill >= 250 and player:getQuestStatus(BASTOK,SHOOT_FIRST_ASK_QUESTIONS_LATER) ~= QUEST_ACCEPTED) then
+	   player:PrintToPlayer("Cid : Detonator?  Use it 100 times and then come see me afterwards.",0x0D);
+	   player:setVar("DETONATOR",100);
+	   player:addQuest(BASTOK,SHOOT_FIRST_ASK_QUESTIONS_LATER);
+	elseif (wsnm <= 0 and player:getQuestStatus(BASTOK,SHOOT_FIRST_ASK_QUESTIONS_LATER) == true) then
+	   player:PrintToPlayer("Cid : Good Job.  Travel to the Boyhada Tree and fight the monster that dwells there.",0x0D);
+	   player:addKeyItem(MAP_TO_THE_ANNALS_OF_TRUTH);
+ 	   player:messageSpecial(MAP_TO_THE_ANNALS_OF_TRUTH);
+	   player:setVar("DETONATOR_WIN",1);
+	elseif (player:hasKeyItem(ANNALS_OF_TRUTH) and player:getVar("DETONATOR_WIN") == 2) then
+	   player:PrintToPlayer("Cid : You have done well.  Detonator is now at full power!",0x0D);
+	   player:delKeyItem(ANNALS_OF_TRUTH);
+	   player:completeQuest(BASTOK,SHOOT_FIRST_ASK_QUESTIONS_LATER);
+	else
         player:startEvent(0x01f4); -- Standard Dialogue
     end
 	

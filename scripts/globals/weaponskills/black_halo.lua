@@ -16,6 +16,7 @@
 require("scripts/globals/status");
 require("scripts/globals/settings");
 require("scripts/globals/weaponskills");
+require("scripts/globals/quests");
 -----------------------------------
 
 function onUseWeaponSkill(player, target, wsID)
@@ -34,8 +35,21 @@ function onUseWeaponSkill(player, target, wsID)
 		params.mnd_wsc = 0.7;
 	end
 
+	local wsnm = player:getVar("BLACK_HALO");
+	local unlock = 0;
+    if (player:hasCompleteQuest(WINDURST,ORASTERY_WOES) == true) then -- Black Halo Quest is done
+	unlock = 1;
+	elseif (player:getQuestStatus(WINDURST,ORASTERY_WOES) == true and wsnm > 0) then -- Black Halo Quest Active
+	wsnm = wsnm - 1;
+	player:setVar("BLACK_HALO",wsnm);
+	elseif (player:getQuestStatus(WINDURST,ORASTERY_WOES) == true and wsnm <= 0) then -- Black Halo powered up
+	unlock = 0.30;
+	else
+	unlock = 0.05;
+	end
+	
 	local damage, criticalHit, tpHits, extraHits = doPhysicalWeaponskill(player, target, params);
-	damage = damage * WEAPON_SKILL_POWER
+	damage = damage * WEAPON_SKILL_POWER * unlock;
 	return tpHits, extraHits, criticalHit, damage;
-
+    
 end

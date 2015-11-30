@@ -25,6 +25,10 @@ end;
 function onTrigger(player,npc)
 
 	local bladeDarkness = player:getQuestStatus(BASTOK, BLADE_OF_DARKNESS);
+	local wsnm = player:getVar("GROUND_STRIKE");
+	local mainlvl = player:getMainLvl();
+	local skill = player:getSkillLevel(4);
+
 
 	if (player:getMainLvl() >= ADVANCED_JOB_LEVEL and  bladeDarkness == QUEST_AVAILABLE) then
 		--DARK KNIGHT QUEST
@@ -35,6 +39,19 @@ function onTrigger(player,npc)
 	or ((player:getCurrentMission(BASTOK) == ON_MY_WAY) and (player:getVar("MissionStatus") == 3)))
 		and (player:getVar("[B7-2]Werei") == 0) then
 		player:startEvent(0x00b1);
+	elseif (mainlvl >= 71 and skill >= 250 and player:getQuestStatus(BASTOK,INHERITANCE) ~= QUEST_ACCEPTED) then
+	   player:PrintToPlayer("Gumbah : Ground Strike?  Use it 100 times and then come see me afterwards.",0x0D);
+	   player:setVar("GROUND_STRIKE",100);
+	   player:addQuest(BASTOK,INHERITANCE);
+	elseif (wsnm <= 0 and player:getQuestStatus(BASTOK,INHERITANCE) == true) then
+	   player:PrintToPlayer("Gumbah : Good Job.  Travel to Western Altepa Desert and fight the monster that dwells there.",0x0D);
+	   player:addKeyItem(MAP_TO_THE_ANNALS_OF_TRUTH);
+ 	   player:messageSpecial(MAP_TO_THE_ANNALS_OF_TRUTH);
+	   player:setVar("GROUND_STRIKE_WIN",1);
+	elseif (player:hasKeyItem(ANNALS_OF_TRUTH) and player:getVar("GROUND_STRIKE_WIN") == 2) then
+	   player:PrintToPlayer("Gumbah : You have done well.  Ground Strike is now at full power!",0x0D);
+	   player:delKeyItem(ANNALS_OF_TRUTH);
+	   player:completeQuest(BASTOK,INHERITANCE);
 	else 
 		--DEFAULT 
 		player:startEvent(0x0034);

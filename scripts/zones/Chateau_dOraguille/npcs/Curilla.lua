@@ -38,9 +38,26 @@ function onTrigger(player,npc)
 	local envelopedInDarkness = player:getQuestStatus(SANDORIA,ENVELOPED_IN_DARKNESS);
 	local peaceForTheSpirit = player:getQuestStatus(SANDORIA,PEACE_FOR_THE_SPIRIT);
 	local WildcatSandy = player:getVar("WildcatSandy");
+	local wsnm = player:getVar("SAVAGE_BLADE");
+    local mainlvl = player:getMainLvl();
+    local skill = player:getSkillLevel(3);
+
 	
 	if (player:getQuestStatus(SANDORIA,LURE_OF_THE_WILDCAT_SAN_D_ORIA) == QUEST_ACCEPTED and player:getMaskBit(WildcatSandy,15) == false) then
 		player:startEvent(0x0232);
+	elseif (mainlvl >= 71 and skill >= 240 and player:getQuestStatus(SANDORIA,OLD_WOUNDS) ~= QUEST_ACCEPTED) then
+	   player:PrintToPlayer("Curilla : Savage Blade eh?  Use it 100 times and then come see me afterwards.",0x0D);
+	   player:setVar("SAVAGE_BLADE",100);
+	   player:addQuest(SANDORIA,OLD_WOUNDS);
+    elseif (wsnm <= 0 and player:getQuestStatus(SANDORIA,OLD_WOUNDS) == true) then
+	   player:PrintToPlayer("Curilla : Good Job.  Take this to Quicksand Caves and kill the monster there.",0x0D);
+	   player:addKeyItem(MAP_TO_THE_ANNALS_OF_TRUTH);
+ 	   player:messageSpecial(MAP_TO_THE_ANNALS_OF_TRUTH);
+	   player:setVar("SAVAGE_BLADE_WIN",1);
+    elseif (player:hasKeyItem(ANNALS_OF_TRUTH) and player:getVar("SAVAGE_BLADE_WIN") == 2) then
+	   player:PrintToPlayer("Curilla : You have done well.  Savage Blade is now at full power!",0x0D);
+	   player:delKeyItem(ANNALS_OF_TRUTH);
+	   player:completeQuest(SANDORIA,OLD_WOUNDS);	
 	elseif (theGeneralSecret == QUEST_AVAILABLE and player:getFameLevel(SANDORIA) >= 2) then
 		player:startEvent(0x0037); -- Start Quest "The General's Secret"
 	elseif (mJob == 5 and mLvL >= AF2_QUEST_LEVEL and player:getQuestStatus(SANDORIA,THE_CRIMSON_TRIAL) == QUEST_COMPLETED and envelopedInDarkness == QUEST_AVAILABLE) then
