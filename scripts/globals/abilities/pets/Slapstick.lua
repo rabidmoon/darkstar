@@ -1,5 +1,5 @@
 ---------------------------------------------------
--- Knockout
+-- Slapstick
 -- Deals Threefold Damage
 -- Damage Varries with TP
 -- 100% TP - 1.5
@@ -30,6 +30,7 @@ function onPetAbility(target, pet, skill)
 	local dex_wsc = 0.30;
 	local agi_wsc = 0;
 	local vit_wsc = 0;
+	local mnd_wsc = 0;
     skill:setSkillchain(38);
 	
 	
@@ -38,7 +39,7 @@ function onPetAbility(target, pet, skill)
 
 
 	
-	local info = AutoPhysicalMove(pet,target,skill,basemod,numhits,attmod,accmod,str_wsc,dex_wsc,agi_wsc,vit_wsc,TP_ACC_VARIES,0,40,80);
+	local info = AutoPhysicalMove(pet,target,skill,basemod,numhits,attmod,accmod,str_wsc,dex_wsc,agi_wsc,vit_wsc,mnd_wsc,TP_ACC_VARIES,0,40,80);
  
     local dmg = MobFinalAdjustments(info.dmg,pet,skill,target,MOBSKILL_PHYSICAL,MOBPARAM_BLUNT,info.hitslanded);
 	
