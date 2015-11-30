@@ -1104,14 +1104,14 @@ void CAIMobDummy::ActionAbilityFinish()
                 if (PWeaponSkill)
                 {
                     SUBEFFECT effect = battleutils::GetSkillChainEffect(m_PBattleSubTarget, PWeaponSkill);
-                    if (effect != SUBEFFECT_NONE)
+					if (effect != SUBEFFECT_NONE)
                     {
                         int32 skillChainDamage = battleutils::TakeSkillchainDamage(m_PMob, PTarget, Action.param);
                         if (skillChainDamage < 0)
                         {
                             Action.addEffectParam = -skillChainDamage;
                             Action.addEffectMessage = 384 + effect;
-                        }
+						}
                         else
                         {
                             Action.addEffectParam = skillChainDamage;

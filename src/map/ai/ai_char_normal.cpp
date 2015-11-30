@@ -2710,9 +2710,19 @@ void CAICharNormal::ActionWeaponSkillFinish()
                 Action.addEffectParam = -Action.addEffectParam;
                 Action.addEffectMessage = 384 + effect;
             }
-            else
+            else if (effect == SUBEFFECT_UMBRA)
+	        {
+                Action.addEffectMessage = 752 + effect;
+				Action.additionalEffect = effect;
+            }
+			else if (effect == SUBEFFECT_RADIANCE)
+	        {
+                Action.addEffectMessage = 752 + effect;
+				Action.additionalEffect = effect;
+            }
+			else
                 Action.addEffectMessage = 287 + effect;
-            Action.additionalEffect = effect;
+                Action.additionalEffect = effect;
 
             if (effect >= 7)
                 wspoints += 1;

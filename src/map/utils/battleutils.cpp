@@ -2840,7 +2840,7 @@ namespace battleutils
 
     uint8 GetSkillchainSubeffect(SKILLCHAIN_ELEMENT skillchain)
     {
-        DSP_DEBUG_BREAK_IF(skillchain < SC_NONE || skillchain > SC_DARKNESS_II);
+        DSP_DEBUG_BREAK_IF(skillchain < SC_NONE || skillchain > SC_UMBRA);
 
         static const uint8 effects[] = {
             SUBEFFECT_NONE,          // SC_NONE
@@ -2860,6 +2860,8 @@ namespace battleutils
             SUBEFFECT_DARKNESS,      // SC_DARKNESS
             SUBEFFECT_LIGHT,         // SC_LIGHT_II
             SUBEFFECT_DARKNESS,      // SC_DARKNESS_II
+			SUBEFFECT_RADIANCE,      // SC_RADIANCE
+            SUBEFFECT_UMBRA,         // SC_UMBRA
         };
 
         return effects[skillchain];
@@ -2867,7 +2869,7 @@ namespace battleutils
 
     uint8 GetSkillchainTier(SKILLCHAIN_ELEMENT skillchain)
     {
-        DSP_DEBUG_BREAK_IF(skillchain < SC_NONE || skillchain > SC_DARKNESS_II);
+        DSP_DEBUG_BREAK_IF(skillchain < SC_NONE || skillchain > SC_UMBRA);
 
         static const uint8 tiers[] = {
             0, // SC_NONE
@@ -2887,6 +2889,8 @@ namespace battleutils
             3, // SC_DARKNESS
             4, // SC_LIGHT_II
             4, // SC_DARKNESS_II
+			5, // SC_RADIANCE
+			5, // SC_UMBRA
         };
 
         return tiers[skillchain];
@@ -2904,7 +2908,10 @@ namespace battleutils
 
                 switch (PAIR((*j), (*i)))
                 {
-
+                    // Level 4 Pairs
+					case PAIR(SC_LIGHT_II, SC_LIGHT): return SC_RADIANCE;     break; // -> Lv5
+					case PAIR(SC_DARKNESS_II, SC_DARKNESS): return SC_UMBRA;     break; // -> Lv5
+					
                     // Level 3 Pairs
                     case PAIR(SC_LIGHT, SC_LIGHT): return SC_LIGHT_II;      break; // -> Lv4
                     case PAIR(SC_DARKNESS, SC_DARKNESS): return SC_DARKNESS_II;   break; // -> Lv4
@@ -3184,6 +3191,9 @@ namespace battleutils
             {MOD_ICEDEF,  MOD_EARTHDEF, MOD_WATERDEF,   MOD_DARKDEF},  // SC_DARKNESS
             {MOD_FIREDEF, MOD_WINDDEF,  MOD_THUNDERDEF, MOD_LIGHTDEF}, // SC_LIGHT
             {MOD_ICEDEF,  MOD_EARTHDEF, MOD_WATERDEF,   MOD_DARKDEF},  // SC_DARKNESS_II
+			
+			{MOD_FIREDEF, MOD_WINDDEF,  MOD_THUNDERDEF, MOD_LIGHTDEF}, // SC_RADIANCE
+            {MOD_ICEDEF,  MOD_EARTHDEF, MOD_WATERDEF,   MOD_DARKDEF},  // SC_UMBRA
         };
 
         uint16 defMod = MOD_NONE;
@@ -3213,11 +3223,13 @@ namespace battleutils
                     defMod = resistances[element][1];
                 break;
 
-                // Level 3 & 4 skill chains
+                // Level 3 & 4 & 5 skill chains
             case SC_LIGHT:
             case SC_LIGHT_II:
             case SC_DARKNESS:
             case SC_DARKNESS_II:
+			case SC_RADIANCE:
+			case SC_UMBRA:
                 if (PDefender->getMod(resistances[element][0]) < PDefender->getMod(resistances[element][1]))
                     defMod = resistances[element][0];
                 else
@@ -3281,7 +3293,7 @@ namespace battleutils
         ELEMENT appliedEle = ELEMENT_NONE;
         int16 resistance = GetSkillchainMinimumResistance(skillchain, PDefender, &appliedEle);
 
-        DSP_DEBUG_BREAK_IF(chainLevel <= 0 || chainLevel > 4 || chainCount <= 0 || chainCount > 5);
+        DSP_DEBUG_BREAK_IF(chainLevel <= 0 || chainLevel > 5 || chainCount <= 0 || chainCount > 5);
 
         // Skill chain damage = (Closing Damage)
         //                      × (Skill chain Level/Number from Table)
