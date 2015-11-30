@@ -125,7 +125,7 @@ void CAIAutomatonDummy::ActionFall()
    
     m_PPet->PMaster->StatusEffectContainer->RemoveAllManeuvers();
 
-	// Remove modifiers
+	// Remove modifiers from attachments when desummoned or all maneuvers are lost
 	   m_PPet->setModifier(MOD_EVA, 0);
 	   m_PPet->setModifier(MOD_DEFP, 0);
 	   m_PPet->setModifier(MOD_HPP, 0);
@@ -138,7 +138,10 @@ void CAIAutomatonDummy::ActionFall()
 	   m_PPet->setModifier(MOD_ACC, 0);
 	   m_PPet->setModifier(MOD_ATTP, 0);
 	   m_PPet->setModifier(MOD_RATTP, 0);
-       m_PPet->setModifier(MOD_HASTE_GEAR, 0);		   
+       m_PPet->setModifier(MOD_HASTE_GEAR, 0);	
+	   m_PPet->setModifier(MOD_REFRESH, 0);	
+	   m_PPet->setModifier(MOD_REGEN, 0);	
+      	   
 			
     CAIPetDummy::ActionFall();
 }
@@ -436,8 +439,8 @@ void CAIAutomatonDummy::ActionAttack()
                                             
 					}
 				preparePetAbility(m_PBattleSubTarget);
-				if (m_PPet->PMaster && m_PPet->PMaster->objtype == TYPE_PC)
-                    {
+				if (m_PPet->PMaster && m_PPet->PMaster->objtype == TYPE_PC && m_PPet->PMaster->GetMJob() == JOB_PUP)
+                    {   
                         puppetutils::TrySkillUP((CAutomatonEntity*)m_PPet, SKILL_ARA, m_PBattleTarget->GetMLevel());
                     }
 				m_LastRangedTime = m_Tick;
@@ -569,7 +572,7 @@ void CAIAutomatonDummy::ActionAttack()
                         }
 			        }
 				preparePetAbility(m_PBattleSubTarget);
-				if (m_PPet->PMaster && m_PPet->PMaster->objtype == TYPE_PC)
+				if (m_PPet->PMaster && m_PPet->PMaster->objtype == TYPE_PC && m_PPet->PMaster->GetMJob() == JOB_PUP)
                     {
                         puppetutils::TrySkillUP((CAutomatonEntity*)m_PPet, SKILL_ARA, m_PBattleTarget->GetMLevel());
                     }
@@ -843,7 +846,7 @@ void CAIAutomatonDummy::ActionAttack()
                         charutils::TrySkillUP((CCharEntity*)m_PBattleTarget, SKILL_EVA, m_PPet->GetMLevel());
                     }
 
-                    if (m_PPet->PMaster && m_PPet->PMaster->objtype == TYPE_PC)
+                    if (m_PPet->PMaster && m_PPet->PMaster->objtype == TYPE_PC && m_PPet->PMaster->GetMJob() == JOB_PUP)
                     {
                         puppetutils::TrySkillUP((CAutomatonEntity*)m_PPet, SKILL_AME, m_PBattleTarget->GetMLevel());
                     }
@@ -922,7 +925,7 @@ void CAIAutomatonDummy::ActionAbilityStart()
                         }
                     
 					}
-					if (m_PPet->PMaster && m_PPet->PMaster->objtype == TYPE_PC)
+					if (m_PPet->PMaster && m_PPet->PMaster->objtype == TYPE_PC && m_PPet->PMaster->GetMJob() == JOB_PUP)
                     {
                         puppetutils::TrySkillUP((CAutomatonEntity*)m_PPet, SKILL_AME, m_PBattleTarget->GetMLevel());
                     }
@@ -956,7 +959,7 @@ void CAIAutomatonDummy::ActionAbilityStart()
                             break;
                         }
 					}
-					if (m_PPet->PMaster && m_PPet->PMaster->objtype == TYPE_PC)
+					if (m_PPet->PMaster && m_PPet->PMaster->objtype == TYPE_PC && m_PPet->PMaster->GetMJob() == JOB_PUP)
                     {
                     puppetutils::TrySkillUP((CAutomatonEntity*)m_PPet, SKILL_ARA, m_PBattleTarget->GetMLevel());
                     }	
@@ -989,7 +992,7 @@ void CAIAutomatonDummy::ActionAbilityStart()
                         }
                     
 					}
-					if (m_PPet->PMaster && m_PPet->PMaster->objtype == TYPE_PC)
+					if (m_PPet->PMaster && m_PPet->PMaster->objtype == TYPE_PC && m_PPet->PMaster->GetMJob() == JOB_PUP)
                     {
                         puppetutils::TrySkillUP((CAutomatonEntity*)m_PPet, SKILL_AME, m_PBattleTarget->GetMLevel());
                     }
@@ -1198,7 +1201,7 @@ void CAIAutomatonDummy::ActionMagicFinish()
     m_PSpell = nullptr;
     m_PBattleSubTarget = nullptr;
 
-		if (m_PPet->PMaster && m_PPet->PMaster->objtype == TYPE_PC)
+		if (m_PPet->PMaster && m_PPet->PMaster->objtype == TYPE_PC && m_PPet->PMaster->GetMJob() == JOB_PUP)
 		
 		{
          puppetutils::TrySkillUP((CAutomatonEntity*)m_PPet, SKILL_AMA, m_PBattleTarget->GetMLevel());
