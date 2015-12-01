@@ -26,20 +26,20 @@ function onTrigger(player,npc)
 
  local state0 = 8;
 	local state1 = 9;
-	local DoorOffset = npc:getID() - 22; -- _5f1
+	local DoorOffset = npc:getID() - 5; -- _5f1
 	
- if (player:hasKeyItem(MAGICKED_ASTROLAB)) then	
+ if (player:hasKeyItem(MAGICKED_ASTROLABE)) then	
 	if (npc:getAnimation() == 8) then
 		state0 = 9;
 		state1 = 8;
 	end
 	-- Gates
 	-- Odin's Gate
-	GetNPCByID(DoorOffset+5):setAnimation(state1);
-	GetNPCByID(DoorOffset+6):setAnimation(state1);
-	GetNPCByID(DoorOffset+7):setAnimation(state1);
-	GetNPCByID(DoorOffset+8):setAnimation(state1);
-	GetNPCByID(DoorOffset+9):setAnimation(state1);
+	GetNPCByID(DoorOffset+5):setAnimation(state0);
+	GetNPCByID(DoorOffset+6):setAnimation(state0);
+	GetNPCByID(DoorOffset+7):setAnimation(state0);
+	GetNPCByID(DoorOffset+8):setAnimation(state0);
+	GetNPCByID(DoorOffset+9):setAnimation(state0);
 
 	return 0;
 	end

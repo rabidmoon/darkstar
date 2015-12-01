@@ -23,20 +23,20 @@ function onTrigger(player,npc)
 
  local state0 = 8;
 	local state1 = 9;
-	local DoorOffset = npc:getID() - 20; -- _5f1
+	local DoorOffset = npc:getID() - 15; -- _5f1
 	
- if (player:hasKeyItem(MAGICKED_ASTROLAB)) then	
+ if (player:hasKeyItem(MAGICKED_ASTROLABE)) then	
 	if (npc:getAnimation() == 8) then
 		state0 = 9;
 		state1 = 8;
 	end
 	-- Gates
-	-- Leviathan's Gate
-    GetNPCByID(DoorOffset+15):setAnimation(state1);
-	GetNPCByID(DoorOffset+16):setAnimation(state1);
-	GetNPCByID(DoorOffset+17):setAnimation(state1);
-	GetNPCByID(DoorOffset+18):setAnimation(state1);
-	GetNPCByID(DoorOffset+19):setAnimation(state1);
+	-- Titan's Gate
+    GetNPCByID(DoorOffset+15):setAnimation(state0);
+	GetNPCByID(DoorOffset+16):setAnimation(state0);
+	GetNPCByID(DoorOffset+17):setAnimation(state0);
+	GetNPCByID(DoorOffset+18):setAnimation(state0);
+	GetNPCByID(DoorOffset+19):setAnimation(state0);
 
 	return 0;
 	end
