@@ -115,6 +115,8 @@ SUBEFFECT_TRANSFIXION   = 11;
 SUBEFFECT_SCISSION      = 12;
 SUBEFFECT_DETONATION    = 13;
 SUBEFFECT_IMPACTION     = 14;
+SUBEFFECT_RADIANCE      = 15;
+SUBEFFECT_UMBRA         = 16;
 
 ------------------------------------
 -- These codes represent the actual status effects.
