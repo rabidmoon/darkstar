@@ -13,13 +13,12 @@ local power = 0;
 local dark = player:getEffectsCount(EFFECT_DARK_MANEUVER);
 if (dark == 1) then
 power = 2;
-if (dark == 2) then
+elseif (dark == 2) then
 power = 2;
-if (dark == 3) then
+elseif (dark == 3) then
 power = 1;
 end
-end
-end
+
 
 local pet = player:getPet();
 pet:addMod(MOD_REFRESH, power);
@@ -31,13 +30,12 @@ local dark = player:getEffectsCount(EFFECT_DARK_MANEUVER);
 local newdark = dark - 1;
 if (newdark == 0) then
 power = 2;
-if (newdark == 1) then
+elseif (newdark == 1) then
 power = 2;
-if (newdark == 2) then
+elseif (newdark == 2) then
 power = 1;
 end
-end
-end
+
 
 local pet = player:getPet();
 pet:delMod(MOD_REFRESH, power);
