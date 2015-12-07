@@ -15,7 +15,7 @@ require("scripts/zones/Dynamis-Windurst/TextIDs");
 -----------------------------------
 
 function onMobSpawn(mob)
-	mob:setMobMod(MOBMOD_SUPERLINK, mob:getShortID());
+	-- mob:setMobMod(MOBMOD_SUPERLINK, mob:getShortID());
 end;
 
 -----------------------------------
@@ -23,7 +23,7 @@ end;
 -----------------------------------
 
 function onMobEngaged(mob,target)
-    dynamis.spawnGroup(mob, windyList, 1);
+    -- dynamis.spawnGroup(mob, windyList, 1);
 end;
 
 -----------------------------------

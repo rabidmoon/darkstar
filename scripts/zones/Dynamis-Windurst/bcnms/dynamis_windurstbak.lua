@@ -25,6 +25,10 @@ function onBcnmEnter(player,instance)
     if ((dynaWaitxDay + (BETWEEN_2DYNA_WAIT_TIME * 24 * 60 * 60)) < realDay) then
         player:setVar("dynaWaitxDay",realDay);
     end
+	
+	if (player:hasKeyItem(PRISMATIC_HOURGLASS)) then
+	   player:setVar("dynaWaitxDay",10); 
+	end
     
 end;
 

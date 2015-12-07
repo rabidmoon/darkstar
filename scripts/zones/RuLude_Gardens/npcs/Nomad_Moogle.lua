@@ -44,28 +44,28 @@ end;
 function onTrigger(player,npc)
     if (player:hasKeyItem(LIMIT_BREAKER) == false and player:getMainLvl() >= 75) then
         player:startEvent(10045,75,2,10,7,30,302895,4095);
-    elseif (player:getMainLvl() == 75 and player:levelCap() == 75 and MAX_LEVEL >= 80 and player:getQuestStatus(JEUNO,NEW_WORLDS_AWAIT) == QUEST_AVAILABLE) then
-        player:startEvent(10045,0,1,1,0);
-    elseif (player:getMainLvl() >= 76 and player:levelCap() == 80 and MAX_LEVEL >= 85 and player:getQuestStatus(JEUNO,EXPANDING_HORIZONS) == QUEST_AVAILABLE) then
-        player:startEvent(10045,0,1,2,0);
-    elseif (player:getMainLvl() >= 81 and player:levelCap() == 85 and MAX_LEVEL >= 90 and player:getQuestStatus(JEUNO,BEYOND_THE_STARS) == QUEST_AVAILABLE) then
-        player:startEvent(10045,0,1,3,0);
-    elseif (player:getMainLvl() >= 86 and player:levelCap() == 90 and MAX_LEVEL >= 95 and player:getQuestStatus(JEUNO,DORMANT_POWERS_DISLODGED) == QUEST_AVAILABLE) then
-        player:startEvent(10045,0,1,4,0);
-    elseif (player:getMainLvl() >= 91 and player:levelCap() == 95 and MAX_LEVEL >= 99 and player:getQuestStatus(JEUNO,BEYOND_INFINITY) == QUEST_AVAILABLE) then
-        player:startEvent(10045,0,1,5,0);
-    elseif (player:getQuestStatus(JEUNO,NEW_WORLDS_AWAIT) == QUEST_ACCEPTED) then
-        player:startEvent(10045,0,1,1,1);
-    elseif (player:getQuestStatus(JEUNO,EXPANDING_HORIZONS) == QUEST_ACCEPTED) then
-        player:startEvent(10045,0,1,2,1);
-    elseif (player:getQuestStatus(JEUNO,BEYOND_THE_STARS) == QUEST_ACCEPTED) then
-        player:startEvent(10045,0,1,3,1);
-    elseif (player:getQuestStatus(JEUNO,DORMANT_POWERS_DISLODGED) == QUEST_ACCEPTED) then
-        player:startEvent(10045,0,1,4,1);
-    elseif (player:getQuestStatus(JEUNO,BEYOND_INFINITY) == QUEST_ACCEPTED) then
-        player:startEvent(10045,0,1,5,1); -- player:startEvent(0x273d,0,1,6,1);
-    elseif (player:hasKeyItem(LIMIT_BREAKER) == true and player:getMainLvl() >= 75) then
-        player:startEvent(10045,0,1,0,0);
+   -- elseif (player:getMainLvl() == 75 and player:levelCap() == 75 and MAX_LEVEL >= 80 and player:getQuestStatus(JEUNO,NEW_WORLDS_AWAIT) == QUEST_AVAILABLE) then
+     --   player:startEvent(10045,0,1,1,0);
+    -- elseif (player:getMainLvl() >= 76 and player:levelCap() == 80 and MAX_LEVEL >= 85 and player:getQuestStatus(JEUNO,EXPANDING_HORIZONS) == QUEST_AVAILABLE) then
+     --   player:startEvent(10045,0,1,2,0);
+    --elseif (player:getMainLvl() >= 81 and player:levelCap() == 85 and MAX_LEVEL >= 90 and player:getQuestStatus(JEUNO,BEYOND_THE_STARS) == QUEST_AVAILABLE) then
+     --   player:startEvent(10045,0,1,3,0);
+    -- elseif (player:getMainLvl() >= 86 and player:levelCap() == 90 and MAX_LEVEL >= 95 and player:getQuestStatus(JEUNO,DORMANT_POWERS_DISLODGED) == QUEST_AVAILABLE) then
+      --  player:startEvent(10045,0,1,4,0);
+    -- elseif (player:getMainLvl() >= 91 and player:levelCap() == 95 and MAX_LEVEL >= 99 and player:getQuestStatus(JEUNO,BEYOND_INFINITY) == QUEST_AVAILABLE) then
+      --  player:startEvent(10045,0,1,5,0);
+    -- elseif (player:getQuestStatus(JEUNO,NEW_WORLDS_AWAIT) == QUEST_ACCEPTED) then
+      --  player:startEvent(10045,0,1,1,1);
+    -- elseif (player:getQuestStatus(JEUNO,EXPANDING_HORIZONS) == QUEST_ACCEPTED) then
+     --   player:startEvent(10045,0,1,2,1);
+    -- elseif (player:getQuestStatus(JEUNO,BEYOND_THE_STARS) == QUEST_ACCEPTED) then
+      --  player:startEvent(10045,0,1,3,1);
+    -- elseif (player:getQuestStatus(JEUNO,DORMANT_POWERS_DISLODGED) == QUEST_ACCEPTED) then
+     --   player:startEvent(10045,0,1,4,1);
+    -- elseif (player:getQuestStatus(JEUNO,BEYOND_INFINITY) == QUEST_ACCEPTED) then
+     --   player:startEvent(10045,0,1,5,1); -- player:startEvent(0x273d,0,1,6,1);
+    -- elseif (player:hasKeyItem(LIMIT_BREAKER) == true and player:getMainLvl() >= 75) then
+     --   player:startEvent(10045,0,1,0,0);
     else
         player:startEvent(10045,0,2,0,0);
     end

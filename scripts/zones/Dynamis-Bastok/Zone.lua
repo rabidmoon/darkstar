@@ -35,34 +35,7 @@ end;
 function onZoneIn(player,prevZone)
     local cs = -1;
 
-    local realDay = os.time();
-    local dynaWaitxDay = player:getVar("dynaWaitxDay");
 
-    if ((dynaWaitxDay + (BETWEEN_2DYNA_WAIT_TIME * 24 * 60 * 60)) < realDay or player:getVar("DynamisID") == GetServerVariable("[DynaBastok]UniqueID")) then
-        if (player:isBcnmsFull() == 1) then
-            if (player:hasStatusEffect(EFFECT_DYNAMIS, 0) == false) then
-                inst = player:addPlayerToDynamis(1280);
-
-                if (inst == 1) then
-                    player:bcnmEnter(1280);
-                else
-                     cs = 0;
-                end
-            else
-                player:bcnmEnter(1280);
-            end
-        else
-            inst = player:bcnmRegister(1280);
-
-            if (inst == 1) then
-                player:bcnmEnter(1280);
-            else
-                cs = 0;
-            end
-        end
-    else
-        cs = 0;
-    end
 
     return cs;
 end;
