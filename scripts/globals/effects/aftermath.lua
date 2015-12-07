@@ -35,6 +35,8 @@ function onEffectGain(target,effect)
 		target:addMod(MOD_ENMITY,power)
 	elseif (effect:getSubPower() == 12) then
 		target:addMod(MOD_RACC,power)
+	elseif (effect:getSubPower() == 13) then
+		target:addMod(MOD_REGAIN,power)	
 	end
 end;
 
@@ -76,5 +78,7 @@ function onEffectLose(target,effect)
 		target:delMod(MOD_ENMITY,power)
 	elseif (effect:getSubPower() == 12) then
 		target:delMod(MOD_RACC,power)
+	elseif (effect:getSubPower() == 13) then
+		target:delMod(MOD_REGAIN,power)	
 	end
 end;

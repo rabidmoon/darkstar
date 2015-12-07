@@ -19,12 +19,11 @@ require("scripts/globals/common");
 ENABLE_COP     = 1;
 ENABLE_TOAU    = 1;
 ENABLE_WOTG    = 1;
-ENABLE_ACP     = 0;
-ENABLE_AMK     = 0;
-ENABLE_ASA     = 0;
-ENABLE_ABYSSEA = 0;
-ENABLE_SOA     = 0;
-ENABLE_ROV     = 0;
+ENABLE_ACP     = 1;
+ENABLE_AMK     = 1;
+ENABLE_ASA     = 1;
+ENABLE_ABYSSEA = 1;
+ENABLE_SOA     = 1;
 
 -- Setting to lock content more accurately to the expansions you have defined above
 -- This generally results in a more accurate presentation of your selected expansions
@@ -37,11 +36,11 @@ INITIAL_LEVEL_CAP = 50; -- The initial level cap for new players.  There seems t
 MAX_LEVEL = 99; -- Level max of the server, lowers the attainable cap by disabling Limit Break quests.
 NORMAL_MOB_MAX_LEVEL_RANGE_MIN = 0; -- Lower Bound of Max Level Range for Normal Mobs (0 = Uncapped)
 NORMAL_MOB_MAX_LEVEL_RANGE_MAX = 0; -- Upper Bound of Max Level Range for Normal Mobs (0 = Uncapped)
-START_GIL = 20,000; --Amount of gil given to newly created characters.
+START_GIL = 20,000; -- Amount of gil given to newly created characters.
 START_INVENTORY = 30; -- Starting inventory and satchel size.  Ignores values < 30.  Do not set above 80!
 OPENING_CUTSCENE_ENABLE = 0; --Set to 1 to enable opening cutscenes, 0 to disable.
-SUBJOB_QUEST_LEVEL = 18; -- Minimum level to accept either subjob quest.  Set to 0 to start the game with subjobs unlocked.
-ADVANCED_JOB_LEVEL = 30; -- Minimum level to accept advanced job quests.  Set to 0 to start the game with advanced jobs.
+SUBJOB_QUEST_LEVEL = 18; --Minimum level to accept either subjob quest.  Set to 0 to start the game with subjobs unlocked.
+ADVANCED_JOB_LEVEL = 30; --Minimum level to accept advanced job quests.  Set to 0 to start the game with advanced jobs.
 ALL_MAPS = 0; -- Set to 1 to give starting characters all the maps.
 UNLOCK_OUTPOST_WARPS = 0; -- Set to 1 to give starting characters all outpost warps.  2 to add Tu'Lia and Tavnazia.
 
@@ -60,9 +59,9 @@ SPELL_POWER = 1.000; -- Multiplies damage dealt by Elemental and Divine Magic.
 BLUE_POWER  = 1.000; -- Multiplies damage dealt by most Blue Magic.
 DRAIN_POWER = 1.000; -- Multiplies amount drained by Drain, Aspir, and relevant Blue Magic spells.
 ITEM_POWER  = 1.000; -- Multiplies the effect of items such as Potions and Ethers.
-WEAPON_SKILL_POWER  = 1.000; -- Multiplies damage dealt by Weapon Skills.
+WEAPON_SKILL_POWER  = 1.000; --  Multiplies damage dealt by Weapon Skills.
 WEAPON_SKILL_POINTS = 1.000; -- Multiplies points earned during weapon unlocking.
-USE_ADOULIN_WEAPON_SKILL_CHANGES = false; -- true/false. Change to toggle new Adoulin weapon skill damage calculations
+USE_ADOULIN_WEAPON_SKILL_CHANGES = true; -- true/false. Change to toggle new Adoulin weapon skill damage calculations
 
 HARVESTING_BREAK_CHANCE = 0.33; -- % chance for the sickle to break during harvesting.  Set between 0 and 1.
 EXCAVATION_BREAK_CHANCE = 0.33; -- % chance for the pickaxe to break during excavation.  Set between 0 and 1.
@@ -86,11 +85,10 @@ LandKingSystem_NQ = 2;
 LandKingSystem_HQ = 2;
 
 -- DYNAMIS SETTINGS
-    BETWEEN_2DYNA_WAIT_TIME = 1;        -- wait time between 2 Dynamis (in real day) min: 1 day
-        DYNA_MIDNIGHT_RESET = true;     -- if true, makes the wait time count by number of server midnights instead of full 24 hour intervals
-             DYNA_LEVEL_MIN = 65;       -- level min for entering in Dynamis
-    TIMELESS_HOURGLASS_COST = 500000;   -- cost of the timeless hourglass for Dynamis.
-     CURRENCY_EXCHANGE_RATE = 100;      -- X Tier 1 ancient currency -> 1 Tier 2, and so on.  Certain values may conflict with shop items.  Not designed to exceed 198.
+BETWEEN_2DYNA_WAIT_TIME = 1;        -- wait time between 2 Dynamis (in real day) min: 1 day
+DYNA_LEVEL_MIN = 65;       -- level min for entering in Dynamis
+TIMELESS_HOURGLASS_COST = 500000;   -- cost of the timeless hourglass for Dynamis.
+CURRENCY_EXCHANGE_RATE = 100;      -- X Tier 1 ancient currency -> 1 Tier 2, and so on.  Certain values may conflict with shop items.  Not designed to exceed 198.
 RELIC_2ND_UPGRADE_WAIT_TIME = 604800;      -- wait time for 2nd relic upgrade (stage 2 -> stage 3) in seconds. 604800s = 1 RL week.
 RELIC_3RD_UPGRADE_WAIT_TIME = 295200;      -- wait time for 3rd relic upgrade (stage 3 -> stage 4) in seconds. 295200s = 82 hours.
 FREE_COP_DYNAMIS = 1 ; -- Authorize player to entering inside COP Dynamis without completing COP mission ( 1 = enable 0= disable)
@@ -117,6 +115,7 @@ LOW_LEVEL_REGIME = 0; --Allow people to kill regime targets even if they give no
 GROUNDS_TOMES = 1; -- Enables Grounds of Valor tomes
 
 -- JOB ABILITY/TRAIT SPECIFIC SETTINGS
+SCAVENGE_RATE = 0.3; --The chance of obtaining an item when you use the Ranger job ability Scavenge.  Do not set above 1!
 CIRCLE_KILLER_EFFECT = 20; -- Intimidation percentage granted by circle effects. (made up number)
 KILLER_EFFECT = 10; -- Intimidation percentage from killer job traits.
 
@@ -133,7 +132,7 @@ ELEMENTAL_DEBUFF_DURATION = 120; -- base duration of elemental debuffs
 AQUAVEIL_INTERR_RATE = 25;  -- percent spell interruption rate reduction from Aquaveil (see http://www.bluegartrls.com/forum/82143-spell-interruption-down-cap-aquaveil-tests.html)
 ABSORB_SPELL_AMOUNT = 8; -- how much of a stat gets absorbed by DRK absorb spells - expected to be a multiple of 8.
 ABSORB_SPELL_TICK = 9; -- duration of 1 absorb spell tick
-SNEAK_INVIS_DURATION_MULTIPLIER = 1; -- multiplies duration of sneak,invis,deodorize to reduce player torture. 1 = retail behavior.
+SNEAK_INVIS_DURATION_MULTIPLIER = 1; -- multiplies duration of sneak,invis,deodorize to reduce player torture. 1 = retail behavior. MUST BE INTEGER.
 USE_OLD_CURE_FORMULA = false; -- true/false. if true, uses older cure formula (3*MND + VIT + 3*(healing skill/5)) // cure 6 will use the newer formula
 
 -- CELEBRATIONS
@@ -163,7 +162,6 @@ HOMEPOINT_TELEPORT = 0; -- Enables the homepoint teleport system
 DIG_ABUNDANCE_BONUS = 0; -- Increase chance of digging up an item (450  = item digup chance +45)
 DIG_FATIGUE = 1; -- Set to 0 to disable Dig Fatigue
 MIASMA_FILTER_COOLDOWN = 5;  -- Number of days a player can obtain a Miasma Filter KI for any of the Boneyard Gully ENMs (Minimum:1)
-FORCE_SPAWN_QM_RESET_TIME = 300; -- Number of seconds the ??? remains hidden for after the despawning of the mob it force spawns.
 
 -- LIMBUS
 BETWEEN_2COSMOCLEANSE_WAIT_TIME = 3; -- day between 2 limbus keyitem  (default 3 days)

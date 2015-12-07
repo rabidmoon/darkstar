@@ -23,10 +23,10 @@ function onUseWeaponSkill(player, target, wsID)
 	params.int_wsc = 0.0;		params.mnd_wsc = 0.0;
 	params.chr_wsc = 0.0;
 	--ftp damage mods (for Damage Varies with TP; lines are calculated in the function params.ftp)
-	params.ftp100 = 3.0; params.ftp200 = 3.0; params.ftp300 = 3.0;
+	params.ftp100 = 4.0; params.ftp200 = 4.0; params.ftp300 = 4.0;
 	--critical modifiers (0.0 = 0%, 0.2 = 20%, 0.5 = 50%..etc)
-	params.crit100 = 0.0; params.crit200=0.0; params.crit300=0.0;
-	params.canCrit = false;
+	params.crit100 = 1.0; params.crit200=1.0; params.crit300=1.0;
+	params.canCrit = true;
 	--accuracy modifiers (0.0 = 0%, 0.2 = 20%, 0.5 = 50%..etc) Keep 0 if ws doesn't have accuracy modification.
 	params.acc100 = 0.0; params.acc200=0.0; params.acc300=0.0;
 	--attack multiplier (only some WSes use this, this varies the actual ratio value, see Tachi: Kasha) 1 is default.

@@ -85,6 +85,12 @@ function onGameIn(player, firstlogin, zoning)
 	
 	
 
+	
+	
+	
+	
+	
+
     if (player:getVar("GodMode") == 1) then
         -- Add bonus effects to the player..
         player:addStatusEffect(EFFECT_MAX_HP_BOOST,1000,0,0);

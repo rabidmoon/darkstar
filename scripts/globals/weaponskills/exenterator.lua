@@ -22,7 +22,7 @@ function onUseWeaponSkill(player, target, wsID)
 
 	local params = {};
 	params.numHits = 4;
-	params.ftp100 = 1.0; params.ftp200 = 1.0; params.ftp300 = 1.0;
+	params.ftp100 = 2.0; params.ftp200 = 2.0; params.ftp300 = 2.0;
 	params.str_wsc = 0.0; params.dex_wsc = 0.0; params.vit_wsc = 0.0; params.agi_wsc = 0.85 + (player:getMerit(MERIT_EXENTERATOR) / 100); params.int_wsc = 0.0; params.mnd_wsc = 0.0; params.chr_wsc = 0.0;
 	params.crit100 = 0.0; params.crit200 = 0.0; params.crit300 = 0.0;
 	params.canCrit = false;
