@@ -94,8 +94,9 @@ private:
     bool CheckTPMove();
     bool CheckRangedAttack();
 
-	int16 BlackMageAttack();	
-	int16 LightAttack();
+	int16 StormFrameStormAttack();	
+	int16 StormFrameSoulAttack();
+	int16 StormFrameSpiritAttack();
 	int16 LightEnfeeb();
 	int16 SharpshotAttack();
 	int16 HarleAttack();

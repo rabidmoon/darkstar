@@ -65,7 +65,7 @@ CAIAutomatonDummy::CAIAutomatonDummy(CPetEntity* PPet)
     m_magicStatusRecast = 8000;
 	m_magicStatusCast = 0;
 
-	m_magicElementalRecast = 0;
+	m_magicElementalRecast = 18000;
 	m_magicElementCast = 0;
 	
 	m_rangedRecast = 2000;
@@ -366,7 +366,7 @@ void CAIAutomatonDummy::ActionSpawn()
        armorplate = armorplatei + armorplateii;
 	   ark = arki + arkii;
 	   dynamo = dynamoi;
-	   lspeaker = lspeakeri + lspeakerii;
+	   lspeaker = lspeakeri + lspeakerii + 15; // Default MAB 15 on Automaton
 	   manajam = manajami + manajamii;
 	   manatank = manatanki + manatankii;
 	   scope = scopei;
@@ -676,10 +676,83 @@ void CAIAutomatonDummy::ActionAttack()
 		}
 
 		   
+		}	
+		
+
+//Stormwaker Frame and Soulsoother Head		
+    if (m_PPet->getFrame() == FRAME_STORMWAKER && m_PPet->getHead() == HEAD_SOULSOOTHER)
+        {
+			int16 spellID = -1;
+			if (m_Tick >= m_LastMagicTime + m_magicRecast) // Check Every 4 Seconds as universal check
+			{
+				uint16 family = m_PPet->m_Family;
+				uint16 petID = m_PPet->m_PetID;
+        
+		
+				spellID = StormFrameSoulAttack();
+		
+				if (spellID != -1)
+				{
+				SetCurrentSpell(spellID);
+				m_ActionType = ACTION_MAGIC_START;
+				ActionMagicStart();
+				return;
+			}
+		}
+
+		   
+		}	
+
+//Stormwaker Frame and Stormwaker Head		
+    if (m_PPet->getFrame() == FRAME_STORMWAKER && m_PPet->getHead() == HEAD_STORMWAKER)
+        {
+			int16 spellID = -1;
+			if (m_Tick >= m_LastMagicTime + m_magicRecast) // Check Every 4 Seconds as universal check
+			{
+				uint16 family = m_PPet->m_Family;
+				uint16 petID = m_PPet->m_PetID;
+        
+		
+				spellID = StormFrameStormAttack();
+		
+				if (spellID != -1)
+				{
+				SetCurrentSpell(spellID);
+				m_ActionType = ACTION_MAGIC_START;
+				ActionMagicStart();
+				return;
+			}
+		}
+
+		   
 		}			
 		
 		
-	
+
+//Stormwaker Frame and Spiritreaver Head		
+    if (m_PPet->getFrame() == FRAME_STORMWAKER && m_PPet->getHead() == HEAD_SPIRITREAVER)
+        {
+			int16 spellID = -1;
+			if (m_Tick >= m_LastMagicTime + m_magicRecast) // Check Every 4 Seconds as universal check
+			{
+				uint16 family = m_PPet->m_Family;
+				uint16 petID = m_PPet->m_PetID;
+        
+		
+				spellID = StormFrameSpiritAttack();
+		
+				if (spellID != -1)
+				{
+				SetCurrentSpell(spellID);
+				m_ActionType = ACTION_MAGIC_START;
+				ActionMagicStart();
+				return;
+			}
+		}
+
+		   
+		}			
+				
 	
 	
 	
@@ -1580,6 +1653,4563 @@ int16 CAIAutomatonDummy::HarleAttack()
 }
 
 
+// Stormwaker Frame/Soulsoother Head Automaton AI (WHM)
+
+
+int16 CAIAutomatonDummy::StormFrameSoulAttack()
+{
+	uint8 requiredHPP = 75;  // Enfeebling Threshold
+	uint8 lowHPP = 31;
+	uint8 level = m_PPet->GetMLevel();
+	uint8 trigger = 40;
+	uint16 mskill = m_PPet->PMaster->GetSkill(SKILL_AMA);
+	uint16 maskill = m_PPet->PMaster->GetSkill(SKILL_AMA);
+	
+    int16 spellID = -1;
+    CBattleEntity* master = m_PPet->PMaster;  
+	//calculate curing threshold based on Light Maneuvers
+	if (m_PPet->PMaster->StatusEffectContainer->GetEffectsCount(EFFECT_LIGHT_MANEUVER) == 1) 
+		{
+		trigger = 40;
+		}
+	else if (m_PPet->PMaster->StatusEffectContainer->GetEffectsCount(EFFECT_LIGHT_MANEUVER) == 2) 
+		{
+		trigger = 50;
+		}
+	else if (m_PPet->PMaster->StatusEffectContainer->GetEffectsCount(EFFECT_LIGHT_MANEUVER) == 3) 
+		{
+		trigger = 75;
+		}
+	else if (m_PPet->hasAttachment(8643))
+		{
+		trigger = 80;
+		}	
+	else
+		{
+		trigger = 40;
+	    }
+	//calculate attachments
+	
+	if (m_PPet->hasAttachment(8643))
+		{
+		 m_damageGauge = 2000; // Prioritiezes Cures by making its counter 2 seconds faster 
+		}
+	else
+		{
+		 m_damageGauge = 0;
+		}
+	
+	
+    CBattleEntity* mostWounded = getWounded(trigger);
+    //CBattleEntity* mostWounded = m_PPet;
+	// Enhancing Spells
+	// Order is Protect > Shell > Haste (if Wind Maneuver is up)
+	
+	if (m_Tick >= m_LastMagicTimeEnhance + m_magicEnhanceRecast) 
+		{
+		if (m_PPet->PMaster->StatusEffectContainer->HasStatusEffect(EFFECT_PROTECT) == false) 
+			{
+			m_PBattleSubTarget = m_PPet->PMaster;
+			if (mskill > 280)
+				if (m_PPet->health.mp > 83)
+					{
+					 spellID = 47;
+					}
+				else if (m_PPet->health.mp > 64)
+					{
+					 spellID = 46;
+					}
+				else if (m_PPet->health.mp > 45)
+					{
+					 spellID = 45;
+					}
+				else if (m_PPet->health.mp > 27)
+					{
+					 spellID = 44;
+					}
+				else if (m_PPet->health.mp > 8)
+					{
+					 spellID = 43;
+					}
+				else 
+			        {
+				     spellID = -1;
+				    }
+			else if (mskill > 216)
+				if (m_PPet->health.mp > 64)
+					{
+					 spellID = 46;
+					}
+				else if (m_PPet->health.mp > 45)
+					{
+					 spellID = 45;
+					}
+				else if (m_PPet->health.mp > 27)
+					{
+					 spellID = 44;
+					}
+				else if (m_PPet->health.mp > 8)
+					{
+					 spellID = 43;
+					}
+				else 
+			        {
+				     spellID = -1;
+				    } 	
+			else if (mskill > 143)
+				if (m_PPet->health.mp > 45)
+					{
+					 spellID = 45;
+					}
+				else if (m_PPet->health.mp > 27)
+					{
+					 spellID = 44;
+					}
+				else if (m_PPet->health.mp > 8)
+					{
+					 spellID = 43;
+					}
+				else 
+			        {
+				     spellID = -1;
+				    } 	
+			else if (mskill > 83)
+				if (m_PPet->health.mp > 27)
+					{
+					 spellID = 44;
+					}
+				else if (m_PPet->health.mp > 8)
+					{
+					 spellID = 43;
+					}
+				else 
+			        {
+				     spellID = -1;
+				    } 	
+			else if (mskill > 23)
+				if (m_PPet->health.mp > 8)
+					{
+					 spellID = 43;
+					}
+				else 
+			        {
+				     spellID = -1;
+				    } 	
+			else
+		        {
+				 spellID = -1;
+				} 
+			m_magicEnhanceCast = 1;
+			m_magicEnhanceRecast = 15000;
+			}
+		else if (m_PPet->PMaster->StatusEffectContainer->HasStatusEffect(EFFECT_SHELL) == false) 
+			{
+			m_PBattleSubTarget = m_PPet->PMaster;
+			if (mskill > 240)
+				if (m_PPet->health.mp > 74)
+					{
+					 spellID = 51;
+					}
+				else if (m_PPet->health.mp > 55)
+					{
+					 spellID = 50;
+					}
+				else if (m_PPet->health.mp > 36)
+					{
+					 spellID = 49;
+					}
+				else if (m_PPet->health.mp > 17)
+					{
+					 spellID = 48;
+					}
+				else 
+			        {
+				     spellID = -1;
+				    } 	
+			else if (mskill > 187)
+				if (m_PPet->health.mp > 55)
+					{
+					 spellID = 50;
+					}
+				else if (m_PPet->health.mp > 36)
+					{
+					 spellID = 49;
+					}
+				else if (m_PPet->health.mp > 17)
+					{
+					 spellID = 48;
+					}
+				else 
+			        {
+				     spellID = -1;
+				    } 	
+			else if (mskill > 113)
+				if (m_PPet->health.mp > 36)
+					{
+					 spellID = 49;
+					}
+				else if (m_PPet->health.mp > 17)
+					{
+					 spellID = 48;
+					}
+				else 
+			        {
+				     spellID = -1;
+				    } 	
+			else if (mskill > 53)
+				if (m_PPet->health.mp > 17)
+					{
+					 spellID = 48;
+					}
+				else 
+			        {
+				     spellID = -1;
+				    } 	
+			else
+		        {
+				 spellID = -1;
+				} 
+			m_magicEnhanceCast = 1;
+			m_magicEnhanceRecast = 15000;
+			}
+		else if (m_PPet->PMaster->StatusEffectContainer->HasStatusEffect(EFFECT_WIND_MANEUVER) == true && m_PPet->PMaster->StatusEffectContainer->HasStatusEffect(EFFECT_HASTE) == false)   //Haste 
+			{
+			m_PBattleSubTarget = m_PPet->PMaster;
+			if (mskill > 146)
+                if (m_PPet->health.mp > 39)
+					{
+					 spellID = 57;
+					}
+				else 
+			        {
+				     spellID = -1;
+				    } 				
+			else
+		        {
+				 spellID = -1;
+				} 
+			m_magicEnhanceCast = 1;
+			m_magicEnhanceRecast = 15000;
+			}			
+			else
+			{
+			m_LastMagicTimeEnhance = m_Tick; // reset mtick
+			m_magicEnhanceRecast = 15000; // No eligible Enhance Spell to Cast
+			}
+        }
+	
+	
+	
+	// Healing AI
+	// TODO Add calculation that looks at most wounded HP percentage vs their full HP amount to determine level of cure
+	// TODO Add a way to calculate proper regen
+
+	if (m_Tick >= m_LastMagicTimeHeal + m_magicHealRecast)  // Look for last magic healing spell time 
+	{
+		if (mostWounded != nullptr)
+		{
+        m_PBattleSubTarget = mostWounded;
+		if (mskill > 206)
+			if (m_PPet->health.mp > 134)
+				{
+				 spellID = 5;
+				}
+			else if (m_PPet->health.mp > 88)
+				{
+				 spellID = 4;
+				}
+			else if (m_PPet->health.mp > 46)  	
+			    {
+				 spellID = 3;
+				}
+			else if (m_PPet->health.mp > 24)  	
+			    {
+				 spellID = 2;
+				}				
+			else if (m_PPet->health.mp > 7)  	
+			    {
+				 spellID = 1;
+				}
+			else 
+			    {
+				 spellID = -1;
+				} 
+		else if (mskill > 146)
+			if (m_PPet->health.mp > 88)
+				{
+				 spellID = 4;
+				}
+			else if (m_PPet->health.mp > 46)  	
+			    {
+				 spellID = 3;
+				}
+			else if (m_PPet->health.mp > 24)  	
+			    {
+				 spellID = 2;
+				}				
+			else if (m_PPet->health.mp > 7)  	
+			    {
+				 spellID = 1;
+				}
+			else 
+			    {
+				 spellID = -1;
+				} 
+		else if (mskill > 80)
+			if (m_PPet->health.mp > 46)  	
+			    {
+				 spellID = 3;
+				}
+			else if (m_PPet->health.mp > 24)  	
+			    {
+				 spellID = 2;
+				}				
+			else if (m_PPet->health.mp > 7)  	
+			    {
+				 spellID = 1;
+				}
+			else
+			    {
+				 spellID = -1;
+				}
+		else if (mskill > 44)
+			if (m_PPet->health.mp > 24)  	
+			    {
+				 spellID = 2;
+				}				
+			else if (m_PPet->health.mp > 7)  	
+			    {
+				 spellID = 1;
+				}
+			else
+			    {
+				 spellID = -1;
+				}
+		else if (mskill > 11)
+			if (m_PPet->health.mp > 7)  	
+			    {
+				 spellID = 1;
+				}
+			else
+			    {
+				 spellID = -1;
+				} 
+		else
+		        {
+				 spellID = -1;
+				} 
+		
+        m_magicHealRecast = 15000 - m_damageGauge;
+		m_magicHealCast = 1; // 1 means casting a spell
+		}
+		else
+		{
+		m_LastMagicTimeHeal = m_Tick; // reset mtick no eligible healing spell to cast
+		m_magicHealRecast = 15000;		
+       }
+	}
+	
+	
+	
+	else if (m_Tick >= m_LastMagicTimeEnf + m_magicEnfeebleRecast)  // Look for last enfeeble spell time 
+	{
+	  if (m_PBattleTarget != nullptr && m_PBattleTarget->StatusEffectContainer->HasStatusEffect(EFFECT_DIA) == false && m_PBattleTarget->GetHPP() >= requiredHPP)
+	{
+		m_PBattleSubTarget = m_PBattleTarget;
+        if (mskill >= 96)
+		    if (m_PPet->health.mp > 30)  	
+			    {
+				 spellID = 24;
+				}
+		    else if (m_PPet->health.mp >= 7)  	
+			    {
+				 spellID = 23;
+				}
+            else
+			    {
+				 spellID = -1;
+				}
+        else if (mskill >= 0)
+		    if (m_PPet->health.mp >= 7)  	
+			    {
+				 spellID = 23;
+				}
+            else 
+			    {
+				 spellID = -1;
+				}
+		m_magicEnfeebCast = 1;
+		m_magicEnfeebleRecast = 8000;
+        
+	}
+	    else if (m_PBattleTarget != nullptr && m_PBattleTarget->StatusEffectContainer->HasStatusEffect(EFFECT_POISON) == false && m_PBattleTarget->GetHPP() >= requiredHPP) 
+	{
+	   m_PBattleSubTarget = m_PBattleTarget;
+		// m_magicRecast = 5000;
+        if (mskill > 17)
+		    if (m_PPet->health.mp >= 5)  	
+			    {
+				 spellID = 220;
+				}
+            else
+			    {
+				 spellID = -1;
+				} 
+        m_magicEnfeebCast = 1;
+		m_magicEnfeebleRecast = 8000;
+	
+	}
+	    else if (m_PBattleTarget != nullptr && m_PBattleTarget->StatusEffectContainer->HasStatusEffect(EFFECT_PARALYSIS) == false && m_PBattleTarget->GetHPP() >= requiredHPP) 
+	{
+	   m_PBattleSubTarget = m_PBattleTarget;
+		// m_magicRecast = 5000;
+        if (mskill > 20)
+		    if (m_PPet->health.mp >= 6)  	
+			    {
+				 spellID = 58;
+				}
+             else
+			    {
+				 spellID = -1;
+				} 
+        m_magicEnfeebCast = 1;
+		m_magicEnfeebleRecast = 8000;
+	
+	}
+	    else if (m_PBattleTarget != nullptr && m_PBattleTarget->StatusEffectContainer->HasStatusEffect(EFFECT_BLINDNESS) == false && m_PBattleTarget->GetHPP() >= requiredHPP) 
+	{
+	   m_PBattleSubTarget = m_PBattleTarget;
+		// m_magicRecast = 5000;
+        if (mskill > 41)
+		    if (m_PPet->health.mp >= 5)  	
+			    {
+				 spellID = 254;
+				}
+            else
+			    {
+				 spellID = -1;
+				} 
+        m_magicEnfeebCast = 1;
+		m_magicEnfeebleRecast = 8000;
+	
+	}
+	
+
+    else if (m_PBattleTarget != nullptr && m_PBattleTarget->StatusEffectContainer->HasStatusEffect(EFFECT_SLOW) == false && m_PBattleTarget->GetHPP() >= requiredHPP) 
+	{
+	   m_PBattleSubTarget = m_PBattleTarget;
+		// m_magicRecast = 5000;
+        if (mskill > 41)
+		    if (m_PPet->health.mp >= 15)  	
+			    {
+				 spellID = 52;
+				}
+             else
+			    {
+				 spellID = -1;
+				} 
+        m_magicEnfeebCast = 1;
+		m_magicEnfeebleRecast = 8000;
+	
+	}
+	
+	  else if (m_PBattleTarget != nullptr && m_PBattleTarget->StatusEffectContainer->HasStatusEffect(EFFECT_SILENCE) == false && m_PBattleTarget->GetHPP() >= requiredHPP) 
+	{
+	   m_PBattleSubTarget = m_PBattleTarget;
+		// m_magicRecast = 5000;
+        if (mskill > 56)
+		    if (m_PPet->health.mp >= 16)  	
+			    {
+				 spellID = 59;
+				}
+            else
+			    {
+				 spellID = -1;
+				} 
+        m_magicEnfeebCast = 1;
+		m_magicEnfeebleRecast = 8000;
+	
+	}
+	
+	else
+	{
+		m_LastMagicTimeEnf = m_Tick; // reset mtick
+		m_magicEnfeebleRecast = 15000; // No eligible Debuffs
+	}	
+	}
+
+	
+	return spellID;
+}
+
+//------------------------------------------------------//
+// Stormwaker Frame/Stormwaker Head Automaton AI (RDM)  //
+//------------------------------------------------------//
+
+
+int16 CAIAutomatonDummy::StormFrameStormAttack()
+{
+	uint8 requiredHPP = 75; // Enfeebling Threshold
+	uint8 nukeHPP = 74; // Mob HP threshold to begin nuking for RDM Head less than or equal to
+	uint8 lowHPP = 31;
+	uint8 level = m_PPet->GetMLevel();
+	uint8 trigger = 40;
+	uint16 mskill = m_PPet->PMaster->GetSkill(SKILL_AMA);
+	uint16 maskill = m_PPet->PMaster->GetSkill(SKILL_AMA);
+	
+    int16 spellID = -1;
+    CBattleEntity* master = m_PPet->PMaster;  
+	//calculate curing threshold based on Light Maneuvers
+	if (m_PPet->PMaster->StatusEffectContainer->GetEffectsCount(EFFECT_LIGHT_MANEUVER) == 1) 
+		{
+		trigger = 40;
+		}
+	else if (m_PPet->PMaster->StatusEffectContainer->GetEffectsCount(EFFECT_LIGHT_MANEUVER) == 2) 
+		{
+		trigger = 50;
+		}
+	else if (m_PPet->PMaster->StatusEffectContainer->GetEffectsCount(EFFECT_LIGHT_MANEUVER) == 3) 
+		{
+		trigger = 75;
+		}
+	else if (m_PPet->hasAttachment(8643))
+		{
+		trigger = 80;
+		}	
+	else
+		{
+		trigger = 40;
+	    }
+	//calculate attachments
+	
+	if (m_PPet->hasAttachment(8643))
+		{
+		 m_damageGauge = 2000; // Prioritiezes Cures by making its counter 2 seconds faster 
+		}
+	else
+		{
+		 m_damageGauge = 0;
+		}
+	
+	
+    CBattleEntity* mostWounded = getWounded(trigger);
+    //CBattleEntity* mostWounded = m_PPet;
+	// Enhancing Spells
+	// Order is Protect > Shell > Haste (if Wind Maneuver is up) > Stoneskin (if Earth Maneuver is up) > Phalanx 
+	
+	if (m_Tick >= m_LastMagicTimeEnhance + m_magicEnhanceRecast) 
+		{
+		if (m_PPet->PMaster->StatusEffectContainer->HasStatusEffect(EFFECT_PROTECT) == false) 
+			{
+			m_PBattleSubTarget = m_PPet->PMaster;
+			if (mskill > 216)
+				if (m_PPet->health.mp > 64)
+					{
+					 spellID = 46;
+					}
+				else if (m_PPet->health.mp > 45)
+					{
+					 spellID = 45;
+					}
+				else if (m_PPet->health.mp > 27)
+					{
+					 spellID = 44;
+					}
+				else if (m_PPet->health.mp > 8)
+					{
+					 spellID = 43;
+					}
+				else 
+			        {
+				     spellID = -1;
+				    } 	
+			else if (mskill > 143)
+				if (m_PPet->health.mp > 45)
+					{
+					 spellID = 45;
+					}
+				else if (m_PPet->health.mp > 27)
+					{
+					 spellID = 44;
+					}
+				else if (m_PPet->health.mp > 8)
+					{
+					 spellID = 43;
+					}
+				else 
+			        {
+				     spellID = -1;
+				    } 	
+			else if (mskill > 83)
+				if (m_PPet->health.mp > 27)
+					{
+					 spellID = 44;
+					}
+				else if (m_PPet->health.mp > 8)
+					{
+					 spellID = 43;
+					}
+				else 
+			        {
+				     spellID = -1;
+				    } 	
+			else if (mskill > 23)
+				if (m_PPet->health.mp > 8)
+					{
+					 spellID = 43;
+					}
+				else 
+			        {
+				     spellID = -1;
+				    } 	
+			else
+		        {
+				 spellID = -1;
+				} 
+			m_magicEnhanceCast = 1;
+			m_magicEnhanceRecast = 15000;
+			}
+		else if (m_PPet->PMaster->StatusEffectContainer->HasStatusEffect(EFFECT_SHELL) == false) 
+			{
+			m_PBattleSubTarget = m_PPet->PMaster;
+			if (mskill > 240)
+				if (m_PPet->health.mp > 74)
+					{
+					 spellID = 51;
+					}
+				else if (m_PPet->health.mp > 55)
+					{
+					 spellID = 50;
+					}
+				else if (m_PPet->health.mp > 36)
+					{
+					 spellID = 49;
+					}
+				else if (m_PPet->health.mp > 17)
+					{
+					 spellID = 48;
+					}
+				else 
+			        {
+				     spellID = -1;
+				    } 	
+			else if (mskill > 187)
+				if (m_PPet->health.mp > 55)
+					{
+					 spellID = 50;
+					}
+				else if (m_PPet->health.mp > 36)
+					{
+					 spellID = 49;
+					}
+				else if (m_PPet->health.mp > 17)
+					{
+					 spellID = 48;
+					}
+				else 
+			        {
+				     spellID = -1;
+				    } 	
+			else if (mskill > 113)
+				if (m_PPet->health.mp > 36)
+					{
+					 spellID = 49;
+					}
+				else if (m_PPet->health.mp > 17)
+					{
+					 spellID = 48;
+					}
+				else 
+			        {
+				     spellID = -1;
+				    } 	
+			else if (mskill > 53)
+				if (m_PPet->health.mp > 17)
+					{
+					 spellID = 48;
+					}
+				else 
+			        {
+				     spellID = -1;
+				    } 	
+			else
+		        {
+				 spellID = -1;
+				} 
+			m_magicEnhanceCast = 1;
+			m_magicEnhanceRecast = 15000;
+			}
+		else if (m_PPet->PMaster->StatusEffectContainer->HasStatusEffect(EFFECT_WIND_MANEUVER) == true && m_PPet->PMaster->StatusEffectContainer->HasStatusEffect(EFFECT_HASTE) == false)   //Haste 
+			{
+			m_PBattleSubTarget = m_PPet->PMaster;
+			if (mskill > 146)
+                if (m_PPet->health.mp > 39)
+					{
+					 spellID = 57;
+					}
+				else 
+			        {
+				     spellID = -1;
+				    } 				
+			else
+		        {
+				 spellID = -1;
+				} 
+			m_magicEnhanceCast = 1;
+			m_magicEnhanceRecast = 15000;
+			}			
+		else if (m_PPet->PMaster->StatusEffectContainer->HasStatusEffect(EFFECT_EARTH_MANEUVER) == true && m_PPet->PMaster->StatusEffectContainer->HasStatusEffect(EFFECT_STONESKIN) == false)   //Stoneskin 
+			{
+			m_PBattleSubTarget = m_PPet->PMaster;
+			if (mskill > 105)
+                if (m_PPet->health.mp > 29)
+					{
+					 spellID = 54;
+					}
+				else 
+			        {
+				     spellID = -1;
+				    } 				
+			else
+		        {
+				 spellID = -1;
+				} 
+			m_magicEnhanceCast = 1;
+			m_magicEnhanceRecast = 15000;
+			}
+        else if (m_PPet->PMaster->StatusEffectContainer->HasStatusEffect(EFFECT_PHALANX) == false && m_PBattleTarget->GetHPP() >= requiredHPP && m_PBattleTarget->GetMLevel() >= m_PPet->PMaster->GetMLevel())   //Phalanx only if mob level is EM or higher
+			{
+			m_PBattleSubTarget = m_PPet->PMaster;
+			if (mskill > 98)
+                if (m_PPet->health.mp > 20)
+					{
+					 spellID = 106;
+					}
+				else 
+			        {
+				     spellID = -1;
+				    } 				
+			else
+		        {
+				 spellID = -1;
+				} 
+			m_magicEnhanceCast = 1;
+			m_magicEnhanceRecast = 15000;
+			}						
+			else
+			{
+			m_LastMagicTimeEnhance = m_Tick; // reset mtick
+			m_magicEnhanceRecast = 15000; // No eligible Enhance Spell to Cast
+			}
+        }
+	
+	
+	
+	// Healing AI
+	// TODO Add calculation that looks at most wounded HP percentage vs their full HP amount to determine level of cure
+	// TODO Add a way to calculate proper regen
+
+	if (m_Tick >= m_LastMagicTimeHeal + m_magicHealRecast)  // Look for last magic healing spell time 
+	{
+		if (mostWounded != nullptr)
+		{
+        m_PBattleSubTarget = mostWounded;
+		if (mskill > 146)
+			if (m_PPet->health.mp > 88)
+				{
+				 spellID = 4;
+				}
+			else if (m_PPet->health.mp > 46)  	
+			    {
+				 spellID = 3;
+				}
+			else if (m_PPet->health.mp > 24)  	
+			    {
+				 spellID = 2;
+				}				
+			else if (m_PPet->health.mp > 7)  	
+			    {
+				 spellID = 1;
+				}
+			else 
+			    {
+				 spellID = -1;
+				} 
+		else if (mskill > 80)
+			if (m_PPet->health.mp > 46)  	
+			    {
+				 spellID = 3;
+				}
+			else if (m_PPet->health.mp > 24)  	
+			    {
+				 spellID = 2;
+				}				
+			else if (m_PPet->health.mp > 7)  	
+			    {
+				 spellID = 1;
+				}
+			else
+			    {
+				 spellID = -1;
+				}
+		else if (mskill > 44)
+			if (m_PPet->health.mp > 24)  	
+			    {
+				 spellID = 2;
+				}				
+			else if (m_PPet->health.mp > 7)  	
+			    {
+				 spellID = 1;
+				}
+			else
+			    {
+				 spellID = -1;
+				}
+		else if (mskill > 11)
+			if (m_PPet->health.mp > 7)  	
+			    {
+				 spellID = 1;
+				}
+			else
+			    {
+				 spellID = -1;
+				} 
+		else
+		        {
+				 spellID = -1;
+				} 
+		
+        m_magicHealRecast = 15000 - m_damageGauge;
+		m_magicHealCast = 1; // 1 means casting a spell
+		}
+		else
+		{
+		m_LastMagicTimeHeal = m_Tick; // reset mtick no eligible healing spell to cast
+		m_magicHealRecast = 15000;		
+       }
+	}
+	
+	
+	
+	if (m_Tick >= m_LastMagicTimeEnf + m_magicEnfeebleRecast)  // Look for last enfeeble spell time 
+	{
+	  if (m_PBattleTarget != nullptr && m_PBattleTarget->StatusEffectContainer->HasStatusEffect(EFFECT_DIA) == false && m_PBattleTarget->GetHPP() >= requiredHPP)
+	{
+		m_PBattleSubTarget = m_PBattleTarget;
+        if (mskill >= 96)
+		    if (m_PPet->health.mp > 30)  	
+			    {
+				 spellID = 24;
+				}
+		    else if (m_PPet->health.mp >= 7)  	
+			    {
+				 spellID = 23;
+				}
+            else
+			    {
+				 spellID = -1;
+				}
+        else if (mskill >= 0)
+		    if (m_PPet->health.mp >= 7)  	
+			    {
+				 spellID = 23;
+				}
+            else 
+			    {
+				 spellID = -1;
+				}
+		m_magicEnfeebCast = 1;
+		m_magicEnfeebleRecast = 11000;
+        
+	}
+	    else if (m_PBattleTarget != nullptr && m_PBattleTarget->StatusEffectContainer->HasStatusEffect(EFFECT_POISON) == false && m_PBattleTarget->GetHPP() >= requiredHPP) 
+	{
+	   m_PBattleSubTarget = m_PBattleTarget;
+		// m_magicRecast = 5000;
+        if (mskill > 17)
+		    if (m_PPet->health.mp >= 5)  	
+			    {
+				 spellID = 220;
+				}
+            else
+			    {
+				 spellID = -1;
+				} 
+        m_magicEnfeebCast = 1;
+		m_magicEnfeebleRecast = 11000;
+	
+	}
+	    else if (m_PBattleTarget != nullptr && m_PBattleTarget->StatusEffectContainer->HasStatusEffect(EFFECT_PARALYSIS) == false && m_PBattleTarget->GetHPP() >= requiredHPP) 
+	{
+	   m_PBattleSubTarget = m_PBattleTarget;
+		// m_magicRecast = 5000;
+        if (mskill > 20)
+		    if (m_PPet->health.mp >= 6)  	
+			    {
+				 spellID = 58;
+				}
+             else
+			    {
+				 spellID = -1;
+				} 
+        m_magicEnfeebCast = 1;
+		m_magicEnfeebleRecast = 11000;
+	
+	}
+	    else if (m_PBattleTarget != nullptr && m_PBattleTarget->StatusEffectContainer->HasStatusEffect(EFFECT_BLINDNESS) == false && m_PBattleTarget->GetHPP() >= requiredHPP) 
+	{
+	   m_PBattleSubTarget = m_PBattleTarget;
+		// m_magicRecast = 5000;
+        if (mskill > 41)
+		    if (m_PPet->health.mp >= 5)  	
+			    {
+				 spellID = 254;
+				}
+            else
+			    {
+				 spellID = -1;
+				} 
+        m_magicEnfeebCast = 1;
+		m_magicEnfeebleRecast = 11000;
+	
+	}
+	
+
+    else if (m_PBattleTarget != nullptr && m_PBattleTarget->StatusEffectContainer->HasStatusEffect(EFFECT_SLOW) == false && m_PBattleTarget->GetHPP() >= requiredHPP) 
+	{
+	   m_PBattleSubTarget = m_PBattleTarget;
+		// m_magicRecast = 5000;
+        if (mskill > 41)
+		    if (m_PPet->health.mp >= 15)  	
+			    {
+				 spellID = 52;
+				}
+             else
+			    {
+				 spellID = -1;
+				} 
+        m_magicEnfeebCast = 1;
+		m_magicEnfeebleRecast = 11000;
+	
+	}
+	
+	  else if (m_PBattleTarget != nullptr && m_PBattleTarget->StatusEffectContainer->HasStatusEffect(EFFECT_SILENCE) == false && m_PBattleTarget->GetHPP() >= requiredHPP) 
+	{
+	   m_PBattleSubTarget = m_PBattleTarget;
+		// m_magicRecast = 5000;
+        if (mskill > 56)
+		    if (m_PPet->health.mp >= 16)  	
+			    {
+				 spellID = 59;
+				}
+            else
+			    {
+				 spellID = -1;
+				} 
+        m_magicEnfeebCast = 1;
+		m_magicEnfeebleRecast = 11000;
+	
+	}
+	}
+	
+	//--------------------------------------------//
+	//   Elemental Magic Weakness Targeting       //
+	//   TODO Ice element forcing Ele Magic       //
+	//--------------------------------------------//
+	if (m_Tick >= m_LastMagicTimeEle + m_magicElementalRecast)  // Look for last ele spell time and force magic casting if ice maneuver is up
+	{
+	 if (m_PBattleTarget != nullptr && m_PBattleTarget->getMod(MOD_THUNDERRES) < 0 && m_PBattleTarget->GetHPP() <= nukeHPP)  // Weak to Thunder
+	 {
+	 ShowDebug("Monster is Weak to Thunder");
+	 m_PBattleSubTarget = m_PBattleTarget;
+		if (mskill > 290)
+			if (m_PPet->health.mp > 195)
+				{
+				 spellID = 167;
+				}
+			else if (m_PPet->health.mp > 90)	
+                {
+				 spellID = 166;
+			    }
+			else if (m_PPet->health.mp > 36)	
+                {
+				 spellID = 165;
+			    }
+			else if (m_PPet->health.mp > 8)	
+                {
+				 spellID = 164;
+			    }
+            else
+				{
+				 spellID = -1;
+				}
+		else if (mskill > 260)
+			if (m_PPet->health.mp > 90)	
+                {
+				 spellID = 166;
+			    }
+			else if (m_PPet->health.mp > 36)	
+                {
+				 spellID = 165;
+			    }
+			else if (m_PPet->health.mp > 8)	
+                {
+				 spellID = 164;
+			    }
+            else
+				{
+				 spellID = -1;
+				}
+		else if (mskill > 202)
+			if (m_PPet->health.mp > 36)	
+                {
+				 spellID = 165;
+			    }
+			else if (m_PPet->health.mp > 8)	
+                {
+				 spellID = 164;
+			    }
+            else
+				{
+				 spellID = -1;
+				}
+		else if (mskill > 89)
+			if (m_PPet->health.mp > 8)	
+                {
+				 spellID = 164;
+			    }
+            else
+				{
+				 spellID = -1;
+				}
+		else
+                {
+                 spellID = -1;
+                }			 
+		m_magicElementCast = 1;
+		m_magicElementalRecast = 18000;
+    }
+	 else if (m_PBattleTarget != nullptr && m_PBattleTarget->getMod(MOD_ICERES) < 0 && m_PBattleTarget->GetHPP() <= nukeHPP)  // Weak to Ice
+	{
+	    ShowDebug("Monster is Weak to Ice");
+		m_PBattleSubTarget = m_PBattleTarget;
+		if (mskill > 286)
+			if (m_PPet->health.mp > 161)
+				{
+				 spellID = 152;
+				}
+			else if (m_PPet->health.mp > 74)	
+                {
+				 spellID = 151;
+			    }
+			else if (m_PPet->health.mp > 30)	
+                {
+				 spellID = 150;
+			    }
+			else if (m_PPet->health.mp > 7)	
+                {
+				 spellID = 149;
+			    }
+            else
+				{
+				 spellID = -1;
+				}
+		else if (mskill > 260)
+			if (m_PPet->health.mp > 74)	
+                {
+				 spellID = 151;
+			    }
+			else if (m_PPet->health.mp > 30)	
+                {
+				 spellID = 150;
+			    }
+			else if (m_PPet->health.mp > 7)	
+                {
+				 spellID = 149;
+			    }
+            else
+				{
+				 spellID = -1;
+				}
+        else if (mskill > 177)
+			if (m_PPet->health.mp > 30)	
+                {
+				 spellID = 150;
+			    }
+			else if (m_PPet->health.mp > 7)	
+                {
+				 spellID = 149;
+			    }
+            else
+				{
+				 spellID = -1;
+				}
+        else if (mskill > 74)
+			if (m_PPet->health.mp > 7)	
+                {
+				 spellID = 149;
+			    }
+            else
+				{
+				 spellID = -1;
+				}	
+    m_magicElementCast = 1;
+	m_magicElementalRecast = 18000;	
+    }
+	 else if (m_PBattleTarget != nullptr && m_PBattleTarget->getMod(MOD_FIRERES) < 0 && m_PBattleTarget->GetHPP() <= nukeHPP)  // Weak to Fire
+	{
+	    ShowDebug("Monster is Weak to Fire");
+		m_PBattleSubTarget = m_PBattleTarget;
+		if (mskill > 280)
+			if (m_PPet->health.mp > 134)
+				{
+				 spellID = 147;
+				}
+			else if (m_PPet->health.mp > 62)	
+                {
+				 spellID = 146;
+			    }
+			else if (m_PPet->health.mp > 25)	
+                {
+				 spellID = 145;
+			    }
+			else if (m_PPet->health.mp > 6)	
+                {
+				 spellID = 144;
+			    }
+            else
+				{
+				 spellID = -1;
+				}
+		else if (mskill > 250)
+			if (m_PPet->health.mp > 62)	
+                {
+				 spellID = 146;
+			    }
+			else if (m_PPet->health.mp > 25)	
+                {
+				 spellID = 145;
+			    }
+			else if (m_PPet->health.mp > 6)	
+                {
+				 spellID = 144;
+			    }
+            else
+				{
+				 spellID = -1;
+				}
+        else if (mskill > 152)
+			if (m_PPet->health.mp > 25)	
+                {
+				 spellID = 145;
+			    }
+			else if (m_PPet->health.mp > 6)	
+                {
+				 spellID = 144;
+			    }
+            else
+				{
+				 spellID = -1;
+				}
+        else if (mskill > 59)
+			if (m_PPet->health.mp > 6)	
+                {
+				 spellID = 144;
+			    }
+            else
+				{
+				 spellID = -1;
+				}	
+    m_magicElementCast = 1;
+	m_magicElementalRecast = 18000;	
+    }
+	 else if (m_PBattleTarget != nullptr && m_PBattleTarget->getMod(MOD_WINDRES) < 0 && m_PBattleTarget->GetHPP() <= nukeHPP)  // Weak to Wind
+	{
+	    ShowDebug("Monster is Weak to Wind");
+		m_PBattleSubTarget = m_PBattleTarget;
+		if (mskill > 275)
+			if (m_PPet->health.mp > 114)
+				{
+				 spellID = 157;
+				}
+			else if (m_PPet->health.mp > 53)	
+                {
+				 spellID = 156;
+			    }
+			else if (m_PPet->health.mp > 21)	
+                {
+				 spellID = 155;
+			    }
+			else if (m_PPet->health.mp > 5)	
+                {
+				 spellID = 154;
+			    }
+            else
+				{
+				 spellID = -1;
+				}
+		else if (mskill > 245)
+			if (m_PPet->health.mp > 53)	
+                {
+				 spellID = 156;
+			    }
+			else if (m_PPet->health.mp > 21)	
+                {
+				 spellID = 155;
+			    }
+			else if (m_PPet->health.mp > 5)	
+                {
+				 spellID = 144;
+			    }
+            else
+				{
+				 spellID = -1;
+				}
+        else if (mskill > 137)
+			if (m_PPet->health.mp > 21)	
+                {
+				 spellID = 155;
+			    }
+			else if (m_PPet->health.mp > 5)	
+                {
+				 spellID = 154;
+			    }
+            else
+				{
+				 spellID = -1;
+				}
+        else if (mskill > 44)
+			if (m_PPet->health.mp > 5)	
+                {
+				 spellID = 154;
+			    }
+            else
+				{
+				 spellID = -1;
+				}	
+    m_magicElementCast = 1;
+	m_magicElementalRecast = 18000;	
+    }
+	 else if (m_PBattleTarget != nullptr && m_PBattleTarget->getMod(MOD_WATERRES) < 0 && m_PBattleTarget->GetHPP() <= nukeHPP)  // Weak to Water
+	{
+	    ShowDebug("Monster is Weak to Water");
+		m_PBattleSubTarget = m_PBattleTarget;
+		if (mskill > 270)
+			if (m_PPet->health.mp > 98)
+				{
+				 spellID = 172;
+				}
+			else if (m_PPet->health.mp > 45)	
+                {
+				 spellID = 171;
+			    }
+			else if (m_PPet->health.mp > 18)	
+                {
+				 spellID = 170;
+			    }
+			else if (m_PPet->health.mp > 4)	
+                {
+				 spellID = 169;
+			    }
+            else
+				{
+				 spellID = -1;
+				}
+		else if (mskill > 235)
+			if (m_PPet->health.mp > 45)	
+                {
+				 spellID = 171;
+			    }
+			else if (m_PPet->health.mp > 18)	
+                {
+				 spellID = 170;
+			    }
+			else if (m_PPet->health.mp > 4)	
+                {
+				 spellID = 169;
+			    }
+            else
+				{
+				 spellID = -1;
+				}
+        else if (mskill > 122)
+			if (m_PPet->health.mp > 18)	
+                {
+				 spellID = 170;
+			    }
+			else if (m_PPet->health.mp > 4)	
+                {
+				 spellID = 169;
+			    }
+            else
+				{
+				 spellID = -1;
+				}
+        else if (mskill > 30)
+			if (m_PPet->health.mp > 4)	
+                {
+				 spellID = 169;
+			    }
+            else
+				{
+				 spellID = -1;
+				}	
+    m_magicElementCast = 1;
+	m_magicElementalRecast = 18000;	
+    }
+    else if (m_PBattleTarget != nullptr && m_PBattleTarget->getMod(MOD_EARTHRES) < 0 && m_PBattleTarget->GetHPP() <= nukeHPP)  // Weak to Earth
+	{
+	    ShowDebug("Monster is Weak to Earth");
+		m_PBattleSubTarget = m_PBattleTarget;
+		if (mskill > 265)
+			if (m_PPet->health.mp > 87)
+				{
+				 spellID = 162;
+				}
+			else if (m_PPet->health.mp > 39)	
+                {
+				 spellID = 161;
+			    }
+			else if (m_PPet->health.mp > 15)	
+                {
+				 spellID = 160;
+			    }
+			else if (m_PPet->health.mp > 3)	
+                {
+				 spellID = 159;
+			    }
+            else
+				{
+				 spellID = -1;
+				}
+		else if (mskill > 226)
+			if (m_PPet->health.mp > 39)	
+                {
+				 spellID = 161;
+			    }
+			else if (m_PPet->health.mp > 15)	
+                {
+				 spellID = 160;
+			    }
+			else if (m_PPet->health.mp > 3)	
+                {
+				 spellID = 159;
+			    }
+            else
+				{
+				 spellID = -1;
+				}
+        else if (mskill > 107)
+			if (m_PPet->health.mp > 15)	
+                {
+				 spellID = 160;
+			    }
+			else if (m_PPet->health.mp > 3)	
+                {
+				 spellID = 159;
+			    }
+            else
+				{
+				 spellID = -1;
+				}
+        else if (mskill > 14)
+			if (m_PPet->health.mp > 3)	
+                {
+				 spellID = 159;
+			    }
+            else
+				{
+				 spellID = -1;
+				}	
+    m_magicElementCast = 1;
+	m_magicElementalRecast = 18000;	
+    }
+	// No elemental magic weakness found - Cast highest Nuke learned
+	// TODO: Add check for Ice maneuver to force casting at any time.
+	else if (m_PBattleTarget != nullptr && m_PBattleTarget->GetHPP() <= nukeHPP)
+	{
+	    ShowDebug("No Weakness Casting Highest Spell \n");
+        m_PBattleSubTarget = m_PBattleTarget;
+		if (mskill > 290)
+		    if (m_PPet->health.mp > 194)
+			{
+			 spellID = 167; //THUNDER IV
+			}
+        else if (m_PPet->health.mp > 161)
+			{
+			 spellID = 152; //BLIZZARD IV
+			}
+        else if (m_PPet->health.mp > 134)
+			{
+			 spellID = 147; //FIRE IV
+			}
+        else if (m_PPet->health.mp > 114)
+			{
+			 spellID = 157; //AERO IV
+			}
+        else if (m_PPet->health.mp > 98)
+			{
+			 spellID = 172; //WATER IV
+			}
+        else if (m_PPet->health.mp > 87)
+			{
+			 spellID = 162; //STONE IV
+			}
+        else if (m_PPet->health.mp > 90)
+			{
+			 spellID = 166; //THUNDER III
+			}
+        else if (m_PPet->health.mp > 74)
+			{
+			 spellID = 151; //BLIZZARD III
+			}
+        else if (m_PPet->health.mp > 62)
+			{
+			 spellID = 146; //FIRE III
+			}
+        else if (m_PPet->health.mp > 53)
+			{
+			 spellID = 156; //AERO III
+			}
+        else if (m_PPet->health.mp > 45)
+			{
+			 spellID = 171; //WATER III
+			}
+        else if (m_PPet->health.mp > 39)
+			{
+			 spellID = 161; //STONE III
+			}
+        else if (m_PPet->health.mp > 36)
+			{
+			 spellID = 165; //THUNDER II
+			}
+        else if (m_PPet->health.mp > 30)
+			{
+			 spellID = 150; //BLIZZARD II
+			}
+        else if (m_PPet->health.mp > 25)
+			{
+			 spellID = 145; //FIRE II
+			}
+        else if (m_PPet->health.mp > 21)
+			{
+			 spellID = 155; //AERO II
+			}
+        else if (m_PPet->health.mp > 18)
+			{
+			 spellID = 170; //WATER II
+			}
+        else if (m_PPet->health.mp > 15)
+			{
+			 spellID = 160; //STONE II
+			}
+        else if (m_PPet->health.mp > 8)
+			{
+			 spellID = 164; //THUNDER I
+			}
+        else if (m_PPet->health.mp > 7)
+			{
+			 spellID = 149; //BLIZZARD I
+			}
+        else if (m_PPet->health.mp > 6)
+			{
+			 spellID = 144; //FIRE I
+			}
+        else if (m_PPet->health.mp > 5)
+			{
+			 spellID = 154; //AERO I
+			}
+        else if (m_PPet->health.mp > 4)
+			{
+			 spellID = 169; //WATER I
+			}
+        else if (m_PPet->health.mp > 3)
+			{
+			 spellID = 159; //STONE I
+			}
+        else
+			{
+		     spellID = -1;
+			}
+		else if (mskill > 285)
+		    if (m_PPet->health.mp > 161)
+			{
+			 spellID = 152; //BLIZZARD IV
+			}
+        else if (m_PPet->health.mp > 134)
+			{
+			 spellID = 147; //FIRE IV
+			}
+        else if (m_PPet->health.mp > 114)
+			{
+			 spellID = 157; //AERO IV
+			}
+        else if (m_PPet->health.mp > 98)
+			{
+			 spellID = 172; //WATER IV
+			}
+        else if (m_PPet->health.mp > 87)
+			{
+			 spellID = 162; //STONE IV
+			}
+        else if (m_PPet->health.mp > 90)
+			{
+			 spellID = 166; //THUNDER III
+			}
+        else if (m_PPet->health.mp > 74)
+			{
+			 spellID = 151; //BLIZZARD III
+			}
+        else if (m_PPet->health.mp > 62)
+			{
+			 spellID = 146; //FIRE III
+			}
+        else if (m_PPet->health.mp > 53)
+			{
+			 spellID = 156; //AERO III
+			}
+        else if (m_PPet->health.mp > 45)
+			{
+			 spellID = 171; //WATER III
+			}
+        else if (m_PPet->health.mp > 39)
+			{
+			 spellID = 161; //STONE III
+			}
+        else if (m_PPet->health.mp > 36)
+			{
+			 spellID = 165; //THUNDER II
+			}
+        else if (m_PPet->health.mp > 30)
+			{
+			 spellID = 150; //BLIZZARD II
+			}
+        else if (m_PPet->health.mp > 25)
+			{
+			 spellID = 145; //FIRE II
+			}
+        else if (m_PPet->health.mp > 21)
+			{
+			 spellID = 155; //AERO II
+			}
+        else if (m_PPet->health.mp > 18)
+			{
+			 spellID = 170; //WATER II
+			}
+        else if (m_PPet->health.mp > 15)
+			{
+			 spellID = 160; //STONE II
+			}
+        else if (m_PPet->health.mp > 8)
+			{
+			 spellID = 164; //THUNDER I
+			}
+        else if (m_PPet->health.mp > 7)
+			{
+			 spellID = 149; //BLIZZARD I
+			}
+        else if (m_PPet->health.mp > 6)
+			{
+			 spellID = 144; //FIRE I
+			}
+        else if (m_PPet->health.mp > 5)
+			{
+			 spellID = 154; //AERO I
+			}
+        else if (m_PPet->health.mp > 4)
+			{
+			 spellID = 169; //WATER I
+			}
+        else if (m_PPet->health.mp > 3)
+			{
+			 spellID = 159; //STONE I
+			}
+        else
+			{
+		     spellID = -1;
+			}	
+		else if (mskill > 280)
+		    if (m_PPet->health.mp > 134)
+			{
+			 spellID = 147; //FIRE IV
+			}
+        else if (m_PPet->health.mp > 114)
+			{
+			 spellID = 157; //AERO IV
+			}
+        else if (m_PPet->health.mp > 98)
+			{
+			 spellID = 172; //WATER IV
+			}
+        else if (m_PPet->health.mp > 87)
+			{
+			 spellID = 162; //STONE IV
+			}
+        else if (m_PPet->health.mp > 90)
+			{
+			 spellID = 166; //THUNDER III
+			}
+        else if (m_PPet->health.mp > 74)
+			{
+			 spellID = 151; //BLIZZARD III
+			}
+        else if (m_PPet->health.mp > 62)
+			{
+			 spellID = 146; //FIRE III
+			}
+        else if (m_PPet->health.mp > 53)
+			{
+			 spellID = 156; //AERO III
+			}
+        else if (m_PPet->health.mp > 45)
+			{
+			 spellID = 171; //WATER III
+			}
+        else if (m_PPet->health.mp > 39)
+			{
+			 spellID = 161; //STONE III
+			}
+        else if (m_PPet->health.mp > 36)
+			{
+			 spellID = 165; //THUNDER II
+			}
+        else if (m_PPet->health.mp > 30)
+			{
+			 spellID = 150; //BLIZZARD II
+			}
+        else if (m_PPet->health.mp > 25)
+			{
+			 spellID = 145; //FIRE II
+			}
+        else if (m_PPet->health.mp > 21)
+			{
+			 spellID = 155; //AERO II
+			}
+        else if (m_PPet->health.mp > 18)
+			{
+			 spellID = 170; //WATER II
+			}
+        else if (m_PPet->health.mp > 15)
+			{
+			 spellID = 160; //STONE II
+			}
+        else if (m_PPet->health.mp > 8)
+			{
+			 spellID = 164; //THUNDER I
+			}
+        else if (m_PPet->health.mp > 7)
+			{
+			 spellID = 149; //BLIZZARD I
+			}
+        else if (m_PPet->health.mp > 6)
+			{
+			 spellID = 144; //FIRE I
+			}
+        else if (m_PPet->health.mp > 5)
+			{
+			 spellID = 154; //AERO I
+			}
+        else if (m_PPet->health.mp > 4)
+			{
+			 spellID = 169; //WATER I
+			}
+        else if (m_PPet->health.mp > 3)
+			{
+			 spellID = 159; //STONE I
+			}
+        else
+			{
+		     spellID = -1;
+			}	
+		else if (mskill > 275)
+		    if (m_PPet->health.mp > 114)
+			{
+			 spellID = 157; //AERO IV
+			}
+        else if (m_PPet->health.mp > 98)
+			{
+			 spellID = 172; //WATER IV
+			}
+        else if (m_PPet->health.mp > 87)
+			{
+			 spellID = 162; //STONE IV
+			}
+        else if (m_PPet->health.mp > 90)
+			{
+			 spellID = 166; //THUNDER III
+			}
+        else if (m_PPet->health.mp > 74)
+			{
+			 spellID = 151; //BLIZZARD III
+			}
+        else if (m_PPet->health.mp > 62)
+			{
+			 spellID = 146; //FIRE III
+			}
+        else if (m_PPet->health.mp > 53)
+			{
+			 spellID = 156; //AERO III
+			}
+        else if (m_PPet->health.mp > 45)
+			{
+			 spellID = 171; //WATER III
+			}
+        else if (m_PPet->health.mp > 39)
+			{
+			 spellID = 161; //STONE III
+			}
+        else if (m_PPet->health.mp > 36)
+			{
+			 spellID = 165; //THUNDER II
+			}
+        else if (m_PPet->health.mp > 30)
+			{
+			 spellID = 150; //BLIZZARD II
+			}
+        else if (m_PPet->health.mp > 25)
+			{
+			 spellID = 145; //FIRE II
+			}
+        else if (m_PPet->health.mp > 21)
+			{
+			 spellID = 155; //AERO II
+			}
+        else if (m_PPet->health.mp > 18)
+			{
+			 spellID = 170; //WATER II
+			}
+        else if (m_PPet->health.mp > 15)
+			{
+			 spellID = 160; //STONE II
+			}
+        else if (m_PPet->health.mp > 8)
+			{
+			 spellID = 164; //THUNDER I
+			}
+        else if (m_PPet->health.mp > 7)
+			{
+			 spellID = 149; //BLIZZARD I
+			}
+        else if (m_PPet->health.mp > 6)
+			{
+			 spellID = 144; //FIRE I
+			}
+        else if (m_PPet->health.mp > 5)
+			{
+			 spellID = 154; //AERO I
+			}
+        else if (m_PPet->health.mp > 4)
+			{
+			 spellID = 169; //WATER I
+			}
+        else if (m_PPet->health.mp > 3)
+			{
+			 spellID = 159; //STONE I
+			}
+        else
+			{
+		     spellID = -1;
+			}	
+		else if (mskill > 270)
+		   if (m_PPet->health.mp > 98)
+			{
+			 spellID = 172; //WATER IV
+			}
+        else if (m_PPet->health.mp > 87)
+			{
+			 spellID = 162; //STONE IV
+			}
+        else if (m_PPet->health.mp > 90)
+			{
+			 spellID = 166; //THUNDER III
+			}
+        else if (m_PPet->health.mp > 74)
+			{
+			 spellID = 151; //BLIZZARD III
+			}
+        else if (m_PPet->health.mp > 62)
+			{
+			 spellID = 146; //FIRE III
+			}
+        else if (m_PPet->health.mp > 53)
+			{
+			 spellID = 156; //AERO III
+			}
+        else if (m_PPet->health.mp > 45)
+			{
+			 spellID = 171; //WATER III
+			}
+        else if (m_PPet->health.mp > 39)
+			{
+			 spellID = 161; //STONE III
+			}
+        else if (m_PPet->health.mp > 36)
+			{
+			 spellID = 165; //THUNDER II
+			}
+        else if (m_PPet->health.mp > 30)
+			{
+			 spellID = 150; //BLIZZARD II
+			}
+        else if (m_PPet->health.mp > 25)
+			{
+			 spellID = 145; //FIRE II
+			}
+        else if (m_PPet->health.mp > 21)
+			{
+			 spellID = 155; //AERO II
+			}
+        else if (m_PPet->health.mp > 18)
+			{
+			 spellID = 170; //WATER II
+			}
+        else if (m_PPet->health.mp > 15)
+			{
+			 spellID = 160; //STONE II
+			}
+        else if (m_PPet->health.mp > 8)
+			{
+			 spellID = 164; //THUNDER I
+			}
+        else if (m_PPet->health.mp > 7)
+			{
+			 spellID = 149; //BLIZZARD I
+			}
+        else if (m_PPet->health.mp > 6)
+			{
+			 spellID = 144; //FIRE I
+			}
+        else if (m_PPet->health.mp > 5)
+			{
+			 spellID = 154; //AERO I
+			}
+        else if (m_PPet->health.mp > 4)
+			{
+			 spellID = 169; //WATER I
+			}
+        else if (m_PPet->health.mp > 3)
+			{
+			 spellID = 159; //STONE I
+			}
+        else
+			{
+		     spellID = -1;
+			}		
+        else if (mskill > 265)
+		  if (m_PPet->health.mp > 87)
+			{
+			 spellID = 162; //STONE IV
+			}
+        else if (m_PPet->health.mp > 90)
+			{
+			 spellID = 166; //THUNDER III
+			}
+        else if (m_PPet->health.mp > 74)
+			{
+			 spellID = 151; //BLIZZARD III
+			}
+        else if (m_PPet->health.mp > 62)
+			{
+			 spellID = 146; //FIRE III
+			}
+        else if (m_PPet->health.mp > 53)
+			{
+			 spellID = 156; //AERO III
+			}
+        else if (m_PPet->health.mp > 45)
+			{
+			 spellID = 171; //WATER III
+			}
+        else if (m_PPet->health.mp > 39)
+			{
+			 spellID = 161; //STONE III
+			}
+        else if (m_PPet->health.mp > 36)
+			{
+			 spellID = 165; //THUNDER II
+			}
+        else if (m_PPet->health.mp > 30)
+			{
+			 spellID = 150; //BLIZZARD II
+			}
+        else if (m_PPet->health.mp > 25)
+			{
+			 spellID = 145; //FIRE II
+			}
+        else if (m_PPet->health.mp > 21)
+			{
+			 spellID = 155; //AERO II
+			}
+        else if (m_PPet->health.mp > 18)
+			{
+			 spellID = 170; //WATER II
+			}
+        else if (m_PPet->health.mp > 15)
+			{
+			 spellID = 160; //STONE II
+			}
+        else if (m_PPet->health.mp > 8)
+			{
+			 spellID = 164; //THUNDER I
+			}
+        else if (m_PPet->health.mp > 7)
+			{
+			 spellID = 149; //BLIZZARD I
+			}
+        else if (m_PPet->health.mp > 6)
+			{
+			 spellID = 144; //FIRE I
+			}
+        else if (m_PPet->health.mp > 5)
+			{
+			 spellID = 154; //AERO I
+			}
+        else if (m_PPet->health.mp > 4)
+			{
+			 spellID = 169; //WATER I
+			}
+        else if (m_PPet->health.mp > 3)
+			{
+			 spellID = 159; //STONE I
+			}
+        else
+			{
+		     spellID = -1;
+			}		
+        else if (mskill > 260)
+		   if (m_PPet->health.mp > 90)
+			{
+			 spellID = 166; //THUNDER III
+			}
+        else if (m_PPet->health.mp > 74)
+			{
+			 spellID = 151; //BLIZZARD III
+			}
+        else if (m_PPet->health.mp > 62)
+			{
+			 spellID = 146; //FIRE III
+			}
+        else if (m_PPet->health.mp > 53)
+			{
+			 spellID = 156; //AERO III
+			}
+        else if (m_PPet->health.mp > 45)
+			{
+			 spellID = 171; //WATER III
+			}
+        else if (m_PPet->health.mp > 39)
+			{
+			 spellID = 161; //STONE III
+			}
+        else if (m_PPet->health.mp > 36)
+			{
+			 spellID = 165; //THUNDER II
+			}
+        else if (m_PPet->health.mp > 30)
+			{
+			 spellID = 150; //BLIZZARD II
+			}
+        else if (m_PPet->health.mp > 25)
+			{
+			 spellID = 145; //FIRE II
+			}
+        else if (m_PPet->health.mp > 21)
+			{
+			 spellID = 155; //AERO II
+			}
+        else if (m_PPet->health.mp > 18)
+			{
+			 spellID = 170; //WATER II
+			}
+        else if (m_PPet->health.mp > 15)
+			{
+			 spellID = 160; //STONE II
+			}
+        else if (m_PPet->health.mp > 8)
+			{
+			 spellID = 164; //THUNDER I
+			}
+        else if (m_PPet->health.mp > 7)
+			{
+			 spellID = 149; //BLIZZARD I
+			}
+        else if (m_PPet->health.mp > 6)
+			{
+			 spellID = 144; //FIRE I
+			}
+        else if (m_PPet->health.mp > 5)
+			{
+			 spellID = 154; //AERO I
+			}
+        else if (m_PPet->health.mp > 4)
+			{
+			 spellID = 169; //WATER I
+			}
+        else if (m_PPet->health.mp > 3)
+			{
+			 spellID = 159; //STONE I
+			}
+        else
+			{
+		     spellID = -1;
+			}
+		else if (mskill > 255)
+		   if (m_PPet->health.mp > 74)
+			{
+			 spellID = 151; //BLIZZARD III
+			}
+        else if (m_PPet->health.mp > 62)
+			{
+			 spellID = 146; //FIRE III
+			}
+        else if (m_PPet->health.mp > 53)
+			{
+			 spellID = 156; //AERO III
+			}
+        else if (m_PPet->health.mp > 45)
+			{
+			 spellID = 171; //WATER III
+			}
+        else if (m_PPet->health.mp > 39)
+			{
+			 spellID = 161; //STONE III
+			}
+        else if (m_PPet->health.mp > 36)
+			{
+			 spellID = 165; //THUNDER II
+			}
+        else if (m_PPet->health.mp > 30)
+			{
+			 spellID = 150; //BLIZZARD II
+			}
+        else if (m_PPet->health.mp > 25)
+			{
+			 spellID = 145; //FIRE II
+			}
+        else if (m_PPet->health.mp > 21)
+			{
+			 spellID = 155; //AERO II
+			}
+        else if (m_PPet->health.mp > 18)
+			{
+			 spellID = 170; //WATER II
+			}
+        else if (m_PPet->health.mp > 15)
+			{
+			 spellID = 160; //STONE II
+			}
+        else if (m_PPet->health.mp > 8)
+			{
+			 spellID = 164; //THUNDER I
+			}
+        else if (m_PPet->health.mp > 7)
+			{
+			 spellID = 149; //BLIZZARD I
+			}
+        else if (m_PPet->health.mp > 6)
+			{
+			 spellID = 144; //FIRE I
+			}
+        else if (m_PPet->health.mp > 5)
+			{
+			 spellID = 154; //AERO I
+			}
+        else if (m_PPet->health.mp > 4)
+			{
+			 spellID = 169; //WATER I
+			}
+        else if (m_PPet->health.mp > 3)
+			{
+			 spellID = 159; //STONE I
+			}
+        else
+			{
+		     spellID = -1;
+			}
+		else if (mskill > 250)
+		    if (m_PPet->health.mp > 62)
+			{
+			 spellID = 146; //FIRE III
+			}
+        else if (m_PPet->health.mp > 53)
+			{
+			 spellID = 156; //AERO III
+			}
+        else if (m_PPet->health.mp > 45)
+			{
+			 spellID = 171; //WATER III
+			}
+        else if (m_PPet->health.mp > 39)
+			{
+			 spellID = 161; //STONE III
+			}
+        else if (m_PPet->health.mp > 36)
+			{
+			 spellID = 165; //THUNDER II
+			}
+        else if (m_PPet->health.mp > 30)
+			{
+			 spellID = 150; //BLIZZARD II
+			}
+        else if (m_PPet->health.mp > 25)
+			{
+			 spellID = 145; //FIRE II
+			}
+        else if (m_PPet->health.mp > 21)
+			{
+			 spellID = 155; //AERO II
+			}
+        else if (m_PPet->health.mp > 18)
+			{
+			 spellID = 170; //WATER II
+			}
+        else if (m_PPet->health.mp > 15)
+			{
+			 spellID = 160; //STONE II
+			}
+        else if (m_PPet->health.mp > 8)
+			{
+			 spellID = 164; //THUNDER I
+			}
+        else if (m_PPet->health.mp > 7)
+			{
+			 spellID = 149; //BLIZZARD I
+			}
+        else if (m_PPet->health.mp > 6)
+			{
+			 spellID = 144; //FIRE I
+			}
+        else if (m_PPet->health.mp > 5)
+			{
+			 spellID = 154; //AERO I
+			}
+        else if (m_PPet->health.mp > 4)
+			{
+			 spellID = 169; //WATER I
+			}
+        else if (m_PPet->health.mp > 3)
+			{
+			 spellID = 159; //STONE I
+			}
+        else
+			{
+		     spellID = -1;
+			}
+		else if (mskill > 245)
+		    if (m_PPet->health.mp > 53)
+			{
+			 spellID = 156; //AERO III
+			}
+        else if (m_PPet->health.mp > 45)
+			{
+			 spellID = 171; //WATER III
+			}
+        else if (m_PPet->health.mp > 39)
+			{
+			 spellID = 161; //STONE III
+			}
+        else if (m_PPet->health.mp > 36)
+			{
+			 spellID = 165; //THUNDER II
+			}
+        else if (m_PPet->health.mp > 30)
+			{
+			 spellID = 150; //BLIZZARD II
+			}
+        else if (m_PPet->health.mp > 25)
+			{
+			 spellID = 145; //FIRE II
+			}
+        else if (m_PPet->health.mp > 21)
+			{
+			 spellID = 155; //AERO II
+			}
+        else if (m_PPet->health.mp > 18)
+			{
+			 spellID = 170; //WATER II
+			}
+        else if (m_PPet->health.mp > 15)
+			{
+			 spellID = 160; //STONE II
+			}
+        else if (m_PPet->health.mp > 8)
+			{
+			 spellID = 164; //THUNDER I
+			}
+        else if (m_PPet->health.mp > 7)
+			{
+			 spellID = 149; //BLIZZARD I
+			}
+        else if (m_PPet->health.mp > 6)
+			{
+			 spellID = 144; //FIRE I
+			}
+        else if (m_PPet->health.mp > 5)
+			{
+			 spellID = 154; //AERO I
+			}
+        else if (m_PPet->health.mp > 4)
+			{
+			 spellID = 169; //WATER I
+			}
+        else if (m_PPet->health.mp > 3)
+			{
+			 spellID = 159; //STONE I
+			}
+        else
+			{
+		     spellID = -1;
+			}
+		else if (mskill > 235)
+		   if (m_PPet->health.mp > 45)
+			{
+			 spellID = 171; //WATER III
+			}
+        else if (m_PPet->health.mp > 39)
+			{
+			 spellID = 161; //STONE III
+			}
+        else if (m_PPet->health.mp > 36)
+			{
+			 spellID = 165; //THUNDER II
+			}
+        else if (m_PPet->health.mp > 30)
+			{
+			 spellID = 150; //BLIZZARD II
+			}
+        else if (m_PPet->health.mp > 25)
+			{
+			 spellID = 145; //FIRE II
+			}
+        else if (m_PPet->health.mp > 21)
+			{
+			 spellID = 155; //AERO II
+			}
+        else if (m_PPet->health.mp > 18)
+			{
+			 spellID = 170; //WATER II
+			}
+        else if (m_PPet->health.mp > 15)
+			{
+			 spellID = 160; //STONE II
+			}
+        else if (m_PPet->health.mp > 8)
+			{
+			 spellID = 164; //THUNDER I
+			}
+        else if (m_PPet->health.mp > 7)
+			{
+			 spellID = 149; //BLIZZARD I
+			}
+        else if (m_PPet->health.mp > 6)
+			{
+			 spellID = 144; //FIRE I
+			}
+        else if (m_PPet->health.mp > 5)
+			{
+			 spellID = 154; //AERO I
+			}
+        else if (m_PPet->health.mp > 4)
+			{
+			 spellID = 169; //WATER I
+			}
+        else if (m_PPet->health.mp > 3)
+			{
+			 spellID = 159; //STONE I
+			}
+        else
+			{
+		     spellID = -1;
+			}
+		else if (mskill > 226)
+		   if (m_PPet->health.mp > 39)
+			{
+			 spellID = 161; //STONE III
+			}
+        else if (m_PPet->health.mp > 36)
+			{
+			 spellID = 165; //THUNDER II
+			}
+        else if (m_PPet->health.mp > 30)
+			{
+			 spellID = 150; //BLIZZARD II
+			}
+        else if (m_PPet->health.mp > 25)
+			{
+			 spellID = 145; //FIRE II
+			}
+        else if (m_PPet->health.mp > 21)
+			{
+			 spellID = 155; //AERO II
+			}
+        else if (m_PPet->health.mp > 18)
+			{
+			 spellID = 170; //WATER II
+			}
+        else if (m_PPet->health.mp > 15)
+			{
+			 spellID = 160; //STONE II
+			}
+        else if (m_PPet->health.mp > 8)
+			{
+			 spellID = 164; //THUNDER I
+			}
+        else if (m_PPet->health.mp > 7)
+			{
+			 spellID = 149; //BLIZZARD I
+			}
+        else if (m_PPet->health.mp > 6)
+			{
+			 spellID = 144; //FIRE I
+			}
+        else if (m_PPet->health.mp > 5)
+			{
+			 spellID = 154; //AERO I
+			}
+        else if (m_PPet->health.mp > 4)
+			{
+			 spellID = 169; //WATER I
+			}
+        else if (m_PPet->health.mp > 3)
+			{
+			 spellID = 159; //STONE I
+			}
+        else
+			{
+		     spellID = -1;
+			}
+		else if (mskill > 202)
+		   if (m_PPet->health.mp > 36)
+			{
+			 spellID = 165; //THUNDER II
+			}
+        else if (m_PPet->health.mp > 30)
+			{
+			 spellID = 150; //BLIZZARD II
+			}
+        else if (m_PPet->health.mp > 25)
+			{
+			 spellID = 145; //FIRE II
+			}
+        else if (m_PPet->health.mp > 21)
+			{
+			 spellID = 155; //AERO II
+			}
+        else if (m_PPet->health.mp > 18)
+			{
+			 spellID = 170; //WATER II
+			}
+        else if (m_PPet->health.mp > 15)
+			{
+			 spellID = 160; //STONE II
+			}
+        else if (m_PPet->health.mp > 8)
+			{
+			 spellID = 164; //THUNDER I
+			}
+        else if (m_PPet->health.mp > 7)
+			{
+			 spellID = 149; //BLIZZARD I
+			}
+        else if (m_PPet->health.mp > 6)
+			{
+			 spellID = 144; //FIRE I
+			}
+        else if (m_PPet->health.mp > 5)
+			{
+			 spellID = 154; //AERO I
+			}
+        else if (m_PPet->health.mp > 4)
+			{
+			 spellID = 169; //WATER I
+			}
+        else if (m_PPet->health.mp > 3)
+			{
+			 spellID = 159; //STONE I
+			}
+        else
+			{
+		     spellID = -1;
+			}
+		else if (mskill > 177)
+		   if (m_PPet->health.mp > 30)
+			{
+			 spellID = 150; //BLIZZARD II
+			}
+        else if (m_PPet->health.mp > 25)
+			{
+			 spellID = 145; //FIRE II
+			}
+        else if (m_PPet->health.mp > 21)
+			{
+			 spellID = 155; //AERO II
+			}
+        else if (m_PPet->health.mp > 18)
+			{
+			 spellID = 170; //WATER II
+			}
+        else if (m_PPet->health.mp > 15)
+			{
+			 spellID = 160; //STONE II
+			}
+        else if (m_PPet->health.mp > 8)
+			{
+			 spellID = 164; //THUNDER I
+			}
+        else if (m_PPet->health.mp > 7)
+			{
+			 spellID = 149; //BLIZZARD I
+			}
+        else if (m_PPet->health.mp > 6)
+			{
+			 spellID = 144; //FIRE I
+			}
+        else if (m_PPet->health.mp > 5)
+			{
+			 spellID = 154; //AERO I
+			}
+        else if (m_PPet->health.mp > 4)
+			{
+			 spellID = 169; //WATER I
+			}
+        else if (m_PPet->health.mp > 3)
+			{
+			 spellID = 159; //STONE I
+			}
+        else
+			{
+		     spellID = -1;
+			}
+		else if (mskill > 152)
+		  if (m_PPet->health.mp > 25)
+			{
+			 spellID = 145; //FIRE II
+			}
+        else if (m_PPet->health.mp > 21)
+			{
+			 spellID = 155; //AERO II
+			}
+        else if (m_PPet->health.mp > 18)
+			{
+			 spellID = 170; //WATER II
+			}
+        else if (m_PPet->health.mp > 15)
+			{
+			 spellID = 160; //STONE II
+			}
+        else if (m_PPet->health.mp > 8)
+			{
+			 spellID = 164; //THUNDER I
+			}
+        else if (m_PPet->health.mp > 7)
+			{
+			 spellID = 149; //BLIZZARD I
+			}
+        else if (m_PPet->health.mp > 6)
+			{
+			 spellID = 144; //FIRE I
+			}
+        else if (m_PPet->health.mp > 5)
+			{
+			 spellID = 154; //AERO I
+			}
+        else if (m_PPet->health.mp > 4)
+			{
+			 spellID = 169; //WATER I
+			}
+        else if (m_PPet->health.mp > 3)
+			{
+			 spellID = 159; //STONE I
+			}
+        else
+			{
+		     spellID = -1;
+			}
+		else if (mskill > 137)
+		   if (m_PPet->health.mp > 21)
+			{
+			 spellID = 155; //AERO II
+			}
+        else if (m_PPet->health.mp > 18)
+			{
+			 spellID = 170; //WATER II
+			}
+        else if (m_PPet->health.mp > 15)
+			{
+			 spellID = 160; //STONE II
+			}
+        else if (m_PPet->health.mp > 8)
+			{
+			 spellID = 164; //THUNDER I
+			}
+        else if (m_PPet->health.mp > 7)
+			{
+			 spellID = 149; //BLIZZARD I
+			}
+        else if (m_PPet->health.mp > 6)
+			{
+			 spellID = 144; //FIRE I
+			}
+        else if (m_PPet->health.mp > 5)
+			{
+			 spellID = 154; //AERO I
+			}
+        else if (m_PPet->health.mp > 4)
+			{
+			 spellID = 169; //WATER I
+			}
+        else if (m_PPet->health.mp > 3)
+			{
+			 spellID = 159; //STONE I
+			}
+        else
+			{
+		     spellID = -1;
+			}
+		else if (mskill > 122)
+		   if (m_PPet->health.mp > 18)
+			{
+			 spellID = 170; //WATER II
+			}
+        else if (m_PPet->health.mp > 15)
+			{
+			 spellID = 160; //STONE II
+			}
+        else if (m_PPet->health.mp > 8)
+			{
+			 spellID = 164; //THUNDER I
+			}
+        else if (m_PPet->health.mp > 7)
+			{
+			 spellID = 149; //BLIZZARD I
+			}
+        else if (m_PPet->health.mp > 6)
+			{
+			 spellID = 144; //FIRE I
+			}
+        else if (m_PPet->health.mp > 5)
+			{
+			 spellID = 154; //AERO I
+			}
+        else if (m_PPet->health.mp > 4)
+			{
+			 spellID = 169; //WATER I
+			}
+        else if (m_PPet->health.mp > 3)
+			{
+			 spellID = 159; //STONE I
+			}
+        else
+			{
+		     spellID = -1;
+			}
+		else if (mskill > 107)
+		   if (m_PPet->health.mp > 15)
+			{
+			 spellID = 160; //STONE II
+			}
+        else if (m_PPet->health.mp > 8)
+			{
+			 spellID = 164; //THUNDER I
+			}
+        else if (m_PPet->health.mp > 7)
+			{
+			 spellID = 149; //BLIZZARD I
+			}
+        else if (m_PPet->health.mp > 6)
+			{
+			 spellID = 144; //FIRE I
+			}
+        else if (m_PPet->health.mp > 5)
+			{
+			 spellID = 154; //AERO I
+			}
+        else if (m_PPet->health.mp > 4)
+			{
+			 spellID = 169; //WATER I
+			}
+        else if (m_PPet->health.mp > 3)
+			{
+			 spellID = 159; //STONE I
+			}
+        else
+			{
+		     spellID = -1;
+			}
+		else if (mskill > 89)
+		   if (m_PPet->health.mp > 8)
+			{
+			 spellID = 164; //THUNDER I
+			}
+        else if (m_PPet->health.mp > 7)
+			{
+			 spellID = 149; //BLIZZARD I
+			}
+        else if (m_PPet->health.mp > 6)
+			{
+			 spellID = 144; //FIRE I
+			}
+        else if (m_PPet->health.mp > 5)
+			{
+			 spellID = 154; //AERO I
+			}
+        else if (m_PPet->health.mp > 4)
+			{
+			 spellID = 169; //WATER I
+			}
+        else if (m_PPet->health.mp > 3)
+			{
+			 spellID = 159; //STONE I
+			}
+        else
+			{
+		     spellID = -1;
+			}
+		else if (mskill > 74)
+		   if (m_PPet->health.mp > 7)
+			{
+			 spellID = 149; //BLIZZARD I
+			}
+        else if (m_PPet->health.mp > 6)
+			{
+			 spellID = 144; //FIRE I
+			}
+        else if (m_PPet->health.mp > 5)
+			{
+			 spellID = 154; //AERO I
+			}
+        else if (m_PPet->health.mp > 4)
+			{
+			 spellID = 169; //WATER I
+			}
+        else if (m_PPet->health.mp > 3)
+			{
+			 spellID = 159; //STONE I
+			}
+        else
+			{
+		     spellID = -1;
+			}
+		else if (mskill > 59)
+		  if (m_PPet->health.mp > 6)
+			{
+			 spellID = 144; //FIRE I
+			}
+        else if (m_PPet->health.mp > 5)
+			{
+			 spellID = 154; //AERO I
+			}
+        else if (m_PPet->health.mp > 4)
+			{
+			 spellID = 169; //WATER I
+			}
+        else if (m_PPet->health.mp > 3)
+			{
+			 spellID = 159; //STONE I
+			}
+        else
+			{
+		     spellID = -1;
+			}	
+		else if (mskill > 44)
+		   if (m_PPet->health.mp > 5)
+			{
+			 spellID = 154; //AERO I
+			}
+        else if (m_PPet->health.mp > 4)
+			{
+			 spellID = 169; //WATER I
+			}
+        else if (m_PPet->health.mp > 3)
+			{
+			 spellID = 159; //STONE I
+			}
+        else
+			{
+		     spellID = -1;
+			}
+		else if (mskill > 30)
+		   if (m_PPet->health.mp > 4)
+			{
+			 spellID = 169; //WATER I
+			}
+        else if (m_PPet->health.mp > 3)
+			{
+			 spellID = 159; //STONE I
+			}
+        else
+			{
+		     spellID = -1;
+			}	
+		else if (mskill > 14)
+		   if (m_PPet->health.mp > 3)
+			{
+			 spellID = 159; //STONE I
+			}
+        else
+			{
+		     spellID = -1;
+			}	
+		m_magicElementCast = 1;
+		m_magicElementalRecast = 25000;        
+    }	
+	else
+	{
+		m_LastMagicTimeEle = m_Tick; // reset mtick
+		m_magicElementalRecast = 15000; // No eligible Elemental Spell to cast
+		}	
+	}
+
+	return spellID;
+}
+
+
+
+
+
+//--------------------------------------------------------//
+// Stormwaker Frame/Spiritreaver Head Automaton AI (BLM) //
+//------------------------------------------------------//
+
+
+int16 CAIAutomatonDummy::StormFrameSpiritAttack()
+{
+	uint8 requiredHPP = 75; // Enfeebling Threshold
+	uint8 nukeHPP = 74; // Mob HP threshold to begin nuking for BLM Head less than or equal to
+	uint8 lowHPP = 31;
+	uint8 level = m_PPet->GetMLevel();
+	uint16 mskill = m_PPet->PMaster->GetSkill(SKILL_AMA);
+	uint16 maskill = m_PPet->PMaster->GetSkill(SKILL_AMA);
+	
+    int16 spellID = -1;
+    CBattleEntity* master = m_PPet->PMaster;  
+	//calculate curing threshold based on Light Maneuvers
+
+	
+	
+    
+    //CBattleEntity* mostWounded = m_PPet;
+	// Enhancing Spells
+	// Order when Dark Maneuver is up:  Aspir > Drain > Absorb INT > Blind > Bio > Poison 2
+	
+
+	if (m_Tick >= m_LastMagicTimeEnf + m_magicEnfeebleRecast)  // Look for last enfeeble spell time 
+	{
+	  if (m_PBattleTarget != nullptr && m_PPet->PMaster->StatusEffectContainer->HasStatusEffect(EFFECT_DARK_MANEUVER) == true && m_PPet->GetMPP() < 75)
+	{
+		m_PBattleSubTarget = m_PBattleTarget;
+        if (mskill >= 77)
+		    if (m_PPet->health.mp > 9)  	
+			    {
+				 spellID = 247;
+				}
+            else
+			    {
+				 spellID = -1;
+				}
+		m_magicEnfeebCast = 1;
+		m_magicEnfeebleRecast = 11000;
+        
+	}
+	    else if (m_PBattleTarget != nullptr && m_PPet->PMaster->StatusEffectContainer->HasStatusEffect(EFFECT_DARK_MANEUVER) == true && m_PPet->GetHPP() < 75) 
+	{
+	   m_PBattleSubTarget = m_PBattleTarget;
+        if (mskill > 44)
+		    if (m_PPet->health.mp >= 20)  	
+			    {
+				 spellID = 245;
+				}
+            else
+			    {
+				 spellID = -1;
+				} 
+        m_magicEnfeebCast = 1;
+		m_magicEnfeebleRecast = 11000;
+	
+	}
+	    else if (m_PBattleTarget != nullptr && m_PPet->PMaster->StatusEffectContainer->HasStatusEffect(EFFECT_DARK_MANEUVER) == true) 
+	{
+	   m_PBattleSubTarget = m_PBattleTarget;
+		// m_magicRecast = 5000;
+        if (mskill > 20)
+		    if (m_PPet->health.mp >= 6)  	
+			    {
+				 spellID = 58;
+				}
+             else
+			    {
+				 spellID = -1;
+				} 
+        m_magicEnfeebCast = 1;
+		m_magicEnfeebleRecast = 11000;
+	
+	}
+	    else if (m_PBattleTarget != nullptr && m_PBattleTarget->StatusEffectContainer->HasStatusEffect(EFFECT_BLINDNESS) == false && m_PBattleTarget->GetHPP() >= requiredHPP) 
+	{
+	   m_PBattleSubTarget = m_PBattleTarget;
+		// m_magicRecast = 5000;
+        if (mskill > 41)
+		    if (m_PPet->health.mp >= 5)  	
+			    {
+				 spellID = 254;
+				}
+            else
+			    {
+				 spellID = -1;
+				} 
+        m_magicEnfeebCast = 1;
+		m_magicEnfeebleRecast = 11000;
+	
+	}
+	}
+	
+	//--------------------------------------------//
+	//   Elemental Magic Weakness Targeting       //
+	//   TODO Ice element forcing Ele Magic       //
+	//--------------------------------------------//
+	if (m_Tick >= m_LastMagicTimeEle + m_magicElementalRecast)  // Look for last ele spell time and force magic casting if ice maneuver is up
+	{
+	 if (m_PBattleTarget != nullptr && m_PBattleTarget->getMod(MOD_THUNDERRES) < 0 && m_PBattleTarget->GetHPP() <= nukeHPP)  // Weak to Thunder
+	 {
+	 m_PBattleSubTarget = m_PBattleTarget;
+		if (mskill > 290)
+			if (m_PPet->health.mp > 195)
+				{
+				 spellID = 167;
+				}
+			else if (m_PPet->health.mp > 90)	
+                {
+				 spellID = 166;
+			    }
+			else if (m_PPet->health.mp > 36)	
+                {
+				 spellID = 165;
+			    }
+			else if (m_PPet->health.mp > 8)	
+                {
+				 spellID = 164;
+			    }
+            else
+				{
+				 spellID = -1;
+				}
+		else if (mskill > 260)
+			if (m_PPet->health.mp > 90)	
+                {
+				 spellID = 166;
+			    }
+			else if (m_PPet->health.mp > 36)	
+                {
+				 spellID = 165;
+			    }
+			else if (m_PPet->health.mp > 8)	
+                {
+				 spellID = 164;
+			    }
+            else
+				{
+				 spellID = -1;
+				}
+		else if (mskill > 202)
+			if (m_PPet->health.mp > 36)	
+                {
+				 spellID = 165;
+			    }
+			else if (m_PPet->health.mp > 8)	
+                {
+				 spellID = 164;
+			    }
+            else
+				{
+				 spellID = -1;
+				}
+		else if (mskill > 89)
+			if (m_PPet->health.mp > 8)	
+                {
+				 spellID = 164;
+			    }
+            else
+				{
+				 spellID = -1;
+				}
+		else
+                {
+                 spellID = -1;
+                }			 
+		m_magicElementCast = 1;
+		m_magicElementalRecast = 18000;
+    }
+	 else if (m_PBattleTarget != nullptr && m_PBattleTarget->getMod(MOD_ICERES) < 0 && m_PBattleTarget->GetHPP() <= nukeHPP)  // Weak to Ice
+	{
+		m_PBattleSubTarget = m_PBattleTarget;
+		if (mskill > 286)
+			if (m_PPet->health.mp > 161)
+				{
+				 spellID = 152;
+				}
+			else if (m_PPet->health.mp > 74)	
+                {
+				 spellID = 151;
+			    }
+			else if (m_PPet->health.mp > 30)	
+                {
+				 spellID = 150;
+			    }
+			else if (m_PPet->health.mp > 7)	
+                {
+				 spellID = 149;
+			    }
+            else
+				{
+				 spellID = -1;
+				}
+		else if (mskill > 260)
+			if (m_PPet->health.mp > 74)	
+                {
+				 spellID = 151;
+			    }
+			else if (m_PPet->health.mp > 30)	
+                {
+				 spellID = 150;
+			    }
+			else if (m_PPet->health.mp > 7)	
+                {
+				 spellID = 149;
+			    }
+            else
+				{
+				 spellID = -1;
+				}
+        else if (mskill > 177)
+			if (m_PPet->health.mp > 30)	
+                {
+				 spellID = 150;
+			    }
+			else if (m_PPet->health.mp > 7)	
+                {
+				 spellID = 149;
+			    }
+            else
+				{
+				 spellID = -1;
+				}
+        else if (mskill > 74)
+			if (m_PPet->health.mp > 7)	
+                {
+				 spellID = 149;
+			    }
+            else
+				{
+				 spellID = -1;
+				}	
+    m_magicElementCast = 1;
+	m_magicElementalRecast = 18000;	
+    }
+	 else if (m_PBattleTarget != nullptr && m_PBattleTarget->getMod(MOD_FIRERES) < 0 && m_PBattleTarget->GetHPP() <= nukeHPP)  // Weak to Fire
+	{
+		m_PBattleSubTarget = m_PBattleTarget;
+		if (mskill > 280)
+			if (m_PPet->health.mp > 134)
+				{
+				 spellID = 147;
+				}
+			else if (m_PPet->health.mp > 62)	
+                {
+				 spellID = 146;
+			    }
+			else if (m_PPet->health.mp > 25)	
+                {
+				 spellID = 145;
+			    }
+			else if (m_PPet->health.mp > 6)	
+                {
+				 spellID = 144;
+			    }
+            else
+				{
+				 spellID = -1;
+				}
+		else if (mskill > 250)
+			if (m_PPet->health.mp > 62)	
+                {
+				 spellID = 146;
+			    }
+			else if (m_PPet->health.mp > 25)	
+                {
+				 spellID = 145;
+			    }
+			else if (m_PPet->health.mp > 6)	
+                {
+				 spellID = 144;
+			    }
+            else
+				{
+				 spellID = -1;
+				}
+        else if (mskill > 152)
+			if (m_PPet->health.mp > 25)	
+                {
+				 spellID = 145;
+			    }
+			else if (m_PPet->health.mp > 6)	
+                {
+				 spellID = 144;
+			    }
+            else
+				{
+				 spellID = -1;
+				}
+        else if (mskill > 59)
+			if (m_PPet->health.mp > 6)	
+                {
+				 spellID = 144;
+			    }
+            else
+				{
+				 spellID = -1;
+				}	
+    m_magicElementCast = 1;
+	m_magicElementalRecast = 18000;	
+    }
+	 else if (m_PBattleTarget != nullptr && m_PBattleTarget->getMod(MOD_WINDRES) < 0 && m_PBattleTarget->GetHPP() <= nukeHPP)  // Weak to Wind
+	{
+		m_PBattleSubTarget = m_PBattleTarget;
+		if (mskill > 275)
+			if (m_PPet->health.mp > 114)
+				{
+				 spellID = 157;
+				}
+			else if (m_PPet->health.mp > 53)	
+                {
+				 spellID = 156;
+			    }
+			else if (m_PPet->health.mp > 21)	
+                {
+				 spellID = 155;
+			    }
+			else if (m_PPet->health.mp > 5)	
+                {
+				 spellID = 154;
+			    }
+            else
+				{
+				 spellID = -1;
+				}
+		else if (mskill > 245)
+			if (m_PPet->health.mp > 53)	
+                {
+				 spellID = 156;
+			    }
+			else if (m_PPet->health.mp > 21)	
+                {
+				 spellID = 155;
+			    }
+			else if (m_PPet->health.mp > 5)	
+                {
+				 spellID = 144;
+			    }
+            else
+				{
+				 spellID = -1;
+				}
+        else if (mskill > 137)
+			if (m_PPet->health.mp > 21)	
+                {
+				 spellID = 155;
+			    }
+			else if (m_PPet->health.mp > 5)	
+                {
+				 spellID = 154;
+			    }
+            else
+				{
+				 spellID = -1;
+				}
+        else if (mskill > 44)
+			if (m_PPet->health.mp > 5)	
+                {
+				 spellID = 154;
+			    }
+            else
+				{
+				 spellID = -1;
+				}	
+    m_magicElementCast = 1;
+	m_magicElementalRecast = 18000;	
+    }
+	 else if (m_PBattleTarget != nullptr && m_PBattleTarget->getMod(MOD_WATERRES) < 0 && m_PBattleTarget->GetHPP() <= nukeHPP)  // Weak to Water
+	{
+		m_PBattleSubTarget = m_PBattleTarget;
+		if (mskill > 270)
+			if (m_PPet->health.mp > 98)
+				{
+				 spellID = 172;
+				}
+			else if (m_PPet->health.mp > 45)	
+                {
+				 spellID = 171;
+			    }
+			else if (m_PPet->health.mp > 18)	
+                {
+				 spellID = 170;
+			    }
+			else if (m_PPet->health.mp > 4)	
+                {
+				 spellID = 169;
+			    }
+            else
+				{
+				 spellID = -1;
+				}
+		else if (mskill > 235)
+			if (m_PPet->health.mp > 45)	
+                {
+				 spellID = 171;
+			    }
+			else if (m_PPet->health.mp > 18)	
+                {
+				 spellID = 170;
+			    }
+			else if (m_PPet->health.mp > 4)	
+                {
+				 spellID = 169;
+			    }
+            else
+				{
+				 spellID = -1;
+				}
+        else if (mskill > 122)
+			if (m_PPet->health.mp > 18)	
+                {
+				 spellID = 170;
+			    }
+			else if (m_PPet->health.mp > 4)	
+                {
+				 spellID = 169;
+			    }
+            else
+				{
+				 spellID = -1;
+				}
+        else if (mskill > 30)
+			if (m_PPet->health.mp > 4)	
+                {
+				 spellID = 169;
+			    }
+            else
+				{
+				 spellID = -1;
+				}	
+    m_magicElementCast = 1;
+	m_magicElementalRecast = 18000;	
+    }
+    else if (m_PBattleTarget != nullptr && m_PBattleTarget->getMod(MOD_EARTHRES) < 0 && m_PBattleTarget->GetHPP() <= nukeHPP)  // Weak to Earth
+	{
+		m_PBattleSubTarget = m_PBattleTarget;
+		if (mskill > 265)
+			if (m_PPet->health.mp > 87)
+				{
+				 spellID = 162;
+				}
+			else if (m_PPet->health.mp > 39)	
+                {
+				 spellID = 161;
+			    }
+			else if (m_PPet->health.mp > 15)	
+                {
+				 spellID = 160;
+			    }
+			else if (m_PPet->health.mp > 3)	
+                {
+				 spellID = 159;
+			    }
+            else
+				{
+				 spellID = -1;
+				}
+		else if (mskill > 226)
+			if (m_PPet->health.mp > 39)	
+                {
+				 spellID = 161;
+			    }
+			else if (m_PPet->health.mp > 15)	
+                {
+				 spellID = 160;
+			    }
+			else if (m_PPet->health.mp > 3)	
+                {
+				 spellID = 159;
+			    }
+            else
+				{
+				 spellID = -1;
+				}
+        else if (mskill > 107)
+			if (m_PPet->health.mp > 15)	
+                {
+				 spellID = 160;
+			    }
+			else if (m_PPet->health.mp > 3)	
+                {
+				 spellID = 159;
+			    }
+            else
+				{
+				 spellID = -1;
+				}
+        else if (mskill > 14)
+			if (m_PPet->health.mp > 3)	
+                {
+				 spellID = 159;
+			    }
+            else
+				{
+				 spellID = -1;
+				}	
+    m_magicElementCast = 1;
+	m_magicElementalRecast = 18000;	
+    }
+	// No elemental magic weakness found - Cast highest Nuke learned
+	// TODO: Add check for Ice maneuver to force casting at any time.
+	else if (m_PBattleTarget != nullptr && m_PBattleTarget->GetHPP() <= nukeHPP)
+	{
+        m_PBattleSubTarget = m_PBattleTarget;
+		if (mskill > 290)
+		    if (m_PPet->health.mp > 194)
+			{
+			 spellID = 167; //THUNDER IV
+			}
+        else if (m_PPet->health.mp > 161)
+			{
+			 spellID = 152; //BLIZZARD IV
+			}
+        else if (m_PPet->health.mp > 134)
+			{
+			 spellID = 147; //FIRE IV
+			}
+        else if (m_PPet->health.mp > 114)
+			{
+			 spellID = 157; //AERO IV
+			}
+        else if (m_PPet->health.mp > 98)
+			{
+			 spellID = 172; //WATER IV
+			}
+        else if (m_PPet->health.mp > 87)
+			{
+			 spellID = 162; //STONE IV
+			}
+        else if (m_PPet->health.mp > 90)
+			{
+			 spellID = 166; //THUNDER III
+			}
+        else if (m_PPet->health.mp > 74)
+			{
+			 spellID = 151; //BLIZZARD III
+			}
+        else if (m_PPet->health.mp > 62)
+			{
+			 spellID = 146; //FIRE III
+			}
+        else if (m_PPet->health.mp > 53)
+			{
+			 spellID = 156; //AERO III
+			}
+        else if (m_PPet->health.mp > 45)
+			{
+			 spellID = 171; //WATER III
+			}
+        else if (m_PPet->health.mp > 39)
+			{
+			 spellID = 161; //STONE III
+			}
+        else if (m_PPet->health.mp > 36)
+			{
+			 spellID = 165; //THUNDER II
+			}
+        else if (m_PPet->health.mp > 30)
+			{
+			 spellID = 150; //BLIZZARD II
+			}
+        else if (m_PPet->health.mp > 25)
+			{
+			 spellID = 145; //FIRE II
+			}
+        else if (m_PPet->health.mp > 21)
+			{
+			 spellID = 155; //AERO II
+			}
+        else if (m_PPet->health.mp > 18)
+			{
+			 spellID = 170; //WATER II
+			}
+        else if (m_PPet->health.mp > 15)
+			{
+			 spellID = 160; //STONE II
+			}
+        else if (m_PPet->health.mp > 8)
+			{
+			 spellID = 164; //THUNDER I
+			}
+        else if (m_PPet->health.mp > 7)
+			{
+			 spellID = 149; //BLIZZARD I
+			}
+        else if (m_PPet->health.mp > 6)
+			{
+			 spellID = 144; //FIRE I
+			}
+        else if (m_PPet->health.mp > 5)
+			{
+			 spellID = 154; //AERO I
+			}
+        else if (m_PPet->health.mp > 4)
+			{
+			 spellID = 169; //WATER I
+			}
+        else if (m_PPet->health.mp > 3)
+			{
+			 spellID = 159; //STONE I
+			}
+        else
+			{
+		     spellID = -1;
+			}
+		else if (mskill > 285)
+		    if (m_PPet->health.mp > 161)
+			{
+			 spellID = 152; //BLIZZARD IV
+			}
+        else if (m_PPet->health.mp > 134)
+			{
+			 spellID = 147; //FIRE IV
+			}
+        else if (m_PPet->health.mp > 114)
+			{
+			 spellID = 157; //AERO IV
+			}
+        else if (m_PPet->health.mp > 98)
+			{
+			 spellID = 172; //WATER IV
+			}
+        else if (m_PPet->health.mp > 87)
+			{
+			 spellID = 162; //STONE IV
+			}
+        else if (m_PPet->health.mp > 90)
+			{
+			 spellID = 166; //THUNDER III
+			}
+        else if (m_PPet->health.mp > 74)
+			{
+			 spellID = 151; //BLIZZARD III
+			}
+        else if (m_PPet->health.mp > 62)
+			{
+			 spellID = 146; //FIRE III
+			}
+        else if (m_PPet->health.mp > 53)
+			{
+			 spellID = 156; //AERO III
+			}
+        else if (m_PPet->health.mp > 45)
+			{
+			 spellID = 171; //WATER III
+			}
+        else if (m_PPet->health.mp > 39)
+			{
+			 spellID = 161; //STONE III
+			}
+        else if (m_PPet->health.mp > 36)
+			{
+			 spellID = 165; //THUNDER II
+			}
+        else if (m_PPet->health.mp > 30)
+			{
+			 spellID = 150; //BLIZZARD II
+			}
+        else if (m_PPet->health.mp > 25)
+			{
+			 spellID = 145; //FIRE II
+			}
+        else if (m_PPet->health.mp > 21)
+			{
+			 spellID = 155; //AERO II
+			}
+        else if (m_PPet->health.mp > 18)
+			{
+			 spellID = 170; //WATER II
+			}
+        else if (m_PPet->health.mp > 15)
+			{
+			 spellID = 160; //STONE II
+			}
+        else if (m_PPet->health.mp > 8)
+			{
+			 spellID = 164; //THUNDER I
+			}
+        else if (m_PPet->health.mp > 7)
+			{
+			 spellID = 149; //BLIZZARD I
+			}
+        else if (m_PPet->health.mp > 6)
+			{
+			 spellID = 144; //FIRE I
+			}
+        else if (m_PPet->health.mp > 5)
+			{
+			 spellID = 154; //AERO I
+			}
+        else if (m_PPet->health.mp > 4)
+			{
+			 spellID = 169; //WATER I
+			}
+        else if (m_PPet->health.mp > 3)
+			{
+			 spellID = 159; //STONE I
+			}
+        else
+			{
+		     spellID = -1;
+			}	
+		else if (mskill > 280)
+		    if (m_PPet->health.mp > 134)
+			{
+			 spellID = 147; //FIRE IV
+			}
+        else if (m_PPet->health.mp > 114)
+			{
+			 spellID = 157; //AERO IV
+			}
+        else if (m_PPet->health.mp > 98)
+			{
+			 spellID = 172; //WATER IV
+			}
+        else if (m_PPet->health.mp > 87)
+			{
+			 spellID = 162; //STONE IV
+			}
+        else if (m_PPet->health.mp > 90)
+			{
+			 spellID = 166; //THUNDER III
+			}
+        else if (m_PPet->health.mp > 74)
+			{
+			 spellID = 151; //BLIZZARD III
+			}
+        else if (m_PPet->health.mp > 62)
+			{
+			 spellID = 146; //FIRE III
+			}
+        else if (m_PPet->health.mp > 53)
+			{
+			 spellID = 156; //AERO III
+			}
+        else if (m_PPet->health.mp > 45)
+			{
+			 spellID = 171; //WATER III
+			}
+        else if (m_PPet->health.mp > 39)
+			{
+			 spellID = 161; //STONE III
+			}
+        else if (m_PPet->health.mp > 36)
+			{
+			 spellID = 165; //THUNDER II
+			}
+        else if (m_PPet->health.mp > 30)
+			{
+			 spellID = 150; //BLIZZARD II
+			}
+        else if (m_PPet->health.mp > 25)
+			{
+			 spellID = 145; //FIRE II
+			}
+        else if (m_PPet->health.mp > 21)
+			{
+			 spellID = 155; //AERO II
+			}
+        else if (m_PPet->health.mp > 18)
+			{
+			 spellID = 170; //WATER II
+			}
+        else if (m_PPet->health.mp > 15)
+			{
+			 spellID = 160; //STONE II
+			}
+        else if (m_PPet->health.mp > 8)
+			{
+			 spellID = 164; //THUNDER I
+			}
+        else if (m_PPet->health.mp > 7)
+			{
+			 spellID = 149; //BLIZZARD I
+			}
+        else if (m_PPet->health.mp > 6)
+			{
+			 spellID = 144; //FIRE I
+			}
+        else if (m_PPet->health.mp > 5)
+			{
+			 spellID = 154; //AERO I
+			}
+        else if (m_PPet->health.mp > 4)
+			{
+			 spellID = 169; //WATER I
+			}
+        else if (m_PPet->health.mp > 3)
+			{
+			 spellID = 159; //STONE I
+			}
+        else
+			{
+		     spellID = -1;
+			}	
+		else if (mskill > 275)
+		    if (m_PPet->health.mp > 114)
+			{
+			 spellID = 157; //AERO IV
+			}
+        else if (m_PPet->health.mp > 98)
+			{
+			 spellID = 172; //WATER IV
+			}
+        else if (m_PPet->health.mp > 87)
+			{
+			 spellID = 162; //STONE IV
+			}
+        else if (m_PPet->health.mp > 90)
+			{
+			 spellID = 166; //THUNDER III
+			}
+        else if (m_PPet->health.mp > 74)
+			{
+			 spellID = 151; //BLIZZARD III
+			}
+        else if (m_PPet->health.mp > 62)
+			{
+			 spellID = 146; //FIRE III
+			}
+        else if (m_PPet->health.mp > 53)
+			{
+			 spellID = 156; //AERO III
+			}
+        else if (m_PPet->health.mp > 45)
+			{
+			 spellID = 171; //WATER III
+			}
+        else if (m_PPet->health.mp > 39)
+			{
+			 spellID = 161; //STONE III
+			}
+        else if (m_PPet->health.mp > 36)
+			{
+			 spellID = 165; //THUNDER II
+			}
+        else if (m_PPet->health.mp > 30)
+			{
+			 spellID = 150; //BLIZZARD II
+			}
+        else if (m_PPet->health.mp > 25)
+			{
+			 spellID = 145; //FIRE II
+			}
+        else if (m_PPet->health.mp > 21)
+			{
+			 spellID = 155; //AERO II
+			}
+        else if (m_PPet->health.mp > 18)
+			{
+			 spellID = 170; //WATER II
+			}
+        else if (m_PPet->health.mp > 15)
+			{
+			 spellID = 160; //STONE II
+			}
+        else if (m_PPet->health.mp > 8)
+			{
+			 spellID = 164; //THUNDER I
+			}
+        else if (m_PPet->health.mp > 7)
+			{
+			 spellID = 149; //BLIZZARD I
+			}
+        else if (m_PPet->health.mp > 6)
+			{
+			 spellID = 144; //FIRE I
+			}
+        else if (m_PPet->health.mp > 5)
+			{
+			 spellID = 154; //AERO I
+			}
+        else if (m_PPet->health.mp > 4)
+			{
+			 spellID = 169; //WATER I
+			}
+        else if (m_PPet->health.mp > 3)
+			{
+			 spellID = 159; //STONE I
+			}
+        else
+			{
+		     spellID = -1;
+			}	
+		else if (mskill > 270)
+		   if (m_PPet->health.mp > 98)
+			{
+			 spellID = 172; //WATER IV
+			}
+        else if (m_PPet->health.mp > 87)
+			{
+			 spellID = 162; //STONE IV
+			}
+        else if (m_PPet->health.mp > 90)
+			{
+			 spellID = 166; //THUNDER III
+			}
+        else if (m_PPet->health.mp > 74)
+			{
+			 spellID = 151; //BLIZZARD III
+			}
+        else if (m_PPet->health.mp > 62)
+			{
+			 spellID = 146; //FIRE III
+			}
+        else if (m_PPet->health.mp > 53)
+			{
+			 spellID = 156; //AERO III
+			}
+        else if (m_PPet->health.mp > 45)
+			{
+			 spellID = 171; //WATER III
+			}
+        else if (m_PPet->health.mp > 39)
+			{
+			 spellID = 161; //STONE III
+			}
+        else if (m_PPet->health.mp > 36)
+			{
+			 spellID = 165; //THUNDER II
+			}
+        else if (m_PPet->health.mp > 30)
+			{
+			 spellID = 150; //BLIZZARD II
+			}
+        else if (m_PPet->health.mp > 25)
+			{
+			 spellID = 145; //FIRE II
+			}
+        else if (m_PPet->health.mp > 21)
+			{
+			 spellID = 155; //AERO II
+			}
+        else if (m_PPet->health.mp > 18)
+			{
+			 spellID = 170; //WATER II
+			}
+        else if (m_PPet->health.mp > 15)
+			{
+			 spellID = 160; //STONE II
+			}
+        else if (m_PPet->health.mp > 8)
+			{
+			 spellID = 164; //THUNDER I
+			}
+        else if (m_PPet->health.mp > 7)
+			{
+			 spellID = 149; //BLIZZARD I
+			}
+        else if (m_PPet->health.mp > 6)
+			{
+			 spellID = 144; //FIRE I
+			}
+        else if (m_PPet->health.mp > 5)
+			{
+			 spellID = 154; //AERO I
+			}
+        else if (m_PPet->health.mp > 4)
+			{
+			 spellID = 169; //WATER I
+			}
+        else if (m_PPet->health.mp > 3)
+			{
+			 spellID = 159; //STONE I
+			}
+        else
+			{
+		     spellID = -1;
+			}		
+        else if (mskill > 265)
+		  if (m_PPet->health.mp > 87)
+			{
+			 spellID = 162; //STONE IV
+			}
+        else if (m_PPet->health.mp > 90)
+			{
+			 spellID = 166; //THUNDER III
+			}
+        else if (m_PPet->health.mp > 74)
+			{
+			 spellID = 151; //BLIZZARD III
+			}
+        else if (m_PPet->health.mp > 62)
+			{
+			 spellID = 146; //FIRE III
+			}
+        else if (m_PPet->health.mp > 53)
+			{
+			 spellID = 156; //AERO III
+			}
+        else if (m_PPet->health.mp > 45)
+			{
+			 spellID = 171; //WATER III
+			}
+        else if (m_PPet->health.mp > 39)
+			{
+			 spellID = 161; //STONE III
+			}
+        else if (m_PPet->health.mp > 36)
+			{
+			 spellID = 165; //THUNDER II
+			}
+        else if (m_PPet->health.mp > 30)
+			{
+			 spellID = 150; //BLIZZARD II
+			}
+        else if (m_PPet->health.mp > 25)
+			{
+			 spellID = 145; //FIRE II
+			}
+        else if (m_PPet->health.mp > 21)
+			{
+			 spellID = 155; //AERO II
+			}
+        else if (m_PPet->health.mp > 18)
+			{
+			 spellID = 170; //WATER II
+			}
+        else if (m_PPet->health.mp > 15)
+			{
+			 spellID = 160; //STONE II
+			}
+        else if (m_PPet->health.mp > 8)
+			{
+			 spellID = 164; //THUNDER I
+			}
+        else if (m_PPet->health.mp > 7)
+			{
+			 spellID = 149; //BLIZZARD I
+			}
+        else if (m_PPet->health.mp > 6)
+			{
+			 spellID = 144; //FIRE I
+			}
+        else if (m_PPet->health.mp > 5)
+			{
+			 spellID = 154; //AERO I
+			}
+        else if (m_PPet->health.mp > 4)
+			{
+			 spellID = 169; //WATER I
+			}
+        else if (m_PPet->health.mp > 3)
+			{
+			 spellID = 159; //STONE I
+			}
+        else
+			{
+		     spellID = -1;
+			}		
+        else if (mskill > 260)
+		   if (m_PPet->health.mp > 90)
+			{
+			 spellID = 166; //THUNDER III
+			}
+        else if (m_PPet->health.mp > 74)
+			{
+			 spellID = 151; //BLIZZARD III
+			}
+        else if (m_PPet->health.mp > 62)
+			{
+			 spellID = 146; //FIRE III
+			}
+        else if (m_PPet->health.mp > 53)
+			{
+			 spellID = 156; //AERO III
+			}
+        else if (m_PPet->health.mp > 45)
+			{
+			 spellID = 171; //WATER III
+			}
+        else if (m_PPet->health.mp > 39)
+			{
+			 spellID = 161; //STONE III
+			}
+        else if (m_PPet->health.mp > 36)
+			{
+			 spellID = 165; //THUNDER II
+			}
+        else if (m_PPet->health.mp > 30)
+			{
+			 spellID = 150; //BLIZZARD II
+			}
+        else if (m_PPet->health.mp > 25)
+			{
+			 spellID = 145; //FIRE II
+			}
+        else if (m_PPet->health.mp > 21)
+			{
+			 spellID = 155; //AERO II
+			}
+        else if (m_PPet->health.mp > 18)
+			{
+			 spellID = 170; //WATER II
+			}
+        else if (m_PPet->health.mp > 15)
+			{
+			 spellID = 160; //STONE II
+			}
+        else if (m_PPet->health.mp > 8)
+			{
+			 spellID = 164; //THUNDER I
+			}
+        else if (m_PPet->health.mp > 7)
+			{
+			 spellID = 149; //BLIZZARD I
+			}
+        else if (m_PPet->health.mp > 6)
+			{
+			 spellID = 144; //FIRE I
+			}
+        else if (m_PPet->health.mp > 5)
+			{
+			 spellID = 154; //AERO I
+			}
+        else if (m_PPet->health.mp > 4)
+			{
+			 spellID = 169; //WATER I
+			}
+        else if (m_PPet->health.mp > 3)
+			{
+			 spellID = 159; //STONE I
+			}
+        else
+			{
+		     spellID = -1;
+			}
+		else if (mskill > 255)
+		   if (m_PPet->health.mp > 74)
+			{
+			 spellID = 151; //BLIZZARD III
+			}
+        else if (m_PPet->health.mp > 62)
+			{
+			 spellID = 146; //FIRE III
+			}
+        else if (m_PPet->health.mp > 53)
+			{
+			 spellID = 156; //AERO III
+			}
+        else if (m_PPet->health.mp > 45)
+			{
+			 spellID = 171; //WATER III
+			}
+        else if (m_PPet->health.mp > 39)
+			{
+			 spellID = 161; //STONE III
+			}
+        else if (m_PPet->health.mp > 36)
+			{
+			 spellID = 165; //THUNDER II
+			}
+        else if (m_PPet->health.mp > 30)
+			{
+			 spellID = 150; //BLIZZARD II
+			}
+        else if (m_PPet->health.mp > 25)
+			{
+			 spellID = 145; //FIRE II
+			}
+        else if (m_PPet->health.mp > 21)
+			{
+			 spellID = 155; //AERO II
+			}
+        else if (m_PPet->health.mp > 18)
+			{
+			 spellID = 170; //WATER II
+			}
+        else if (m_PPet->health.mp > 15)
+			{
+			 spellID = 160; //STONE II
+			}
+        else if (m_PPet->health.mp > 8)
+			{
+			 spellID = 164; //THUNDER I
+			}
+        else if (m_PPet->health.mp > 7)
+			{
+			 spellID = 149; //BLIZZARD I
+			}
+        else if (m_PPet->health.mp > 6)
+			{
+			 spellID = 144; //FIRE I
+			}
+        else if (m_PPet->health.mp > 5)
+			{
+			 spellID = 154; //AERO I
+			}
+        else if (m_PPet->health.mp > 4)
+			{
+			 spellID = 169; //WATER I
+			}
+        else if (m_PPet->health.mp > 3)
+			{
+			 spellID = 159; //STONE I
+			}
+        else
+			{
+		     spellID = -1;
+			}
+		else if (mskill > 250)
+		    if (m_PPet->health.mp > 62)
+			{
+			 spellID = 146; //FIRE III
+			}
+        else if (m_PPet->health.mp > 53)
+			{
+			 spellID = 156; //AERO III
+			}
+        else if (m_PPet->health.mp > 45)
+			{
+			 spellID = 171; //WATER III
+			}
+        else if (m_PPet->health.mp > 39)
+			{
+			 spellID = 161; //STONE III
+			}
+        else if (m_PPet->health.mp > 36)
+			{
+			 spellID = 165; //THUNDER II
+			}
+        else if (m_PPet->health.mp > 30)
+			{
+			 spellID = 150; //BLIZZARD II
+			}
+        else if (m_PPet->health.mp > 25)
+			{
+			 spellID = 145; //FIRE II
+			}
+        else if (m_PPet->health.mp > 21)
+			{
+			 spellID = 155; //AERO II
+			}
+        else if (m_PPet->health.mp > 18)
+			{
+			 spellID = 170; //WATER II
+			}
+        else if (m_PPet->health.mp > 15)
+			{
+			 spellID = 160; //STONE II
+			}
+        else if (m_PPet->health.mp > 8)
+			{
+			 spellID = 164; //THUNDER I
+			}
+        else if (m_PPet->health.mp > 7)
+			{
+			 spellID = 149; //BLIZZARD I
+			}
+        else if (m_PPet->health.mp > 6)
+			{
+			 spellID = 144; //FIRE I
+			}
+        else if (m_PPet->health.mp > 5)
+			{
+			 spellID = 154; //AERO I
+			}
+        else if (m_PPet->health.mp > 4)
+			{
+			 spellID = 169; //WATER I
+			}
+        else if (m_PPet->health.mp > 3)
+			{
+			 spellID = 159; //STONE I
+			}
+        else
+			{
+		     spellID = -1;
+			}
+		else if (mskill > 245)
+		    if (m_PPet->health.mp > 53)
+			{
+			 spellID = 156; //AERO III
+			}
+        else if (m_PPet->health.mp > 45)
+			{
+			 spellID = 171; //WATER III
+			}
+        else if (m_PPet->health.mp > 39)
+			{
+			 spellID = 161; //STONE III
+			}
+        else if (m_PPet->health.mp > 36)
+			{
+			 spellID = 165; //THUNDER II
+			}
+        else if (m_PPet->health.mp > 30)
+			{
+			 spellID = 150; //BLIZZARD II
+			}
+        else if (m_PPet->health.mp > 25)
+			{
+			 spellID = 145; //FIRE II
+			}
+        else if (m_PPet->health.mp > 21)
+			{
+			 spellID = 155; //AERO II
+			}
+        else if (m_PPet->health.mp > 18)
+			{
+			 spellID = 170; //WATER II
+			}
+        else if (m_PPet->health.mp > 15)
+			{
+			 spellID = 160; //STONE II
+			}
+        else if (m_PPet->health.mp > 8)
+			{
+			 spellID = 164; //THUNDER I
+			}
+        else if (m_PPet->health.mp > 7)
+			{
+			 spellID = 149; //BLIZZARD I
+			}
+        else if (m_PPet->health.mp > 6)
+			{
+			 spellID = 144; //FIRE I
+			}
+        else if (m_PPet->health.mp > 5)
+			{
+			 spellID = 154; //AERO I
+			}
+        else if (m_PPet->health.mp > 4)
+			{
+			 spellID = 169; //WATER I
+			}
+        else if (m_PPet->health.mp > 3)
+			{
+			 spellID = 159; //STONE I
+			}
+        else
+			{
+		     spellID = -1;
+			}
+		else if (mskill > 235)
+		   if (m_PPet->health.mp > 45)
+			{
+			 spellID = 171; //WATER III
+			}
+        else if (m_PPet->health.mp > 39)
+			{
+			 spellID = 161; //STONE III
+			}
+        else if (m_PPet->health.mp > 36)
+			{
+			 spellID = 165; //THUNDER II
+			}
+        else if (m_PPet->health.mp > 30)
+			{
+			 spellID = 150; //BLIZZARD II
+			}
+        else if (m_PPet->health.mp > 25)
+			{
+			 spellID = 145; //FIRE II
+			}
+        else if (m_PPet->health.mp > 21)
+			{
+			 spellID = 155; //AERO II
+			}
+        else if (m_PPet->health.mp > 18)
+			{
+			 spellID = 170; //WATER II
+			}
+        else if (m_PPet->health.mp > 15)
+			{
+			 spellID = 160; //STONE II
+			}
+        else if (m_PPet->health.mp > 8)
+			{
+			 spellID = 164; //THUNDER I
+			}
+        else if (m_PPet->health.mp > 7)
+			{
+			 spellID = 149; //BLIZZARD I
+			}
+        else if (m_PPet->health.mp > 6)
+			{
+			 spellID = 144; //FIRE I
+			}
+        else if (m_PPet->health.mp > 5)
+			{
+			 spellID = 154; //AERO I
+			}
+        else if (m_PPet->health.mp > 4)
+			{
+			 spellID = 169; //WATER I
+			}
+        else if (m_PPet->health.mp > 3)
+			{
+			 spellID = 159; //STONE I
+			}
+        else
+			{
+		     spellID = -1;
+			}
+		else if (mskill > 226)
+		   if (m_PPet->health.mp > 39)
+			{
+			 spellID = 161; //STONE III
+			}
+        else if (m_PPet->health.mp > 36)
+			{
+			 spellID = 165; //THUNDER II
+			}
+        else if (m_PPet->health.mp > 30)
+			{
+			 spellID = 150; //BLIZZARD II
+			}
+        else if (m_PPet->health.mp > 25)
+			{
+			 spellID = 145; //FIRE II
+			}
+        else if (m_PPet->health.mp > 21)
+			{
+			 spellID = 155; //AERO II
+			}
+        else if (m_PPet->health.mp > 18)
+			{
+			 spellID = 170; //WATER II
+			}
+        else if (m_PPet->health.mp > 15)
+			{
+			 spellID = 160; //STONE II
+			}
+        else if (m_PPet->health.mp > 8)
+			{
+			 spellID = 164; //THUNDER I
+			}
+        else if (m_PPet->health.mp > 7)
+			{
+			 spellID = 149; //BLIZZARD I
+			}
+        else if (m_PPet->health.mp > 6)
+			{
+			 spellID = 144; //FIRE I
+			}
+        else if (m_PPet->health.mp > 5)
+			{
+			 spellID = 154; //AERO I
+			}
+        else if (m_PPet->health.mp > 4)
+			{
+			 spellID = 169; //WATER I
+			}
+        else if (m_PPet->health.mp > 3)
+			{
+			 spellID = 159; //STONE I
+			}
+        else
+			{
+		     spellID = -1;
+			}
+		else if (mskill > 202)
+		   if (m_PPet->health.mp > 36)
+			{
+			 spellID = 165; //THUNDER II
+			}
+        else if (m_PPet->health.mp > 30)
+			{
+			 spellID = 150; //BLIZZARD II
+			}
+        else if (m_PPet->health.mp > 25)
+			{
+			 spellID = 145; //FIRE II
+			}
+        else if (m_PPet->health.mp > 21)
+			{
+			 spellID = 155; //AERO II
+			}
+        else if (m_PPet->health.mp > 18)
+			{
+			 spellID = 170; //WATER II
+			}
+        else if (m_PPet->health.mp > 15)
+			{
+			 spellID = 160; //STONE II
+			}
+        else if (m_PPet->health.mp > 8)
+			{
+			 spellID = 164; //THUNDER I
+			}
+        else if (m_PPet->health.mp > 7)
+			{
+			 spellID = 149; //BLIZZARD I
+			}
+        else if (m_PPet->health.mp > 6)
+			{
+			 spellID = 144; //FIRE I
+			}
+        else if (m_PPet->health.mp > 5)
+			{
+			 spellID = 154; //AERO I
+			}
+        else if (m_PPet->health.mp > 4)
+			{
+			 spellID = 169; //WATER I
+			}
+        else if (m_PPet->health.mp > 3)
+			{
+			 spellID = 159; //STONE I
+			}
+        else
+			{
+		     spellID = -1;
+			}
+		else if (mskill > 177)
+		   if (m_PPet->health.mp > 30)
+			{
+			 spellID = 150; //BLIZZARD II
+			}
+        else if (m_PPet->health.mp > 25)
+			{
+			 spellID = 145; //FIRE II
+			}
+        else if (m_PPet->health.mp > 21)
+			{
+			 spellID = 155; //AERO II
+			}
+        else if (m_PPet->health.mp > 18)
+			{
+			 spellID = 170; //WATER II
+			}
+        else if (m_PPet->health.mp > 15)
+			{
+			 spellID = 160; //STONE II
+			}
+        else if (m_PPet->health.mp > 8)
+			{
+			 spellID = 164; //THUNDER I
+			}
+        else if (m_PPet->health.mp > 7)
+			{
+			 spellID = 149; //BLIZZARD I
+			}
+        else if (m_PPet->health.mp > 6)
+			{
+			 spellID = 144; //FIRE I
+			}
+        else if (m_PPet->health.mp > 5)
+			{
+			 spellID = 154; //AERO I
+			}
+        else if (m_PPet->health.mp > 4)
+			{
+			 spellID = 169; //WATER I
+			}
+        else if (m_PPet->health.mp > 3)
+			{
+			 spellID = 159; //STONE I
+			}
+        else
+			{
+		     spellID = -1;
+			}
+		else if (mskill > 152)
+		  if (m_PPet->health.mp > 25)
+			{
+			 spellID = 145; //FIRE II
+			}
+        else if (m_PPet->health.mp > 21)
+			{
+			 spellID = 155; //AERO II
+			}
+        else if (m_PPet->health.mp > 18)
+			{
+			 spellID = 170; //WATER II
+			}
+        else if (m_PPet->health.mp > 15)
+			{
+			 spellID = 160; //STONE II
+			}
+        else if (m_PPet->health.mp > 8)
+			{
+			 spellID = 164; //THUNDER I
+			}
+        else if (m_PPet->health.mp > 7)
+			{
+			 spellID = 149; //BLIZZARD I
+			}
+        else if (m_PPet->health.mp > 6)
+			{
+			 spellID = 144; //FIRE I
+			}
+        else if (m_PPet->health.mp > 5)
+			{
+			 spellID = 154; //AERO I
+			}
+        else if (m_PPet->health.mp > 4)
+			{
+			 spellID = 169; //WATER I
+			}
+        else if (m_PPet->health.mp > 3)
+			{
+			 spellID = 159; //STONE I
+			}
+        else
+			{
+		     spellID = -1;
+			}
+		else if (mskill > 137)
+		   if (m_PPet->health.mp > 21)
+			{
+			 spellID = 155; //AERO II
+			}
+        else if (m_PPet->health.mp > 18)
+			{
+			 spellID = 170; //WATER II
+			}
+        else if (m_PPet->health.mp > 15)
+			{
+			 spellID = 160; //STONE II
+			}
+        else if (m_PPet->health.mp > 8)
+			{
+			 spellID = 164; //THUNDER I
+			}
+        else if (m_PPet->health.mp > 7)
+			{
+			 spellID = 149; //BLIZZARD I
+			}
+        else if (m_PPet->health.mp > 6)
+			{
+			 spellID = 144; //FIRE I
+			}
+        else if (m_PPet->health.mp > 5)
+			{
+			 spellID = 154; //AERO I
+			}
+        else if (m_PPet->health.mp > 4)
+			{
+			 spellID = 169; //WATER I
+			}
+        else if (m_PPet->health.mp > 3)
+			{
+			 spellID = 159; //STONE I
+			}
+        else
+			{
+		     spellID = -1;
+			}
+		else if (mskill > 122)
+		   if (m_PPet->health.mp > 18)
+			{
+			 spellID = 170; //WATER II
+			}
+        else if (m_PPet->health.mp > 15)
+			{
+			 spellID = 160; //STONE II
+			}
+        else if (m_PPet->health.mp > 8)
+			{
+			 spellID = 164; //THUNDER I
+			}
+        else if (m_PPet->health.mp > 7)
+			{
+			 spellID = 149; //BLIZZARD I
+			}
+        else if (m_PPet->health.mp > 6)
+			{
+			 spellID = 144; //FIRE I
+			}
+        else if (m_PPet->health.mp > 5)
+			{
+			 spellID = 154; //AERO I
+			}
+        else if (m_PPet->health.mp > 4)
+			{
+			 spellID = 169; //WATER I
+			}
+        else if (m_PPet->health.mp > 3)
+			{
+			 spellID = 159; //STONE I
+			}
+        else
+			{
+		     spellID = -1;
+			}
+		else if (mskill > 107)
+		   if (m_PPet->health.mp > 15)
+			{
+			 spellID = 160; //STONE II
+			}
+        else if (m_PPet->health.mp > 8)
+			{
+			 spellID = 164; //THUNDER I
+			}
+        else if (m_PPet->health.mp > 7)
+			{
+			 spellID = 149; //BLIZZARD I
+			}
+        else if (m_PPet->health.mp > 6)
+			{
+			 spellID = 144; //FIRE I
+			}
+        else if (m_PPet->health.mp > 5)
+			{
+			 spellID = 154; //AERO I
+			}
+        else if (m_PPet->health.mp > 4)
+			{
+			 spellID = 169; //WATER I
+			}
+        else if (m_PPet->health.mp > 3)
+			{
+			 spellID = 159; //STONE I
+			}
+        else
+			{
+		     spellID = -1;
+			}
+		else if (mskill > 89)
+		   if (m_PPet->health.mp > 8)
+			{
+			 spellID = 164; //THUNDER I
+			}
+        else if (m_PPet->health.mp > 7)
+			{
+			 spellID = 149; //BLIZZARD I
+			}
+        else if (m_PPet->health.mp > 6)
+			{
+			 spellID = 144; //FIRE I
+			}
+        else if (m_PPet->health.mp > 5)
+			{
+			 spellID = 154; //AERO I
+			}
+        else if (m_PPet->health.mp > 4)
+			{
+			 spellID = 169; //WATER I
+			}
+        else if (m_PPet->health.mp > 3)
+			{
+			 spellID = 159; //STONE I
+			}
+        else
+			{
+		     spellID = -1;
+			}
+		else if (mskill > 74)
+		   if (m_PPet->health.mp > 7)
+			{
+			 spellID = 149; //BLIZZARD I
+			}
+        else if (m_PPet->health.mp > 6)
+			{
+			 spellID = 144; //FIRE I
+			}
+        else if (m_PPet->health.mp > 5)
+			{
+			 spellID = 154; //AERO I
+			}
+        else if (m_PPet->health.mp > 4)
+			{
+			 spellID = 169; //WATER I
+			}
+        else if (m_PPet->health.mp > 3)
+			{
+			 spellID = 159; //STONE I
+			}
+        else
+			{
+		     spellID = -1;
+			}
+		else if (mskill > 59)
+		  if (m_PPet->health.mp > 6)
+			{
+			 spellID = 144; //FIRE I
+			}
+        else if (m_PPet->health.mp > 5)
+			{
+			 spellID = 154; //AERO I
+			}
+        else if (m_PPet->health.mp > 4)
+			{
+			 spellID = 169; //WATER I
+			}
+        else if (m_PPet->health.mp > 3)
+			{
+			 spellID = 159; //STONE I
+			}
+        else
+			{
+		     spellID = -1;
+			}	
+		else if (mskill > 44)
+		   if (m_PPet->health.mp > 5)
+			{
+			 spellID = 154; //AERO I
+			}
+        else if (m_PPet->health.mp > 4)
+			{
+			 spellID = 169; //WATER I
+			}
+        else if (m_PPet->health.mp > 3)
+			{
+			 spellID = 159; //STONE I
+			}
+        else
+			{
+		     spellID = -1;
+			}
+		else if (mskill > 30)
+		   if (m_PPet->health.mp > 4)
+			{
+			 spellID = 169; //WATER I
+			}
+        else if (m_PPet->health.mp > 3)
+			{
+			 spellID = 159; //STONE I
+			}
+        else
+			{
+		     spellID = -1;
+			}	
+		else if (mskill > 14)
+		   if (m_PPet->health.mp > 3)
+			{
+			 spellID = 159; //STONE I
+			}
+        else
+			{
+		     spellID = -1;
+			}	
+		m_magicElementCast = 1;
+		m_magicElementalRecast = 25000;        
+    }	
+	else
+	{
+		m_LastMagicTimeEle = m_Tick; // reset mtick
+		m_magicElementalRecast = 15000; // No eligible Elemental Spell to cast
+		}	
+	}
+
+	return spellID;
+}
+
+
+
+
 
 
 
@@ -1609,7 +6239,7 @@ CBattleEntity* CAIAutomatonDummy::getWounded(uint8 threshold)
             }
         }
     }
-    if (m_PPet->PMaster->PAlly.size() > 0)  //Only Soulsoother Head can cure other Allies
+    if (m_PPet->PMaster->PAlly.size() > 0)  //Only Soulsoother Head can cure other Allies add Soulsoother Head
     {
         for (auto ally : m_PPet->PMaster->PAlly)
         {

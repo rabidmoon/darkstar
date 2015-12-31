@@ -1380,11 +1380,28 @@ namespace petutils
             case FRAME_SHARPSHOT:
                 PPet->SetMJob(JOB_RNG);
                 PPet->SetSJob(JOB_PUP);
-                break;
+                break;	
             case FRAME_STORMWAKER:
                 PPet->SetMJob(JOB_WHM);
                 PPet->SetSJob(JOB_RDM);
-                break;
+                {
+				switch (PAutomaton->getHead())
+				{
+				case HEAD_STORMWAKER:
+				    PPet->SetMJob(JOB_RDM);
+                    PPet->SetSJob(JOB_RDM);
+					break;
+				case HEAD_SPIRITREAVER:
+					PPet->SetMJob(JOB_BLM);
+                    PPet->SetSJob(JOB_RDM);
+					break;
+				case HEAD_IMMORTAL:
+					PPet->SetMJob(JOB_BLU);
+                    PPet->SetSJob(JOB_WAR);
+					break;	
+					}
+				}	
+				break;
             }
             //TEMP: should be MLevel when unsummoned, and PUP level when summoned
 			
