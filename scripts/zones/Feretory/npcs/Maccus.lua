@@ -23,7 +23,7 @@ function onTrigger(player,npc)
 local aura = player:getVar("FerretoryAura");
 local plvl = player:getMainLvl();
 
-if (player:getVar("FerretoryAura") == 0) then -- check for ferretory aura if it is 0 start the initial quest
+if (player:getVar("FerretoryAura") == 0) and (plvl > 9) then -- check for ferretory aura if it is 0 start the initial quest
 	player:PrintToPlayer("NPC : Hey, I don't sense an aura on you.  If you do some tasks for me, your aura will increase", 0xD);
 	player:setVar("FerretoryQuest1",1); -- enable the quest
 	player:setVar("FerretoryPlantoid",15); -- set the quest monster number needed to defeat
@@ -50,7 +50,7 @@ if (player:getVar("FerretoryPlantoidComplete") == 1) then
 	
 	
 	---------------- Start Ferretory Quest #2 -------------------
-	if (player:getVar("FerretoryAura") == 1) and (plvl > 9) then -- check for level of player and aura level
+	if (player:getVar("FerretoryAura") == 1) and (plvl > 19) then -- check for level of player and aura level
 	player:PrintToPlayer("Maccus : Defeat 30 experience yielding lizard monsters and report back to me", 0xD);  -- give the task for the quest
 	player:setVar("FerretoryQuest1",2); -- enable the quest
 	player:setVar("FerretoryPlantoid",30); -- set the quest monster number needed to defeat
@@ -69,7 +69,7 @@ if (player:getVar("FerretoryPlantoidComplete") == 1) then
 	
 	
 	---------------- Start Ferretory Quest #3 -------------------
-	if (player:getVar("FerretoryAura") == 2) and (plvl > 19) then -- check for level of player and aura level
+	if (player:getVar("FerretoryAura") == 2) and (plvl > 29) then -- check for level of player and aura level
 	player:PrintToPlayer("Maccus : Defeat 50 experience yielding bird type monsters and report back to me", 0xD);  -- give the task for the quest
 	player:setVar("FerretoryQuest1",3); -- enable the quest
 	player:setVar("FerretoryPlantoid",50); -- set the quest monster number needed to defeat
@@ -88,7 +88,7 @@ if (player:getVar("FerretoryPlantoidComplete") == 1) then
 	
 	
 		---------------- Start Ferretory Quest #4 -------------------
-	if (player:getVar("FerretoryAura") == 3) and (plvl > 29) then -- check for level of player and aura level
+	if (player:getVar("FerretoryAura") == 3) and (plvl > 39) then -- check for level of player and aura level
 	player:PrintToPlayer("Maccus : Defeat 75 experience yielding beast type monsters and report back to me", 0xD);  -- give the task for the quest
 	player:setVar("FerretoryQuest1",4); -- enable the quest
 	player:setVar("FerretoryPlantoid",75); -- set the quest monster number needed to defeat
@@ -106,7 +106,7 @@ if (player:getVar("FerretoryPlantoidComplete") == 1) then
 	
 	
 			---------------- Start Ferretory Quest #5 -------------------
-	if (player:getVar("FerretoryAura") == 4) and (plvl > 39) then -- check for level of player and aura level
+	if (player:getVar("FerretoryAura") == 4) and (plvl > 49) then -- check for level of player and aura level
 	player:PrintToPlayer("Maccus : Defeat 100 experience yielding Beastmen and report back to me", 0xD);  -- give the task for the quest
 	player:setVar("FerretoryQuest1",5); -- enable the quest
 	player:setVar("FerretoryPlantoid",100); -- set the quest monster number needed to defeat
@@ -121,6 +121,41 @@ if (player:getVar("FerretoryPlantoidComplete") == 1) then
 	player:PrintToPlayer("Your Aura has reached Level "..aura.."!", 0x15);
 
     end
+	
+			---------------- Start Ferretory Quest #6 -------------------
+	if (player:getVar("FerretoryAura") == 5) and (plvl > 59) then -- check for level of player and aura level
+	player:PrintToPlayer("Maccus : Defeat 125 experience yielding Arcana and report back to me", 0xD);  -- give the task for the quest
+	player:setVar("FerretoryQuest1",6); -- enable the quest
+	player:setVar("FerretoryPlantoid",125); -- set the quest monster number needed to defeat
+	end
+	
+	if (player:getVar("FerretoryPlantoidComplete") == 6) then
+    player:PrintToPlayer("Maccus : You've done well!  Your Aura is strong now!", 0xD);
+	player:setVar("FerretoryPlantoidComplete",0);
+	player:setVar("FerretoryQuest1",7);
+	player:setVar("FerretoryAura",6);
+	aura = player:getVar("FerretoryAura");
+	player:PrintToPlayer("Your Aura has reached Level "..aura.."!", 0x15);
+
+    end	
+	
+	
+			---------------- Start Ferretory Quest #7 -------------------
+	if (player:getVar("FerretoryAura") == 6) and (plvl > 69) then -- check for level of player and aura level
+	player:PrintToPlayer("Maccus : Defeat 150 experience yielding Undead and report back to me", 0xD);  -- give the task for the quest
+	player:setVar("FerretoryQuest1",7); -- enable the quest
+	player:setVar("FerretoryPlantoid",150); -- set the quest monster number needed to defeat
+	end
+	
+	if (player:getVar("FerretoryPlantoidComplete") == 7) then
+    player:PrintToPlayer("Maccus : You've done well!  Your Aura is strong now!", 0xD);
+	player:setVar("FerretoryPlantoidComplete",0);
+	player:setVar("FerretoryQuest1",8);
+	player:setVar("FerretoryAura",7);
+	aura = player:getVar("FerretoryAura");
+	player:PrintToPlayer("Your Aura has reached Level "..aura.."!", 0x15);
+
+    end		
 	
 	
 	

@@ -353,7 +353,7 @@ local level9 = {11507,11524,12489,12620,12622,12623,12741,12846,12920,12997,1379
 
 	
 	-- player:PrintToPlayer("Correct Item");
-		-- Leafslit
+		-- Leafslit  STR/DEX
       if trade:getItem(1) == 8933 then 
          a1 = 1;
          v1 = power - 1;
@@ -371,7 +371,7 @@ local level9 = {11507,11524,12489,12620,12622,12623,12741,12846,12920,12997,1379
          v4 = math.floor(power * 0.5);
        end
 	   
--- Leaftip
+-- Leaftip  STR/AGI
       if trade:getItem(1) == 8942 then 
          a1 = 1;
          v1 = power - 1;
@@ -389,7 +389,7 @@ local level9 = {11507,11524,12489,12620,12622,12623,12741,12846,12920,12997,1379
          v4 = math.floor(power * 0.5);
        end	
 
--- Leafdim
+-- Leafdim  DEX/AGI
       if trade:getItem(1) == 8951 then 
          a1 = 1;
          v1 = power - 1;
@@ -407,7 +407,7 @@ local level9 = {11507,11524,12489,12620,12622,12623,12741,12846,12920,12997,1379
          v4 = math.floor(power * 0.5);
        end	 
 
--- Leaforb
+-- Leaforb STR/VIT
       if trade:getItem(1) == 8960 then 
          a1 = 1;
          v1 = power - 1;
@@ -427,76 +427,76 @@ local level9 = {11507,11524,12489,12620,12622,12623,12741,12846,12920,12997,1379
 	   
 
 
--- Leafslit +1
+-- Leafslit +1 Accuracy/Attack
       if trade:getItem(1) == 8934 then 
          a1 = 1;
          v1 = power - 1;
 		 a2 = 68;
-         v2 = math.floor(power * 0.9);
+         v2 = math.floor(power * 0.5);
       elseif trade:getItem(2) == 8934 then 
 	     a1 = 1;
          v1 = power - 1;
          a3 = 68;
-         v3 = math.floor(power * 0.9);
+         v3 = math.floor(power * 0.5);
       elseif trade:getItem(3) == 8934 then 
 	     a1 = 1;
          v1 = power - 1;
          a4 = 68;
-         v4 = math.floor(power * 0.9);
+         v4 = math.floor(power * 0.5);
        end
 	   
--- Leaftip +1
+-- Leaftip +1 RNG Acc/Att
       if trade:getItem(1) == 8943 then 
          a1 = 1;
          v1 = power - 1;
 		 a2 = 69;
-         v2 = math.floor(power * 0.9);
+         v2 = math.floor(power * 0.5);
       elseif trade:getItem(2) == 8943 then 
 	     a1 = 1;
          v1 = power - 1;
          a3 = 69;
-         v3 = math.floor(power * 0.9);
+         v3 = math.floor(power * 0.5);
       elseif trade:getItem(3) == 8943 then 
 	     a1 = 1;
          v1 = power - 1;
          a4 = 69;
-         v4 = math.floor(power * 0.9);
+         v4 = math.floor(power * 0.5);
        end	
 
--- Leafdim +1
+-- Leafdim +1 Evasion
       if trade:getItem(1) == 8952 then 
          a1 = 1;
          v1 = power - 1;
 		 a2 = 31;
-         v2 = math.floor(power * 0.9);
+         v2 = math.floor(power * 0.5);
       elseif trade:getItem(2) == 8952 then 
 	     a1 = 1;
          v1 = power - 1;
          a3 = 31;
-         v3 = math.floor(power * 0.9);
+         v3 = math.floor(power * 0.5);
       elseif trade:getItem(3) == 8952 then 
 	     a1 = 1;
          v1 = power - 1;
          a4 = 31;
-         v4 = math.floor(power * 0.9);
+         v4 = math.floor(power * 0.5);
        end	 
 
--- Leaforb +1
+-- Leaforb +1 Defense
       if trade:getItem(1) == 8961 then 
          a1 = 1;
          v1 = power - 1;
 		 a2 = 33;
-         v2 = math.floor(power * 0.9);
+         v2 = math.floor(power * 0.5);
       elseif trade:getItem(2) == 8961 then 
 	     a1 = 1;
          v1 = power - 1;
          a3 = 33;
-         v3 = math.floor(power * 0.9);
+         v3 = math.floor(power * 0.5);
       elseif trade:getItem(3) == 8961 then 
 	     a1 = 1;
          v1 = power - 1;
          a4 = 33;
-         v4 = math.floor(power * 0.9);
+         v4 = math.floor(power * 0.5);
        end	   
 	   
 	   

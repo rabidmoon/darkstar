@@ -22,20 +22,26 @@ end;
 function onTrigger(player,npc)
 local boonpower = player:getVar("FerretoryMageBoonPower");
 local meleeboonpower = player:getVar("FerretoryMeleeBoonPower");
-	local mpboon = boonpower * 10;
-	local mabboon = boonpower * 2;
-	local fcboon = math.floor(boonpower * 1.5);
-	local curepotboon = boonpower;	
+	local mabboon = (math.floor(boonpower * 1.43));
+	local fcboon = (math.floor((boonpower * 0.5) -1));
+	local maccboon = boonpower;
+	local curepotboon = (boonpower - 4);
+	if (curepotboon < 0) then
+		curepotboon = 0;
+	end
 	
-	local hpboon = meleeboonpower * 10;
-	local attboon = meleeboonpower * 5;
-	local stp = meleeboonpower * 1;
-	local haste = math.floor(meleeboonpower * 0.5);
+	local attboon = (meleeboonpower * 2) + 1;
+	local rattboon = (meleeboonpower * 2) + 1;
+	local accboon = (math.floor(meleeboonpower * 1.5));
+    local storetpboon = (math.floor((meleeboonpower * 0.5) - 1));
+	if (storetpboon < 0) then
+	    storetpboon = 0;
+	end
 
 
 player:PrintToPlayer("Teyrnon : The following Perks are active:",0xD);
-player:PrintToPlayer("Teyrnon : Magic Attack Bonus +"..mabboon.." Fast Cast+"..fcboon.."% Cure Potency+"..curepotboon.."% ", 0xD);
-player:PrintToPlayer("Teyrnon : Attack/Ranged Attack +"..attboon.." Store TP+"..stp.." Haste+"..haste.."% ", 0xD);
+player:PrintToPlayer("Teyrnon : Magic Atk+"..mabboon.." Magic Acc.+"..maccboon.." Cure Potency+"..curepotboon.."% ", 0xD);
+player:PrintToPlayer("Teyrnon : Atk/R.Atk+"..attboon.." Acc/R.Acc+"..accboon.." Store TP+"..storetpboon..".", 0xD);
 	
 end;
 -----------------------------------

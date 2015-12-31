@@ -22,7 +22,7 @@ end;
 function onTrigger(player,npc)
 local aura = player:getVar("FerretoryAura");
  
-if (aura > 0) and (aura < 3) then
+if (aura > 0) and (aura < 5) then
 
 stock = {0x22E5,1000,	--Leafslit 
 	         0x22EE,1000,	--leaftip
@@ -36,7 +36,7 @@ player:PrintToPlayer("Stone Merchant : Access Level 1 Granted", 0xD);
  
  
 showShop(player, STATIC, stock);  
-else if (aura > 2) and (aura < 4) then
+else if (aura > 4) and (aura < 10) then
 stock = {0x22E5,1000,	--Leafslit 
 	         0x22EE,1000,	--leaftip
 	         0x22F7,1000,	--Leafdim
@@ -58,7 +58,7 @@ stock = {0x22E5,1000,	--Leafslit
  player:PrintToPlayer("Stone Merchant : Access Level 2 Granted", 0xD);
  
 showShop(player, STATIC, stock);  
-else if (aura > 4) then
+else if (aura > 9) then
 stock = {0x22E5,1000,	--Leafslit 
 	         0x22EE,1000,	--leaftip
 	         0x22F7,1000,	--Leafdim

@@ -31,7 +31,8 @@ function onMobDeathEx(mob, killer, isKillShot, isWeaponSkillKill)
 	local infamy = killer:getVar("Infamy");
 	local playerlvl = killer:getMainLvl();
 	local moblvl = mob:getMainLvl();
-
+ 
+	
 
 
 	
@@ -149,6 +150,42 @@ end
 
 
 
+	-------------------- Ferretory Quest #6 (Arcana) -----------------------
+	
+	if (mobfamily == 3) and (killer:getVar("FerretoryQuest1") == 6) and (mob:checkBaseExp())then  -- check for Birds, check if quest is active, and check if the level difference is less than 10
+		if  (killer:getVar("FerretoryPlantoid")) > 0 then  -- if the kills needed are greater than 0
+		killer:setVar("FerretoryPlantoid",kill - 1);  -- Subtract kill
+		kill = killer:getVar("FerretoryPlantoid");
+		if (killer:getVar("FerretoryPlantoid") > 0) then 
+		killer:PrintToPlayer("Aura Quest #5 Objectives Remaining: " ..kill..".", 0x15);  -- Print objectives remaining
+		else if (killer:getVar("FerretoryPlantoid") == 0) then  -- check to see kills have been completed
+		killer:PrintToPlayer("You have completed your objective.  Please report to Maccus for your reward", 0x15);  -- Print message to player
+		killer:setVar("FerretoryPlantoidComplete",6);
+		end
+		end
+		end	
+end	
+
+
+
+	-------------------- Ferretory Quest #7 (Undead) -----------------------
+	
+	if (mobfamily == 19) and (killer:getVar("FerretoryQuest1") == 7) and (mob:checkBaseExp())then  -- check for Birds, check if quest is active, and check if the level difference is less than 10
+		if  (killer:getVar("FerretoryPlantoid")) > 0 then  -- if the kills needed are greater than 0
+		killer:setVar("FerretoryPlantoid",kill - 1);  -- Subtract kill
+		kill = killer:getVar("FerretoryPlantoid");
+		if (killer:getVar("FerretoryPlantoid") > 0) then 
+		killer:PrintToPlayer("Aura Quest #5 Objectives Remaining: " ..kill..".", 0x15);  -- Print objectives remaining
+		else if (killer:getVar("FerretoryPlantoid") == 0) then  -- check to see kills have been completed
+		killer:PrintToPlayer("You have completed your objective.  Please report to Maccus for your reward", 0x15);  -- Print message to player
+		killer:setVar("FerretoryPlantoidComplete",7);
+		end
+		end
+		end	
+end	
+
+
+
 
 
 
@@ -218,7 +255,10 @@ end
 
 
 
- 
+ if (mob:checkBaseExp()) then
+     newbonus = restexp - reduction;
+	 killer:setVar("RestExp",newbonus);
+	end
 	
 
 

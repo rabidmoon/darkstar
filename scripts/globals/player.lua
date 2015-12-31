@@ -18,11 +18,35 @@ require("scripts/globals/gear_sets");
 -----------------------------------
 
 function onGameIn(player, firstlogin, zoning)
+
+player:setVar("restingLogin", os.time());
+local logintime = player:getVar("restingLogin");
+local lastlogin = player:getVar("logoutRestStart");
+local bonus = 0;
+
     if (not zoning) then -- Things checked ONLY during logon go here.
         if (firstlogin) then
             CharCreate(player);
         end
 		player:PrintToServer(string.format("%s has logged in...", player:getName()), 0x1C);
+		
+		
+		  if (player:hasStatusEffect(EFFECT_RESTING_BONUS) == false) then
+			if ((logintime - lastlogin) >= 20) then  --43200
+			bonus = (((logintime - lastlogin) - 39600) / 3600) * 1.66; -- 1 hour is 1.66% exp
+			math.floor(bonus);
+				if (bonus >= 120) then
+				bonus = 120; -- cap bonus at 120%
+				end
+			player:setVar("RestExp",bonus);
+			player:addStatusEffectEx(EFFECT_RESTING_BONUS,EFFECT_DEDICATION,bonus,0,10800,0,20000);
+			end
+			end
+			
+		
+		
+		
+		
     end
 
     if (zoning) then -- Things checked ONLY during zone in go here.
@@ -39,7 +63,7 @@ function onGameIn(player, firstlogin, zoning)
 	
 	local boonpower = player:getVar("FerretoryMageBoonPower");
 	local plvl = player:getMainLvl();
-	local plvladj = (math.floor(plvl / 10)) +1;
+	local plvladj = (math.floor((plvl - 1) / 10));
 	if (boonpower > (plvladj)) then
 	boonpower = plvladj;
 	else
@@ -47,41 +71,53 @@ function onGameIn(player, firstlogin, zoning)
 	end
 	
 	
-	local mpboon = boonpower * 10;
-	local mabboon = boonpower * 2;
-	local fcboon = math.floor(boonpower * 1.5);
-	local curepotboon = boonpower;
 	
-	player:addMod(MOD_MP,mpboon);
+	local mabboon = (math.floor(boonpower * 1.43));
+	local fcboon = (math.floor((boonpower * 0.5) -1));
+	local maccboon = boonpower;
+	local curepotboon = (boonpower - 4);
+	if (curepotboon < 0) then
+		curepotboon = 0;
+	end
+	
+	
+ --	player:addMod(MOD_MP,mpboon);
 	player:addMod(MOD_MATT,mabboon);
-	player:addMod(MOD_FASTCAST,fcboon);
+	player:addMod(MOD_MACC,maccboon);
+ -- player:addMod(MOD_FASTCAST,fcboon);
 	player:addMod(MOD_CURE_POTENCY,curepotboon);
 	
 	
 	---- Melee Boons ----
 	
 	 local meleeboonpower = player:getVar("FerretoryMeleeBoonPower");
-	
+	 local plvladj1 = (math.floor((plvl - 1) / 10));
 	 if (meleeboonpower > (plvladj)) then
-	 local plvladj1 = (math.floor(plvl / 10)) +1;
+
 	 meleeboonpower = plvladj1;
 	 else
 	 meleeboonpower = meleeboonpower;
 	 end
 	
 	
-	 local hpboon = meleeboonpower * 10;
-	 local attboon = meleeboonpower * 5;
-	 local rattboon = meleeboonpower * 5;
-	 local storetpboon = meleeboonpower * 1;
-	 local hasteboon = math.floor(meleeboonpower * 0.5);
+ --	 local hpboon = meleeboonpower * 10;
+	 local attboon = (meleeboonpower * 2) + 1;
+	 local rattboon = (meleeboonpower * 2) + 1;
+	 local accboon = (math.floor(meleeboonpower * 1.5));
+     local storetpboon = (math.floor((meleeboonpower * 0.5) - 1));
+	 if (storetpboon < 0) then
+	     storetpboon = 0;
+	end
+  -- local hasteboon = math.floor(meleeboonpower / 5);
 	
 	
-	 player:addMod(MOD_HP,hpboon);
+  -- player:addMod(MOD_HP,hpboon);
 	 player:addMod(MOD_ATT,attboon);
 	 player:addMod(MOD_RATT,rattboon);
-	 player:addMod(MOD_STORETP,storetpboon);
-	 player:addMod(MOD_HASTE_ABILITY,hasteboon);
+	 player:addMod(MOD_ACC,accboon);
+	 player:addMod(MOD_RACC,accboon);
+     player:addMod(MOD_STORETP,storetpboon);
+  -- player:addMod(MOD_HASTE_ABILITY,hasteboon);
 	
 	
 
