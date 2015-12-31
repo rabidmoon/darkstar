@@ -42,7 +42,8 @@ enum AUTOHEADTYPE
     HEAD_SHARPSHOT    = 0x03,
     HEAD_STORMWAKER   = 0x04,
     HEAD_SOULSOOTHER  = 0x05,
-    HEAD_SPIRITREAVER = 0x06
+    HEAD_SPIRITREAVER = 0x06,
+	HEAD_IMMORTAL     = 0x07
 };
 
 struct automaton_equip_t

@@ -411,6 +411,10 @@ uint16 getSkillCap(CCharEntity* PChar, SKILLTYPE skill, uint8 level)
             if (skill == SKILL_ARA)
                 rank -= 1;
             break;
+		case HEAD_IMMORTAL:
+		    if (skill == SKILL_AME || skill == SKILL_AMA)
+                rank -= 1;
+            break;		
         case HEAD_STORMWAKER:
             if (skill == SKILL_AME || skill == SKILL_AMA)
                 rank -= 1;
