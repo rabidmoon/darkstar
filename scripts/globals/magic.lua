@@ -5,7 +5,8 @@ require("scripts/globals/utils")
 
     MMSG_BUFF_FAIL = 75;
 
-    DIVINE_MAGIC_SKILL     = 32;
+    AUTOMATON_MAGIC_SKILL  = 24;
+	DIVINE_MAGIC_SKILL     = 32;
     HEALING_MAGIC_SKILL    = 33;
     ENHANCING_MAGIC_SKILL  = 34;
     ENFEEBLING_MAGIC_SKILL = 35;
@@ -378,6 +379,14 @@ function getMagicHitRate(caster, target, skillType, element, percentBonus, bonus
     end
 
     local magiceva = 0;
+	
+	local player = caster:getMaster();
+	
+	if (caster:isPet() and player:getMainJob() == JOB_PUP) then
+	skillType = 24;
+	-- printf("Setting skill to AUTOMATON MAGIC");
+	end
+
 
     if (bonusAcc == nil) then
         bonusAcc = 0;
@@ -388,7 +397,10 @@ function getMagicHitRate(caster, target, skillType, element, percentBonus, bonus
 
     if (skillType ~= 0) then
         magicacc = magicacc + caster:getSkillLevel(skillType) + caster:getMod(79 + skillType);
-    else
+    elseif (automaton == 69) then
+		-- for automaton skills
+		magicacc = magicacc + player:getSkillLevel(24);
+	else
         -- for mob skills / additional effects which don't have a skill
         magicacc = magicacc + utils.getSkillLvl(1, caster:getMainLvl());
     end
@@ -445,19 +457,19 @@ function getMagicResist(magicHitRate)
     -- Determine final resist based on which thresholds have been crossed.
     if (resvar <= sixteenth) then
         resist = 0.0625;
-        --printf("Spell resisted to 1/16!!!  Threshold = %u",sixteenth);
+     --   printf("Spell resisted to 1/16!!!  Threshold = %u",sixteenth);
     elseif (resvar <= eighth) then
         resist = 0.125;
-        --printf("Spell resisted to 1/8!  Threshold = %u",eighth);
+      --  printf("Spell resisted to 1/8!  Threshold = %u",eighth);
     elseif (resvar <= quart) then
         resist = 0.25;
-        --printf("Spell resisted to 1/4.  Threshold = %u",quart);
+      --  printf("Spell resisted to 1/4.  Threshold = %u",quart);
     elseif (resvar <= half) then
         resist = 0.5;
-        --printf("Spell resisted to 1/2.  Threshold = %u",half);
+      --  printf("Spell resisted to 1/2.  Threshold = %u",half);
     else
         resist = 1.0;
-        --printf("1.0");
+      --  printf("1.0");
     end
 
     return resist;
@@ -1115,6 +1127,13 @@ function doElementalNuke(caster, spell, target, spellParams)
     --get resist multiplier (1x if no resist)
     local diff = caster:getStat(MOD_INT) - target:getStat(MOD_INT);
     local resist = applyResistance(caster, spell, target, diff, ELEMENTAL_MAGIC_SKILL, resistBonus);
+	local player = caster:getMaster();
+	local automaton = player:getPetID();
+	if (automaton == 69) then
+	local resist = applyResistance(caster, spell, target, diff, AUTOMATON_MAGIC_SKILL, resistBonus);
+	-- printf("Using Automaton Numbers");
+	end
+	
 
     --get the resisted damage
     DMG = DMG * resist;
@@ -1220,8 +1239,8 @@ end
 function outputMagicHitRateInfo()
     for casterLvl = 1, 75 do
 
-        printf("");
-        printf("-------- CasterLvl: %d", casterLvl);
+     --   printf("");
+     --   printf("-------- CasterLvl: %d", casterLvl);
 
         for lvlMod = -5, 20 do
 
@@ -1246,7 +1265,7 @@ function outputMagicHitRateInfo()
 
                 local magicHitRate = calculateMagicHitRate(magicAcc, magicEva, 0, casterLvl, targetLvl);
 
-                printf("Lvl: %d vs %d, %d%%, MA: %d, ME: %d", casterLvl, targetLvl, magicHitRate, magicAcc, magicEva);
+              --  printf("Lvl: %d vs %d, %d%%, MA: %d, ME: %d", casterLvl, targetLvl, magicHitRate, magicAcc, magicEva);
             end
 
         end
