@@ -3079,7 +3079,7 @@ namespace charutils
 
         PChar->ForAlliance([&PMob, &region, &minlevel, &maxlevel, &pcinzone](CBattleEntity* PPartyMember) {
             auto PMember = static_cast<CCharEntity*>(PPartyMember);
-            uint32 baseexp = 0, exp = 0, dedication = 0;
+            uint32 baseexp = 0, exp = 0, dedication = 0, resting_bonus = 0;
             float permonstercap, monsterbonus = 1.0f;
             bool chainactive = false;
             if (PMob->m_HiPCLvl > maxlevel) maxlevel = PMob->m_HiPCLvl;
@@ -4184,6 +4184,49 @@ namespace charutils
             }
 
         }
+		
+		if (PChar->StatusEffectContainer->GetStatusEffect(EFFECT_RESTING_BONUS))
+        {
+            CStatusEffect* dedication = PChar->StatusEffectContainer->GetStatusEffect(EFFECT_RESTING_BONUS);
+            int16 percentage = dedication->GetPower();
+            int16 cap = dedication->GetSubPower();
+			int16 reduction = 0;
+			if (dedication->GetPower() > 100)
+			{
+              reduction = (exp / exp) * 5;
+			}	
+			else if (dedication->GetPower() > 80)
+			{
+              reduction = (exp / exp) * 4;
+			}
+			else if (dedication->GetPower() > 35)
+			{
+              reduction = (exp / exp) * 3;
+			}
+			else if (dedication->GetPower() > 15)
+			{
+              reduction = (exp / exp) * 2;
+			}
+			else
+			{
+              reduction = (exp / exp);
+			}			
+			
+            bonus += dsp_cap((exp * percentage) / 100, 0, cap);
+            dedication->SetSubPower(cap -= bonus);
+			dedication->SetPower(percentage -= reduction);
+
+            if (cap <= 0 || percentage <= 0)
+            {
+                PChar->StatusEffectContainer->DelStatusEffect(EFFECT_RESTING_BONUS);
+            }
+
+        }
+		
+		
+		
+		
+		
 
         bonus += exp * (PChar->getMod(MOD_EXP_BONUS) / 100.0f);
 
