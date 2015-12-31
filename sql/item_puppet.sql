@@ -44,6 +44,7 @@ INSERT INTO `item_puppet` VALUES (8195, 'sharpshot_z-500_head', 1, 35783427);
 INSERT INTO `item_puppet` VALUES (8196, 'stormwaker_y-700_head', 1, 540025392);
 INSERT INTO `item_puppet` VALUES (8197, 'soulsoother_c-1000_head', 1, 53486128);
 INSERT INTO `item_puppet` VALUES (8198, 'spiritreaver_m-400_head', 1, 808460848);
+INSERT INTO `item_puppet` VALUES (8199, 'immortal_z-600_head', 1, 808460848);
 INSERT INTO `item_puppet` VALUES (8224, 'harlequin_frame', 2, 858993459);
 INSERT INTO `item_puppet` VALUES (8225, 'valoredge_x-900_frame', 2, 590562084);
 INSERT INTO `item_puppet` VALUES (8226, 'sharpshot_z-500_frame', 2, 590623779);
