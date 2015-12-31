@@ -25,6 +25,6 @@ end;
 -----------------------------------
 
 function onMobDeath(mob, killer)
-	checkRegime(killer,mob,619,3);
-	checkRegime(killer,mob,620,1);
+	checkGoVregime(killer,mob,619,3);
+	checkGoVregime(killer,mob,620,1);
 end;
