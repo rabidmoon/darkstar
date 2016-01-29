@@ -775,11 +775,33 @@ end;
 -----------------------------------
 
 function onTrigger(player,npc)
+local job = player:getMainJob();
 
-
+	if ((job == 1) and (player:getVar("WARAFweapon") == 3)) or
+	((job == 2) and (player:getVar("MNKAFweapon") == 3)) or
+	((job == 3) and (player:getVar("WHMAFweapon") == 3)) or
+	((job == 4) and (player:getVar("BLMAFweapon") == 3)) or
+	((job == 5) and (player:getVar("RDMAFweapon") == 3)) or
+	((job == 6) and (player:getVar("THFAFweapon") == 3)) or
+	((job == 7) and (player:getVar("PLDAFweapon") == 3)) or
+	((job == 7) and (player:getVar("PLDAFshield") == 3)) or
+	((job == 8) and (player:getVar("DRKAFweapon") == 3)) or
+	((job == 8) and (player:getVar("DRKAFweapongs") == 3)) or
+	((job == 9) and (player:getVar("BSTAFweapon") == 3)) or
+	((job == 10) and (player:getVar("BRDAFweapon") == 3)) or
+	((job == 10) and (player:getVar("BRDAFhorn") == 3)) or
+	((job == 10) and (player:getVar("BRDAFharp") == 3)) or
+	((job == 11) and (player:getVar("RNGAFweaponbow") == 3)) or
+	((job == 11) and (player:getVar("RNGAFweapongun") == 3)) or
+	((job == 12) and (player:getVar("SMNAFweapon") == 3)) or
+	((job == 13) and (player:getVar("NINAFweapon") == 3)) or
+	((job == 14) and (player:getVar("DRGAFweapon") == 3)) or
+	((job == 15) and (player:getVar("SAMAFweapon") == 3)) or then
+	player:PrintToPlayer("Oboro : Relic? Never heard of it, talk to the goblin over there", 0xD);
+	
 	
     
-    if (player:hasItem(18214) or player:hasItem(17478) or player:hasItem(17422) or player:hasItem(17572) or player:hasItem(16829) or 
+    elseif (player:hasItem(18214) or player:hasItem(17478) or player:hasItem(17422) or player:hasItem(17572) or player:hasItem(16829) or 
 	player:hasItem(16764) or player:hasItem(17643) or player:hasItem(12307) or player:hasItem(16978) or player:hasItem(16590) or
 	player:hasItem(16680) or player:hasItem(16766) or player:hasItem(17352) or player:hasItem(17356) or player:hasItem(17188) or
 	player:hasItem(17256) or player:hasItem(17218) or player:hasItem(17597) or player:hasItem(17771) or player:hasItem(17772) or

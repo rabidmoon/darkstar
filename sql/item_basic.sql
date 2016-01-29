@@ -5816,6 +5816,36 @@ INSERT INTO `item_basic` VALUES (8800,0,'azuki_bean','azuki_bean',12,0,59,0,40);
 INSERT INTO `item_basic` VALUES (8803,0,'ranka','ranka',99,0,49,0,0);
 INSERT INTO `item_basic` VALUES (8804,0,'furusumi','furusumi',99,0,49,0,0);
 
+INSERT INTO `item_basic` VALUES (8930,0,'snowslit_stone','snowslit_stone',12,12352,46,1,0);
+INSERT INTO `item_basic` VALUES (8931,0,'snowslit_stone_+1','snowslit_stone_+1',12,12352,46,1,0);
+INSERT INTO `item_basic` VALUES (8932,0,'snowslit_stone_+2','snowslit_stone_+2',12,12352,46,1,0);
+INSERT INTO `item_basic` VALUES (8933,0,'leafslit_stone','leafslit_stone',12,12352,46,1,0);
+INSERT INTO `item_basic` VALUES (8934,0,'leafslit_stone_+1','leafslit_stone_+1',12,12352,46,1,0);
+INSERT INTO `item_basic` VALUES (8935,0,'leafslit_stone_+2','leafslit_stone_+2',12,12352,46,1,0);
+
+INSERT INTO `item_basic` VALUES (8939,0,'snowtip_stone','snowtip_stone',12,12352,46,1,0);
+INSERT INTO `item_basic` VALUES (8940,0,'snowtip_stone_+1','snowtip_stone_+1',12,12352,46,1,0);
+INSERT INTO `item_basic` VALUES (8941,0,'snowtip_stone_+2','snowtip_stone_+2',12,12352,46,1,0);
+INSERT INTO `item_basic` VALUES (8942,0,'leaftip_stone','leaftip_stone',12,12352,46,1,0);
+INSERT INTO `item_basic` VALUES (8943,0,'leaftip_stone_+1','leaftip_stone_+1',12,12352,46,1,0);
+INSERT INTO `item_basic` VALUES (8944,0,'leaftip_stone_+2','leaftip_stone_+2',12,12352,46,1,0);
+
+
+INSERT INTO `item_basic` VALUES (8948,0,'snowdim_stone','snowdim_stone',12,12352,46,1,0);
+INSERT INTO `item_basic` VALUES (8949,0,'snowdim_stone_+1','snowdim_stone_+1',12,12352,46,1,0);
+INSERT INTO `item_basic` VALUES (8950,0,'snowdim_stone_+2','snowdim_stone_+2',12,12352,46,1,0);
+INSERT INTO `item_basic` VALUES (8951,0,'leafdim_stone','leafdim_stone',12,12352,46,1,0);
+INSERT INTO `item_basic` VALUES (8952,0,'leafdim_stone_+1','leafdim_stone_+1',12,12352,46,1,0);
+INSERT INTO `item_basic` VALUES (8953,0,'leafdim_stone_+2','leafdim_stone_+2',12,12352,46,1,0);
+
+
+INSERT INTO `item_basic` VALUES (8957,0,'snoworb_stone','snoworb_stone',12,12352,46,1,0);
+INSERT INTO `item_basic` VALUES (8958,0,'snoworb_stone_+1','snoworb_stone_+1',12,12352,46,1,0);
+INSERT INTO `item_basic` VALUES (8959,0,'snoworb_stone_+2','snoworb_stone_+2',12,12352,46,1,0);
+INSERT INTO `item_basic` VALUES (8960,0,'leaforb_stone','leaforb_stone',12,12352,46,1,0);
+INSERT INTO `item_basic` VALUES (8961,0,'leaforb_stone_+1','leaforb_stone_+1',12,12352,46,1,0);
+INSERT INTO `item_basic` VALUES (8962,0,'leaforb_stone_+2','leaforb_stone_+2',12,12352,46,1,0);
+
 INSERT INTO `item_basic` VALUES (10240,0,'hexed_haubert','hexed_haubert',1,2080,99,0,0);
 INSERT INTO `item_basic` VALUES (10241,0,'hexed_domaru','hexed_domaru',1,2080,99,0,0);
 INSERT INTO `item_basic` VALUES (10242,0,'hexed_jacket','hexed_jacket',1,2080,99,0,0);

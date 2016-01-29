@@ -34,37 +34,10 @@ end;
 
 function onZoneIn(player,prevZone)
     local cs = -1;
-
-    local realDay = os.time();
-    local dynaWaitxDay = player:getVar("dynaWaitxDay");
-
-    if ((dynaWaitxDay + (BETWEEN_2DYNA_WAIT_TIME * 24 * 60 * 60)) < realDay or player:getVar("DynamisID") == GetServerVariable("[DynaSandoria]UniqueID")) then
-        if (player:isBcnmsFull() == 1) then
-            if (player:hasStatusEffect(EFFECT_DYNAMIS, 0) == false) then
-                inst = player:addPlayerToDynamis(1281);
-
-                if (inst == 1) then
-                    player:bcnmEnter(1281);
-                else
-                     cs = 0;
-                end
-            else
-                player:bcnmEnter(1281);
-            end
-        else
-            inst = player:bcnmRegister(1281);
-
-            if (inst == 1) then
-                player:bcnmEnter(1281);
-            else
-                cs = 0;
-            end
-        end
-    else
-        cs = 0;
-    end
-
-    return cs;
+	 player:addStatusEffect(EFFECT_LEVEL_RESTRICTION,75,3,200);
+     player:PrintToPlayer("You have 60 minutes remaining in Dynamis", 0xD);
+	 player:setVar("Dynamis_Time_Remaining",200000);
+	return cs;
 end;
 
 -----------------------------------

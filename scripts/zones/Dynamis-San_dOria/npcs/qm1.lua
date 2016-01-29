@@ -1,7 +1,8 @@
 -----------------------------------
 -- Area:  Dynamis San d'Oria
 -- NPC:   qm1 (???)
--- Notes: Spawns when Megaboss is defeated
+-- Notes: Spawns Rokgevok and Gadgqok
+-- Uses Chapter 2 Tome and Odious Scale
 -----------------------------------
 package.loaded["scripts/zones/Dynamis-San_dOria/TextIDs"] = nil;
 -----------------------------------
@@ -14,6 +15,36 @@ require("scripts/zones/Dynamis-San_dOria/TextIDs");
 -----------------------------------
 
 function onTrade(player,npc,trade)
+if (GetMobAction(17535006) == 0 and trade:hasItemQty(3353,1) and trade:hasItemQty(3853,3)) then
+	player:setVar("DynaWeakener",3);
+	SpawnMob(17535006):updateClaim(player);
+elseif (GetMobAction(17535006) == 0 and trade:hasItemQty(3353,1) and trade:hasItemQty(3853,2)) then
+	player:setVar("DynaWeakener",2);
+	SpawnMob(17535006):updateClaim(player);
+elseif (GetMobAction(17535006) == 0 and trade:hasItemQty(3353,1) and trade:hasItemQty(3853,1)) then
+	player:setVar("DynaWeakener",1);
+	SpawnMob(17535006):updateClaim(player);
+elseif (GetMobAction(17535006) == 0 and trade:hasItemQty(3353,1)) then
+player:setVar("DynaWeakener",0);
+	SpawnMob(17535006):updateClaim(player);
+end	
+
+----- Need to replace secondary NPC ID below
+
+if (GetMobAction(17543294) == 0 and trade:hasItemQty(3405,1) and trade:hasItemQty(3853,3)) then
+	player:setVar("DynaWeakener",3);
+	SpawnMob(17543294):updateClaim(player);
+elseif (GetMobAction(17543294) == 0 and trade:hasItemQty(3405,1) and trade:hasItemQty(3853,2)) then
+	player:setVar("DynaWeakener",2);
+	SpawnMob(17543294):updateClaim(player);
+elseif (GetMobAction(17543294) == 0 and trade:hasItemQty(3405,1) and trade:hasItemQty(3853,1)) then
+	player:setVar("DynaWeakener",1);
+	SpawnMob(17543294):updateClaim(player);
+elseif (GetMobAction(17543294) == 0 and trade:hasItemQty(3405,1)) then
+player:setVar("DynaWeakener",0);
+	SpawnMob(17543294):updateClaim(player);
+end
+
 end;
 
 -----------------------------------
@@ -22,13 +53,7 @@ end;
 
 function onTrigger(player,npc)
 	
-	if (player:hasKeyItem(HYDRA_CORPS_COMMAND_SCEPTER) == false) then
-		player:setVar("DynaSandoria_Win",1);
-		player:addKeyItem(HYDRA_CORPS_COMMAND_SCEPTER);
-		player:messageSpecial(KEYITEM_OBTAINED,HYDRA_CORPS_COMMAND_SCEPTER);
-	else
-		player:messageSpecial(NOTHING_OUT_OF_ORDINARY);
-	end
+		player:messageSpecial(NOTHING_OUT_OF_ORDINARY);		
 	
 end;
 

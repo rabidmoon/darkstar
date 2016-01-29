@@ -32434,33 +32434,56 @@ INSERT INTO `mob_droplist` VALUES (4557,0,18767,97);
 INSERT INTO `mob_droplist` VALUES (4558,0,15942,128);
 
 -- Mandragora
-INSERT INTO `mob_droplist` VALUES (5000,0,1449,400); -- T Whiteshell
+INSERT INTO `mob_droplist` VALUES (5000,0,1449,450); -- T Whiteshell
+INSERT INTO `mob_droplist` VALUES (5000,0,1449,450); -- T Whiteshell
+INSERT INTO `mob_droplist` VALUES (5000,0,1449,450); -- T Whiteshell
 INSERT INTO `mob_droplist` VALUES (5000,0,1449,250); -- T Whiteshell
 INSERT INTO `mob_droplist` VALUES (5000,0,1449,150); -- T Whiteshell
 INSERT INTO `mob_droplist` VALUES (5000,0,1449,150); -- T Whiteshell
 INSERT INTO `mob_droplist` VALUES (5000,0,1449,100); -- T Whiteshell
-INSERT INTO `mob_droplist` VALUES (5000,0,15133,10);  -- MNK Feet
-INSERT INTO `mob_droplist` VALUES (5000,0,15134,10);  -- WHM Feet
-INSERT INTO `mob_droplist` VALUES (5000,0,15121,10);  -- RDM Legs
-INSERT INTO `mob_droplist` VALUES (5000,0,15137,10);  -- THF Feet
-INSERT INTO `mob_droplist` VALUES (5000,0,15140,10);  -- BST Feet
-INSERT INTO `mob_droplist` VALUES (5000,0,16352,10);  -- PUP Legs
+INSERT INTO `mob_droplist` VALUES (5000,0,15133,10);  -- WAR Head
+INSERT INTO `mob_droplist` VALUES (5000,0,14091,10);  -- WHM Feet
+INSERT INTO `mob_droplist` VALUES (5000,0,15105,10);  -- BLM Gloves
+INSERT INTO `mob_droplist` VALUES (5000,0,15077,10);  -- THF Head
+
+-- Crawler
+INSERT INTO `mob_droplist` VALUES (5001,0,1449,450); -- T Whiteshell
+INSERT INTO `mob_droplist` VALUES (5001,0,1449,450); -- T Whiteshell
 INSERT INTO `mob_droplist` VALUES (5001,0,1449,450); -- T Whiteshell
 INSERT INTO `mob_droplist` VALUES (5001,0,1449,250); -- T Whiteshell
 INSERT INTO `mob_droplist` VALUES (5001,0,1449,150); -- T Whiteshell
 INSERT INTO `mob_droplist` VALUES (5001,0,1449,150); -- T Whiteshell
 INSERT INTO `mob_droplist` VALUES (5001,0,1449,100); -- T Whiteshell
+INSERT INTO `mob_droplist` VALUES (5001,0,15138,10);  -- PLD Feet
+INSERT INTO `mob_droplist` VALUES (5001,0,15109,10);  -- DRK Hands
+INSERT INTO `mob_droplist` VALUES (5001,0,15080,10);  -- BST Head
+INSERT INTO `mob_droplist` VALUES (5001,0,15112,10);  -- RNG Hands
 
+-- Bee
+INSERT INTO `mob_droplist` VALUES (5002,0,1449,450); -- T Whiteshell
+INSERT INTO `mob_droplist` VALUES (5002,0,1449,450); -- T Whiteshell
 INSERT INTO `mob_droplist` VALUES (5002,0,1449,450); -- T Whiteshell
 INSERT INTO `mob_droplist` VALUES (5002,0,1449,250); -- T Whiteshell
 INSERT INTO `mob_droplist` VALUES (5002,0,1449,150); -- T Whiteshell
 INSERT INTO `mob_droplist` VALUES (5002,0,1449,150); -- T Whiteshell
 INSERT INTO `mob_droplist` VALUES (5002,0,1449,100); -- T Whiteshell
+INSERT INTO `mob_droplist` VALUES (5002,0,15131,10);  -- SMN Legs
+INSERT INTO `mob_droplist` VALUES (5002,0,15084,10);  -- NIN Head
+INSERT INTO `mob_droplist` VALUES (5002,0,15128,10);  -- SAM Legs
+INSERT INTO `mob_droplist` VALUES (5002,0,15684,10);  -- BLU Feet
 
+-- Rabbit
+INSERT INTO `mob_droplist` VALUES (5003,0,1449,450); -- T Whiteshell
+INSERT INTO `mob_droplist` VALUES (5003,0,1449,450); -- T Whiteshell
+INSERT INTO `mob_droplist` VALUES (5003,0,1449,450); -- T Whiteshell
+INSERT INTO `mob_droplist` VALUES (5003,0,1449,250); -- T Whiteshell
 INSERT INTO `mob_droplist` VALUES (5003,0,1449,150); -- T Whiteshell
 INSERT INTO `mob_droplist` VALUES (5003,0,1449,150); -- T Whiteshell
-INSERT INTO `mob_droplist` VALUES (5003,0,1449,150); -- T Whiteshell
-INSERT INTO `mob_droplist` VALUES (5003,0,1449,150); -- T Whiteshell
+INSERT INTO `mob_droplist` VALUES (5003,0,1449,100); -- T Whiteshell
+INSERT INTO `mob_droplist` VALUES (5003,0,15031,10);  -- PUP Hands
+INSERT INTO `mob_droplist` VALUES (5003,0,15038,10);  -- DNC Hands
+INSERT INTO `mob_droplist` VALUES (5003,0,11398,10);  -- SCH Feet
+
 
 INSERT INTO `mob_droplist` VALUES (5004,0,1449,150); -- T Whiteshell
 INSERT INTO `mob_droplist` VALUES (5004,0,3415,1000); -- Fiendish Tome 12
@@ -32486,15 +32509,165 @@ INSERT INTO `mob_droplist` VALUES (5010,0,3390,1000); -- Odious Holy Water
 INSERT INTO `mob_droplist` VALUES (5011,0,1449,150); -- T Whiteshell
 INSERT INTO `mob_droplist` VALUES (5011,0,3391,1000); -- Odious Quipus
 
-INSERT INTO `mob_droplist` VALUES (5012,0,1449,150); -- T Whiteshell
-
-INSERT INTO `mob_droplist` VALUES (5013,0,1449,150); -- T Whiteshell
-INSERT INTO `mob_droplist` VALUES (5014,0,1449,150); -- T Whiteshell
-INSERT INTO `mob_droplist` VALUES (5015,0,1449,150); -- T Whiteshell
-INSERT INTO `mob_droplist` VALUES (5016,0,1449,150); -- T Whiteshell
+INSERT INTO `mob_droplist` VALUES (5012,0,1449,150); -- T Whiteshell MegaBoss
 
 
+-- Beetle
+INSERT INTO `mob_droplist` VALUES (5013,0,1455,450); -- Byne Bill
+INSERT INTO `mob_droplist` VALUES (5013,0,1455,450); -- Byne Bill
+INSERT INTO `mob_droplist` VALUES (5013,0,1455,450); -- Byne Bill
+INSERT INTO `mob_droplist` VALUES (5013,0,1455,250); -- Byne Bill
+INSERT INTO `mob_droplist` VALUES (5013,0,1455,150); -- Byne Bill
+INSERT INTO `mob_droplist` VALUES (5013,0,1455,150); -- Byne Bill
+INSERT INTO `mob_droplist` VALUES (5013,0,1455,100); -- Byne Bill
+INSERT INTO `mob_droplist` VALUES (5013,0,15666,10);  -- MNK Feet
+INSERT INTO `mob_droplist` VALUES (5013,0,15583,10);  -- BLM Head
+INSERT INTO `mob_droplist` VALUES (5013,0,14913,10);  -- RDM Hands
+INSERT INTO `mob_droplist` VALUES (5013,0,14505,10);  -- THF Body
 
+-- Worm
+INSERT INTO `mob_droplist` VALUES (5014,0,1455,450); -- Byne Bill
+INSERT INTO `mob_droplist` VALUES (5014,0,1455,450); -- Byne Bill
+INSERT INTO `mob_droplist` VALUES (5014,0,1455,450); -- Byne Bill
+INSERT INTO `mob_droplist` VALUES (5014,0,1455,250); -- Byne Bill
+INSERT INTO `mob_droplist` VALUES (5014,0,1455,150); -- Byne Bill
+INSERT INTO `mob_droplist` VALUES (5014,0,1455,150); -- Byne Bill
+INSERT INTO `mob_droplist` VALUES (5014,0,1455,100); -- Byne Bill
+INSERT INTO `mob_droplist` VALUES (5014,0,15251,10); -- PLD Head 
+INSERT INTO `mob_droplist` VALUES (5014,0,15672,10); -- DRK Feet 
+INSERT INTO `mob_droplist` VALUES (5014,0,14508,10); -- BST Body
+INSERT INTO `mob_droplist` VALUES (5014,0,14918,10); -- BRD Hands
+
+-- Bat
+INSERT INTO `mob_droplist` VALUES (5015,0,1455,450); -- Byne Bill
+INSERT INTO `mob_droplist` VALUES (5015,0,1455,450); -- Byne Bill
+INSERT INTO `mob_droplist` VALUES (5015,0,1455,450); -- Byne Bill
+INSERT INTO `mob_droplist` VALUES (5015,0,1455,250); -- Byne Bill
+INSERT INTO `mob_droplist` VALUES (5015,0,1455,150); -- Byne Bill
+INSERT INTO `mob_droplist` VALUES (5015,0,1455,150); -- Byne Bill
+INSERT INTO `mob_droplist` VALUES (5015,0,1455,100); -- Byne Bill
+INSERT INTO `mob_droplist` VALUES (5015,0,14923,10); -- SMN Hands
+INSERT INTO `mob_droplist` VALUES (5015,0,15593,10); -- DRG Legs
+INSERT INTO `mob_droplist` VALUES (5015,0,14920,10); -- SAM Hands
+INSERT INTO `mob_droplist` VALUES (501,0,16347,10); -- BLU Pants
+
+-- Sheep
+INSERT INTO `mob_droplist` VALUES (5016,0,1455,450); -- Byne Bill
+INSERT INTO `mob_droplist` VALUES (5016,0,1455,450); -- Byne Bill
+INSERT INTO `mob_droplist` VALUES (5016,0,1455,450); -- Byne Bill
+INSERT INTO `mob_droplist` VALUES (5016,0,1455,250); -- Byne Bill
+INSERT INTO `mob_droplist` VALUES (5016,0,1455,150); -- Byne Bill
+INSERT INTO `mob_droplist` VALUES (5016,0,1455,150); -- Byne Bill
+INSERT INTO `mob_droplist` VALUES (5016,0,1455,100); -- Byne Bill
+INSERT INTO `mob_droplist` VALUES (5016,0,11386,10); -- COR Feet
+INSERT INTO `mob_droplist` VALUES (5016,0,11479,10); -- DNC Head
+INSERT INTO `mob_droplist` VALUES (5016,0,16363,10); -- SCH Pants
+
+
+INSERT INTO `mob_droplist` VALUES (5017,0,1455,150); -- Byne Bill
+INSERT INTO `mob_droplist` VALUES (5017,0,3410,1000); -- Fiendish Tome 7
+
+INSERT INTO `mob_droplist` VALUES (5018,0,1455,150); -- Byne Bill
+INSERT INTO `mob_droplist` VALUES (5018,0,3411,1000); -- Fiendish Tome 8
+
+INSERT INTO `mob_droplist` VALUES (5019,0,1455,150); -- Byne Bill
+INSERT INTO `mob_droplist` VALUES (5019,0,3412,1000); -- Fiendish Tome 9
+
+INSERT INTO `mob_droplist` VALUES (5020,0,1455,150); -- Byne Bill
+INSERT INTO `mob_droplist` VALUES (5020,0,3413,1000); -- Fiendish Tome 10
+
+INSERT INTO `mob_droplist` VALUES (5021,0,1455,150); -- Byne Bill
+INSERT INTO `mob_droplist` VALUES (5021,0,3384,1000); -- Odious Charm
+
+INSERT INTO `mob_droplist` VALUES (5022,0,1455,150); -- Byne Bill
+INSERT INTO `mob_droplist` VALUES (5022,0,3385,1000); -- Odious Backscale
+
+INSERT INTO `mob_droplist` VALUES (5023,0,1455,150); -- Byne Bill
+INSERT INTO `mob_droplist` VALUES (5023,0,3386,1000); -- Odious Engraving
+
+INSERT INTO `mob_droplist` VALUES (5024,0,1455,150); -- Byne Bill
+INSERT INTO `mob_droplist` VALUES (5024,0,3387,1000); -- Odious Letterbox
+
+INSERT INTO `mob_droplist` VALUES (5025,0,1455,150); -- Mega Boss Byne Bill
+
+-- Vulture
+INSERT INTO `mob_droplist` VALUES (5026,0,1452,450); -- O. Bronze
+INSERT INTO `mob_droplist` VALUES (5026,0,1452,450); -- O. Bronze
+INSERT INTO `mob_droplist` VALUES (5026,0,1452,450); -- O. Bronze
+INSERT INTO `mob_droplist` VALUES (5026,0,1452,250); -- O. Bronze
+INSERT INTO `mob_droplist` VALUES (5026,0,1452,150); -- O. Bronze
+INSERT INTO `mob_droplist` VALUES (5026,0,1452,150); -- O. Bronze
+INSERT INTO `mob_droplist` VALUES (5026,0,1452,100); -- O. Bronze
+INSERT INTO `mob_droplist` VALUES (5026,0,15665,10); -- WAR Feet
+INSERT INTO `mob_droplist` VALUES (5026,0,15581,10); -- MNK Legs
+INSERT INTO `mob_droplist` VALUES (5026,0,15247,10); -- WHM Head
+INSERT INTO `mob_droplist` VALUES (5026,0,15669,10); -- RDM Feet
+
+-- Fuguar
+INSERT INTO `mob_droplist` VALUES (5027,0,1452,450); -- O. Bronze
+INSERT INTO `mob_droplist` VALUES (5027,0,1452,450); -- O. Bronze
+INSERT INTO `mob_droplist` VALUES (5027,0,1452,450); -- O. Bronze
+INSERT INTO `mob_droplist` VALUES (5027,0,1452,250); -- O. Bronze
+INSERT INTO `mob_droplist` VALUES (5027,0,1452,150); -- O. Bronze
+INSERT INTO `mob_droplist` VALUES (5027,0,1452,150); -- O. Bronze
+INSERT INTO `mob_droplist` VALUES (5027,0,1452,100); -- O. Bronze
+INSERT INTO `mob_droplist` VALUES (5027,0,14915,10); -- PLD Hands
+INSERT INTO `mob_droplist` VALUES (5027,0,15588,10); -- BST Pants
+INSERT INTO `mob_droplist` VALUES (5027,0,15254,10); -- BRD Head
+INSERT INTO `mob_droplist` VALUES (5027,0,15590,10); -- RNG Legs
+
+
+-- Crab
+INSERT INTO `mob_droplist` VALUES (5028,0,1452,450); -- O. Bronze
+INSERT INTO `mob_droplist` VALUES (5028,0,1452,450); -- O. Bronze
+INSERT INTO `mob_droplist` VALUES (5028,0,1452,450); -- O. Bronze
+INSERT INTO `mob_droplist` VALUES (5028,0,1452,250); -- O. Bronze
+INSERT INTO `mob_droplist` VALUES (5028,0,1452,150); -- O. Bronze
+INSERT INTO `mob_droplist` VALUES (5028,0,1452,150); -- O. Bronze
+INSERT INTO `mob_droplist` VALUES (5028,0,1452,100); -- O. Bronze
+INSERT INTO `mob_droplist` VALUES (5028,0,15679,10); -- SMN Feet
+INSERT INTO `mob_droplist` VALUES (5028,0,15592,10); -- NIN Pants
+INSERT INTO `mob_droplist` VALUES (5028,0,15678,10); -- DRG Feet
+INSERT INTO `mob_droplist` VALUES (5028,0,15026,10); -- BLU Hands
+
+
+-- Pugil
+INSERT INTO `mob_droplist` VALUES (5029,0,1452,450); -- O. Bronze
+INSERT INTO `mob_droplist` VALUES (5029,0,1452,450); -- O. Bronze
+INSERT INTO `mob_droplist` VALUES (5029,0,1452,450); -- O. Bronze
+INSERT INTO `mob_droplist` VALUES (5029,0,1452,250); -- O. Bronze
+INSERT INTO `mob_droplist` VALUES (5029,0,1452,150); -- O. Bronze
+INSERT INTO `mob_droplist` VALUES (5029,0,1452,150); -- O. Bronze
+INSERT INTO `mob_droplist` VALUES (5029,0,1452,100); -- O. Bronze 
+INSERT INTO `mob_droplist` VALUES (5029,0,16350,10); -- COR Pants
+INSERT INTO `mob_droplist` VALUES (5029,0,11389,10); -- PUP Feet
+INSERT INTO `mob_droplist` VALUES (5029,0,15041,10); -- SCH Hands
+
+INSERT INTO `mob_droplist` VALUES (5030,0,1452,450); -- O. Bronze
+INSERT INTO `mob_droplist` VALUES (5030,0,3405,1000); -- Fiendish Tome 2
+
+INSERT INTO `mob_droplist` VALUES (5031,0,1452,450); -- O. Bronze
+INSERT INTO `mob_droplist` VALUES (5031,0,3406,1000); -- Fiendish Tome 3
+
+INSERT INTO `mob_droplist` VALUES (5032,0,1452,450); -- O. Bronze
+INSERT INTO `mob_droplist` VALUES (5032,0,3407,1000); -- Fiendish Tome 4
+
+INSERT INTO `mob_droplist` VALUES (5033,0,1452,450); -- O. Bronze
+INSERT INTO `mob_droplist` VALUES (5033,0,3408,1000); -- Fiendish Tome 5
+
+INSERT INTO `mob_droplist` VALUES (5034,0,1452,450); -- O. Bronze
+INSERT INTO `mob_droplist` VALUES (5034,0,3380,1000); -- Odious Scale
+
+INSERT INTO `mob_droplist` VALUES (5035,0,1452,450); -- O. Bronze
+INSERT INTO `mob_droplist` VALUES (5035,0,3381,1000); -- Odious Leather
+
+INSERT INTO `mob_droplist` VALUES (5036,0,1452,450); -- O. Bronze
+INSERT INTO `mob_droplist` VALUES (5036,0,3382,1000); -- Odious Cryptex
+
+INSERT INTO `mob_droplist` VALUES (5037,0,1452,450); -- O. Bronze
+INSERT INTO `mob_droplist` VALUES (5037,0,3387,1000); -- Odious Strongbox
+
+INSERT INTO `mob_droplist` VALUES (5038,0,1452,150); -- Mega Boss O Bronze
 
 
 /*!40000 ALTER TABLE `mob_droplist` ENABLE KEYS */;

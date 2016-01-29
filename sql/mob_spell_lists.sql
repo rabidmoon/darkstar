@@ -1459,6 +1459,7 @@ INSERT INTO `mob_spell_lists` VALUES ('Automaton_Stormwaker', 260, 58, 1, 255);
 INSERT INTO `mob_spell_lists` VALUES ('Automaton_Stormwaker', 260, 108, 1, 255);
 INSERT INTO `mob_spell_lists` VALUES ('Automaton_Stormwaker', 260, 110, 1, 255);
 INSERT INTO `mob_spell_lists` VALUES ('Automaton_Stormwaker', 260, 111, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES ('Automaton_Stormwaker', 260, 167, 1, 255);
 
 
 
