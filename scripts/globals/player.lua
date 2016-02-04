@@ -32,14 +32,14 @@ local bonus = 0;
 		
 		
 		  if (player:hasStatusEffect(EFFECT_RESTING_BONUS) == false) then
-			if ((logintime - lastlogin) >= 20) then  --43200
-			bonus = (((logintime - lastlogin) - 39600) / 3600) * 1.66; -- 1 hour is 1.66% exp
+			if ((logintime - lastlogin) >= 39600) then  --43200
+			bonus = (((logintime - lastlogin) - 39600)) * 1.66; -- 1 hour is 1.66% exp
 			math.floor(bonus);
 				if (bonus >= 120) then
 				bonus = 120; -- cap bonus at 120%
 				end
 			player:setVar("RestExp",bonus);
-			player:addStatusEffectEx(EFFECT_RESTING_BONUS,EFFECT_DEDICATION,bonus,0,10800,0,20000);
+			player:addStatusEffectEx(EFFECT_RESTING_BONUS,EFFECT_DEDICATION,bonus,0,86400,0,20000);
 			end
 			end
 			
