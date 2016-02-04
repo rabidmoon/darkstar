@@ -1127,10 +1127,15 @@ function doElementalNuke(caster, spell, target, spellParams)
     --get resist multiplier (1x if no resist)
     local diff = caster:getStat(MOD_INT) - target:getStat(MOD_INT);
     local resist = applyResistance(caster, spell, target, diff, ELEMENTAL_MAGIC_SKILL, resistBonus);
+	
+	-- Seperate logic for puppet
+	if (caster:isPet()) then
+    -- printf("Caster is a Pet");
 	local player = caster:getMaster();
 	local automaton = player:getPetID();
 	if (automaton == 69) then
 	local resist = applyResistance(caster, spell, target, diff, AUTOMATON_MAGIC_SKILL, resistBonus);
+	end
 	-- printf("Using Automaton Numbers");
 	end
 	
