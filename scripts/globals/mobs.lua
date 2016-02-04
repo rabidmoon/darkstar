@@ -255,10 +255,10 @@ end
 
 
 
- if (mob:checkBaseExp()) then
-     newbonus = restexp - reduction;
-	 killer:setVar("RestExp",newbonus);
-	end
+-- if (mob:checkBaseExp()) then
+  --   newbonus = restexp - reduction;
+	-- killer:setVar("RestExp",newbonus);
+	-- end
 	
 
 
