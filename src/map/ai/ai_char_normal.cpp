@@ -2404,7 +2404,7 @@ void CAICharNormal::ActionWeaponSkillStart()
                 return;
             }
 
-        }
+        }		
         m_LastActionTime = m_Tick;
         m_ActionType = ACTION_WEAPONSKILL_FINISH;
         return;
@@ -2599,8 +2599,15 @@ void CAICharNormal::ActionWeaponSkillFinish()
 
     apAction_t Action;
     Action.ActionTarget = m_PBattleSubTarget;
-    Action.animation = m_PWeaponSkill->getAnimationId();
-
+	
+        if (m_PChar->look.race == 5 && m_PWeaponSkill->getID() == 204)
+            {
+               Action.animation = m_PWeaponSkill->getAnimationId() + 608; 
+            }
+		else
+			{
+			   Action.animation = m_PWeaponSkill->getAnimationId();
+			}
 
     if (!battleutils::isValidSelfTargetWeaponskill(m_PWeaponSkill->getID()))
     {

@@ -6099,7 +6099,7 @@ inline int32 CLuaBaseEntity::getSystem(lua_State* L)
 inline int32 CLuaBaseEntity::getFamily(lua_State* L)
 {
     DSP_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
-    DSP_DEBUG_BREAK_IF(m_PBaseEntity->objtype != TYPE_MOB);
+    //DSP_DEBUG_BREAK_IF(m_PBaseEntity->objtype != TYPE_MOB);
 
     uint16 family = ((CMobEntity*)m_PBaseEntity)->m_Family;
 

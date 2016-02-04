@@ -21,7 +21,7 @@ function onEffectTick(target,effect)
 	local seconds = math.floor(duration / 1000);
 	if (target:getVar("Dynamis_Time_Remaining") > 180000) then
 	    target:setVar("Dynamis_Time_Remaining",duration);
-		target:PrintToPlayer(duration);
+		-- target:PrintToPlayer(duration);
 	end	
 	if (target:getVar("Dynamis_Time_Remaining") < 9000) then
 	    target:setVar("Dynamis_Time_Remaining",duration);
@@ -37,7 +37,7 @@ function onEffectTick(target,effect)
 	end	
 	if (target:getVar("Dynamis_Time_Remaining") <= 177000) then
 	    target:setVar("Dynamis_Time_Remaining",duration);
-        target:PrintToPlayer(duration);
+       -- target:PrintToPlayer(duration);
 	end	
 end;
 

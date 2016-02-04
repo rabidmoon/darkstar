@@ -1,7 +1,7 @@
 -----------------------------------
 -- Area:  Dynamis San d'Oria
 -- NPC:   qm2 (???)
--- Notes: Spawns Kratzvatz and Fugbrag
+-- Notes: Spawns Fugbrag and Kratzvatz
 -- Uses Chapter 3 Tome and Odious Leather
 -----------------------------------
 package.loaded["scripts/zones/Dynamis-San_dOria/TextIDs"] = nil;
@@ -31,18 +31,18 @@ end
 
 ----- Need to replace secondary NPC ID below
 
-if (GetMobAction(17543294) == 0 and trade:hasItemQty(3406,1) and trade:hasItemQty(3853,3)) then
+if (GetMobAction(17535208) == 0 and trade:hasItemQty(3406,1) and trade:hasItemQty(3853,3)) then
 	player:setVar("DynaWeakener",3);
-	SpawnMob(17543294):updateClaim(player);
-elseif (GetMobAction(17543294) == 0 and trade:hasItemQty(3406,1) and trade:hasItemQty(3853,2)) then
+	SpawnMob(17535208):updateClaim(player);
+elseif (GetMobAction(17535208) == 0 and trade:hasItemQty(3406,1) and trade:hasItemQty(3853,2)) then
 	player:setVar("DynaWeakener",2);
-	SpawnMob(17543294):updateClaim(player);
-elseif (GetMobAction(17543294) == 0 and trade:hasItemQty(3406,1) and trade:hasItemQty(3853,1)) then
+	SpawnMob(17535208):updateClaim(player);
+elseif (GetMobAction(17535208) == 0 and trade:hasItemQty(3406,1) and trade:hasItemQty(3853,1)) then
 	player:setVar("DynaWeakener",1);
-	SpawnMob(17543294):updateClaim(player);
-elseif (GetMobAction(17543294) == 0 and trade:hasItemQty(3406,1)) then
+	SpawnMob(17535208):updateClaim(player);
+elseif (GetMobAction(17535208) == 0 and trade:hasItemQty(3406,1)) then
 player:setVar("DynaWeakener",0);
-	SpawnMob(17543294):updateClaim(player);
+	SpawnMob(17535208):updateClaim(player);
 end
 
 end;

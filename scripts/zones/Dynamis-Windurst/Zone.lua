@@ -34,9 +34,9 @@ end;
 
 function onZoneIn(player,prevZone)
     local cs = -1;
-	 player:addStatusEffect(EFFECT_LEVEL_RESTRICTION,75,3,200);
+	 player:addStatusEffect(EFFECT_LEVEL_RESTRICTION,75,3,5400);
      player:PrintToPlayer("You have 60 minutes remaining in Dynamis", 0xD);
-	 player:setVar("Dynamis_Time_Remaining",200000);
+	 player:setVar("Dynamis_Time_Remaining",5400000);
 	return cs;
 end;
 

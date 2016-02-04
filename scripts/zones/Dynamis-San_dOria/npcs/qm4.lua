@@ -1,7 +1,7 @@
 -----------------------------------
 -- Area:  Dynamis San d'Oria
 -- NPC:   qm4 (???)
--- Notes: Spawns Voshgrosh and Butchnotch
+-- Notes: Spawns Bjakdek and Djokvuuk
 -- Uses Chapter 5 Tome and Odious Strongbox
 -----------------------------------
 package.loaded["scripts/zones/Dynamis-San_dOria/TextIDs"] = nil;
@@ -29,20 +29,20 @@ player:setVar("DynaWeakener",0);
 	SpawnMob(17535032):updateClaim(player);
 end	
 
------ Need to replace secondary NPC ID below
 
-if (GetMobAction(17543294) == 0 and trade:hasItemQty(3408,1) and trade:hasItemQty(3853,3)) then
+
+if (GetMobAction(17535211) == 0 and trade:hasItemQty(3408,1) and trade:hasItemQty(3853,3)) then
 	player:setVar("DynaWeakener",3);
-	SpawnMob(17543294):updateClaim(player);
-elseif (GetMobAction(17543294) == 0 and trade:hasItemQty(3408,1) and trade:hasItemQty(3853,2)) then
+	SpawnMob(17535211):updateClaim(player);
+elseif (GetMobAction(17535211) == 0 and trade:hasItemQty(3408,1) and trade:hasItemQty(3853,2)) then
 	player:setVar("DynaWeakener",2);
-	SpawnMob(17543294):updateClaim(player);
-elseif (GetMobAction(17543294) == 0 and trade:hasItemQty(3408,1) and trade:hasItemQty(3853,1)) then
+	SpawnMob(17535211):updateClaim(player);
+elseif (GetMobAction(17535211) == 0 and trade:hasItemQty(3408,1) and trade:hasItemQty(3853,1)) then
 	player:setVar("DynaWeakener",1);
-	SpawnMob(17543294):updateClaim(player);
-elseif (GetMobAction(17543294) == 0 and trade:hasItemQty(3408,1)) then
+	SpawnMob(17535211):updateClaim(player);
+elseif (GetMobAction(17535211) == 0 and trade:hasItemQty(3408,1)) then
 player:setVar("DynaWeakener",0);
-	SpawnMob(17543294):updateClaim(player);
+	SpawnMob(17535211):updateClaim(player);
 end
 
 end;

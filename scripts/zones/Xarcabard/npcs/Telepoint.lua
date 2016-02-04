@@ -38,6 +38,8 @@ function onTrigger(player,npc)
 	if (player:hasKeyItem(VAHZL_GATE_CRYSTAL) == false) then
 		player:addKeyItem(VAHZL_GATE_CRYSTAL);
 		player:messageSpecial(KEYITEM_OBTAINED,VAHZL_GATE_CRYSTAL);
+	elseif (player:hasKeyItem(VIAL_OF_SHROUDED_SAND) == false) then
+	    player:addKeyItem(VIAL_OF_SHROUDED_SAND);
 	else
 		player:messageSpecial(ALREADY_OBTAINED_TELE);
 	end

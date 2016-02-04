@@ -154,11 +154,6 @@ bool CWeaponSkill::isElemental()
 
 uint16 CWeaponSkill::getAnimationId()
 {
-    if(m_AnimationId == 129){
-    return m_AnimationId;
-	return m_AnimationId - 1;
-  }
-
 	return m_AnimationId;
 }
 

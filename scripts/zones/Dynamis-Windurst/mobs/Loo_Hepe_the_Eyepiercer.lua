@@ -24,6 +24,7 @@ local weakener = target:getVar("DynaWeakener");
    mob:setMod(MOD_ATTP,-75);
    mob:addMod(MOD_EVA,-30);
    mob:addMOd(MOD_ACC,-30);
+   target:setVar("DynaWeakener",0);
   --  SetDropRate(5004,3415,300);
 target:PrintToPlayer("You have significantly weakened the monster!", 0xD);
 elseif (weakener == 2) then
@@ -32,6 +33,7 @@ elseif (weakener == 2) then
    mob:setMod(MOD_ATTP,-20);
    mob:addMod(MOD_EVA,-20);
    mob:addMOd(MOD_ACC,-20);
+   target:setVar("DynaWeakener",0);
   --  SetDropRate(5004,3415,500);
 target:PrintToPlayer("You have weakened the monster!", 0xD);
 elseif (weakener == 1) then
@@ -40,11 +42,13 @@ elseif (weakener == 1) then
    mob:setMod(MOD_ATTP,-10);
    mob:addMod(MOD_EVA,-10);
    mob:addMOd(MOD_ACC,-10);
+   target:setVar("DynaWeakener",0);
     -- SetDropRate(5004,3415,700);
 target:PrintToPlayer("You have weakened the monster ever so slightly", 0xD);
 elseif (weakener == 0) then
  -- mob:setMod(MOD_ACC,100);
  -- mob:setMod(MOD_EVA,100);
+   target:setVar("DynaWeakener",0);
 target:PrintToPlayer("You have summoned a Monster.", 0xD);  
 end   
 end;

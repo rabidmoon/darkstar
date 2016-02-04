@@ -1,55 +1,75 @@
 -----------------------------------
--- Area: Dynamis San d'Oria
--- NPC:  Overlord's Tombstone
+-- Area: Dynamis Sandy
+-- NPC:  Overlords Tombstone
+-- Boss: Zone Boss
 -----------------------------------
-
-require("scripts/globals/titles");
-require("scripts/globals/dynamis");
-
+require("scripts/globals/keyitems");
 -----------------------------------
 -- onMobSpawn Action
 -----------------------------------
 
 function onMobSpawn(mob)
+mob:addMod(MOD_EVA,50);
+mob:addMod(MOD_ACC,50);
+
+
 end;
 
------------------------------------
--- onMobEngaged
------------------------------------
 
 function onMobEngaged(mob,target)
-
-	SpawnMob(17535350):updateEnmity(target); -- 110
-	SpawnMob(17535351):updateEnmity(target); -- 111
-	SpawnMob(17535352):updateEnmity(target); -- 112
-	SpawnMob(17535354):updateEnmity(target); -- 114
-	SpawnMob(17534978):updateEnmity(target); -- Battlechoir Gitchfotch
-	SpawnMob(17534979):updateEnmity(target); -- Soulsender Fugbrag
-
+local weakener = target:getVar("DynaWeakener");
+ if (weakener == 4) then
+   mob:setMod(MOD_HPP,-75);
+   mob:setMod(MOD_DEFP,-75);
+   mob:setMod(MOD_ATTP,-75);
+   mob:addMod(MOD_EVA,-40);
+   mob:addMOd(MOD_ACC,-40);
+   target:setVar("DynaWeakener",0);
+  --  SetDropRate(5004,3415,300);
+target:PrintToPlayer("The Monster may not prove to be a challenge", 0xD); 
+elseif (weakener == 3) then
+   mob:setMod(MOD_HPP,-57);
+   mob:setMod(MOD_DEFP,-57);
+   mob:setMod(MOD_ATTP,-77);
+   mob:addMod(MOD_EVA,-30);
+   mob:addMOd(MOD_ACC,-30);
+   target:setVar("DynaWeakener",0);
+  --  SetDropRate(5004,3415,300);
+target:PrintToPlayer("You have significantly weakened the monster!", 0xD);
+elseif (weakener == 2) then
+   mob:setMod(MOD_HPP,-38);
+   mob:setMod(MOD_DEFP,-20);
+   mob:setMod(MOD_ATTP,-20);
+   mob:addMod(MOD_EVA,-20);
+   mob:addMOd(MOD_ACC,-20);
+   target:setVar("DynaWeakener",0);
+  --  SetDropRate(5004,3415,500);
+target:PrintToPlayer("You have weakened the monster!", 0xD);
+elseif (weakener == 1) then
+   mob:setMod(MOD_HPP,-20);
+   mob:setMod(MOD_DEFP,-10);
+   mob:setMod(MOD_ATTP,-10);
+   mob:addMod(MOD_EVA,-10);
+   mob:addMOd(MOD_ACC,-10);
+   target:setVar("DynaWeakener",0);
+    -- SetDropRate(5004,3415,700);
+target:PrintToPlayer("You have weakened the monster ever so slightly", 0xD);
+elseif (weakener == 0) then
+ -- mob:setMod(MOD_ACC,100);
+ -- mob:setMod(MOD_EVA,100);
+   target:setVar("DynaWeakener",0);
+target:PrintToPlayer("You have summoned a Monster.", 0xD);  
+end   
 end;
+
 
 -----------------------------------
 -- onMobDeath
 -----------------------------------
 
 function onMobDeath(mob,killer)
-
-	if (alreadyReceived(killer,8) == false) then
-		addDynamisList(killer,128);
-
-		killer:addTitle(DYNAMISSAN_DORIA_INTERLOPER); -- Add title
-
-		local npc = GetNPCByID(17535224); -- Spawn ???
-		npc:setPos(mob:getXPos(),mob:getYPos(),mob:getZPos());
-		npc:setStatus(0);
-
-		killer:launchDynamisSecondPart(); -- Spawn dynamis second part
-	end
-
-	for i = 17534978, 17534979 do
-      if (GetMobAction(i) ~= 0) then
-         DespawnMob(i);
-      end
-	end
+killer:setVar("DynaWeakener",0);
+killer:addKeyItem(HYDRA_CORPS_COMMAND_SCEPTER);
+	
 
 end;
