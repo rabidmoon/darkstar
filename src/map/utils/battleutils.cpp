@@ -1186,7 +1186,7 @@ namespace battleutils
 
                 if (daze == EFFECT_DRAIN_DAZE)
                 {
-                    uint16 multiplier = 3 + (5.5f * power - 1);
+                    uint16 multiplier = 2 + (2.1f * power - 1);
                     int8 Samba = dsprand::GetRandomNumber(1, (delay * multiplier) / 100 + 1);
 
                     // vary damage based on lvl diff
