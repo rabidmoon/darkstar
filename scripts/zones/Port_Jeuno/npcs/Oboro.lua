@@ -615,40 +615,41 @@ end
 end
 
 
-
 --------------------------------------------------------
---         SMN TRADE DRAGON STAFF 17597               --
+--            SAM TRADE MAGOROKU 17812                --
 --------------------------------------------------------
 
 
 
-if (job == 12) and (trade:hasItemQty(17597, 1)) and trade:hasItemQty( 1126, 15 ) and level >= 51 then
+if (job == 12) and (trade:hasItemQty(17812, 1)) and trade:hasItemQty( 1126, 15 ) and level >= 51 then
              -- Complete the trade..
             player:tradeComplete();
 			player:PrintToPlayer("Oboro : Thank you for the requested items. Come see me again when you are stronger.", 0xD);
-			player:addItem(17597, 1, 45, 11, 321, 1);
-			player:setVar("SMNAFweapon", 1);
-			player:messageSpecial(ITEM_OBTAINED, 17597);
+			player:addItem(17812, 1, 45, 5);
+			player:setVar("SAMAFweapon", 1);
+			player:messageSpecial(ITEM_OBTAINED, 17812);
 			
 end
-	if (job == 12) and (trade:hasItemQty(17597, 1)) and trade:hasItemQty( 1126, 30 ) and level >= 61 and (player:getVar("SMNAFweapon") == 1)  then
+	if (job == 12) and (trade:hasItemQty(17812, 1)) and trade:hasItemQty( 1126, 30 ) and level >= 61 and (player:getVar("SAMAFweapon") == 1)  then
              -- Complete the trade..
             player:tradeComplete();
 			player:PrintToPlayer("Oboro : Thank you for the requested items. Come see me again when you are stronger.", 0xD);
-			player:addItem(17597, 1, 45, 23, 321, 1);
-			player:setVar("SMNAFweapon", 2);
-			player:messageSpecial(ITEM_OBTAINED, 17597);
+			player:addItem(17812, 1, 45, 12, 142, 1);
+			player:setVar("SAMAFweapon", 2);
+			player:messageSpecial(ITEM_OBTAINED, 17812);
 			
 end
-	if (job == 12) and (trade:hasItemQty(17597, 1)) and trade:hasItemQty( 1127, 15 ) and level >= 71 and (player:getVar("SMNAFweapon") == 2) then
+	if (job == 12) and (trade:hasItemQty(17812, 1)) and trade:hasItemQty( 1127, 15 ) and level >= 71 and (player:getVar("SAMAFweapon") == 2) then
              -- Complete the trade..
             player:tradeComplete();
 			player:PrintToPlayer("Oboro : Thank you for the requested items. Come see me again when you are stronger.", 0xD);
-			player:addItem(17597, 1, 76, 1, 321, 1);
-			player:setVar("SMNAFweapon", 3);
-			player:messageSpecial(ITEM_OBTAINED, 17597);
+			player:addItem(17812, 1, 45, 19, 142, 2);
+			player:setVar("SAMAFweapon", 3);
+			player:messageSpecial(ITEM_OBTAINED, 17812);
 			
 end
+
+
 
 --------------------------------------------------------
 --      NIN TRADE ANJU & ZUSHIO 17771 / 17772         --
@@ -727,46 +728,136 @@ end
 
 
 
+
 --------------------------------------------------------
---            SAM TRADE MAGOROKU 17812                --
+--         SMN TRADE DRAGON STAFF 17597               --
 --------------------------------------------------------
 
 
 
-if (job == 15) and (trade:hasItemQty(17812, 1)) and trade:hasItemQty( 1126, 15 ) and level >= 51 then
+if (job == 15) and (trade:hasItemQty(17597, 1)) and trade:hasItemQty( 1126, 15 ) and level >= 51 then
              -- Complete the trade..
             player:tradeComplete();
 			player:PrintToPlayer("Oboro : Thank you for the requested items. Come see me again when you are stronger.", 0xD);
-			player:addItem(17812, 1, 45, 5);
-			player:setVar("SAMAFweapon", 1);
-			player:messageSpecial(ITEM_OBTAINED, 17812);
+			player:addItem(17597, 1, 45, 11, 321, 1);
+			player:setVar("SMNAFweapon", 1);
+			player:messageSpecial(ITEM_OBTAINED, 17597);
 			
 end
-	if (job == 15) and (trade:hasItemQty(17812, 1)) and trade:hasItemQty( 1126, 30 ) and level >= 61 and (player:getVar("SAMAFweapon") == 1)  then
+	if (job == 15) and (trade:hasItemQty(17597, 1)) and trade:hasItemQty( 1126, 30 ) and level >= 61 and (player:getVar("SMNAFweapon") == 1)  then
              -- Complete the trade..
             player:tradeComplete();
 			player:PrintToPlayer("Oboro : Thank you for the requested items. Come see me again when you are stronger.", 0xD);
-			player:addItem(17812, 1, 45, 12, 142, 1);
-			player:setVar("SAMAFweapon", 2);
-			player:messageSpecial(ITEM_OBTAINED, 17812);
+			player:addItem(17597, 1, 45, 23, 321, 1);
+			player:setVar("SMNAFweapon", 2);
+			player:messageSpecial(ITEM_OBTAINED, 17597);
 			
 end
-	if (job == 15) and (trade:hasItemQty(17812, 1)) and trade:hasItemQty( 1127, 15 ) and level >= 71 and (player:getVar("SAMAFweapon") == 2) then
+	if (job == 15) and (trade:hasItemQty(17597, 1)) and trade:hasItemQty( 1127, 15 ) and level >= 71 and (player:getVar("SMNAFweapon") == 2) then
              -- Complete the trade..
             player:tradeComplete();
 			player:PrintToPlayer("Oboro : Thank you for the requested items. Come see me again when you are stronger.", 0xD);
-			player:addItem(17812, 1, 45, 19, 142, 2);
-			player:setVar("SAMAFweapon", 3);
-			player:messageSpecial(ITEM_OBTAINED, 17812);
+			player:addItem(17597, 1, 76, 1, 321, 1);
+			player:setVar("SMNAFweapon", 3);
+			player:messageSpecial(ITEM_OBTAINED, 17597);
 			
 end
 
 
+--------------------------------------------------------
+--         BLU TRADE IMMORTAL SCIMITAR  17717         --
+--------------------------------------------------------
 
 
-
+if (job == 16) and (trade:hasItemQty(17717, 1)) and trade:hasItemQty( 1126, 15 ) and level >= 51 then
+             -- Complete the trade..
+            player:tradeComplete();
+			player:PrintToPlayer("Oboro : Thank you for the requested items. Come see me again when you are stronger.", 0xD);
+			player:addItem(17717, 1, 45, 3, 550, 1); -- STR/DEX+2
+			player:setVar("BLUAFweapon", 1);
+			player:messageSpecial(ITEM_OBTAINED, 17717);
+			
+end
+	if (job == 16) and (trade:hasItemQty(16829, 1)) and trade:hasItemQty( 1126, 30 ) and level >= 61 and (player:getVar("BLUAFweapon") == 1)  then
+             -- Complete the trade..
+            player:tradeComplete();
+			player:PrintToPlayer("Oboro : Thank you for the requested items. Come see me again when you are stronger.", 0xD);
+			player:addItem(16829, 1, 45, 8, 550, 3); -- STR/DEX+4
+			player:setVar("BLUAFweapon", 2);
+			player:messageSpecial(ITEM_OBTAINED, 17717);
+			
+end
+	if (job == 16) and (trade:hasItemQty(16829, 1)) and trade:hasItemQty( 1127, 15 ) and level >= 71 and (player:getVar("BLUAFweapon") == 2) then
+             -- Complete the trade..
+            player:tradeComplete();
+			player:PrintToPlayer("Oboro : Thank you for the requested items. Come see me again when you are stronger.", 0xD);
+			player:addItem(16829, 1, 45, 13, 550, 5); -- STR/DEX+6
+			player:setVar("BLUAFweapon", 3);
+			player:messageSpecial(ITEM_OBTAINED, 17717);
+			
+end
 	
 
+	
+	
+--------------------------------------------------------
+--      COR TRADE HEXAGUN 18702                    --
+--------------------------------------------------------
+
+
+
+if (job == 17) and (trade:hasItemQty(18702, 1)) and trade:hasItemQty( 1126, 15 ) and level >= 51 then
+             -- Complete the trade..
+            player:tradeComplete();
+			player:PrintToPlayer("Oboro : Thank you for the requested items. Come see me again when you are stronger.", 0xD);
+			player:addItem(18702, 1, 45, 2, 26, 2, 27, 2);
+			player:setVar("CORAFweapon", 1);
+			player:messageSpecial(ITEM_OBTAINED, 18702);
+			
+end
+	if (job == 17) and (trade:hasItemQty(18702, 1)) and trade:hasItemQty( 1126, 30 ) and level >= 61 and (player:getVar("CORAFweapon") == 1)  then
+             -- Complete the trade..
+            player:tradeComplete();
+			player:PrintToPlayer("Oboro : Thank you for the requested items. Come see me again when you are stronger.", 0xD);
+			player:addItem(18702, 1, 45, 5, 26, 4, 27, 4);
+			player:setVar("CORAFweapon", 2);
+			player:messageSpecial(ITEM_OBTAINED, 18702);
+			
+end
+	if (job == 17) and (trade:hasItemQty(18702, 1)) and trade:hasItemQty( 1127, 15 ) and level >= 71 and (player:getVar("CORAFweapon") == 2) then
+             -- Complete the trade..
+            player:tradeComplete();
+			player:PrintToPlayer("Oboro : Thank you for the requested items. Come see me again when you are stronger.", 0xD);
+			player:addItem(18702, 1, 45, 8, 26, 6, 27, 6);
+			player:setVar("CORAFweapon", 3);
+			player:messageSpecial(ITEM_OBTAINED, 18702);
+end	
+
+
+--------------------------------------------------------
+--      PUP TRADE ADARGAS 18353                     --
+--------------------------------------------------------
+	
+if (job == 18) and (trade:hasItemQty(18353, 1)) and trade:hasItemQty( 1126, 30 ) and level >= 61 and (player:getVar("PUPAFweapon") == 1) then
+             -- Complete the trade..
+            player:tradeComplete();
+			player:PrintToPlayer("Oboro : Thank you for the requested items. Come see me again when you are stronger.", 0xD);
+			player:addItem(18353, 1, 45, 7, 25, 4); -- Attack +5
+			player:setVar("PUPAFweapon", 2);
+			player:messageSpecial(ITEM_OBTAINED, 18353);
+			
+end
+	if (job == 1) and (trade:hasItemQty(18353, 1)) and trade:hasItemQty( 1127, 15 ) and level >= 71 and (player:getVar("PUPAFweapon") == 2) then
+             -- Complete the trade..
+            player:tradeComplete();
+			player:PrintToPlayer("Oboro : Thank you for the requested items. Come see me again when you are stronger.", 0xD);
+			player:addItem(18353, 1, 45, 12, 25, 6); -- Attack +7
+			player:setVar("PUPAFweapon", 3);
+			player:messageSpecial(ITEM_OBTAINED, 18353);
+			
+end	
+	
+	
 
 end;
 
@@ -776,6 +867,7 @@ end;
 
 function onTrigger(player,npc)
 local job = player:getMainJob();
+local level = player:getMainLvl();
 
 	if ((job == 1) and (player:getVar("WARAFweapon") == 3)) or
 	((job == 2) and (player:getVar("MNKAFweapon") == 3)) or
@@ -810,6 +902,18 @@ local job = player:getMainJob();
 	
    player:PrintToPlayer("Oboro : Hey, I can upgrade that weapon for you. Bring me 15 Beastmen seals for the first", 0xD);
    player:PrintToPlayer("Oboro : upgrade, 30 beastmen seals for the second, and 15 Kindred seals for the last", 0xD);
+   elseif ((job == 18) and (level >=47)) then
+   player:PrintToPlayer("Oboro : You are becoming a strong Puppetmaster.  I've made these new weapons, try them out.", 0xD);
+   if (player:getFreeSlotsCount() == 0) then
+   player:PrintToPlayer("Oboro : Hey make some room in your inventory!", 0xD);
+   elseif (player:getVar("PUPWeaponObtained") == 1) and (player:getVar("PUPAFweapon") == 0) and (player:hasItem(18353, 0)) then
+   player:PrintToPlayer("Oboro : You've those magnificent weapons already? Cough up 5,000 and I'll get you another!", 0xD);
+   else
+   player:addItem(18353, 1);
+   player:setVar("PUPAFweapon", 0);
+   player:setVar("PUPWeaponObtained",1);
+   player:messageSpecial(ITEM_OBTAINED, 18353);
+   end
    else
    player:PrintToPlayer("Oboro : I'm busy!", 0xD);
    end
