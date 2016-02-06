@@ -40,7 +40,7 @@ end
              -- Complete the trade..
             player:tradeComplete();
 			player:PrintToPlayer("Oboro : Thank you for the requested items. Come see me again when you are stronger.", 0xD);
-			player:addItem(18214, 1, 45, 34, 25, 6); -- Attack +7
+			player:addItem(18214, 1, 76, 1, 25, 6); -- Attack +7
 			player:setVar("WARAFweapon", 3);
 			player:messageSpecial(ITEM_OBTAINED, 18214);
 			
@@ -143,7 +143,7 @@ end
              -- Complete the trade..
             player:tradeComplete();
 			player:PrintToPlayer("Oboro : Thank you for the requested items. Come see me again when you are stronger.", 0xD);
-			player:addItem(17572, 1, 45, 33);
+			player:addItem(17572, 1, 76, 0);
 			player:setVar("BLMAFweapon", 3);
 			player:messageSpecial(ITEM_OBTAINED, 17572);
 			
@@ -536,7 +536,7 @@ end
              -- Complete the trade..
             player:tradeComplete();
 			player:PrintToPlayer("Oboro : Thank you for the requested items. Come see me again when you are stronger.", 0xD);
-			player:addItem(17188, 1, 45, 36, 29, 6);
+			player:addItem(17188, 1, 76, 3, 29, 6);
 			player:setVar("RNGAFweaponbow", 3);
 			player:messageSpecial(ITEM_OBTAINED, 17188);
 			
@@ -644,7 +644,7 @@ end
              -- Complete the trade..
             player:tradeComplete();
 			player:PrintToPlayer("Oboro : Thank you for the requested items. Come see me again when you are stronger.", 0xD);
-			player:addItem(17597, 1, 45, 35, 321, 1);
+			player:addItem(17597, 1, 76, 1, 321, 1);
 			player:setVar("SMNAFweapon", 3);
 			player:messageSpecial(ITEM_OBTAINED, 17597);
 			
@@ -796,8 +796,9 @@ local job = player:getMainJob();
 	((job == 12) and (player:getVar("SMNAFweapon") == 3)) or
 	((job == 13) and (player:getVar("NINAFweapon") == 3)) or
 	((job == 14) and (player:getVar("DRGAFweapon") == 3)) or
-	((job == 15) and (player:getVar("SAMAFweapon") == 3)) or then
-	player:PrintToPlayer("Oboro : Relic? Never heard of it, talk to the goblin over there", 0xD);
+	((job == 15) and (player:getVar("SAMAFweapon") == 3)) then
+	player:PrintToPlayer("Oboro : Relic? Never heard of it, talk to the goblin over there.", 0xD);
+	player:PrintToPlayer("Oboro : I am busy trying to invent a new type of Artifact Weapon.", 0xD);
 	
 	
     
