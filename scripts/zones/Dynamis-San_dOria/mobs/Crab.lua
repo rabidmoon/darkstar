@@ -190,6 +190,7 @@ end;
 -----------------------------------
 
 function onMobDeath(mob,killer)
+    local scyldmult = killer:getVar("ScyldMultiplier");
     local duration = 45;
 	local defBoost = 15;
 	local level = killer:getMainLvl();

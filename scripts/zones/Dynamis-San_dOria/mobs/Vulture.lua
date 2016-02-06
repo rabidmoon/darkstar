@@ -57,7 +57,7 @@ local isweak = mob:getLocalVar("WeakenedTrigger");
 local wsweakness = math.random(1,200);
 attacker:PrintToPlayer(wsweakness);
 if (wsweakness > 145) and (isweak ~= 1) then
-mob:weaknessTrigger(0); -- Yellow Stagger Increase Scyld
+mob:weaknessTrigger(0); -- Yellow Stagger Increase Scyld  27.5%
 mob:addStatusEffect(EFFECT_TERROR,1,0,10);
 SetDropRate(5026,4248,0); -- Memoirs
 SetDropRate(5026,1453,0); -- Montiont Silverpiece
@@ -73,7 +73,7 @@ attacker:setVar("ScyldMultiplier",newscyld);
 mob:setLocalVar("WeakenedTrigger",1);
 attacker:PrintToPlayer("You have been granted a "..randomscyld.."% scyld bonus", 0x15);
 elseif (wsweakness > 20) and (wsweakness < 50) and (isweak ~= 1) then
-mob:weaknessTrigger(1); -- Blue Stagger drops Memoirs which grants 4-8 currency
+mob:weaknessTrigger(1); -- Blue Stagger drops Memoirs which grants 4-8 currency  15%
 mob:addStatusEffect(EFFECT_TERROR,1,0,10);
 SetDropRate(5026,4248,1000); -- Memoirs
 SetDropRate(5026,1453,0); -- Montiont Silverpiece
@@ -84,7 +84,7 @@ SetDropRate(5026,3408,0); -- Fiendish Tome 5
 
 mob:setLocalVar("WeakenedTrigger",1);
 elseif (wsweakness > 90) and (wsweakness < 110) and (isweak ~= 1) then
-mob:weaknessTrigger(2); -- Red Stagger drops Pop Items
+mob:weaknessTrigger(2); -- Red Stagger drops Pop Items 10%
 mob:addStatusEffect(EFFECT_TERROR,1,0,10);
 local itemdrop = math.random(1,4);
 if (itemdrop == 1) then
