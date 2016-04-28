@@ -842,7 +842,7 @@ if (job == 18) and (trade:hasItemQty(18353, 1)) and trade:hasItemQty( 1126, 30 )
              -- Complete the trade..
             player:tradeComplete();
 			player:PrintToPlayer("Oboro : Thank you for the requested items. Come see me again when you are stronger.", 0xD);
-			player:addItem(18353, 1, 45, 7, 25, 4); -- Attack +5
+			player:addItem(18353, 1, 45, 2, 25, 4); -- Attack +5
 			player:setVar("PUPAFweapon", 2);
 			player:messageSpecial(ITEM_OBTAINED, 18353);
 			
@@ -851,7 +851,7 @@ end
              -- Complete the trade..
             player:tradeComplete();
 			player:PrintToPlayer("Oboro : Thank you for the requested items. Come see me again when you are stronger.", 0xD);
-			player:addItem(18353, 1, 45, 12, 25, 6); -- Attack +7
+			player:addItem(18353, 1, 45, 5, 25, 6); -- Attack +7
 			player:setVar("PUPAFweapon", 3);
 			player:messageSpecial(ITEM_OBTAINED, 18353);
 			
