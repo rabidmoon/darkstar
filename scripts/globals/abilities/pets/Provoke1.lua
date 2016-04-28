@@ -15,8 +15,6 @@ function onMobSkillCheck(target,mob,skill)
 end;
 
 function onPetAbility(target, pet, skill)
- skill:setMsg(0);
- target:addEnmity(pet, 500, 3600);
+ target:addEnmity(pet, 0, 1800);
  return EFFECT_PROVOKE;
-
 end;

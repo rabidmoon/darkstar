@@ -2106,8 +2106,8 @@ INSERT INTO `mob_skill_lists` VALUES ('Yilbegan',470,2271);
 INSERT INTO `mob_skill_lists` VALUES ('Yilbegan',470,2272);
 INSERT INTO `mob_skill_lists` VALUES ('Yilbegan',470,2273);
 INSERT INTO `mob_skill_lists` VALUES ('Yilbegan',470,2274);
-INSERT INTO `mob_skill_lists` VALUES ('Harpeia',471,2469);
-INSERT INTO `mob_skill_lists` VALUES ('Harpeia',471,2470);
+-- INSERT INTO `mob_skill_lists` VALUES ('Harpeia',471,2469);
+-- INSERT INTO `mob_skill_lists` VALUES ('Harpeia',471,2470);
 INSERT INTO `mob_skill_lists` VALUES ('Harpeia',471,2471);
 INSERT INTO `mob_skill_lists` VALUES ('Harpeia',471,2472);
 INSERT INTO `mob_skill_lists` VALUES ('Harpeia',471,2473);
@@ -2392,7 +2392,6 @@ INSERT INTO `mob_skill_lists` VALUES ('Medusa',725,1554);
 INSERT INTO `mob_skill_lists` VALUES ('Medusa',725,1556);
 INSERT INTO `mob_skill_lists` VALUES ('Medusa',725,1557);
 INSERT INTO `mob_skill_lists` VALUES ('Medusa',725,1558);
-INSERT INTO `mob_skill_lists` VALUES ('Medusa',725,1558);
 INSERT INTO `mob_skill_lists` VALUES ('Bahamut',726,1286);
 INSERT INTO `mob_skill_lists` VALUES ('Bahamut',726,1287);
 INSERT INTO `mob_skill_lists` VALUES ('Bahamut',726,1288);
@@ -2444,4 +2443,29 @@ INSERT INTO `mob_skill_lists` VALUES ('Proto-Ultima',729,1266);
 INSERT INTO `mob_skill_lists` VALUES ('Proto-Ultima',729,1267);
 INSERT INTO `mob_skill_lists` VALUES ('Proto-Ultima',729,1268);
 -- INSERT INTO `mob_skill_lists` VALUES ('Proto-Ultima',729,1284);
+INSERT INTO `mob_skill_lists` VALUES ('Nanaa_Mihgo',730,2212);
+INSERT INTO `mob_skill_lists` VALUES ('Nanaa_Mihgo',730,2213);
+INSERT INTO `mob_skill_lists` VALUES ('Nanaa_Mihgo',730,2214);
+-- INSERT INTO `mob_skill_lists` VALUES ('Kupipi',731,3058);
+INSERT INTO `mob_skill_lists` VALUES ('Kupipi',731,3770); -- Shining Strike
+INSERT INTO `mob_skill_lists` VALUES ('Kupipi',731,3771); -- Brainshaker
+INSERT INTO `mob_skill_lists` VALUES ('Kupipi',731,3772); -- True Strike
+INSERT INTO `mob_skill_lists` VALUES ('Kupipi',731,3773); -- Judgement
+INSERT INTO `mob_skill_lists` VALUES ('Kupipi',731,3774); -- Hexa Strike
+INSERT INTO `mob_skill_lists` VALUES ('Kupipi',731,3775); -- Black Halo
+INSERT INTO `mob_skill_lists` VALUES ('Naji',732,2961); -- Savage Blade
 
+
+INSERT INTO `mob_skill_lists` VALUES ('Ayame',733,3779); -- Tachi Enpi
+INSERT INTO `mob_skill_lists` VALUES ('Ayame',733,3780); -- Tachi Goten
+INSERT INTO `mob_skill_lists` VALUES ('Ayame',733,3781); -- Tachi Jinpu
+INSERT INTO `mob_skill_lists` VALUES ('Ayame',733,3782); -- Tachi Yukikaze
+INSERT INTO `mob_skill_lists` VALUES ('Ayame',733,3783); -- Tachi Gekko
+INSERT INTO `mob_skill_lists` VALUES ('Ayame',733,3784); -- Tachi Kasha
+INSERT INTO `mob_skill_lists` VALUES ('Ayame',733,3785); -- Tachi Fudo
+INSERT INTO `mob_skill_lists` VALUES ('Ayame',733,3786); -- Tachi Shoha
+
+INSERT INTO `mob_skill_lists` VALUES ('Curilla',734,3740); -- Red Lotus Blade
+INSERT INTO `mob_skill_lists` VALUES ('Curilla',734,3742); -- Vorpal Blade
+INSERT INTO `mob_skill_lists` VALUES ('Curilla',734,3743); -- Swift Blade
+INSERT INTO `mob_skill_lists` VALUES ('Curilla',734,3711); -- Provoke
