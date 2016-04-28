@@ -114,3 +114,11 @@ INSERT INTO `pet_list` VALUES (69, 'HarlequinFrame', 5124, 1, 99, 0, 0);
 INSERT INTO `pet_list` VALUES (70, 'ValoredgeFrame', 5125, 1, 99, 0, 0);
 INSERT INTO `pet_list` VALUES (71, 'SharpshotFrame', 5126, 1, 99, 0, 0);
 INSERT INTO `pet_list` VALUES (72, 'StormwakerFrame', 5127, 1, 99, 0, 0);
+INSERT INTO `pet_list` VALUES (73, 'Shawn', 415, 1, 99, 0, 0);
+INSERT INTO `pet_list` VALUES (74, 'Chocobo', 1360, 1, 99, 0, 0);
+INSERT INTO `pet_list` VALUES (75, 'Naji', 7801, 1, 99, 0, 0);
+INSERT INTO `pet_list` VALUES (76, 'Kupipi', 7802, 1, 99, 0, 0);
+INSERT INTO `pet_list` VALUES (77, 'Ayame', 7804, 1, 99, 0, 0);
+INSERT INTO `pet_list` VALUES (78, 'Nanaa Mihgo', 7805, 1, 99, 0, 0);
+INSERT INTO `pet_list` VALUES (79, 'Curilla', 7806, 1, 99, 0, 0);
+INSERT INTO `pet_list` VALUES (80, 'Luopan', 7900, 1, 99, 0, 0); -- GEO-REFRESH
