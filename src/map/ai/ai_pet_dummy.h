@@ -27,6 +27,7 @@
 #include "../../common/cbasetypes.h"
 
 #include "ai_general.h"
+#include <map>
 
 /************************************************************************
 *																		*
@@ -48,6 +49,7 @@ public:
 	CAIPetDummy(CPetEntity* PPet);
 
 	uint16	m_MasterCommand; //used for avatars/wyverns atm
+	std::map<char,int> timers;
     bool  m_queueSic;
 
 protected:
@@ -55,6 +57,19 @@ protected:
 
 	CPetEntity* m_PPet;
     int16 m_skillTP;
+	//individual universal recast timers
+	uint32 m_magicRecast;
+	uint32 m_magicKupipiRecast;
+	
+	//individual spell timers
+	uint32 m_magicHealRecast;
+	uint32 m_curillaVokeRecast;
+    uint32 m_magicHealCast;
+	uint32 m_curillaFlashRecast;
+	uint32 m_kupipiHealCast;
+	uint32 m_kupipiHealRecast;
+
+
 
 	void preparePetAbility(CBattleEntity* PTarg);
 	void ActionRoaming();
@@ -69,12 +84,18 @@ protected:
 	void ActionAbilityUsing();
 	void ActionAbilityInterrupt();
 	void ActionAbilityFinish();
+	void ActionWeaponSkillFinish();
+	void ActionJobAbilityFinish(); 
 	bool PetIsHealing(); //true if wyvern is healing
 
 	void ActionMagicStart();
 	void ActionMagicCasting();
 	void ActionMagicFinish();
 	void ActionMagicInterrupt();
+	
+	int16 CurillaSpell();
+	int16 KupipiSpell();
+	CBattleEntity* getWounded(uint8 threshold);
 
     void SendTooFarInterruptMessage(CBattleEntity* PTarg);
 

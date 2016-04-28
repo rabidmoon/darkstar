@@ -2061,6 +2061,12 @@ namespace battleutils
                 PAttacker->addTP(tpMultiplier * (baseTp * (1.0f + 0.01f * (float)((PAttacker->getMod(MOD_STORETP) + getStoreTPbonusFromMerit(PAttacker))))));
                 if (PAttacker->objtype == TYPE_PC)
                     charutils::UpdateHealth((CCharEntity*)PAttacker);
+				if (PAttacker->objtype == TYPE_PET){
+				PAttacker = PAttacker->PMaster;
+				
+				charutils::UpdateHealth((CCharEntity*)PAttacker);
+                				
+                }				
             }
 
             if (giveTPtoVictim)
@@ -2069,6 +2075,14 @@ namespace battleutils
                 float sBlowMult = ((100.0f - dsp_cap((float)PAttacker->getMod(MOD_SUBTLE_BLOW), 0.0f, 50.0f)) / 100.0f);
 
                 //mobs hit get basetp+30 whereas pcs hit get basetp/3
+				if (PDefender->objtype == TYPE_PET)
+				{
+				PDefender->addTP(tpMultiplier * ((baseTp / 3) * sBlowMult * (1.0f + 0.01f * (float)((PDefender->getMod(MOD_STORETP) + getStoreTPbonusFromMerit(PAttacker)))))); //yup store tp counts on hits taken too!
+				CCharEntity* PChar = (CCharEntity*)PDefender;
+			
+				PDefender = PDefender->PMaster;
+				charutils::UpdateHealth((CCharEntity*)PDefender);
+				}
                 if (PDefender->objtype == TYPE_PC)
                 {
                     PDefender->addTP(tpMultiplier * ((baseTp / 3) * sBlowMult * (1.0f + 0.01f * (float)((PDefender->getMod(MOD_STORETP) + getStoreTPbonusFromMerit(PAttacker)))))); //yup store tp counts on hits taken too!
@@ -2179,6 +2193,10 @@ namespace battleutils
 
             // add tp to attacker
             PChar->addTP(tpMultiplier * (baseTp * (1.0f + 0.01f * (float)((PChar->getMod(MOD_STORETP) + getStoreTPbonusFromMerit(PChar))))));
+			
+			charutils::UpdateHealth((CCharEntity*)PChar);
+                				
+            
 
             //account for attacker's subtle blow which reduces the baseTP gain for the defender
             float sBlowMult = ((100.0f - dsp_cap((float)PChar->getMod(MOD_SUBTLE_BLOW), 0.0f, 50.0f)) / 100.0f);
@@ -3691,7 +3709,7 @@ namespace battleutils
     void GenerateInRangeEnmity(CBattleEntity* PSource, int16 CE, int16 VE)
     {
         DSP_DEBUG_BREAK_IF(PSource == nullptr);
-        DSP_DEBUG_BREAK_IF(PSource->objtype != TYPE_PC);
+        DSP_DEBUG_BREAK_IF(PSource->objtype != TYPE_PC && PSource->objtype != TYPE_PET);
 
         CCharEntity* PChar = (CCharEntity*)PSource;
 

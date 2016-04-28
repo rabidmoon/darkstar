@@ -238,7 +238,7 @@ bool CAICharNormal::GetValidTarget(CBattleEntity** PBattleTarget, uint8 ValidTar
         return false;
     }
 
-    if (PTarget->objtype == TYPE_PC)
+    if (PTarget->objtype == TYPE_PC || PTarget->objtype == TYPE_PET)
     {
         if ((ValidTarget & TARGET_SELF) &&
             PTarget->targid == m_PChar->targid)
@@ -345,7 +345,7 @@ void CAICharNormal::ActionEngage()
                     else if (m_PChar->animation == ANIMATION_HEALING)
                     {
                         m_PChar->StatusEffectContainer->DelStatusEffect(EFFECT_HEALING);
-                    }
+                    }               
 
                     m_ActionType = ACTION_ATTACK;
                     m_LastMeleeTime = m_Tick - m_PChar->m_Weapons[SLOT_MAIN]->getDelay() + 1500;
@@ -440,6 +440,10 @@ void CAICharNormal::ActionDisengage()
     m_PChar->PLatentEffectContainer->CheckLatentsWeaponDraw(false);
 
     if (m_PChar->PPet != nullptr && m_PChar->PPet->objtype == TYPE_PET && ((CPetEntity*)m_PChar->PPet)->getPetType() == PETTYPE_WYVERN)
+    {
+        m_PChar->PPet->PBattleAI->SetBattleTarget(nullptr);
+    }
+	if (m_PChar->PPet != nullptr && m_PChar->PPet->objtype == TYPE_PET && ((CPetEntity*)m_PChar->PPet)->getPetType() == PETTYPE_TRUST)
     {
         m_PChar->PPet->PBattleAI->SetBattleTarget(nullptr);
     }
@@ -2757,7 +2761,17 @@ void CAICharNormal::ActionWeaponSkillFinish()
     }
 
     m_PChar->m_ActionList.push_back(Action);
-
+    if (m_PBattleSubTarget->GetLocalVar("PendingEffectID") != 0)
+    {
+		apAction_t addedAction;
+		addedAction.messageID = m_PBattleSubTarget->GetLocalVar("PendingEffectID");
+		addedAction.ActionTarget = m_PBattleSubTarget;
+		addedAction.param = m_PBattleSubTarget->GetLocalVar("PendingEffectParam");
+		m_PChar->m_ActionList.push_back(addedAction);
+		m_PChar->loc.zone->PushPacket(m_PChar, CHAR_INRANGE_SELF, new CActionPacket(m_PChar));
+		m_PBattleSubTarget->SetLocalVar("PendingEffectID", 0);
+		m_PBattleSubTarget->SetLocalVar("PendingEffectParam", 0);
+    }
     if (m_PWeaponSkill->isAoE())
     {
         float radius = 10;
@@ -2814,6 +2828,19 @@ void CAICharNormal::ActionWeaponSkillFinish()
 
             m_PChar->health.tp = afterWsTP;
             m_PChar->m_ActionList.push_back(Action);
+
+			if (PTarget->GetLocalVar("PendingEffectID") != 0)
+			{
+				apAction_t addedAction;
+				addedAction.messageID = PTarget->GetLocalVar("PendingEffectID");
+				addedAction.ActionTarget = PTarget;
+				addedAction.param = PTarget->GetLocalVar("PendingEffectParam");
+				m_PChar->m_ActionList.push_back(addedAction);
+				m_PChar->loc.zone->PushPacket(m_PChar, CHAR_INRANGE_SELF, new CActionPacket(m_PChar));
+				PTarget->SetLocalVar("PendingEffectID", 0);
+				PTarget->SetLocalVar("PendingEffectParam", 0);
+			}
+			
         }
     }
 
@@ -3016,6 +3043,14 @@ void CAICharNormal::ActionAttack()
             {
                 m_PChar->PPet->PBattleAI->SetBattleTarget(m_PBattleTarget);
             }
+			                   //Order Allies to attack
+                    if (m_PChar->PAlly.size() != 0)
+                    {
+                        for ( auto ally : m_PChar->PAlly)
+                        {
+                            ally->PBattleAI->SetBattleTarget(m_PBattleTarget);
+                        }        
+                    }     
         }
     }
 }

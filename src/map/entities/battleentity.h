@@ -535,6 +535,9 @@ public:
     void            delPetModifiers(std::vector<CModifier*> *modList);
     void            applyPetModifiers(CPetEntity* PPet);
     void            removePetModifiers(CPetEntity* PPet);
+	void            clearAllies();
+    CBattleEntity*  getRecentAlly();
+    bool            isUniqueAlly(uint32 petID);
 
     template        <typename F, typename... Args>
     void            ForParty(F func, Args&&... args)

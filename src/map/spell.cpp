@@ -567,7 +567,7 @@ namespace spell
             uint8 JobSLVL = spell->getJob(PCaster->GetSJob());
             uint8 requirements = spell->getRequirements();
 
-            if(PCaster->objtype == TYPE_MOB){
+            if(PCaster->objtype == TYPE_MOB || PCaster->objtype == TYPE_PET){
                 // Mobs can cast any non-given char spell
                 return true;
             }

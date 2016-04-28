@@ -340,6 +340,7 @@ namespace petutils
 
         float growth = 1.0;
         uint8 lvl = PMob->GetMLevel();
+		
 
         //give hp boost every 10 levels after 25
         //special boosts at 25 and 50
@@ -378,6 +379,7 @@ namespace petutils
             PMob->health.maxmp = (int16)(15.2 * pow(lvl, 1.1075) * petStats->MPscale);
             break;
         }
+		
 
         PMob->speed = petStats->speed;
         PMob->speedsub = petStats->speed;
@@ -393,6 +395,175 @@ namespace petutils
         PMob->setModifier(MOD_ACC, GetJugBase(PMob, petStats->accRank));
 
         PMob->m_Weapons[SLOT_MAIN]->setDamage(GetJugWeaponDamage(PMob));
+
+        //reduce weapon delay of MNK
+        if (PMob->GetMJob() == JOB_MNK){
+            PMob->m_Weapons[SLOT_MAIN]->resetDelay();
+        }
+
+        uint16 fSTR = GetBaseToRank(petStats->strRank, PMob->GetMLevel());
+        uint16 fDEX = GetBaseToRank(petStats->dexRank, PMob->GetMLevel());
+        uint16 fVIT = GetBaseToRank(petStats->vitRank, PMob->GetMLevel());
+        uint16 fAGI = GetBaseToRank(petStats->agiRank, PMob->GetMLevel());
+        uint16 fINT = GetBaseToRank(petStats->intRank, PMob->GetMLevel());
+        uint16 fMND = GetBaseToRank(petStats->mndRank, PMob->GetMLevel());
+        uint16 fCHR = GetBaseToRank(petStats->chrRank, PMob->GetMLevel());
+
+        uint16 mSTR = GetBaseToRank(grade::GetJobGrade(PMob->GetMJob(), 2), PMob->GetMLevel());
+        uint16 mDEX = GetBaseToRank(grade::GetJobGrade(PMob->GetMJob(), 3), PMob->GetMLevel());
+        uint16 mVIT = GetBaseToRank(grade::GetJobGrade(PMob->GetMJob(), 4), PMob->GetMLevel());
+        uint16 mAGI = GetBaseToRank(grade::GetJobGrade(PMob->GetMJob(), 5), PMob->GetMLevel());
+        uint16 mINT = GetBaseToRank(grade::GetJobGrade(PMob->GetMJob(), 6), PMob->GetMLevel());
+        uint16 mMND = GetBaseToRank(grade::GetJobGrade(PMob->GetMJob(), 7), PMob->GetMLevel());
+        uint16 mCHR = GetBaseToRank(grade::GetJobGrade(PMob->GetMJob(), 8), PMob->GetMLevel());
+
+        PMob->stats.STR = (fSTR + mSTR) * 0.9;
+        PMob->stats.DEX = (fDEX + mDEX) * 0.9;
+        PMob->stats.VIT = (fVIT + mVIT) * 0.9;
+        PMob->stats.AGI = (fAGI + mAGI) * 0.9;
+        PMob->stats.INT = (fINT + mINT) * 0.9;
+        PMob->stats.MND = (fMND + mMND) * 0.9;
+        PMob->stats.CHR = (fCHR + mCHR) * 0.9;
+
+    }
+	
+	
+	    void LoadTrustStats(CPetEntity* PMob, Pet_t* petStats){
+        //follows monster formulas but jugs have no subjob
+
+        float growth = 1.0;
+        uint8 lvl = PMob->GetMLevel();
+		JOBTYPE mJob = PMob->GetMJob();
+        JOBTYPE sJob = PMob->GetSJob();
+		
+
+        //give hp boost every 10 levels after 25
+        //special boosts at 25 and 50
+        if (lvl > 75){
+            growth = 1.25;
+        }
+        else if (lvl > 65){
+            growth = 1.28;
+        }
+        else if (lvl > 55){
+            growth = 1.28;
+        }
+        else if (lvl > 50){
+            growth = 1.25;
+        }
+        else if (lvl > 45){
+            growth = 1.27;
+        }
+        else if (lvl > 35){
+            growth = 1.29;
+        }
+        else if (lvl > 25){
+            growth = 1.30;
+        }
+		else if (lvl > 4){
+            growth = 1.43;
+        }
+
+        PMob->health.maxhp = (int16)(7.2 * pow(lvl, growth) * petStats->HPscale);
+
+        switch (PMob->GetMJob()){
+        case JOB_PLD:
+        case JOB_WHM:
+        case JOB_BLM:
+        case JOB_RDM:
+        case JOB_DRK:
+        case JOB_BLU:
+        case JOB_SCH:
+            PMob->health.maxmp = (int16)(7.2 * pow(lvl, 1.1075) * petStats->MPscale);
+            break;
+        }
+		
+		if (((CPetEntity*)PMob)->m_PetID == PETID_KUPIPI){
+		ShowWarning(CL_GREEN"KUPIPI IN LOADTRUSTSTATS!!!!!! YESSS/n" CL_RESET);
+		}
+		/*if (mJob == 6){ //THF Add Traits and Weapon Damage Types
+		ShowWarning(CL_GREEN"THF TRIGGERED!!! ADDING STATS\n" CL_RESET);
+		PMob->setModifier(MOD_ACC, battleutils::GetMaxSkill(SKILL_GAX, JOB_WAR, PMob->GetMLevel())); //A+ Acc
+		PMob->setModifier(MOD_EVA, battleutils::GetMaxSkill(SKILL_GAX, JOB_WAR, PMob->GetMLevel())); //A+ Evasion
+		PMob->setModifier(MOD_ATT, battleutils::GetMaxSkill(SKILL_GAX, JOB_WAR, PMob->GetMLevel()));// A+ Attack
+		PMob->setModifier(MOD_DEF, battleutils::GetMaxSkill(SKILL_POL, JOB_WAR, PMob->GetMLevel()));// B- Defense
+		PMob->m_Weapons[SLOT_MAIN]->setDamage(floor(PMob->GetMLevel()*0.40f));// D:30 @75
+		PMob->m_Weapons[SLOT_MAIN]->setDelay(floor(1000.0f*(180.0f / 60.0f))); //180 delay
+		   if (lvl > 54){
+		        PMob->setModifier(MOD_TRIPLE_ATTACK, 15);
+				PMob->setModifier(MOD_TREASURE_HUNTER, 2);
+		   }
+		}
+		else if (mJob == 12){ //SAM Add Traits and Weapon Damage Types
+		ShowWarning(CL_GREEN"SAM TRIGGERED!!! ADDING STATS\n" CL_RESET);
+		PMob->setModifier(MOD_ACC, battleutils::GetMaxSkill(SKILL_GAX, JOB_WAR, PMob->GetMLevel())); //A+ Acc
+		PMob->setModifier(MOD_EVA, battleutils::GetMaxSkill(SKILL_GAX, JOB_WAR, PMob->GetMLevel())); //A+ Evasion
+		PMob->setModifier(MOD_ATT, battleutils::GetMaxSkill(SKILL_GAX, JOB_WAR, PMob->GetMLevel()));// A+ Attack
+		PMob->setModifier(MOD_DEF, battleutils::GetMaxSkill(SKILL_SYH, JOB_WAR, PMob->GetMLevel()));// B+ Defense
+		PMob->m_Weapons[SLOT_MAIN]->setDamage(floor(PMob->GetMLevel()*0.93f));// D:30 @75
+		PMob->m_Weapons[SLOT_MAIN]->setDelay(floor(1000.0f*(420.0f / 60.0f))); //420 delay
+		   if (lvl > 49){
+		        PMob->setModifier(MOD_DOUBLE_ATTACK, 15);
+		   }
+		}*/
+		
+		if (mJob == 1){ //THF Add Traits and Weapon Damage Types
+		ShowWarning(CL_GREEN"WAR TRIGGERED!!! \n" CL_RESET);
+		}
+		else if (mJob == 2){
+		ShowWarning(CL_GREEN"MNK TRIGGERED!!! \n" CL_RESET);
+		}
+		else if (mJob == 3){
+		ShowWarning(CL_GREEN"WHM TRIGGERED!!! \n" CL_RESET);
+		}
+		else if (mJob == 4){
+		ShowWarning(CL_GREEN"BLM TRIGGERED!!! \n" CL_RESET);
+		}
+		else if (mJob == 5){
+		ShowWarning(CL_GREEN"RDM TRIGGERED!!! \n" CL_RESET);
+		}
+		else if (mJob == 6){
+		ShowWarning(CL_GREEN"THF TRIGGERED!!! \n" CL_RESET);
+		}
+		else if (mJob == 7){
+		ShowWarning(CL_GREEN"PLD TRIGGERED!!! \n" CL_RESET);
+		}
+		else if (mJob == 8){
+		ShowWarning(CL_GREEN"DRK TRIGGERED!!! \n" CL_RESET);
+		}
+		else if (mJob == 9){
+		ShowWarning(CL_GREEN"BST TRIGGERED!!! \n" CL_RESET);
+		}
+		else
+		{
+		ShowWarning(CL_RED"NOTHING TRIGGERED!!!\n" CL_RESET);
+		}
+
+        PMob->speed = petStats->speed;
+        PMob->speedsub = petStats->speed;
+
+        PMob->UpdateHealth();
+        PMob->health.tp = 0;
+        PMob->health.hp = PMob->GetMaxHP();
+        PMob->health.mp = PMob->GetMaxMP();
+
+       
+        //PMob->setModifier(MOD_DEF, GetJugBase(PMob, petStats->defRank));
+        //PMob->setModifier(MOD_EVA, GetJugBase(PMob, petStats->evaRank));
+        //PMob->setModifier(MOD_ATT, GetJugBase(PMob, petStats->attRank));
+        //PMob->setModifier(MOD_ACC, GetJugBase(PMob, petStats->accRank));
+
+        //PMob->m_Weapons[SLOT_MAIN]->setDamage(GetJugWeaponDamage(PMob));
+		
+		
+		 //PMob->setModifier(MOD_ACC, battleutils::GetMaxSkill(SKILL_GAX, JOB_WAR, PMob->GetMLevel()));
+		    //Set A+ evasion
+		 //PMob->setModifier(MOD_EVA, battleutils::GetMaxSkill(SKILL_GAX, JOB_WAR, PMob->GetMLevel()));
+
+		//PMob->m_Weapons[SLOT_MAIN]->setDamage(floor(PMob->GetMLevel()*0.67f));
+
+		
+		
 
         //reduce weapon delay of MNK
         if (PMob->GetMJob() == JOB_MNK){
@@ -744,7 +915,10 @@ namespace petutils
 
         CPetEntity* PPet = (CPetEntity*)PMaster->PPet;
 
+		
+
         PPet->allegiance = PMaster->allegiance;
+		
         PMaster->StatusEffectContainer->CopyConfrontationEffect(PPet);
 
         if (PetID == PETID_ALEXANDER || PetID == PETID_ODIN)
@@ -759,14 +933,19 @@ namespace petutils
         {
             PPet->PBattleAI = new CAIPetDummy(PPet);
         }
+        
         PPet->PBattleAI->SetLastActionTime(gettick());
+      
         PPet->PBattleAI->SetCurrentAction(ACTION_SPAWN);
+        
 
         PMaster->PPet = PPet;
         PPet->PMaster = PMaster;
-
+       
+       
         PMaster->loc.zone->InsertPET(PPet);
-        if (PMaster->objtype == TYPE_PC)
+      
+         if (PMaster->objtype == TYPE_PC)
         {
             charutils::BuildingCharPetAbilityTable((CCharEntity*)PMaster, PPet, PetID);
             ((CCharEntity*)PMaster)->pushPacket(new CCharUpdatePacket((CCharEntity*)PMaster));
@@ -788,7 +967,167 @@ namespace petutils
 
 
     }
+	
+    void SpawnAlly(CBattleEntity* PMaster, uint32 PetID, bool spawningFromZone)
+    {
+        //Check to see if in full party
+        uint16 partySize = PMaster->PAlly.size();
+		
+        if (PMaster->PParty != nullptr)
+        {
+            for (uint8 i = 0; i < PMaster->PParty->members.size(); i++)
+            {
+                CBattleEntity* PPartyMember = PMaster->PParty->members[i];
+                partySize = partySize + 1 + PPartyMember->PAlly.size();             
+            }
+        }
+		else
+        {
+			partySize += 1;
+        }        
+        if (partySize > 6)
+            return;
+        
+        
+        if (PMaster->PAlly.size() > 2)
+        {
+            PMaster->PAlly[2]->PBattleAI->SetCurrentAction(ACTION_FALL);
+            PMaster->PAlly.pop_back();
+        }
+        if (PMaster->PParty == nullptr)
+		{
+            PMaster->PParty = new CParty(PMaster);
+		}
+        
+        CPetEntity* PAlly = LoadAlly(PMaster, PetID, spawningFromZone);
+        PAlly->allegiance = PMaster->allegiance;
+        PMaster->StatusEffectContainer->CopyConfrontationEffect(PAlly);
+		uint8 plvl = PAlly->GetMLevel();
+		
+		if (PetID == PETID_NANAA_MIHGO)
+		{
+		uint16 modstat = (PAlly->GetMLevel());
+		uint16 modstatatt = (PAlly->GetMLevel() * 1.2);
+		ShowWarning(CL_GREEN"NANAA MIGHO TRIGGERED SPAWN ALLY!!! \n" CL_RESET);
+		PAlly->setModifier(MOD_ACC, battleutils::GetMaxSkill(SKILL_GAX, JOB_WAR, PAlly->GetMLevel()) + modstat); //A+ Acc
+		PAlly->setModifier(MOD_EVA, battleutils::GetMaxSkill(SKILL_GAX, JOB_WAR, PAlly->GetMLevel()) + modstat); //A+ Evasion
+		PAlly->setModifier(MOD_ATT, battleutils::GetMaxSkill(SKILL_GAX, JOB_WAR, PAlly->GetMLevel()) + modstatatt);// A+ Attack
+		PAlly->setModifier(MOD_DEF, battleutils::GetMaxSkill(SKILL_POL, JOB_WAR, PAlly->GetMLevel()) + modstat);// B- Defense
+		PAlly->m_Weapons[SLOT_MAIN]->setDamage(floor(PAlly->GetMLevel()*0.36f) + 3);// D:30 @75
+		PAlly->m_Weapons[SLOT_MAIN]->setDelay(floor(1000.0f*(180.0f / 60.0f))); //180 delay
+		   if (plvl > 54){
+		        PAlly->setModifier(MOD_TRIPLE_ATTACK, 15);
+				PAlly->setModifier(MOD_TREASURE_HUNTER, 2);
+		   }
+		}
+	    else if (PetID == PETID_KUPIPI)
+		{
+		ShowWarning(CL_GREEN"KUPIPI TRIGGERED SPAWN ALLY!!! \n" CL_RESET);
+		PAlly->setModifier(MOD_ACC, battleutils::GetMaxSkill(SKILL_GAX, JOB_WAR, PAlly->GetMLevel())); //A+ Acc
+		PAlly->setModifier(MOD_EVA, battleutils::GetMaxSkill(SKILL_POL, JOB_WAR, PAlly->GetMLevel())); //B- Evasion
+		PAlly->setModifier(MOD_ATT, battleutils::GetMaxSkill(SKILL_POL, JOB_WAR, PAlly->GetMLevel()));// B- Attack
+		PAlly->setModifier(MOD_DEF, battleutils::GetMaxSkill(SKILL_POL, JOB_WAR, PAlly->GetMLevel()));// B- Defense
+		PAlly->setModifier(MOD_HEALING, battleutils::GetMaxSkill(SKILL_GAX, JOB_WAR, PAlly->GetMLevel()));// A+ Healing
+		PAlly->setModifier(MOD_DIVINE, battleutils::GetMaxSkill(SKILL_GAX, JOB_WAR, PAlly->GetMLevel()));// A+ Divine Magic
+		PAlly->m_Weapons[SLOT_MAIN]->setDamage(floor(PAlly->GetMLevel()*0.52f) + 3);// D:42 @75
+		PAlly->m_Weapons[SLOT_MAIN]->setDelay(floor(1000.0f*(320.0f / 60.0f))); //320 delay
+		PAlly->health.maxmp = (int16)(22 + (3.66f*(plvl * 3.66f))); 
+		PAlly->UpdateHealth();
+        PAlly->health.mp = PAlly->health.maxmp;
+		   if (plvl > 49){
+		        PAlly->setModifier(MOD_REFRESH, 1);
+		   }
+		}
+		else if (PetID == PETID_NAJI)
+		{
+		ShowWarning(CL_GREEN"NAJI TRIGGERED SPAWN ALLY!!! \n" CL_RESET);
+		PAlly->setModifier(MOD_ACC, battleutils::GetMaxSkill(SKILL_SYH, JOB_WAR, PAlly->GetMLevel())); //B+ Acc
+		PAlly->setModifier(MOD_EVA, battleutils::GetMaxSkill(SKILL_SYH, JOB_WAR, PAlly->GetMLevel())); //B+ Evasion
+		PAlly->setModifier(MOD_ATT, battleutils::GetMaxSkill(SKILL_SYH, JOB_WAR, PAlly->GetMLevel()));// B+ Attack
+		PAlly->setModifier(MOD_DEF, battleutils::GetMaxSkill(SKILL_POL, JOB_WAR, PAlly->GetMLevel()));// B- Defense
+		PAlly->m_Weapons[SLOT_MAIN]->setDamage(floor(PAlly->GetMLevel()*0.56f));// D:42 @75
+		PAlly->m_Weapons[SLOT_MAIN]->setDelay(floor(1000.0f*(240.0f / 60.0f))); //240 delay
+		   if (plvl > 49){
+		        PAlly->setModifier(MOD_REFRESH, 1);
+		   }
+		}
+		else if (PetID == PETID_AYAME)
+		{
+		uint16 haste = 0;
+		uint16 modstat = (PAlly->GetMLevel() * 1.3);
+		uint16 maxhaste = PAlly->GetMLevel();
+		haste = (floor(maxhaste * 2.7));
+		if (haste > 200){
+		haste = 200;
+		}
+		ShowWarning(CL_GREEN"AYAME TRIGGERED SPAWN ALLY!!! \n" CL_RESET);
+		PAlly->setModifier(MOD_ACC, battleutils::GetMaxSkill(SKILL_GAX, JOB_WAR, PAlly->GetMLevel()) + modstat); //B+ Acc
+		PAlly->setModifier(MOD_EVA, battleutils::GetMaxSkill(SKILL_SYH, JOB_WAR, PAlly->GetMLevel())); //B+ Evasion
+		PAlly->setModifier(MOD_ATT, battleutils::GetMaxSkill(SKILL_GAX, JOB_WAR, PAlly->GetMLevel()) + modstat);// B+ Attack
+		PAlly->setModifier(MOD_DEF, battleutils::GetMaxSkill(SKILL_SYH, JOB_WAR, PAlly->GetMLevel()));// B+ Defense
+		PAlly->m_Weapons[SLOT_MAIN]->setDamage(floor(PAlly->GetMLevel()*0.90f) + 12);// D:12 @1 / D:80 @ 75
+		PAlly->m_Weapons[SLOT_MAIN]->setDelay(floor(1000.0f*(450.0f / 60.0f))); //420 delay
+		PAlly->setModifier(MOD_HASTE_ABILITY, 102); //Constant Hasso
+		PAlly->setModifier(MOD_HASTE_GEAR, haste);
+		   if (plvl > 9){
+		        PAlly->setModifier(MOD_STORETP, 15);
+		   }
+		   if (plvl > 29){
+		        PAlly->setModifier(MOD_STORETP, 25);
+				PAlly->setModifier(MOD_ZANSHIN, 25);
+		   }	   
+		   if (plvl > 49){
+		        PAlly->setModifier(MOD_STORETP, 35);
+				PAlly->setModifier(MOD_DOUBLE_ATTACK, 15);
+				PAlly->setModifier(MOD_ZANSHIN, 35);
+				PAlly->setModifier(MOD_TP_BONUS, (floor((PAlly->GetMLevel() / 2) + 1)));
+		   }
+		   if (plvl > 74){
+		        PAlly->setModifier(MOD_STORETP, 50);
+				PAlly->setModifier(MOD_DOUBLE_ATTACK, 15);
+				PAlly->setModifier(MOD_ZANSHIN, 45);
+				PAlly->setModifier(MOD_TP_BONUS, (floor(PAlly->GetMLevel() + 1)));
+		   }
+		   
+		   
+		}
+		else if (PetID == PETID_CURILLA)
+		{
+		uint16 defrate = (floor(PAlly->GetMLevel() * 4));
+		uint16 modstat = (floor(PAlly->GetMLevel() * 1.1));
+		uint16 hpstat = (floor(PAlly->GetMLevel() * 2));
+		ShowWarning(CL_GREEN"CURILLA TRIGGERED SPAWN ALLY!!! \n" CL_RESET);
+		PAlly->setModifier(MOD_ACC, battleutils::GetMaxSkill(SKILL_GAX, JOB_WAR, PAlly->GetMLevel())); //B+ Acc
+		PAlly->setModifier(MOD_EVA, battleutils::GetMaxSkill(SKILL_SYH, JOB_WAR, PAlly->GetMLevel())); //B+ Evasion
+		PAlly->setModifier(MOD_ATT, battleutils::GetMaxSkill(SKILL_GAX, JOB_WAR, PAlly->GetMLevel()) + modstat);// B+ Attack
+		PAlly->setModifier(MOD_DEF, battleutils::GetMaxSkill(SKILL_GAX, JOB_WAR, PAlly->GetMLevel()) + defrate);// A+ Defense
+		PAlly->setModifier(MOD_HEALING, battleutils::GetMaxSkill(SKILL_SYH, JOB_WAR, PAlly->GetMLevel()));// B+ Healing
+		PAlly->setModifier(MOD_DIVINE, battleutils::GetMaxSkill(SKILL_SYH, JOB_WAR, PAlly->GetMLevel()));// A+ Divine Magic
+		PAlly->setModifier(MOD_ENMITY, 25);
+		PAlly->setModifier(MOD_ENMITY_LOSS_REDUCTION, 10);
+		PAlly->m_Weapons[SLOT_MAIN]->setDamage(floor(PAlly->GetMLevel()*0.48f) + 6);// D:42 @75
+		PAlly->m_Weapons[SLOT_MAIN]->setDelay(floor(1000.0f*(260.0f / 60.0f))); //260 delay
+		PAlly->setModifier(MOD_SHIELDBLOCKRATE, 35); //35% Shield Block Rate
+		PAlly->health.maxmp = (int16)(15 + (2.72f*(plvl * 2.72f))); 
+		PAlly->UpdateHealth();
+        PAlly->health.mp = PAlly->health.maxmp;
+			if (plvl > 49){
+				PAlly->setModifier(MOD_DOUBLE_ATTACK, 10);
 
+		   }
+		}
+		
+		
+        PAlly->PBattleAI = new CAIPetDummy(PAlly);
+        PAlly->PBattleAI->SetLastActionTime(gettick());
+        PAlly->PBattleAI->SetCurrentAction(ACTION_SPAWN);
+        PAlly->PMaster = PMaster;
+
+        PMaster->loc.zone->InsertPET(PAlly);
+        PMaster->PParty->ReloadParty();		
+
+    }
+	
     void SpawnMobPet(CBattleEntity* PMaster, uint32 PetID)
     {
         // this is ONLY used for mob smn elementals / avatars
@@ -964,6 +1303,7 @@ namespace petutils
             return;
         }
 
+
         petutils::DetachPet(PMaster);
     }
 
@@ -1121,6 +1461,41 @@ namespace petutils
         PPet->addModifier(MOD_DEFP, rate * 100.0f);
 
     }
+	   
+    CPetEntity* LoadAlly(CBattleEntity* PMaster, uint32 PetID, bool spawningFromZone)
+    {
+        DSP_DEBUG_BREAK_IF(PetID >= g_PPetList.size());
+        Pet_t* PPetData = g_PPetList.at(PetID);
+        PETTYPE petType = PETTYPE_TRUST;
+        CPetEntity* PPet = new CPetEntity(petType);
+				
+        PPet->m_Weapons[SLOT_MAIN]->setDelay(floor(1000.0f*(240.0f / 60.0f)));
+		
+
+        PPet->SetMLevel(PMaster->GetMLevel());
+        PPet->SetSLevel(PMaster->GetMLevel() / 2);
+        LoadTrustStats(PPet, PPetData);
+        PPet->loc = PMaster->loc;
+        PPet->loc.p = nearPosition(PMaster->loc.p, PET_ROAM_DISTANCE, M_PI);
+        
+        PPet->look = g_PPetList.at(PetID)->look;
+        PPet->name = g_PPetList.at(PetID)->name;
+        PPet->m_name_prefix = g_PPetList.at(PetID)->name_prefix;
+        PPet->m_MobSkillList = g_PPetList.at(PetID)->m_MobSkillList;
+        PPet->SetMJob(g_PPetList.at(PetID)->mJob);
+        PPet->m_Element = g_PPetList.at(PetID)->m_Element;
+        PPet->m_PetID = PetID;
+        
+        FinalizePetStatistics(PMaster, PPet);
+		PPet->PetSkills = battleutils::GetMobSkillList(PPet->m_MobSkillList);
+		PPet->status = STATUS_NORMAL;
+		PPet->m_ModelSize += g_PPetList.at(PetID)->size;
+		PPet->m_EcoSystem = g_PPetList.at(PetID)->EcoSystem;
+        PMaster->PAlly.insert(PMaster->PAlly.begin(), PPet);
+        return PPet;
+        
+    }
+    	
 
     void LoadPet(CBattleEntity* PMaster, uint32 PetID, bool spawningFromZone)
     {
@@ -1416,7 +1791,21 @@ namespace petutils
             
             LoadAutomatonStats((CCharEntity*)PMaster, PPet, g_PPetList.at(PetID)); //temp
         }
-
+        else if (PPet->getPetType() == PETTYPE_TRUST)
+        {
+		    CPetEntity* PPet = (CPetEntity*)PMaster->PPet;
+		    if (PetID == PETID_NANAA_MIHGO){
+			ShowWarning(CL_GREEN"I FOUND NANAA MIHGO/n" CL_RESET);
+			}
+		    //Set A+ weapon skill
+		    PPet->setModifier(MOD_ACC, battleutils::GetMaxSkill(SKILL_GAX, JOB_WAR, PPet->GetMLevel()));
+		    //Set A+ evasion
+		    PPet->setModifier(MOD_EVA, battleutils::GetMaxSkill(SKILL_GAX, JOB_WAR, PPet->GetMLevel()));
+            PPet->SetMLevel(PMaster->GetMLevel());
+            PPet->SetSLevel(PMaster->GetMLevel() / 2);
+            LoadTrustStats(PPet, PPetData);  
+        }
+		
 		FinalizePetStatistics(PMaster, PPet);
 		PPet->PetSkills = battleutils::GetMobSkillList(PPet->m_MobSkillList);
 		PPet->status = STATUS_NORMAL;

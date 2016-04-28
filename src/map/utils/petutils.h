@@ -59,7 +59,13 @@ enum PETID
     PETID_SHARPSHOTFRAME     = 71,
     PETID_STORMWAKERFRAME    = 72,
 	PETID_ADVENTURING_FELLOW = 73,
-	PETID_CHOCOBO            = 74
+	PETID_CHOCOBO            = 74,
+	PETID_NAJI               = 75,
+	PETID_KUPIPI             = 76,
+	PETID_AYAME              = 77,
+	PETID_NANAA_MIHGO        = 78,
+	PETID_CURILLA            = 79,
+	PETID_LUOPAN             = 80
 };
 
 
@@ -71,6 +77,7 @@ namespace petutils
 	void	FreePetList();
 
 	void	SpawnPet(CBattleEntity* PMaster, uint32 PetID, bool spawningFromZone);
+	void	SpawnAlly(CBattleEntity* PMaster, uint32 PetID, bool spawningFromZone);
   void  SpawnMobPet(CBattleEntity* PMaster, uint32 PetID);
   void  DetachPet(CBattleEntity* PMaster);
   void  DespawnPet(CBattleEntity* PMaster);
@@ -80,6 +87,7 @@ namespace petutils
   int16 PerpetuationCost(uint32 id, uint8 level);
   void  Familiar(CBattleEntity* PPet);
   void  LoadPet(CBattleEntity* PMaster, uint32 PetID, bool spawningFromZone);
+  CPetEntity*  LoadAlly(CBattleEntity* PMaster, uint32 PetID, bool spawningFromZone);
   void  LoadWyvernStatistics(CBattleEntity* PMaster, CPetEntity* PPet, bool finalize);
   void  FinalizePetStatistics(CBattleEntity* PMaster, CPetEntity* PPet);
 };

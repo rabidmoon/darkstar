@@ -35,12 +35,14 @@
 ************************************************************************/
 
 class CCharEntity;
+class CBattleEntity;
 
 class CCharHealthPacket : public CBasicPacket
 {
 public:
 
 	CCharHealthPacket(CCharEntity* PChar);
+    CCharHealthPacket(CBattleEntity* PChar);
 };
 
 #endif

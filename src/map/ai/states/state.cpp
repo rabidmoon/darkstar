@@ -90,12 +90,12 @@ bool CState::CheckValidTarget(CBattleEntity* PTarget)
     if(m_PEntity->objtype == TYPE_PC)
     {
         // assert you cannot target pets for anything
-        if(PTarget->PMaster != nullptr && PTarget->PMaster->objtype == TYPE_PC)
+        /*if(PTarget->PMaster != nullptr && PTarget->PMaster->objtype == TYPE_PC)
         {
             // this is someones pet. cannot target
             PushError(MSGBASIC_THAT_SOMEONES_PET);
             return false;
-        }
+        }*/
 
         // act on battlefield targets unless I have it too
         if(PTarget->StatusEffectContainer->HasStatusEffect(EFFECT_BATTLEFIELD) && !m_PEntity->StatusEffectContainer->HasStatusEffect(EFFECT_BATTLEFIELD))

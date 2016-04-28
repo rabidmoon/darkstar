@@ -2879,8 +2879,9 @@ namespace charutils
 
     void UpdateHealth(CCharEntity* PChar)
     {
-        DSP_DEBUG_BREAK_IF(PChar->objtype != TYPE_PC);
+        //DSP_DEBUG_BREAK_IF(PChar->objtype != TYPE_PC);
 
+        //ShowDebug("Update Health fired.");
         PChar->updatemask |= UPDATE_HP;
 
         if (PChar->PParty != nullptr)
@@ -2888,6 +2889,13 @@ namespace charutils
             if (PChar->PParty->m_PAlliance == nullptr)
             {
                 PChar->PParty->PushPacket(PChar->id, PChar->getZone(), new CCharHealthPacket(PChar));
+                if (PChar->PAlly.size() > 0)
+                {
+                    for (auto ally : PChar->PAlly)
+                    {
+                        PChar->PParty->PushPacket(ally->id, ally->getZone(), new CCharHealthPacket(ally));
+                    }
+                }				
             }
             else if (PChar->PParty->m_PAlliance != nullptr)
             {

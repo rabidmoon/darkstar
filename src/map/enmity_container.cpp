@@ -123,6 +123,10 @@ void CEnmityContainer::UpdateEnmity(CBattleEntity* PEntity, int16 CE, int16 VE, 
         CE = 0;
         VE = 0;
     }
+	
+	auto PMob = dynamic_cast<CMobEntity*>(m_EnmityHolder);
+	if (PMob && PMob->m_HiPCLvl < PEntity->GetMLevel())
+		PMob->m_HiPCLvl = PEntity->GetMLevel();
 
     // Crash fix, PEntity was in ACTION_FALL
     if (PEntity->PBattleAI->GetCurrentAction() == ACTION_FALL)

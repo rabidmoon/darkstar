@@ -28,11 +28,19 @@ This file is part of DarkStar-server source code.
 #include "../utils/charutils.h"
 #include "../entities/charentity.h"
 #include "../entities/petentity.h"
+#include "../entities/mobentity.h"
+#include "../entities/battleentity.h"
 #include "../zone.h"
+#include "../weapon_skill.h"
 #include "../attack.h"
 #include "../attackround.h"
 #include "../mobskill.h"
 #include "../utils/petutils.h"
+#include "../utils/mobutils.h"
+#include "../ability.h"
+#include "../packets/char_health.h"
+
+#include "../party.h"
 
 #include "../lua/luautils.h"
 
@@ -47,6 +55,7 @@ This file is part of DarkStar-server source code.
 
 #include "../alliance.h"
 #include "ai_pet_dummy.h"
+#include "ai_general.h"
 
 /************************************************************************
 *																		*
@@ -62,6 +71,17 @@ CAIPetDummy::CAIPetDummy(CPetEntity* PPet)
     m_PPathFind = new CPathFind(PPet);
 
     m_PMagicState = new CMagicState(PPet, m_PTargetFind);
+	
+	m_curillaVokeRecast = 30000;
+	m_magicRecast = 6000;
+	m_magicHealRecast = 25000;
+	m_magicHealCast = 0;
+	m_kupipiHealRecast = 18000;
+	m_kupipiHealCast = 0;
+	m_curillaFlashRecast = 50000;
+	m_magicKupipiRecast = 4000;
+	
+	
 }
 
 /************************************************************************
@@ -101,6 +121,8 @@ void CAIPetDummy::CheckCurrentAction(uint32 tick)
         case ACTION_MAGIC_START: ActionMagicStart(); break;
         case ACTION_MAGIC_CASTING: ActionMagicCasting(); break;
         case ACTION_MAGIC_FINISH: ActionMagicFinish(); break;
+		case ACTION_WEAPONSKILL_FINISH:     ActionWeaponSkillFinish();  break;
+		case ACTION_JOBABILITY_FINISH:      ActionJobAbilityFinish(); break;
 
         default: DSP_DEBUG_BREAK_IF(true);
     }
@@ -119,10 +141,390 @@ void CAIPetDummy::WeatherChange(WEATHER weather, uint8 element)
 
 void CAIPetDummy::ActionAbilityStart()
 {
+    uint16 petID = m_PPet->m_PetID;
+	uint8 lvl = m_PPet->PMaster->GetMLevel();
+	uint8 wsrandom = 0;
     if (m_PPet->StatusEffectContainer->HasPreventActionEffect())
     {
         return;
     }
+
+    
+	
+
+	 //Choose TP Move based on Trust Type
+	 // This is essentially a hack to get this to work
+	 //It iterates through blank skill ID's and then sets the current mob skill to the blank unused mob ability and also assigns the correct WS number via setcurrentws
+	 //On prepare pet ability it then sends the information to actionweaponskillfinish and then plays the WS animation based on the WS number
+	 //The mobskill is called via the fake blank skill which is named in the mob_skill.sql file with the damage modifiers
+	 if (m_PPet->m_PetID == PETID_NANAA_MIHGO && m_PPet->health.tp >= 1000 && m_PBattleTarget != nullptr) { 	
+			uint8 wsrandom = dsprand::GetRandomNumber(1, 3);
+            for (int i = 0; i < m_PPet->PetSkills.size(); i++) {
+		        //printf("Random Number: %d \n", wsrandom);
+				if (lvl <= 99){ // Set up so Nanaa can use either King Cobra Clamp or Dancing Edge at 71 or higher
+				auto PMobSkill = battleutils::GetMobSkill(m_PPet->PetSkills.at(i));
+  					if (PMobSkill->getID() == 2212 && wsrandom > 1) { //King Kobra Clamp
+                    SetCurrentMobSkill(PMobSkill);
+			        ShowWarning("KING KOBRA CLAMP \n");
+                    break;
+                    }
+					//else if (PMobSkill->getID() == 2213) { //WASP STING
+                    //SetCurrentMobSkill(PMobSkill);
+			        //ShowWarning("WASP STING \n");
+                    //break;
+                    //}
+					else if (PMobSkill->getID() == 2214 && wsrandom > 0) { //DANCING EDGE
+                    SetCurrentMobSkill(PMobSkill);
+			        ShowWarning("DANCING EDGE \n");
+                    break;
+                    } 	
+
+                } 
+				if (lvl < 65){ // Set up so Nanaa can only use Dancing Edge
+				auto PMobSkill = battleutils::GetMobSkill(m_PPet->PetSkills.at(i));
+                    if (PMobSkill->getID() == 2214) { //DANCING EDGE
+                    SetCurrentMobSkill(PMobSkill);
+			        ShowWarning("DANCING EDGE \n");
+                    break;
+                    } 	
+
+                }	
+				if (lvl < 60){ // Set up so Nanaa can only use wasp sting
+				auto PMobSkill = battleutils::GetMobSkill(m_PPet->PetSkills.at(i));
+                    if (PMobSkill->getID() == 2213) { //Wasp Sting
+                    SetCurrentMobSkill(PMobSkill);
+			        ShowWarning("WASP STING \n");
+                    break;
+                    } 	
+
+                }			
+			}	
+            preparePetAbility(m_PBattleSubTarget);
+            return;
+        }
+	 if (m_PPet->m_PetID == PETID_KUPIPI && m_PPet->health.tp >= 1000 && m_PBattleTarget != nullptr){
+			int16 mobwsID = -1;
+			if (lvl <= 99) {
+			uint8 wsrandom = dsprand::GetRandomNumber(1, 3); // Black Halo or Hexa Strike
+            for (int i = 0; i < m_PPet->PetSkills.size(); i++) {
+                auto PMobSkill = battleutils::GetMobSkill(m_PPet->PetSkills.at(i));
+  					if (PMobSkill->getID() == 3774 && wsrandom == 1) { //Hexa Strike
+					mobwsID = 168;
+					SetCurrentMobSkill(PMobSkill);
+			        SetCurrentWeaponSkill(mobwsID);
+                    break;
+                    }
+                    else if (PMobSkill->getID() == 3775 && wsrandom == 2) { //Hexa Strike
+					mobwsID = 169;
+					SetCurrentMobSkill(PMobSkill);
+			        SetCurrentWeaponSkill(mobwsID);
+                    break;
+                    } 						
+
+                }
+            }
+            if (lvl < 71) {
+			uint8 wsrandom = dsprand::GetRandomNumber(1, 3); //Hexa Strike or Judgement
+            for (int i = 0; i < m_PPet->PetSkills.size(); i++) {
+                auto PMobSkill = battleutils::GetMobSkill(m_PPet->PetSkills.at(i));
+  					if (PMobSkill->getID() == 3774 && wsrandom == 1) { //Hexa Strike
+					mobwsID = 168;
+					SetCurrentMobSkill(PMobSkill);
+			        SetCurrentWeaponSkill(mobwsID);
+                    break;
+                    }
+                    else if (PMobSkill->getID() == 3773 && wsrandom == 2) { //Judgement
+					mobwsID = 167;
+					SetCurrentMobSkill(PMobSkill);
+			        SetCurrentWeaponSkill(mobwsID);
+                    break;
+                    } 						
+
+                }
+            }
+            if (lvl < 65) {
+			uint8 wsrandom = dsprand::GetRandomNumber(1, 3); //Judgement or True STrike
+            for (int i = 0; i < m_PPet->PetSkills.size(); i++) {
+                auto PMobSkill = battleutils::GetMobSkill(m_PPet->PetSkills.at(i));
+  					if (PMobSkill->getID() == 3773 && wsrandom == 1) { //Judgement
+					mobwsID = 167;
+					SetCurrentMobSkill(PMobSkill);
+			        SetCurrentWeaponSkill(mobwsID);
+                    break;
+                    }
+                    else if (PMobSkill->getID() == 3772 && wsrandom == 2) { //True Strike
+					mobwsID = 166;
+					SetCurrentMobSkill(PMobSkill);
+			        SetCurrentWeaponSkill(mobwsID);
+                    break;
+                    } 						
+
+                }
+            }
+           if (lvl < 60) {
+			uint8 wsrandom = dsprand::GetRandomNumber(1, 3); //True Strike or Brainshaker
+            for (int i = 0; i < m_PPet->PetSkills.size(); i++) {
+                auto PMobSkill = battleutils::GetMobSkill(m_PPet->PetSkills.at(i));
+  					if (PMobSkill->getID() == 3772 && wsrandom == 1) { //True Strike
+					mobwsID = 166;
+					SetCurrentMobSkill(PMobSkill);
+			        SetCurrentWeaponSkill(mobwsID);
+                    break;
+                    }
+                    else if (PMobSkill->getID() == 3771 && wsrandom == 2) { //Brainshaker
+					mobwsID = 162;
+					SetCurrentMobSkill(PMobSkill);
+			        SetCurrentWeaponSkill(mobwsID);
+                    break;
+                    } 						
+
+                }
+            }
+          if (lvl < 55) {
+			uint8 wsrandom = dsprand::GetRandomNumber(1, 3); //True Strike or Brainshaker
+            for (int i = 0; i < m_PPet->PetSkills.size(); i++) {
+                auto PMobSkill = battleutils::GetMobSkill(m_PPet->PetSkills.at(i));
+  					if (PMobSkill->getID() == 3771 && wsrandom == 1) { //Brain Shaker
+					mobwsID = 162;
+					SetCurrentMobSkill(PMobSkill);
+			        SetCurrentWeaponSkill(mobwsID);
+                    break;
+                    }
+                    else if (PMobSkill->getID() == 3770 && wsrandom == 2) { //Shining Strike
+					mobwsID = 162;
+					SetCurrentMobSkill(PMobSkill);
+			        SetCurrentWeaponSkill(mobwsID);
+                    break;
+                    } 						
+
+                }
+            }	
+         if (lvl < 25) {
+            for (int i = 0; i < m_PPet->PetSkills.size(); i++) {
+                auto PMobSkill = battleutils::GetMobSkill(m_PPet->PetSkills.at(i));
+  					if (PMobSkill->getID() == 3770) { //Shinning Strike
+					mobwsID = 162;
+					SetCurrentMobSkill(PMobSkill);
+			        SetCurrentWeaponSkill(mobwsID);
+                    break;
+					}
+
+                }
+            }			
+            preparePetAbility(m_PBattleSubTarget);
+			return;	
+            }			
+				
+           
+        
+	 if (m_PPet->m_PetID == PETID_AYAME && m_PPet->health.tp >= 1000 && m_PBattleTarget != nullptr){
+			int16 mobwsID = -1;		
+			if (lvl <= 99) {
+			uint8 wsrandom = dsprand::GetRandomNumber(1, 3); //Gekko or Kasha only 70+ for right now
+            for (int i = 0; i < m_PPet->PetSkills.size(); i++) {
+                auto PMobSkill = battleutils::GetMobSkill(m_PPet->PetSkills.at(i));
+  					if (PMobSkill->getID() == 3784 && wsrandom == 1) { //Tachi Kasha
+                    mobwsID = 152;
+					SetCurrentMobSkill(PMobSkill);
+					SetCurrentWeaponSkill(mobwsID);
+			        ShowWarning("Tachi: Kasha \n");
+                    break;
+                    } 
+  					else if (PMobSkill->getID() == 3783 && wsrandom == 2) { //Tachi Gekko
+                    mobwsID = 151;
+					SetCurrentMobSkill(PMobSkill);
+					SetCurrentWeaponSkill(mobwsID);
+			        ShowWarning("Tachi: Gekko \n");
+                    break;
+                    } 					
+
+                }
+			}
+			if (lvl < 71) {
+			uint8 wsrandom = dsprand::GetRandomNumber(1, 3); //Gekko or Kasha only 70+ for right now
+            for (int i = 0; i < m_PPet->PetSkills.size(); i++) {
+                auto PMobSkill = battleutils::GetMobSkill(m_PPet->PetSkills.at(i));
+  					if (PMobSkill->getID() == 3783 && wsrandom == 1) { //Tachi Gekko
+                    mobwsID = 151;
+					SetCurrentMobSkill(PMobSkill);
+					SetCurrentWeaponSkill(mobwsID);
+			        ShowWarning("Tachi: Gekko \n");
+                    break;
+                    } 
+  					else if (PMobSkill->getID() == 3782 && wsrandom == 2) { //Tachi Yuki
+                    mobwsID = 150;
+					SetCurrentMobSkill(PMobSkill);
+					SetCurrentWeaponSkill(mobwsID);
+			        ShowWarning("Tachi: Yuki \n");
+                    break;
+                    } 					
+
+                }
+			}				
+			if (lvl < 65) {
+			uint8 wsrandom = dsprand::GetRandomNumber(1, 3); //Yuki or Jinpu only 
+            for (int i = 0; i < m_PPet->PetSkills.size(); i++) {
+                auto PMobSkill = battleutils::GetMobSkill(m_PPet->PetSkills.at(i));
+  					if (PMobSkill->getID() == 3782 && wsrandom == 1) { //Tachi Yuki
+                    mobwsID = 150;
+					SetCurrentMobSkill(PMobSkill);
+					SetCurrentWeaponSkill(mobwsID);
+			        ShowWarning("Tachi: Yuki \n");
+                    break;
+                    } 
+  					else if (PMobSkill->getID() == 3781 && wsrandom == 2) { //Tachi Jinpu
+                    mobwsID = 148;
+					SetCurrentMobSkill(PMobSkill);
+					SetCurrentWeaponSkill(mobwsID);
+			        ShowWarning("Tachi: Jinpu \n");
+                    break;
+                    } 					
+
+                }
+			}
+			if (lvl < 59) {
+			uint8 wsrandom = dsprand::GetRandomNumber(1, 4); //Jinpu or goten or Enpi
+            for (int i = 0; i < m_PPet->PetSkills.size(); i++) {
+                auto PMobSkill = battleutils::GetMobSkill(m_PPet->PetSkills.at(i));
+  					if (PMobSkill->getID() == 3779 && wsrandom == 1) { //Tachi Enpi
+                    mobwsID = 144;
+					SetCurrentMobSkill(PMobSkill);
+					SetCurrentWeaponSkill(mobwsID);
+			        ShowWarning("Tachi: Enpi \n");
+                    break;
+                    }
+  					else if (PMobSkill->getID() == 3780 && wsrandom == 2) { //Tachi Goten
+                    mobwsID = 146;
+					SetCurrentMobSkill(PMobSkill);
+					SetCurrentWeaponSkill(mobwsID);
+			        ShowWarning("Tachi: Goten \n");
+                    break;
+                    } 								
+  					else if (PMobSkill->getID() == 3781 && wsrandom == 3) { //Tachi Jinpu
+                    mobwsID = 148;
+					SetCurrentMobSkill(PMobSkill);
+					SetCurrentWeaponSkill(mobwsID);
+			        ShowWarning("Tachi: Jinpu \n");
+                    break;
+                    } 					
+
+                }
+			}			
+			if (lvl < 49) {
+			uint8 wsrandom = dsprand::GetRandomNumber(1, 3); //Jinpu or goten or Enpi
+            for (int i = 0; i < m_PPet->PetSkills.size(); i++) {
+                auto PMobSkill = battleutils::GetMobSkill(m_PPet->PetSkills.at(i));
+  					if (PMobSkill->getID() == 3779 && wsrandom == 1) { //Tachi Enpi
+                    mobwsID = 144;
+					SetCurrentMobSkill(PMobSkill);
+					SetCurrentWeaponSkill(mobwsID);
+			        ShowWarning("Tachi: Enpi \n");
+                    break;
+                    }
+  					else if (PMobSkill->getID() == 3780 && wsrandom == 2) { //Tachi Goten
+                    mobwsID = 146;
+					SetCurrentMobSkill(PMobSkill);
+					SetCurrentWeaponSkill(mobwsID);
+			        ShowWarning("Tachi: Goten \n");
+                    break;
+                    } 													
+
+                }
+			}
+			if (lvl < 23) {
+            for (int i = 0; i < m_PPet->PetSkills.size(); i++) {
+                auto PMobSkill = battleutils::GetMobSkill(m_PPet->PetSkills.at(i));
+  					if (PMobSkill->getID() == 3779) { //Tachi Enpi
+                    mobwsID = 144;
+					SetCurrentMobSkill(PMobSkill);
+					SetCurrentWeaponSkill(mobwsID);
+			        ShowWarning("Tachi: Enpi \n");
+                    break;
+					}						
+
+                }
+			}			
+			preparePetAbility(m_PBattleSubTarget);
+            return;
+        }		
+	 if (m_PPet->m_PetID == PETID_NAJI && m_PPet->health.tp >= 1000 && m_PBattleTarget != nullptr){
+			
+            for (int i = 0; i < m_PPet->PetSkills.size(); i++) {
+                auto PMobSkill = battleutils::GetMobSkill(m_PPet->PetSkills.at(i));
+  					if (PMobSkill->getID() == 2961) { //Savage Blade
+                    SetCurrentMobSkill(PMobSkill);
+			        ShowWarning("KING KOBRA CLAMP \n");
+                    break;
+                    } 	
+
+                }
+            preparePetAbility(m_PBattleSubTarget);
+            return;
+        }
+
+	if (m_PPet->m_PetID == PETID_CURILLA && m_PPet->health.tp >= 1000 && m_PBattleTarget != nullptr){
+			int16 mobwsID = -1;		
+			if (lvl <= 99) {
+			m_PJobAbility = nullptr;
+			uint8 wsrandom = dsprand::GetRandomNumber(1, 3); //Swift Blade or Vorpal
+            for (int i = 0; i < m_PPet->PetSkills.size(); i++) {
+                auto PMobSkill = battleutils::GetMobSkill(m_PPet->PetSkills.at(i));
+  					if (PMobSkill->getID() == 3743 && wsrandom == 1) { //Swift Blade
+                    mobwsID = 41;
+					SetCurrentMobSkill(PMobSkill);
+					SetCurrentWeaponSkill(mobwsID);
+			        ShowWarning("Swift Blade \n");
+                    break;
+                    } 
+  					else if (PMobSkill->getID() == 3742 && wsrandom == 2) { //Vorpal Blade
+                    mobwsID = 40;
+					SetCurrentMobSkill(PMobSkill);
+					SetCurrentWeaponSkill(mobwsID);
+			        ShowWarning("Vorpal Blade \n");
+                    break;
+                    } 					
+
+                }
+			}
+			if (lvl < 65) {
+			m_PJobAbility = nullptr;
+			uint8 wsrandom = dsprand::GetRandomNumber(1, 3); //Vorpal or Red Lotus
+            for (int i = 0; i < m_PPet->PetSkills.size(); i++) {
+                auto PMobSkill = battleutils::GetMobSkill(m_PPet->PetSkills.at(i));
+  					if (PMobSkill->getID() == 3740 && wsrandom == 1) { //Red Lotus Blade
+                    mobwsID = 34;
+					SetCurrentMobSkill(PMobSkill);
+					SetCurrentWeaponSkill(mobwsID);
+			        ShowWarning("Red Lotus Blade \n");
+                    break;
+                    } 
+  					else if (PMobSkill->getID() == 3742 && wsrandom == 2) { //Vorpal Blade
+                    mobwsID = 40;
+					SetCurrentMobSkill(PMobSkill);
+					SetCurrentWeaponSkill(mobwsID);
+			        ShowWarning("Vorpal Blade \n");
+                    break;
+                    } 					
+
+                }
+			}
+			if (lvl < 60) {
+			m_PJobAbility = nullptr;
+            for (int i = 0; i < m_PPet->PetSkills.size(); i++) {
+                auto PMobSkill = battleutils::GetMobSkill(m_PPet->PetSkills.at(i));
+  					if (PMobSkill->getID() == 3740 && wsrandom == 1) { //Red Lotus Blade
+                    mobwsID = 34;
+					SetCurrentMobSkill(PMobSkill);
+					SetCurrentWeaponSkill(mobwsID);
+			        ShowWarning("Red Lotus Blade \n");
+                    break;
+                    } 					
+
+                }
+			}			
+            preparePetAbility(m_PBattleSubTarget);
+            return;
+        }		
 
     if (m_PPet->objtype == TYPE_MOB && m_PPet->PMaster->objtype == TYPE_PC)
     {
@@ -175,6 +577,10 @@ void CAIPetDummy::ActionAbilityStart()
             }
         }
     }
+	
+	
+	
+	
     else if (m_PPet->getPetType() == PETTYPE_AVATAR) {
         for (int i = 0; i < m_PPet->PetSkills.size(); i++) {
             auto PMobSkill = battleutils::GetMobSkill(m_PPet->PetSkills.at(i));
@@ -301,8 +707,91 @@ void CAIPetDummy::ActionAbilityStart()
 }
 
 void CAIPetDummy::preparePetAbility(CBattleEntity* PTarg) {
-    if (m_PMobSkill != nullptr) {
 
+	if (m_PJobAbility != nullptr || m_PJobAbility > 0) {
+        ShowWarning(CL_GREEN"Alternate preparepet triggered" CL_RESET);
+        apAction_t Action;
+        m_PPet->m_ActionList.clear();
+
+       		
+		// find correct targe
+        
+		
+		//for weaponskill end
+		
+	
+
+        Action.ActionTarget = m_PBattleSubTarget;
+        Action.reaction = REACTION_HIT;
+        Action.speceffect = SPECEFFECT_HIT;
+        Action.animation = 0;
+        Action.param = m_PJobAbility->getID();
+        //Action.messageID = 43; //readies message
+        Action.knockback = 0;
+        m_skillTP = m_PPet->health.tp;
+		
+	
+		
+		
+		
+        //m_PPet->health.tp = 0;
+        m_PPet->m_ActionList.push_back(Action);
+        m_PPet->loc.zone->PushPacket(m_PPet, CHAR_INRANGE, new CActionPacket(m_PPet));
+		
+		
+        m_LastActionTime = m_Tick;
+		ShowWarning(CL_RED"PreparePetAbility for JOB ABILITY Fired!!!\n" CL_RESET);
+        m_LastActionTime = m_Tick;
+		       
+        m_ActionType = ACTION_JOBABILITY_FINISH;
+        ActionJobAbilityFinish();
+		
+    }
+
+
+	else if (m_PWeaponSkill != nullptr || m_PWeaponSkill > 0) {
+        ShowWarning(CL_GREEN"Alternate preparepet triggered" CL_RESET);
+        apAction_t Action;
+        m_PPet->m_ActionList.clear();
+
+       		
+		// find correct targe
+        
+		
+		//for weaponskill end
+		
+	
+
+        Action.ActionTarget = m_PBattleSubTarget;
+        Action.reaction = REACTION_HIT;
+        Action.speceffect = SPECEFFECT_HIT;
+        Action.animation = 0;
+        Action.param = m_PWeaponSkill->getID();
+        Action.messageID = 43; //readies message
+        Action.knockback = 0;
+        m_skillTP = m_PPet->health.tp;
+		
+	
+		
+		
+		
+        //m_PPet->health.tp = 0;
+        m_PPet->m_ActionList.push_back(Action);
+        m_PPet->loc.zone->PushPacket(m_PPet, CHAR_INRANGE, new CActionPacket(m_PPet));
+		
+		Action.ActionTarget = m_PBattleSubTarget;
+        m_LastActionTime = m_Tick;
+		ShowWarning(CL_RED"PreparePetAbility Fired!!!\n" CL_RESET);
+        m_LastActionTime = m_Tick;
+        m_ActionType = ACTION_WEAPONSKILL_FINISH;
+        ActionWeaponSkillFinish();
+		
+    }
+
+
+
+    else if (m_PMobSkill != nullptr) {
+        ShowWarning(CL_RED"Normal preparepet triggered \n" CL_RESET);
         apAction_t Action;
         m_PPet->m_ActionList.clear();
 
@@ -327,6 +816,7 @@ void CAIPetDummy::preparePetAbility(CBattleEntity* PTarg) {
             }
             DSP_DEBUG_BREAK_IF(m_PBattleSubTarget == nullptr);
         }
+		
 
         Action.ActionTarget = m_PBattleSubTarget;
         Action.reaction = REACTION_HIT;
@@ -345,7 +835,8 @@ void CAIPetDummy::preparePetAbility(CBattleEntity* PTarg) {
         m_PMobSkill->getID() != 1686 && m_PMobSkill->getID() != 1687 && m_PMobSkill->getID() != 1688 &&
         m_PMobSkill->getID() != 1689 && m_PMobSkill->getID() != 1690 && m_PMobSkill->getID() != 1691 &&
 		m_PMobSkill->getID() != 1811 && m_PMobSkill->getID() != 2488 && m_PMobSkill->getID() != 1692 &&
-		m_PMobSkill->getID() != 2044 && m_PMobSkill->getID() != 1810 && m_PMobSkill->getID() != 1809)  //Prevents Ranged Attacks and WS's from resetting TP since they are considered an ability
+		m_PMobSkill->getID() != 2044 && m_PMobSkill->getID() != 1810 && m_PMobSkill->getID() != 1809 && 
+		m_PMobSkill->getID() != 3711)  //Prevents Ranged Attacks and WS's from resetting TP since they are considered an ability
 		{
         m_PPet->health.tp = 0;
         }
@@ -354,7 +845,14 @@ void CAIPetDummy::preparePetAbility(CBattleEntity* PTarg) {
 
         m_LastActionTime = m_Tick;
         m_ActionType = ACTION_MOBABILITY_USING;
+		
     }
+	
+	
+	
+
+	
+	
     else {
         ShowWarning("ai_pet_dummy::ActionAbilityFinish Pet skill is NULL \n");
         TransitionBack(true);
@@ -474,8 +972,12 @@ void CAIPetDummy::ActionAbilityUsing()
 }
 
 void CAIPetDummy::ActionAbilityFinish() {
-    DSP_DEBUG_BREAK_IF(m_PMobSkill == nullptr);
+
+	
+    //DSP_DEBUG_BREAK_IF(m_PMobSkill == nullptr);
     DSP_DEBUG_BREAK_IF(m_PBattleSubTarget == nullptr);
+        ShowWarning(CL_GREEN"MOBSKILL ABILITY FIRED!!! \n" CL_RESET);
+	
 
     // reset AoE finder
     m_PTargetFind->reset();
@@ -527,15 +1029,14 @@ void CAIPetDummy::ActionAbilityFinish() {
     Action.speceffect = SPECEFFECT_HIT;
     Action.animation = animationId;
     Action.knockback = 0;
-
+   
     uint16 msg = 0;
     for (std::vector<CBattleEntity*>::iterator it = m_PTargetFind->m_targets.begin(); it != m_PTargetFind->m_targets.end(); ++it)
     {
-
+       
         CBattleEntity* PTarget = *it;
 
         Action.ActionTarget = PTarget;
-
         if (m_PPet->isBstPet()) {
             Action.param = luautils::OnMobWeaponSkill(PTarget, m_PPet, GetCurrentMobSkill());
         }
@@ -599,6 +1100,171 @@ void CAIPetDummy::ActionAbilityFinish() {
 		
 		
 		
+
+        battleutils::ClaimMob(m_PBattleSubTarget, m_PPet);
+
+        if (PTarget->objtype == TYPE_MOB && !m_PTargetFind->checkIsPlayer(PTarget) && m_PMobSkill->isDamageMsg())
+        {
+            ((CMobEntity*)PTarget)->PEnmityContainer->UpdateEnmityFromDamage(m_PPet, Action.param);
+        }
+
+        if (m_PBattleSubTarget->objtype == TYPE_MOB)
+        {
+            uint16 PWeaponskill = m_PMobSkill->getID();
+            luautils::OnWeaponskillHit(m_PBattleSubTarget, m_PPet, PWeaponskill);
+        }
+
+        // If we dealt damage.. we should wake up our target..
+        if (m_PMobSkill->isDamageMsg() && Action.param > 0 && PTarget->StatusEffectContainer != nullptr)
+            PTarget->StatusEffectContainer->WakeUp();
+
+        m_PPet->m_ActionList.push_back(Action);
+    }
+	
+
+    m_PPet->loc.zone->PushPacket(m_PPet, CHAR_INRANGE, new CActionPacket(m_PPet));
+
+    if (Action.ActionTarget != nullptr && m_PPet->getPetType() == PETTYPE_AVATAR) { //todo: remove pet type avatar maybe
+        Action.ActionTarget->loc.zone->PushPacket(Action.ActionTarget, CHAR_INRANGE, new CEntityUpdatePacket(Action.ActionTarget, ENTITY_UPDATE, UPDATE_COMBAT));
+    } 
+
+    m_PBattleSubTarget = nullptr;
+    m_ActionType = ACTION_ATTACK;
+}
+
+
+
+void CAIPetDummy::ActionWeaponSkillFinish() 
+{
+ 
+    ShowWarning(CL_GREEN"WEAPONSKILL ABILITY FINISH!!! \n" CL_RESET);
+    //DSP_DEBUG_BREAK_IF(m_PMobSkill == nullptr);
+    DSP_DEBUG_BREAK_IF(m_PWeaponSkill == nullptr);
+    DSP_DEBUG_BREAK_IF(m_PBattleSubTarget == nullptr);
+
+	m_PTargetFind->reset();
+    m_PPet->m_ActionList.clear();
+
+    float distance = m_PMobSkill->getDistance();
+
+    if (m_PTargetFind->isWithinRange(&m_PBattleSubTarget->loc.p, distance))
+    {
+        if (m_PMobSkill->isAoE())
+        {
+            float radius = m_PMobSkill->getDistance();
+
+            m_PTargetFind->findWithinArea(m_PBattleSubTarget, (AOERADIUS)m_PMobSkill->getAoe(), distance);
+        }
+        else if (m_PMobSkill->isConal())
+        {
+            float angle = 45.0f;
+            m_PTargetFind->findWithinCone(m_PBattleSubTarget, distance, angle);
+        }
+        else
+        {
+            m_PTargetFind->findSingleTarget(m_PBattleSubTarget);
+        }
+    }
+
+    uint16 totalTargets = m_PTargetFind->m_targets.size();
+    //call the script for each monster hit
+    m_PMobSkill->setTotalTargets(totalTargets);
+
+    float bonusTP = m_PPet->getMod(MOD_TP_BONUS);
+
+    if( bonusTP + m_skillTP > 300 )
+       m_skillTP = 300;
+    else
+       m_skillTP += bonusTP;
+
+    m_PMobSkill->setTP(m_skillTP);
+    m_PMobSkill->setHPP(m_PPet->GetHPP());
+
+	
+
+	uint16 animationId = m_PWeaponSkill->getAnimationId();
+
+	printf("Mob Weaponskill Animation ID Should be: %d \n", animationId);
+	apAction_t Action;
+	Action.ActionTarget = m_PBattleSubTarget;
+	Action.reaction = REACTION_HIT;
+	Action.speceffect = SPECEFFECT_HIT;
+	Action.animation = animationId;
+	Action.knockback = 0;
+	
+
+		
+	m_PPet->m_ActionList.push_back(Action);
+
+    	
+	   uint16 msg = 0;
+	 for (std::vector<CBattleEntity*>::iterator it = m_PTargetFind->m_targets.begin(); it != m_PTargetFind->m_targets.end(); ++it)
+        {
+            CBattleEntity* PTarget = *it;
+
+        Action.ActionTarget = PTarget;
+        if (m_PPet->isBstPet()) {
+            Action.param = luautils::OnMobWeaponSkill(PTarget, m_PPet, GetCurrentMobSkill());
+        }
+        else {
+            Action.param = luautils::OnPetAbility(PTarget, m_PPet, GetCurrentMobSkill(), m_PPet->PMaster);
+        }
+
+        if (msg == 0) {
+            msg = m_PMobSkill->getMsg();
+        }
+        else {
+            msg = m_PMobSkill->getAoEMsg();
+        }
+
+        Action.messageID = msg;
+		
+		//Test Begin for SC
+		
+		        if (m_PMobSkill->hasMissMsg())
+        {
+            Action.reaction   = REACTION_MISS;
+            Action.speceffect = SPECEFFECT_NONE;
+            if (msg = m_PMobSkill->getAoEMsg())
+                msg = 282;
+        }
+        else
+        {
+            Action.reaction   = REACTION_HIT;
+        }
+
+        if (Action.speceffect & SPECEFFECT_HIT)
+        {
+            Action.speceffect = SPECEFFECT_RECOIL;
+            Action.knockback = m_PMobSkill->getKnockback();
+            if (it == m_PTargetFind->m_targets.begin() && (m_PMobSkill->getSkillchain() != 0))
+            {
+                CWeaponSkill* PWeaponSkill = battleutils::GetWeaponSkill(m_PMobSkill->getSkillchain());
+                if (PWeaponSkill)
+                {
+                    SUBEFFECT effect = battleutils::GetSkillChainEffect(m_PBattleSubTarget, PWeaponSkill);
+                    if (effect != SUBEFFECT_NONE)
+                    {
+                        int32 skillChainDamage = battleutils::TakeSkillchainDamage(m_PPet, PTarget, Action.param);
+                        if (skillChainDamage < 0)
+                        {
+                            Action.addEffectParam = -skillChainDamage;
+                            Action.addEffectMessage = 384 + effect;
+                        }
+                        else
+                        {
+                            Action.addEffectParam = skillChainDamage;
+                            Action.addEffectMessage = 287 + effect;
+                        }
+                        Action.additionalEffect = effect;
+                    }
+                }
+            }
+        }
+		
+		//Test End for SC
+		
+		
 		
 
         battleutils::ClaimMob(m_PBattleSubTarget, m_PPet);
@@ -620,16 +1286,136 @@ void CAIPetDummy::ActionAbilityFinish() {
 
         m_PPet->m_ActionList.push_back(Action);
     }
+	
 
     m_PPet->loc.zone->PushPacket(m_PPet, CHAR_INRANGE, new CActionPacket(m_PPet));
 
     if (Action.ActionTarget != nullptr && m_PPet->getPetType() == PETTYPE_AVATAR) { //todo: remove pet type avatar maybe
         Action.ActionTarget->loc.zone->PushPacket(Action.ActionTarget, CHAR_INRANGE, new CEntityUpdatePacket(Action.ActionTarget, ENTITY_UPDATE, UPDATE_COMBAT));
+    } 
+
+		
+	m_PPet->health.tp = 5;
+	m_PBattleSubTarget = nullptr;
+    m_ActionType = ACTION_ATTACK;
+ 
+
+}
+
+
+void CAIPetDummy::ActionJobAbilityFinish()
+{
+ 
+    ShowWarning(CL_GREEN"JOB ABILITY FINISH!!! \n" CL_RESET);
+    //DSP_DEBUG_BREAK_IF(m_PMobSkill == nullptr);
+    //DSP_DEBUG_BREAK_IF(m_PWeaponSkill == nullptr);
+    //DSP_DEBUG_BREAK_IF(m_PBattleSubTarget == nullptr);
+
+	m_PTargetFind->reset();
+    m_PPet->m_ActionList.clear();
+
+    float distance = m_PMobSkill->getDistance();
+
+    if (m_PTargetFind->isWithinRange(&m_PBattleSubTarget->loc.p, distance))
+    {
+        if (m_PMobSkill->isAoE())
+        {
+            float radius = m_PMobSkill->getDistance();
+
+            m_PTargetFind->findWithinArea(m_PBattleSubTarget, (AOERADIUS)m_PMobSkill->getAoe(), distance);
+        }
+        else if (m_PMobSkill->isConal())
+        {
+            float angle = 45.0f;
+            m_PTargetFind->findWithinCone(m_PBattleSubTarget, distance, angle);
+        }
+        else
+        {
+            m_PTargetFind->findSingleTarget(m_PBattleSubTarget);
+        }
     }
 
-    m_PBattleSubTarget = nullptr;
+    uint16 totalTargets = m_PTargetFind->m_targets.size();
+    //call the script for each monster hit
+    m_PMobSkill->setTotalTargets(totalTargets);
+
+
+
+	
+
+	uint16 animationId = m_PJobAbility->getAnimationID();
+
+	printf("Mob Job Ability Animation ID Should be: %d \n", animationId);
+	apAction_t Action;
+	Action.ActionTarget = m_PBattleSubTarget;
+	Action.reaction = REACTION_HIT;
+	Action.speceffect = SPECEFFECT_HIT;
+	Action.animation = animationId;
+	Action.knockback = 0;
+	
+
+		
+	m_PPet->m_ActionList.push_back(Action);
+
+    	
+	   uint16 msg = 0;
+	 for (std::vector<CBattleEntity*>::iterator it = m_PTargetFind->m_targets.begin(); it != m_PTargetFind->m_targets.end(); ++it)
+        {
+            CBattleEntity* PTarget = *it;
+
+        Action.ActionTarget = PTarget;
+        if (m_PPet->isBstPet()) {
+            Action.param = luautils::OnMobWeaponSkill(PTarget, m_PPet, GetCurrentMobSkill());
+        }
+        else {
+            Action.param = luautils::OnPetAbility(PTarget, m_PPet, GetCurrentMobSkill(), m_PPet->PMaster);
+        }
+
+        if (msg == 0) {
+            msg = m_PMobSkill->getMsg();
+        }
+        else {
+            msg = m_PMobSkill->getAoEMsg();
+        }
+
+        Action.messageID = msg;
+		
+        battleutils::ClaimMob(m_PBattleSubTarget, m_PPet);
+
+        if (PTarget->objtype == TYPE_MOB && !m_PTargetFind->checkIsPlayer(PTarget) && m_PMobSkill->isDamageMsg())
+        {
+            ((CMobEntity*)PTarget)->PEnmityContainer->UpdateEnmityFromDamage(m_PPet, Action.param);
+        }
+
+        if (m_PBattleSubTarget->objtype == TYPE_MOB)
+        {
+            uint16 PWeaponskill = m_PMobSkill->getID();
+            luautils::OnWeaponskillHit(m_PBattleSubTarget, m_PPet, PWeaponskill);
+        }
+
+        // If we dealt damage.. we should wake up our target..
+        if (m_PMobSkill->isDamageMsg() && Action.param > 0 && PTarget->StatusEffectContainer != nullptr)
+            PTarget->StatusEffectContainer->WakeUp();
+
+        m_PPet->m_ActionList.push_back(Action);
+    }
+	
+
+    m_PPet->loc.zone->PushPacket(m_PPet, CHAR_INRANGE, new CActionPacket(m_PPet));
+
+    if (Action.ActionTarget != nullptr && m_PPet->getPetType() == PETTYPE_AVATAR) { //todo: remove pet type avatar maybe
+        Action.ActionTarget->loc.zone->PushPacket(Action.ActionTarget, CHAR_INRANGE, new CEntityUpdatePacket(Action.ActionTarget, ENTITY_UPDATE, UPDATE_COMBAT));
+    } 
+
+		
+	
+	m_PBattleSubTarget = nullptr;
     m_ActionType = ACTION_ATTACK;
+ 
+
 }
+
+
 
 void CAIPetDummy::ActionAbilityInterrupt() {
     m_LastActionTime = m_Tick;
@@ -671,6 +1457,13 @@ bool CAIPetDummy::PetIsHealing() {
         m_PPet->updatemask |= UPDATE_HP;
         return false;
     }
+	
+	
+	
+	m_PPet->updatemask |= UPDATE_HP;
+	charutils::UpdateHealth((CCharEntity*)m_PPet->PMaster);
+
+ 
     return isMasterHealing;
 }
 
@@ -689,10 +1482,14 @@ void CAIPetDummy::ActionRoaming()
     }
 
     //automaton, wyvern
-    if (m_PPet->getPetType() == PETTYPE_WYVERN || m_PPet->getPetType() == PETTYPE_AUTOMATON) {
+    if (m_PPet->getPetType() == PETTYPE_WYVERN || m_PPet->getPetType() == PETTYPE_AUTOMATON ||  m_PPet->getPetType() == PETTYPE_TRUST) {
         if (PetIsHealing()) {
             return;
         }
+		if (m_PPet->StatusEffectContainer->HasStatusEffect(EFFECT_HEALING) == false)
+		{
+		m_PPet->StatusEffectContainer->AddStatusEffect(new CStatusEffect(EFFECT_HEALING, 0, 0, 5, 0));
+		}
     }
 
     if (m_PBattleTarget != nullptr) {
@@ -700,7 +1497,8 @@ void CAIPetDummy::ActionRoaming()
         ActionEngage();
         return;
     }
-
+	//ShowWarning(CL_RED"PET IS ACTION ROAMING\n" CL_RESET);
+    //((CCharEntity*)m_PPet->PMaster)->pushPacket(new CCharHealthPacket((CCharEntity*)m_PPet->PMaster));
     float currentDistance = distance(m_PPet->loc.p, m_PPet->PMaster->loc.p);
 
 
@@ -735,6 +1533,12 @@ void CAIPetDummy::ActionEngage()
 {
     DSP_DEBUG_BREAK_IF(m_PBattleTarget == nullptr);
 
+	uint8 trustlvl = m_PPet->GetMLevel();
+	if (m_PPet->getPetType() == PETTYPE_TRUST){
+	m_PPet->StatusEffectContainer->DelStatusEffect(EFFECT_HEALING);
+	m_PPet->updatemask |= UPDATE_HP;
+	}
+	
     if (m_PPet->PMaster == nullptr || m_PPet->PMaster->isDead())
     {
         m_ActionType = ACTION_FALL;
@@ -772,6 +1576,82 @@ void CAIPetDummy::ActionAttack()
         return;
     }
 
+	
+	//****************************************************************//
+	//   TRUST ABILITIES BY TRUST NAME                               //
+	//**************************************************************//
+	
+	  if (m_PPet->m_PetID == PETID_KUPIPI)
+		{
+		 ShowDebug("KUPIPI Check \n");
+		 if (m_Tick >= m_LastKupipiMagicTime + m_magicKupipiRecast) // Check Every 4 Seconds as universal check
+			{
+			    int16 spellID = -1;
+				uint16 family = m_PPet->m_Family;
+				uint16 petID = m_PPet->m_PetID;
+        
+		
+				spellID = KupipiSpell();
+		        printf("Kupipi Spell is: %d \n", spellID);
+				if (spellID != -1)
+				{
+				SetCurrentSpell(spellID);
+				m_ActionType = ACTION_MAGIC_START;
+				ActionMagicStart();
+				return;
+			    }
+		    }		
+				
+				
+		}
+	
+	
+	
+	 if (m_PPet->m_PetID == PETID_CURILLA)
+		{
+		 if (m_Tick >= m_LastMagicTime + m_magicRecast) // Check Every 4 Seconds as universal check
+			{
+			    int16 spellID = -1;
+				uint16 family = m_PPet->m_Family;
+				uint16 petID = m_PPet->m_PetID;
+        
+		
+				spellID = CurillaSpell();
+		
+				if (spellID != -1)
+				{
+				SetCurrentSpell(spellID);
+				m_ActionType = ACTION_MAGIC_START;
+				ActionMagicStart();
+				return;
+			    }
+		    }		
+		 if (m_Tick >= m_LastCurillaVokeTime + m_curillaVokeRecast)
+			{
+			m_PWeaponSkill = nullptr;
+            int16 mobjaID = -1;			
+			for (int i = 0; i < m_PPet->PetSkills.size(); i++) {
+                    auto PMobSkill = battleutils::GetMobSkill(m_PPet->PetSkills.at(i));
+                            
+                        if (PMobSkill->getID() == 3711) { //Provoke
+						    mobjaID = 19;
+                            SetCurrentMobSkill(PMobSkill);
+							SetCurrentJobAbility(mobjaID);
+							m_PBattleSubTarget = m_PBattleTarget;
+							break;
+                        }
+			        }
+				preparePetAbility(m_PBattleSubTarget);
+				ShowDebug("PROVOKE!!!!\n");
+				m_LastCurillaVokeTime = m_Tick;
+				return;	
+				}				
+				
+		}
+	
+
+
+	
 
     //if 2 bsts are in party, make sure their pets cannot fight eachother
     if (m_PBattleTarget != nullptr && m_PBattleTarget->objtype == TYPE_MOB && m_PBattleTarget->PMaster != nullptr && m_PBattleTarget->PMaster->objtype == TYPE_PC)
@@ -807,6 +1687,28 @@ void CAIPetDummy::ActionAttack()
         ActionAbilityStart();
         return;
     }
+	
+	//Skill List Check
+    /*if (m_PPet->getPetType() == PETTYPE_TRUST && m_PPet->PetSkills.size() > 0)
+	{
+    ShowWarning(CL_GREEN"SKILL LIST HAS A SIZE!!!!!!\n" CL_RESET);	
+	}
+	
+	if (m_PPet->getPetType() == PETTYPE_TRUST && m_PPet->PetSkills.size() == 0)
+	{
+    ShowWarning(CL_RED"SKILL LIST DOES NOT HAVE A SIZE!!!!!!\n" CL_RESET);	
+	}*/
+	
+	
+	if (m_PPet->getPetType() == PETTYPE_TRUST && m_PPet->health.tp >= 1000 && m_PPet->PetSkills.size() > 0)
+    {
+        // now use my tp move
+		m_PBattleSubTarget = m_PBattleTarget;
+        m_ActionType = ACTION_MOBABILITY_START;
+        ActionAbilityStart();
+        return;
+	}
+	 
 
     m_PPathFind->LookAt(m_PBattleTarget->loc.p);
 
@@ -948,12 +1850,20 @@ void CAIPetDummy::ActionSleep()
 
 void CAIPetDummy::ActionDisengage()
 {
+    uint8 trustlvl = m_PPet->GetMLevel();
+	
+
     if (m_PPet->PMaster == nullptr || m_PPet->PMaster->isDead()) {
         m_ActionType = ACTION_FALL;
         ActionFall();
         return;
     }
-
+	
+	//Add Regen and Refresh to Trusts
+	if (m_PPet->getPetType() == PETTYPE_TRUST){
+	m_PPet->StatusEffectContainer->AddStatusEffect(new CStatusEffect(EFFECT_HEALING, 0, 0, 5, 0));
+	 ((CCharEntity*)m_PPet->PMaster)->pushPacket(new CCharHealthPacket((CCharEntity*)m_PPet->PMaster));
+	}
     m_queueSic = false;
     m_PPet->animation = ANIMATION_NONE;
     m_PPet->updatemask |= UPDATE_HP;
@@ -974,7 +1884,21 @@ void CAIPetDummy::ActionFall()
     // remove master from pet
     if (m_PPet->PMaster != nullptr && m_PPet->PMaster->PPet == m_PPet) {
         petutils::DetachPet(m_PPet->PMaster);
-    }
+	}
+	uint8 counter = 0;
+	if (m_PPet->PMaster != nullptr && m_PPet->PMaster->PAlly.size() != 0) {
+		for (auto ally : m_PPet->PMaster->PAlly)
+		{
+			if (ally == m_PPet)
+			{
+				m_PPet->PMaster->PAlly.erase(m_PPet->PMaster->PAlly.begin() + counter);
+				m_PPet->PMaster->PParty->ReloadParty();
+				
+				break;
+			}
+			counter++;
+		}
+	}
 
     // detach pet just deleted this
     // so break out of here
@@ -1004,7 +1928,7 @@ void CAIPetDummy::ActionDeath()
 void CAIPetDummy::ActionMagicStart()
 {
     // disabled
-    DSP_DEBUG_BREAK_IF(m_PSpell == nullptr);
+    //DSP_DEBUG_BREAK_IF(m_PSpell == nullptr);
     DSP_DEBUG_BREAK_IF(m_PBattleSubTarget == nullptr);
 
     m_LastActionTime = m_Tick;
@@ -1126,4 +2050,270 @@ void CAIPetDummy::TransitionBack(bool skipWait)
             ActionRoaming();
         }
     }
+}
+
+int16 CAIPetDummy::KupipiSpell()
+{
+
+	uint8 trigger = 60; // HP Trigger Threshold
+	uint8 lowHPP = 31;
+	uint8 level = m_PPet->GetMLevel();
+    int16 spellID = -1;
+	
+ CBattleEntity* master = m_PPet->PMaster;  
+ CBattleEntity* mostWounded = getWounded(trigger);
+if (m_Tick >= m_LastKupipiMagicTime + m_kupipiHealRecast)  // Look for last magic healing spell time 
+	{
+		if (mostWounded != nullptr)
+		{
+        m_PBattleSubTarget = mostWounded;
+		if (level > 54)
+			if (m_PPet->health.mp > 88)
+				{
+				 spellID = 4;
+				}
+			else if (m_PPet->health.mp > 46)  	
+			    {
+				 spellID = 3;
+				}
+			else if (m_PPet->health.mp > 24)  	
+			    {
+				 spellID = 2;
+				}				
+			else if (m_PPet->health.mp > 7)  	
+			    {
+				 spellID = 1;
+				}
+			else 
+			    {
+				 spellID = -1;
+				} 
+		else if (level > 29)
+			if (m_PPet->health.mp > 46)  	
+			    {
+				 spellID = 3;
+				}
+			else if (m_PPet->health.mp > 24)  	
+			    {
+				 spellID = 2;
+				}				
+			else if (m_PPet->health.mp > 7)  	
+			    {
+				 spellID = 1;
+				}
+			else
+			    {
+				 spellID = -1;
+				}
+		else if (level > 16)
+			if (m_PPet->health.mp > 24)  	
+			    {
+				 spellID = 2;
+				}				
+			else if (m_PPet->health.mp > 7)  	
+			    {
+				 spellID = 1;
+				}
+			else
+			    {
+				 spellID = -1;
+				}
+		else if (level > 4)
+			if (m_PPet->health.mp > 7)  	
+			    {
+				 spellID = 1;
+				}
+			else
+			    {
+				 spellID = -1;
+				} 
+		else
+		        {
+				 spellID = -1;
+				} 
+		if (m_PPet->StatusEffectContainer->HasStatusEffect(EFFECT_SILENCE) == true)
+		{
+	    spellID = -1;
+		} 
+        m_kupipiHealRecast = 18000; 
+		m_kupipiHealCast = 1; // 1 means casting a spell
+		}
+		else
+		{
+		m_LastKupipiMagicTime = m_Tick; // reset mtick no eligible healing spell to cast
+		m_kupipiHealRecast = 11000;		
+       }
+	} 
+
+	
+	return spellID;
+
+}
+
+
+
+int16 CAIPetDummy::CurillaSpell()
+{
+
+	uint8 trigger = 45; // HP Trigger Threshold
+	uint8 lowHPP = 31;
+	uint8 level = m_PPet->GetMLevel();
+    int16 spellID = -1;
+	
+ CBattleEntity* master = m_PPet->PMaster;  
+ CBattleEntity* mostWounded = getWounded(trigger);
+if (m_Tick >= m_LastMagicTimeHeal + m_magicHealRecast)  // Look for last magic healing spell time 
+	{
+		if (mostWounded != nullptr)
+		{
+        m_PBattleSubTarget = mostWounded;
+		if (level > 54)
+			if (m_PPet->health.mp > 88)
+				{
+				 spellID = 4;
+				}
+			else if (m_PPet->health.mp > 46)  	
+			    {
+				 spellID = 3;
+				}
+			else if (m_PPet->health.mp > 24)  	
+			    {
+				 spellID = 2;
+				}				
+			else if (m_PPet->health.mp > 7)  	
+			    {
+				 spellID = 1;
+				}
+			else 
+			    {
+				 spellID = -1;
+				} 
+		else if (level > 29)
+			if (m_PPet->health.mp > 46)  	
+			    {
+				 spellID = 3;
+				}
+			else if (m_PPet->health.mp > 24)  	
+			    {
+				 spellID = 2;
+				}				
+			else if (m_PPet->health.mp > 7)  	
+			    {
+				 spellID = 1;
+				}
+			else
+			    {
+				 spellID = -1;
+				}
+		else if (level > 16)
+			if (m_PPet->health.mp > 24)  	
+			    {
+				 spellID = 2;
+				}				
+			else if (m_PPet->health.mp > 7)  	
+			    {
+				 spellID = 1;
+				}
+			else
+			    {
+				 spellID = -1;
+				}
+		else if (level > 4)
+			if (m_PPet->health.mp > 7)  	
+			    {
+				 spellID = 1;
+				}
+			else
+			    {
+				 spellID = -1;
+				} 
+		else
+		        {
+				 spellID = -1;
+				} 
+		if (m_PPet->StatusEffectContainer->HasStatusEffect(EFFECT_SILENCE) == true)
+		{
+	    spellID = -1;
+		} 
+		
+        m_magicHealRecast = 25000; 
+		m_magicHealCast = 1; // 1 means casting a spell
+		}
+		else
+		{
+		m_LastMagicTimeHeal = m_Tick; // reset mtick no eligible healing spell to cast
+		m_magicHealRecast = 14000;		
+       }
+	} 
+	else if (m_Tick >= m_LastCurillaFlash + m_curillaFlashRecast)  // Look for last flash spell time 
+	{
+	    m_PBattleSubTarget = m_PBattleTarget;
+        if (level >= 37)
+		    if (m_PPet->health.mp > 25)  	
+			    {
+				 spellID = 112;
+				}
+			else
+			    {
+				 spellID = -1;
+				}	
+		m_curillaFlashRecast = 50000;
+        m_LastCurillaFlash = m_Tick;
+    }		
+	
+	return spellID;
+ 
+ 
+
+}
+
+
+
+CBattleEntity* CAIPetDummy::getWounded(uint8 threshold)
+{
+    uint8 lowest = 100;
+    CBattleEntity* mostWounded = nullptr;
+    if (m_PPet->PMaster == nullptr)
+        return nullptr;
+    if (m_PPet->PMaster->GetHPP() < lowest){
+        lowest = m_PPet->PMaster->GetHPP();
+        mostWounded = m_PPet->PMaster;
+    }
+    if (m_PPet->PMaster->PPet != nullptr && m_PPet->PMaster->PPet->GetHPP() < lowest)
+    {
+        lowest = m_PPet->PMaster->PPet->GetHPP();
+        mostWounded = m_PPet->PMaster->PPet;
+    }
+    if (m_PPet->PMaster->PParty != nullptr)  //Certain Trusts can't heal other members
+    {
+        for (auto member : m_PPet->PMaster->PParty->members)
+        {
+            if ( member->GetHPP() < lowest)
+            {
+                lowest = member->GetHPP();
+                mostWounded = member;
+            }
+        }
+    }
+    if (m_PPet->PMaster->PAlly.size() > 0)  //Certain Trusts can't heal other members
+    {
+        for (auto ally : m_PPet->PMaster->PAlly)
+        {
+            if ( ally->GetHPP() < lowest)
+            {
+                lowest = ally->GetHPP();
+                mostWounded = ally;
+            }
+        }
+    }
+    
+    if (lowest <= threshold)
+    {
+        return mostWounded;
+    }
+    else
+    {
+        return nullptr;
+    }
+
 }

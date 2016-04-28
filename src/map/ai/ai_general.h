@@ -151,7 +151,10 @@ public:
 	void			SetLastMagicTimeEnf(uint32 time);	
 	void			SetLastMagicTimeStatus(uint32 time);
 	void			SetLastMagicTimeEle(uint32 time);	
-	void			SetLastMagicTimeEnhance(uint32 time);		
+	void			SetLastMagicTimeEnhance(uint32 time);
+	void			SetLastCurillaVokeTime(uint32 time);
+    void            SetLastCurillaFlash(uint32 time);
+	void            SetLastKupipiMagicTime(uint32 time);
 	void			SetCurrentAction(ACTIONTYPE Action, uint16 TargetID = 0);
 	void			SetLastCorsairRoll(uint16 ability);
 	void			SetAutoAttackEnabled(bool enabled);
@@ -198,6 +201,9 @@ protected:
 	uint32			m_LastMagicTimeStatus;
 	uint32			m_LastMagicTimeEle;
 	uint32			m_LastMagicTimeEnhance;	
+	uint32          m_LastCurillaVokeTime;
+	uint32          m_LastCurillaFlash;
+	uint32          m_LastKupipiMagicTime;
 
 
     uint32			m_Tick;					// текущее значение времени

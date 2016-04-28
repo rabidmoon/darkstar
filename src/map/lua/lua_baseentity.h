@@ -223,6 +223,7 @@ public:
     int32 addPlayerToSpecialBattlefield(lua_State*); //for limbus
 
     int32 setSpawn(lua_State*);                // Sets spawn point
+	int32 spawnAlly(lua_State*);              // Calls Ally
     int32 setRespawnTime(lua_State*);          // set respawn time
     int32 getDynamisUniqueID(lua_State*);      //Get unique Dynamis ID
     int32 addPlayerToDynamis(lua_State*);      //Add player to the Dynamis
@@ -552,6 +553,9 @@ public:
     int32 getActiveManeuvers(lua_State*);
     int32 removeOldestManeuver(lua_State*);
 	int32 getEffectsCount(lua_State* L);
+	int32 getRecentAlly(lua_State*);
+    int32 isUniqueAlly(lua_State* L);	
+	
     int32 removeAllManeuvers(lua_State*);
     int32 addBurden(lua_State* L);
 
@@ -563,6 +567,7 @@ public:
 
     int32 getILvlMacc(lua_State *L);
 
+    int32 setPendingMessage(lua_State* L);
     int32 getConfrontationEffect(lua_State* L);
     int32 copyConfrontationEffect(lua_State* L);    // copy confrontation effect, param = targetEntity:getShortID()
 	

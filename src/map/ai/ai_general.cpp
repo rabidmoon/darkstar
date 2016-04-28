@@ -94,6 +94,10 @@ void CAIGeneral::Reset()
 	m_LastMagicTimeStatus = 0;
 	m_LastMagicTimeEle = 0;
 	m_LastMagicTimeEnhance = 0;
+	
+	m_LastCurillaVokeTime = 0;
+	m_LastCurillaFlash = 0;
+	m_LastKupipiMagicTime = 0;
 
     m_WaitTime = 0;
     m_LastWaitTime = 0;
@@ -336,6 +340,21 @@ void CAIGeneral::SetLastMagicTimeEle(uint32 time)
 void CAIGeneral::SetLastMagicTimeEnhance(uint32 time)
 {
 	m_LastMagicTimeEnhance = time;
+}
+
+void CAIGeneral::SetLastCurillaVokeTime(uint32 time)
+{
+	m_LastCurillaVokeTime = time;
+}
+
+void CAIGeneral::SetLastCurillaFlash(uint32 time)
+{
+	m_LastCurillaFlash = time;
+}
+
+void CAIGeneral::SetLastKupipiMagicTime(uint32 time)
+{
+	m_LastKupipiMagicTime = time;
 }
 
 void CAIGeneral::SetBattleTarget(CBattleEntity* PEntity)

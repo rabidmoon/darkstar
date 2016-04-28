@@ -434,6 +434,10 @@ int16 CBattleEntity::addTP(int16 tp)
 
         tp = tp * TPMulti;
     }
+    if (tp != 0)
+    {
+        updatemask |= UPDATE_HP;
+    }	
     int16 cap = dsp_cap(health.tp + tp, 0, 3000);
     tp = health.tp - cap;
     health.tp = cap;
@@ -1080,3 +1084,52 @@ void CBattleEntity::delTrait(CTrait* PTrait)
     delModifier(PTrait->getMod(), PTrait->getValue());
     std::remove(TraitList.begin(), TraitList.end(), PTrait);
 }
+//Ally methods
+void CBattleEntity::clearAllies()
+{
+    if (PAlly.size() == 0)
+        return;
+    
+    for (auto ally : PAlly)
+    {
+        ally->PBattleAI->SetCurrentAction(ACTION_FALL);
+    }
+    PAlly.clear();
+}
+
+CBattleEntity* CBattleEntity::getRecentAlly()
+{
+    CBattleEntity* ally = nullptr;
+    if (PAlly.size() > 0)
+    {
+        ally = PAlly[PAlly.size() - 1];
+    }
+    return ally;
+}
+
+bool CBattleEntity::isUniqueAlly(uint32 petID)
+{
+    if (PAlly.size() == 0)
+        return true;
+    for (auto ally : PAlly)
+    {
+        if (((CPetEntity*)ally)->m_PetID == petID)
+            return false;
+    }
+    
+    if (PParty != nullptr)
+    {
+        for (auto PMember : PParty->members)
+        {
+            if (PMember->PAlly.size() > 0)
+            {
+                for (auto mAlly : PMember->PAlly)
+                {
+                    if (((CPetEntity*)mAlly)->m_PetID == petID)
+                        return false;
+                }
+            }
+        }
+    }
+    return true;
+ }
