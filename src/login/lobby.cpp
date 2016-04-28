@@ -454,17 +454,21 @@ int32 lobbyview_parse(int32 fd)
             int32 sendsize = 0x28;
             unsigned char MainReservePacket[0x28];
 
-            string_t client_ver((char*)(buff + 0x74), 10);
+            string_t client_ver_data((char*)(buff + 0x74), 6); // Full length is 10 but we drop last 4
+            client_ver_data = client_ver_data+"xx_x";          // And then we replace those last 4..
 
-            if (version_info.Min_Client_Ver != client_ver)
+            string_t expected_version(version_info.CLIENT_VER, 6); // Same deal here!
+            expected_version = expected_version+"xx_x";
+
+            if (expected_version != client_ver_data)
             {
                 sendsize = 0x24;
                 LOBBBY_ERROR_MESSAGE(ReservePacket);
 
                 WBUFW(ReservePacket, 32) = 331;
                 memcpy(MainReservePacket, ReservePacket, sendsize);
-                ShowError("lobbyview_parse: Incorrect client version: got %s, expected %s\n", client_ver.c_str(), version_info.Min_Client_Ver.c_str());
-                if (version_info.Min_Client_Ver < client_ver)
+                ShowError("lobbyview_parse: Incorrect client version: got %s, expected %s\n", client_ver_data.c_str(), expected_version.c_str());
+                if (expected_version < client_ver_data)
                 {
                     ShowError("lobbyview_parse: The server must be updated to support this client version\n");
                 }
@@ -476,7 +480,7 @@ int32 lobbyview_parse(int32 fd)
             else
             {
                 LOBBY_026_RESERVEPACKET(ReservePacket);
-                WBUFW(ReservePacket, 32) = login_config.expansions;	// BitMask for expansions;
+                WBUFW(ReservePacket, 32) = login_config.expansions;// BitMask for expansions;
                 memcpy(MainReservePacket, ReservePacket, sendsize);
             }
             //Хеширование пакета, и запись значения Хеш функции в пакет
