@@ -1,8 +1,7 @@
 -----------------------------------------
 -- ID: 4249
 -- Item: Copy of Schultz Stratage
--- Grants 150 - 500 EXP
--- Does not grant Limit Points. 
+-- Grants 4-8 Byne Bills
 --
 -----------------------------------------
 
@@ -25,5 +24,7 @@ end;
 -----------------------------------------
 
 function onItemUse(target)
-	target:addExp(EXP_RATE * math.random(150,500));
+    local currencyrand = math.random(4,8);
+	target:addItem(1455,currencyrand);
+
 end;

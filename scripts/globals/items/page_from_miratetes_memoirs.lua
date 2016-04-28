@@ -1,8 +1,7 @@
 -----------------------------------------
 -- ID: 4247
 -- Item: Page From Miratete's Memo
--- Grants 750 - 1,500 EXP
--- Does not grant Limit Points. 
+-- Grants 4-8 Whiteshells
 --
 -----------------------------------------
 
@@ -25,5 +24,8 @@ end;
 -----------------------------------------
 
 function onItemUse(target)
-	target:addExp(EXP_RATE * math.random(750,1500));
+	local currencyrand = math.random(4,8);
+	
+	target:addItem(1449,currencyrand);
+	target:PrintToPlayer("You obtain "..currencyrand.." Tukuku Whiteshells.", 0x15);
 end;
