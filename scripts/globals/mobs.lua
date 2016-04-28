@@ -24,6 +24,10 @@ function onMobDeathEx(mob, killer, isKillShot, isWeaponSkillKill)
 	local mobfamily = mob:getSystem();
     local lvldif = (mob:getMainLvl() - killer:getMainLvl());
     local kill = killer:getVar("FerretoryPlantoid");
+	local killa = killer:getVar("FerretoryUndead");
+	local killb = killer:getVar("FerretoryArcana");
+	local killc = killer:getVar("FerretoryDragonDemon");
+	local killd = killer:getVar("FerretoryLuminian");
 	local job = killer:getMainJob();
 	local ferretoryblmquest = killer:getVar("FerretoryBLM"); -- turns quest on
 	local ferretoryblmkills = killer:getVar("FerretoryBLMkills"); -- sets kill number
@@ -31,6 +35,9 @@ function onMobDeathEx(mob, killer, isKillShot, isWeaponSkillKill)
 	local infamy = killer:getVar("Infamy");
 	local playerlvl = killer:getMainLvl();
 	local moblvl = mob:getMainLvl();
+	local infamycap = killer:getVar("infamycap");
+	local infamymult = killer:getVar("infamymult");
+	local newinfamymult = (infamymult / 2);
  
 	
 
@@ -57,7 +64,7 @@ function onMobDeathEx(mob, killer, isKillShot, isWeaponSkillKill)
 	
 	--//TODO create a calculator based on level.  Replace the < # with a number that determines the level difference based on level.  If player level < 75 difference is 15.  If it is greater than 74 then it is 44?
 	
-	-------------------- Ferretory Quest #1 -----------------------
+	-------------------- Ferretory Quest #1 (Plantoid) -----------------------
 	
 	if (mobfamily == 17) and (killer:getVar("FerretoryQuest1") == 1) and (mob:checkBaseExp()) then  -- check for plantoid, check if quest is active, and check if the level difference is less than 10
 		if  (killer:getVar("FerretoryPlantoid")) > 0 then  -- if the kills needed are greater than 0
@@ -77,7 +84,7 @@ end
 
 
 
-	-------------------- Ferretory Quest #2 -----------------------
+	-------------------- Ferretory Quest #2 (Lizard) -----------------------
 	
 	if (mobfamily == 14) and (killer:getVar("FerretoryQuest1") == 2) and (mob:checkBaseExp()) then  -- check for plantoid, check if quest is active, and check if the level difference is less than 10
 		if  (killer:getVar("FerretoryPlantoid")) > 0 then  -- if the kills needed are greater than 0
@@ -132,9 +139,9 @@ end
 
 
 
-	-------------------- Ferretory Quest #5 (Beastmen) -----------------------
+	-------------------- Ferretory Quest #5 (Amorph) -----------------------
 	
-	if (mobfamily == 7) and (killer:getVar("FerretoryQuest1") == 5) and (mob:checkBaseExp())then  -- check for Birds, check if quest is active, and check if the level difference is less than 10
+	if (mobfamily == 1) and (killer:getVar("FerretoryQuest1") == 5) and (mob:checkBaseExp())then  -- check for Amorph, check if quest is active, and check if the level difference is less than 10
 		if  (killer:getVar("FerretoryPlantoid")) > 0 then  -- if the kills needed are greater than 0
 		killer:setVar("FerretoryPlantoid",kill - 1);  -- Subtract kill
 		kill = killer:getVar("FerretoryPlantoid");
@@ -150,14 +157,14 @@ end
 
 
 
-	-------------------- Ferretory Quest #6 (Arcana) -----------------------
+	-------------------- Ferretory Quest #6 (Vermin) -----------------------
 	
-	if (mobfamily == 3) and (killer:getVar("FerretoryQuest1") == 6) and (mob:checkBaseExp())then  -- check for Birds, check if quest is active, and check if the level difference is less than 10
+	if (mobfamily == 20) and (killer:getVar("FerretoryQuest1") == 6) and (mob:checkBaseExp())then  -- check for Vermin, check if quest is active, and check if the level difference is less than 10
 		if  (killer:getVar("FerretoryPlantoid")) > 0 then  -- if the kills needed are greater than 0
 		killer:setVar("FerretoryPlantoid",kill - 1);  -- Subtract kill
 		kill = killer:getVar("FerretoryPlantoid");
 		if (killer:getVar("FerretoryPlantoid") > 0) then 
-		killer:PrintToPlayer("Aura Quest #5 Objectives Remaining: " ..kill..".", 0x15);  -- Print objectives remaining
+		killer:PrintToPlayer("Aura Quest #6 Objectives Remaining: " ..kill..".", 0x15);  -- Print objectives remaining
 		else if (killer:getVar("FerretoryPlantoid") == 0) then  -- check to see kills have been completed
 		killer:PrintToPlayer("You have completed your objective.  Please report to Maccus for your reward", 0x15);  -- Print message to player
 		killer:setVar("FerretoryPlantoidComplete",6);
@@ -168,14 +175,14 @@ end
 
 
 
-	-------------------- Ferretory Quest #7 (Undead) -----------------------
+	-------------------- Ferretory Quest #7 (Aquan) -----------------------
 	
-	if (mobfamily == 19) and (killer:getVar("FerretoryQuest1") == 7) and (mob:checkBaseExp())then  -- check for Birds, check if quest is active, and check if the level difference is less than 10
+	if (mobfamily == 2) and (killer:getVar("FerretoryQuest1") == 7) and (mob:checkBaseExp())then  -- check for Birds, check if quest is active, and check if the level difference is less than 10
 		if  (killer:getVar("FerretoryPlantoid")) > 0 then  -- if the kills needed are greater than 0
 		killer:setVar("FerretoryPlantoid",kill - 1);  -- Subtract kill
 		kill = killer:getVar("FerretoryPlantoid");
 		if (killer:getVar("FerretoryPlantoid") > 0) then 
-		killer:PrintToPlayer("Aura Quest #5 Objectives Remaining: " ..kill..".", 0x15);  -- Print objectives remaining
+		killer:PrintToPlayer("Aura Quest #7 Objectives Remaining: " ..kill..".", 0x15);  -- Print objectives remaining
 		else if (killer:getVar("FerretoryPlantoid") == 0) then  -- check to see kills have been completed
 		killer:PrintToPlayer("You have completed your objective.  Please report to Maccus for your reward", 0x15);  -- Print message to player
 		killer:setVar("FerretoryPlantoidComplete",7);
@@ -184,14 +191,67 @@ end
 		end	
 end	
 
+    -------------------- Ferretory Quest #8 (Undead and Arcana) -----------------------
+    if (mobfamily == 19) and (killer:getVar("FerretoryQuest75") == 8) and (mob:checkBaseExp())then
+	    if (killer:getVar("FerretoryUndead")) > 0 then -- if the kills needed are greater than 0
+        killer:setVar("FerretoryUndead",killa - 1); -- subtract kill
+		killa = killer:getVar("FerretoryUndead");
+		killb = killer:getVar("FerretoryArcana");
+		if (killer:getVar("FerretoryUndead")) > 0 then
+		killer:PrintToPlayer("Feretory Quest #8 Objectives Remaining: Undead(" ..killa..")/Arcana(" ..killb.."),", 0x15);  -- Print objectives remaining
+        else if (killer:getVar("FerretoryUndead") == 0) and (killer:getVar("FerretoryArcana") == 0) then  -- check to see kills have been completed
+		killer:PrintToPlayer("You have completed your objectives.  Please report to Maccus for your reward", 0x15);  -- Print message to player
+		killer:setVar("FerretoryLv75Complete",8);
+        end
+		end
+		end	
+    end
+	if (mobfamily == 3) and (killer:getVar("FerretoryQuest75") == 8) and (mob:checkBaseExp())then
+	    if (killer:getVar("FerretoryArcana")) > 0 then -- if the kills needed are greater than 0
+        killer:setVar("FerretoryArcana",killb - 1); -- subtract kill
+		killa = killer:getVar("FerretoryUndead");
+		killb = killer:getVar("FerretoryArcana");
+		if (killer:getVar("FerretoryArcana")) > 0 then
+		killer:PrintToPlayer("Feretory Quest #8 Objectives Remaining: Undead(" ..killa..")/Arcana(" ..killb.."),", 0x15);  -- Print objectives remaining
+        else if (killer:getVar("FerretoryUndead") == 0) and (killer:getVar("FerretoryArcana") == 0) then  -- check to see kills have been completed
+		killer:PrintToPlayer("You have completed your objectives.  Please report to Maccus for your reward", 0x15);  -- Print message to player
+		killer:setVar("FerretoryLv75Complete",8);
+        end
+		end
+		end	
+    end
 
+	-------------------- Ferretory Quest #9 (Demon/Dragon) -----------------------
+	
+	if (mobfamily == 2) and (killer:getVar("FerretoryQuest1") == 7) and (mob:checkBaseExp())then  -- check for Birds, check if quest is active, and check if the level difference is less than 10
+		if  (killer:getVar("FerretoryDragonDemon")) > 0 then  -- if the kills needed are greater than 0
+		killer:setVar("FerretoryDragonDemon",killc - 1);  -- Subtract kill
+		killc = killer:getVar("FerretoryDragonDemon");
+		if (killer:getVar("FerretoryDragonDemon") > 0) then 
+		killer:PrintToPlayer("Feretory Quest #9 Objectives Remaining: " ..killc..".", 0x15);  -- Print objectives remaining
+		else if (killer:getVar("FerretoryDragonDemon") == 0) then  -- check to see kills have been completed
+		killer:PrintToPlayer("You have completed your objective.  Please report to Maccus for your reward", 0x15);  -- Print message to player
+		killer:setVar("FerretoryLv75Complete",9);
+		end
+		end
+		end	
+end	
 
-
-
-
-
-
-
+	-------------------- Ferretory Quest #10 (Luminian/Lumorian) -----------------------
+	
+	if (mobfamily == 2) and (killer:getVar("FerretoryQuest1") == 7) and (mob:checkBaseExp())then  -- check for Birds, check if quest is active, and check if the level difference is less than 10
+		if  (killer:getVar("FerretoryLuminian")) > 0 then  -- if the kills needed are greater than 0
+		killer:setVar("FerretoryLuminian",killd - 1);  -- Subtract kill
+		killd = killer:getVar("FerretoryLuminian");
+		if (killer:getVar("FerretoryLuminian") > 0) then 
+		killer:PrintToPlayer("Feretory Quest #10 Objectives Remaining: " ..killd..".", 0x15);  -- Print objectives remaining
+		else if (killer:getVar("FerretoryLuminian") == 0) then  -- check to see kills have been completed
+		killer:PrintToPlayer("You have completed your objective.  Please report to Maccus for your reward", 0x15);  -- Print message to player
+		killer:setVar("FerretoryLv75Complete",10);
+		end
+		end
+		end	
+end	
 
 
 
@@ -215,6 +275,13 @@ if (job == 4) and (killer:getVar("FerretoryBLM") == 1) and (mobfamily == 11) the
 end
 
 --  Infamy Point Calculations
+-- Check to see if they have finished the respective mob family quest.  Only get infamy based on mob families you've quested.
+if ((mobfamily == 17) and (killer:getVar("FerretoryQuest1") > 1)) or ((mobfamily == 14) and (killer:getVar("FerretoryQuest1") > 2)) or
+((mobfamily == 8) and (killer:getVar("FerretoryQuest1") > 3)) or ((mobfamily == 6) and (killer:getVar("FerretoryQuest1") > 4)) or
+((mobfamily == 1) and (killer:getVar("FerretoryQuest1") > 5)) or ((mobfamily == 20) and (killer:getVar("FerretoryQuest1") > 6)) or
+((mobfamily == 2) and (killer:getVar("FerretoryQuest1") > 7)) then
+
+
 
 if (infamy == 1) and (playerlvl < 75) and (mob:checkBaseExp()) then -- check if infamy is turned on
 if (lvldif < -11) then  -- EP
@@ -239,8 +306,11 @@ end
 end
 
 
-local infamypoints = math.floor((lvldif + 25) * multiplier);
+local infamypoints = math.floor(((lvldif + 25) * multiplier) * infamymult);
 killer:addCurrency("infamy",infamypoints);
+if (killer:getCurrency("infamy") > infamycap) then
+killer:setCurrency("infamy",infamycap);
+end
 if (infamypoints > 0) then
 killer:PrintToPlayer(string.format("%s gains "..infamypoints.." infamy points.", killer:getName()), 0x15);
 -- killer:PrintToPlayer(lvldif);
@@ -250,7 +320,7 @@ else
 end
 
 end
-
+end
 
 
 
