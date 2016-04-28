@@ -12112,6 +12112,11 @@ INSERT INTO `mob_groups` VALUES (14336,5546,84,5400,0,4557,5000,0,56,57,0);
 -- Rumble Crawler that may spawn instead of Habetrot
 INSERT INTO `mob_groups` VALUES (14340,3415,159,1056,128,3015,0,0,53,56,0);
 
+-- Trust testing
+INSERT INTO `mob_groups` VALUES (17002,7807,210,330,0,500000,2900,0,62,64,0); -- Kupipi
+INSERT INTO `mob_groups` VALUES (17004,7808,210,330,0,500000,2900,0,62,64,0); -- Ayame
+INSERT INTO `mob_groups` VALUES (17006,7806,210,330,0,500000,2900,0,62,64,0); -- Curilla
+
 
 -- Dynamis Extra Mobs
 -- Dynamis Windurst
@@ -12167,6 +12172,11 @@ INSERT INTO `mob_groups` VALUES (18036,8036,185,0,128,5036,8400,0,80,80,0); -- N
 INSERT INTO `mob_groups` VALUES (18037,8037,185,0,128,5037,8400,0,80,80,0); -- NM05
 
 INSERT INTO `mob_groups` VALUES (18038,3076,185,0,128,5038,10400,0,80,80,0); -- Mega Boss
+
+-- Test Zone for Salvage
+INSERT INTO `mob_groups` VALUES (18500,8500,210,330,128,5038,1000400,0,80,80,0); -- Mega Boss
+INSERT INTO `mob_groups` VALUES (18501,8501,210,0,128,5038,10000,0,80,80,0); -- Fomor Ninja
+
 
 
 

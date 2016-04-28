@@ -50,10 +50,10 @@ function onWeaponskillHit(mob, attacker, weaponskill)
 -- Staggering Function
 local isweak = mob:getLocalVar("WeakenedTrigger");
 
-local wsweakness = math.random(1,200);
+local wsweakness = math.random(1,000); -- 40% stagger Rate
 attacker:PrintToPlayer(wsweakness);
-if (wsweakness > 145) and (isweak ~= 1) then
-mob:weaknessTrigger(0); -- Yellow Stagger Increase Scyld
+if (wsweakness > 180) and (wsweakness < 401) and (isweak ~= 1) then
+mob:weaknessTrigger(0); -- Yellow Stagger Increase Scyld 55% of Triggers
 mob:addStatusEffect(EFFECT_TERROR,1,0,10);
 SetDropRate(5027,4248,0); -- Memoirs
 SetDropRate(5027,1453,0); -- Montiont Silverpiece
@@ -68,8 +68,8 @@ local newscyld = (randomscyld + oldscyld);
 attacker:setVar("ScyldMultiplier",newscyld);
 mob:setLocalVar("WeakenedTrigger",1);
 attacker:PrintToPlayer("You have been granted a "..randomscyld.."% scyld bonus", 0x15);
-elseif (wsweakness > 20) and (wsweakness < 50) and (isweak ~= 1) then
-mob:weaknessTrigger(1); -- Blue Stagger drops Memoirs which grants 4-8 currency
+elseif (wsweakness > 80) and (wsweakness < 181) and (isweak ~= 1) then
+mob:weaknessTrigger(1); -- Blue Stagger drops Memoirs which grants 4-8 currency  25% of Triggers 
 mob:addStatusEffect(EFFECT_TERROR,1,0,10);
 SetDropRate(5027,4248,1000); -- Memoirs
 SetDropRate(5027,1453,0); -- Montiont Silverpiece
@@ -79,8 +79,8 @@ SetDropRate(5027,3407,0); -- Fiendish Tome 4
 SetDropRate(5027,3408,0); -- Fiendish Tome 5
 
 mob:setLocalVar("WeakenedTrigger",1);
-elseif (wsweakness > 90) and (wsweakness < 110) and (isweak ~= 1) then
-mob:weaknessTrigger(2); -- Red Stagger drops Pop Items
+elseif (wsweakness > 20) and (wsweakness < 81) and (isweak ~= 1) then
+mob:weaknessTrigger(2); -- Red Stagger drops Pop Items 15% of Triggers
 mob:addStatusEffect(EFFECT_TERROR,1,0,10);
 local itemdrop = math.random(1,4);
 if (itemdrop == 1) then
@@ -113,8 +113,8 @@ SetDropRate(5027,3407,0); -- Fiendish Tome 4
 SetDropRate(5027,3408,1000); -- Fiendish Tome 5
 end
 mob:setLocalVar("WeakenedTrigger",1);
-elseif (wsweakness < 4) and (isweak ~= 1) then
-mob:weaknessTrigger(3); -- White Stagger drops 100's
+elseif (wsweakness < 21) and (isweak ~= 1) then
+mob:weaknessTrigger(3); -- White Stagger drops 100's  5% of Triggers
 mob:addStatusEffect(EFFECT_TERROR,1,0,10);
 SetDropRate(5027,4248,0); -- Memoirs
 SetDropRate(5027,1453,1000); -- Montiont Silverpiece
@@ -161,19 +161,19 @@ if (changeres == 1) then
 target:PrintToPlayer("There is a change in the Monsters behavior.", 0x1C);
 mob:setMod(MOD_SLASHRES,300);
 mob:setMod(MOD_PIERCERES,1000);
-mob:setMod(MOD_HTHRES,2000);
+mob:setMod(MOD_HTHRES,1500);
 mob:setLocalVar("changeTime", mob:getBattleTime());
 elseif (changeres == 2) then
 target:PrintToPlayer("There is a change in the Monsters behavior.", 0x1C);
 mob:setMod(MOD_SLASHRES,1000);
-mob:setMod(MOD_PIERCERES,2000);
+mob:setMod(MOD_PIERCERES,1500);
 mob:setMod(MOD_HTHRES,300);
 mob:setLocalVar("changeTime", mob:getBattleTime());
 else
 target:PrintToPlayer("There is a change in the Monsters behavior.", 0x1C);
-mob:setMod(MOD_SLASHRES,3000);
+mob:setMod(MOD_SLASHRES,1500);
 mob:setMod(MOD_PIERCERES,300);
-mob:setMod(MOD_HTHRES,2000);
+mob:setMod(MOD_HTHRES,1000);
 mob:setLocalVar("changeTime", mob:getBattleTime());
 end
 end
