@@ -22,8 +22,8 @@ end;
 function onEffectTick(target,effect)
 
 	local healtime = effect:getTickCount();
-	
-
+	local trust = target:getPetID();
+    local master = target:getMaster();
 	local pet = target:getPet();
 
 	if (healtime > 1) then
@@ -35,8 +35,14 @@ function onEffectTick(target,effect)
 				pet:addHP(10+(2*math.floor(target:getMainLvl()+1))+(healtime-2)*(1+math.floor(pet:getMaxHP()/300))+(pet:getMod(MOD_HPHEAL)));
 				end
 			else
+			-- add something so trusts don't lose TP here
+			  if (target:getObjType() == TYPE_PC) then
 				target:setTP(target:getTP()-10);
+			  end	
 				target:addHP(10+(0.50*math.floor(target:getMainLvl()+1))+(healtime-2)+(target:getMod(MOD_HPHEAL)));
+				--master:PrintToPlayer("Trust is out!");
+				master:updateHealth();
+				target:updateHealth();
 			end
          -- Each rank of Clear Mind provides +3 hMP (via MOD_MPHEAL)
          -- Each tic of healing should be +1mp more than the last
@@ -44,7 +50,10 @@ function onEffectTick(target,effect)
 			target:addMP(12+(0.5*math.floor(target:getMainLvl()+5))+((healtime-2) * (1+target:getMod(MOD_CLEAR_MIND)))+(target:getMod(MOD_MPHEAL)));
 			if (pet ~= nil) then
 			pet:addMP(12+(0.5*math.floor(target:getMainLvl()+5))+((healtime-2) * (1+(pet:getMod(MOD_MPHEAL)))));
+			
+
 			end
+			
 		end
 	end
 
