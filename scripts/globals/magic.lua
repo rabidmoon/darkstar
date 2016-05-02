@@ -179,6 +179,11 @@ end;
     local MND = caster:getStat(MOD_MND);
     local VIT = caster:getStat(MOD_VIT);
     local skill = caster:getSkillLevel(HEALING_MAGIC_SKILL) + caster:getMod(MOD_HEALING);
+	local player = caster:getMaster();
+	local automaton = player:getPetID();
+	if (automaton == 69) then
+	skill = caster:getSkillLevel(AUTOMATON_MAGIC_SKILL);
+	end
     local power = math.floor(MND/2) + math.floor(VIT/4) + skill;
     return power;
 end;
