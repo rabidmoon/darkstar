@@ -360,16 +360,16 @@ function onTrigger(player,page)
 			8641,     7000,    -- Auto-Repair Kit 
 			8644,    15000,    -- Auto-Repair Kit II
 			8520,    15000,    -- Barrage Turbine
-			8583,    15000,    -- Coiler
-			8643,     8000,    -- Damage Gauge
+			2413,    15000,    -- Coiler
+			2264,     8000,    -- Damage Gauge
 			8517,    10000,    -- Drum Magazine
-			8582,    10000,    -- Dynamo
-			1050,    12000,    -- Flashbulb
+			2351,    10000,    -- Dynamo
+			2263,    12000,    -- Flashbulb
 			8642,    15000,    -- Hammermill
 			8451,    10000,    -- Inhibitor
 			8482,     5000,    -- Loudspeaker I
 			8484,    10000,    -- Loudspeaker II
-			8674,     5000,    -- Mana Converter
+			2267,     5000,    -- Mana Converter
 			8609,    15000,    -- Mana Jammer
 			8612,     7000,    -- Mana Jammer II
 			8673,     8000,    -- Mana Tank
@@ -381,7 +381,7 @@ function onTrigger(player,page)
 			8449,     7000,    -- Strobe
 			8450,     7000,    -- Tension Spring
 			8452,    15000,    -- Tension Spring II
-            8518,    20000     -- Tubro Charger
+            2349,    20000     -- Tubro Charger
 			
 			
         };
