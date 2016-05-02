@@ -18,7 +18,8 @@ function onTrade(player,npc,trade)
 	if (tradeStatus == 1) then
 		for i=0,7 do
 			local subid = trade:getItemSubId(i);
-			if (subid >= 0x2000 and subid < 0x2800) then
+			player:PrintToPlayer(subid);
+			if (subid >= 0x2000 and subid < 0x21FF) then
 				if (player:unlockAttachment(subid)) then
                     player:setVar('TateeyaUnlock', subid);
 					player:startEventString(0x028B, automatonName, automatonName, automatonName, automatonName, subid); --unlock attachment event
@@ -31,6 +32,9 @@ function onTrade(player,npc,trade)
 			end
 		end
 	end
+
+
+
 end; 
 
 -----------------------------------
