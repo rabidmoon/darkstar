@@ -43,6 +43,9 @@ function onUseWeaponSkill(player, target, wsID)
 	elseif (player:getQuestStatus(SANDORIA,OLD_WOUNDS) == QUEST_ACCEPTED and wsnm > 0) then -- Savage Blade Quest Active
 	unlock = 0.05;
 	wsnm = wsnm - 1;
+	if (wsnm < 1) then
+	wsnm = 1;
+	end
 	player:setVar("SAVAGE_BLADE",wsnm);
 	elseif (player:getQuestStatus(SANDORIA,OLD_WOUNDS) == QUEST_ACCEPTED and wsnm <= 0) then -- Savage Blade powered up
 	unlock = 0.30;

@@ -43,6 +43,9 @@ function onUseWeaponSkill(player, target, wsID)
 	unlock = 1;
 	elseif (player:getQuestStatus(SANDORIA,BLOOD_AND_GLORY) == true and wsnm > 0) then -- Retribution Quest Active
 	wsnm = wsnm - 1;
+	if (wsnm < 1) then
+	wsnm = 1;
+	end
 	player:setVar("RETRIBUTION",wsnm);
 	elseif (player:getQuestStatus(SANDORIA,BLOOD_AND_GLORY) == true and wsnm <= 0) then -- Retribution powered up
 	unlock = 0.30;

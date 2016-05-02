@@ -44,6 +44,9 @@ function onUseWeaponSkill(player, target, wsID)
 	elseif (player:getQuestStatus(BASTOK,THE_WALLS_OF_YOUR_MIND) == QUEST_ACCEPTED and wsnm > 0) then -- Asuran Fists Quest Active
 	unlock = 0.05;
 	wsnm = wsnm - 1;
+    if (wsnm < 1) then
+	wsnm = 1;
+	end
 	player:setVar("ASURAN_FISTS",wsnm);
 	elseif (player:getQuestStatus(BASTOK,THE_WALLS_OF_YOUR_MIND) == QUEST_ACCEPTED and wsnm <= 0) then -- Asuran Fists powered up
 	unlock = 0.30;

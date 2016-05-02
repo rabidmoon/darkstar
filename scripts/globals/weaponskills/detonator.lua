@@ -43,6 +43,9 @@ function onUseWeaponSkill(player, target, wsID)
 	unlock = 1;
 	elseif (player:getQuestStatus(BASTOK,SHOOT_FIRST_ASK_QUESTIONS_LATER) == true and wsnm > 0) then -- Detonator Quest Active
 	wsnm = wsnm - 1;
+	if (wsnm < 1) then
+	wsnm = 1;
+	end
 	player:setVar("DETONATOR",wsnm);
 	elseif (player:getQuestStatus(BASTOK,SHOOT_FIRST_ASK_QUESTIONS_LATER) == true and wsnm <= 0) then -- Detonator powered up
 	unlock = 0.30;

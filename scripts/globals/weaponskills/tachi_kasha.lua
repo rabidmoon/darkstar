@@ -47,6 +47,9 @@ function onUseWeaponSkill(player, target, wsID)
 	elseif (player:getQuestStatus(OUTLANDS,THE_POTENTIAL_WITHIN) == QUEST_ACCEPTED and wsnm > 0) then -- Tachi:Kasha Quest Active
 	unlock = 0.05;
 	wsnm = wsnm - 1;
+	if (wsnm < 1) then
+	wsnm = 1;
+	end
 	player:setVar("KASHA",wsnm);
 	elseif (player:getQuestStatus(OUTLANDS,THE_POTENTIAL_WITHIN) == QUEST_ACCEPTED and wsnm <= 0) then -- Tachi:Kasha powered up
 	unlock = 0.30;

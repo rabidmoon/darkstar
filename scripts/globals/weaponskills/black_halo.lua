@@ -41,6 +41,9 @@ function onUseWeaponSkill(player, target, wsID)
 	unlock = 1;
 	elseif (player:getQuestStatus(WINDURST,ORASTERY_WOES) == true and wsnm > 0) then -- Black Halo Quest Active
 	wsnm = wsnm - 1;
+	if (wsnm < 1) then
+	wsnm = 1;
+	end
 	player:setVar("BLACK_HALO",wsnm);
 	elseif (player:getQuestStatus(WINDURST,ORASTERY_WOES) == true and wsnm <= 0) then -- Black Halo powered up
 	unlock = 0.30;

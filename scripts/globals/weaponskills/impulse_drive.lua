@@ -43,6 +43,9 @@ function onUseWeaponSkill(player, target, wsID)
 	unlock = 1;
 	elseif (player:getQuestStatus(SANDORIA,METHODS_CREATE_MADNESS) == true and wsnm > 0) then -- Impulse Drive Quest Active
 	wsnm = wsnm - 1;
+	if (wsnm < 1) then
+	wsnm = 1;
+	end
 	player:setVar("IMPULSE_DRIVE",wsnm);
 	elseif (player:getQuestStatus(SANDORIA,METHODS_CREATE_MADNESS) == true and wsnm <= 0) then -- Impulse Drive powered up
 	unlock = 0.30;

@@ -43,6 +43,9 @@ function onUseWeaponSkill(player, target, wsID)
 	unlock = 1;
 	elseif (player:getQuestStatus(WINDURST,FROM_SAPLINGS_GROW) == true and wsnm > 0) then -- Empyreal Arrow Quest Active
 	wsnm = wsnm - 1;
+	if (wsnm < 1) then
+	wsnm = 1;
+	end
 	player:setVar("EMPYREAL_ARROW",wsnm);
 	elseif (player:getQuestStatus(WINDURST,FROM_SAPLINGS_GROW) == true and wsnm <= 0) then -- Empyreal Arrow powered up
 	unlock = 0.30;

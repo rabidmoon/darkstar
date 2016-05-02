@@ -41,6 +41,9 @@ function onUseWeaponSkill(player, target, wsID)
 	elseif (player:getQuestStatus(SANDORIA,SOULS_IN_SHADOW) == QUEST_ACCEPTED and wsnm > 0) then -- Spiral Hell Quest Active
 	unlock = 0.05;
 	wsnm = wsnm - 1;
+	if (wsnm < 1) then
+	wsnm = 1;
+	end
 	player:setVar("SPIRAL_HELL",wsnm);
 	elseif (player:getQuestStatus(SANDORIA,SOULS_IN_SHADOW) == QUEST_ACCEPTED and wsnm <= 0) then -- Spiral Hell powered up
 	unlock = 0.30;
