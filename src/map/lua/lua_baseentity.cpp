@@ -7605,6 +7605,25 @@ inline int32 CLuaBaseEntity::getCurrency(lua_State *L)
 
 //==========================================================//
 
+inline int32 CLuaBaseEntity::setCurrency(lua_State *L)
+{
+    DSP_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
+    DSP_DEBUG_BREAK_IF(m_PBaseEntity->objtype != TYPE_PC);
+
+    DSP_DEBUG_BREAK_IF(lua_isnil(L, 1) || !lua_isstring(L, 1));
+    DSP_DEBUG_BREAK_IF(lua_isnil(L, 2) || !lua_isnumber(L, 2));
+
+    const char* type = lua_tostring(L, 1);
+    int32 amount = (int32)lua_tointeger(L, 2);
+    CCharEntity* PChar = (CCharEntity*)m_PBaseEntity;
+
+    charutils::SetPoints(PChar, type, amount);
+
+    return 0;
+}
+
+//==========================================================//
+
 inline int32 CLuaBaseEntity::addCurrency(lua_State *L)
 {
     DSP_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
