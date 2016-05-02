@@ -46,6 +46,16 @@ end;
 -----------------------------------
 
 function onEffectLose(target,effect)
+    local zone = target:getZoneID();
 	target:levelRestriction(0);
-	target:setPos(-217.000,1.000,-119.000,94,0xEF);
+	
+	if (zone == 185) then
+	target:setPos(161.000,-2.000,161.000,94,0xE6); -- Sandy
+	elseif (zone == 186) then
+	target:setPos(112.000,0.994,-72.000,127,0xEA); -- Bastok
+	elseif (zone == 187) then
+	target:setPos(-217.000,1.000,-119.000,94,0xEF);  -- Windurst
+	end
+
+					        
 end;
