@@ -85,7 +85,14 @@ end;
 
 function onMobDeath(mob,killer)
 killer:setVar("DynaWeakener",0);
-killer:addKeyItem(HYDRA_CORPS_COMMAND_SCEPTER);
+
+	if (killer:hasKeyItem(HYDRA_CORPS_COMMAND_SCEPTER) == false) then
+		killer:setVar("DynaSandy_Win",1);
+		killer:addKeyItem(HYDRA_CORPS_COMMAND_SCEPTER);
+		killer:messageSpecial(KEYITEM_OBTAINED,HYDRA_CORPS_COMMAND_SCEPTER);
+		killer:addTitle(DYNAMISSAN_DORIA_INTERLOPER); -- Add title
+	end
+
 	
 
 end;

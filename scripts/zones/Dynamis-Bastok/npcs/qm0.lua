@@ -14,6 +14,45 @@ require("scripts/zones/Dynamis-Bastok/TextIDs");
 -----------------------------------
 
 function onTrade(player,npc,trade)
+if ((trade:hasItemQty(3384,1)) and (trade:hasItemQty(3385,1)) and (trade:hasItemQty(3386,1)) and (trade:hasItemQty(3387,1))) then
+player:addKeyItem(ALABASTER_GRANULES_OF_TIME);
+player:messageSpecial(KEYITEM_OBTAINED,ALABASTER_GRANULES_OF_TIME);
+player:tradeComplete();
+elseif ((trade:hasItemQty(3384,1)) and (trade:hasItemQty(3385,1)) and (trade:hasItemQty(3386,1))) then
+player:addKeyItem(AMBER_GRANULES_OF_TIME);
+player:messageSpecial(KEYITEM_OBTAINED,AMBER_GRANULES_OF_TIME);
+player:tradeComplete();
+elseif ((trade:hasItemQty(3384,1)) and (trade:hasItemQty(3385,1))) then
+player:addKeyItem(AZURE_GRANULES_OF_TIME);
+player:messageSpecial(KEYITEM_OBTAINED,AZURE_GRANULES_OF_TIME);
+player:tradeComplete();
+elseif (trade:hasItemQty(3384,1)) then
+player:addKeyItem(CRIMSON_GRANULES_OF_TIME);
+player:messageSpecial(KEYITEM_OBTAINED,CRIMSON_GRANULES_OF_TIME);
+player:tradeComplete();
+end
+
+if (GetMobAction(17539073) == 0 and trade:hasItemQty(3410,1)) and trade:hasItemQty(3411,1) and trade:hasItemQty(3412,1) and trade:hasItemQty(3413,1) and player:hasKeyItem(ALABASTER_GRANULES_OF_TIME) then
+	player:setVar("DynaWeakener",4);
+	SpawnMob(17539073):updateClaim(player);
+	player:delKeyItem(ALABASTER_GRANULES_OF_TIME);
+elseif (GetMobAction(17539073) == 0 and trade:hasItemQty(3410,1)) and trade:hasItemQty(3411,1) and trade:hasItemQty(3412,1) and trade:hasItemQty(3413,1) and player:hasKeyItem(AMBER_GRANULES_OF_TIME) then
+	player:setVar("DynaWeakener",2);
+	SpawnMob(17539073):updateClaim(player);
+    player:delKeyItem(AMBER_GRANULES_OF_TIME);
+elseif (GetMobAction(17539073) == 0 and trade:hasItemQty(3410,1)) and trade:hasItemQty(3411,1) and trade:hasItemQty(3412,1) and trade:hasItemQty(3413,1) and player:hasKeyItem(AZURE_GRANULES_OF_TIME) then
+	player:setVar("DynaWeakener",2);
+	SpawnMob(17539073):updateClaim(player);
+	player:delKeyItem(AZURE_GRANULES_OF_TIME);
+elseif (GetMobAction(17539073) == 0 and trade:hasItemQty(3410,1)) and trade:hasItemQty(3411,1) and trade:hasItemQty(3412,1) and trade:hasItemQty(3413,1) and player:hasKeyItem(CRIMSON_GRANULES_OF_TIME) then
+    player:setVar("DynaWeakener",1);
+	SpawnMob(17539073):updateClaim(player);
+	player:delKeyItem(CRIMSON_GRANULES_OF_TIME);	
+elseif (GetMobAction(17539073) == 0 and trade:hasItemQty(3410,1)) and trade:hasItemQty(3411,1) and trade:hasItemQty(3412,1) and trade:hasItemQty(3413,1) then
+player:setVar("DynaWeakener",0);
+	SpawnMob(17539073):updateClaim(player);	
+end	
+
 end;
 
 -----------------------------------
@@ -22,13 +61,7 @@ end;
 
 function onTrigger(player,npc)
 	
-	if (player:hasKeyItem(HYDRA_CORPS_EYEGLASS) == false) then
-		player:setVar("DynaBastok_Win",1);
-		player:addKeyItem(HYDRA_CORPS_EYEGLASS);
-		player:messageSpecial(KEYITEM_OBTAINED,HYDRA_CORPS_EYEGLASS);
-	else
-		player:messageSpecial(NOTHING_OUT_OF_ORDINARY);		
-	end
+
 	
 end;
 

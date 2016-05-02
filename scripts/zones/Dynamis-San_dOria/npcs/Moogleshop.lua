@@ -38,7 +38,7 @@ stock = {0x0F0D,1000,  -- Displacers
 		 0x0AA5,30000   -- SCH
 
 }  
-player:PrintToPlayer("Moogle : Discounts for you Kupo, for defeating that Overlord Tombstone!!", 0xD);
+player:PrintToPlayer("Moogle : Discounts for you Kupo, for defeating that smelly Overlord Tombstone!!", 0xD);
 showShop(player, STATIC, stock);  
 else
 stock = {0x0F0D,3500,  -- Displacers

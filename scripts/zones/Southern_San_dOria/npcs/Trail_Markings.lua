@@ -33,6 +33,7 @@ function onTrigger(player,npc)
 		local firstDyna = 0;
 		local realDay = os.time();
 		local dynaWaitxDay = player:getVar("dynaWaitxDay");
+		local dynatime = player:getVar("Dynamis_Reenter");
 		
 		if (checkFirstDyna(player,1)) then  -- First Dyna-San d'oria => CS
 			firstDyna = 1; 
@@ -40,10 +41,11 @@ function onTrigger(player,npc)
 		
 		if (player:getMainLvl() < DYNA_LEVEL_MIN) then
 			player:messageSpecial(PLAYERS_HAVE_NOT_REACHED_LEVEL,DYNA_LEVEL_MIN);
-		elseif ((dynaWaitxDay + (BETWEEN_2DYNA_WAIT_TIME * 24 * 60 * 60)) < realDay or player:getVar("DynamisID") == GetServerVariable("[DynaSandoria]UniqueID")) then
+		-- elseif ((dynaWaitxDay + (BETWEEN_2DYNA_WAIT_TIME * 24 * 60 * 60)) < realDay or player:getVar("DynamisID") == GetServerVariable("[DynaSandoria]UniqueID")) then
+		   elseif (dynatime < realDay) then
 			player:startEvent(0x02ad,1,firstDyna,0,BETWEEN_2DYNA_WAIT_TIME,64,VIAL_OF_SHROUDED_SAND,4236,4237);
 		else
-			dayRemaining = math.floor(((dynaWaitxDay + (BETWEEN_2DYNA_WAIT_TIME * 24 * 60 * 60)) - realDay)/3456);
+			dayRemaining = math.floor((dynatime - realDay)/3456);
 			player:messageSpecial(YOU_CANNOT_ENTER_DYNAMIS,dayRemaining,1);
 		end
 	else

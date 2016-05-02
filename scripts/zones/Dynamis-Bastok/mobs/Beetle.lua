@@ -50,7 +50,7 @@ function onWeaponskillHit(mob, attacker, weaponskill)
 -- Staggering Function
 local isweak = mob:getLocalVar("WeakenedTrigger");
 
-local wsweakness = math.random(1,000); -- 40% stagger Rate
+local wsweakness = math.random(1,1000); -- 40% stagger Rate
 attacker:PrintToPlayer(wsweakness);
 if (wsweakness > 180) and (wsweakness < 401) and (isweak ~= 1) then
 mob:weaknessTrigger(0); -- Yellow Stagger Increase Scyld 55% of Triggers

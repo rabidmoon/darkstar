@@ -1,28 +1,9 @@
 -------------------------
--- Area: Dynamis - Windurst
+-- Area: Dynamis - Bastok
 -- NPC: Relic Armor Moogle
 -- Trade 8000 Scyld and Artifact armor of the same time to receive Relic
 -------------------------
-
-
------------------------------------
--- onTrigger Action
------------------------------------
-
-function onTrigger(player,npc)
-
-
-
-player:PrintToPlayer("Moogle : Trade me a damaged Artifact and I can make it new again for 6000 Scyld.", 0xD);
- 
- 
-
-
-end;
-
-
-
-
+require("scripts/zones/Dynamis-Bastok/TextIDs");
 
 -----------------------------------
 -- onTrade Action
@@ -34,48 +15,25 @@ local balance = 0;
 local af2 = 8000; 
 local uscyld = player:getCurrency("scyld");
 
+
 ------------------------------
 --           MNK            --  
 ------------------------------
 
-if (trade:hasItemQty( 2033, 1 )) then     
+if (trade:hasItemQty( 2042, 1 )) then     
    if (player:getFreeSlotsCount() >= 1) then
    if (uscyld >= af2) then   
    player:delCurrency("scyld", af2);
    player:tradeComplete();
-   player:addItem(15072,1);
-   player:messageSpecial(ITEM_OBTAINED,15072,1);
+   player:addItem(15133,1);
+   player:messageSpecial(ITEM_OBTAINED,15133,1);
    else
    balance = af2 - uscyld; 
    player:PrintToPlayer( "Moogle : I'm sorry, you need "..balance.." more scyld to purchase that armor.", 0xD);
    end
    else
-   player:messageSpecial(ITEM_CANNOT_BE_OBTAINED,15072);
+   player:messageSpecial(ITEM_CANNOT_BE_OBTAINED,15133);
    end
-
-end
-
-
-
-------------------------------
---           WHM            --  
-------------------------------
-
-if (trade:hasItemQty( 2047, 1 )) then     
-   if (player:getFreeSlotsCount() >= 1) then
-   if (uscyld >= af2) then   
-   player:delCurrency("scyld", af2);
-   player:tradeComplete();
-   player:addItem(15134,1);
-   player:messageSpecial(ITEM_OBTAINED,15134,1);
-   else
-   balance = af2 - uscyld; 
-   player:PrintToPlayer( "Moogle : I'm sorry, you need "..balance.." more scyld to purchase that armor.", 0xD);
-   end
-   else
-   player:messageSpecial(ITEM_CANNOT_BE_OBTAINED,15134);
-   end
-
 end
 
 
@@ -83,298 +41,299 @@ end
 --           BLM            --  
 ------------------------------
 
-if (trade:hasItemQty( 2050, 1 )) then     
+if (trade:hasItemQty( 2051, 1 )) then     
    if (player:getFreeSlotsCount() >= 1) then
    if (uscyld >= af2) then   
    player:delCurrency("scyld", af2);
    player:tradeComplete();
-   player:addItem(15105,1);
-   player:messageSpecial(ITEM_OBTAINED,15105,1);
+   player:addItem(15120,1);
+   player:messageSpecial(ITEM_OBTAINED,15120,1);
    else
    balance = af2 - uscyld; 
    player:PrintToPlayer( "Moogle : I'm sorry, you need "..balance.." more scyld to purchase that armor.", 0xD);
    end
    else
-   player:messageSpecial(ITEM_CANNOT_BE_OBTAINED,15105);
+   player:messageSpecial(ITEM_CANNOT_BE_OBTAINED,15120);
    end
-
 end
 
+------------------------------
+--           RDM            --  
+------------------------------
+
+if (trade:hasItemQty( 2055, 1 )) then     
+   if (player:getFreeSlotsCount() >= 1) then
+   if (uscyld >= af2) then   
+   player:delCurrency("scyld", af2);
+   player:tradeComplete();
+   player:addItem(15106,1);
+   player:messageSpecial(ITEM_OBTAINED,15106,1);
+   else
+   balance = af2 - uscyld; 
+   player:PrintToPlayer( "Moogle : I'm sorry, you need "..balance.." more scyld to purchase that armor.", 0xD);
+   end
+   else
+   player:messageSpecial(ITEM_CANNOT_BE_OBTAINED,15106);
+   end
+end
 
 ------------------------------
 --           THF            --  
 ------------------------------
 
-if (trade:hasItemQty( 2058, 1 )) then     
+if (trade:hasItemQty( 2059, 1 )) then     
    if (player:getFreeSlotsCount() >= 1) then
    if (uscyld >= af2) then   
    player:delCurrency("scyld", af2);
    player:tradeComplete();
-   player:addItem(15077,1);
-   player:messageSpecial(ITEM_OBTAINED,15077,1);
+   player:addItem(15092,1);
+   player:messageSpecial(ITEM_OBTAINED,15092,1);
    else
    balance = af2 - uscyld; 
    player:PrintToPlayer( "Moogle : I'm sorry, you need "..balance.." more scyld to purchase that armor.", 0xD);
    end
    else
-   player:messageSpecial(ITEM_CANNOT_BE_OBTAINED,15077);
+   player:messageSpecial(ITEM_CANNOT_BE_OBTAINED,15092);
    end
-
 end
-
 
 ------------------------------
 --           PLD            --  
 ------------------------------
 
-if (trade:hasItemQty( 2067, 1 )) then     
+if (trade:hasItemQty( 2063, 1 )) then     
    if (player:getFreeSlotsCount() >= 1) then
    if (uscyld >= af2) then   
    player:delCurrency("scyld", af2);
    player:tradeComplete();
-   player:addItem(15138,1);
-   player:messageSpecial(ITEM_OBTAINED,15138,1);
+   player:addItem(15078,1);
+   player:messageSpecial(ITEM_OBTAINED,15078,1);
    else
    balance = af2 - uscyld; 
    player:PrintToPlayer( "Moogle : I'm sorry, you need "..balance.." more scyld to purchase that armor.", 0xD);
    end
    else
-   player:messageSpecial(ITEM_CANNOT_BE_OBTAINED,15138);
+   player:messageSpecial(ITEM_CANNOT_BE_OBTAINED,15078);
    end
-
 end
-
 
 ------------------------------
 --           DRK            --  
 ------------------------------
 
-if (trade:hasItemQty( 2070, 1 )) then     
+if (trade:hasItemQty( 2072, 1 )) then     
    if (player:getFreeSlotsCount() >= 1) then
    if (uscyld >= af2) then   
    player:delCurrency("scyld", af2);
    player:tradeComplete();
-   player:addItem(15109,1);
-   player:messageSpecial(ITEM_OBTAINED,15109,1);
+   player:addItem(15139,1);
+   player:messageSpecial(ITEM_OBTAINED,15139,1);
    else
    balance = af2 - uscyld; 
    player:PrintToPlayer( "Moogle : I'm sorry, you need "..balance.." more scyld to purchase that armor.", 0xD);
    end
    else
-   player:messageSpecial(ITEM_CANNOT_BE_OBTAINED,15109);
+   player:messageSpecial(ITEM_CANNOT_BE_OBTAINED,15139);
    end
-
 end
-
 
 ------------------------------
 --           BST            --  
 ------------------------------
 
-if (trade:hasItemQty( 2073, 1 )) then     
+if (trade:hasItemQty( 2074, 1 )) then     
    if (player:getFreeSlotsCount() >= 1) then
    if (uscyld >= af2) then   
    player:delCurrency("scyld", af2);
    player:tradeComplete();
-   player:addItem(15080,1);
-   player:messageSpecial(ITEM_OBTAINED,15080,1);
+   player:addItem(15095,1);
+   player:messageSpecial(ITEM_OBTAINED,15095,1);
    else
    balance = af2 - uscyld; 
    player:PrintToPlayer( "Moogle : I'm sorry, you need "..balance.." more scyld to purchase that armor.", 0xD);
    end
    else
-   player:messageSpecial(ITEM_CANNOT_BE_OBTAINED,15080);
+   player:messageSpecial(ITEM_CANNOT_BE_OBTAINED,15095);
    end
-
 end
 
-
 ------------------------------
---           RNG            --  
+--           BRD            --  
 ------------------------------
 
-if (trade:hasItemQty( 2085, 1 )) then     
+if (trade:hasItemQty( 2080, 1 )) then     
    if (player:getFreeSlotsCount() >= 1) then
    if (uscyld >= af2) then   
    player:delCurrency("scyld", af2);
    player:tradeComplete();
-   player:addItem(15082,1);
-   player:messageSpecial(ITEM_OBTAINED,15082,1);
+   player:addItem(15111,1);
+   player:messageSpecial(ITEM_OBTAINED,15111,1);
    else
    balance = af2 - uscyld; 
    player:PrintToPlayer( "Moogle : I'm sorry, you need "..balance.." more scyld to purchase that armor.", 0xD);
    end
    else
-   player:messageSpecial(ITEM_CANNOT_BE_OBTAINED,15082);
+   player:messageSpecial(ITEM_CANNOT_BE_OBTAINED,15111);
    end
-
 end
-
 
 ------------------------------
 --           SMN            --  
 ------------------------------
 
-if (trade:hasItemQty( 2106, 1 )) then     
+if (trade:hasItemQty( 2105, 1 )) then     
    if (player:getFreeSlotsCount() >= 1) then
    if (uscyld >= af2) then   
    player:delCurrency("scyld", af2);
    player:tradeComplete();
-   player:addItem(15131,1);
-   player:messageSpecial(ITEM_OBTAINED,15131,1);
+   player:addItem(15116,1);
+   player:messageSpecial(ITEM_OBTAINED,15116,1);
    else
    balance = af2 - uscyld; 
    player:PrintToPlayer( "Moogle : I'm sorry, you need "..balance.." more scyld to purchase that armor.", 0xD);
    end
    else
-   player:messageSpecial(ITEM_CANNOT_BE_OBTAINED,15131);
+   player:messageSpecial(ITEM_CANNOT_BE_OBTAINED,15116);
    end
-
 end
 
-
 ------------------------------
---           NIN            --  
+--           DRG            --  
 ------------------------------
 
-if (trade:hasItemQty( 2093, 1 )) then     
+if (trade:hasItemQty( 2101, 1 )) then     
    if (player:getFreeSlotsCount() >= 1) then
    if (uscyld >= af2) then   
    player:delCurrency("scyld", af2);
    player:tradeComplete();
-   player:addItem(15084,1);
-   player:messageSpecial(ITEM_OBTAINED,15084,1);
+   player:addItem(15130,1);
+   player:messageSpecial(ITEM_OBTAINED,15130,1);
    else
    balance = af2 - uscyld; 
    player:PrintToPlayer( "Moogle : I'm sorry, you need "..balance.." more scyld to purchase that armor.", 0xD);
    end
    else
-   player:messageSpecial(ITEM_CANNOT_BE_OBTAINED,15084);
+   player:messageSpecial(ITEM_CANNOT_BE_OBTAINED,15130);
    end
-
 end
-
 
 ------------------------------
 --           SAM            --  
 ------------------------------
 
-if (trade:hasItemQty( 2091, 1 )) then     
+if (trade:hasItemQty( 2090, 1 )) then     
    if (player:getFreeSlotsCount() >= 1) then
    if (uscyld >= af2) then   
    player:delCurrency("scyld", af2);
    player:tradeComplete();
-   player:addItem(15128,1);
-   player:messageSpecial(ITEM_OBTAINED,15128,1);
+   player:addItem(15113,1);
+   player:messageSpecial(ITEM_OBTAINED,15113,1);
    else
    balance = af2 - uscyld; 
    player:PrintToPlayer( "Moogle : I'm sorry, you need "..balance.." more scyld to purchase that armor.", 0xD);
    end
    else
-   player:messageSpecial(ITEM_CANNOT_BE_OBTAINED,15128);
+   player:messageSpecial(ITEM_CANNOT_BE_OBTAINED,15113);
    end
-
 end
-
 
 ------------------------------
 --           BLU            --  
 ------------------------------
 
-if (trade:hasItemQty( 2666, 1 )) then     
+if (trade:hasItemQty( 2665, 1 )) then     
    if (player:getFreeSlotsCount() >= 1) then
    if (uscyld >= af2) then   
    player:delCurrency("scyld", af2);
    player:tradeComplete();
-   player:addItem(11382,1);
-   player:messageSpecial(ITEM_OBTAINED,11382,1);
+   player:addItem(16346,1);
+   player:messageSpecial(ITEM_OBTAINED,16346,1);
    else
    balance = af2 - uscyld; 
    player:PrintToPlayer( "Moogle : I'm sorry, you need "..balance.." more scyld to purchase that armor.", 0xD);
    end
    else
-   player:messageSpecial(ITEM_CANNOT_BE_OBTAINED,11382);
+   player:messageSpecial(ITEM_CANNOT_BE_OBTAINED,16346);
    end
-
 end
 
-
 ------------------------------
---           PUP            --  
+--           COR            --  
 ------------------------------
 
-if (trade:hasItemQty( 2674, 1 )) then     
+if (trade:hasItemQty( 2671, 1 )) then     
    if (player:getFreeSlotsCount() >= 1) then
    if (uscyld >= af2) then   
    player:delCurrency("scyld", af2);
    player:tradeComplete();
-   player:addItem(15031,1);
-   player:messageSpecial(ITEM_OBTAINED,15031,1);
+   player:addItem(11385,1);
+   player:messageSpecial(ITEM_OBTAINED,11385,1);
    else
    balance = af2 - uscyld; 
    player:PrintToPlayer( "Moogle : I'm sorry, you need "..balance.." more scyld to purchase that armor.", 0xD);
    end
    else
-   player:messageSpecial(ITEM_CANNOT_BE_OBTAINED,15031);
+   player:messageSpecial(ITEM_CANNOT_BE_OBTAINED,11385);
    end
-
 end
-
 
 ------------------------------
 --           DNC            --  
 ------------------------------
 
-if (trade:hasItemQty( 2720, 1 )) then     
+if (trade:hasItemQty( 2718, 1 )) then     
    if (player:getFreeSlotsCount() >= 1) then
    if (uscyld >= af2) then   
    player:delCurrency("scyld", af2);
    player:tradeComplete();
-   player:addItem(15038,1);
-   player:messageSpecial(ITEM_OBTAINED,15038,1);
+   player:addItem(11478,1);
+   player:messageSpecial(ITEM_OBTAINED,11478,1);
    else
    balance = af2 - uscyld; 
    player:PrintToPlayer( "Moogle : I'm sorry, you need "..balance.." more scyld to purchase that armor.", 0xD);
    end
    else
-   player:messageSpecial(ITEM_CANNOT_BE_OBTAINED,15038);
+   player:messageSpecial(ITEM_CANNOT_BE_OBTAINED,11478);
    end
-
 end
 
-
 ------------------------------
---           SCH            --  
+--           SCH           --  
 ------------------------------
 
-if (trade:hasItemQty( 2727, 1 )) then     
+if (trade:hasItemQty( 2726, 1 )) then     
    if (player:getFreeSlotsCount() >= 1) then
    if (uscyld >= af2) then   
    player:delCurrency("scyld", af2);
    player:tradeComplete();
-   player:addItem(11398,1);
-   player:messageSpecial(ITEM_OBTAINED,11398,1);
+   player:addItem(16362,1);
+   player:messageSpecial(ITEM_OBTAINED,16362,1);
    else
    balance = af2 - uscyld; 
    player:PrintToPlayer( "Moogle : I'm sorry, you need "..balance.." more scyld to purchase that armor.", 0xD);
    end
    else
-   player:messageSpecial(ITEM_CANNOT_BE_OBTAINED,11398);
+   player:messageSpecial(ITEM_CANNOT_BE_OBTAINED,16362);
    end
-
 end
-
-
-
-
-
-
 
 
 
 end;
 
+-----------------------------------
+-- onTrigger Action
+-----------------------------------
 
+function onTrigger(player,npc)
+
+
+player:PrintToPlayer("Moogle : For a cheaper price, trade me a damaged relic piece and 8000 Scyld and I will make a normal quality relic!", 0xD);
+ 
+ 
+showShop(player, STATIC, stock);  
+
+end;
 
 -----------------------------------
 -- onEventUpdate

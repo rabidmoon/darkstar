@@ -55,10 +55,10 @@ function onWeaponskillHit(mob, attacker, weaponskill)
 -- Staggering Function
 local isweak = mob:getLocalVar("WeakenedTrigger");
 
-local wsweakness = math.random(1,200);
+local wsweakness = math.random(1,1000); -- 40% stagger Rate
 attacker:PrintToPlayer(wsweakness);
-if (wsweakness > 145) and (isweak ~= 1) then
-mob:weaknessTrigger(0); -- Yellow Stagger Increase Scyld  27.5%
+if (wsweakness > 180) and (wsweakness < 401) and (isweak ~= 1) then
+mob:weaknessTrigger(0); -- Yellow Stagger Increase Scyld 55% of Triggers
 mob:addStatusEffect(EFFECT_TERROR,1,0,10);
 SetDropRate(5014,0,4249,0); -- Schultz Battle Theorum
 SetDropRate(5014,0,1456,0); -- 100 Byne Bill
@@ -73,8 +73,8 @@ local newscyld = (randomscyld + oldscyld);
 attacker:setVar("ScyldMultiplier",newscyld);
 mob:setLocalVar("WeakenedTrigger",1);
 attacker:PrintToPlayer("You have been granted a "..randomscyld.."% scyld bonus", 0x15);
-elseif (wsweakness > 20) and (wsweakness < 50) and (isweak ~= 1) then
-mob:weaknessTrigger(1); -- Blue Stagger drops Memoirs which grants 4-8 currency  15%
+elseif (wsweakness > 80) and (wsweakness < 181) and (isweak ~= 1) then
+mob:weaknessTrigger(1); -- Blue Stagger drops Memoirs which grants 4-8 currency  25% of Triggers 
 mob:addStatusEffect(EFFECT_TERROR,1,0,10);
 SetDropRate(5014,0,4249,1000); -- Schultz Battle Theorum
 SetDropRate(5014,0,1456,0); -- 100 Byne Bill
@@ -84,8 +84,8 @@ SetDropRate(5014,0,3412,0); -- Fiendish Tome 9
 SetDropRate(5014,0,3413,0); -- Fiendish Tome 10
 
 mob:setLocalVar("WeakenedTrigger",1);
-elseif (wsweakness > 90) and (wsweakness < 110) and (isweak ~= 1) then
-mob:weaknessTrigger(2); -- Red Stagger drops Pop Items 10%
+elseif (wsweakness > 20) and (wsweakness < 81) and (isweak ~= 1) then
+mob:weaknessTrigger(2); -- Red Stagger drops Pop Items 15% of Triggers
 mob:addStatusEffect(EFFECT_TERROR,1,0,10);
 local itemdrop = math.random(1,4);
 if (itemdrop == 1) then
@@ -118,8 +118,8 @@ SetDropRate(5014,0,3412,0); -- Fiendish Tome 9
 SetDropRate(5014,0,3413,1000); -- Fiendish Tome 10
 end
 mob:setLocalVar("WeakenedTrigger",1);
-elseif (wsweakness < 4) and (isweak ~= 1) then
-mob:weaknessTrigger(3); -- White Stagger drops 100's
+elseif (wsweakness < 21) and (isweak ~= 1) then
+mob:weaknessTrigger(3); -- White Stagger drops 100's  5% of Triggers
 mob:addStatusEffect(EFFECT_TERROR,1,0,10);
 SetDropRate(5014,0,4249,0); -- Schultz Battle Theorum
 SetDropRate(5014,0,1456,1000); -- 100 Byne Bill

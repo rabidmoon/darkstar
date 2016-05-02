@@ -1,7 +1,7 @@
 -----------------------------------
 -- Area: Dynamis Bastok
 -- NPC:  Ko'Dho Cannonball
--- Boss Trigger for Gu'Dha Effigy
+-- Popped with Tome 9
 -----------------------------------
 
 -----------------------------------
@@ -9,31 +9,50 @@
 -----------------------------------
 
 function onMobSpawn(mob)
+mob:addMod(MOD_EVA,50);
+mob:addMod(MOD_ACC,50);
+
+
 end;
 
------------------------------------
--- onMobEngaged
------------------------------------
 
 function onMobEngaged(mob,target)
+local weakener = target:getVar("DynaWeakener");
+   if (weakener == 3) then
+   mob:setMod(MOD_HPP,-75);
+   mob:setMod(MOD_DEFP,-75);
+   mob:setMod(MOD_ATTP,-75);
+   mob:addMod(MOD_EVA,-30);
+   mob:addMOd(MOD_ACC,-30);
+target:PrintToPlayer("You have significantly weakened the monster!", 0xD);
+elseif (weakener == 2) then
+   mob:setMod(MOD_HPP,-50);
+   mob:setMod(MOD_DEFP,-20);
+   mob:setMod(MOD_ATTP,-20);
+   mob:addMod(MOD_EVA,-20);
+   mob:addMOd(MOD_ACC,-20);
+target:PrintToPlayer("You have weakened the monster!", 0xD);
+elseif (weakener == 1) then
+   mob:setMod(MOD_HPP,-20);
+   mob:setMod(MOD_DEFP,-10);
+   mob:setMod(MOD_ATTP,-10);
+   mob:addMod(MOD_EVA,-10);
+   mob:addMOd(MOD_ACC,-10);
+target:PrintToPlayer("You have weakened the monster ever so slightly", 0xD);
+elseif (weakener == 0) then
+ -- mob:setMod(MOD_ACC,100);
+ -- mob:setMod(MOD_EVA,100);
+target:PrintToPlayer("You have summoned a Monster.", 0xD);  
+end   
 end;
+
 
 -----------------------------------
 -- onMobDeath
 -----------------------------------
 
 function onMobDeath(mob,killer)
-
-	local bossTrigger = GetServerVariable("[DynaBastok]Boss_Trigger");
-
-	if (bossTrigger == 0 or bossTrigger == 1 or bossTrigger == 4 or bossTrigger == 5) then
-		SetServerVariable("[DynaBastok]Boss_Trigger",bossTrigger + 2);
-	end
-
-	-- If 3 boss trigger is killer -> pop the boss
-	if (GetServerVariable("[DynaBastok]Boss_Trigger") == 7) then
-		SpawnMob(17539073);
-		SetServerVariable("[DynaBastok]Boss_Trigger",0);
-	end
+killer:setVar("DynaWeakener",0);
+	
 
 end;

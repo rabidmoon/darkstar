@@ -1,9 +1,9 @@
 -------------------------
 -- Area: Dynamis - San d'Oria
 -- NPC: Relic Armor Moogle
--- Trade 6000 Scyld and Artifact armor of the same time to receive Relic
+-- Trade 8000 Scyld and Artifact armor of the same time to receive Relic
 -------------------------
-require("scripts/zones/Dynamis-Windurst/TextIDs");
+require("scripts/zones/Dynamis-San_dOria/TextIDs");
 
 -----------------------------------
 -- onTrade Action
@@ -12,7 +12,7 @@ require("scripts/zones/Dynamis-Windurst/TextIDs");
 function onTrade(player,npc,trade)
 
 local balance = 0;
-local af2 = 6000; 
+local af2 = 8000; 
 local uscyld = player:getCurrency("scyld");
 
 
@@ -34,8 +34,6 @@ if (trade:hasItemQty( 2037, 1 )) then
    else
    player:messageSpecial(ITEM_CANNOT_BE_OBTAINED,15312);
    end
-else
-player:PrintToPlayer("Please trade me an artifact armor piece...");
 end
 
 
@@ -58,8 +56,6 @@ if (trade:hasItemQty( 2042, 1 )) then
    else
    player:messageSpecial(ITEM_CANNOT_BE_OBTAINED,15133);
    end
-else
-player:PrintToPlayer("Please trade me an artifact armor piece...");
 end
 
 
@@ -82,8 +78,6 @@ if (trade:hasItemQty( 2043, 1 )) then
    else
    player:messageSpecial(ITEM_CANNOT_BE_OBTAINED,15074);
    end
-else
-player:PrintToPlayer("Please trade me an artifact armor piece...");
 end
 
 
@@ -105,8 +99,6 @@ if (trade:hasItemQty( 2057, 1 )) then
    else
    player:messageSpecial(ITEM_CANNOT_BE_OBTAINED,14093);
    end
-else
-player:PrintToPlayer("Please trade me an artifact armor piece...");
 end
 
 
@@ -128,8 +120,6 @@ if (trade:hasItemQty( 2065, 1 )) then
    else
    player:messageSpecial(ITEM_CANNOT_BE_OBTAINED,15108);
    end
-else
-player:PrintToPlayer("Please trade me an artifact armor piece...");
 end
 
 
@@ -151,8 +141,6 @@ if (trade:hasItemQty( 2076, 1)) then
    else
    player:messageSpecial(ITEM_CANNOT_BE_OBTAINED,15125);
    end
-else
-player:PrintToPlayer("Please trade me an artifact armor piece...");
 end
 
 
@@ -174,8 +162,6 @@ if (trade:hasItemQty( 2078, 1 )) then
    else
    player:messageSpecial(ITEM_CANNOT_BE_OBTAINED,15081);
    end
-else
-player:PrintToPlayer("Please trade me an artifact armor piece...");
 end
 
 
@@ -197,8 +183,6 @@ if (trade:hasItemQty( 2086, 1 )) then
    else
    player:messageSpecial(ITEM_CANNOT_BE_OBTAINED,15127);
    end
-else
-player:PrintToPlayer("Please trade me an artifact armor piece...");
 end
 
 
@@ -222,8 +206,6 @@ if (trade:hasItemQty( 2017, 1 )) then
    else
    player:messageSpecial(ITEM_CANNOT_BE_OBTAINED,15146);
    end
-else
-player:PrintToPlayer("Please trade me an artifact armor piece...");
 end
 
 
@@ -245,8 +227,6 @@ if (trade:hasItemQty( 2096, 1 )) then
    else
    player:messageSpecial(ITEM_CANNOT_BE_OBTAINED,15129);
    end
-else
-player:PrintToPlayer("Please trade me an artifact armor piece...");
 end
 
 
@@ -269,8 +249,6 @@ if (trade:hasItemQty( 2102, 1 )) then
    else
    player:messageSpecial(ITEM_CANNOT_BE_OBTAINED,15145);
    end
-else
-player:PrintToPlayer("Please trade me an artifact armor piece...");
 end
 
 
@@ -292,8 +270,6 @@ if (trade:hasItemQty( 2664, 1 )) then
    else
    player:messageSpecial(ITEM_CANNOT_BE_OBTAINED,15025);
    end
-else
-player:PrintToPlayer("Please trade me an artifact armor piece...");
 end
 
 
@@ -316,8 +292,7 @@ if (trade:hasItemQty( 2670, 1 )) then
    else
    player:messageSpecial(ITEM_CANNOT_BE_OBTAINED,16349);
    end
-else
-player:PrintToPlayer("Please trade me an artifact armor piece...");
+
 end
 
 
@@ -342,8 +317,6 @@ if (trade:hasItemQty( 2676, 1 )) then
    else
    player:messageSpecial(ITEM_CANNOT_BE_OBTAINED,11388);
    end
-else
-player:PrintToPlayer("Please trade me an artifact armor piece...");
 end
 
 
@@ -366,8 +339,6 @@ if (trade:hasItemQty( 2725, 1 )) then
    else
    player:messageSpecial(ITEM_CANNOT_BE_OBTAINED,15040);
    end
-else
-player:PrintToPlayer("Please trade me an artifact armor piece...");
 end
 
 
@@ -382,26 +353,12 @@ end;
 function onTrigger(player,npc)
 
 
-stock = {0x3B1D,999999999, -- MNK
-		 0x3B1E,999999999, -- WHM
-	     0x3B02,999999999, -- RDM
-		 0x3AE5,999999999, -- THF
-		 0x3B05,999999999, -- DRK
-		 0x3AE8,999999999, -- BST
-		 0x3AE9,999999999, -- BRD
-		 0x3B1B,999999999, -- SMN
-		 0x3B1A,999999999, -- DRG
-		 0x3B18,999999999, -- SAM
-		 0x3FDD,999999999, -- COR
-		 0x2C7C,999999999, -- PUP
-		 0x2CD6,999999999, -- DNC
-		 0x3AC0,999999999} -- SCH
 
 
-player:PrintToPlayer("Moogle : For a cheaper price, trade me a damaged relic piece and 6000 Scyld and I will make a normal quality relic!", 0xD);
+player:PrintToPlayer("Moogle : For a cheaper price, trade me a damaged relic piece and 8000 Scyld and I will make a normal quality relic!", 0xD);
  
  
-showShop(player, STATIC, stock);  
+
 
 end;
 

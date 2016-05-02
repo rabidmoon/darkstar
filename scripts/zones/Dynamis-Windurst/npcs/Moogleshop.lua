@@ -38,7 +38,7 @@ stock = {0x0F0D,1000,  -- Displacers
 
 
 }  
-player:PrintToPlayer("Moogle : Discounts for you Kupo, for defeating that Overlord Tombstone!!", 0xD);
+player:PrintToPlayer("Moogle : Discounts for you Kupo, for defeating that Tzee Xicu Idol!!", 0xD);
 showShop(player, STATIC, stock);  
 else
 stock = {0x0F0D,3500,  -- Displacers
@@ -59,7 +59,7 @@ stock = {0x0F0D,3500,  -- Displacers
 		 0x0AA7,1000000   -- SCH
 
 }  
-player:PrintToPlayer("Moogle : Kupo, I'll give you a discount if you defeat the Overlord Tombstone.", 0xD);
+player:PrintToPlayer("Moogle : Kupo, I'll give you a discount if you defeat the Tzee Xicu Idol!.", 0xD);
 showShop(player, STATIC, stock);  
 end
 end;
