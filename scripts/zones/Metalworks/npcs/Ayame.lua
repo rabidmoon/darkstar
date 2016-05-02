@@ -37,6 +37,26 @@ function onTrigger(player,npc)
 	
 	local trueStrength = player:getQuestStatus(BASTOK,TRUE_STRENGTH);
 	local WildcatBastok = player:getVar("WildcatBastok");
+	local pNation = player:getNation();
+	local currentMission = player:getCurrentMission(pNation);
+	
+		if (player:getNation() == 0) and (player:hasKeyItem(RED_INSTITUTE_CARD)) and (player:hasSpell(900) == false) and (currentMission == JOURNEY_TO_WINDURST) then  -- Sandy Nation and mission 2-3
+	player:PrintToPlayer("Your Red Institute Card flashes brilliantly!", 0x1C);
+    player:PrintToPlayer("Ayame : Ah a Red Institute Card.  My blade is ready to assist you", 0xD);
+    player:addSpell(900);	
+    elseif (player:getNation() == 1) and (player:hasKeyItem(BLUE_INSTITUTE_CARD)) and (player:hasSpell(900) == false) then  -- Bastok Nation and mission 2-3
+	player:PrintToPlayer("Your Blue Institute Card flashes brilliantly!", 0x1C);
+    player:PrintToPlayer("Ayame : Ah a Red Institute Card.  My blade is ready to assist you", 0xD);
+    player:addSpell(900);
+    elseif (player:getNation() == 2) and (player:hasKeyItem(GREEN_INSTITUTE_CARD)) and (player:hasSpell(900) == false) and (currentMission == THE_THREE_KINGDOMS) then -- Windy Nation can obtain without pre-requisites
+	player:PrintToPlayer("Your Blue Institute Card flashes brilliantly!", 0x1C);
+    player:PrintToPlayer("Ayame : Ah a Green Institute Card.  My blade is ready to assist you", 0xD);
+    player:addSpell(900);	
+	end
+	
+	
+	
+	
 	
 	if (player:getQuestStatus(BASTOK,LURE_OF_THE_WILDCAT_BASTOK) == QUEST_ACCEPTED and player:getMaskBit(WildcatBastok,9) == false) then
 		player:startEvent(0x03a7);

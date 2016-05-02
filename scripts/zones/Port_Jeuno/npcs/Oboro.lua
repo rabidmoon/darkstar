@@ -837,6 +837,13 @@ end
 --------------------------------------------------------
 --      PUP TRADE ADARGAS 18353                     --
 --------------------------------------------------------
+
+if (job == 18) and (level >=47) and (player:hasItem(18353) == false) and (player:getVar("PUPAFweapon") == 0) and trade:getGil(5000) then
+            player:addItem(18353, 1);
+			player:messageSpecial(ITEM_OBTAINED, 18353);
+			player:PrintToPlayer("Oboro : Don't go off losing that weapon again or I will be very angry.", 0xD);
+    end		
+  
 	
 if (job == 18) and (trade:hasItemQty(18353, 1)) and trade:hasItemQty( 1126, 30 ) and level >= 61 and (player:getVar("PUPAFweapon") == 1) then
              -- Complete the trade..
@@ -892,7 +899,18 @@ local level = player:getMainLvl();
 	player:PrintToPlayer("Oboro : Relic? Never heard of it, talk to the goblin over there.", 0xD);
 	player:PrintToPlayer("Oboro : I am busy trying to invent a new type of Artifact Weapon.", 0xD);
 	
-	
+   elseif ((job == 18) and (level >=47)) and (player:hasItem(18353) == false) then
+   player:PrintToPlayer("Oboro : You are becoming a strong Puppetmaster.  I've made these new weapons, try them out.", 0xD);
+   if (player:getFreeSlotsCount() == 0) then
+   player:PrintToPlayer("Oboro : Hey make some room in your inventory!", 0xD);
+   elseif (player:getVar("PUPWeaponObtained") == 1) and (player:getVar("PUPAFweapon") == 0) and (player:hasItem(18353) == false) then
+   player:PrintToPlayer("Oboro : You've lost those magnificent weapons already? Cough up 5,000 and I'll get you another!", 0xD);
+   else
+   player:addItem(18353, 1);
+   player:setVar("PUPAFweapon", 0);
+   player:setVar("PUPWeaponObtained",1);
+   player:messageSpecial(ITEM_OBTAINED, 18353);
+   end
     
     elseif (player:hasItem(18214) or player:hasItem(17478) or player:hasItem(17422) or player:hasItem(17572) or player:hasItem(16829) or 
 	player:hasItem(16764) or player:hasItem(17643) or player:hasItem(12307) or player:hasItem(16978) or player:hasItem(16590) or
@@ -902,18 +920,7 @@ local level = player:getMainLvl();
 	
    player:PrintToPlayer("Oboro : Hey, I can upgrade that weapon for you. Bring me 15 Beastmen seals for the first", 0xD);
    player:PrintToPlayer("Oboro : upgrade, 30 beastmen seals for the second, and 15 Kindred seals for the last", 0xD);
-   elseif ((job == 18) and (level >=47)) then
-   player:PrintToPlayer("Oboro : You are becoming a strong Puppetmaster.  I've made these new weapons, try them out.", 0xD);
-   if (player:getFreeSlotsCount() == 0) then
-   player:PrintToPlayer("Oboro : Hey make some room in your inventory!", 0xD);
-   elseif (player:getVar("PUPWeaponObtained") == 1) and (player:getVar("PUPAFweapon") == 0) and (player:hasItem(18353, 0)) then
-   player:PrintToPlayer("Oboro : You've those magnificent weapons already? Cough up 5,000 and I'll get you another!", 0xD);
-   else
-   player:addItem(18353, 1);
-   player:setVar("PUPAFweapon", 0);
-   player:setVar("PUPWeaponObtained",1);
-   player:messageSpecial(ITEM_OBTAINED, 18353);
-   end
+
    else
    player:PrintToPlayer("Oboro : I'm busy!", 0xD);
    end
