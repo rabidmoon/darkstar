@@ -331,7 +331,7 @@ function onTrigger(player,npc)
 player:PrintToPlayer("Moogle : For a cheaper price, trade me a damaged relic piece and 8000 Scyld and I will make a normal quality relic!", 0xD);
  
  
-showShop(player, STATIC, stock);  
+
 
 end;
 
