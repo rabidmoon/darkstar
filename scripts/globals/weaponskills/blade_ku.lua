@@ -44,14 +44,14 @@ function onUseWeaponSkill(player, target, wsID)
 	local unlock = 0;
     if (player:hasCompleteQuest(OUTLANDS,BUGI_SODEN) == true) then -- Blade Ku Quest is done
 	unlock = 1;
-	elseif (player:getQuestStatus(OUTLANDS,BUGI_SODEN) == QUEST_ACCEPTED and wsnm > 0) then -- Blade Ku Quest Active
+	elseif (player:getQuestStatus(OUTLANDS,BUGI_SODEN) == QUEST_ACCEPTED and wsnm > 1) then -- Blade Ku Quest Active
 	unlock = 0.05;
 	wsnm = wsnm - 1;
 	if (wsnm < 1) then
 	wsnm = 1;
 	end
 	player:setVar("BLADE_KU",wsnm);
-	elseif (player:getQuestStatus(OUTLANDS,BUGI_SODEN) == QUEST_ACCEPTED and wsnm <= 0) then -- Blade Ku powered up
+	elseif (player:getQuestStatus(OUTLANDS,BUGI_SODEN) == QUEST_ACCEPTED and wsnm <= 1) then -- Blade Ku powered up
 	unlock = 0.30;
 	else
 	unlock = 0.05;

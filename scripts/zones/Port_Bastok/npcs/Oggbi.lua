@@ -51,7 +51,7 @@ function onTrigger(player,npc)
 	   player:PrintToPlayer("Oggbi : Asuran Fists?  Use it 100 times and then come see me afterwards.",0x0D);
 	   player:setVar("ASURAN_FISTS",100);
 	   player:addQuest(BASTOK,THE_WALLS_OF_YOUR_MIND);
-	elseif (wsnm <= 0 and player:getQuestStatus(BASTOK,THE_WALLS_OF_YOUR_MIND) == true) then
+	elseif (wsnm == 1 and player:getQuestStatus(BASTOK,THE_WALLS_OF_YOUR_MIND) == true) then
 	   player:PrintToPlayer("Oggbi : Good Job.  Travel to Bostaunieux Oubliette and fight the monster that dwells there.",0x0D);
 	   player:addKeyItem(MAP_TO_THE_ANNALS_OF_TRUTH);
  	   player:messageSpecial(MAP_TO_THE_ANNALS_OF_TRUTH);

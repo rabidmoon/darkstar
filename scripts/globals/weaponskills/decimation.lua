@@ -40,13 +40,13 @@ function onUseWeaponSkill(player, target, wsID)
 	local unlock = 0;
     if (player:hasCompleteQuest(BASTOK,AXE_THE_COMPETITION) == true) then -- Decimation Quest is done
 	unlock = 1;
-	elseif (player:getQuestStatus(BASTOK,AXE_THE_COMPETITION) == true and wsnm > 0) then -- Decimation Quest Active
+	elseif (player:getQuestStatus(BASTOK,AXE_THE_COMPETITION) == true and wsnm > 1) then -- Decimation Quest Active
 	wsnm = wsnm - 1;
 	if (wsnm < 1) then
 	wsnm = 1;
 	end
 	player:setVar("DECIMATION",wsnm);
-	elseif (player:getQuestStatus(BASTOK,AXE_THE_COMPETITION) == true and wsnm <= 0) then -- Decimation powered up
+	elseif (player:getQuestStatus(BASTOK,AXE_THE_COMPETITION) == true and wsnm <= 1) then -- Decimation powered up
 	unlock = 0.30;
 	else
 	unlock = 0.05;

@@ -43,7 +43,7 @@ function onTrigger(player,npc)
 	   player:PrintToPlayer("Gumbah : Ground Strike?  Use it 100 times and then come see me afterwards.",0x0D);
 	   player:setVar("GROUND_STRIKE",100);
 	   player:addQuest(BASTOK,INHERITANCE);
-	elseif (wsnm <= 0 and player:getQuestStatus(BASTOK,INHERITANCE) == true) then
+	elseif (wsnm == 1 and player:getQuestStatus(BASTOK,INHERITANCE) == true) then
 	   player:PrintToPlayer("Gumbah : Good Job.  Travel to Western Altepa Desert and fight the monster that dwells there.",0x0D);
 	   player:addKeyItem(MAP_TO_THE_ANNALS_OF_TRUTH);
  	   player:messageSpecial(MAP_TO_THE_ANNALS_OF_TRUTH);

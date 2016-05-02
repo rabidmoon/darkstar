@@ -63,7 +63,7 @@ function onTrigger(player,npc)
 	   player:PrintToPlayer("Iron Eater : Steel Cyclone eh?  Use it 100 times and then come see me afterwards.",0x0D);
 	   player:setVar("STEEL_CYCLONE",100);
 	   player:addQuest(BASTOK,THE_WEIGHT_OF_YOUR_LIMITS);
-    elseif (wsnm <= 0 and player:getQuestStatus(BASTOK,THE_WEIGHT_OF_YOUR_LIMITS) == true) then
+    elseif (wsnm == 1 and player:getQuestStatus(BASTOK,THE_WEIGHT_OF_YOUR_LIMITS) == true) then
 	   player:PrintToPlayer("Iron Eater :  Good Job.  Go to The Sanctuary of Zi'Tah and fight the monster that dwells there.",0x0D);
 	   player:addKeyItem(MAP_TO_THE_ANNALS_OF_TRUTH);
  	   player:messageSpecial(MAP_TO_THE_ANNALS_OF_TRUTH);

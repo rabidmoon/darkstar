@@ -41,13 +41,13 @@ function onUseWeaponSkill(player, target, wsID)
 	local unlock = 0;
     if (player:hasCompleteQuest(BASTOK,THE_WEIGHT_OF_YOUR_LIMITS) == true) then -- Steel Cyclone Quest is done
 	unlock = 1;
-	elseif (player:getQuestStatus(BASTOK,THE_WEIGHT_OF_YOUR_LIMITS) == true and wsnm > 0) then -- Steel Cyclone Quest Active
+	elseif (player:getQuestStatus(BASTOK,THE_WEIGHT_OF_YOUR_LIMITS) == true and wsnm > 1) then -- Steel Cyclone Quest Active
 	wsnm = wsnm - 1;
 	if (wsnm < 1) then
 	wsnm = 1;
 	end
 	player:setVar("STEEL_CYCLONE",wsnm);
-	elseif (player:getQuestStatus(BASTOK,THE_WEIGHT_OF_YOUR_LIMITS) == true and wsnm <= 0) then -- Steel Cyclone powered up
+	elseif (player:getQuestStatus(BASTOK,THE_WEIGHT_OF_YOUR_LIMITS) == true and wsnm <= 1) then -- Steel Cyclone powered up
 	unlock = 0.30;
 	else
 	unlock = 0.05;

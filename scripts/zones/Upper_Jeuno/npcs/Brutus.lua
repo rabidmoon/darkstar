@@ -109,7 +109,7 @@ function onTrigger(player,npc)
 	    player:PrintToPlayer("Brutus : Decimation eh?  Use it 100 times and then come see me afterwards.",0x0D);
 	    player:setVar("DECIMATION",100);
 	    player:addQuest(BASTOK,AXE_THE_COMPETITION);
-        elseif (wsnm <= 0 and player:getQuestStatus(BASTOK,AXE_THE_COMPETITION) == true) then
+        elseif (wsnm == 1 and player:getQuestStatus(BASTOK,AXE_THE_COMPETITION) == true) then
 	    player:PrintToPlayer("Brutus :  Good Job.  Now go to the Temple of Uggalepih and fight the monster that dwells there.",0x0D);
 	    player:addKeyItem(MAP_TO_THE_ANNALS_OF_TRUTH);
  	    player:messageSpecial(MAP_TO_THE_ANNALS_OF_TRUTH);

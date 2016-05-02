@@ -34,13 +34,13 @@ function onUseWeaponSkill(player, target, wsID)
 	local unlock = 0;
     if (player:hasCompleteQuest(BASTOK,INHERITANCE) == true) then -- Inheritance Quest is done
 	unlock = 1;
-	elseif (player:getQuestStatus(BASTOK,INHERITANCE) == true and wsnm > 0) then -- Inheritance Quest Active
+	elseif (player:getQuestStatus(BASTOK,INHERITANCE) == true and wsnm > 1) then -- Inheritance Quest Active
 	wsnm = wsnm - 1;
 	if (wsnm < 1) then
 	wsnm = 1;
 	end
 	player:setVar("GROUND_STRIKE",wsnm);
-	elseif (player:getQuestStatus(BASTOK,INHERITANCE) == true and wsnm <= 0) then -- Inheritance powered up
+	elseif (player:getQuestStatus(BASTOK,INHERITANCE) == true and wsnm <= 1) then -- Inheritance powered up
 	unlock = 0.30;
 	else
 	unlock = 0.05;

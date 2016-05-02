@@ -59,7 +59,7 @@ function onTrigger(player,npc)
 	   player:PrintToPlayer("Ryoma : Blade: Ku eh?  Use it 100 times and then come see me afterwards.",0x0D);
 	   player:setVar("BLADE_KU",100);
 	   player:addQuest(OUTLANDS,BUGI_SODEN);
-    elseif (wsnm <= 0 and player:getQuestStatus(OUTLANDS,BUGI_SODEN) == true) then
+    elseif (wsnm == 1 and player:getQuestStatus(OUTLANDS,BUGI_SODEN) == true) then
 	   player:PrintToPlayer("Ryoma : Good Job.  Go to the Labrynth of Onzozo and fight the monster that dwells there.",0x0D);
 	   player:addKeyItem(MAP_TO_THE_ANNALS_OF_TRUTH);
  	   player:messageSpecial(MAP_TO_THE_ANNALS_OF_TRUTH);
