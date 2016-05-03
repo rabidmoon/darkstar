@@ -2532,6 +2532,7 @@ void SmallPacket0x05B(map_session_data_t* session, CCharEntity* PChar, CBasicPac
 
         if (RBUFB(data, (0x0E)) != 0)
         {
+            if (EventID == 0x7d00) PrintPacket(data);
             luautils::OnEventUpdate(PChar, EventID, Result);
         }
         else

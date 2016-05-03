@@ -30,7 +30,7 @@ CREATE TABLE `battlefield_info` (
   `partySize` smallint(5) unsigned NOT NULL DEFAULT '6',
   `lootDropId` smallint(5) unsigned NOT NULL DEFAULT '0',
   `rules` smallint(5) unsigned NOT NULL DEFAULT '0',
-  PRIMARY KEY (`bcnmId`)
+  PRIMARY KEY (`battlefieldId`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AVG_ROW_LENGTH=56;
 
 -- ----------------------------

@@ -433,6 +433,7 @@ void CBattlefield::Cleanup()
     ForEachPlayer([&](CCharEntity* PChar)
     {
         RemoveEntity(PChar, -1);
+        PChar->StatusEffectContainer->DelStatusEffectsByFlag(EFFECT_CONFRONTATION);
     });
 
     ForEachAlly([&](CMobEntity* PAlly)

@@ -72,10 +72,10 @@ CBattlefield* CBattlefieldHandler::LoadBattlefield(CCharEntity* PChar, uint16 ba
 {
     if (m_Battlefields.size() < m_MaxBattlefields)
     {
-        auto area = 1;
+        auto area = m_MaxBattlefields;
 
         // todo: this is horrible, find another way to set the area number
-        for (; area < m_MaxBattlefields; ++area)
+        for (; area > 0; --area)
             for (auto& PBattlefield : m_Battlefields)
                 if (area == PBattlefield->GetArea())
                     continue;
@@ -108,7 +108,7 @@ CBattlefield* CBattlefieldHandler::LoadBattlefield(CCharEntity* PChar, uint16 ba
             PBattlefield->SetRuleMask((uint16)Sql_GetUIntData(SqlHandle, 7));
 
             m_Battlefields.push_back(std::move(PBattlefield));
-            return PBattlefield.get();
+            return m_Battlefields.back().get();
         }
     }
     return nullptr;

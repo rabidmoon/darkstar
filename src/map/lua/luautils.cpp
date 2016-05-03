@@ -2465,7 +2465,7 @@ namespace luautils
         CLuaZone LuaZone(PZone);
         Lunar<CLuaZone>::push(LuaHandle, &LuaZone);
 
-        if (lua_pcall(LuaHandle, 2, LUA_MULTRET, 0))
+        if (lua_pcall(LuaHandle, 1, LUA_MULTRET, 0))
         {
             ShowError("luautils::onBattlefieldHandlerInitialise: %s\n", lua_tostring(LuaHandle, -1));
             lua_pop(LuaHandle, 1);

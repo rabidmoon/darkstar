@@ -30,7 +30,7 @@ function onEffectLose(target,effect)
     if (target:getPet()) then
         target:getPet():delStatusEffect(EFFECT_BATTLEFIELD);
     end
-    target:leaveBattlefield(effect:getPower(), effect:getSubPower());
+    target:leaveBattlefield(effect:getPower());
 end;
 
 -----------------------------------
@@ -38,7 +38,7 @@ end;
 -----------------------------------
 
 function onEventUpdate(player,csid,option)
---printf("onUpdate CSID: %u",csid);
+    player:PrintToPlayer(string.format("UPDATE csid %u option %u", csid, option));
 --printf("onUpdate RESULT: %u",option);
 end;
 

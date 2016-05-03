@@ -6917,7 +6917,7 @@ inline int32 CLuaBaseEntity::addRecast(lua_State* L)
 
 inline int32 CLuaBaseEntity::registerBattlefield(lua_State* L)
 {
-    DSP_DEBUG_BREAK_IF(m_PBaseEntity == nullptr || PZone->m_BattlefieldHandler == nullptr);
+    DSP_DEBUG_BREAK_IF(m_PBaseEntity == nullptr || m_PBaseEntity->loc.zone->m_BattlefieldHandler == nullptr);
     DSP_DEBUG_BREAK_IF(m_PBaseEntity->objtype != TYPE_PC);
 
     auto PChar = static_cast<CCharEntity*>(m_PBaseEntity);

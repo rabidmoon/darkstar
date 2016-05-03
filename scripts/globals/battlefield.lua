@@ -1,5 +1,4 @@
-local MaxAreas =
-{
+local MaxAreas = {
     -- temenos
     {Max = 8, Zones = {37}},
     
@@ -7,11 +6,11 @@ local MaxAreas =
     {Max = 6, Zones = {38}},
     
     -- dynamis
-    {Max = 1, Zones = {39, 40, 41, 42, 134, 135, 185, 186, 187, 188
-                                140 }}, -- ghelsba
+    {Max = 1, Zones = {39, 40, 41, 42, 134, 135, 185, 186, 187, 188,
+                                140}}, -- ghelsba
 };
 
-local function onBattlefieldHandlerInitialise(zone)
+function onBattlefieldHandlerInitialise(zone)
     for _, battlefield in pairs(MaxAreas) do
         for _, zoneid in pairs(battlefield.Zones) do
             if zone:getID() == zoneid then
@@ -19,14 +18,14 @@ local function onBattlefieldHandlerInitialise(zone)
              end;
         end
     end;
+    return 3;
 end;
 
 
 
 g_Battlefield = {};
 
-g_Battlefield.Status =
-{
+g_Battlefield.Status = {
     OPEN     = 0,
     LOCKED  = 1,
     WON      = 2,
