@@ -11,6 +11,7 @@
 function onEffectGain(target,effect)
 	target:setAnimation(33);
 	target:messageSystem(effect:getPower(),30);
+	target:PrintToPlayer("Any Trusts that are summoned will be automatically disbanded within 5 seconds", 0x1F);
 end;
 
 -----------------------------------
@@ -18,6 +19,10 @@ end;
 -----------------------------------
 
 function onEffectTick(target,effect)
+    
+
+	
+	
 
 	if (effect:getTickCount() > 5) then
 	    target:setVar("logoutRestStart", os.time());  -- sets variable for resting bonus
@@ -26,6 +31,15 @@ function onEffectTick(target,effect)
 		target:messageSystem(effect:getPower(),30-effect:getTickCount()*5);
 		
 	end
+	
+	local hp = 0;
+	local ally = target:getRecentAlly();
+    if (effect:getTickCount() > 1) then
+    ally:injectActionPacket(4, 261);
+	ally:setHP( hp );
+	end
+	
+	
 end;
 
 -----------------------------------
