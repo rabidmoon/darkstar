@@ -144,6 +144,25 @@ bool CPathFind::PathAround(position_t point, float distanceFromPoint, uint8 path
     return PathTo(point, pathFlags, false);
 }
 
+bool CPathFind::PathBehind(position_t point, float distanceFromPoint, uint8 pathFlags)
+{
+    Clear();
+    position_t* lastPoint = &point;
+
+    float randomRadian = dsprand::GetRandomNumber<float>(M_PI, (3 * M_PI/2));
+
+    lastPoint->x -= cosf(randomRadian) * distanceFromPoint;
+    lastPoint->z -= sinf(randomRadian) * distanceFromPoint;
+
+    // save for sliding logic
+    m_originalPoint = point;
+    m_distanceFromPoint = -5;
+
+    // Don't clear path so
+    // original point / distance are kept
+    return PathTo(point, pathFlags, false);
+}
+
 bool CPathFind::PathThrough(position_t* points, uint8 totalPoints, uint8 pathFlags)
 {
 

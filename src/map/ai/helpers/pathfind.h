@@ -60,6 +60,9 @@ class CPathFind
 
     // move some where around the point
     bool PathAround(position_t point, float distanceFromPoint, uint8 pathFlags = 0);
+	
+	// move some where behind the point
+    bool PathBehind(position_t point, float distanceFromPoint, uint8 pathFlags = 0);
 
     // walk through the given points. No new points made.
     bool PathThrough(position_t* points, uint8 totalPoints, uint8 pathFlags = 0);

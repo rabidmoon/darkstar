@@ -124,7 +124,7 @@ void CAIPetDummy::CheckCurrentAction(uint32 tick)
 		case ACTION_WEAPONSKILL_FINISH:     ActionWeaponSkillFinish();  break;
 		case ACTION_JOBABILITY_FINISH:      ActionJobAbilityFinish(); break;
 
-        default: DSP_DEBUG_BREAK_IF(true);
+        //default: DSP_DEBUG_BREAK_IF(true);
     }
 
     //check if this AI was replaced (the new AI will update if this is the case)
@@ -161,11 +161,11 @@ void CAIPetDummy::ActionAbilityStart()
 			uint8 wsrandom = dsprand::GetRandomNumber(1, 3);
             for (int i = 0; i < m_PPet->PetSkills.size(); i++) {
 		        //printf("Random Number: %d \n", wsrandom);
-				if (lvl <= 99){ // Set up so Nanaa can use either King Cobra Clamp or Dancing Edge at 71 or higher
+				if (lvl > 71){ // Set up so Nanaa can use either King Cobra Clamp or Dancing Edge at 71 or higher
 				auto PMobSkill = battleutils::GetMobSkill(m_PPet->PetSkills.at(i));
-  					if (PMobSkill->getID() == 2212 && wsrandom > 1) { //King Kobra Clamp
+  					if (PMobSkill->getID() == 2212 && wsrandom >= 2) { //King Kobra Clamp
                     SetCurrentMobSkill(PMobSkill);
-			        ShowWarning("KING KOBRA CLAMP \n");
+			        //ShowWarning("KING KOBRA CLAMP \n");
                     break;
                     }
 					//else if (PMobSkill->getID() == 2213) { //WASP STING
@@ -173,27 +173,27 @@ void CAIPetDummy::ActionAbilityStart()
 			        //ShowWarning("WASP STING \n");
                     //break;
                     //}
-					else if (PMobSkill->getID() == 2214 && wsrandom > 0) { //DANCING EDGE
+					else if (PMobSkill->getID() == 2214 && wsrandom < 2) { //DANCING EDGE
                     SetCurrentMobSkill(PMobSkill);
-			        ShowWarning("DANCING EDGE \n");
+			        //ShowWarning("DANCING EDGE \n");
                     break;
                     } 	
 
                 } 
-				if (lvl < 65){ // Set up so Nanaa can only use Dancing Edge
+				else if (lvl > 59){ // Set up so Nanaa can only use Dancing Edge
 				auto PMobSkill = battleutils::GetMobSkill(m_PPet->PetSkills.at(i));
                     if (PMobSkill->getID() == 2214) { //DANCING EDGE
                     SetCurrentMobSkill(PMobSkill);
-			        ShowWarning("DANCING EDGE \n");
+			        //ShowWarning("DANCING EDGE \n");
                     break;
                     } 	
 
                 }	
-				if (lvl < 60){ // Set up so Nanaa can only use wasp sting
+				else if (lvl > 5){ // Set up so Nanaa can only use wasp sting
 				auto PMobSkill = battleutils::GetMobSkill(m_PPet->PetSkills.at(i));
                     if (PMobSkill->getID() == 2213) { //Wasp Sting
                     SetCurrentMobSkill(PMobSkill);
-			        ShowWarning("WASP STING \n");
+			        //ShowWarning("WASP STING \n");
                     break;
                     } 	
 
@@ -204,17 +204,17 @@ void CAIPetDummy::ActionAbilityStart()
         }
 	 if (m_PPet->m_PetID == PETID_KUPIPI && m_PPet->health.tp >= 1000 && m_PBattleTarget != nullptr){
 			int16 mobwsID = -1;
-			if (lvl <= 99) {
+			if (lvl > 71) {
 			uint8 wsrandom = dsprand::GetRandomNumber(1, 3); // Black Halo or Hexa Strike
             for (int i = 0; i < m_PPet->PetSkills.size(); i++) {
                 auto PMobSkill = battleutils::GetMobSkill(m_PPet->PetSkills.at(i));
-  					if (PMobSkill->getID() == 3774 && wsrandom == 1) { //Hexa Strike
+  					if (PMobSkill->getID() == 3774 && wsrandom >= 2) { //Hexa Strike
 					mobwsID = 168;
 					SetCurrentMobSkill(PMobSkill);
 			        SetCurrentWeaponSkill(mobwsID);
                     break;
                     }
-                    else if (PMobSkill->getID() == 3775 && wsrandom == 2) { //Hexa Strike
+                    else if (PMobSkill->getID() == 3775 && wsrandom < 2) { //Black Halo
 					mobwsID = 169;
 					SetCurrentMobSkill(PMobSkill);
 			        SetCurrentWeaponSkill(mobwsID);
@@ -223,17 +223,17 @@ void CAIPetDummy::ActionAbilityStart()
 
                 }
             }
-            if (lvl < 71) {
+            else if (lvl > 64) {
 			uint8 wsrandom = dsprand::GetRandomNumber(1, 3); //Hexa Strike or Judgement
             for (int i = 0; i < m_PPet->PetSkills.size(); i++) {
                 auto PMobSkill = battleutils::GetMobSkill(m_PPet->PetSkills.at(i));
-  					if (PMobSkill->getID() == 3774 && wsrandom == 1) { //Hexa Strike
+  					if (PMobSkill->getID() == 3774 && wsrandom >= 2) { //Hexa Strike
 					mobwsID = 168;
 					SetCurrentMobSkill(PMobSkill);
 			        SetCurrentWeaponSkill(mobwsID);
                     break;
                     }
-                    else if (PMobSkill->getID() == 3773 && wsrandom == 2) { //Judgement
+                    else if (PMobSkill->getID() == 3773 && wsrandom < 2) { //Judgement
 					mobwsID = 167;
 					SetCurrentMobSkill(PMobSkill);
 			        SetCurrentWeaponSkill(mobwsID);
@@ -242,17 +242,17 @@ void CAIPetDummy::ActionAbilityStart()
 
                 }
             }
-            if (lvl < 65) {
+            else if (lvl > 59) {
 			uint8 wsrandom = dsprand::GetRandomNumber(1, 3); //Judgement or True STrike
             for (int i = 0; i < m_PPet->PetSkills.size(); i++) {
                 auto PMobSkill = battleutils::GetMobSkill(m_PPet->PetSkills.at(i));
-  					if (PMobSkill->getID() == 3773 && wsrandom == 1) { //Judgement
+  					if (PMobSkill->getID() == 3773 && wsrandom >= 2) { //Judgement
 					mobwsID = 167;
 					SetCurrentMobSkill(PMobSkill);
 			        SetCurrentWeaponSkill(mobwsID);
                     break;
                     }
-                    else if (PMobSkill->getID() == 3772 && wsrandom == 2) { //True Strike
+                    else if (PMobSkill->getID() == 3772 && wsrandom < 2) { //True Strike
 					mobwsID = 166;
 					SetCurrentMobSkill(PMobSkill);
 			        SetCurrentWeaponSkill(mobwsID);
@@ -261,17 +261,17 @@ void CAIPetDummy::ActionAbilityStart()
 
                 }
             }
-           if (lvl < 60) {
+           else if (lvl > 54) {
 			uint8 wsrandom = dsprand::GetRandomNumber(1, 3); //True Strike or Brainshaker
             for (int i = 0; i < m_PPet->PetSkills.size(); i++) {
                 auto PMobSkill = battleutils::GetMobSkill(m_PPet->PetSkills.at(i));
-  					if (PMobSkill->getID() == 3772 && wsrandom == 1) { //True Strike
+  					if (PMobSkill->getID() == 3772 && wsrandom >= 2) { //True Strike
 					mobwsID = 166;
 					SetCurrentMobSkill(PMobSkill);
 			        SetCurrentWeaponSkill(mobwsID);
                     break;
                     }
-                    else if (PMobSkill->getID() == 3771 && wsrandom == 2) { //Brainshaker
+                    else if (PMobSkill->getID() == 3771 && wsrandom < 2) { //Brainshaker
 					mobwsID = 162;
 					SetCurrentMobSkill(PMobSkill);
 			        SetCurrentWeaponSkill(mobwsID);
@@ -280,17 +280,17 @@ void CAIPetDummy::ActionAbilityStart()
 
                 }
             }
-          if (lvl < 55) {
+          else if (lvl > 24) {
 			uint8 wsrandom = dsprand::GetRandomNumber(1, 3); //True Strike or Brainshaker
             for (int i = 0; i < m_PPet->PetSkills.size(); i++) {
                 auto PMobSkill = battleutils::GetMobSkill(m_PPet->PetSkills.at(i));
-  					if (PMobSkill->getID() == 3771 && wsrandom == 1) { //Brain Shaker
+  					if (PMobSkill->getID() == 3771 && wsrandom >= 2) { //Brain Shaker
 					mobwsID = 162;
 					SetCurrentMobSkill(PMobSkill);
 			        SetCurrentWeaponSkill(mobwsID);
                     break;
                     }
-                    else if (PMobSkill->getID() == 3770 && wsrandom == 2) { //Shining Strike
+                    else if (PMobSkill->getID() == 3770 && wsrandom < 2) { //Shining Strike
 					mobwsID = 162;
 					SetCurrentMobSkill(PMobSkill);
 			        SetCurrentWeaponSkill(mobwsID);
@@ -299,7 +299,7 @@ void CAIPetDummy::ActionAbilityStart()
 
                 }
             }	
-         if (lvl < 25) {
+         else if (lvl > 4) {
             for (int i = 0; i < m_PPet->PetSkills.size(); i++) {
                 auto PMobSkill = battleutils::GetMobSkill(m_PPet->PetSkills.at(i));
   					if (PMobSkill->getID() == 3770) { //Shinning Strike
@@ -319,126 +319,126 @@ void CAIPetDummy::ActionAbilityStart()
         
 	 if (m_PPet->m_PetID == PETID_AYAME && m_PPet->health.tp >= 1000 && m_PBattleTarget != nullptr){
 			int16 mobwsID = -1;		
-			if (lvl <= 99) {
+			if (lvl > 71) {
 			uint8 wsrandom = dsprand::GetRandomNumber(1, 3); //Gekko or Kasha only 70+ for right now
             for (int i = 0; i < m_PPet->PetSkills.size(); i++) {
                 auto PMobSkill = battleutils::GetMobSkill(m_PPet->PetSkills.at(i));
-  					if (PMobSkill->getID() == 3784 && wsrandom == 1) { //Tachi Kasha
+  					if (PMobSkill->getID() == 3784 && wsrandom >= 2) { //Tachi Kasha
                     mobwsID = 152;
 					SetCurrentMobSkill(PMobSkill);
 					SetCurrentWeaponSkill(mobwsID);
-			        ShowWarning("Tachi: Kasha \n");
+			        //ShowWarning("Tachi: Kasha \n");
                     break;
                     } 
-  					else if (PMobSkill->getID() == 3783 && wsrandom == 2) { //Tachi Gekko
+  					else if (PMobSkill->getID() == 3783 && wsrandom < 2) { //Tachi Gekko
                     mobwsID = 151;
 					SetCurrentMobSkill(PMobSkill);
 					SetCurrentWeaponSkill(mobwsID);
-			        ShowWarning("Tachi: Gekko \n");
+			        //ShowWarning("Tachi: Gekko \n");
                     break;
                     } 					
 
                 }
 			}
-			if (lvl < 71) {
+			else if (lvl > 64) {
 			uint8 wsrandom = dsprand::GetRandomNumber(1, 3); //Gekko or Kasha only 70+ for right now
             for (int i = 0; i < m_PPet->PetSkills.size(); i++) {
                 auto PMobSkill = battleutils::GetMobSkill(m_PPet->PetSkills.at(i));
-  					if (PMobSkill->getID() == 3783 && wsrandom == 1) { //Tachi Gekko
+  					if (PMobSkill->getID() == 3783 && wsrandom >= 2) { //Tachi Gekko
                     mobwsID = 151;
 					SetCurrentMobSkill(PMobSkill);
 					SetCurrentWeaponSkill(mobwsID);
-			        ShowWarning("Tachi: Gekko \n");
+			        //ShowWarning("Tachi: Gekko \n");
                     break;
                     } 
-  					else if (PMobSkill->getID() == 3782 && wsrandom == 2) { //Tachi Yuki
+  					else if (PMobSkill->getID() == 3782 && wsrandom < 2) { //Tachi Yuki
                     mobwsID = 150;
 					SetCurrentMobSkill(PMobSkill);
 					SetCurrentWeaponSkill(mobwsID);
-			        ShowWarning("Tachi: Yuki \n");
+			        //ShowWarning("Tachi: Yuki \n");
                     break;
                     } 					
 
                 }
 			}				
-			if (lvl < 65) {
+			else if (lvl > 59) {
 			uint8 wsrandom = dsprand::GetRandomNumber(1, 3); //Yuki or Jinpu only 
             for (int i = 0; i < m_PPet->PetSkills.size(); i++) {
                 auto PMobSkill = battleutils::GetMobSkill(m_PPet->PetSkills.at(i));
-  					if (PMobSkill->getID() == 3782 && wsrandom == 1) { //Tachi Yuki
+  					if (PMobSkill->getID() == 3782 && wsrandom >= 2) { //Tachi Yuki
                     mobwsID = 150;
 					SetCurrentMobSkill(PMobSkill);
 					SetCurrentWeaponSkill(mobwsID);
-			        ShowWarning("Tachi: Yuki \n");
+			        //ShowWarning("Tachi: Yuki \n");
                     break;
                     } 
-  					else if (PMobSkill->getID() == 3781 && wsrandom == 2) { //Tachi Jinpu
+  					else if (PMobSkill->getID() == 3781 && wsrandom < 2) { //Tachi Jinpu
                     mobwsID = 148;
 					SetCurrentMobSkill(PMobSkill);
 					SetCurrentWeaponSkill(mobwsID);
-			        ShowWarning("Tachi: Jinpu \n");
+			        //ShowWarning("Tachi: Jinpu \n");
                     break;
                     } 					
 
                 }
 			}
-			if (lvl < 59) {
+			else if (lvl > 54) {
 			uint8 wsrandom = dsprand::GetRandomNumber(1, 4); //Jinpu or goten or Enpi
             for (int i = 0; i < m_PPet->PetSkills.size(); i++) {
                 auto PMobSkill = battleutils::GetMobSkill(m_PPet->PetSkills.at(i));
-  					if (PMobSkill->getID() == 3779 && wsrandom == 1) { //Tachi Enpi
+  					if (PMobSkill->getID() == 3779 && wsrandom <= 2) { //Tachi Enpi
                     mobwsID = 144;
 					SetCurrentMobSkill(PMobSkill);
 					SetCurrentWeaponSkill(mobwsID);
-			        ShowWarning("Tachi: Enpi \n");
+			        //ShowWarning("Tachi: Enpi \n");
                     break;
                     }
-  					else if (PMobSkill->getID() == 3780 && wsrandom == 2) { //Tachi Goten
+  					else if (PMobSkill->getID() == 3780 && wsrandom == 3) { //Tachi Goten
                     mobwsID = 146;
 					SetCurrentMobSkill(PMobSkill);
 					SetCurrentWeaponSkill(mobwsID);
-			        ShowWarning("Tachi: Goten \n");
+			        //ShowWarning("Tachi: Goten \n");
                     break;
                     } 								
-  					else if (PMobSkill->getID() == 3781 && wsrandom == 3) { //Tachi Jinpu
+  					else if (PMobSkill->getID() == 3781 && wsrandom == 4) { //Tachi Jinpu
                     mobwsID = 148;
 					SetCurrentMobSkill(PMobSkill);
 					SetCurrentWeaponSkill(mobwsID);
-			        ShowWarning("Tachi: Jinpu \n");
+			        //ShowWarning("Tachi: Jinpu \n");
                     break;
                     } 					
 
                 }
 			}			
-			if (lvl < 49) {
+			else if (lvl > 23) {
 			uint8 wsrandom = dsprand::GetRandomNumber(1, 3); //Jinpu or goten or Enpi
             for (int i = 0; i < m_PPet->PetSkills.size(); i++) {
                 auto PMobSkill = battleutils::GetMobSkill(m_PPet->PetSkills.at(i));
-  					if (PMobSkill->getID() == 3779 && wsrandom == 1) { //Tachi Enpi
+  					if (PMobSkill->getID() == 3779 && wsrandom >= 2) { //Tachi Enpi
                     mobwsID = 144;
 					SetCurrentMobSkill(PMobSkill);
 					SetCurrentWeaponSkill(mobwsID);
-			        ShowWarning("Tachi: Enpi \n");
+			        //ShowWarning("Tachi: Enpi \n");
                     break;
                     }
-  					else if (PMobSkill->getID() == 3780 && wsrandom == 2) { //Tachi Goten
+  					else if (PMobSkill->getID() == 3780 && wsrandom < 2) { //Tachi Goten
                     mobwsID = 146;
 					SetCurrentMobSkill(PMobSkill);
 					SetCurrentWeaponSkill(mobwsID);
-			        ShowWarning("Tachi: Goten \n");
+			        //ShowWarning("Tachi: Goten \n");
                     break;
                     } 													
 
                 }
 			}
-			if (lvl < 23) {
+			else if (lvl > 4) {
             for (int i = 0; i < m_PPet->PetSkills.size(); i++) {
                 auto PMobSkill = battleutils::GetMobSkill(m_PPet->PetSkills.at(i));
   					if (PMobSkill->getID() == 3779) { //Tachi Enpi
                     mobwsID = 144;
 					SetCurrentMobSkill(PMobSkill);
 					SetCurrentWeaponSkill(mobwsID);
-			        ShowWarning("Tachi: Enpi \n");
+			        //ShowWarning("Tachi: Enpi \n");
                     break;
 					}						
 
@@ -453,7 +453,7 @@ void CAIPetDummy::ActionAbilityStart()
                 auto PMobSkill = battleutils::GetMobSkill(m_PPet->PetSkills.at(i));
   					if (PMobSkill->getID() == 2961) { //Savage Blade
                     SetCurrentMobSkill(PMobSkill);
-			        ShowWarning("KING KOBRA CLAMP \n");
+			        //ShowWarning("KING KOBRA CLAMP \n");
                     break;
                     } 	
 
@@ -464,59 +464,59 @@ void CAIPetDummy::ActionAbilityStart()
 
 	if (m_PPet->m_PetID == PETID_CURILLA && m_PPet->health.tp >= 1000 && m_PBattleTarget != nullptr){
 			int16 mobwsID = -1;		
-			if (lvl <= 99) {
+			if (lvl > 64) {
 			m_PJobAbility = nullptr;
 			uint8 wsrandom = dsprand::GetRandomNumber(1, 3); //Swift Blade or Vorpal
             for (int i = 0; i < m_PPet->PetSkills.size(); i++) {
                 auto PMobSkill = battleutils::GetMobSkill(m_PPet->PetSkills.at(i));
-  					if (PMobSkill->getID() == 3743 && wsrandom == 1) { //Swift Blade
+  					if (PMobSkill->getID() == 3743 && wsrandom >= 2) { //Swift Blade
                     mobwsID = 41;
 					SetCurrentMobSkill(PMobSkill);
 					SetCurrentWeaponSkill(mobwsID);
-			        ShowWarning("Swift Blade \n");
+			        //ShowWarning("Swift Blade \n");
                     break;
                     } 
-  					else if (PMobSkill->getID() == 3742 && wsrandom == 2) { //Vorpal Blade
+  					else if (PMobSkill->getID() == 3742 && wsrandom < 2) { //Vorpal Blade
                     mobwsID = 40;
 					SetCurrentMobSkill(PMobSkill);
 					SetCurrentWeaponSkill(mobwsID);
-			        ShowWarning("Vorpal Blade \n");
+			        //ShowWarning("Vorpal Blade \n");
                     break;
                     } 					
 
                 }
 			}
-			if (lvl < 65) {
+			else if (lvl > 59) {
 			m_PJobAbility = nullptr;
 			uint8 wsrandom = dsprand::GetRandomNumber(1, 3); //Vorpal or Red Lotus
             for (int i = 0; i < m_PPet->PetSkills.size(); i++) {
                 auto PMobSkill = battleutils::GetMobSkill(m_PPet->PetSkills.at(i));
-  					if (PMobSkill->getID() == 3740 && wsrandom == 1) { //Red Lotus Blade
+  					if (PMobSkill->getID() == 3740 && wsrandom >= 2) { //Red Lotus Blade
                     mobwsID = 34;
 					SetCurrentMobSkill(PMobSkill);
 					SetCurrentWeaponSkill(mobwsID);
-			        ShowWarning("Red Lotus Blade \n");
+			        //ShowWarning("Red Lotus Blade \n");
                     break;
                     } 
-  					else if (PMobSkill->getID() == 3742 && wsrandom == 2) { //Vorpal Blade
+  					else if (PMobSkill->getID() == 3742 && wsrandom < 2) { //Vorpal Blade
                     mobwsID = 40;
 					SetCurrentMobSkill(PMobSkill);
 					SetCurrentWeaponSkill(mobwsID);
-			        ShowWarning("Vorpal Blade \n");
+			        //ShowWarning("Vorpal Blade \n");
                     break;
                     } 					
 
                 }
 			}
-			if (lvl < 60) {
+			else if (lvl > 4) {
 			m_PJobAbility = nullptr;
             for (int i = 0; i < m_PPet->PetSkills.size(); i++) {
                 auto PMobSkill = battleutils::GetMobSkill(m_PPet->PetSkills.at(i));
-  					if (PMobSkill->getID() == 3740 && wsrandom == 1) { //Red Lotus Blade
+  					if (PMobSkill->getID() == 3740) { //Red Lotus Blade
                     mobwsID = 34;
 					SetCurrentMobSkill(PMobSkill);
 					SetCurrentWeaponSkill(mobwsID);
-			        ShowWarning("Red Lotus Blade \n");
+			        //ShowWarning("Red Lotus Blade \n");
                     break;
                     } 					
 
@@ -709,7 +709,7 @@ void CAIPetDummy::ActionAbilityStart()
 void CAIPetDummy::preparePetAbility(CBattleEntity* PTarg) {
 
 	if (m_PJobAbility != nullptr || m_PJobAbility > 0) {
-        ShowWarning(CL_GREEN"Alternate preparepet triggered" CL_RESET);
+        //ShowWarning(CL_GREEN"Alternate preparepet triggered" CL_RESET);
         apAction_t Action;
         m_PPet->m_ActionList.clear();
 
@@ -740,7 +740,7 @@ void CAIPetDummy::preparePetAbility(CBattleEntity* PTarg) {
 		
 		
         m_LastActionTime = m_Tick;
-		ShowWarning(CL_RED"PreparePetAbility for JOB ABILITY Fired!!!\n" CL_RESET);
+		//ShowWarning(CL_RED"PreparePetAbility for JOB ABILITY Fired!!!\n" CL_RESET);
         m_LastActionTime = m_Tick;
 		       
         m_ActionType = ACTION_JOBABILITY_FINISH;
@@ -750,7 +750,7 @@ void CAIPetDummy::preparePetAbility(CBattleEntity* PTarg) {
 
 
 	else if (m_PWeaponSkill != nullptr || m_PWeaponSkill > 0) {
-        ShowWarning(CL_GREEN"Alternate preparepet triggered" CL_RESET);
+        //ShowWarning(CL_GREEN"Alternate preparepet triggered" CL_RESET);
         apAction_t Action;
         m_PPet->m_ActionList.clear();
 
@@ -781,7 +781,7 @@ void CAIPetDummy::preparePetAbility(CBattleEntity* PTarg) {
 		
 		Action.ActionTarget = m_PBattleSubTarget;
         m_LastActionTime = m_Tick;
-		ShowWarning(CL_RED"PreparePetAbility Fired!!!\n" CL_RESET);
+		//ShowWarning(CL_RED"PreparePetAbility Fired!!!\n" CL_RESET);
         m_LastActionTime = m_Tick;
         m_ActionType = ACTION_WEAPONSKILL_FINISH;
         ActionWeaponSkillFinish();
@@ -791,7 +791,7 @@ void CAIPetDummy::preparePetAbility(CBattleEntity* PTarg) {
 
 
     else if (m_PMobSkill != nullptr) {
-        ShowWarning(CL_RED"Normal preparepet triggered \n" CL_RESET);
+        //ShowWarning(CL_RED"Normal preparepet triggered \n" CL_RESET);
         apAction_t Action;
         m_PPet->m_ActionList.clear();
 
@@ -854,7 +854,7 @@ void CAIPetDummy::preparePetAbility(CBattleEntity* PTarg) {
 	
 	
     else {
-        ShowWarning("ai_pet_dummy::ActionAbilityFinish Pet skill is NULL \n");
+        //ShowWarning("ai_pet_dummy::ActionAbilityFinish Pet skill is NULL \n");
         TransitionBack(true);
     }
 }
@@ -976,7 +976,7 @@ void CAIPetDummy::ActionAbilityFinish() {
 	
     //DSP_DEBUG_BREAK_IF(m_PMobSkill == nullptr);
     DSP_DEBUG_BREAK_IF(m_PBattleSubTarget == nullptr);
-        ShowWarning(CL_GREEN"MOBSKILL ABILITY FIRED!!! \n" CL_RESET);
+        //ShowWarning(CL_GREEN"MOBSKILL ABILITY FIRED!!! \n" CL_RESET);
 	
 
     // reset AoE finder
@@ -1137,7 +1137,7 @@ void CAIPetDummy::ActionAbilityFinish() {
 void CAIPetDummy::ActionWeaponSkillFinish() 
 {
  
-    ShowWarning(CL_GREEN"WEAPONSKILL ABILITY FINISH!!! \n" CL_RESET);
+    //ShowWarning(CL_GREEN"WEAPONSKILL ABILITY FINISH!!! \n" CL_RESET);
     //DSP_DEBUG_BREAK_IF(m_PMobSkill == nullptr);
     DSP_DEBUG_BREAK_IF(m_PWeaponSkill == nullptr);
     DSP_DEBUG_BREAK_IF(m_PBattleSubTarget == nullptr);
@@ -1184,7 +1184,7 @@ void CAIPetDummy::ActionWeaponSkillFinish()
 
 	uint16 animationId = m_PWeaponSkill->getAnimationId();
 
-	printf("Mob Weaponskill Animation ID Should be: %d \n", animationId);
+	//printf("Mob Weaponskill Animation ID Should be: %d \n", animationId);
 	apAction_t Action;
 	Action.ActionTarget = m_PBattleSubTarget;
 	Action.reaction = REACTION_HIT;
@@ -1345,7 +1345,7 @@ void CAIPetDummy::ActionJobAbilityFinish()
 
 	uint16 animationId = m_PJobAbility->getAnimationID();
 
-	printf("Mob Job Ability Animation ID Should be: %d \n", animationId);
+	//printf("Mob Job Ability Animation ID Should be: %d \n", animationId);
 	apAction_t Action;
 	Action.ActionTarget = m_PBattleSubTarget;
 	Action.reaction = REACTION_HIT;
@@ -1583,7 +1583,7 @@ void CAIPetDummy::ActionAttack()
 	
 	  if (m_PPet->m_PetID == PETID_KUPIPI)
 		{
-		 ShowDebug("KUPIPI Check \n");
+		 //ShowDebug("KUPIPI Check \n");
 		 if (m_Tick >= m_LastKupipiMagicTime + m_magicKupipiRecast) // Check Every 4 Seconds as universal check
 			{
 			    int16 spellID = -1;
@@ -1592,7 +1592,7 @@ void CAIPetDummy::ActionAttack()
         
 		
 				spellID = KupipiSpell();
-		        printf("Kupipi Spell is: %d \n", spellID);
+		        //printf("Kupipi Spell is: %d \n", spellID);
 				if (spellID != -1)
 				{
 				SetCurrentSpell(spellID);
@@ -1715,7 +1715,34 @@ void CAIPetDummy::ActionAttack()
     float currentDistance = distance(m_PPet->loc.p, m_PBattleTarget->loc.p);
 
     //go to target if its too far away
-    if (currentDistance > m_PBattleTarget->m_ModelSize && m_PPet->speed != 0)
+    if (currentDistance > m_PBattleTarget->m_ModelSize && m_PPet->m_PetID == PETID_NANAA_MIHGO && m_PPet->speed != 0)
+    {
+        if (m_PPathFind->PathBehind(m_PBattleTarget->loc.p, 2.0f, PATHFLAG_RUN | PATHFLAG_WALLHACK))
+        {
+            m_PPathFind->FollowPath();
+
+            // recalculate
+            currentDistance = distance(m_PPet->loc.p, m_PBattleTarget->loc.p);
+			
+        }
+		
+		if (!m_PPathFind->IsFollowingPath())
+		{
+			//Trust has arrived at the target
+			printf("I am not following /n");
+			auto angle = getangle(m_PPet->loc.p, m_PBattleTarget->loc.p) + 150;
+			position_t new_pos{ 0, m_PPet->loc.p.x - (cosf(rotationToRadian(angle)) * 1.5f),
+				m_PBattleTarget->loc.p.y, m_PPet->loc.p.z + (sinf(rotationToRadian(angle)) * 2.5f), 0 };
+
+				m_PPathFind->PathTo(new_pos, PATHFLAG_WALLHACK | PATHFLAG_RUN);
+			
+		}
+		
+    }
+	
+	
+	    //go to target if its too far away
+    if (currentDistance > m_PBattleTarget->m_ModelSize && m_PPet->m_PetID != PETID_NANAA_MIHGO && m_PPet->speed != 0)
     {
         if (m_PPathFind->PathAround(m_PBattleTarget->loc.p, 2.0f, PATHFLAG_RUN | PATHFLAG_WALLHACK))
         {
@@ -1723,8 +1750,37 @@ void CAIPetDummy::ActionAttack()
 
             // recalculate
             currentDistance = distance(m_PPet->loc.p, m_PBattleTarget->loc.p);
+			
         }
     }
+	
+	  //Move Nanaa Mihgo Behind the Target?
+	if ((abs(m_PBattleTarget->loc.p.rotation - m_PPet->loc.p.rotation) > 23) &&  m_PPet->m_PetID == PETID_NANAA_MIHGO)
+		{
+		 ShowDebug("NANAA IS NOT BEHIND THE TARGET");
+		 if (m_PPathFind->PathAround(m_PBattleTarget->loc.p, 2.0f, PATHFLAG_RUN | PATHFLAG_WALLHACK))
+        {
+		
+		auto angle = getangle(m_PPet->loc.p, m_PBattleTarget->loc.p) + 64;
+			position_t new_pos{ 0, m_PPet->loc.p.x - (cosf(rotationToRadian(angle)) * 1.5f),
+			m_PBattleTarget->loc.p.y, m_PPet->loc.p.z + (sinf(rotationToRadian(angle)) * 2.5f), 0 };
+			if (m_PPathFind->PathTo(new_pos, PATHFLAG_RUN | PATHFLAG_WALLHACK))
+			{
+				m_PPathFind->FollowPath();
+			}
+		
+            
+        }
+		}
+	
+	
+
+	
+	if ((abs(m_PBattleTarget->loc.p.rotation - m_PPet->loc.p.rotation) > 23) &&  m_PPet->m_PetID == PETID_NANAA_MIHGO)
+	    {
+	    ShowWarning(CL_RED"Nanaa Mihgo is NOT behind the target!!!!!!\n" CL_RESET);
+		}
+	
 
     if (currentDistance <= m_PBattleTarget->m_ModelSize)
     {

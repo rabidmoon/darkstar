@@ -10435,6 +10435,7 @@ Lunar<CLuaBaseEntity>::Register_t CLuaBaseEntity::methods[] =
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,BCNMSetLoot),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,getBattlefieldID),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,getCurrency),
+    LUNAR_DECLARE_METHOD(CLuaBaseEntity,setCurrency),	
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,addCurrency),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,delCurrency),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,getCP),
