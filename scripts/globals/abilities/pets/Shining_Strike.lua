@@ -1,9 +1,6 @@
 ---------------------------------------------------
--- King Cobra Clamp
--- Deciding Maneuver: Fire
--- Recover HP equal to damage dealth.  Damage varries with TP.  
--- HP recovery ineffective against undead
--- Skillchain Properties: Compression/Reverberation
+-- Shining STrike
+-- Skillchain Properties: Impaction
 ---------------------------------------------------
 
 require("/scripts/globals/settings");
@@ -17,16 +14,16 @@ function onMobSkillCheck(target,mob,skill)
 end;
 
 function onPetAbility(target, pet, skill)
-    local basemod = 5;
+    local basemod = 1;
     local numhits = 1;
-	local attmod = 1;
+	local attmod = 1.0;
     local accmod = 1;
-	local str_wsc = 0.60;
-	local dex_wsc = 0.60;
+	local str_wsc = 0.40;
+	local dex_wsc = 0;
 	local agi_wsc = 0;
 	local vit_wsc = 0;
-	local mnd_wsc = 0;
-    skill:setSkillchain(132);
+	local mnd_wsc = 0.40;
+    skill:setSkillchain(1);
 	
 	
 	
@@ -34,9 +31,9 @@ function onPetAbility(target, pet, skill)
 
 
 	
-	local info = AutoPhysicalMove(pet,target,skill,basemod,numhits,attmod,accmod,str_wsc,dex_wsc,agi_wsc,vit_wsc,mnd_wsc,TP_DMG_BONUS,5.5,7,9);
+	local info = AutoPhysicalMove(pet,target,skill,basemod,numhits,attmod,accmod,str_wsc,dex_wsc,agi_wsc,vit_wsc,mnd_wsc,TP_DMG_BONUS,1.6,3.0,4.65);
  
-    local dmg = MobFinalAdjustments(info.dmg,pet,skill,target,MOBSKILL_PHYSICAL,MOBPARAM_PIERCE,info.hitslanded);
+    local dmg = MobFinalAdjustments(info.dmg,pet,skill,target,MOBSKILL_PHYSICAL,MOBPARAM_BLUNT,info.hitslanded);
 	
 	local hits = automatonhitslanded;
 	local firsthit = 0;
