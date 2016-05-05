@@ -40,7 +40,7 @@ function onTrigger(player,npc)
 	local pNation = player:getNation();
 	local currentMission = player:getCurrentMission(pNation);
 	local srank = getNationRank(SANDORIA);
-	local wrank = getNationRank(WINDURST);
+
 	
 	if (player:getNation() == 0) and (player:hasKeyItem(RED_INSTITUTE_CARD)) and (player:hasSpell(900) == false) and (currentMission == JOURNEY_TO_WINDURST) then  -- Sandy Nation and mission 2-3
 	player:PrintToPlayer("Your Red Institute Card flashes brilliantly!", 0x1C);
@@ -54,11 +54,11 @@ function onTrigger(player,npc)
 	player:PrintToPlayer("Your Green Institute Card flashes brilliantly!", 0x1C);
     player:PrintToPlayer("Ayame : Ah a Green Institute Card.  My blade is ready to assist you", 0xD);
     player:addSpell(900);	
-    elseif (player:getNation() == 2) and (player:hasKeyItem(GREEN_INSTITUTE_CARD)) and (player:hasSpell(900) == false) and (wrank >= 3) then -- Windy Nation can obtain when rank is higher than 2
+    elseif (player:getNation() == 2) and (player:hasKeyItem(GREEN_INSTITUTE_CARD)) and (player:hasSpell(900) == false) and (player:hasCompletedMission(WINDURST,THE_THREE_KINGDOMS) == true) then -- Windy Nation can obtain when rank is higher than 2
 	player:PrintToPlayer("Your Green Institute Card flashes brilliantly!", 0x1C);
     player:PrintToPlayer("Ayame : Ah a Green Institute Card.  My blade is ready to assist you", 0xD);
     player:addSpell(900);	
-	elseif (player:getNation() == 0) and (player:hasKeyItem(RED_INSTITUTE_CARD)) and (player:hasSpell(900) == false) and (srank >= 3) then  -- Sandy Nation can obtain when rank is higher than 2
+	elseif (player:getNation() == 0) and (player:hasKeyItem(RED_INSTITUTE_CARD)) and (player:hasSpell(900) == false) and (player:hasCompletedMission(SANDORIA,JOURNEY_TO_WINDURST) == true) then  -- Sandy Nation can obtain when rank is higher than 2
 	player:PrintToPlayer("Your Red Institute Card flashes brilliantly!", 0x1C);
     player:PrintToPlayer("Ayame : Ah a Red Institute Card.  My blade is ready to assist you", 0xD);
     player:addSpell(900);
