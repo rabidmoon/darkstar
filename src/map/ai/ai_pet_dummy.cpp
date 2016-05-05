@@ -1482,7 +1482,15 @@ void CAIPetDummy::ActionRoaming()
     }
 
     //automaton, wyvern
-    if (m_PPet->getPetType() == PETTYPE_WYVERN || m_PPet->getPetType() == PETTYPE_AUTOMATON ||  m_PPet->getPetType() == PETTYPE_TRUST) {
+    if (m_PPet->getPetType() == PETTYPE_WYVERN || m_PPet->getPetType() == PETTYPE_AUTOMATON) {
+        if (PetIsHealing()) {
+            return;
+        }
+    }
+	
+	
+	//Trusts
+    if (m_PPet->getPetType() == PETTYPE_TRUST) {
         if (PetIsHealing()) {
             return;
         }
