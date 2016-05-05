@@ -31,7 +31,7 @@ function onMobDeathEx(mob, killer, isKillShot, isWeaponSkillKill)
 	local job = killer:getMainJob();
 	local ferretoryblmquest = killer:getVar("FerretoryBLM"); -- turns quest on
 	local ferretoryblmkills = killer:getVar("FerretoryBLMkills"); -- sets kill number
-	local multiplier = 0;
+	local multiplier = 2;
 	local infamy = killer:getVar("Infamy");
 	local playerlvl = killer:getMainLvl();
 	local moblvl = mob:getMainLvl();
