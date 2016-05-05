@@ -841,6 +841,7 @@ end
 if (job == 18) and (level >=47) and (player:hasItem(18353) == false) and (player:getVar("PUPAFweapon") == 0) and trade:getGil(5000) then
             player:addItem(18353, 1);
 			player:messageSpecial(ITEM_OBTAINED, 18353);
+			player:setVar("PUPAFweapon",1);
 			player:PrintToPlayer("Oboro : Don't go off losing that weapon again or I will be very angry.", 0xD);
     end		
   
@@ -901,6 +902,7 @@ local level = player:getMainLvl();
 	
    elseif ((job == 18) and (level >=47)) and (player:hasItem(18353) == false) then
    player:PrintToPlayer("Oboro : You are becoming a strong Puppetmaster.  I've made these new weapons, try them out.", 0xD);
+   player:setVar("PUPAFweapon",1);
    if (player:getFreeSlotsCount() == 0) then
    player:PrintToPlayer("Oboro : Hey make some room in your inventory!", 0xD);
    elseif (player:getVar("PUPWeaponObtained") == 1) and (player:getVar("PUPAFweapon") == 0) and (player:hasItem(18353) == false) then
