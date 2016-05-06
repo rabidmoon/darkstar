@@ -436,7 +436,7 @@ void CAIMobDummy::ActionDropItems()
                 }
 
                 DropList_t* DropList = itemutils::GetDropList(m_PMob->m_DropID);
-                //ShowDebug(CL_CYAN"DropID: %u dropping with TH Level: %u\n" CL_RESET, m_PMob->m_DropID, m_PMob->m_THLvl);
+                ShowDebug(CL_CYAN"DropID: %u dropping with TH Level: %u\n" CL_RESET, m_PMob->m_DropID, m_PMob->m_THLvl);
 
                 if (DropList != nullptr && !m_PMob->getMobMod(MOBMOD_NO_DROPS) && DropList->size())
                 {
