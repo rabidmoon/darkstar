@@ -80,6 +80,7 @@ CAIPetDummy::CAIPetDummy(CPetEntity* PPet)
 	m_kupipiHealCast = 0;
 	m_curillaFlashRecast = 50000;
 	m_magicKupipiRecast = 4000;
+	m_nanaacheck = 5000;  //For Nanaa Mihgo to check every 5 seconds if she is facing target or not
 	
 	
 }
@@ -1734,7 +1735,7 @@ void CAIPetDummy::ActionAttack()
 			
         }
 		
-		if (!m_PPathFind->IsFollowingPath())
+	/*	if (!m_PPathFind->IsFollowingPath())
 		{
 			//Trust has arrived at the target
 			printf("I am not following /n");
@@ -1744,7 +1745,7 @@ void CAIPetDummy::ActionAttack()
 
 				m_PPathFind->PathTo(new_pos, PATHFLAG_WALLHACK | PATHFLAG_RUN);
 			
-		}
+		} */
 		
     }
 	
@@ -1762,34 +1763,61 @@ void CAIPetDummy::ActionAttack()
         }
     }
 	
-	  //Move Nanaa Mihgo Behind the Target?
-	if ((abs(m_PBattleTarget->loc.p.rotation - m_PPet->loc.p.rotation) > 23) &&  m_PPet->m_PetID == PETID_NANAA_MIHGO)
-		{
-		 ShowDebug("NANAA IS NOT BEHIND THE TARGET");
-		 if (m_PPathFind->PathAround(m_PBattleTarget->loc.p, 2.0f, PATHFLAG_RUN | PATHFLAG_WALLHACK))
-        {
-		
-		auto angle = getangle(m_PPet->loc.p, m_PBattleTarget->loc.p) + 64;
-			position_t new_pos{ 0, m_PPet->loc.p.x - (cosf(rotationToRadian(angle)) * 1.5f),
-			m_PBattleTarget->loc.p.y, m_PPet->loc.p.z + (sinf(rotationToRadian(angle)) * 2.5f), 0 };
-			if (m_PPathFind->PathTo(new_pos, PATHFLAG_RUN | PATHFLAG_WALLHACK))
+	if (m_PPet->m_PetID == PETID_NANAA_MIHGO){
+	if (m_Tick >= m_LastNanaaCheckTime + m_nanaacheck) // Every 5 seconds to see if nanaa is not facing target
+	{
+	    //Check to see if facing target
+		ShowDebug("NANAA FACING CHECK  \n");
+	    if ((abs(m_PBattleTarget->loc.p.rotation - m_PPet->loc.p.rotation) > 5) &&
+		(abs(m_PBattleTarget->loc.p.rotation - m_PPet->loc.p.rotation) < 118)) 
+		//Not facing target have Nanaa Mihgo Behind the Target
+		{	
+		    ShowWarning(CL_GREEN"Nanaa is moving behind the target\n" CL_RESET);
+			ShowDebug("Greater than 10 and less than 118  \n");
+			position_t* pos = &m_PBattleTarget->loc.p;
+			position_t nearEntity = nearPosition(*pos, 2.0f, M_PI);
+			m_PPathFind->PathTo(nearEntity, PATHFLAG_WALLHACK | PATHFLAG_RUN);
 			{
 				m_PPathFind->FollowPath();
 			}
+			m_nanaacheck = 0;
 		
             
         }
-		}
+		else if (((abs(m_PBattleTarget->loc.p.rotation - m_PPet->loc.p.rotation) > 135) &&
+		(abs(m_PBattleTarget->loc.p.rotation - m_PPet->loc.p.rotation) < 250)) && m_PPet->m_PetID == PETID_NANAA_MIHGO) 
+		//Not facing target have Nanaa Mihgo Behind the Target
+		{	
+		    ShowWarning(CL_GREEN"Nanaa is moving behind the target\n" CL_RESET);
+			ShowDebug("Greater than 135 and less than 245  \n");
+			position_t* pos = &m_PBattleTarget->loc.p;
+			position_t nearEntity = nearPosition(*pos, 2.0f, M_PI);
+			m_PPathFind->PathTo(nearEntity, PATHFLAG_WALLHACK | PATHFLAG_RUN);
+			{
+			m_PPathFind->FollowPath();
+			}
+		    m_nanaacheck = 0;
+            
+        }
+
+		
+		else
+			{	
+             ShowWarning(CL_RED"NANAA IS IN FRONT OR BEHIND THE MOB.  DONT MOVE!!\n" CL_RESET);
+			 m_nanaacheck = 5000;
+             m_LastNanaaCheckTime = m_Tick;
+			}
+		
+	}
+	}
+	
+
+
+	
 	
 	
 
 	
-	if ((abs(m_PBattleTarget->loc.p.rotation - m_PPet->loc.p.rotation) > 23) &&  m_PPet->m_PetID == PETID_NANAA_MIHGO)
-	    {
-	    ShowWarning(CL_RED"Nanaa Mihgo is NOT behind the target!!!!!!\n" CL_RESET);
-		}
-	
-
     if (currentDistance <= m_PBattleTarget->m_ModelSize)
     {
         int32 WeaponDelay = m_PPet->m_Weapons[SLOT_MAIN]->getDelay();

@@ -1416,7 +1416,7 @@ int16 CAIAutomatonDummy::HarleAttack()
 		}
 	else if (m_PPet->hasAttachment(8643))
 		{
-		trigger = 80;
+		trigger = 50;
 		}	
 	else
 		{

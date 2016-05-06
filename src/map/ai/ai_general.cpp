@@ -98,6 +98,7 @@ void CAIGeneral::Reset()
 	m_LastCurillaVokeTime = 0;
 	m_LastCurillaFlash = 0;
 	m_LastKupipiMagicTime = 0;
+    m_LastNanaaCheckTime = 0;
 
     m_WaitTime = 0;
     m_LastWaitTime = 0;
@@ -355,6 +356,11 @@ void CAIGeneral::SetLastCurillaFlash(uint32 time)
 void CAIGeneral::SetLastKupipiMagicTime(uint32 time)
 {
 	m_LastKupipiMagicTime = time;
+}
+
+void CAIGeneral::SetLastNanaaCheckTime(uint32 time)
+{
+	m_LastNanaaCheckTime = time;
 }
 
 void CAIGeneral::SetBattleTarget(CBattleEntity* PEntity)
