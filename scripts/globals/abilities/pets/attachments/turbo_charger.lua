@@ -28,6 +28,7 @@ pet:addMod(MOD_HASTE_GEAR, 5)
 end
 end
 end
+end;
 
 function onManeuverLose(player,maneuvers)
 local pet = player:getPet();
@@ -45,4 +46,4 @@ end
 end
 
 
-end
+end;
