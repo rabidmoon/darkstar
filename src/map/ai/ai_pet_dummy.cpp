@@ -81,6 +81,7 @@ CAIPetDummy::CAIPetDummy(CPetEntity* PPet)
 	m_curillaFlashRecast = 50000;
 	m_magicKupipiRecast = 4000;
 	m_nanaacheck = 5000;  //For Nanaa Mihgo to check every 5 seconds if she is facing target or not
+	m_nanaaSneakAttackRecast = 20000;
 	
 	
 }
@@ -710,24 +711,27 @@ void CAIPetDummy::ActionAbilityStart()
 void CAIPetDummy::preparePetAbility(CBattleEntity* PTarg) {
 
 	if (m_PJobAbility != nullptr || m_PJobAbility > 0) {
-        //ShowWarning(CL_GREEN"Alternate preparepet triggered" CL_RESET);
+        //ShowWarning(CL_GREEN"Alternate preparepet triggered for JA /n" CL_RESET);
         apAction_t Action;
         m_PPet->m_ActionList.clear();
 
        		
-		// find correct targe
-        
+		/* // find correct targe
+         if (m_PMobSkill->getValidTargets() == TARGET_SELF)
+        { //self
+            m_PBattleSubTarget = m_PPet;
+        } */
 		
 		//for weaponskill end
 		
 	
-
+        // OK for here set specific section below based on job ability number so that certain ja's give the reaction hit message
         Action.ActionTarget = m_PBattleSubTarget;
         Action.reaction = REACTION_HIT;
-        Action.speceffect = SPECEFFECT_HIT;
+        Action.speceffect = SPECEFFECT_HIT; //SPECEFFECT_NONE;
         Action.animation = 0;
         Action.param = m_PJobAbility->getID();
-        //Action.messageID = 43; //readies message
+        //Action.messageID = 100; //<player> uses message
         Action.knockback = 0;
         m_skillTP = m_PPet->health.tp;
 		
@@ -837,7 +841,7 @@ void CAIPetDummy::preparePetAbility(CBattleEntity* PTarg) {
         m_PMobSkill->getID() != 1689 && m_PMobSkill->getID() != 1690 && m_PMobSkill->getID() != 1691 &&
 		m_PMobSkill->getID() != 1811 && m_PMobSkill->getID() != 2488 && m_PMobSkill->getID() != 1692 &&
 		m_PMobSkill->getID() != 2044 && m_PMobSkill->getID() != 1810 && m_PMobSkill->getID() != 1809 && 
-		m_PMobSkill->getID() != 3711)  //Prevents Ranged Attacks and WS's from resetting TP since they are considered an ability
+		m_PMobSkill->getID() != 3711 && m_PMobSkill->getID() != 3801)  //Prevents Ranged Attacks and WS's from resetting TP since they are considered an ability
 		{
         m_PPet->health.tp = 0;
         }
@@ -1349,10 +1353,11 @@ void CAIPetDummy::ActionJobAbilityFinish()
 	//printf("Mob Job Ability Animation ID Should be: %d \n", animationId);
 	apAction_t Action;
 	Action.ActionTarget = m_PBattleSubTarget;
-	Action.reaction = REACTION_HIT;
+	Action.reaction = REACTION_HIT; //   SPECEFFECT_NONE;
 	Action.speceffect = SPECEFFECT_HIT;
 	Action.animation = animationId;
 	Action.knockback = 0;
+	Action.messageID = 100; 
 	
 
 		
@@ -1379,7 +1384,7 @@ void CAIPetDummy::ActionJobAbilityFinish()
             msg = m_PMobSkill->getAoEMsg();
         }
 
-        Action.messageID = msg;
+        //Action.messageID = msg;
 		
         battleutils::ClaimMob(m_PBattleSubTarget, m_PPet);
 
@@ -1409,7 +1414,8 @@ void CAIPetDummy::ActionJobAbilityFinish()
     } 
 
 		
-	
+    m_PJobAbility = nullptr;
+    
 	m_PBattleSubTarget = nullptr;
     m_ActionType = ACTION_ATTACK;
  
@@ -1657,6 +1663,32 @@ void CAIPetDummy::ActionAttack()
 				}				
 				
 		}
+		
+		 if (m_PPet->m_PetID == PETID_NANAA_MIHGO)
+		{		
+		 if ((m_Tick >= m_LastNanaaSneakAttackTime + m_nanaaSneakAttackRecast) && m_PPet->health.tp < 800 &&
+		 (abs(m_PBattleTarget->loc.p.rotation - m_PPet->loc.p.rotation) < 23)) // Only use SA when timer is up less than 500 tp and behind the mob
+			{
+			m_PWeaponSkill = nullptr;
+            int16 mobjaID = -1;			
+			for (int i = 0; i < m_PPet->PetSkills.size(); i++) {
+                    auto PMobSkill = battleutils::GetMobSkill(m_PPet->PetSkills.at(i));
+                            
+                        if (PMobSkill->getID() == 3801) { //Sneak Atack
+						    mobjaID = 28;
+                            SetCurrentMobSkill(PMobSkill);
+							SetCurrentJobAbility(mobjaID);
+							m_PBattleSubTarget = m_PPet;  //Target Self
+							break;
+                        }
+			        }
+				preparePetAbility(m_PBattleSubTarget);
+				ShowDebug("Sneak Attack \n");
+				m_LastNanaaSneakAttackTime = m_Tick;
+				return;	
+				}				
+				
+		}
 	
 
 
@@ -1878,8 +1910,20 @@ void CAIPetDummy::ActionAttack()
                                 Action.speceffect = SPECEFFECT_CRITICAL_HIT;
                                 Action.messageID = 67;
                             }
-
-                            damage = (int32)((m_PPet->GetMainWeaponDmg() + battleutils::GetFSTR(m_PPet, m_PBattleTarget, SLOT_MAIN)) * DamageRatio);
+						    if (m_PPet->StatusEffectContainer->HasStatusEffect(EFFECT_SNEAK_ATTACK))
+			                {					
+                                damage = (int32)((m_PPet->GetMainWeaponDmg() + m_PPet->DEX() + battleutils::GetFSTR(m_PPet, m_PBattleTarget, SLOT_MAIN)) * DamageRatio);
+                            }
+							else
+							{
+							    damage = (int32)((m_PPet->GetMainWeaponDmg() + battleutils::GetFSTR(m_PPet, m_PBattleTarget, SLOT_MAIN)) * DamageRatio);
+						    }
+							if (m_PPet->StatusEffectContainer->HasStatusEffect(EFFECT_SNEAK_ATTACK))
+			                {
+					            ShowWarning(CL_GREEN"HIT OCCURED REMOVING SA \n" CL_RESET);
+						        m_PPet->StatusEffectContainer->DelStatusEffect(EFFECT_SNEAK_ATTACK);
+					        }	
+			
                         }
                     }
                     else {

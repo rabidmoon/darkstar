@@ -156,6 +156,7 @@ public:
     void            SetLastCurillaFlash(uint32 time);
 	void            SetLastKupipiMagicTime(uint32 time);
 	void			SetLastNanaaCheckTime(uint32 time);
+	void			SetLastNanaaSneakAttackTime(uint32 time);
 	void			SetCurrentAction(ACTIONTYPE Action, uint16 TargetID = 0);
 	void			SetLastCorsairRoll(uint16 ability);
 	void			SetAutoAttackEnabled(bool enabled);
@@ -206,6 +207,7 @@ protected:
 	uint32          m_LastCurillaFlash;
 	uint32          m_LastKupipiMagicTime;
 	uint32          m_LastNanaaCheckTime;  //Last time Nanaa Mihgo checked if facing target
+	uint32			m_LastNanaaSneakAttackTime;
 
 
     uint32			m_Tick;					// текущее значение времени

@@ -69,6 +69,7 @@ protected:
 	uint32 m_kupipiHealCast;
 	uint32 m_kupipiHealRecast;
 	uint32 m_nanaacheck;
+	uint32 m_nanaaSneakAttackRecast;
 
 
 

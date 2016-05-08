@@ -2446,6 +2446,9 @@ INSERT INTO `mob_skill_lists` VALUES ('Proto-Ultima',729,1268);
 INSERT INTO `mob_skill_lists` VALUES ('Nanaa_Mihgo',730,2212);
 INSERT INTO `mob_skill_lists` VALUES ('Nanaa_Mihgo',730,2213);
 INSERT INTO `mob_skill_lists` VALUES ('Nanaa_Mihgo',730,2214);
+INSERT INTO `mob_skill_lists` VALUES ('Nanaa_Mihgo',730,3800); -- Viper Bite
+INSERT INTO `mob_skill_lists` VALUES ('Nanaa_Mihgo',730,3801); -- Sneak Attack
+
 -- INSERT INTO `mob_skill_lists` VALUES ('Kupipi',731,3058);
 INSERT INTO `mob_skill_lists` VALUES ('Kupipi',731,3770); -- Shining Strike
 INSERT INTO `mob_skill_lists` VALUES ('Kupipi',731,3771); -- Brainshaker

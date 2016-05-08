@@ -25,6 +25,7 @@
 #include "entities/battleentity.h"
 #include "attackround.h"
 #include "attack.h"
+#include "entities/petentity.h"
 
 #include <math.h>
 
@@ -303,6 +304,16 @@ void CAttack::ProcessDamage()
 		((abs(m_victim->loc.p.rotation - m_attacker->loc.p.rotation) < 23) ||
         m_attacker->StatusEffectContainer->HasStatusEffect(EFFECT_HIDE)))
 	{
+		m_trickAttackDamage = m_attacker->DEX();
+	}
+
+	// Sneak attack.
+	if (m_isFirstSwing &&
+		m_attacker->StatusEffectContainer->HasStatusEffect(EFFECT_SNEAK_ATTACK) &&
+		((abs(m_victim->loc.p.rotation - m_attacker->loc.p.rotation) < 23) ||
+			m_attacker->StatusEffectContainer->HasStatusEffect(EFFECT_HIDE)))
+	{
+		ShowWarning(CL_GREEN"SNEAK ATTACK BY NANAA IS TRIGGERED!!!!!!\n" CL_RESET);
 		m_trickAttackDamage = m_attacker->DEX();
 	}
 
