@@ -835,13 +835,13 @@ void CAIPetDummy::preparePetAbility(CBattleEntity* PTarg) {
 		
 	
         // OK for here set specific section below based on job ability number so that certain ja's give the reaction hit message
-        Action.ActionTarget = m_PBattleSubTarget;
+       /* Action.ActionTarget = m_PBattleSubTarget;
         Action.reaction = REACTION_HIT;
         Action.speceffect = SPECEFFECT_HIT; //SPECEFFECT_NONE;
         Action.animation = 0;
         Action.param = m_PJobAbility->getID();
         //Action.messageID = 100; //<player> uses message
-        Action.knockback = 0;
+        Action.knockback = 0; */
         m_skillTP = m_PPet->health.tp;
 		
 	
@@ -1487,29 +1487,29 @@ void CAIPetDummy::ActionJobAbilityFinish()
 	//printf("Mob Job Ability Animation ID Should be: %d \n", animationId);
 	apAction_t Action;
 	Action.ActionTarget = m_PBattleSubTarget;
-	Action.reaction = REACTION_HIT; //   SPECEFFECT_NONE;
-	Action.speceffect = SPECEFFECT_HIT;
-	Action.animation = animationId;
-	Action.knockback = 0;
-	
-	
-	
-	
-	if (m_PMobSkill->getID() == 3712)
-	{
-	Action.messageID = 1;
-	}
-	else
-	{
-	Action.messageID = 100; 
-	}
-	
+	Action.param = m_PJobAbility->getID();
+        if (m_PJobAbility->getID() == 50) 
+	    {	
+		Action.reaction = REACTION_HIT; //   SPECEFFECT_NONE;
+		Action.speceffect = SPECEFFECT_HIT;
+		Action.animation = animationId;
+		Action.knockback = 0;
+		Action.messageID = 110;
+		}
+	    else
+	    {
+		Action.reaction = REACTION_NONE; //   SPECEFFECT_NONE;
+		Action.speceffect = SPECEFFECT_NONE;
+		Action.animation = animationId;
+		Action.knockback = 0;
+		Action.messageID = 100;
+	    }
 
 		
-	m_PPet->m_ActionList.push_back(Action);
+	//m_PPet->m_ActionList.push_back(Action);
 
     	
-	   uint16 msg = 0;
+	   //uint16 msg = 0;
 	 for (std::vector<CBattleEntity*>::iterator it = m_PTargetFind->m_targets.begin(); it != m_PTargetFind->m_targets.end(); ++it)
         {
             CBattleEntity* PTarget = *it;
@@ -1522,14 +1522,14 @@ void CAIPetDummy::ActionJobAbilityFinish()
             Action.param = luautils::OnPetAbility(PTarget, m_PPet, GetCurrentMobSkill(), m_PPet->PMaster);
         }
 
-        if (msg == 0) {
+       /* if (msg == 0) {
             msg = m_PMobSkill->getMsg();
         }
         else {
             msg = m_PMobSkill->getAoEMsg();
         }
 
-        //Action.messageID = msg;
+        //Action.messageID = msg; */
 		
         battleutils::ClaimMob(m_PBattleSubTarget, m_PPet);
 
