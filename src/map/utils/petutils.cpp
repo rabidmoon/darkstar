@@ -1013,8 +1013,8 @@ namespace petutils
 		PAlly->setModifier(MOD_EVA, battleutils::GetMaxSkill(SKILL_GAX, JOB_WAR, PAlly->GetMLevel()) + modstat); //A+ Evasion
 		PAlly->setModifier(MOD_ATT, battleutils::GetMaxSkill(SKILL_GAX, JOB_WAR, PAlly->GetMLevel()) + modstatatt);// A+ Attack
 		PAlly->setModifier(MOD_DEF, battleutils::GetMaxSkill(SKILL_POL, JOB_WAR, PAlly->GetMLevel()) + modstat);// B- Defense
-		PAlly->m_Weapons[SLOT_MAIN]->setDamage(floor(PAlly->GetMLevel()*0.36f) + 3);// D:30 @75
-		PAlly->m_Weapons[SLOT_MAIN]->setDelay(floor(1000.0f*(150.0f / 60.0f))); //150 delay
+		PAlly->m_Weapons[SLOT_MAIN]->setDamage(floor(PAlly->GetMLevel()*0.46f) + 1);// D:35 @75
+		PAlly->m_Weapons[SLOT_MAIN]->setDelay(floor(1000.0f*(200.0f / 60.0f))); //2000 delay
 		   if (plvl > 54){
 		        PAlly->setModifier(MOD_TRIPLE_ATTACK, 15);
 				PAlly->setModifier(MOD_TREASURE_HUNTER, 2);
@@ -1047,8 +1047,8 @@ namespace petutils
 		PAlly->setModifier(MOD_DEF, battleutils::GetMaxSkill(SKILL_POL, JOB_WAR, PAlly->GetMLevel()));// B- Defense
 		PAlly->m_Weapons[SLOT_MAIN]->setDamage(floor(PAlly->GetMLevel()*0.56f));// D:42 @75
 		PAlly->m_Weapons[SLOT_MAIN]->setDelay(floor(1000.0f*(240.0f / 60.0f))); //240 delay
-		   if (plvl > 49){
-		        PAlly->setModifier(MOD_REFRESH, 1);
+		   if (plvl > 24){
+				PAlly->setModifier(MOD_DOUBLE_ATTACK, 15);
 		   }
 		}
 		else if (PetID == PETID_AYAME)
@@ -1134,6 +1134,12 @@ namespace petutils
 		PAlly->m_Weapons[SLOT_MAIN]->setDamage(floor(PAlly->GetMLevel()*0.96f) + 15);// D:15 @5 / D:87 @ 75
 		PAlly->m_Weapons[SLOT_MAIN]->setDelay(floor(1000.0f*(492.0f / 60.0f))); //492 delay
 		PAlly->setModifier(MOD_HASTE_GEAR, haste);
+		    if (plvl > 49)
+		    {
+			  PAlly->setModifier(MOD_DOUBLE_ATTACK, 10);
+			  PAlly->setModifier(MOD_HASTE_ABILITY, 52); //Constant Subjob Hasso
+			  PAlly->setModifier(MOD_STORETP, 15); // Small Store TP Bonus
+		    }
 		}
 		
 		
@@ -1810,11 +1816,10 @@ namespace petutils
             
             LoadAutomatonStats((CCharEntity*)PMaster, PPet, g_PPetList.at(PetID)); //temp
         }
-        else if (PPet->getPetType() == PETTYPE_TRUST)
+       /* else if (PPet->getPetType() == PETTYPE_TRUST)
         {
 		    CPetEntity* PPet = (CPetEntity*)PMaster->PPet;
 		    if (PetID == PETID_NANAA_MIHGO){
-			ShowWarning(CL_GREEN"I FOUND NANAA MIHGO/n" CL_RESET);
 			}
 		    //Set A+ weapon skill
 		    PPet->setModifier(MOD_ACC, battleutils::GetMaxSkill(SKILL_GAX, JOB_WAR, PPet->GetMLevel()));
@@ -1823,7 +1828,7 @@ namespace petutils
             PPet->SetMLevel(PMaster->GetMLevel());
             PPet->SetSLevel(PMaster->GetMLevel() / 2);
             LoadTrustStats(PPet, PPetData);  
-        }
+        }*/
 		
 		FinalizePetStatistics(PMaster, PPet);
 		PPet->PetSkills = battleutils::GetMobSkillList(PPet->m_MobSkillList);

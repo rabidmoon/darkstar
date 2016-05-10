@@ -1,6 +1,6 @@
 ---------------------------------------------------
--- Leg Sweep
--- Skillchain Properties: Compression/Reverberation
+-- Penta Thrust
+-- Skillchain Properties: Compression
 ---------------------------------------------------
 
 require("/scripts/globals/settings");
@@ -15,15 +15,15 @@ end;
 
 function onPetAbility(target, pet, skill)
     local basemod = 1;
-    local numhits = 1;
+    local numhits = 5;
 	local attmod = 1;
-    local accmod = 1;
-	local str_wsc = 1;
-	local dex_wsc = 0;
+    local accmod = 1.2;
+	local str_wsc = 0.20;
+	local dex_wsc = 0.20;
 	local agi_wsc = 0;
 	local vit_wsc = 0;
 	local mnd_wsc = 0;
-    skill:setSkillchain(38);
+    skill:setSkillchain(3);
 	
 
 	

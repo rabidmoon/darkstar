@@ -79,6 +79,8 @@ function onPetAbility(target, pet, skill, action)
 	dmg = basedmg * ftp;
 	pet:addTP(19.4);
 	end
+	
+	target:lowerEnmity(pet, 50);
  
 
  target:delHP(dmg);

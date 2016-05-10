@@ -903,17 +903,13 @@ local level = player:getMainLvl();
    elseif ((job == 18) and (level >=47)) and (player:hasItem(18353) == false) then
    player:PrintToPlayer("Oboro : You are becoming a strong Puppetmaster.  I've made these new weapons, try them out.", 0xD);
    player:setVar("PUPAFweapon",1);
-   if (player:getFreeSlotsCount() == 0) then
-   player:PrintToPlayer("Oboro : Hey make some room in your inventory!", 0xD);
-   elseif (player:getVar("PUPWeaponObtained") == 1) and (player:getVar("PUPAFweapon") == 0) and (player:hasItem(18353) == false) then
-   player:PrintToPlayer("Oboro : You've lost those magnificent weapons already? Cough up 5,000 and I'll get you another!", 0xD);
-   else
    player:addItem(18353, 1);
-   player:setVar("PUPAFweapon", 0);
    player:setVar("PUPWeaponObtained",1);
    player:messageSpecial(ITEM_OBTAINED, 18353);
-   end
-    
+   elseif (((job == 18) and (level >=47)) and (player:hasItem(18353) == false) and (player:getFreeSlotsCount() == 0)) then
+   player:PrintToPlayer("Oboro : Hey make some room in your inventory!", 0xD);
+   elseif (player:getVar("PUPWeaponObtained") == 1) and (player:getVar("PUPAFweapon") == 0) and (player:hasItem(18353) == false) then
+   player:PrintToPlayer("Oboro : You've lost those magnificent weapons already? Cough up 5,000 and I'll get you another!", 0xD);   
     elseif (player:hasItem(18214) or player:hasItem(17478) or player:hasItem(17422) or player:hasItem(17572) or player:hasItem(16829) or 
 	player:hasItem(16764) or player:hasItem(17643) or player:hasItem(12307) or player:hasItem(16978) or player:hasItem(16590) or
 	player:hasItem(16680) or player:hasItem(16766) or player:hasItem(17352) or player:hasItem(17356) or player:hasItem(17188) or

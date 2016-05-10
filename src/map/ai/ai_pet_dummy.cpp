@@ -550,7 +550,7 @@ void CAIPetDummy::ActionAbilityStart()
             return;
         }	
 		
-		if (m_PPet->m_PetID == PETID_EXCENMILLE && m_PPet->health.tp >= 1000 && m_PBattleTarget != nullptr){
+		if (m_PPet->m_PetID == PETID_EXCENMILLE && m_PPet->health.tp >= 1000 && m_PBattleTarget != nullptr && (m_Tick >= m_LastExeJumpTime + 4000 || m_Tick >= m_LastExeHjumpTime + 4000 )){  //If jumped recently WS after 5 sec
 			int16 mobwsID = -1;		
 			if (lvl > 64) {
 			m_PJobAbility = nullptr;
@@ -1488,7 +1488,7 @@ void CAIPetDummy::ActionJobAbilityFinish()
 	apAction_t Action;
 	Action.ActionTarget = m_PBattleSubTarget;
 	Action.param = m_PJobAbility->getID();
-        if (m_PJobAbility->getID() == 50) 
+        if (m_PJobAbility->getID() == 50 || m_PJobAbility->getID() == 51) 
 	    {	
 		Action.reaction = REACTION_HIT; //   SPECEFFECT_NONE;
 		Action.speceffect = SPECEFFECT_HIT;
@@ -1879,9 +1879,9 @@ void CAIPetDummy::ActionAttack()
 				}		
 	     }
 
-		 if (m_PPet->m_PetID == PETID_EXCENMILLE && trustlevel >=10)
+		 if (m_PPet->m_PetID == PETID_EXCENMILLE)
 		{		
-		 if (m_Tick >= m_LastExeJumpTime + m_exeJumpRecast)
+		 if (m_Tick >= m_LastExeJumpTime + m_exeJumpRecast && trustlevel >=10)
 			{
 			m_PWeaponSkill = nullptr;
             int16 mobjaID = -1;			
@@ -1892,15 +1892,58 @@ void CAIPetDummy::ActionAttack()
 						    mobjaID = 50;
                             SetCurrentMobSkill(PMobSkill);
 							SetCurrentJobAbility(mobjaID);
-							m_PBattleSubTarget = m_PBattleTarget;  //Target Self
+							m_PBattleSubTarget = m_PBattleTarget;
 							break;
                         }
 			        }
 				preparePetAbility(m_PBattleSubTarget);
 				m_LastExeJumpTime = m_Tick;
 				return;	
-				}		
-	     }		 
+				}
+		 if (m_Tick >= m_LastExeHjumpTime + m_exeHjumpRecast && m_Tick >= m_LastExeJumpTime + 3500 && trustlevel >=35) // Puts a small delay between jumps
+			{
+			m_PWeaponSkill = nullptr;
+            int16 mobjaID = -1;			
+			for (int i = 0; i < m_PPet->PetSkills.size(); i++) {
+                    auto PMobSkill = battleutils::GetMobSkill(m_PPet->PetSkills.at(i));
+                            
+                        if (PMobSkill->getID() == 3713) { //High Jump
+						    mobjaID = 51;
+                            SetCurrentMobSkill(PMobSkill);
+							SetCurrentJobAbility(mobjaID);
+							m_PBattleSubTarget = m_PBattleTarget;  
+							break;
+                        }
+			        }
+				preparePetAbility(m_PBattleSubTarget);
+				m_LastExeHjumpTime = m_Tick;
+				return;	
+				}
+		 			
+	     }	
+
+		 if (m_PPet->m_PetID == PETID_EXCENMILLE && m_PPet->health.hp < 40 && trustlevel >= 50 )
+		{	
+         if (m_Tick >= m_LastExeSjumpTime + m_exeSjumpRecast) // Uses Super Jump when HP is less than 30%
+			{
+			m_PWeaponSkill = nullptr;
+            int16 mobjaID = -1;			
+			for (int i = 0; i < m_PPet->PetSkills.size(); i++) {
+                    auto PMobSkill = battleutils::GetMobSkill(m_PPet->PetSkills.at(i));
+                            
+                        if (PMobSkill->getID() == 3714) { //Super Jump
+						    mobjaID = 52;
+                            SetCurrentMobSkill(PMobSkill);
+							SetCurrentJobAbility(mobjaID);
+							m_PBattleSubTarget = m_PBattleTarget;  
+							break;
+                        }
+			        }
+				preparePetAbility(m_PBattleSubTarget);
+				m_LastExeSjumpTime = m_Tick;
+				return;	
+				}
+        }				
 
 
 	
