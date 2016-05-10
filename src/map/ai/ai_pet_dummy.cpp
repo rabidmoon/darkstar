@@ -1445,7 +1445,7 @@ void CAIPetDummy::ActionWeaponSkillFinish()
 void CAIPetDummy::ActionJobAbilityFinish()
 {
  
-    ShowWarning(CL_GREEN"JOB ABILITY FINISH!!! \n" CL_RESET);
+    //ShowWarning(CL_GREEN"JOB ABILITY FINISH!!! \n" CL_RESET);
     //DSP_DEBUG_BREAK_IF(m_PMobSkill == nullptr);
     //DSP_DEBUG_BREAK_IF(m_PWeaponSkill == nullptr);
     //DSP_DEBUG_BREAK_IF(m_PBattleSubTarget == nullptr);
@@ -1922,7 +1922,7 @@ void CAIPetDummy::ActionAttack()
 		 			
 	     }	
 
-		 if (m_PPet->m_PetID == PETID_EXCENMILLE && m_PPet->health.hp < 40 && trustlevel >= 50 )
+		 if (m_PPet->m_PetID == PETID_EXCENMILLE && m_PPet->GetHPP() < 40 && trustlevel >= 50 )
 		{	
          if (m_Tick >= m_LastExeSjumpTime + m_exeSjumpRecast) // Uses Super Jump when HP is less than 30%
 			{
