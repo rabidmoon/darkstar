@@ -548,7 +548,94 @@ void CAIPetDummy::ActionAbilityStart()
 			}			
             preparePetAbility(m_PBattleSubTarget);
             return;
-        }		
+        }	
+		
+		if (m_PPet->m_PetID == PETID_EXCENMILLE && m_PPet->health.tp >= 1000 && m_PBattleTarget != nullptr){
+			int16 mobwsID = -1;		
+			if (lvl > 64) {
+			m_PJobAbility = nullptr;
+			uint8 wsrandom = dsprand::GetRandomNumber(1, 10); //Wheeling Thrust or Penta
+            for (int i = 0; i < m_PPet->PetSkills.size(); i++) {
+                auto PMobSkill = battleutils::GetMobSkill(m_PPet->PetSkills.at(i));
+  					if (PMobSkill->getID() == 3792 && wsrandom >= 6) { //Wheeling Thrust
+                    mobwsID = 119;
+					SetCurrentMobSkill(PMobSkill);
+					SetCurrentWeaponSkill(mobwsID);
+                    break;
+                    } 
+  					else if (PMobSkill->getID() == 3791 && wsrandom < 6) { //Penta Thrust
+                    mobwsID = 116;
+					SetCurrentMobSkill(PMobSkill);
+					SetCurrentWeaponSkill(mobwsID);
+                    break;
+                    } 					
+
+                }
+			}
+			else if (lvl > 48) {
+			m_PJobAbility = nullptr;
+			uint8 wsrandom = dsprand::GetRandomNumber(1, 10); //Penta or Leg sweep
+            for (int i = 0; i < m_PPet->PetSkills.size(); i++) {
+                auto PMobSkill = battleutils::GetMobSkill(m_PPet->PetSkills.at(i));
+  					if (PMobSkill->getID() == 3791 && wsrandom >= 6) { //Penta Thrust
+                    mobwsID = 116;
+					SetCurrentMobSkill(PMobSkill);
+					SetCurrentWeaponSkill(mobwsID);
+			        //ShowWarning("Red Lotus Blade \n");
+                    break;
+                    } 
+  					else if (PMobSkill->getID() == 3790 && wsrandom < 6) { //Leg Sweep
+                    mobwsID = 115;
+					SetCurrentMobSkill(PMobSkill);
+					SetCurrentWeaponSkill(mobwsID);
+			        //ShowWarning("Vorpal Blade \n");
+                    break;
+                    } 					
+
+                }
+			}
+			else if (lvl > 32) {
+			m_PJobAbility = nullptr;
+			uint8 wsrandom = dsprand::GetRandomNumber(1, 10); //Double or Leg Sweep
+            for (int i = 0; i < m_PPet->PetSkills.size(); i++) {
+                auto PMobSkill = battleutils::GetMobSkill(m_PPet->PetSkills.at(i));
+  					if (PMobSkill->getID() == 3790 && wsrandom >= 6) { //Leg sweep
+                    mobwsID = 115;
+					SetCurrentMobSkill(PMobSkill);
+					SetCurrentWeaponSkill(mobwsID);
+			        //ShowWarning("Red Lotus Blade \n");
+                    break;
+                    } 
+  					else if (PMobSkill->getID() == 3789 && wsrandom < 6) { //Double Thrust
+                    mobwsID = 112;
+					SetCurrentMobSkill(PMobSkill);
+					SetCurrentWeaponSkill(mobwsID);
+			        //ShowWarning("Vorpal Blade \n");
+                    break;
+                    } 					
+
+                }
+			}
+			else if (lvl > 4) {
+			m_PJobAbility = nullptr;
+            for (int i = 0; i < m_PPet->PetSkills.size(); i++) {
+                auto PMobSkill = battleutils::GetMobSkill(m_PPet->PetSkills.at(i));
+  					if (PMobSkill->getID() == 3789) { //Double Thrust
+                    mobwsID = 112;
+					SetCurrentMobSkill(PMobSkill);
+					SetCurrentWeaponSkill(mobwsID);
+			        //ShowWarning("Red Lotus Blade \n");
+                    break;
+                    } 					
+                }
+			}			
+            preparePetAbility(m_PBattleSubTarget);
+            return;
+        }	
+
+
+
+		
 
     if (m_PPet->objtype == TYPE_MOB && m_PPet->PMaster->objtype == TYPE_PC)
     {
@@ -863,7 +950,7 @@ void CAIPetDummy::preparePetAbility(CBattleEntity* PTarg) {
         m_PMobSkill->getID() != 1689 && m_PMobSkill->getID() != 1690 && m_PMobSkill->getID() != 1691 &&
 		m_PMobSkill->getID() != 1811 && m_PMobSkill->getID() != 2488 && m_PMobSkill->getID() != 1692 &&
 		m_PMobSkill->getID() != 2044 && m_PMobSkill->getID() != 1810 && m_PMobSkill->getID() != 1809 && 
-		m_PMobSkill->getID() != 3711 && m_PMobSkill->getID() != 3801)  //Prevents Ranged Attacks and WS's from resetting TP since they are considered an ability
+		m_PMobSkill->getID() != 3711 && m_PMobSkill->getID() != 3801 && m_PMobSkill->getID() != 3712)  //Prevents Ranged Attacks and WS's from resetting TP since they are considered an ability
 		{
         m_PPet->health.tp = 0;
         }
@@ -1404,7 +1491,18 @@ void CAIPetDummy::ActionJobAbilityFinish()
 	Action.speceffect = SPECEFFECT_HIT;
 	Action.animation = animationId;
 	Action.knockback = 0;
+	
+	
+	
+	
+	if (m_PMobSkill->getID() == 3712)
+	{
+	Action.messageID = 1;
+	}
+	else
+	{
 	Action.messageID = 100; 
+	}
 	
 
 		
@@ -1769,7 +1867,6 @@ void CAIPetDummy::ActionAttack()
                             
                         if (PMobSkill->getID() == 3715) { //Meditate
 						    mobjaID = 47;
-						    mobjaID = 47;
                             SetCurrentMobSkill(PMobSkill);
 							SetCurrentJobAbility(mobjaID);
 							m_PBattleSubTarget = m_PPet;  //Target Self
@@ -1781,6 +1878,29 @@ void CAIPetDummy::ActionAttack()
 				return;	
 				}		
 	     }
+
+		 if (m_PPet->m_PetID == PETID_EXCENMILLE && trustlevel >=10)
+		{		
+		 if (m_Tick >= m_LastExeJumpTime + m_exeJumpRecast)
+			{
+			m_PWeaponSkill = nullptr;
+            int16 mobjaID = -1;			
+			for (int i = 0; i < m_PPet->PetSkills.size(); i++) {
+                    auto PMobSkill = battleutils::GetMobSkill(m_PPet->PetSkills.at(i));
+                            
+                        if (PMobSkill->getID() == 3712) { //Jump
+						    mobjaID = 50;
+                            SetCurrentMobSkill(PMobSkill);
+							SetCurrentJobAbility(mobjaID);
+							m_PBattleSubTarget = m_PBattleTarget;  //Target Self
+							break;
+                        }
+			        }
+				preparePetAbility(m_PBattleSubTarget);
+				m_LastExeJumpTime = m_Tick;
+				return;	
+				}		
+	     }		 
 
 
 	

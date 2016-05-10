@@ -2480,4 +2480,10 @@ INSERT INTO `mob_skill_lists` VALUES ('Curilla',734,3742); -- Vorpal Blade
 INSERT INTO `mob_skill_lists` VALUES ('Curilla',734,3743); -- Swift Blade
 INSERT INTO `mob_skill_lists` VALUES ('Curilla',734,3711); -- Provoke
 
-INSERT INTO `mob_skill_lists` VALUES ('Excenmille',735,3711); -- Provoke
+INSERT INTO `mob_skill_lists` VALUES ('Excenmille',735,3712); -- Jump
+INSERT INTO `mob_skill_lists` VALUES ('Excenmille',735,3713); -- High Jump
+INSERT INTO `mob_skill_lists` VALUES ('Excenmille',735,3714); -- Super Jump
+INSERT INTO `mob_skill_lists` VALUES ('Excenmille',735,3789); -- Double Thrust
+INSERT INTO `mob_skill_lists` VALUES ('Excenmille',735,3790); -- Leg Sweep
+INSERT INTO `mob_skill_lists` VALUES ('Excenmille',735,3791); -- Penta Thrus
+INSERT INTO `mob_skill_lists` VALUES ('Excenmille',735,3792); -- Wheeling Thrust
