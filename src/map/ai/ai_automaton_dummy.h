@@ -101,6 +101,8 @@ private:
 	int16 SharpshotAttack();
 	int16 HarleAttack();
 	CBattleEntity* getWounded(uint8 threshold);
+	CBattleEntity* getWoundedLow(uint8 threshold);
+	
 
     virtual void TransitionBack(bool skipWait = false) override;
 
