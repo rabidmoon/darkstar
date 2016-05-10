@@ -479,7 +479,6 @@ namespace petutils
         }
 		
 		if (((CPetEntity*)PMob)->m_PetID == PETID_KUPIPI){
-		ShowWarning(CL_GREEN"KUPIPI IN LOADTRUSTSTATS!!!!!! YESSS/n" CL_RESET);
 		}
 		/*if (mJob == 6){ //THF Add Traits and Weapon Damage Types
 		ShowWarning(CL_GREEN"THF TRIGGERED!!! ADDING STATS\n" CL_RESET);
@@ -507,37 +506,6 @@ namespace petutils
 		   }
 		}*/
 		
-		if (mJob == 1){ //THF Add Traits and Weapon Damage Types
-		ShowWarning(CL_GREEN"WAR TRIGGERED!!! \n" CL_RESET);
-		}
-		else if (mJob == 2){
-		ShowWarning(CL_GREEN"MNK TRIGGERED!!! \n" CL_RESET);
-		}
-		else if (mJob == 3){
-		ShowWarning(CL_GREEN"WHM TRIGGERED!!! \n" CL_RESET);
-		}
-		else if (mJob == 4){
-		ShowWarning(CL_GREEN"BLM TRIGGERED!!! \n" CL_RESET);
-		}
-		else if (mJob == 5){
-		ShowWarning(CL_GREEN"RDM TRIGGERED!!! \n" CL_RESET);
-		}
-		else if (mJob == 6){
-		ShowWarning(CL_GREEN"THF TRIGGERED!!! \n" CL_RESET);
-		}
-		else if (mJob == 7){
-		ShowWarning(CL_GREEN"PLD TRIGGERED!!! \n" CL_RESET);
-		}
-		else if (mJob == 8){
-		ShowWarning(CL_GREEN"DRK TRIGGERED!!! \n" CL_RESET);
-		}
-		else if (mJob == 9){
-		ShowWarning(CL_GREEN"BST TRIGGERED!!! \n" CL_RESET);
-		}
-		else
-		{
-		ShowWarning(CL_RED"NOTHING TRIGGERED!!!\n" CL_RESET);
-		}
 
         PMob->speed = petStats->speed;
         PMob->speedsub = petStats->speed;
@@ -1096,7 +1064,7 @@ namespace petutils
 		uint16 defrate = (floor(PAlly->GetMLevel() * 4));
 		uint16 modstat = (floor(PAlly->GetMLevel() * 1.1));
 		uint16 hpstat = (floor(PAlly->GetMLevel() * 2));
-		ShowWarning(CL_GREEN"CURILLA TRIGGERED SPAWN ALLY!!! \n" CL_RESET);
+		//ShowWarning(CL_GREEN"CURILLA TRIGGERED SPAWN ALLY!!! \n" CL_RESET);
 		PAlly->setModifier(MOD_ACC, battleutils::GetMaxSkill(SKILL_GAX, JOB_WAR, PAlly->GetMLevel())); //B+ Acc
 		PAlly->setModifier(MOD_EVA, battleutils::GetMaxSkill(SKILL_SYH, JOB_WAR, PAlly->GetMLevel())); //B+ Evasion
 		PAlly->setModifier(MOD_ATT, battleutils::GetMaxSkill(SKILL_GAX, JOB_WAR, PAlly->GetMLevel()) + modstat);// B+ Attack
