@@ -1612,7 +1612,7 @@ int16 CAIAutomatonDummy::HarleAttack()
         if (mskill > 41)
 		    if (m_PPet->health.mp >= 15)  	
 			    {
-				 spellID = 52;
+				 spellID = 56;
 				}
              else
 			    {
@@ -1662,6 +1662,7 @@ int16 CAIAutomatonDummy::StormFrameSoulAttack()
 	uint8 lowHPP = 31;
 	uint8 level = m_PPet->GetMLevel();
 	uint8 trigger = 40;
+	uint8 lowtrigger = 30;
 	uint16 mskill = m_PPet->PMaster->GetSkill(SKILL_AMA);
 	uint16 maskill = m_PPet->PMaster->GetSkill(SKILL_AMA);
 	
@@ -1682,11 +1683,23 @@ int16 CAIAutomatonDummy::StormFrameSoulAttack()
 		}
 	else if (m_PPet->hasAttachment(8643))
 		{
-		trigger = 80;
+		trigger = 50;
 		}	
+	else if (m_PPet->hasAttachment(8643) && m_PPet->PMaster->StatusEffectContainer->GetEffectsCount(EFFECT_LIGHT_MANEUVER) == 1)
+		{
+		trigger = 60;
+		}
+	else if (m_PPet->hasAttachment(8643) && m_PPet->PMaster->StatusEffectContainer->GetEffectsCount(EFFECT_LIGHT_MANEUVER) == 2)
+		{
+		trigger = 70;
+		}	
+	else if (m_PPet->hasAttachment(8643) && m_PPet->PMaster->StatusEffectContainer->GetEffectsCount(EFFECT_LIGHT_MANEUVER) == 3)
+		{
+		trigger = 80;
+		}		
 	else
 		{
-		trigger = 40;
+		trigger = 30;
 	    }
 	//calculate attachments
 	
@@ -1701,6 +1714,7 @@ int16 CAIAutomatonDummy::StormFrameSoulAttack()
 	
 	
     CBattleEntity* mostWounded = getWounded(trigger);
+	CBattleEntity* mostWoundedLow = getWounded(lowtrigger);
     //CBattleEntity* mostWounded = m_PPet;
 	// Enhancing Spells
 	// Order is Protect > Shell > Haste (if Wind Maneuver is up)
@@ -1906,9 +1920,10 @@ int16 CAIAutomatonDummy::StormFrameSoulAttack()
 
 	if (m_Tick >= m_LastMagicTimeHeal + m_magicHealRecast)  // Look for last magic healing spell time 
 	{
-		if (mostWounded != nullptr)
+	    //This will only fire if the targets are 30% or lower so it uses the highest cure possible
+		if (mostWoundedLow != nullptr)
 		{
-        m_PBattleSubTarget = mostWounded;
+        m_PBattleSubTarget = mostWoundedLow;
 		if (mskill > 206)
 			if (m_PPet->health.mp > 134)
 				{
@@ -1934,7 +1949,36 @@ int16 CAIAutomatonDummy::StormFrameSoulAttack()
 			    {
 				 spellID = -1;
 				} 
-		else if (mskill > 146)
+		}		
+		else if (mostWounded != nullptr)
+		{
+        m_PBattleSubTarget = mostWounded;
+		/*if (mskill > 206)
+			if (m_PPet->health.mp > 134)
+				{
+				 spellID = 5;
+				}
+			else if (m_PPet->health.mp > 88)
+				{
+				 spellID = 4;
+				}
+			else if (m_PPet->health.mp > 46)  	
+			    {
+				 spellID = 3;
+				}
+			else if (m_PPet->health.mp > 24)  	
+			    {
+				 spellID = 2;
+				}				
+			else if (m_PPet->health.mp > 7)  	
+			    {
+				 spellID = 1;
+				}
+			else 
+			    {
+				 spellID = -1;
+				} 
+		else*/ if (mskill > 146)
 			if (m_PPet->health.mp > 88)
 				{
 				 spellID = 4;
@@ -2102,7 +2146,7 @@ int16 CAIAutomatonDummy::StormFrameSoulAttack()
         if (mskill > 41)
 		    if (m_PPet->health.mp >= 15)  	
 			    {
-				 spellID = 52;
+				 spellID = 56;
 				}
              else
 			    {
@@ -2582,7 +2626,7 @@ int16 CAIAutomatonDummy::StormFrameStormAttack()
         if (mskill > 41)
 		    if (m_PPet->health.mp >= 15)  	
 			    {
-				 spellID = 52;
+				 spellID = 56;
 				}
              else
 			    {
@@ -6254,6 +6298,56 @@ CBattleEntity* CAIAutomatonDummy::getWounded(uint8 threshold)
     if (lowest <= threshold)
     {
         return mostWounded;
+    }
+    else
+    {
+        return nullptr;
+    }
+
+}
+
+
+CBattleEntity* CAIAutomatonDummy::getWoundedLow(uint8 threshold)
+{
+    uint8 lowest = 100;
+    CBattleEntity* mostWoundedLow = nullptr;
+    if (m_PPet->PMaster == nullptr)
+        return nullptr;
+    if (m_PPet->PMaster->GetHPP() < lowest){
+        lowest = m_PPet->PMaster->GetHPP();
+        mostWoundedLow = m_PPet->PMaster;
+    }
+    if (m_PPet->PMaster->PPet != nullptr && m_PPet->PMaster->PPet->GetHPP() < lowest)
+    {
+        lowest = m_PPet->PMaster->PPet->GetHPP();
+        mostWoundedLow = m_PPet->PMaster->PPet;
+    }
+    if (m_PPet->PMaster->PParty != nullptr)  //Only Soulsoother Head can cure other Party Members
+    {
+        for (auto member : m_PPet->PMaster->PParty->members)
+        {
+            if ( member->GetHPP() < lowest)
+            {
+                lowest = member->GetHPP();
+                mostWoundedLow = member;
+            }
+        }
+    }
+    if (m_PPet->PMaster->PAlly.size() > 0)  //Only Soulsoother Head can cure other Allies add Soulsoother Head
+    {
+        for (auto ally : m_PPet->PMaster->PAlly)
+        {
+            if ( ally->GetHPP() < lowest)
+            {
+                lowest = ally->GetHPP();
+                mostWoundedLow = ally;
+            }
+        }
+    }
+    
+    if (lowest <= threshold)
+    {
+        return mostWoundedLow;
     }
     else
     {
