@@ -353,6 +353,9 @@ function AutoPhysicalMove(mob,target,skill,basemod,numhits,attmod,accmod,str_wsc
     --get dstr (bias to monsters, so no fSTR)
     local dstr = mob:getStat(MOD_STR) - target:getStat(MOD_VIT);
     local weaponbase = mob:getWeaponDmg();
+	
+
+	
 
     if (dstr >= 12) then
 		fstr1 = ((dstr+4)/4);
@@ -393,6 +396,8 @@ function AutoPhysicalMove(mob,target,skill,basemod,numhits,attmod,accmod,str_wsc
 	
 	
     --apply WSC
+	
+
     local base = (mob:getWeaponDmg() * basemod) + fstr1 + wsc; 
     if (base < 1) then
         base = 1;

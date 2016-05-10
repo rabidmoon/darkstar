@@ -1014,7 +1014,7 @@ namespace petutils
 		PAlly->setModifier(MOD_ATT, battleutils::GetMaxSkill(SKILL_GAX, JOB_WAR, PAlly->GetMLevel()) + modstatatt);// A+ Attack
 		PAlly->setModifier(MOD_DEF, battleutils::GetMaxSkill(SKILL_POL, JOB_WAR, PAlly->GetMLevel()) + modstat);// B- Defense
 		PAlly->m_Weapons[SLOT_MAIN]->setDamage(floor(PAlly->GetMLevel()*0.36f) + 3);// D:30 @75
-		PAlly->m_Weapons[SLOT_MAIN]->setDelay(floor(1000.0f*(180.0f / 60.0f))); //180 delay
+		PAlly->m_Weapons[SLOT_MAIN]->setDelay(floor(1000.0f*(150.0f / 60.0f))); //150 delay
 		   if (plvl > 54){
 		        PAlly->setModifier(MOD_TRIPLE_ATTACK, 15);
 				PAlly->setModifier(MOD_TREASURE_HUNTER, 2);

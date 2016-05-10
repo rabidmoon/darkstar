@@ -100,7 +100,13 @@ void CAIGeneral::Reset()
 	m_LastKupipiMagicTime = 0;
     m_LastNanaaCheckTime = 0;
 	m_LastNanaaSneakAttackTime = 0;
-
+	
+	m_LastAyameMeditateTime = 0;
+	m_LastNajiBerserkTime = 0;
+	m_LastNajiWarcryTime = 0;
+	m_LastExeJumpTime = 0;
+	m_LastExeHjumpTime = 0;
+	m_LastExeSjumpTime = 0;
     m_WaitTime = 0;
     m_LastWaitTime = 0;
     m_interruptSpell = false;
@@ -368,6 +374,40 @@ void CAIGeneral::SetLastNanaaSneakAttackTime(uint32 time)
 {
 	m_LastNanaaSneakAttackTime = time;
 } 
+
+
+void CAIGeneral::SetLastAyameMeditateTime(uint32 time)
+{
+	m_LastAyameMeditateTime = time;
+} 
+
+void CAIGeneral::SetLastNajiBerserkTime(uint32 time)
+{
+	m_LastNajiBerserkTime = time;
+} 
+
+void CAIGeneral::SetLastNajiWarcryTime(uint32 time)
+{
+	m_LastNajiWarcryTime = time;
+} 
+
+void CAIGeneral::SetLastExeJumpTime(uint32 time)
+{
+	m_LastExeJumpTime = time;
+} 
+
+void CAIGeneral::SetLastExeHjumpTime(uint32 time)
+{
+	m_LastExeHjumpTime = time;
+} 
+
+void CAIGeneral::SetLastExeSjumpTime(uint32 time)
+{
+	m_LastExeSjumpTime = time;
+} 
+
+
+
 
 
 void CAIGeneral::SetBattleTarget(CBattleEntity* PEntity)

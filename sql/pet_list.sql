@@ -121,4 +121,5 @@ INSERT INTO `pet_list` VALUES (76, 'Kupipi', 7802, 1, 99, 0, 0);
 INSERT INTO `pet_list` VALUES (77, 'Ayame', 7804, 1, 99, 0, 0);
 INSERT INTO `pet_list` VALUES (78, 'Nanaa Mihgo', 7805, 1, 99, 0, 0);
 INSERT INTO `pet_list` VALUES (79, 'Curilla', 7806, 1, 99, 0, 0);
-INSERT INTO `pet_list` VALUES (80, 'Luopan', 7900, 1, 99, 0, 0); -- GEO-REFRESH
+INSERT INTO `pet_list` VALUES (80, 'Excenmille', 7803, 1, 99, 0, 0);
+-- INSERT INTO `pet_list` VALUES (80, 'Luopan', 7900, 1, 99, 0, 0); -- GEO-REFRESH

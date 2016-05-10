@@ -70,6 +70,13 @@ protected:
 	uint32 m_kupipiHealRecast;
 	uint32 m_nanaacheck;
 	uint32 m_nanaaSneakAttackRecast;
+	uint32 m_ayameMeditateRecast;
+	uint32 m_najiBerserkRecast;
+	uint32 m_najiWarcryRecast;
+	uint32 m_exeJumpRecast;
+	uint32 m_exeHjumpRecast;
+	uint32 m_exeSjumpRecast;
+	
 
 
 

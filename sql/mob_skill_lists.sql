@@ -2456,9 +2456,15 @@ INSERT INTO `mob_skill_lists` VALUES ('Kupipi',731,3772); -- True Strike
 INSERT INTO `mob_skill_lists` VALUES ('Kupipi',731,3773); -- Judgement
 INSERT INTO `mob_skill_lists` VALUES ('Kupipi',731,3774); -- Hexa Strike
 INSERT INTO `mob_skill_lists` VALUES ('Kupipi',731,3775); -- Black Halo
-INSERT INTO `mob_skill_lists` VALUES ('Naji',732,2961); -- Savage Blade
 
+INSERT INTO `mob_skill_lists` VALUES ('Naji',732,441); -- Berserk
+INSERT INTO `mob_skill_lists` VALUES ('Naji',732,1172); -- Warcry
+INSERT INTO `mob_skill_lists` VALUES ('Naji',732,3739); -- Fast Blade
+INSERT INTO `mob_skill_lists` VALUES ('Naji',732,3740); -- Red Lotus Blade
+INSERT INTO `mob_skill_lists` VALUES ('Naji',732,3741); -- Flat Blade
+INSERT INTO `mob_skill_lists` VALUES ('Naji',732,3742); -- Vorpal Blade
 
+INSERT INTO `mob_skill_lists` VALUES ('Ayame',733,3715); -- Meditate
 INSERT INTO `mob_skill_lists` VALUES ('Ayame',733,3779); -- Tachi Enpi
 INSERT INTO `mob_skill_lists` VALUES ('Ayame',733,3780); -- Tachi Goten
 INSERT INTO `mob_skill_lists` VALUES ('Ayame',733,3781); -- Tachi Jinpu
@@ -2468,7 +2474,10 @@ INSERT INTO `mob_skill_lists` VALUES ('Ayame',733,3784); -- Tachi Kasha
 INSERT INTO `mob_skill_lists` VALUES ('Ayame',733,3785); -- Tachi Fudo
 INSERT INTO `mob_skill_lists` VALUES ('Ayame',733,3786); -- Tachi Shoha
 
+INSERT INTO `mob_skill_lists` VALUES ('Curilla',734,3739); -- Fast Blade
 INSERT INTO `mob_skill_lists` VALUES ('Curilla',734,3740); -- Red Lotus Blade
 INSERT INTO `mob_skill_lists` VALUES ('Curilla',734,3742); -- Vorpal Blade
 INSERT INTO `mob_skill_lists` VALUES ('Curilla',734,3743); -- Swift Blade
 INSERT INTO `mob_skill_lists` VALUES ('Curilla',734,3711); -- Provoke
+
+INSERT INTO `mob_skill_lists` VALUES ('Excenmille',735,3711); -- Provoke

@@ -81,7 +81,14 @@ CAIPetDummy::CAIPetDummy(CPetEntity* PPet)
 	m_curillaFlashRecast = 50000;
 	m_magicKupipiRecast = 4000;
 	m_nanaacheck = 5000;  //For Nanaa Mihgo to check every 5 seconds if she is facing target or not
-	m_nanaaSneakAttackRecast = 20000;
+	m_nanaaSneakAttackRecast = 45000;
+	
+	m_ayameMeditateRecast = 180000;
+	m_najiBerserkRecast = 300000;
+	m_najiWarcryRecast = 300000;
+	m_exeJumpRecast = 60000;
+	m_exeHjumpRecast = 120000;
+	m_exeSjumpRecast = 180000;
 	
 	
 }
@@ -159,7 +166,11 @@ void CAIPetDummy::ActionAbilityStart()
 	 //It iterates through blank skill ID's and then sets the current mob skill to the blank unused mob ability and also assigns the correct WS number via setcurrentws
 	 //On prepare pet ability it then sends the information to actionweaponskillfinish and then plays the WS animation based on the WS number
 	 //The mobskill is called via the fake blank skill which is named in the mob_skill.sql file with the damage modifiers
+	 
+	 //This section below is for nanaa to only use WS if SA timer is greater than 15 seconds	
 	 if (m_PPet->m_PetID == PETID_NANAA_MIHGO && m_PPet->health.tp >= 1000 && m_PBattleTarget != nullptr) { 	
+	        ShowWarning("SA WS Active \n");
+			int16 mobwsID = -1;
 			uint8 wsrandom = dsprand::GetRandomNumber(1, 3);
             for (int i = 0; i < m_PPet->PetSkills.size(); i++) {
 		        //printf("Random Number: %d \n", wsrandom);
@@ -190,7 +201,18 @@ void CAIPetDummy::ActionAbilityStart()
                     break;
                     } 	
 
-                }	
+                }
+				else if (lvl > 32){ // Set up so Nanaa can only use Dancing Edge
+				auto PMobSkill = battleutils::GetMobSkill(m_PPet->PetSkills.at(i));
+                    if (PMobSkill->getID() == 3800) { //Viper Bite
+                    mobwsID = 17;
+					SetCurrentMobSkill(PMobSkill);
+			        SetCurrentWeaponSkill(mobwsID);
+			        //ShowWarning("Viper Bite \n");
+                    break;
+                    } 	
+
+                }				
 				else if (lvl > 5){ // Set up so Nanaa can only use wasp sting
 				auto PMobSkill = battleutils::GetMobSkill(m_PPet->PetSkills.at(i));
                     if (PMobSkill->getID() == 2213) { //Wasp Sting
@@ -203,7 +225,7 @@ void CAIPetDummy::ActionAbilityStart()
 			}	
             preparePetAbility(m_PBattleSubTarget);
             return;
-        }
+        }	 
 	 if (m_PPet->m_PetID == PETID_KUPIPI && m_PPet->health.tp >= 1000 && m_PBattleTarget != nullptr){
 			int16 mobwsID = -1;
 			if (lvl > 71) {
@@ -1137,7 +1159,25 @@ void CAIPetDummy::ActionAbilityFinish() {
     m_ActionType = ACTION_ATTACK;
 }
 
-
+    int16 CalculateBaseTP(int delay) {
+        int16 x = 1;
+        if (delay <= 180) {
+            x = 50 + (((float)delay - 180)*1.5f) / 18;
+        }
+        else if (delay <= 450) {
+            x = 50 + (((float)delay - 180)*6.5f) / 27;
+        }
+        else if (delay <= 480) {
+            x = 115 + (((float)delay - 450)*1.5f) / 3;
+        }
+        else if (delay <= 530) {
+            x = 130 + (((float)delay - 480)*1.5f) / 5;
+        }
+        else {
+            x = 145 + (((float)delay - 530)*3.5f) / 47;
+        }
+        return x;
+    }
 
 void CAIPetDummy::ActionWeaponSkillFinish() 
 {
@@ -1299,8 +1339,15 @@ void CAIPetDummy::ActionWeaponSkillFinish()
         Action.ActionTarget->loc.zone->PushPacket(Action.ActionTarget, CHAR_INRANGE, new CEntityUpdatePacket(Action.ActionTarget, ENTITY_UPDATE, UPDATE_COMBAT));
     } 
 
+	int16 baseTp = 0;
+	int16 delay = m_PPet->GetWeaponDelay(true);
+	float ratio = 1.0f;
+
+	baseTp = CalculateBaseTP((delay * 60) / 1000) / ratio;
+
 		
-	m_PPet->health.tp = 5;
+	m_PPet->health.tp = ((baseTp)* (1.0f + 0.01f * (float)(m_PPet->getMod(MOD_STORETP))));
+	charutils::UpdateHealth((CCharEntity*)m_PPet->PMaster);
 	m_PBattleSubTarget = nullptr;
     m_ActionType = ACTION_ATTACK;
  
@@ -1590,7 +1637,9 @@ void CAIPetDummy::ActionAttack()
         ActionFall();
         return;
     }
-
+	
+	uint8 trustlevel = m_PPet->GetMLevel();
+    charutils::UpdateHealth((CCharEntity*)m_PPet->PMaster); // To update pet health at all time
 	
 	//****************************************************************//
 	//   TRUST ABILITIES BY TRUST NAME                               //
@@ -1657,14 +1706,13 @@ void CAIPetDummy::ActionAttack()
                         }
 			        }
 				preparePetAbility(m_PBattleSubTarget);
-				ShowDebug("PROVOKE!!!!\n");
 				m_LastCurillaVokeTime = m_Tick;
 				return;	
 				}				
 				
 		}
 		
-		 if (m_PPet->m_PetID == PETID_NANAA_MIHGO)
+		 if (m_PPet->m_PetID == PETID_NANAA_MIHGO && trustlevel >=15)
 		{		
 		 if ((m_Tick >= m_LastNanaaSneakAttackTime + m_nanaaSneakAttackRecast) && m_PPet->health.tp < 800 &&
 		 (abs(m_PBattleTarget->loc.p.rotation - m_PPet->loc.p.rotation) < 23)) // Only use SA when timer is up less than 500 tp and behind the mob
@@ -1683,13 +1731,56 @@ void CAIPetDummy::ActionAttack()
                         }
 			        }
 				preparePetAbility(m_PBattleSubTarget);
-				ShowDebug("Sneak Attack \n");
 				m_LastNanaaSneakAttackTime = m_Tick;
 				return;	
-				}				
+				}
+		 if ((m_Tick >= m_LastNanaaSneakAttackTime + m_nanaaSneakAttackRecast) && m_PPet->health.tp >= 1000 &&
+		 (abs(m_PBattleTarget->loc.p.rotation - m_PPet->loc.p.rotation) < 23)) // For SA WS only attempt SA when TP is 100%
+			{
+			m_PWeaponSkill = nullptr;
+            int16 mobjaID = -1;			
+			for (int i = 0; i < m_PPet->PetSkills.size(); i++) {
+                    auto PMobSkill = battleutils::GetMobSkill(m_PPet->PetSkills.at(i));
+                            
+                        if (PMobSkill->getID() == 3801) { //Sneak Atack
+						    mobjaID = 28;
+                            SetCurrentMobSkill(PMobSkill);
+							SetCurrentJobAbility(mobjaID);
+							m_PBattleSubTarget = m_PPet;  //Target Self
+							break;
+                        }
+			        }
+				preparePetAbility(m_PBattleSubTarget);
+				m_LastNanaaSneakAttackTime = m_Tick;
+				return;	
+				}
+				
 				
 		}
-	
+		
+		 if (m_PPet->m_PetID == PETID_AYAME && trustlevel >=30)
+		{		
+		 if ((m_Tick >= m_LastAyameMeditateTime + m_ayameMeditateRecast) && m_PPet->health.tp < 250) // Only use Meditate when TP is less than 25%
+			{
+			m_PWeaponSkill = nullptr;
+            int16 mobjaID = -1;			
+			for (int i = 0; i < m_PPet->PetSkills.size(); i++) {
+                    auto PMobSkill = battleutils::GetMobSkill(m_PPet->PetSkills.at(i));
+                            
+                        if (PMobSkill->getID() == 3715) { //Meditate
+						    mobjaID = 47;
+						    mobjaID = 47;
+                            SetCurrentMobSkill(PMobSkill);
+							SetCurrentJobAbility(mobjaID);
+							m_PBattleSubTarget = m_PPet;  //Target Self
+							break;
+                        }
+			        }
+				preparePetAbility(m_PBattleSubTarget);
+				m_LastAyameMeditateTime = m_Tick;
+				return;	
+				}		
+	     }
 
 
 	
@@ -1739,11 +1830,64 @@ void CAIPetDummy::ActionAttack()
 	{
     ShowWarning(CL_RED"SKILL LIST DOES NOT HAVE A SIZE!!!!!!\n" CL_RESET);	
 	}*/
+	//The bottom determines when Trusts will use WS.
+	//Nanaa will use WS based on if SA is active, or won't be available for a certain period of time
+	//Ayame will use WS if the players TP is less than 80%.  If the player's TP is 80% she will hold TP until the player get 100%.
 	
-	
-	if (m_PPet->getPetType() == PETTYPE_TRUST && m_PPet->health.tp >= 1000 && m_PPet->PetSkills.size() > 0)
+		if (m_PPet->getPetType() == PETTYPE_TRUST && m_PPet->m_PetID != PETID_NANAA_MIHGO && m_PPet->m_PetID != PETID_AYAME && m_PPet->health.tp >= 1000 && m_PPet->PetSkills.size() > 0)
     {
-        // now use my tp move
+		m_PBattleSubTarget = m_PBattleTarget;
+        m_ActionType = ACTION_MOBABILITY_START;
+        ActionAbilityStart();
+        return;
+	}
+	    //Ayame will use WS if player TP is less than 80%
+		if (m_PPet->getPetType() == PETTYPE_TRUST && m_PPet->m_PetID == PETID_AYAME && m_PPet->health.tp >= 1000 && m_PPet->PetSkills.size() > 0 && m_PPet->PMaster->health.tp < 800)
+    {
+		m_PBattleSubTarget = m_PBattleTarget;
+        m_ActionType = ACTION_MOBABILITY_START;
+        ActionAbilityStart();
+        return;
+	}
+		if (m_PPet->getPetType() == PETTYPE_TRUST && m_PPet->m_PetID == PETID_AYAME && m_PPet->health.tp >= 1000 && m_PPet->PetSkills.size() > 0 && m_PPet->PMaster->health.tp >= 1000)
+    {
+		m_PBattleSubTarget = m_PBattleTarget;
+        m_ActionType = ACTION_MOBABILITY_START;
+        ActionAbilityStart();
+        return;
+	}
+	/*
+		//Ayame will wait for player to get 100% Tp if they are at 80%
+		if (m_PPet->getPetType() == PETTYPE_TRUST && m_PPet->m_PetID == PETID_AYAME && m_PPet->health.tp >= 1000 && m_PPet->PetSkills.size() > 0
+		&& m_PPet->PMaster->health.tp > 1000)
+    {
+		m_PBattleSubTarget = m_PBattleTarget;
+        m_ActionType = ACTION_MOBABILITY_START;
+        ActionAbilityStart();
+        return;
+	} */
+	    //Use WS if SA is active
+		if (m_PPet->getPetType() == PETTYPE_TRUST && m_PPet->m_PetID == PETID_NANAA_MIHGO && m_PPet->health.tp >= 1000 && m_PPet->PetSkills.size() > 0
+		&& m_PPet->StatusEffectContainer->HasStatusEffect(EFFECT_SNEAK_ATTACK))
+    {
+		m_PBattleSubTarget = m_PBattleTarget;
+        m_ActionType = ACTION_MOBABILITY_START;
+        ActionAbilityStart();
+        return;
+	}
+	    //Use WS if SA timer has more than 25 seconds left
+		if (m_PPet->getPetType() == PETTYPE_TRUST && m_PPet->m_PetID == PETID_NANAA_MIHGO && m_PPet->health.tp >= 1000 && m_PPet->PetSkills.size() > 0
+		&& m_Tick < m_LastNanaaSneakAttackTime + 20000)
+    {
+		m_PBattleSubTarget = m_PBattleTarget;
+        m_ActionType = ACTION_MOBABILITY_START;
+        ActionAbilityStart();
+        return;
+	}
+	    //No SA available for Nanaa Yet
+		if (m_PPet->getPetType() == PETTYPE_TRUST && m_PPet->m_PetID == PETID_NANAA_MIHGO && m_PPet->health.tp >= 1000 && m_PPet->PetSkills.size() > 0
+		&& trustlevel < 15)
+    {
 		m_PBattleSubTarget = m_PBattleTarget;
         m_ActionType = ACTION_MOBABILITY_START;
         ActionAbilityStart();

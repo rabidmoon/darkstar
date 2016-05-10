@@ -2193,7 +2193,7 @@ namespace battleutils
 
             // add tp to attacker
             PChar->addTP(tpMultiplier * (baseTp * (1.0f + 0.01f * (float)((PChar->getMod(MOD_STORETP) + getStoreTPbonusFromMerit(PChar))))));
-			
+			ShowDebug("Adding TP to WS");
 			charutils::UpdateHealth((CCharEntity*)PChar);
                 				
             

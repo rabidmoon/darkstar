@@ -17,6 +17,8 @@ end;
 -----------------------------------
 
 function onEffectTick(target,effect)
+-- caster:isUniqueAlly(79))
+target:updateHealth();
 end;
 
 -----------------------------------
