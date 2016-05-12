@@ -313,7 +313,7 @@ void CAttack::ProcessDamage()
 		((abs(m_victim->loc.p.rotation - m_attacker->loc.p.rotation) < 23) ||
 			m_attacker->StatusEffectContainer->HasStatusEffect(EFFECT_HIDE)))
 	{
-		ShowWarning(CL_GREEN"SNEAK ATTACK BY NANAA IS TRIGGERED!!!!!!\n" CL_RESET);
+		//ShowWarning(CL_GREEN"SNEAK ATTACK BY NANAA IS TRIGGERED!!!!!!\n" CL_RESET);
 		m_trickAttackDamage = m_attacker->DEX();
 	}
 

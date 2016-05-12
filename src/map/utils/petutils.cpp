@@ -939,6 +939,7 @@ namespace petutils
     void SpawnAlly(CBattleEntity* PMaster, uint32 PetID, bool spawningFromZone)
     {
         //Check to see if in full party
+		ShowWarning(CL_GREEN"SPAWN ALLY \n" CL_RESET);
         uint16 partySize = PMaster->PAlly.size();
 		
         if (PMaster->PParty != nullptr)
@@ -1457,6 +1458,7 @@ namespace petutils
 	   
     CPetEntity* LoadAlly(CBattleEntity* PMaster, uint32 PetID, bool spawningFromZone)
     {
+	    ShowWarning(CL_GREEN"LOAD ALLY \n" CL_RESET);
         DSP_DEBUG_BREAK_IF(PetID >= g_PPetList.size());
         Pet_t* PPetData = g_PPetList.at(PetID);
         PETTYPE petType = PETTYPE_TRUST;
