@@ -109,6 +109,7 @@ void CAIAutomatonDummy::CheckCurrentAction(uint32 tick)
     case ACTION_MAGIC_START:            ActionMagicStart();         break;
     case ACTION_MAGIC_CASTING:          ActionMagicCasting();       break;
     case ACTION_MAGIC_FINISH:           ActionMagicFinish();        break;
+	case ACTION_MAGIC_INTERRUPT:		ActionMagicInterrupt();     break;
 
     default: DSP_DEBUG_BREAK_IF(true);
     }
@@ -1886,6 +1887,220 @@ int16 CAIAutomatonDummy::StormFrameSoulAttack()
 			m_magicEnhanceCast = 1;
 			m_magicEnhanceRecast = 15000;
 			}
+		else if (m_PPet->StatusEffectContainer->HasStatusEffect(EFFECT_PROTECT) == false) //cast pro on self
+			{
+			m_PBattleSubTarget = m_PPet;
+			if (mskill > 280)
+				if (m_PPet->health.mp > 83)
+					{
+					 spellID = 47;
+					}
+				else if (m_PPet->health.mp > 64)
+					{
+					 spellID = 46;
+					}
+				else if (m_PPet->health.mp > 45)
+					{
+					 spellID = 45;
+					}
+				else if (m_PPet->health.mp > 27)
+					{
+					 spellID = 44;
+					}
+				else if (m_PPet->health.mp > 8)
+					{
+					 spellID = 43;
+					}
+				else 
+			        {
+				     spellID = -1;
+				    }
+			else if (mskill > 216)
+				if (m_PPet->health.mp > 64)
+					{
+					 spellID = 46;
+					}
+				else if (m_PPet->health.mp > 45)
+					{
+					 spellID = 45;
+					}
+				else if (m_PPet->health.mp > 27)
+					{
+					 spellID = 44;
+					}
+				else if (m_PPet->health.mp > 8)
+					{
+					 spellID = 43;
+					}
+				else 
+			        {
+				     spellID = -1;
+				    } 	
+			else if (mskill > 143)
+				if (m_PPet->health.mp > 45)
+					{
+					 spellID = 45;
+					}
+				else if (m_PPet->health.mp > 27)
+					{
+					 spellID = 44;
+					}
+				else if (m_PPet->health.mp > 8)
+					{
+					 spellID = 43;
+					}
+				else 
+			        {
+				     spellID = -1;
+				    } 	
+			else if (mskill > 83)
+				if (m_PPet->health.mp > 27)
+					{
+					 spellID = 44;
+					}
+				else if (m_PPet->health.mp > 8)
+					{
+					 spellID = 43;
+					}
+				else 
+			        {
+				     spellID = -1;
+				    } 	
+			else if (mskill > 23)
+				if (m_PPet->health.mp > 8)
+					{
+					 spellID = 43;
+					}
+				else 
+			        {
+				     spellID = -1;
+				    } 	
+			else
+		        {
+				 spellID = -1;
+				} 
+			m_magicEnhanceCast = 1;
+			m_magicEnhanceRecast = 15000;
+			}
+		else if (m_PPet->StatusEffectContainer->HasStatusEffect(EFFECT_SHELL) == false) // Cast Shell on Self
+			{
+			m_PBattleSubTarget = m_PPet;
+			if (mskill > 240)
+				if (m_PPet->health.mp > 74)
+					{
+					 spellID = 51;
+					}
+				else if (m_PPet->health.mp > 55)
+					{
+					 spellID = 50;
+					}
+				else if (m_PPet->health.mp > 36)
+					{
+					 spellID = 49;
+					}
+				else if (m_PPet->health.mp > 17)
+					{
+					 spellID = 48;
+					}
+				else 
+			        {
+				     spellID = -1;
+				    } 	
+			else if (mskill > 187)
+				if (m_PPet->health.mp > 55)
+					{
+					 spellID = 50;
+					}
+				else if (m_PPet->health.mp > 36)
+					{
+					 spellID = 49;
+					}
+				else if (m_PPet->health.mp > 17)
+					{
+					 spellID = 48;
+					}
+				else 
+			        {
+				     spellID = -1;
+				    } 	
+			else if (mskill > 113)
+				if (m_PPet->health.mp > 36)
+					{
+					 spellID = 49;
+					}
+				else if (m_PPet->health.mp > 17)
+					{
+					 spellID = 48;
+					}
+				else 
+			        {
+				     spellID = -1;
+				    } 	
+			else if (mskill > 53)
+				if (m_PPet->health.mp > 17)
+					{
+					 spellID = 48;
+					}
+				else 
+			        {
+				     spellID = -1;
+				    } 	
+			else
+		        {
+				 spellID = -1;
+				} 
+			m_magicEnhanceCast = 1;
+			m_magicEnhanceRecast = 15000;
+			}	
+		else if (m_PPet->PMaster->GetHPP() > 65 && m_PPet->PMaster->GetHPP() < 95 && m_PPet->PMaster->StatusEffectContainer->HasStatusEffect(EFFECT_REGEN) == false)   //Regen 
+			{
+			m_PBattleSubTarget = m_PPet->PMaster;
+			if (mskill >= 232)
+                if (m_PPet->health.mp >= 64)
+					{
+					 spellID = 111;
+					}
+                else if (m_PPet->health.mp >= 36)
+					{
+					 spellID = 110;
+					}
+                else if (m_PPet->health.mp >= 15)
+					{
+					 spellID = 109;
+					}					
+				else 
+			        {
+				     spellID = -1;
+				    } 
+			else if (mskill >= 135)
+                if (m_PPet->health.mp >= 36)
+					{
+					 spellID = 110;
+					}
+                else if (m_PPet->health.mp >= 15)
+					{
+					 spellID = 109;
+					}					
+				else 
+			        {
+				     spellID = -1;
+				    }
+			else if (mskill >= 66)
+                if (m_PPet->health.mp >= 15)
+					{
+					 spellID = 109;
+					}					
+				else 
+			        {
+				     spellID = -1;
+				    }					
+			else
+		        {
+				 spellID = -1;
+				} 
+			m_magicEnhanceCast = 1;
+			m_magicEnhanceRecast = 15000;
+			}				
 		else if (m_PPet->PMaster->StatusEffectContainer->HasStatusEffect(EFFECT_WIND_MANEUVER) == true && m_PPet->PMaster->StatusEffectContainer->HasStatusEffect(EFFECT_HASTE) == false)   //Haste 
 			{
 			m_PBattleSubTarget = m_PPet->PMaster;
@@ -2383,6 +2598,146 @@ int16 CAIAutomatonDummy::StormFrameStormAttack()
 			m_magicEnhanceCast = 1;
 			m_magicEnhanceRecast = 15000;
 			}
+		else if (m_PPet->StatusEffectContainer->HasStatusEffect(EFFECT_PROTECT) == false) //cast protect on self
+			{
+			m_PBattleSubTarget = m_PPet;
+			if (mskill > 216)
+				if (m_PPet->health.mp > 64)
+					{
+					 spellID = 46;
+					}
+				else if (m_PPet->health.mp > 45)
+					{
+					 spellID = 45;
+					}
+				else if (m_PPet->health.mp > 27)
+					{
+					 spellID = 44;
+					}
+				else if (m_PPet->health.mp > 8)
+					{
+					 spellID = 43;
+					}
+				else 
+			        {
+				     spellID = -1;
+				    } 	
+			else if (mskill > 143)
+				if (m_PPet->health.mp > 45)
+					{
+					 spellID = 45;
+					}
+				else if (m_PPet->health.mp > 27)
+					{
+					 spellID = 44;
+					}
+				else if (m_PPet->health.mp > 8)
+					{
+					 spellID = 43;
+					}
+				else 
+			        {
+				     spellID = -1;
+				    } 	
+			else if (mskill > 83)
+				if (m_PPet->health.mp > 27)
+					{
+					 spellID = 44;
+					}
+				else if (m_PPet->health.mp > 8)
+					{
+					 spellID = 43;
+					}
+				else 
+			        {
+				     spellID = -1;
+				    } 	
+			else if (mskill > 23)
+				if (m_PPet->health.mp > 8)
+					{
+					 spellID = 43;
+					}
+				else 
+			        {
+				     spellID = -1;
+				    } 	
+			else
+		        {
+				 spellID = -1;
+				} 
+			m_magicEnhanceCast = 1;
+			m_magicEnhanceRecast = 15000;
+			}
+		else if (m_PPet->StatusEffectContainer->HasStatusEffect(EFFECT_SHELL) == false)  //Cast shell on self
+			{
+			m_PBattleSubTarget = m_PPet;
+			if (mskill > 240)
+				if (m_PPet->health.mp > 74)
+					{
+					 spellID = 51;
+					}
+				else if (m_PPet->health.mp > 55)
+					{
+					 spellID = 50;
+					}
+				else if (m_PPet->health.mp > 36)
+					{
+					 spellID = 49;
+					}
+				else if (m_PPet->health.mp > 17)
+					{
+					 spellID = 48;
+					}
+				else 
+			        {
+				     spellID = -1;
+				    } 	
+			else if (mskill > 187)
+				if (m_PPet->health.mp > 55)
+					{
+					 spellID = 50;
+					}
+				else if (m_PPet->health.mp > 36)
+					{
+					 spellID = 49;
+					}
+				else if (m_PPet->health.mp > 17)
+					{
+					 spellID = 48;
+					}
+				else 
+			        {
+				     spellID = -1;
+				    } 	
+			else if (mskill > 113)
+				if (m_PPet->health.mp > 36)
+					{
+					 spellID = 49;
+					}
+				else if (m_PPet->health.mp > 17)
+					{
+					 spellID = 48;
+					}
+				else 
+			        {
+				     spellID = -1;
+				    } 	
+			else if (mskill > 53)
+				if (m_PPet->health.mp > 17)
+					{
+					 spellID = 48;
+					}
+				else 
+			        {
+				     spellID = -1;
+				    } 	
+			else
+		        {
+				 spellID = -1;
+				} 
+			m_magicEnhanceCast = 1;
+			m_magicEnhanceRecast = 15000;
+			}				
 		else if (m_PPet->PMaster->StatusEffectContainer->HasStatusEffect(EFFECT_WIND_MANEUVER) == true && m_PPet->PMaster->StatusEffectContainer->HasStatusEffect(EFFECT_HASTE) == false)   //Haste 
 			{
 			m_PBattleSubTarget = m_PPet->PMaster;
@@ -2537,7 +2892,32 @@ int16 CAIAutomatonDummy::StormFrameStormAttack()
 	
 	if (m_Tick >= m_LastMagicTimeEnf + m_magicEnfeebleRecast)  // Look for last enfeeble spell time 
 	{
-	  if (m_PBattleTarget != nullptr && m_PBattleTarget->StatusEffectContainer->HasStatusEffect(EFFECT_DIA) == false && m_PBattleTarget->GetHPP() >= requiredHPP)
+	    //Dispel List
+	    if (m_PBattleTarget != nullptr && m_PBattleTarget->StatusEffectContainer->HasStatusEffect(EFFECT_BLAZE_SPIKES) ||
+		m_PBattleTarget->StatusEffectContainer->HasStatusEffect(EFFECT_ICE_SPIKES) || m_PBattleTarget->StatusEffectContainer->HasStatusEffect(EFFECT_SHOCK_SPIKES) ||
+		m_PBattleTarget->StatusEffectContainer->HasStatusEffect(EFFECT_BLINK) || m_PBattleTarget->StatusEffectContainer->HasStatusEffect(EFFECT_STONESKIN) ||
+		m_PBattleTarget->StatusEffectContainer->HasStatusEffect(EFFECT_PROTECT) || m_PBattleTarget->StatusEffectContainer->HasStatusEffect(EFFECT_SHELL) ||
+		m_PBattleTarget->StatusEffectContainer->HasStatusEffect(EFFECT_REGEN) || m_PBattleTarget->StatusEffectContainer->HasStatusEffect(EFFECT_BERSERK) ||
+		m_PBattleTarget->StatusEffectContainer->HasStatusEffect(EFFECT_DEFENDER) || m_PBattleTarget->StatusEffectContainer->HasStatusEffect(EFFECT_COUNTERSTANCE) ||
+		m_PBattleTarget->StatusEffectContainer->HasStatusEffect(EFFECT_ENSTONE) || m_PBattleTarget->StatusEffectContainer->HasStatusEffect(EFFECT_ENTHUNDER) ||
+		m_PBattleTarget->StatusEffectContainer->HasStatusEffect(EFFECT_ENWATER) || m_PBattleTarget->StatusEffectContainer->HasStatusEffect(EFFECT_ENFIRE) ||
+		m_PBattleTarget->StatusEffectContainer->HasStatusEffect(EFFECT_ENAERO) || m_PBattleTarget->StatusEffectContainer->HasStatusEffect(EFFECT_ENBLIZZARD))
+	{
+	   m_PBattleSubTarget = m_PBattleTarget;
+		// m_magicRecast = 5000;
+        if (mskill > 105)
+		    if (m_PPet->health.mp >= 25)  	
+			    {
+				 spellID = 260;
+				}
+            else
+			    {
+				 spellID = -1;
+				} 
+        m_magicEnfeebCast = 1;
+		m_magicEnfeebleRecast = 11000;
+	}	
+	  else if (m_PBattleTarget != nullptr && m_PBattleTarget->StatusEffectContainer->HasStatusEffect(EFFECT_DIA) == false && m_PBattleTarget->GetHPP() >= requiredHPP)
 	{
 		m_PBattleSubTarget = m_PBattleTarget;
         if (mskill >= 96)
@@ -4471,7 +4851,121 @@ int16 CAIAutomatonDummy::StormFrameSpiritAttack()
 		m_magicEnfeebleRecast = 11000;
 	
 	}
-	    else if (m_PBattleTarget != nullptr && m_PPet->PMaster->StatusEffectContainer->HasStatusEffect(EFFECT_DARK_MANEUVER) == true) 
+	    else if (m_PBattleTarget != nullptr && m_PPet->PMaster->StatusEffectContainer->HasStatusEffect(EFFECT_DARK_MANEUVER) == true && m_PPet->GetHPP() < 65) // Dread Spikes
+	{
+	   m_PBattleSubTarget = m_PBattleTarget;
+        if (mskill >= 256)
+		    if (m_PPet->health.mp >= 78)  	
+			    {
+				 spellID = 277;
+				}
+            else
+			    {
+				 spellID = -1;
+				} 
+        m_magicEnfeebCast = 1;
+		m_magicEnfeebleRecast = 11000;
+	
+	}	
+	    else if (m_PBattleTarget != nullptr && m_PPet->PMaster->StatusEffectContainer->HasStatusEffect(EFFECT_DARK_MANEUVER) == true) //Absorb INT
+	{
+	   m_PBattleSubTarget = m_PBattleTarget;
+		// m_magicRecast = 5000;
+        if (mskill >= 120)
+		    if (m_PPet->health.mp >= 33)  	
+			    {
+				 spellID = 270;
+				}
+             else
+			    {
+				 spellID = -1;
+				} 
+        m_magicEnfeebCast = 1;
+		m_magicEnfeebleRecast = 11000;
+	
+	}
+	    else if (m_PBattleTarget != nullptr && m_PBattleTarget->StatusEffectContainer->HasStatusEffect(EFFECT_BLINDNESS) == false && m_PPet->PMaster->StatusEffectContainer->HasStatusEffect(EFFECT_DARK_MANEUVER) == true && m_PBattleTarget->GetHPP() >= requiredHPP) //Blind
+	{
+	   m_PBattleSubTarget = m_PBattleTarget;
+		// m_magicRecast = 5000;
+        if (mskill > 26)
+		    if (m_PPet->health.mp >= 5)  	
+			    {
+				 spellID = 254;
+				}
+            else
+			    {
+				 spellID = -1;
+				} 
+        m_magicEnfeebCast = 1;
+		m_magicEnfeebleRecast = 11000;
+	
+	}	
+	    else if (m_PBattleTarget != nullptr && m_PBattleTarget->StatusEffectContainer->HasStatusEffect(EFFECT_BIO) == false && m_PPet->PMaster->StatusEffectContainer->HasStatusEffect(EFFECT_DARK_MANEUVER) == true) // Bio
+	{
+	   m_PBattleSubTarget = m_PBattleTarget;
+		// m_magicRecast = 5000;
+        if (mskill >= 111)
+		    if (m_PPet->health.mp >= 36)  	
+			    {
+				 spellID = 231;
+				}
+			else if (m_PPet->health.mp >= 15) 	
+			    {
+				 spellID = 230;
+				}
+             else
+			    {
+				 spellID = -1;
+				} 
+		else if (mskill >= 33)
+		    if (m_PPet->health.mp >= 15) 	
+			    {
+				 spellID = 230;
+				}
+             else
+			    {
+				 spellID = -1;
+				} 
+        m_magicEnfeebCast = 1;
+		m_magicEnfeebleRecast = 11000;
+	
+	}	
+		else if (m_PBattleTarget != nullptr && m_PBattleTarget->StatusEffectContainer->HasStatusEffect(EFFECT_SILENCE) == false && m_PPet->PMaster->StatusEffectContainer->HasStatusEffect(EFFECT_DARK_MANEUVER) == true) // Silence
+	{
+	   m_PBattleSubTarget = m_PBattleTarget;
+		// m_magicRecast = 5000;
+        if (mskill > 56)
+		    if (m_PPet->health.mp >= 16)  	
+			    {
+				 spellID = 59;
+				}
+             else
+			    {
+				 spellID = -1;
+				} 
+        m_magicEnfeebCast = 1;
+		m_magicEnfeebleRecast = 11000;
+	
+	}
+		else if (m_PBattleTarget != nullptr && m_PBattleTarget->StatusEffectContainer->HasStatusEffect(EFFECT_SLOW) == false && m_PPet->PMaster->StatusEffectContainer->HasStatusEffect(EFFECT_DARK_MANEUVER) == true) // Slow
+	{
+	   m_PBattleSubTarget = m_PBattleTarget;
+		// m_magicRecast = 5000;
+        if (mskill > 42)
+		    if (m_PPet->health.mp >= 15)  	
+			    {
+				 spellID = 56;
+				}
+             else
+			    {
+				 spellID = -1;
+				} 
+        m_magicEnfeebCast = 1;
+		m_magicEnfeebleRecast = 11000;
+	
+	}
+	    else if (m_PBattleTarget != nullptr && m_PBattleTarget->StatusEffectContainer->HasStatusEffect(EFFECT_PARALYSIS) == false && m_PPet->PMaster->StatusEffectContainer->HasStatusEffect(EFFECT_DARK_MANEUVER) == true) // Para
 	{
 	   m_PBattleSubTarget = m_PBattleTarget;
 		// m_magicRecast = 5000;
@@ -4488,23 +4982,36 @@ int16 CAIAutomatonDummy::StormFrameSpiritAttack()
 		m_magicEnfeebleRecast = 11000;
 	
 	}
-	    else if (m_PBattleTarget != nullptr && m_PBattleTarget->StatusEffectContainer->HasStatusEffect(EFFECT_BLINDNESS) == false && m_PBattleTarget->GetHPP() >= requiredHPP) 
+	    else if (m_PBattleTarget != nullptr && m_PBattleTarget->StatusEffectContainer->HasStatusEffect(EFFECT_BIO) == false && m_PPet->PMaster->StatusEffectContainer->HasStatusEffect(EFFECT_DARK_MANEUVER) == true) // Poison
 	{
 	   m_PBattleSubTarget = m_PBattleTarget;
 		// m_magicRecast = 5000;
-        if (mskill > 41)
-		    if (m_PPet->health.mp >= 5)  	
+        if (mskill >= 141)
+		    if (m_PPet->health.mp >= 38)  	
 			    {
-				 spellID = 254;
+				 spellID = 221;
 				}
-            else
+			else if (m_PPet->health.mp >= 5) 	
+			    {
+				 spellID = 220;
+				}
+             else
+			    {
+				 spellID = -1;
+				} 
+		else if (mskill >= 18)
+		    if (m_PPet->health.mp >= 5) 	
+			    {
+				 spellID = 220;
+				}
+             else
 			    {
 				 spellID = -1;
 				} 
         m_magicEnfeebCast = 1;
 		m_magicEnfeebleRecast = 11000;
 	
-	}
+	}	
 	}
 	
 	//--------------------------------------------//

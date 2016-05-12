@@ -98,6 +98,7 @@ void CAIGeneral::Reset()
 	m_LastCurillaVokeTime = 0;
 	m_LastCurillaFlash = 0;
 	m_LastKupipiMagicTime = 0;
+	m_LastKupipiEnhanceTime - 0;
     m_LastNanaaCheckTime = 0;
 	m_LastNanaaSneakAttackTime = 0;
 	
@@ -365,6 +366,11 @@ void CAIGeneral::SetLastKupipiMagicTime(uint32 time)
 	m_LastKupipiMagicTime = time;
 }
 
+void CAIGeneral::SetLastKupipiEnhanceTime(uint32 time)
+{
+	m_LastKupipiEnhanceTime = time;
+}
+
 void CAIGeneral::SetLastNanaaCheckTime(uint32 time)
 {
 	m_LastNanaaCheckTime = time;
@@ -374,7 +380,6 @@ void CAIGeneral::SetLastNanaaSneakAttackTime(uint32 time)
 {
 	m_LastNanaaSneakAttackTime = time;
 } 
-
 
 void CAIGeneral::SetLastAyameMeditateTime(uint32 time)
 {

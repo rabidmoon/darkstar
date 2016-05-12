@@ -68,6 +68,7 @@ protected:
 	uint32 m_curillaFlashRecast;
 	uint32 m_kupipiHealCast;
 	uint32 m_kupipiHealRecast;
+	uint32 m_kupipiEnhanceRecast;
 	uint32 m_nanaacheck;
 	uint32 m_nanaaSneakAttackRecast;
 	uint32 m_ayameMeditateRecast;
@@ -76,6 +77,7 @@ protected:
 	uint32 m_exeJumpRecast;
 	uint32 m_exeHjumpRecast;
 	uint32 m_exeSjumpRecast;
+
 	
 
 
@@ -105,6 +107,7 @@ protected:
 	int16 CurillaSpell();
 	int16 KupipiSpell();
 	CBattleEntity* getWounded(uint8 threshold);
+	CBattleEntity* getWoundedLow(uint8 threshold);	
 
     void SendTooFarInterruptMessage(CBattleEntity* PTarg);
 

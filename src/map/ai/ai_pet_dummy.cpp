@@ -77,6 +77,7 @@ CAIPetDummy::CAIPetDummy(CPetEntity* PPet)
 	m_magicHealRecast = 25000;
 	m_magicHealCast = 0;
 	m_kupipiHealRecast = 18000;
+	m_kupipiEnhanceRecast = 10000;  // Enhancing such as Haste Pro/Shell and ~na's will share the same cast timer
 	m_kupipiHealCast = 0;
 	m_curillaFlashRecast = 50000;
 	m_magicKupipiRecast = 4000;
@@ -114,24 +115,25 @@ void CAIPetDummy::CheckCurrentAction(uint32 tick)
 
     switch (m_ActionType)
     {
-        case ACTION_NONE:							break;
-        case ACTION_ROAMING:	ActionRoaming();	break;
-        case ACTION_DEATH:		ActionDeath();		break;
-        case ACTION_SPAWN:		ActionSpawn();		break;
-        case ACTION_FALL:		ActionFall();		break;
-        case ACTION_ENGAGE:		ActionEngage();		break;
-        case ACTION_ATTACK:		ActionAttack();		break;
-        case ACTION_SLEEP:		ActionSleep();		break;
-        case ACTION_DISENGAGE:	ActionDisengage();	break;
-        case ACTION_MOBABILITY_START:	ActionAbilityStart();	break;
-        case ACTION_MOBABILITY_USING: ActionAbilityUsing(); break;
-        case ACTION_MOBABILITY_FINISH: ActionAbilityFinish(); break;
-        case ACTION_MOBABILITY_INTERRUPT: ActionAbilityInterrupt(); break;
-        case ACTION_MAGIC_START: ActionMagicStart(); break;
-        case ACTION_MAGIC_CASTING: ActionMagicCasting(); break;
-        case ACTION_MAGIC_FINISH: ActionMagicFinish(); break;
-		case ACTION_WEAPONSKILL_FINISH:     ActionWeaponSkillFinish();  break;
-		case ACTION_JOBABILITY_FINISH:      ActionJobAbilityFinish(); break;
+        case ACTION_NONE:							                     break;
+        case ACTION_ROAMING:	             ActionRoaming();	         break;
+        case ACTION_DEATH:		             ActionDeath();		         break;
+        case ACTION_SPAWN:		             ActionSpawn();		         break;
+        case ACTION_FALL:		             ActionFall();		         break;
+        case ACTION_ENGAGE:		             ActionEngage();	         break;
+        case ACTION_ATTACK:		             ActionAttack();	         break;
+        case ACTION_SLEEP:		             ActionSleep();		         break;
+        case ACTION_DISENGAGE:	             ActionDisengage();	         break;
+        case ACTION_MOBABILITY_START:	     ActionAbilityStart();	     break;
+        case ACTION_MOBABILITY_USING:        ActionAbilityUsing();       break;
+        case ACTION_MOBABILITY_FINISH:       ActionAbilityFinish();      break;
+        case ACTION_MOBABILITY_INTERRUPT:    ActionAbilityInterrupt();   break;
+        case ACTION_MAGIC_START:             ActionMagicStart();         break;
+        case ACTION_MAGIC_CASTING:           ActionMagicCasting();       break;
+        case ACTION_MAGIC_FINISH:            ActionMagicFinish();        break;
+	    case ACTION_MAGIC_INTERRUPT:         ActionMagicInterrupt();     break;	
+		case ACTION_WEAPONSKILL_FINISH:      ActionWeaponSkillFinish();  break;
+		case ACTION_JOBABILITY_FINISH:       ActionJobAbilityFinish();   break;
 
         //default: DSP_DEBUG_BREAK_IF(true);
     }
@@ -472,16 +474,83 @@ void CAIPetDummy::ActionAbilityStart()
             return;
         }		
 	 if (m_PPet->m_PetID == PETID_NAJI && m_PPet->health.tp >= 1000 && m_PBattleTarget != nullptr){
-			
+			int16 mobwsID = -1;		
+			if (lvl > 59) {
+			m_PJobAbility = nullptr;
+			uint8 wsrandom = dsprand::GetRandomNumber(1, 10); //Vorpal
             for (int i = 0; i < m_PPet->PetSkills.size(); i++) {
                 auto PMobSkill = battleutils::GetMobSkill(m_PPet->PetSkills.at(i));
-  					if (PMobSkill->getID() == 2961) { //Savage Blade
-                    SetCurrentMobSkill(PMobSkill);
-			        //ShowWarning("KING KOBRA CLAMP \n");
+                    if (PMobSkill->getID() == 3742) { //Vorpal Blade Exclusively for now
+                    mobwsID = 40;
+					SetCurrentMobSkill(PMobSkill);
+					SetCurrentWeaponSkill(mobwsID);
+			        //ShowWarning("Vorpal Blade \n");
                     break;
-                    } 	
+                    } 					
 
                 }
+			}
+			else if (lvl > 25) {
+			m_PJobAbility = nullptr;
+			uint8 wsrandom = dsprand::GetRandomNumber(1, 30); //Red Lotus, Fast Blade, or Flat Blade
+            for (int i = 0; i < m_PPet->PetSkills.size(); i++) {
+                auto PMobSkill = battleutils::GetMobSkill(m_PPet->PetSkills.at(i));
+                    if (PMobSkill->getID() == 3741 && wsrandom >= 20) { //Flat Blade
+                    mobwsID = 35;
+					SetCurrentMobSkill(PMobSkill);
+					SetCurrentWeaponSkill(mobwsID);			    
+                    break;
+                    }  
+                    else if (PMobSkill->getID() == 3740 && wsrandom >= 10 && wsrandom < 20) { //Red Lotus Blade
+                    mobwsID = 34;
+					SetCurrentMobSkill(PMobSkill);
+					SetCurrentWeaponSkill(mobwsID);
+                    break;
+                    } 
+  					else if (PMobSkill->getID() == 3739 && wsrandom < 10) { //Fast Blade
+                    mobwsID = 32;
+					SetCurrentMobSkill(PMobSkill);
+					SetCurrentWeaponSkill(mobwsID);
+                    break;
+                    } 					
+
+                }
+			}			
+			else if (lvl > 16) {
+			m_PJobAbility = nullptr;
+			uint8 wsrandom = dsprand::GetRandomNumber(1, 10); //Red Lotus or Fast Blade
+            for (int i = 0; i < m_PPet->PetSkills.size(); i++) {
+                auto PMobSkill = battleutils::GetMobSkill(m_PPet->PetSkills.at(i));
+  					if (PMobSkill->getID() == 3740 && wsrandom >= 6) { //Red Lotus Blade
+                    mobwsID = 34;
+					SetCurrentMobSkill(PMobSkill);
+					SetCurrentWeaponSkill(mobwsID);
+			        //ShowWarning("Red Lotus Blade \n");
+                    break;
+                    } 
+  					else if (PMobSkill->getID() == 3739 && wsrandom < 6) { //Fast Blade
+                    mobwsID = 32;
+					SetCurrentMobSkill(PMobSkill);
+					SetCurrentWeaponSkill(mobwsID);
+			        //ShowWarning("Vorpal Blade \n");
+                    break;
+                    } 					
+
+                }
+			}			
+			else if (lvl > 4) {
+			m_PJobAbility = nullptr;
+            for (int i = 0; i < m_PPet->PetSkills.size(); i++) {
+                auto PMobSkill = battleutils::GetMobSkill(m_PPet->PetSkills.at(i));
+  					if (PMobSkill->getID() == 3739) { //Fast Blade
+                    mobwsID = 32;
+					SetCurrentMobSkill(PMobSkill);
+					SetCurrentWeaponSkill(mobwsID);
+                    break;
+                    } 					
+
+                }
+			}			
             preparePetAbility(m_PBattleSubTarget);
             return;
         }
@@ -490,17 +559,17 @@ void CAIPetDummy::ActionAbilityStart()
 			int16 mobwsID = -1;		
 			if (lvl > 64) {
 			m_PJobAbility = nullptr;
-			uint8 wsrandom = dsprand::GetRandomNumber(1, 3); //Swift Blade or Vorpal
+			uint8 wsrandom = dsprand::GetRandomNumber(1, 10); //Swift Blade or Vorpal
             for (int i = 0; i < m_PPet->PetSkills.size(); i++) {
                 auto PMobSkill = battleutils::GetMobSkill(m_PPet->PetSkills.at(i));
-  					if (PMobSkill->getID() == 3743 && wsrandom >= 2) { //Swift Blade
+  					if (PMobSkill->getID() == 3743 && wsrandom >= 6) { //Swift Blade
                     mobwsID = 41;
 					SetCurrentMobSkill(PMobSkill);
 					SetCurrentWeaponSkill(mobwsID);
 			        //ShowWarning("Swift Blade \n");
                     break;
                     } 
-  					else if (PMobSkill->getID() == 3742 && wsrandom < 2) { //Vorpal Blade
+  					else if (PMobSkill->getID() == 3742 && wsrandom < 6) { //Vorpal Blade
                     mobwsID = 40;
 					SetCurrentMobSkill(PMobSkill);
 					SetCurrentWeaponSkill(mobwsID);
@@ -512,21 +581,19 @@ void CAIPetDummy::ActionAbilityStart()
 			}
 			else if (lvl > 59) {
 			m_PJobAbility = nullptr;
-			uint8 wsrandom = dsprand::GetRandomNumber(1, 3); //Vorpal or Red Lotus
+			uint8 wsrandom = dsprand::GetRandomNumber(1, 10); //Vorpal or Fast Blade
             for (int i = 0; i < m_PPet->PetSkills.size(); i++) {
                 auto PMobSkill = battleutils::GetMobSkill(m_PPet->PetSkills.at(i));
-  					if (PMobSkill->getID() == 3740 && wsrandom >= 2) { //Red Lotus Blade
-                    mobwsID = 34;
+  					if (PMobSkill->getID() == 3739 && wsrandom >= 6) { //Fast Blade
+                    mobwsID = 32;
 					SetCurrentMobSkill(PMobSkill);
 					SetCurrentWeaponSkill(mobwsID);
-			        //ShowWarning("Red Lotus Blade \n");
                     break;
                     } 
-  					else if (PMobSkill->getID() == 3742 && wsrandom < 2) { //Vorpal Blade
+  					else if (PMobSkill->getID() == 3742 && wsrandom < 6) { //Vorpal Blade
                     mobwsID = 40;
 					SetCurrentMobSkill(PMobSkill);
 					SetCurrentWeaponSkill(mobwsID);
-			        //ShowWarning("Vorpal Blade \n");
                     break;
                     } 					
 
@@ -536,8 +603,8 @@ void CAIPetDummy::ActionAbilityStart()
 			m_PJobAbility = nullptr;
             for (int i = 0; i < m_PPet->PetSkills.size(); i++) {
                 auto PMobSkill = battleutils::GetMobSkill(m_PPet->PetSkills.at(i));
-  					if (PMobSkill->getID() == 3740) { //Red Lotus Blade
-                    mobwsID = 34;
+  					if (PMobSkill->getID() == 3739) { //Fast Blade
+                    mobwsID = 32;
 					SetCurrentMobSkill(PMobSkill);
 					SetCurrentWeaponSkill(mobwsID);
 			        //ShowWarning("Red Lotus Blade \n");
@@ -1641,17 +1708,6 @@ void CAIPetDummy::ActionRoaming()
     }
 	
 	
-	//Trusts
-    if (m_PPet->getPetType() == PETTYPE_TRUST) {
-        if (PetIsHealing()) {
-            return;
-        }
-		if (m_PPet->StatusEffectContainer->HasStatusEffect(EFFECT_HEALING) == false)
-		{
-		m_PPet->StatusEffectContainer->AddStatusEffect(new CStatusEffect(EFFECT_HEALING, 0, 0, 5, 0));
-		}
-    }
-
     if (m_PBattleTarget != nullptr) {
         m_ActionType = ACTION_ENGAGE;
         ActionEngage();
@@ -1687,6 +1743,18 @@ void CAIPetDummy::ActionRoaming()
             m_PPathFind->WarpTo(m_PPet->PMaster->loc.p, PET_ROAM_DISTANCE);
         }
     }
+	
+		//Trusts
+    if (m_PPet->getPetType() == PETTYPE_TRUST) {
+        if (PetIsHealing()) {
+            return;
+        }
+		if (m_PPet->StatusEffectContainer->HasStatusEffect(EFFECT_HEALING) == false)
+		{
+		m_PPet->StatusEffectContainer->AddStatusEffect(new CStatusEffect(EFFECT_HEALING, 0, 0, 5, 0));
+		}
+    }
+
 }
 
 void CAIPetDummy::ActionEngage()
@@ -1922,7 +1990,7 @@ void CAIPetDummy::ActionAttack()
 		 			
 	     }	
 
-		 if (m_PPet->m_PetID == PETID_EXCENMILLE && m_PPet->GetHPP() < 40 && trustlevel >= 50 )
+		if (m_PPet->m_PetID == PETID_EXCENMILLE && m_PPet->GetHPP() < 40 && trustlevel >= 50 )
 		{	
          if (m_Tick >= m_LastExeSjumpTime + m_exeSjumpRecast) // Uses Super Jump when HP is less than 30%
 			{
@@ -1943,7 +2011,50 @@ void CAIPetDummy::ActionAttack()
 				m_LastExeSjumpTime = m_Tick;
 				return;	
 				}
-        }				
+        }
+
+        if (m_PPet->m_PetID == PETID_NAJI)
+		{		
+		 if (m_Tick >= m_LastNajiBerserkTime + m_najiBerserkRecast && trustlevel >=25 && m_PPet->health.tp > 900)  //Uses berserk when TP is over 90% so before weaponskill
+			{
+			m_PWeaponSkill = nullptr;
+            int16 mobjaID = -1;			
+			for (int i = 0; i < m_PPet->PetSkills.size(); i++) {
+                    auto PMobSkill = battleutils::GetMobSkill(m_PPet->PetSkills.at(i));
+                            
+                        if (PMobSkill->getID() == 441) { //Berserk
+						    mobjaID = 15;
+                            SetCurrentMobSkill(PMobSkill);
+							SetCurrentJobAbility(mobjaID);
+							m_PBattleSubTarget = m_PPet;
+							break;
+                        }
+			        }
+				preparePetAbility(m_PBattleSubTarget);
+				m_LastNajiBerserkTime = m_Tick;
+				return;	
+				}
+		 if (m_Tick >= m_LastNajiWarcryTime + m_najiWarcryRecast && trustlevel >=35) // Puts a small delay between jumps
+			{
+			m_PWeaponSkill = nullptr;
+            int16 mobjaID = -1;			
+			for (int i = 0; i < m_PPet->PetSkills.size(); i++) {
+                    auto PMobSkill = battleutils::GetMobSkill(m_PPet->PetSkills.at(i));
+                            
+                        if (PMobSkill->getID() == 1172) { //Warcry
+						    mobjaID = 16;
+                            SetCurrentMobSkill(PMobSkill);
+							SetCurrentJobAbility(mobjaID);
+							m_PBattleSubTarget = m_PBattleTarget;  
+							break;
+                        }
+			        }
+				preparePetAbility(m_PBattleSubTarget);
+				m_LastNajiWarcryTime = m_Tick;
+				return;	
+				}
+		 			
+	     }		
 
 
 	
@@ -2500,14 +2611,45 @@ int16 CAIPetDummy::KupipiSpell()
 
 	uint8 trigger = 60; // HP Trigger Threshold
 	uint8 lowHPP = 31;
+	uint8 lowtrigger = 30;	
 	uint8 level = m_PPet->GetMLevel();
     int16 spellID = -1;
 	
  CBattleEntity* master = m_PPet->PMaster;  
  CBattleEntity* mostWounded = getWounded(trigger);
-if (m_Tick >= m_LastKupipiMagicTime + m_kupipiHealRecast)  // Look for last magic healing spell time 
+ CBattleEntity* mostWoundedLow = getWounded(lowtrigger);
+ if (m_Tick >= m_LastKupipiMagicTime + m_kupipiHealRecast)  // Look for last magic healing spell time 
 	{
-		if (mostWounded != nullptr)
+ 		if (mostWoundedLow != nullptr)
+		{
+        m_PBattleSubTarget = mostWounded;
+		if (level > 60)
+			if (m_PPet->health.mp > 134)
+				{
+				 spellID = 5;
+				}		
+			else if (m_PPet->health.mp > 88)
+				{
+				 spellID = 4;
+				}
+			else if (m_PPet->health.mp > 46)  	
+			    {
+				 spellID = 3;
+				}
+			else if (m_PPet->health.mp > 24)  	
+			    {
+				 spellID = 2;
+				}				
+			else if (m_PPet->health.mp > 7)  	
+			    {
+				 spellID = 1;
+				}
+			else 
+			    {
+				 spellID = -1;
+				} 	
+	    }
+		else if (mostWounded != nullptr)
 		{
         m_PBattleSubTarget = mostWounded;
 		if (level > 54)
@@ -2574,6 +2716,7 @@ if (m_Tick >= m_LastKupipiMagicTime + m_kupipiHealRecast)  // Look for last magi
 		        {
 				 spellID = -1;
 				} 
+		m_LastKupipiMagicTime = m_Tick;		
 		if (m_PPet->StatusEffectContainer->HasStatusEffect(EFFECT_SILENCE) == true)
 		{
 	    spellID = -1;
@@ -2586,12 +2729,315 @@ if (m_Tick >= m_LastKupipiMagicTime + m_kupipiHealRecast)  // Look for last magi
 		m_LastKupipiMagicTime = m_Tick; // reset mtick no eligible healing spell to cast
 		m_kupipiHealRecast = 11000;		
        }
-	} 
+	}
+	
+    if (m_Tick >= m_LastKupipiEnhanceTime + m_kupipiEnhanceRecast)  // Look for last magic enhancing/na spell time.  ~na will take precidence over enhancing buffs Poisina, blindna, paralyna, erase
+	{
+	    if (m_PPet->StatusEffectContainer->HasStatusEffect(EFFECT_SILENCE) == true)
+		{
+	    spellID = -1;
+		} 	
+		else if (m_PPet->PMaster->StatusEffectContainer->HasStatusEffect(EFFECT_POISON) == true) 
+		{	
+		m_PBattleSubTarget = m_PPet->PMaster;
+		if (level >= 5)
+		    if (m_PPet->health.mp >= 8)
+			    {
+				 spellID = 14;
+				}
+		    else
+			    {
+				 spellID = -1;
+				}
+			m_LastKupipiEnhanceTime = m_Tick;	
+		    m_kupipiEnhanceRecast = 10000;
+		}
+	    else if (m_PPet->PMaster->StatusEffectContainer->HasStatusEffect(EFFECT_BLINDNESS) == true) 
+		{	
+		m_PBattleSubTarget = m_PPet->PMaster;
+		if (level >= 14)
+		    if (m_PPet->health.mp >= 16)
+			    {
+				 spellID = 16;
+				}
+		    else
+			    {
+				 spellID = -1;
+				}
+			m_LastKupipiEnhanceTime = m_Tick;	
+		    m_kupipiEnhanceRecast = 10000;
+		}
+	    else if (m_PPet->PMaster->StatusEffectContainer->HasStatusEffect(EFFECT_PARALYSIS) == true) 
+		{	
+		m_PBattleSubTarget = m_PPet->PMaster;
+		if (level >= 9)
+		    if (m_PPet->health.mp >= 12)
+			    {
+				 spellID = 15;
+				}
+		    else
+			    {
+				 spellID = -1;
+				}
+			m_LastKupipiEnhanceTime = m_Tick;	
+		    m_kupipiEnhanceRecast = 10000;
+		}	
+	    else if (m_PPet->PMaster->StatusEffectContainer->HasStatusEffect(EFFECT_SILENCE) == true) 
+		{	
+		m_PBattleSubTarget = m_PPet->PMaster;
+		if (level >= 19)
+		    if (m_PPet->health.mp >= 24)
+			    {
+				 spellID = 17;
+				}
+		    else
+			    {
+				 spellID = -1;
+				}
+			m_LastKupipiEnhanceTime = m_Tick;	
+		    m_kupipiEnhanceRecast = 10000;
+		}		
+	    else if (m_PPet->PMaster->StatusEffectContainer->HasStatusEffect(EFFECT_PETRIFICATION) == true) 
+		{	
+		m_PBattleSubTarget = m_PPet->PMaster;
+		if (level >= 39)
+		    if (m_PPet->health.mp >= 40)
+			    {
+				 spellID = 18;
+				}
+		    else
+			    {
+				 spellID = -1;
+				}
+			m_LastKupipiEnhanceTime = m_Tick;	
+		    m_kupipiEnhanceRecast = 10000;
+		}
+	    else if (m_PPet->PMaster->StatusEffectContainer->HasStatusEffect(EFFECT_DISEASE) == true) 
+		{	
+		m_PBattleSubTarget = m_PPet->PMaster;
+		if (level >= 34)
+		    if (m_PPet->health.mp >= 34)
+			    {
+				 spellID = 19;
+				}
+		    else
+			    {
+				 spellID = -1;
+				}
+			m_LastKupipiEnhanceTime = m_Tick;	
+		    m_kupipiEnhanceRecast = 10000;
+		}		
+	    else if (m_PPet->PMaster->StatusEffectContainer->HasStatusEffect(EFFECT_CURSE) == true) 
+		{	
+		m_PBattleSubTarget = m_PPet->PMaster;
+		if (level >= 29)
+		    if (m_PPet->health.mp >= 30)
+			    {
+				 spellID = 20;
+				}
+		    else
+			    {
+				 spellID = -1;
+				}
+			m_LastKupipiEnhanceTime = m_Tick;	
+		    m_kupipiEnhanceRecast = 10000;
+		}
+	    else if (m_PPet->PMaster->StatusEffectContainer->HasStatusEffect(EFFECT_DIA) == true) 
+		{	
+		m_PBattleSubTarget = m_PPet->PMaster;
+		if (level >= 32)
+		    if (m_PPet->health.mp >= 18)
+			    {
+				 spellID = 143;
+				}
+		    else
+			    {
+				 spellID = -1;
+				}
+			m_LastKupipiEnhanceTime = m_Tick;	
+		    m_kupipiEnhanceRecast = 10000;
+		}
+	    else if (m_PPet->PMaster->StatusEffectContainer->HasStatusEffect(EFFECT_BIO) == true) 
+		{	
+		m_PBattleSubTarget = m_PPet->PMaster;
+		if (level >= 32)
+		    if (m_PPet->health.mp >= 18)
+			    {
+				 spellID = 143;
+				}
+		    else
+			    {
+				 spellID = -1;
+				}
+			m_LastKupipiEnhanceTime = m_Tick;	
+		    m_kupipiEnhanceRecast = 10000;
+		}
+	    else if (m_PPet->PMaster->StatusEffectContainer->HasStatusEffect(EFFECT_WEIGHT) == true) 
+		{	
+		m_PBattleSubTarget = m_PPet->PMaster;
+		if (level >= 32)
+		    if (m_PPet->health.mp >= 18)
+			    {
+				 spellID = 143;
+				}
+		    else
+			    {
+				 spellID = -1;
+				}
+			m_LastKupipiEnhanceTime = m_Tick;	
+		    m_kupipiEnhanceRecast = 10000;
+		}
+		else if (m_PPet->PMaster->StatusEffectContainer->HasStatusEffect(EFFECT_PROTECT) == false) 
+			{
+			m_PBattleSubTarget = m_PPet; //Target Self for Potectra
+			if (level >= 63)
+				if (m_PPet->health.mp > 64)
+					{
+					 spellID = 128;
+					}
+				else if (m_PPet->health.mp > 45)
+					{
+					 spellID = 127;
+					}
+				else if (m_PPet->health.mp > 27)
+					{
+					 spellID = 126;
+					}
+				else if (m_PPet->health.mp > 8)
+					{
+					 spellID = 125;
+					}
+				else 
+			        {
+				     spellID = -1;
+				    } 	
+			else if (level > 47)
+				if (m_PPet->health.mp > 45)
+					{
+					 spellID = 127;
+					}
+				else if (m_PPet->health.mp > 27)
+					{
+					 spellID = 126;
+					}
+				else if (m_PPet->health.mp > 8)
+					{
+					 spellID = 125;
+					}
+				else 
+			        {
+				     spellID = -1;
+				    } 	
+			else if (level > 27)
+				if (m_PPet->health.mp > 27)
+					{
+					 spellID = 126;
+					}
+				else if (m_PPet->health.mp > 8)
+					{
+					 spellID = 125;
+					}
+				else 
+			        {
+				     spellID = -1;
+				    } 	
+			else if (level > 6)
+				if (m_PPet->health.mp > 8)
+					{
+					 spellID = 125;
+					}
+				else 
+			        {
+				     spellID = -1;
+				    } 	
+			else
+		        {
+				 spellID = -1;
+				} 
+			m_LastKupipiEnhanceTime = m_Tick;	
+			m_kupipiEnhanceRecast = 10000;
+			}
+		else if (m_PPet->PMaster->StatusEffectContainer->HasStatusEffect(EFFECT_SHELL) == false) 
+			{
+			m_PBattleSubTarget = m_PPet->PMaster;
+			if (level >= 68)
+				if (m_PPet->health.mp > 74)
+					{
+					 spellID = 133;
+					}
+				else if (m_PPet->health.mp > 55)
+					{
+					 spellID = 132;
+					}
+				else if (m_PPet->health.mp > 36)
+					{
+					 spellID = 131;
+					}
+				else if (m_PPet->health.mp > 17)
+					{
+					 spellID = 130;
+					}
+				else 
+			        {
+				     spellID = -1;
+				    } 	
+			else if (level >= 57)
+				if (m_PPet->health.mp > 55)
+					{
+					 spellID = 132;
+					}
+				else if (m_PPet->health.mp > 36)
+					{
+					 spellID = 131;
+					}
+				else if (m_PPet->health.mp > 17)
+					{
+					 spellID = 130;
+					}
+				else 
+			        {
+				     spellID = -1;
+				    } 	
+			else if (level > 37)
+				if (m_PPet->health.mp > 36)
+					{
+					 spellID = 131;
+					}
+				else if (m_PPet->health.mp > 17)
+					{
+					 spellID = 130;
+					}
+				else 
+			        {
+				     spellID = -1;
+				    } 	
+			else if (level > 17)
+				if (m_PPet->health.mp > 17)
+					{
+					 spellID = 130;
+					}
+				else 
+			        {
+				     spellID = -1;
+				    } 	
+			else
+		        {
+				 spellID = -1;
+				} 			
+			m_LastKupipiEnhanceTime = m_Tick;	
+			m_kupipiEnhanceRecast = 10000;
+			}
+
+			
+	}	
+    return spellID;
+}	
+	
 
 	
-	return spellID;
+	
 
-}
+
 
 
 
@@ -2753,6 +3199,55 @@ CBattleEntity* CAIPetDummy::getWounded(uint8 threshold)
     if (lowest <= threshold)
     {
         return mostWounded;
+    }
+    else
+    {
+        return nullptr;
+    }
+
+}
+
+CBattleEntity* CAIPetDummy::getWoundedLow(uint8 threshold)
+{
+    uint8 lowest = 100;
+    CBattleEntity* mostWoundedLow = nullptr;
+    if (m_PPet->PMaster == nullptr)
+        return nullptr;
+    if (m_PPet->PMaster->GetHPP() < lowest){
+        lowest = m_PPet->PMaster->GetHPP();
+        mostWoundedLow = m_PPet->PMaster;
+    }
+    if (m_PPet->PMaster->PPet != nullptr && m_PPet->PMaster->PPet->GetHPP() < lowest)
+    {
+        lowest = m_PPet->PMaster->PPet->GetHPP();
+        mostWoundedLow = m_PPet->PMaster->PPet;
+    }
+    if (m_PPet->PMaster->PParty != nullptr)  //Only Soulsoother Head can cure other Party Members
+    {
+        for (auto member : m_PPet->PMaster->PParty->members)
+        {
+            if ( member->GetHPP() < lowest)
+            {
+                lowest = member->GetHPP();
+                mostWoundedLow = member;
+            }
+        }
+    }
+    if (m_PPet->PMaster->PAlly.size() > 0)  //Only Soulsoother Head can cure other Allies add Soulsoother Head
+    {
+        for (auto ally : m_PPet->PMaster->PAlly)
+        {
+            if ( ally->GetHPP() < lowest)
+            {
+                lowest = ally->GetHPP();
+                mostWoundedLow = ally;
+            }
+        }
+    }
+    
+    if (lowest <= threshold)
+    {
+        return mostWoundedLow;
     }
     else
     {

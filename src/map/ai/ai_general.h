@@ -155,6 +155,7 @@ public:
 	void			SetLastCurillaVokeTime(uint32 time);
     void            SetLastCurillaFlash(uint32 time);
 	void            SetLastKupipiMagicTime(uint32 time);
+	void            SetLastKupipiEnhanceTime(uint32 time);
 	void			SetLastNanaaCheckTime(uint32 time);
 	void			SetLastNanaaSneakAttackTime(uint32 time);
 	void			SetLastAyameMeditateTime(uint32 time);
@@ -214,6 +215,7 @@ protected:
 	uint32          m_LastCurillaVokeTime;
 	uint32          m_LastCurillaFlash;
 	uint32          m_LastKupipiMagicTime;
+	uint32			m_LastKupipiEnhanceTime;
 	uint32          m_LastNanaaCheckTime;  //Last time Nanaa Mihgo checked if facing target
 	uint32			m_LastNanaaSneakAttackTime;
 	uint32			m_LastAyameMeditateTime;
