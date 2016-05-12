@@ -4,6 +4,7 @@
 -- Empyreal Arrow WSNM
 -----------------------------------		
 require("scripts/globals/keyitems");
+require("scripts/zones/Cape_Teriggan/TextIDs");
 -----------------------------------	
 
 function onMobSpawn(mob)
@@ -24,5 +25,6 @@ function onMobDeath(mob,killer)
     killer:messageSpecial(KEYITEM_OBTAINED,ANNALS_OF_TRUTH);
 	killer:delKeyItem(MAP_TO_THE_ANNALS_OF_TRUTH);
 	killer:setVar("EMPYREAL_ARROW_WIN",2);
+		killer:setVar("EMPYREAL_ARROW",0);
 	end
 end;	

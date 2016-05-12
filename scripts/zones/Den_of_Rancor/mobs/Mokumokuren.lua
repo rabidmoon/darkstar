@@ -4,6 +4,7 @@
 -- Spiral Hell
 -----------------------------------		
 require("scripts/globals/keyitems");
+require("scripts/zones/Den_of_Rancor/TextIDs");
 -----------------------------------	
 
 function onMobSpawn(mob)
@@ -24,5 +25,6 @@ function onMobDeath(mob,killer)
     killer:messageSpecial(KEYITEM_OBTAINED,ANNALS_OF_TRUTH);
 	killer:delKeyItem(MAP_TO_THE_ANNALS_OF_TRUTH);
 	killer:setVar("SPIRAL_HELL_WIN",2);
+	killer:setVar("SPIRAL_HELL",0);
 	end
 end;	

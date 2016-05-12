@@ -4,6 +4,7 @@
 -- Steel Cyclone NM	
 -----------------------------------		
 require("scripts/globals/keyitems");
+require("scripts/zones/The_Sanctuary_of_ZiTah/TextIDs");
 -----------------------------------	
 
 function onMobSpawn(mob)
@@ -20,9 +21,10 @@ end;
 	
 function onMobDeath(mob,killer)	
     if (killer:getVar("STEEL_CYCLONE_WIN") == 1) then
-    killer:addKeyItem(ANNALS_OF_TRUTH );
+    killer:addKeyItem(ANNALS_OF_TRUTH);
     killer:messageSpecial(KEYITEM_OBTAINED,ANNALS_OF_TRUTH);
 	killer:delKeyItem(MAP_TO_THE_ANNALS_OF_TRUTH);
 	killer:setVar("STEEL_CYCLONE_WIN",2);
+	killer:setVar("STEEL_CYCLONE",0);
 	end
 end;	

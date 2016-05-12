@@ -4,6 +4,7 @@
 -- Retribution NM
 -----------------------------------		
 require("scripts/globals/keyitems");
+require("scripts/zones/Ifrits_Cauldron/TextIDs");
 -----------------------------------	
 
 function onMobSpawn(mob)
@@ -24,5 +25,6 @@ function onMobDeath(mob,killer)
     killer:messageSpecial(KEYITEM_OBTAINED,ANNALS_OF_TRUTH);
 	killer:delKeyItem(MAP_TO_THE_ANNALS_OF_TRUTH);
 	killer:setVar("RETRIBUTION_WIN",2);
+	killer:setVar("RETRIBUTION",0);	
 	end
 end;	

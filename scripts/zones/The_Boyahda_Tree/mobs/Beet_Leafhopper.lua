@@ -4,6 +4,7 @@
 -- Detonator NM
 -----------------------------------		
 require("scripts/globals/keyitems");
+require("scripts/zones/The_Boyahda_Tree/TextIDs");
 -----------------------------------	
 
 function onMobSpawn(mob)
@@ -24,5 +25,6 @@ function onMobDeath(mob,killer)
     killer:messageSpecial(KEYITEM_OBTAINED,ANNALS_OF_TRUTH);
 	killer:delKeyItem(MAP_TO_THE_ANNALS_OF_TRUTH);
 	killer:setVar("DETONATOR_WIN",2);
+	killer:setVar("DETONATOR",0);	
 	end
 end;	

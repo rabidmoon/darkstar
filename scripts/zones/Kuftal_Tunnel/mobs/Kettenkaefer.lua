@@ -4,6 +4,7 @@
 -- Tachi: Kasha NM
 -----------------------------------		
 require("scripts/globals/keyitems");
+require("scripts/zones/Kuftal_Tunnel/TextIDs");
 -----------------------------------	
 
 function onMobSpawn(mob)
@@ -24,5 +25,6 @@ function onMobDeath(mob,killer)
     killer:messageSpecial(KEYITEM_OBTAINED,ANNALS_OF_TRUTH);
 	killer:delKeyItem(MAP_TO_THE_ANNALS_OF_TRUTH);
 	killer:setVar("TACHI_KASHA_WIN",2);
+	killer:setVar("TACHI_KASHA",0);
 	end
 end;	

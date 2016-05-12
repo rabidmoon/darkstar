@@ -4,6 +4,7 @@
 -- Impulse Drive WSNM
 -----------------------------------		
 require("scripts/globals/keyitems");
+require("scripts/zones/Sea_Serpent_Grotto/TextIDs");
 -----------------------------------	
 
 function onMobSpawn(mob)
@@ -20,9 +21,10 @@ end;
 	
 function onMobDeath(mob,killer)
     if (killer:getVar("IMPULSE_DRIVE_WIN") == 1) then
-    killer:addKeyItem(ANNALS_OF_TRUTH );
+    killer:addKeyItem(ANNALS_OF_TRUTH);
     killer:messageSpecial(KEYITEM_OBTAINED,ANNALS_OF_TRUTH);
 	killer:delKeyItem(MAP_TO_THE_ANNALS_OF_TRUTH);
 	killer:setVar("IMPULSE_DRIVE_WIN",2);
+	killer:setVar("IMPULSE_DRIVE",0);	
 	end
 end;	

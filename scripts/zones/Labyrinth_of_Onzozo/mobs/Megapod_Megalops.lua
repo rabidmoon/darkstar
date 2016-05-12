@@ -4,6 +4,7 @@
 -- Blade: Ku WSNM
 -----------------------------------		
 require("scripts/globals/keyitems");
+require("scripts/zones/Labyrinth_of_Onzozo/TextIDs");
 -----------------------------------	
 
 function onMobSpawn(mob)
@@ -24,5 +25,6 @@ function onMobDeath(mob,killer)
     killer:messageSpecial(KEYITEM_OBTAINED,ANNALS_OF_TRUTH);
 	killer:delKeyItem(MAP_TO_THE_ANNALS_OF_TRUTH);
 	killer:setVar("BLADE_KU_WIN",2);
+	killer:setVar("BLADE_KU",0);	
 	end
 end;	

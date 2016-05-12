@@ -4,6 +4,7 @@
 -- Decimation WS
 -----------------------------------		
 require("scripts/globals/keyitems");
+require("scripts/zones/Temple_of_Uggalepih/TextIDs");
 -----------------------------------	
 
 function onMobSpawn(mob)
@@ -20,9 +21,10 @@ end;
 	
 function onMobDeath(mob,killer)
     if (killer:getVar("DECIMATION_WIN") == 1) then
-    killer:addKeyItem(ANNALS_OF_TRUTH );
+    killer:addKeyItem(ANNALS_OF_TRUTH);
     killer:messageSpecial(KEYITEM_OBTAINED,ANNALS_OF_TRUTH);
 	killer:delKeyItem(MAP_TO_THE_ANNALS_OF_TRUTH);
 	killer:setVar("DECIMATION_WIN",2);
+	killer:setVar("DECIMATION",0);	
 	end
 end;	
