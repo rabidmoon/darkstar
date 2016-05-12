@@ -12,7 +12,9 @@ function onEffectGain(target,effect)
     if (target:getPet()) then
         target:getPet():addStatusEffect(effect);
     end
-    target:registerBattlefield(effect:getPower(), effect:getSubPower(), effect:getSubID());
+    if target:getBattlefieldID() == -1 then
+        target:registerBattlefield(effect:getPower(), effect:getSubPower(), effect:getSubType());
+    end
 end;
 
 -----------------------------------

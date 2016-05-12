@@ -177,7 +177,7 @@ function EventUpdateBCNM(player, csid, option, entrance)
             player:registerBattlefield(id);
             return true;
         end
-        player:addStatusEffect(EFFECT_BATTLEFIELD, id, 0, 0, player:getID());
+        local effect = player:addStatusEffect(EFFECT_BATTLEFIELD, id, 0, 0, player:getID());
         if (effect:getSubPower() ~= 0) then
             player:updateEvent(0, 3, 0, 0, 1, 0);
             -- player:tradeComplete();
@@ -197,14 +197,14 @@ function EventUpdateBCNM(player, csid, option, entrance)
             if (mask < playerbcnmid) then
                 mask = GetBattleBitmask(playerbcnmid, player:getZoneID(), 2);
                 player:updateEvent(2, mask, 0, 1, 1, skip); -- Add mask number for the correct entering CS
-                player:enterBattlefield(id);
+                -- player:enterBattlefield(id);
                 -- print("mask is "..mask)
                 -- print("playerbcnmid is "..playerbcnmid);
 
             elseif (mask >= playerbcnmid) then
                 mask = GetBattleBitmask(id, player:getZoneID(), 2);
                 player:updateEvent(2, mask, 0, 1, 1, skip); -- Add mask number for the correct entering CS
-                player:enterBattlefield(id);
+                -- player:enterBattlefield(id);
                 -- print("mask2 is "..mask)
                 -- print("playerbcnmid2 is "..playerbcnmid);
             end
@@ -237,7 +237,8 @@ function EventFinishBCNM(player, csid, option)
     if (player:hasStatusEffect(EFFECT_BATTLEFIELD) == false) then -- Temp condition for normal bcnm (started with onTrigger)
         return false;
     else
-
+        local item = trade:getItem();
+        local id = player:getBattlefieldID();
         if (id == 68 or id == 418 or id == 450 or id == 482 or id == 545 or id == 578 or id == 609 or id == 293) then
             player:tradeComplete(); -- Removes the item
         elseif ((item >= 1426 and item <= 1440) or item == 1130 or item == 1131 or item == 1175 or item == 1177 or item == 1180 or item == 1178 or item == 1551 or item == 1552 or item == 1553) then -- Orb and Testimony (one time item)

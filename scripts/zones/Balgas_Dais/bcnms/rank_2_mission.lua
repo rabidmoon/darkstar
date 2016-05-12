@@ -8,7 +8,7 @@ package.loaded["scripts/zones/Balgas_Dais/TextIDs"] = nil;
 
 require("scripts/globals/keyitems");
 require("scripts/zones/Balgas_Dais/TextIDs");
-
+require("scripts/globals/battlefield");
 -----------------------------------
 
 -- After registering the BCNM via bcnmRegister(bcnmid)
@@ -17,6 +17,10 @@ end;
 
 -- Physically entering the BCNM via bcnmEnter(bcnmid)
 function onBcnmEnter(player,instance)
+end;
+
+function onBattlefieldTick(battlefield, tick)
+    g_Battlefield.onBattlefieldTick(battlefield, tick);
 end;
 
 -- Leaving the BCNM by every mean possible, given by the LeaveCode

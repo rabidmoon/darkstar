@@ -58,7 +58,8 @@ CBattlefield::CBattlefield(uint16 id, CZone* PZone, uint8 area, CCharEntity* PIn
     m_Initiator.id = PInitiator->id;
     m_Initiator.name = PInitiator->name;
 
-    throw !LoadMobs();
+    if (!LoadMobs())
+        Cleanup();
 
     InsertEntity(PInitiator);
 
@@ -200,8 +201,8 @@ void CBattlefield::SetArea(uint8 area)
 
 void CBattlefield::SetRecord(int8* name, duration time)
 {
-    m_Record.name = name;
-    m_Record.time = time;
+    m_Record.name = name ? name : "your mum";
+    m_Record.time = time.count() ? time : 3600s;
 
     const int8* query = "UPDATE battlefield_info SET fastestName = %s, fastestTime = %u WHERE battlefieldId = %u";
     if (Sql_Query(SqlHandle, query, name, time, this->GetID() == SQL_ERROR))
@@ -320,14 +321,14 @@ bool CBattlefield::InsertEntity(CBaseEntity* PEntity, bool inBattlefield, BATTLE
 
     auto entity = dynamic_cast<CBattleEntity*>(PEntity);
 
+    // set their battlefield to this as they're now physically inside that battlefield
+    if (inBattlefield)
+        PEntity->PBattlefield = std::unique_ptr<CBattlefield>(this);
+
     // probably a mob or ally
     if (entity && !entity->StatusEffectContainer->GetStatusEffect(EFFECT_BATTLEFIELD))
         entity->StatusEffectContainer->AddStatusEffect(new CStatusEffect(EFFECT_BATTLEFIELD, EFFECT_BATTLEFIELD, this->GetID(),
             0, 0, 0, this->GetArea()));
-
-    // set their battlefield to this as they're now physically inside that battlefield
-    if (inBattlefield)
-        PEntity->PBattlefield = std::unique_ptr<CBattlefield>(this);
 
     return true;
 }
@@ -488,6 +489,7 @@ bool CBattlefield::LoadMobs()
                     }
                     else
                     {
+                        this->InsertEntity(PMob, true);
                         ShowDebug(CL_CYAN"Battlefield::LoadMobs() <%s> (%u) is already spawned\n" CL_RESET, PMob->GetName(), PMob->id);
                     }
                 }
@@ -596,50 +598,68 @@ bool CBattlefield::InProgress()
 
 void CBattlefield::ForEachPlayer(std::function<void(CCharEntity*)> func)
 {
-    for (auto player : m_PlayerList)
+    if (m_PlayerList.size())
     {
-        func((CCharEntity*)GetZone()->GetEntity(player, TYPE_PC));
+        for (auto player : m_PlayerList)
+        {
+            func((CCharEntity*)GetZone()->GetEntity(player, TYPE_PC));
+        }
     }
 }
 
 void CBattlefield::ForEachEnemy(std::function<void(CMobEntity*)> func)
 {
-    for (auto mob : m_EnemyList)
+    if (m_EnemyList.size())
     {
-        func((CMobEntity*)GetZone()->GetEntity(mob.targid, TYPE_MOB | TYPE_PET));
+        for (auto mob : m_EnemyList)
+        {
+            func((CMobEntity*)GetZone()->GetEntity(mob.targid, TYPE_MOB | TYPE_PET));
+        }
     }
 }
 
 void CBattlefield::ForEachRequiredEnemy(std::function<void(CMobEntity*)> func)
 {
-    for (auto mob : m_EnemyList)
+    if (m_EnemyList.size())
     {
-        if (mob.condition & CONDITION_WIN_REQUIREMENT)
-            func((CMobEntity*)GetZone()->GetEntity(mob.targid, TYPE_MOB | TYPE_PET));
+        for (auto mob : m_EnemyList)
+        {
+            if (mob.condition & CONDITION_WIN_REQUIREMENT)
+                func((CMobEntity*)GetZone()->GetEntity(mob.targid, TYPE_MOB | TYPE_PET));
+        }
     }
 }
 
 void CBattlefield::ForEachAdditionalEnemy(std::function<void(CMobEntity*)> func)
 {
-    for (auto mob : m_EnemyList)
+    if (m_EnemyList.size())
     {
-        if (mob.condition == CONDITION_NONE)
-            func((CMobEntity*)GetZone()->GetEntity(mob.targid, TYPE_MOB | TYPE_PET));
+        for (auto mob : m_EnemyList)
+        {
+            if (mob.condition == CONDITION_NONE)
+                func((CMobEntity*)GetZone()->GetEntity(mob.targid, TYPE_MOB | TYPE_PET));
+        }
     }
 }
 
 void CBattlefield::ForEachNpc(std::function<void(CNpcEntity*)> func)
 {
-    for (auto npc : m_NpcList)
+    if (m_NpcList.size())
     {
-        func((CNpcEntity*)GetZone()->GetEntity(npc, TYPE_NPC));
+        for (auto npc : m_NpcList)
+        {
+            func((CNpcEntity*)GetZone()->GetEntity(npc, TYPE_NPC));
+        }
     }
 }
 
 void CBattlefield::ForEachAlly(std::function<void(CMobEntity*)> func)
 {
-    for (auto ally : m_AllyList)
+    if (m_AllyList.size())
     {
-        func((CMobEntity*)GetZone()->GetEntity(ally, TYPE_PET));
+        for (auto ally : m_AllyList)
+        {
+            func((CMobEntity*)GetZone()->GetEntity(ally, TYPE_PET));
+        }
     }
 }

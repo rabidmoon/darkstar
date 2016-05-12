@@ -44,17 +44,27 @@ function g_Battlefield.onBattlefieldTick(battlefield, timeinside)
     end;
     g_Battlefield.HandleWipe(battlefield);
     g_Battlefield.HandleTimePrompts(battlefield);
+    
+    if killedallmobs then
+        battlefield:setStatus(g_Battlefield.Status.WON);
+        battlefield:cleanup(true);
+    end
 end;
 
 function g_Battlefield.HandleTimePrompts(battlefield)
     local tick = battlefield:getTick();
     local status = battlefield:getStatus();
-    
+    print(tick)
     if tick/1000 % 60 then
         for _, player in pairs(battlefield:getPlayers()) do
             player:messageBasic(202, battlefield:getRemainingTime());
         end;
-   end;
+    end;
+   
+    if battlefield:getTimeInside() >= battlefield:getTimeLimit() and status == g_Battlefield.Status.LOCKED then
+        battlefield:setStatus(g_Battlefield.Status.LOST);
+        battlefield:cleanup(true);
+    end;
 end;
 
 function g_Battlefield.HandleWipe(battlefield)

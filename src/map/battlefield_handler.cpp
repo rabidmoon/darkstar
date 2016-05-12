@@ -59,26 +59,39 @@ CBattlefieldHandler::CBattlefieldHandler(CZone* PZone)
 
 void CBattlefieldHandler::HandleBattlefields(time_point tick)
 {
-    auto check = [](auto& battlefield) {return battlefield->CanCleanup();};
-    m_Battlefields.erase(std::remove_if(m_Battlefields.begin(), m_Battlefields.end(), check), m_Battlefields.end());
-
-    for (auto& PBattlefield : m_Battlefields)
+    if (m_Battlefields.size())
     {
-        PBattlefield->DoTick(server_clock::now());
-    };
+        // can't std::remove_if in map so i'll ghetto it
+        for (auto it = m_Battlefields.begin(); it != m_Battlefields.end();)
+        {
+            if (it->second->CanCleanup())
+                it = m_Battlefields.erase(it);
+            else
+                ++it;
+        }
+
+        for (auto& PBattlefield : m_Battlefields)
+        {
+            PBattlefield.second->DoTick(server_clock::now());
+        }
+    }
 }
 
 CBattlefield* CBattlefieldHandler::LoadBattlefield(CCharEntity* PChar, uint16 battlefield)
 {
     if (m_Battlefields.size() < m_MaxBattlefields)
     {
-        auto area = m_MaxBattlefields;
+        auto area = 1;
 
-        // todo: this is horrible, find another way to set the area number
-        for (; area > 0; --area)
-            for (auto& PBattlefield : m_Battlefields)
-                if (area == PBattlefield->GetArea())
-                    continue;
+        if (m_Battlefields.size() && m_Battlefields.find(area) != m_Battlefields.end())
+        {
+            // there's already a battlefield in use so we'll start see if this area is already in use
+            for (auto i = 0; i < m_Battlefields.size(); ++i)
+            {
+                if (m_Battlefields[i]->GetArea() != area)
+                    break;  // started from the bottom now we here
+            }
+        }
 
         const int8* fmtQuery = "SELECT name, battlefieldId, fastestName, fastestTime, timeLimit, levelCap, lootDropId, rules, partySize, zoneId \
 						    FROM battlefield_info \
@@ -96,19 +109,28 @@ CBattlefield* CBattlefieldHandler::LoadBattlefield(CCharEntity* PChar, uint16 ba
         else
         {
             auto PEffect = PChar->StatusEffectContainer->GetStatusEffect(EFFECT_BATTLEFIELD);
+            auto name = Sql_GetData(SqlHandle, 0);
+            auto recordholder = Sql_GetData(SqlHandle, 2);
+            auto recordtime = std::chrono::seconds(Sql_GetUIntData(SqlHandle, 3));
+            auto timelimit = std::chrono::seconds(Sql_GetUIntData(SqlHandle, 4));
+            auto levelcap = Sql_GetUIntData(SqlHandle, 5);
+            auto lootid = Sql_GetUIntData(SqlHandle, 6);
+            auto maxplayers = Sql_GetUIntData(SqlHandle, 8);
+            auto rulemask = Sql_GetUIntData(SqlHandle, 7);
+
             PEffect->SetSubPower(area);
             std::unique_ptr<CBattlefield> PBattlefield = std::make_unique<CBattlefield>(battlefield, m_PZone, area, PChar);
 
-            PBattlefield->SetName(Sql_GetData(SqlHandle, 0));
-            PBattlefield->SetRecord(Sql_GetData(SqlHandle, 2), std::chrono::seconds(Sql_GetUIntData(SqlHandle, 3)));
-            PBattlefield->SetTimeLimit(std::chrono::seconds(Sql_GetUIntData(SqlHandle, 4)));
-            PBattlefield->SetLevelCap(Sql_GetUIntData(SqlHandle, 5));
-            PBattlefield->SetLootID(Sql_GetUIntData(SqlHandle, 6));
-            PBattlefield->SetMaxParticipants(Sql_GetUIntData(SqlHandle, 8));
-            PBattlefield->SetRuleMask((uint16)Sql_GetUIntData(SqlHandle, 7));
+            PBattlefield->SetName(name);
+            PBattlefield->SetRecord(recordholder, recordtime);
+            PBattlefield->SetTimeLimit(timelimit);
+            PBattlefield->SetLevelCap(levelcap);
+            PBattlefield->SetLootID(lootid);
+            PBattlefield->SetMaxParticipants(maxplayers);
+            PBattlefield->SetRuleMask(rulemask);
 
-            m_Battlefields.push_back(std::move(PBattlefield));
-            return m_Battlefields.back().get();
+            m_Battlefields.insert(std::make_pair(PBattlefield->GetArea(), std::move(PBattlefield)));
+            return m_Battlefields.find(area)->second.get();
         }
     }
     return nullptr;
@@ -121,9 +143,9 @@ CBattlefield* CBattlefieldHandler::GetBattlefield(CBaseEntity* PEntity)
 
     for (auto& PBattlefield : m_Battlefields)
     {
-        if (PBattlefield == PEntity->PBattlefield || (PEffect &&
-            (PEffect->GetPower() == PBattlefield->GetID() && PEffect->GetSubID() == PBattlefield->GetInitiator().id)))
-            return PBattlefield.get();
+        if (PBattlefield.second == PEntity->PBattlefield || (PEffect &&
+            (PEffect->GetPower() == PBattlefield.second->GetID() && PEffect->GetSubID() == PBattlefield.second->GetInitiator().id)))
+            return PBattlefield.second.get();
     }
     return nullptr;
 }

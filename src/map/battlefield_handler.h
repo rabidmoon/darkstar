@@ -27,7 +27,7 @@
 #include "../common/cbasetypes.h"
 #include "../common/mmo.h"
 
-#include <vector>
+#include <map>
 #include <memory>
 
 class CBattlefield;
@@ -48,9 +48,9 @@ public:
     bool          RemoveFromBattlefield(CBaseEntity* PEntity, CBattlefield* PBattlefield = nullptr, uint8 leavecode = 3);
 
 private:
-    CZone*                                     m_PZone;
-    uint8                                      m_MaxBattlefields; // usually 3 except dynamis, einherjar, besieged, ...
-    std::vector<std::unique_ptr<CBattlefield>> m_Battlefields;    // area
+    CZone*                                       m_PZone;
+    uint8                                        m_MaxBattlefields; // usually 3 except dynamis, einherjar, besieged, ...
+    std::map<int, std::unique_ptr<CBattlefield>> m_Battlefields;    // area
 };
 
 #endif
