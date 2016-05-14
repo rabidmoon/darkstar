@@ -4366,11 +4366,16 @@ inline int32 CLuaBaseEntity::addStatusEffect(lua_State *L)
     DSP_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
     DSP_DEBUG_BREAK_IF(m_PBaseEntity->objtype == TYPE_NPC);
 
+    lua_getglobal(L, CLuaStatusEffect::className);
+    lua_pushstring(L, "new");
+    lua_gettable(L, -2);
+    lua_insert(L, -2);
+
     if (lua_isuserdata(L, 1))
     {
         CLuaStatusEffect* PStatusEffect = Lunar<CLuaStatusEffect>::check(L, 1);
 
-        lua_pushboolean(L, ((CBattleEntity*)m_PBaseEntity)->StatusEffectContainer->AddStatusEffect(
+        lua_pushlightuserdata(L, (void*)((CBattleEntity*)m_PBaseEntity)->StatusEffectContainer->AddStatusEffect(
             new CStatusEffect(*PStatusEffect->GetStatusEffect())));
     }
     else
@@ -4382,7 +4387,7 @@ inline int32 CLuaBaseEntity::addStatusEffect(lua_State *L)
 
         int32 n = lua_gettop(L);
 
-        CStatusEffect * PEffect = new CStatusEffect(
+        auto effect = new CStatusEffect(
             (EFFECT)lua_tointeger(L, 1),
             (uint16)lua_tointeger(L, 1),
             (uint16)lua_tointeger(L, 2),
@@ -4392,8 +4397,11 @@ inline int32 CLuaBaseEntity::addStatusEffect(lua_State *L)
             (n >= 6 ? (uint16)lua_tointeger(L, 6) : 0),
             (n >= 7 ? (uint16)lua_tointeger(L, 7) : 0));
 
-        lua_pushboolean(L, ((CBattleEntity*)m_PBaseEntity)->StatusEffectContainer->AddStatusEffect(PEffect));
+        auto added = static_cast<CBattleEntity*>(m_PBaseEntity)->StatusEffectContainer->AddStatusEffect(effect);
+
+        lua_pushlightuserdata(L, added ? (void*)effect : nullptr);
     }
+    lua_pcall(L, 2, 1, 0);
 
     return 1;
 }
