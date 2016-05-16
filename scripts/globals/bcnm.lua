@@ -154,7 +154,7 @@ function EventTriggerBCNM(player, npc)
         param8: 0 for options, 1 plays rank 2 mission without option, 2+ doesnt allow entry? (confirm once loading actually handled)
     ]]--
     if (player:hasStatusEffect(EFFECT_BATTLEFIELD)) then
-        if (player:getBattlefieldID() ~= -1) then
+        if player:getBattlefield() then
             player:startEvent(0x7d03); -- Run Away or Stay menu
         else -- You're not in the BCNM but you have the Battlefield effect. Think: non-trader in a party
             local status = player:getStatusEffect(EFFECT_BATTLEFIELD);
@@ -180,6 +180,13 @@ end;
 
 function EventUpdateBCNM(player, csid, option, entrance)
     -- return false;
+    --[[
+        what probably happens:
+            player is given list of valid bcnms
+            that mask is slapped into oneventupdate
+            client chooses event
+            player gets registered oneventfinish
+    ]]
     local id = player:getVar("trade_bcnmid"); -- this is 0 if the bcnm isnt handled by new functions
     local skip = CutsceneSkip(player, npc);
 
@@ -211,22 +218,16 @@ function EventUpdateBCNM(player, csid, option, entrance)
         -- If the second instance is free, it should respond to the second packet, etc
       
             local mask = GetBattleBitmask(id, player:getZoneID(), 2);
-            local status = player:getStatusEffect(EFFECT_BATTLEFIELD);
+            local status = player:addStatusEffect(EFFECT_BATTLEFIELD);
             local playerbcnmid = status:getPower();
             if (mask < playerbcnmid) then
                 mask = GetBattleBitmask(playerbcnmid, player:getZoneID(), 2);
-                player:updateEvent(2, mask, 0, 1, 1, skip); -- Add mask number for the correct entering CS
-                -- player:enterBattlefield(id);
-                -- print("mask is "..mask)
-                -- print("playerbcnmid is "..playerbcnmid);
-
             elseif (mask >= playerbcnmid) then
                 mask = GetBattleBitmask(id, player:getZoneID(), 2);
-                player:updateEvent(2, mask, 0, 1, 1, skip); -- Add mask number for the correct entering CS
-                -- player:enterBattlefield(id);
-                -- print("mask2 is "..mask)
-                -- print("playerbcnmid2 is "..playerbcnmid);
             end
+            player:setLocalVar("MASK", mask);
+            player:PrintToPlayer(string.format("EU mask %u | option %u", mask, option));
+            player:updateEvent(2, mask, 0, 1, 1, skip); -- Add mask number for the correct entering CS
             
         -- elseif (player:getVar("bcnm_instanceid") == 255) then -- none free
             -- print("nfa");
@@ -252,7 +253,7 @@ end;
 function EventFinishBCNM(player, csid, option)
     print("FINISH csid "..csid.." option "..option);
 
-
+    player:PrintToPlayer(string.format("EF mask %u | option %u", option, mask));
     if (player:hasStatusEffect(EFFECT_BATTLEFIELD) == false) then -- Temp condition for normal bcnm (started with onTrigger)
         return false;
     else
@@ -279,7 +280,7 @@ function CheckMaatFights(player, zone, trade, npc)
 
     if (itemid >= 1426 and itemid <= 1440) then -- The traded item IS A TESTIMONY
         if (lvl < 66) then
-        return true;
+            return true;
         end
 
         if (player:isBcnmsFull() == 1) then -- temp measure, this will precheck the instances
@@ -289,11 +290,16 @@ function CheckMaatFights(player, zone, trade, npc)
         end
 
         -- Zone, {item, job, menu, bcnmid, ...}
-        maatList = {139, {1426, 1, 32, 5, 1429, 4, 64, 6, 1436, 11, 128, 7},        -- Horlais Peak [WAR BLM RNG]
-                    144, {1430, 5, 64, 70, 1431, 6, 128, 71, 1434, 9, 256, 72},        -- Waughroon Shrine [RDM THF BST]
-                    146, {1427, 2, 32, 101, 1428, 3, 64, 102, 1440, 15, 128, 103},    -- Balga's Dais [MNK WHM SMN]
-                    168, {1437, 12, 4, 194, 1438, 13, 8, 195, 1439, 14, 16, 196},    -- Chamber of Oracles [SAM NIN DRG]
-                    206, {1432, 7, 32, 517, 1433, 8, 64, 518, 1435, 10, 128, 519} };-- Qu'Bia Arena [PLD DRK BRD]
+        maatList = {
+                            [139] = {1426, 1, 32, 5, 1429, 4, 64, 6, 1436, 11, 128, 7},        -- Horlais Peak [WAR BLM RNG]
+                            [144] = {1430, 5, 64, 70, 1431, 6, 128, 71, 1434, 9, 256, 72},        -- Waughroon Shrine [RDM THF BST]
+                            [146] = {1427, 2, 32, 101, 1428, 3, 64, 102, 1440, 15, 128, 103},    -- Balga's Dais [MNK WHM SMN]
+                            [168] = {1437, 12, 4, 194, 1438, 13, 8, 195, 1439, 14, 16, 196},    -- Chamber of Oracles [SAM NIN DRG]
+                            [206] = {1432, 7, 32, 517, 1433, 8, 64, 518, 1435, 10, 128, 519}
+                        };-- Qu'Bia Arena [PLD DRK BRD]
+                    
+        local list = maatList[zone];
+        
 
         for nb = 1, table.getn(maatList), 2 do
             if (maatList[nb] == zone) then
@@ -328,6 +334,7 @@ function GetBattleBitmask(id, zone, mode)
                     ret = mask + bit.lshift(index, 2);
                 else
                     ret = mask + index;
+                end
             end
         end
     else
