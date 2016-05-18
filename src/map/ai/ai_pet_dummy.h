@@ -77,6 +77,7 @@ protected:
 	uint32 m_exeJumpRecast;
 	uint32 m_exeHjumpRecast;
 	uint32 m_exeSjumpRecast;
+	uint32 m_ayameThirdEyeRecast;
 
 	
 

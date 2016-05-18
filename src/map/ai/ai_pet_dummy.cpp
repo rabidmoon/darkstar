@@ -82,7 +82,7 @@ CAIPetDummy::CAIPetDummy(CPetEntity* PPet)
 	m_curillaFlashRecast = 50000;
 	m_magicKupipiRecast = 4000;
 	m_nanaacheck = 5000;  //For Nanaa Mihgo to check every 5 seconds if she is facing target or not
-	m_nanaaSneakAttackRecast = 45000;
+	m_nanaaSneakAttackRecast = 50000;
 	
 	m_ayameMeditateRecast = 180000;
 	m_najiBerserkRecast = 300000;
@@ -90,6 +90,9 @@ CAIPetDummy::CAIPetDummy(CPetEntity* PPet)
 	m_exeJumpRecast = 60000;
 	m_exeHjumpRecast = 120000;
 	m_exeSjumpRecast = 180000;
+	m_ayameThirdEyeRecast = 45000;
+	
+
 	
 	
 }
@@ -171,7 +174,7 @@ void CAIPetDummy::ActionAbilityStart()
 	 
 	 //This section below is for nanaa to only use WS if SA timer is greater than 15 seconds	
 	 if (m_PPet->m_PetID == PETID_NANAA_MIHGO && m_PPet->health.tp >= 1000 && m_PBattleTarget != nullptr) { 	
-	        ShowWarning("SA WS Active \n");
+	        //ShowWarning("SA WS Active \n");
 			int16 mobwsID = -1;
 			uint8 wsrandom = dsprand::GetRandomNumber(1, 3);
             for (int i = 0; i < m_PPet->PetSkills.size(); i++) {
@@ -1706,6 +1709,7 @@ void CAIPetDummy::ActionRoaming()
             return;
         }
     }
+	charutils::UpdateHealth((CCharEntity*)m_PPet->PMaster);
 	
 	
     if (m_PBattleTarget != nullptr) {
@@ -1761,6 +1765,8 @@ void CAIPetDummy::ActionEngage()
 {
     DSP_DEBUG_BREAK_IF(m_PBattleTarget == nullptr);
 
+	m_LastEngageStart = m_Tick; //For WS timers so trusts don't WS at the start unless they are tanks
+	
 	uint8 trustlvl = m_PPet->GetMLevel();
 	if (m_PPet->getPetType() == PETTYPE_TRUST){
 	m_PPet->StatusEffectContainer->DelStatusEffect(EFFECT_HEALING);
@@ -1946,6 +1952,28 @@ void CAIPetDummy::ActionAttack()
 				return;	
 				}		
 	     }
+		 if (m_PPet->m_PetID == PETID_AYAME && trustlevel >=15)
+		{		
+		 if ((m_Tick >= m_LastAyameThirdEyeTime + m_ayameThirdEyeRecast) && m_PPet->GetHPP() < 85 || m_PPet->health.tp < 20) // Use Third eye when HP is lower than 85% or tp is less than 20% to activate after WS
+			{
+			m_PWeaponSkill = nullptr;
+            int16 mobjaID = -1;			
+			for (int i = 0; i < m_PPet->PetSkills.size(); i++) {
+                    auto PMobSkill = battleutils::GetMobSkill(m_PPet->PetSkills.at(i));
+                            
+                        if (PMobSkill->getID() == 3716) { //Third Eye
+						    mobjaID = 46;
+                            SetCurrentMobSkill(PMobSkill);
+							SetCurrentJobAbility(mobjaID);
+							m_PBattleSubTarget = m_PPet;  //Target Self
+							break;
+                        }
+			        }
+				preparePetAbility(m_PBattleSubTarget);
+				m_LastAyameThirdEyeTime = m_Tick;
+				return;	
+				}		
+	     }		 
 
 		 if (m_PPet->m_PetID == PETID_EXCENMILLE)
 		{		
@@ -2108,7 +2136,7 @@ void CAIPetDummy::ActionAttack()
 	//Nanaa will use WS based on if SA is active, or won't be available for a certain period of time
 	//Ayame will use WS if the players TP is less than 80%.  If the player's TP is 80% she will hold TP until the player get 100%.
 	
-		if (m_PPet->getPetType() == PETTYPE_TRUST && m_PPet->m_PetID != PETID_NANAA_MIHGO && m_PPet->m_PetID != PETID_AYAME && m_PPet->health.tp >= 1000 && m_PPet->PetSkills.size() > 0)
+		if (m_PPet->getPetType() == PETTYPE_TRUST && m_PPet->m_PetID != PETID_NAJI && m_PPet->m_PetID != PETID_NANAA_MIHGO && m_PPet->m_PetID != PETID_AYAME && m_PPet->health.tp >= 1000 && m_PPet->PetSkills.size() > 0)
     {
 		m_PBattleSubTarget = m_PBattleTarget;
         m_ActionType = ACTION_MOBABILITY_START;
@@ -2116,14 +2144,14 @@ void CAIPetDummy::ActionAttack()
         return;
 	}
 	    //Ayame will use WS if player TP is less than 80%
-		if (m_PPet->getPetType() == PETTYPE_TRUST && m_PPet->m_PetID == PETID_AYAME && m_PPet->health.tp >= 1000 && m_PPet->PetSkills.size() > 0 && m_PPet->PMaster->health.tp < 800)
+		if (m_PPet->getPetType() == PETTYPE_TRUST && m_Tick >= m_LastEngageStart + 7000 && m_PPet->m_PetID == PETID_AYAME && m_PPet->health.tp >= 1000 && m_PPet->PetSkills.size() > 0 && m_PPet->PMaster->health.tp < 800)
     {
 		m_PBattleSubTarget = m_PBattleTarget;
         m_ActionType = ACTION_MOBABILITY_START;
         ActionAbilityStart();
         return;
 	}
-		if (m_PPet->getPetType() == PETTYPE_TRUST && m_PPet->m_PetID == PETID_AYAME && m_PPet->health.tp >= 1000 && m_PPet->PetSkills.size() > 0 && m_PPet->PMaster->health.tp >= 1000)
+		if (m_PPet->getPetType() == PETTYPE_TRUST && m_Tick >= m_LastEngageStart + 7000 && m_PPet->m_PetID == PETID_AYAME && m_PPet->health.tp >= 1000 && m_PPet->PetSkills.size() > 0 && m_PPet->PMaster->health.tp >= 1000)
     {
 		m_PBattleSubTarget = m_PBattleTarget;
         m_ActionType = ACTION_MOBABILITY_START;
@@ -2141,7 +2169,7 @@ void CAIPetDummy::ActionAttack()
         return;
 	} */
 	    //Use WS if SA is active
-		if (m_PPet->getPetType() == PETTYPE_TRUST && m_PPet->m_PetID == PETID_NANAA_MIHGO && m_PPet->health.tp >= 1000 && m_PPet->PetSkills.size() > 0
+		if (m_PPet->getPetType() == PETTYPE_TRUST && m_Tick >= m_LastEngageStart + 7000 && m_PPet->m_PetID == PETID_NANAA_MIHGO && m_PPet->health.tp >= 1000 && m_PPet->PetSkills.size() > 0
 		&& m_PPet->StatusEffectContainer->HasStatusEffect(EFFECT_SNEAK_ATTACK))
     {
 		m_PBattleSubTarget = m_PBattleTarget;
@@ -2150,7 +2178,7 @@ void CAIPetDummy::ActionAttack()
         return;
 	}
 	    //Use WS if SA timer has more than 25 seconds left
-		if (m_PPet->getPetType() == PETTYPE_TRUST && m_PPet->m_PetID == PETID_NANAA_MIHGO && m_PPet->health.tp >= 1000 && m_PPet->PetSkills.size() > 0
+		if (m_PPet->getPetType() == PETTYPE_TRUST && m_Tick >= m_LastEngageStart + 7000 && m_PPet->m_PetID == PETID_NANAA_MIHGO && m_PPet->health.tp >= 1000 && m_PPet->PetSkills.size() > 0
 		&& m_Tick < m_LastNanaaSneakAttackTime + 20000)
     {
 		m_PBattleSubTarget = m_PBattleTarget;
@@ -2159,7 +2187,7 @@ void CAIPetDummy::ActionAttack()
         return;
 	}
 	    //No SA available for Nanaa Yet
-		if (m_PPet->getPetType() == PETTYPE_TRUST && m_PPet->m_PetID == PETID_NANAA_MIHGO && m_PPet->health.tp >= 1000 && m_PPet->PetSkills.size() > 0
+		if (m_PPet->getPetType() == PETTYPE_TRUST && m_Tick >= m_LastEngageStart + 7000 && m_PPet->m_PetID == PETID_NANAA_MIHGO && m_PPet->health.tp >= 1000 && m_PPet->PetSkills.size() > 0
 		&& trustlevel < 15)
     {
 		m_PBattleSubTarget = m_PBattleTarget;
@@ -2167,7 +2195,13 @@ void CAIPetDummy::ActionAttack()
         ActionAbilityStart();
         return;
 	}
-	 
+		if (m_PPet->getPetType() == PETTYPE_TRUST && m_Tick >= m_LastEngageStart + 7000 && m_PPet->m_PetID == PETID_NAJI && m_PPet->health.tp >= 1000 && m_PPet->PetSkills.size() > 0)
+    {
+		m_PBattleSubTarget = m_PBattleTarget;
+        m_ActionType = ACTION_MOBABILITY_START;
+        ActionAbilityStart();
+        return;
+	} 
 
     m_PPathFind->LookAt(m_PBattleTarget->loc.p);
 
@@ -2217,13 +2251,13 @@ void CAIPetDummy::ActionAttack()
 	if (m_Tick >= m_LastNanaaCheckTime + m_nanaacheck) // Every 5 seconds to see if nanaa is not facing target
 	{
 	    //Check to see if facing target
-		ShowDebug("NANAA FACING CHECK  \n");
+		//ShowDebug("NANAA FACING CHECK  \n");
 	    if ((abs(m_PBattleTarget->loc.p.rotation - m_PPet->loc.p.rotation) > 5) &&
 		(abs(m_PBattleTarget->loc.p.rotation - m_PPet->loc.p.rotation) < 118)) 
 		//Not facing target have Nanaa Mihgo Behind the Target
 		{	
-		    ShowWarning(CL_GREEN"Nanaa is moving behind the target\n" CL_RESET);
-			ShowDebug("Greater than 10 and less than 118  \n");
+		    //ShowWarning(CL_GREEN"Nanaa is moving behind the target\n" CL_RESET);
+			//ShowDebug("Greater than 10 and less than 118  \n");
 			position_t* pos = &m_PBattleTarget->loc.p;
 			position_t nearEntity = nearPosition(*pos, 2.0f, M_PI);
 			m_PPathFind->PathTo(nearEntity, PATHFLAG_WALLHACK | PATHFLAG_RUN);
@@ -2238,8 +2272,8 @@ void CAIPetDummy::ActionAttack()
 		(abs(m_PBattleTarget->loc.p.rotation - m_PPet->loc.p.rotation) < 250)) && m_PPet->m_PetID == PETID_NANAA_MIHGO) 
 		//Not facing target have Nanaa Mihgo Behind the Target
 		{	
-		    ShowWarning(CL_GREEN"Nanaa is moving behind the target\n" CL_RESET);
-			ShowDebug("Greater than 135 and less than 245  \n");
+		    //ShowWarning(CL_GREEN"Nanaa is moving behind the target\n" CL_RESET);
+			//ShowDebug("Greater than 135 and less than 245  \n");
 			position_t* pos = &m_PBattleTarget->loc.p;
 			position_t nearEntity = nearPosition(*pos, 2.0f, M_PI);
 			m_PPathFind->PathTo(nearEntity, PATHFLAG_WALLHACK | PATHFLAG_RUN);
@@ -2253,7 +2287,7 @@ void CAIPetDummy::ActionAttack()
 		
 		else
 			{	
-             ShowWarning(CL_RED"NANAA IS IN FRONT OR BEHIND THE MOB.  DONT MOVE!!\n" CL_RESET);
+             //ShowWarning(CL_RED"NANAA IS IN FRONT OR BEHIND THE MOB.  DONT MOVE!!\n" CL_RESET);
 			 m_nanaacheck = 5000;
              m_LastNanaaCheckTime = m_Tick;
 			}
@@ -2338,7 +2372,7 @@ void CAIPetDummy::ActionAttack()
 						    }
 							if (m_PPet->StatusEffectContainer->HasStatusEffect(EFFECT_SNEAK_ATTACK))
 			                {
-					            ShowWarning(CL_GREEN"HIT OCCURED REMOVING SA \n" CL_RESET);
+					            //ShowWarning(CL_GREEN"HIT OCCURED REMOVING SA \n" CL_RESET);
 						        m_PPet->StatusEffectContainer->DelStatusEffect(EFFECT_SNEAK_ATTACK);
 					        }	
 			
@@ -2568,6 +2602,7 @@ void CAIPetDummy::ActionSpawn()
     {
         m_ActionType = ACTION_ROAMING;
     }
+
 }
 
 /************************************************************************

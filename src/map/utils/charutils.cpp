@@ -2825,7 +2825,7 @@ namespace charutils
     {
         if (PChar->objtype != TYPE_PC)
         {
-            ShowError("charutils::hasTrait Attempt to reference a trait from a non-character entity: %s %i", PChar->name.c_str(), PChar->id);
+            // ShowError("charutils::hasTrait Attempt to reference a trait from a non-character entity: %s %i", PChar->name.c_str(), PChar->id);
             return 0;
         }
         return hasBit(TraitID, PChar->m_TraitList, sizeof(PChar->m_TraitList));
@@ -2835,7 +2835,7 @@ namespace charutils
     {
         if (PChar->objtype != TYPE_PC)
         {
-            ShowError("charutils::addTrait Attempt to reference a trait from a non-character entity: %s %i", PChar->name.c_str(), PChar->id);
+           // ShowError("charutils::addTrait Attempt to reference a trait from a non-character entity: %s %i", PChar->name.c_str(), PChar->id);
             return 0;
         }
         return addBit(TraitID, PChar->m_TraitList, sizeof(PChar->m_TraitList));
@@ -2845,7 +2845,7 @@ namespace charutils
     {
         if (PChar->objtype != TYPE_PC)
         {
-            ShowError("charutils::delTrait Attempt to reference a trait from a non-character entity: %s %i", PChar->name.c_str(), PChar->id);
+           // ShowError("charutils::delTrait Attempt to reference a trait from a non-character entity: %s %i", PChar->name.c_str(), PChar->id);
             return 0;
         }
         return delBit(TraitID, PChar->m_TraitList, sizeof(PChar->m_TraitList));
@@ -2881,7 +2881,6 @@ namespace charutils
     {
         //DSP_DEBUG_BREAK_IF(PChar->objtype != TYPE_PC);
 
-        //ShowDebug("Update Health fired.");
         PChar->updatemask |= UPDATE_HP;
 
         if (PChar->PParty != nullptr)
