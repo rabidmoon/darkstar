@@ -20,7 +20,7 @@ local balance = 0;
 local questweakness = 175000; 
 local pinfamy = player:getCurrency("infamy");
 
-if (trade:hasItemQty( 4104, 1 )) and (player:getVar("FerretoryLv75Complete") >= 11) then 
+if (trade:hasItemQty(4104,1)) and (player:getVar("FerretoryLv75") >= 11) then 
     if (pinfamy >= questweakness) then   
     player:delCurrency("infamy", questweakness);
     player:tradeComplete();
@@ -69,22 +69,26 @@ local a8 = 0;
 local a9 = 0;
 local a10 = 0;
 
-
+local plvl = player:getMainLvl();
 
 
 local currentachievement = a1+a2+a3+a4+a5+a6;
 local wktimer = currentachievement * 15;
 
+player:setVar("WeakTimer",wktimer);
 
 
 
 
 
 
-if (player:getVar("FerretoryQuest75") >= 11) and player:getVar("AchievementWeakness") ~= nil and (plvl > 74) then
-    player:PrintToPlayer("Sageen : Weakness Timer? Give me 175,000 Infamy and 1 fire cluster to unlock these achievements", 0xD);
-else if (player:getVar("AchievementWeakness") == 1) then
+
+
+
+if (player:getVar("AchievementWeakness") == 1) then
     player:PrintToPlayer("Sageen : Weakness Timer is currently -"..wktimer.." seconds.  Current Achievements ["..currentachievement.."/10]", 0xD);
+else if (player:getVar("FerretoryQuest75") >= 11) and (plvl > 74) then
+    player:PrintToPlayer("Sageen : Weakness Timer? Give me 175,000 Infamy and 1 fire cluster to unlock these achievements", 0xD);	
 else
 	 player:PrintToPlayer("Sageen : Sorry, Maccus said I can't talk to you about Achievements yet...", 0xD);
 end
