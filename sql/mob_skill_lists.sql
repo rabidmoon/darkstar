@@ -2465,6 +2465,7 @@ INSERT INTO `mob_skill_lists` VALUES ('Naji',732,3741); -- Flat Blade
 INSERT INTO `mob_skill_lists` VALUES ('Naji',732,3742); -- Vorpal Blade
 
 INSERT INTO `mob_skill_lists` VALUES ('Ayame',733,3715); -- Meditate
+INSERT INTO `mob_skill_lists` VALUES ('Ayame',733,3716); -- Third Eye
 INSERT INTO `mob_skill_lists` VALUES ('Ayame',733,3779); -- Tachi Enpi
 INSERT INTO `mob_skill_lists` VALUES ('Ayame',733,3780); -- Tachi Goten
 INSERT INTO `mob_skill_lists` VALUES ('Ayame',733,3781); -- Tachi Jinpu
