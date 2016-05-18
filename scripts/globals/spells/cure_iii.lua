@@ -61,7 +61,8 @@ function onSpellCast(caster,target,spell)
 		end
 	end
 
-	if (target:getAllegiance() == caster:getAllegiance() and (target:getObjType() == TYPE_PC or target:getObjType() == TYPE_MOB or target:getObjType() == TYPE_PET)) then
+	if (target:getAllegiance() == caster:getAllegiance() and (target:getObjType() == TYPE_PC or target:getObjType() == TYPE_MOB or ((target:getObjType() == TYPE_PET) and 
+	((target:getSystem() ~= 5) or target:getSystem() ~=18)))) then
 		if (USE_OLD_CURE_FORMULA == true) then
 			basecure = getBaseCure(power,divisor,constant);
 		else
