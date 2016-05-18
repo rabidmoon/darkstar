@@ -94,15 +94,17 @@ void CAIGeneral::Reset()
 	m_LastMagicTimeStatus = 0;
 	m_LastMagicTimeEle = 0;
 	m_LastMagicTimeEnhance = 0;
+	m_LastEngageStart = 0;
 	
 	m_LastCurillaVokeTime = 0;
 	m_LastCurillaFlash = 0;
 	m_LastKupipiMagicTime = 0;
-	m_LastKupipiEnhanceTime - 0;
+	m_LastKupipiEnhanceTime = 0;
     m_LastNanaaCheckTime = 0;
 	m_LastNanaaSneakAttackTime = 0;
 	
 	m_LastAyameMeditateTime = 0;
+	m_LastAyameThirdEyeTime = 0;
 	m_LastNajiBerserkTime = 0;
 	m_LastNajiWarcryTime = 0;
 	m_LastExeJumpTime = 0;
@@ -386,6 +388,11 @@ void CAIGeneral::SetLastAyameMeditateTime(uint32 time)
 	m_LastAyameMeditateTime = time;
 } 
 
+void CAIGeneral::SetLastAyameThirdEyeTime(uint32 time)
+{
+	m_LastAyameThirdEyeTime = time;
+} 
+
 void CAIGeneral::SetLastNajiBerserkTime(uint32 time)
 {
 	m_LastNajiBerserkTime = time;
@@ -411,7 +418,10 @@ void CAIGeneral::SetLastExeSjumpTime(uint32 time)
 	m_LastExeSjumpTime = time;
 } 
 
-
+void CAIGeneral::SetLastEngageStart(uint32 time)
+{
+	m_LastEngageStart = time;
+} 
 
 
 

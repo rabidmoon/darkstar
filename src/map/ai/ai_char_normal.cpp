@@ -3069,6 +3069,8 @@ void CAICharNormal::ActionRaiseMenuSelection()
     m_PChar->animation = ANIMATION_NONE;
 
     uint8 weaknessLvl = 1;
+	int32 wktimer = charutils::GetVar(PChar, "WeakTimer");
+	int32 newwktime = (300 - wktimer);
     if (m_PChar->StatusEffectContainer->HasStatusEffect(EFFECT_WEAKNESS))
     {
         //double weakness!
@@ -3078,7 +3080,7 @@ void CAICharNormal::ActionRaiseMenuSelection()
     //add weakness effect (75% reduction in HP/MP)
     if (!m_PChar->getMijinGakure())
     {
-        CStatusEffect* PWeaknessEffect = new CStatusEffect(EFFECT_WEAKNESS, EFFECT_WEAKNESS, weaknessLvl, 0, 300);
+        CStatusEffect* PWeaknessEffect = new CStatusEffect(EFFECT_WEAKNESS, EFFECT_WEAKNESS, weaknessLvl, 0, newwktime);
         m_PChar->StatusEffectContainer->AddStatusEffect(PWeaknessEffect);
     }
 

@@ -159,11 +159,13 @@ public:
 	void			SetLastNanaaCheckTime(uint32 time);
 	void			SetLastNanaaSneakAttackTime(uint32 time);
 	void			SetLastAyameMeditateTime(uint32 time);
+	void			SetLastAyameThirdEyeTime(uint32 time);
 	void			SetLastNajiBerserkTime(uint32 time);
 	void			SetLastNajiWarcryTime(uint32 time);			
 	void			SetLastExeJumpTime(uint32 time);	
 	void			SetLastExeHjumpTime(uint32 time);	
-	void			SetLastExeSjumpTime(uint32 time);	
+	void			SetLastExeSjumpTime(uint32 time);
+    void			SetLastEngageStart(uint32 time);	
 	
 	
 	void			SetCurrentAction(ACTIONTYPE Action, uint16 TargetID = 0);
@@ -219,11 +221,14 @@ protected:
 	uint32          m_LastNanaaCheckTime;  //Last time Nanaa Mihgo checked if facing target
 	uint32			m_LastNanaaSneakAttackTime;
 	uint32			m_LastAyameMeditateTime;
+	uint32			m_LastAyameThirdEyeTime;
 	uint32			m_LastNajiBerserkTime;
 	uint32			m_LastNajiWarcryTime;
 	uint32          m_LastExeJumpTime;
 	uint32			m_LastExeHjumpTime;
 	uint32			m_LastExeSjumpTime;
+	
+	uint32			m_LastEngageStart;
 
 
     uint32			m_Tick;					// текущее значение времени
