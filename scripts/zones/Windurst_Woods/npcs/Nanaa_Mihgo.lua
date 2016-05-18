@@ -40,6 +40,26 @@ end;
 -----------------------------------
 
 function onTrigger(player,npc)
+    local srank = player:getNationRank(SANDORIA);
+	local wrank = player:getNationRank(WINDURST);
+	local brank = player:getNationRank(BASTOK);
+	
+	if (srank >= 4) and (player:hasKeyItem(RED_INSTITUTE_CARD)) and (player:hasSpell(901) == false) then  -- Sandy Rnak 4 or higher
+	player:PrintToPlayer("Your Red Institute Card flashes brilliantly!", 0x1C);
+    player:PrintToPlayer("Nanaa Mihgo : Ah a Red Institute Card.  From now on, you can summon me to help you with your battles", 0xD);
+    player:addSpell(901);	
+	end
+	if (wrank >= 4) and (player:hasKeyItem(GREEN_INSTITUTE_CARD)) and (player:hasSpell(901) == false) then  -- Sandy Rnak 4 or higher
+	player:PrintToPlayer("Your Green Institute Card flashes brilliantly!", 0x1C);
+    player:PrintToPlayer("Nanaa Mihgo : Ah a Green Institute Card.  From now on, you can summon me to help you with your battles", 0xD);
+    player:addSpell(901);
+	end
+	if (brank >= 4) and (player:hasKeyItem(BLUE_INSTITUTE_CARD)) and (player:hasSpell(901) == false) then  -- Sandy Rnak 4 or higher
+	player:PrintToPlayer("Your Green Institute Card flashes brilliantly!", 0x1C);
+    player:PrintToPlayer("Nanaa Mihgo : Ah a Blue Institute Card.  From now on, you can summon me to help you with your battles", 0xD);
+    player:addSpell(901);
+	end
+	
 	
 	-- Check for Missions first (priority?)
 	local MissionStatus = player:getVar("MissionStatus");

@@ -22,7 +22,25 @@ end;
 -----------------------------------
 
 function onTrigger(player,npc)
+    local srank = player:getNationRank(SANDORIA);
+	local wrank = player:getNationRank(WINDURST);
+	local brank = player:getNationRank(BASTOK);
+	
+	if (srank >= 4) and (player:hasKeyItem(RED_INSTITUTE_CARD)) and (player:hasSpell(899) == false) then  -- Sandy Rnak 4 or higher
+	player:PrintToPlayer("Your Red Institute Card flashes brilliantly!", 0x1C);
+    player:PrintToPlayer("Excenmille : Ah a Red Institute Card.  From now on, you can summon me to help you with your battles", 0xD);
+    player:addSpell(899);	
+	elseif (wrank >= 4) and (player:hasKeyItem(GREEN_INSTITUTE_CARD)) and (player:hasSpell(899) == false) then  -- Sandy Rnak 4 or higher
+	player:PrintToPlayer("Your Green Institute Card flashes brilliantly!", 0x1C);
+    player:PrintToPlayer("Excenmille : Ah a Green Institute Card.  From now on, you can summon me to help you with your battles", 0xD);
+    player:addSpell(899);
+	elseif (brank >= 4) and (player:hasKeyItem(BLUE_INSTITUTE_CARD)) and (player:hasSpell(899) == false) then  -- Sandy Rnak 4 or higher
+	player:PrintToPlayer("Your Green Institute Card flashes brilliantly!", 0x1C);
+    player:PrintToPlayer("Excenmille : Ah a Blue Institute Card.  From now on, you can summon me to help you with your battles", 0xD);
+    player:addSpell(899);
+	else
 	player:startEvent(0x001d);
+	end
 end;
 
 -----------------------------------
