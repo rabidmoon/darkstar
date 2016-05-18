@@ -28,10 +28,6 @@ function onPetAbility(target, pet, skill)
 	local mnd_wsc = 0;
     skill:setSkillchain(38);
 	
-	if (pet:hasStatusEffect(EFFECT_SNEAK_ATTACK)) then
-	dex_wsc = 2.4;
-	attmod = 2.5;  --  hack for crit for now
-	end
 	
 
 

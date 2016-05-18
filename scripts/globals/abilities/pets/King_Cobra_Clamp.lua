@@ -17,24 +17,23 @@ function onMobSkillCheck(target,mob,skill)
 end;
 
 function onPetAbility(target, pet, skill)
-    local basemod = 5;
+    local basemod = 1;
     local numhits = 1;
-	local attmod = 1;
+	local attmod = 1.3;
     local accmod = 1;
-	local str_wsc = 0.60;
-	local dex_wsc = 0.60;
-	local agi_wsc = 0;
+	local str_wsc = 0.75;
+	local dex_wsc = 0;
+	local agi_wsc = 0.75;
 	local vit_wsc = 0;
 	local mnd_wsc = 0;
-    skill:setSkillchain(132);
-	
+    skill:setSkillchain(26);
 	
 	
 	
 
 
 	
-	local info = AutoPhysicalMove(pet,target,skill,basemod,numhits,attmod,accmod,str_wsc,dex_wsc,agi_wsc,vit_wsc,mnd_wsc,TP_DMG_BONUS,5.5,7,9);
+	local info = AutoPhysicalMove(pet,target,skill,basemod,numhits,attmod,accmod,str_wsc,dex_wsc,agi_wsc,vit_wsc,mnd_wsc,TP_DMG_BONUS,5.5,8,12);
  
     local dmg = MobFinalAdjustments(info.dmg,pet,skill,target,MOBSKILL_PHYSICAL,MOBPARAM_PIERCE,info.hitslanded);
 	

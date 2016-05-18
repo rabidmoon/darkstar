@@ -38,21 +38,6 @@ function onPetAbility(target, pet, skill)
  
     local dmg = MobFinalAdjustments(info.dmg,pet,skill,target,MOBSKILL_PHYSICAL,MOBPARAM_SLASH,info.hitslanded);
 	
-	local hits = automatonhitslanded;
-	local firsthit = 0;
-	local remaining = 0;
-	local finaltp = 0;
-	
-	   if (dmg > 0) then
-       target:addTP(2);
-	   if (hits > 1) then
-	   remaining = hits - 1;
-	   finaltp = (8.3 + remaining);
-       pet:setTP(finaltp);
-	   elseif (hits == 1) then
-	   pet:setTP(8);
-	   end
-	   end
 	 
     
 

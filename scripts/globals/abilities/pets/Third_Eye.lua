@@ -1,5 +1,5 @@
 ---------------------------------------------------
--- Meditate
+-- Third Eye
 -- Trust: Ayame
 -- 
 ---------------------------------------------------
@@ -15,21 +15,6 @@ function onMobSkillCheck(target,mob,skill)
 end;
 
 function onPetAbility(target, pet, skill)
-    local amount = 20;
-
-
-    local tick = 15;
-    local extratick = 0;
-
-    -- Todo: change these item checks into a modifier.
-
-    if (extratick == 1) then
-        extratick = math.random(1,2);
-    elseif (extratick == 2) then
-        extratick = math.random(2,3);
-    end
-
-    tick = tick + (extratick * 3);
-    pet:addStatusEffectEx(EFFECT_MEDITATE,0,amount,3,tick);
-    return EFFECT_MEDITATE;
+    pet:addStatusEffect(EFFECT_THIRD_EYE,0,0,30); --power keeps track of procs
+    return EFFECT_THIRD_EYE;
 end;

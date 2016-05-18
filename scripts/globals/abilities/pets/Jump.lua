@@ -24,7 +24,7 @@ function onPetAbility(target, pet, skill, action)
 
 	local level = pet:getMainLvl();
 	local doubleatt = math.random(1,100);
-	if (doubleatt <=50) then
+	if (doubleatt <=10) then
 	da = 1;
 	end
 	
@@ -65,19 +65,14 @@ function onPetAbility(target, pet, skill, action)
 	if (crit < 20) then
 	ftp = (2 + (vit/256));
 	end
-	print("Jump Weapon Base Damage");
-	print(basedmg);
-	print("Random Crit Rate");
-	print(crit);
-	print("FTP");
-	print(ftp);
+
 	
 	if (da == 1) then
     dmg = 2 * (basedmg * ftp);
-	pet:addTP(38.8);
+	pet:addTP(26.8);
 	else
 	dmg = basedmg * ftp;
-	pet:addTP(19.4);
+	pet:addTP(13.4);
 	end
  
 

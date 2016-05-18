@@ -1,9 +1,9 @@
 ---------------------------------------------------
--- King Cobra Clamp
--- Deciding Maneuver: Fire
--- Recover HP equal to damage dealth.  Damage varries with TP.  
--- HP recovery ineffective against undead
--- Skillchain Properties: Compression/Reverberation
+-- Hexa Strike
+-- Trust: Kupipi
+-- Deals sixfold damage.  Doesn't deal criticals yet 
+-- Using Random in order to boost criticals.
+-- Skillchain Properties: Fusion
 ---------------------------------------------------
 
 require("/scripts/globals/settings");
@@ -18,23 +18,22 @@ end;
 
 function onPetAbility(target, pet, skill)
     local basemod = 1;
-    local numhits = 5;
-	local attmod = 1.3;
+    local numhits = 62;
+	local attmod = 1;
     local accmod = 1;
-	local str_wsc = 0.60;
-	local dex_wsc = 0.60;
+	local str_wsc = 0.30;
+	local dex_wsc = 0;
 	local agi_wsc = 0;
 	local vit_wsc = 0;
-	local mnd_wsc = 0;
-    skill:setSkillchain(38);
+	local mnd_wsc = 0.70;
+    skill:setSkillchain(198);
 	
-	
-	print("Dancing Edge");
+
 	
 
 
 	
-	local info = AutoPhysicalMove(pet,target,skill,basemod,numhits,attmod,accmod,str_wsc,dex_wsc,agi_wsc,vit_wsc,mnd_wsc,TP_ACC_VARIES,20,40,80);
+	local info = AutoPhysicalMove(pet,target,skill,basemod,numhits,attmod,accmod,str_wsc,dex_wsc,agi_wsc,vit_wsc,mnd_wsc,TP_DMG_BONUS,1.5,2,3);
  
     local dmg = MobFinalAdjustments(info.dmg,pet,skill,target,MOBSKILL_PHYSICAL,MOBPARAM_PIERCE,info.hitslanded);
 	
@@ -43,16 +42,7 @@ function onPetAbility(target, pet, skill)
 	local remaining = 0;
 	local finaltp = 0;
 	
-	   if (dmg > 0) then
-       target:addTP(2);
-	   if (hits > 1) then
-	   remaining = hits - 1;
-	   finaltp = (8.3 + remaining);
-       pet:setTP(finaltp);
-	   elseif (hits == 1) then
-	   pet:setTP(8);
-	   end
-	   end
+    dmg = dmg;
 	 
     
 

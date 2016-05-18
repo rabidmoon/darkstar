@@ -1,9 +1,9 @@
 ---------------------------------------------------
--- King Cobra Clamp
--- Deciding Maneuver: Fire
--- Recover HP equal to damage dealth.  Damage varries with TP.  
--- HP recovery ineffective against undead
--- Skillchain Properties: Compression/Reverberation
+-- Hexa Strike
+-- Trust: Kupipi
+-- Deals sixfold damage.  Doesn't deal criticals yet 
+-- Using Random in order to boost criticals.
+-- Skillchain Properties: Fusion
 ---------------------------------------------------
 
 require("/scripts/globals/settings");
@@ -19,17 +19,17 @@ end;
 function onPetAbility(target, pet, skill)
     local basemod = 1;
     local numhits = 6;
-	local attmod = 1.5;
+	local attmod = 1;
     local accmod = 1;
 	local str_wsc = 0.60;
 	local dex_wsc = 0.60;
 	local agi_wsc = 0;
 	local vit_wsc = 0;
 	local mnd_wsc = 0;
-    skill:setSkillchain(38);
+    skill:setSkillchain(198);
 	
-	
-	
+	local randcrit = math.random(5,25);
+	local crit = (1 + (randcrit/100));
 	
 
 
@@ -43,16 +43,7 @@ function onPetAbility(target, pet, skill)
 	local remaining = 0;
 	local finaltp = 0;
 	
-	   if (dmg > 0) then
-       target:addTP(2);
-	   if (hits > 1) then
-	   remaining = hits - 1;
-	   finaltp = (8.3 + remaining);
-       pet:setTP(finaltp);
-	   elseif (hits == 1) then
-	   pet:setTP(8);
-	   end
-	   end
+    dmg = dmg * crit;
 	 
     
 
