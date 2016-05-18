@@ -11,10 +11,18 @@ require("scripts/globals/summon");
 -----------------------------------------
 
 function onMagicCastingCheck(caster,target,spell)
-	if (not caster:canUsePet()) then
+    local zone = caster:getZoneID();
+	if (zone == 185) or (zone == 186) or (zone == 187) then
+	caster:PrintToPlayer("You cannot summon a trust in this area",0xD);
+	else if(not caster:canUsePet()) then
 		return MSGBASIC_CANT_BE_USED_IN_AREA;
-    end
+	else if (not caster:isUniqueAlly(78)) then
+       	caster:PrintToPlayer("Nanaa Mihgo is already summoned.",0xD);
+    else
 	return 0;
+	end
+	end
+	end
 end;
 
 function onSpellCast(caster,target,spell)

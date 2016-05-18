@@ -27,7 +27,7 @@ end;
 
 function onSpellCast(caster,target,spell)
 	caster:spawnAlly(80);
-   caster:PrintToPlayer("(Excenmille) This should prove to be a good training exercise to hone my skills as a Knight.", 0xF); 
+   caster:PrintToPlayer("(Excenmille) I am ready to face all foes who stand in our way.", 0xF); 
 
     
 	return 0;
