@@ -393,6 +393,7 @@ INSERT INTO `abilities` VALUES ('643', 'ultimate_terror', '15', '37', '4', '60',
 INSERT INTO `abilities` VALUES ('644', 'noctoshield', '15', '49', '1', '60', '174', '0', '0', '92', '18.0', '0', '1', '60', '0', '0',null); -- ROTZ
 INSERT INTO `abilities` VALUES ('645', 'dream_shroud', '15', '56', '1', '60', '174', '0', '0', '121', '18.0', '0', '1', '60', '0', '0',null); -- ROTZ
 INSERT INTO `abilities` VALUES ('646', 'nether_blast', '15', '65', '4', '60', '173', '0', '0', '109', '18.0', '0', '1', '60', '0', '0',null); -- ROTZ
+INSERT INTO `abilities` VALUES ('822', 'deus_ex_automata', '18', '5', '1', '300', '210', '0', '0', '333', '18.0', '0', '1', '0', '0', '0','TOAU');
 
 
 -- For old school server simply comment out the matching 1 hour abilities above, and uncomment the 2hrs below.
