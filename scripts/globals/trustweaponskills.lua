@@ -352,7 +352,13 @@ function AutoPhysicalMove(mob,target,skill,basemod,numhits,attmod,accmod,str_wsc
 
     --get dstr (bias to monsters, so no fSTR)
     local dstr = mob:getStat(MOD_STR) - target:getStat(MOD_VIT);
+	local sadmg = mob:getStat(MOD_DEX);
+	
     local weaponbase = mob:getWeaponDmg();
+	
+	if (mob:hasStatusEffect(EFFECT_SNEAK_ATTACK)) then
+	weaponbase = weaponbase + sadmg;
+	end
 	
 
 	
@@ -403,14 +409,14 @@ function AutoPhysicalMove(mob,target,skill,basemod,numhits,attmod,accmod,str_wsc
         base = 1;
     end
 	
-	print("Calculated WSC");
-	print(wsc);
-	print("Final FSTR2");
-	print(fstr2);
-	print("Weapon Base Damage");
-	print(weaponbase);
-	print("Final Base Damage");
-	print(base);
+	-- print("Calculated WSC");
+	-- print(wsc);
+	-- print("Final FSTR2");
+	-- print(fstr2);
+	-- print("Weapon Base Damage");
+	-- print(weaponbase);
+	-- print("Final Base Damage");
+	-- print(base);
 
 
     --work out and cap ratio
@@ -420,8 +426,8 @@ function AutoPhysicalMove(mob,target,skill,basemod,numhits,attmod,accmod,str_wsc
     end;
     local ratio = offcratiomod/target:getStat(MOD_DEF);
     ratio = utils.clamp(ratio, 0, 3.15);
-    print("Pdif Before Correction");
-	print(ratio);
+    -- print("Pdif Before Correction");
+	-- print(ratio);
 	
     local lvldiff = lvluser - lvltarget;
     if (lvldiff >= 0) then
@@ -429,9 +435,12 @@ function AutoPhysicalMove(mob,target,skill,basemod,numhits,attmod,accmod,str_wsc
     end;
 
     ratio = ratio + lvldiff * 0.05;
+	if (mob:hasStatusEffect(EFFECT_SNEAK_ATTACK)) then
+	ratio = ratio + 1;
+	end
     ratio = utils.clamp(ratio, 0, 3.15);
-	print("pDIF Corrected");
-	print(ratio);
+	-- print("pDIF Corrected");
+	-- print(ratio);
 	
 	local tp = mob:getTP();
     
