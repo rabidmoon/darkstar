@@ -975,26 +975,28 @@ namespace petutils
 		
 		if (PetID == PETID_NANAA_MIHGO)
 		{
-		uint16 modstat = (PAlly->GetMLevel());
-		uint16 modstatatt = (PAlly->GetMLevel() * 1.2);
+		uint16 nmatt = (PAlly->GetMLevel() * 1.0);
+		uint16 nmacc = (PAlly->GetMLevel() * 0.5);
 		//ShowWarning(CL_GREEN"NANAA MIGHO TRIGGERED SPAWN ALLY!!! \n" CL_RESET);
-		PAlly->setModifier(MOD_ACC, battleutils::GetMaxSkill(SKILL_GAX, JOB_WAR, PAlly->GetMLevel()) + modstat); //A+ Acc
-		PAlly->setModifier(MOD_EVA, battleutils::GetMaxSkill(SKILL_GAX, JOB_WAR, PAlly->GetMLevel()) + modstat); //A+ Evasion
-		PAlly->setModifier(MOD_ATT, battleutils::GetMaxSkill(SKILL_GAX, JOB_WAR, PAlly->GetMLevel()) + modstatatt);// A+ Attack
-		PAlly->setModifier(MOD_DEF, battleutils::GetMaxSkill(SKILL_POL, JOB_WAR, PAlly->GetMLevel()) + modstat);// B- Defense
+		PAlly->setModifier(MOD_ACC, battleutils::GetMaxSkill(SKILL_GAX, JOB_WAR, PAlly->GetMLevel()) + nmacc); //A+ Acc
+		PAlly->setModifier(MOD_EVA, battleutils::GetMaxSkill(SKILL_GAX, JOB_WAR, PAlly->GetMLevel())); //A+ Evasion
+		PAlly->setModifier(MOD_ATT, battleutils::GetMaxSkill(SKILL_GAX, JOB_WAR, PAlly->GetMLevel()) + nmatt);// A+ Attack
+		PAlly->setModifier(MOD_DEF, battleutils::GetMaxSkill(SKILL_POL, JOB_WAR, PAlly->GetMLevel()));// B- Defense
 		PAlly->m_Weapons[SLOT_MAIN]->setDamage(floor(PAlly->GetMLevel()*0.46f) + 1);// D:35 @75
 		PAlly->m_Weapons[SLOT_MAIN]->setDelay(floor(1000.0f*(200.0f / 60.0f))); //2000 delay
 		   if (plvl > 54){
-		        PAlly->setModifier(MOD_TRIPLE_ATTACK, 15);
-				PAlly->setModifier(MOD_TREASURE_HUNTER, 2);
+		        PAlly->setModifier(MOD_TRIPLE_ATTACK, 8);
+				PAlly->setModifier(MOD_TREASURE_HUNTER, 1);
 		   }
 		}
 	    else if (PetID == PETID_KUPIPI)
 		{
+		uint16 kupatt = (PAlly->GetMLevel() * 1.0);
+		uint16 kupacc = (PAlly->GetMLevel() * 0.5);
 		//ShowWarning(CL_GREEN"KUPIPI TRIGGERED SPAWN ALLY!!! \n" CL_RESET);
-		PAlly->setModifier(MOD_ACC, battleutils::GetMaxSkill(SKILL_GAX, JOB_WAR, PAlly->GetMLevel())); //A+ Acc
+		PAlly->setModifier(MOD_ACC, battleutils::GetMaxSkill(SKILL_GAX, JOB_WAR, PAlly->GetMLevel()) + kupacc); //A+ Acc
 		PAlly->setModifier(MOD_EVA, battleutils::GetMaxSkill(SKILL_POL, JOB_WAR, PAlly->GetMLevel())); //B- Evasion
-		PAlly->setModifier(MOD_ATT, battleutils::GetMaxSkill(SKILL_POL, JOB_WAR, PAlly->GetMLevel()));// B- Attack
+		PAlly->setModifier(MOD_ATT, battleutils::GetMaxSkill(SKILL_POL, JOB_WAR, PAlly->GetMLevel()) + kupatt);// B- Attack
 		PAlly->setModifier(MOD_DEF, battleutils::GetMaxSkill(SKILL_POL, JOB_WAR, PAlly->GetMLevel()));// B- Defense
 		PAlly->setModifier(MOD_HEALING, battleutils::GetMaxSkill(SKILL_GAX, JOB_WAR, PAlly->GetMLevel()));// A+ Healing
 		PAlly->setModifier(MOD_DIVINE, battleutils::GetMaxSkill(SKILL_GAX, JOB_WAR, PAlly->GetMLevel()));// A+ Divine Magic
@@ -1009,10 +1011,12 @@ namespace petutils
 		}
 		else if (PetID == PETID_NAJI)
 		{
+		uint16 moddatt = (PAlly->GetMLevel() * 1.0);
+		uint16 moddacc = (PAlly->GetMLevel() * 0.5);
 		//ShowWarning(CL_GREEN"NAJI TRIGGERED SPAWN ALLY!!! \n" CL_RESET);
-		PAlly->setModifier(MOD_ACC, battleutils::GetMaxSkill(SKILL_SYH, JOB_WAR, PAlly->GetMLevel())); //B+ Acc
+		PAlly->setModifier(MOD_ACC, battleutils::GetMaxSkill(SKILL_SYH, JOB_WAR, PAlly->GetMLevel()) + moddacc); //B+ Acc
 		PAlly->setModifier(MOD_EVA, battleutils::GetMaxSkill(SKILL_SYH, JOB_WAR, PAlly->GetMLevel())); //B+ Evasion
-		PAlly->setModifier(MOD_ATT, battleutils::GetMaxSkill(SKILL_SYH, JOB_WAR, PAlly->GetMLevel()));// B+ Attack
+		PAlly->setModifier(MOD_ATT, battleutils::GetMaxSkill(SKILL_SYH, JOB_WAR, PAlly->GetMLevel()) + moddatt);// B+ Attack
 		PAlly->setModifier(MOD_DEF, battleutils::GetMaxSkill(SKILL_POL, JOB_WAR, PAlly->GetMLevel()));// B- Defense
 		PAlly->m_Weapons[SLOT_MAIN]->setDamage(floor(PAlly->GetMLevel()*0.56f));// D:42 @75
 		PAlly->m_Weapons[SLOT_MAIN]->setDelay(floor(1000.0f*(240.0f / 60.0f))); //240 delay
@@ -1023,16 +1027,17 @@ namespace petutils
 		else if (PetID == PETID_AYAME)
 		{
 		uint16 haste = 0;
-		uint16 modstat = (PAlly->GetMLevel() * 1.3);
+		uint16 modatt = (PAlly->GetMLevel() * 1.3);
+		uint16 modacc = (PAlly->GetMLevel() * 0.66);
 		uint16 maxhaste = PAlly->GetMLevel();
 		haste = (floor(maxhaste * 2.7));
 		if (haste > 200){
 		haste = 200;
 		}
 		//ShowWarning(CL_GREEN"AYAME TRIGGERED SPAWN ALLY!!! \n" CL_RESET);
-		PAlly->setModifier(MOD_ACC, battleutils::GetMaxSkill(SKILL_GAX, JOB_WAR, PAlly->GetMLevel()) + modstat); //B+ Acc
+		PAlly->setModifier(MOD_ACC, battleutils::GetMaxSkill(SKILL_GAX, JOB_WAR, PAlly->GetMLevel()) + modacc); //A+ Acc
 		PAlly->setModifier(MOD_EVA, battleutils::GetMaxSkill(SKILL_SYH, JOB_WAR, PAlly->GetMLevel())); //B+ Evasion
-		PAlly->setModifier(MOD_ATT, battleutils::GetMaxSkill(SKILL_GAX, JOB_WAR, PAlly->GetMLevel()) + modstat);// B+ Attack
+		PAlly->setModifier(MOD_ATT, battleutils::GetMaxSkill(SKILL_GAX, JOB_WAR, PAlly->GetMLevel()) + modatt);// A+ Attack
 		PAlly->setModifier(MOD_DEF, battleutils::GetMaxSkill(SKILL_SYH, JOB_WAR, PAlly->GetMLevel()));// B+ Defense
 		PAlly->m_Weapons[SLOT_MAIN]->setDamage(floor(PAlly->GetMLevel()*0.90f) + 12);// D:12 @1 / D:80 @ 75
 		PAlly->m_Weapons[SLOT_MAIN]->setDelay(floor(1000.0f*(450.0f / 60.0f))); //420 delay
@@ -1062,20 +1067,22 @@ namespace petutils
 		}
 		else if (PetID == PETID_CURILLA)
 		{
-		uint16 defrate = (floor(PAlly->GetMLevel() * 4));
-		uint16 modstat = (floor(PAlly->GetMLevel() * 1.1));
+		uint16 defrate = (floor(PAlly->GetMLevel() * 4.2));
+		uint16 modstat = (floor(PAlly->GetMLevel() * 1.0));
 		uint16 hpstat = (floor(PAlly->GetMLevel() * 2));
+		uint16 accstat = (floor(PAlly->GetMLevel() * 0.5));
 		//ShowWarning(CL_GREEN"CURILLA TRIGGERED SPAWN ALLY!!! \n" CL_RESET);
-		PAlly->setModifier(MOD_ACC, battleutils::GetMaxSkill(SKILL_GAX, JOB_WAR, PAlly->GetMLevel())); //B+ Acc
+		PAlly->setModifier(MOD_ACC, battleutils::GetMaxSkill(SKILL_GAX, JOB_WAR, PAlly->GetMLevel()) + accstat); //A+ Acc
 		PAlly->setModifier(MOD_EVA, battleutils::GetMaxSkill(SKILL_SYH, JOB_WAR, PAlly->GetMLevel())); //B+ Evasion
 		PAlly->setModifier(MOD_ATT, battleutils::GetMaxSkill(SKILL_GAX, JOB_WAR, PAlly->GetMLevel()) + modstat);// B+ Attack
 		PAlly->setModifier(MOD_DEF, battleutils::GetMaxSkill(SKILL_GAX, JOB_WAR, PAlly->GetMLevel()) + defrate);// A+ Defense
 		PAlly->setModifier(MOD_HEALING, battleutils::GetMaxSkill(SKILL_SYH, JOB_WAR, PAlly->GetMLevel()));// B+ Healing
 		PAlly->setModifier(MOD_DIVINE, battleutils::GetMaxSkill(SKILL_SYH, JOB_WAR, PAlly->GetMLevel()));// A+ Divine Magic
-		PAlly->setModifier(MOD_ENMITY, 25);
-		PAlly->setModifier(MOD_ENMITY_LOSS_REDUCTION, 10);
+		PAlly->setModifier(MOD_ENMITY, 45);
+		PAlly->setModifier(MOD_ENMITY_LOSS_REDUCTION, 20);
 		PAlly->m_Weapons[SLOT_MAIN]->setDamage(floor(PAlly->GetMLevel()*0.48f) + 6);// D:42 @75
 		PAlly->m_Weapons[SLOT_MAIN]->setDelay(floor(1000.0f*(260.0f / 60.0f))); //260 delay
+		PAlly->m_Weapons[SLOT_SUB]->setShieldSize(5);
 		PAlly->setModifier(MOD_SHIELDBLOCKRATE, 35); //35% Shield Block Rate
 		PAlly->health.maxmp = (int16)(15 + (2.72f*(plvl * 2.72f))); 
 		PAlly->UpdateHealth();
@@ -1088,21 +1095,24 @@ namespace petutils
 		else if (PetID == PETID_EXCENMILLE)
 		{
 		uint16 haste = 0;
-		uint16 modstat = (PAlly->GetMLevel() * 1.3);
-		uint16 modacc = (PAlly->GetMLevel() * 0.46);
+		uint16 exeatt = (PAlly->GetMLevel() * 1.0);
+		uint16 exeacc = (PAlly->GetMLevel() * 0.5);
 		uint16 maxhaste = PAlly->GetMLevel();
 		haste = (floor(maxhaste * 2.7));
 		if (haste > 200){
 		haste = 200;
 		}
 		//ShowWarning(CL_GREEN"EXCENMILLE TRIGGERED SPAWN ALLY!!! \n" CL_RESET);
-		PAlly->setModifier(MOD_ACC, battleutils::GetMaxSkill(SKILL_GAX, JOB_WAR, PAlly->GetMLevel()) + modstat + modacc); //A+ Acc
+		PAlly->setModifier(MOD_ACC, battleutils::GetMaxSkill(SKILL_GAX, JOB_WAR, PAlly->GetMLevel()) + exeatt); //A+ Acc
 		PAlly->setModifier(MOD_EVA, battleutils::GetMaxSkill(SKILL_SYH, JOB_WAR, PAlly->GetMLevel())); //B+ Evasion
-		PAlly->setModifier(MOD_ATT, battleutils::GetMaxSkill(SKILL_GAX, JOB_WAR, PAlly->GetMLevel()) + modstat);// A+ Attack
+		PAlly->setModifier(MOD_ATT, battleutils::GetMaxSkill(SKILL_GAX, JOB_WAR, PAlly->GetMLevel()) + exeacc);// A+ Attack
 		PAlly->setModifier(MOD_DEF, battleutils::GetMaxSkill(SKILL_SYH, JOB_WAR, PAlly->GetMLevel()));// B+ Defense
 		PAlly->m_Weapons[SLOT_MAIN]->setDamage(floor(PAlly->GetMLevel()*0.96f) + 15);// D:15 @5 / D:87 @ 75
 		PAlly->m_Weapons[SLOT_MAIN]->setDelay(floor(1000.0f*(492.0f / 60.0f))); //492 delay
 		PAlly->setModifier(MOD_HASTE_GEAR, haste);
+		PAlly->health.maxhp = (int16)(11 + (3.5*(plvl * 5.0f))); 
+		PAlly->UpdateHealth();
+        PAlly->health.hp = PAlly->health.maxhp;
 		    if (plvl > 49)
 		    {
 			  PAlly->setModifier(MOD_DOUBLE_ATTACK, 10);
