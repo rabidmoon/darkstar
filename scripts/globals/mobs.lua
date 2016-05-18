@@ -31,7 +31,7 @@ function onMobDeathEx(mob, killer, isKillShot, isWeaponSkillKill)
 	local job = killer:getMainJob();
 	local ferretoryblmquest = killer:getVar("FerretoryBLM"); -- turns quest on
 	local ferretoryblmkills = killer:getVar("FerretoryBLMkills"); -- sets kill number
-	local multiplier = 2;
+	local multiplier = 2;  -- 2 is normal and 4 is double
 	local infamy = killer:getVar("Infamy");
 	local playerlvl = killer:getMainLvl();
 	local moblvl = mob:getMainLvl();
@@ -223,7 +223,7 @@ end
 
 	-------------------- Ferretory Quest #9 (Demon/Dragon) -----------------------
 	
-	if (mobfamily == 2) and (killer:getVar("FerretoryQuest1") == 7) and (mob:checkBaseExp())then  -- check for Birds, check if quest is active, and check if the level difference is less than 10
+	if ((mobfamily == 9) or (mobfamily == 10)) and (killer:getVar("FerretoryQuest75") == 9) and (mob:checkBaseExp())then  -- check for Birds, check if quest is active, and check if the level difference is less than 10
 		if  (killer:getVar("FerretoryDragonDemon")) > 0 then  -- if the kills needed are greater than 0
 		killer:setVar("FerretoryDragonDemon",killc - 1);  -- Subtract kill
 		killc = killer:getVar("FerretoryDragonDemon");
@@ -239,7 +239,7 @@ end
 
 	-------------------- Ferretory Quest #10 (Luminian/Lumorian) -----------------------
 	
-	if (mobfamily == 2) and (killer:getVar("FerretoryQuest1") == 7) and (mob:checkBaseExp())then  -- check for Birds, check if quest is active, and check if the level difference is less than 10
+	if ((mobfamily == 15) or (mobfamily == 16)) and (killer:getVar("FerretoryQuest75") == 10) and (mob:checkBaseExp()) then  -- check for Birds, check if quest is active, and check if the level difference is less than 10
 		if  (killer:getVar("FerretoryLuminian")) > 0 then  -- if the kills needed are greater than 0
 		killer:setVar("FerretoryLuminian",killd - 1);  -- Subtract kill
 		killd = killer:getVar("FerretoryLuminian");
@@ -279,11 +279,14 @@ end
 if ((mobfamily == 17) and (killer:getVar("FerretoryQuest1") > 1)) or ((mobfamily == 14) and (killer:getVar("FerretoryQuest1") > 2)) or
 ((mobfamily == 8) and (killer:getVar("FerretoryQuest1") > 3)) or ((mobfamily == 6) and (killer:getVar("FerretoryQuest1") > 4)) or
 ((mobfamily == 1) and (killer:getVar("FerretoryQuest1") > 5)) or ((mobfamily == 20) and (killer:getVar("FerretoryQuest1") > 6)) or
-((mobfamily == 2) and (killer:getVar("FerretoryQuest1") > 7)) then
+((mobfamily == 2) and (killer:getVar("FerretoryQuest1") > 7)) or ((mobfamily == 3) and (killer:getVar("FerretoryQuest75") > 8)) or
+((mobfamily == 19) and (killer:getVar("FerretoryQuest75") > 8)) or ((mobfamily == 9) and (killer:getVar("FerretoryQuest75") > 9)) or 
+((mobfamily == 10) and (killer:getVar("FerretoryQuest75") > 9)) or ((mobfamily == 15) and (killer:getVar("FerretoryQuest75") > 10)) or
+((mobfamily == 16) and (killer:getVar("FerretoryQuest75") > 10)) then
 
 
 
-if (infamy == 1) and (playerlvl < 75) and (mob:checkBaseExp()) then -- check if infamy is turned on
+if (infamy == 1) and (playerlvl <= 75) and (mob:checkBaseExp()) then -- check if infamy is turned on
 if (lvldif < -11) then  -- EP
 multiplier = 1.7;
 else if (lvldif <= -3) then

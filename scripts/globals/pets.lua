@@ -1180,6 +1180,12 @@ PET_CAIT_SITH             = 20;
 PET_AUTOMATON     = 69;
 
 PET_WYVERN                = 48;
+PET_NAJI               = 75;
+PET_KUPIPI             = 76;
+PET_AYAME              = 77;
+PET_NANAA_MIHGO        = 78;
+PET_CURILLA            = 79;
+PET_LUOPAN             = 80;
 
 
 -----------------------------------

@@ -32,7 +32,7 @@ local bonus = 0;
 		
 		
 		  if (player:hasStatusEffect(EFFECT_RESTING_BONUS) == false) then
-			if ((logintime - lastlogin) >= 39600) then  --43200
+			if ((logintime - lastlogin) >= 39600) then  --39600 is 11 hours
 			bonus = (((logintime - lastlogin) - 39600)) * 1.66; -- 1 hour is 1.66% exp
 			math.floor(bonus);
 				if (bonus >= 120) then
