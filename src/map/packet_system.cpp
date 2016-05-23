@@ -2532,14 +2532,14 @@ void SmallPacket0x05B(map_session_data_t* session, CCharEntity* PChar, CBasicPac
 
         if (RBUFB(data, (0x0E)) != 0)
         {
-            if (((uint8)Result & 0x0F) == 3) //battlefield selected
-                ShowDebug(CL_CYAN"%s Selected BCNM Index %u in Zone %u!\n" CL_RESET, PChar->name.c_str(), (uint16)Result >> 4, PChar->getZone()); //index 0-29, per zone (client supports max 30 choices)
-            else if (EventID == 0x7d00) PrintPacket(data);
-
             luautils::OnEventUpdate(PChar, EventID, Result);
         }
         else
         {
+            if (((uint8)Result & 0x0F) == 3) //battlefield selected
+                ShowDebug(CL_CYAN"%s Selected BCNM Index %u in Zone %u!\n" CL_RESET, PChar->name.c_str(), (uint16)Result >> 4, PChar->getZone()); //index 0-29, per zone (client supports max 30 choices)
+            else if (EventID == 0x7d00) PrintPacket(data);
+
             luautils::OnEventFinish(PChar, EventID, Result);
             //reset if this event did not initiate another event
             if (PChar->m_event.EventID == EventID)
