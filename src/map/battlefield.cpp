@@ -53,15 +53,10 @@
 CBattlefield::CBattlefield(uint16 id, CZone* PZone, uint8 area, CCharEntity* PInitiator)
 {
     m_ID = id;
-    m_PZone = std::make_unique<CZone>(*PZone);
+    m_ZoneID = PZone->GetID();
     m_Area = area;
     m_Initiator.id = PInitiator->id;
     m_Initiator.name = PInitiator->name;
-
-    if (!LoadMobs())
-        Cleanup();
-
-    InsertEntity(PInitiator);
 
     m_StartTime = server_clock::now();
     m_Tick = m_StartTime;
@@ -79,12 +74,12 @@ uint16 CBattlefield::GetID()
 
 CZone* CBattlefield::GetZone()
 {
-    return m_PZone.get();
+    return zoneutils::GetZone(m_ZoneID);
 }
 
 uint16 CBattlefield::GetZoneID()
 {
-    return m_PZone->GetID();
+    return m_ZoneID;
 }
 
 string_t CBattlefield::GetName()
@@ -204,10 +199,10 @@ void CBattlefield::SetRecord(int8* name, duration time)
     m_Record.name = name ? name : "your mum";
     m_Record.time = time.count() ? time : 3600s;
 
-    const int8* query = "UPDATE battlefield_info SET fastestName = %s, fastestTime = %u WHERE battlefieldId = %u";
-    if (Sql_Query(SqlHandle, query, name, time, this->GetID() == SQL_ERROR))
+    const int8* query = "UPDATE battlefield_info SET fastestName = '%s', fastestTime = '%u' WHERE battlefieldId = '%u' AND zoneId = '%u'";
+    if (Sql_Query(SqlHandle, query, name, time.count(), this->GetID(), GetZoneID()) == SQL_ERROR)
     {
-        ShowError("Battlefield::SetCurrentRecord() unable to find battlefield %u \n", this->GetID());
+        ShowError("Battlefield::SetRecord() unable to find battlefield %u \n", this->GetID());
     }
 }
 
@@ -243,8 +238,11 @@ void CBattlefield::ApplyLevelCap(CCharEntity* PChar)
     auto cap = GetLevelCap();
     cap += map_config.Battle_cap_tweak;
 
-    PChar->StatusEffectContainer->DelStatusEffectsByFlag(EFFECTFLAG_DEATH);
-    PChar->StatusEffectContainer->AddStatusEffect(new CStatusEffect(EFFECT_LEVEL_RESTRICTION, EFFECT_LEVEL_RESTRICTION, cap, 0, 0));
+    if (cap)
+    {
+        PChar->StatusEffectContainer->DelStatusEffectsByFlag(EFFECTFLAG_DEATH);
+        PChar->StatusEffectContainer->AddStatusEffect(new CStatusEffect(EFFECT_LEVEL_RESTRICTION, EFFECT_LEVEL_RESTRICTION, cap, 0, 0));
+    }
 }
 
 void CBattlefield::PushMessageToAllInBcnm(uint16 msg, uint16 param)
@@ -291,9 +289,14 @@ bool CBattlefield::InsertEntity(CBaseEntity* PEntity, bool inBattlefield, BATTLE
     if (PEntity->objtype == TYPE_PC)
     {
         if (GetPlayerCount() < GetMaxParticipants())
+        {
+            ApplyLevelCap(static_cast<CCharEntity*>(PEntity));
             m_PlayerList.push_back(PEntity->targid);
+        }
         else
+        {
             return false;
+        }
     }
     else if (PEntity->objtype == TYPE_NPC)
     {
@@ -325,10 +328,10 @@ bool CBattlefield::InsertEntity(CBaseEntity* PEntity, bool inBattlefield, BATTLE
     if (inBattlefield)
         PEntity->PBattlefield = std::unique_ptr<CBattlefield>(this);
 
-    // probably a mob or ally
+    // mob, initiator or ally
     if (entity && !entity->StatusEffectContainer->GetStatusEffect(EFFECT_BATTLEFIELD))
         entity->StatusEffectContainer->AddStatusEffect(new CStatusEffect(EFFECT_BATTLEFIELD, EFFECT_BATTLEFIELD, this->GetID(),
-            0, 0, 0, this->GetArea()));
+            0, 0, m_Initiator.id, this->GetArea()));
 
     return true;
 }
@@ -356,7 +359,17 @@ bool CBattlefield::RemoveEntity(CBaseEntity* PEntity, uint8 leavecode)
 
     if (PEntity->objtype == TYPE_PC)
     {
-        m_PlayerList.erase(std::remove_if(m_PlayerList.begin(), m_PlayerList.end(), check), m_PlayerList.end());
+        auto i = 0;
+        for (; i < m_PlayerList.size(); ++i)
+        {
+            if (m_PlayerList[i] == PEntity->id)
+            {
+                found = true;
+                break;
+            }
+        }
+        if (found)
+            m_PlayerList.erase(m_PlayerList.begin() + i);
 
         if (leavecode != 255)
         {
@@ -365,9 +378,6 @@ bool CBattlefield::RemoveEntity(CBaseEntity* PEntity, uint8 leavecode)
 
             luautils::OnBcnmLeave(static_cast<CCharEntity*>(PEntity), this, leavecode);
         }
-
-        if (!IsOccupied())
-            CanCleanup(true);
     }
     else if (PEntity->objtype == TYPE_NPC)
     {
@@ -400,8 +410,11 @@ bool CBattlefield::RemoveEntity(CBaseEntity* PEntity, uint8 leavecode)
     // assume its either a player or ally and remove any enmity
     auto entity = dynamic_cast<CBattleEntity*>(PEntity);
     if (entity)
+    {
+        entity->StatusEffectContainer->DelStatusEffectsByFlag(EFFECTFLAG_CONFRONTATION);
+        entity->StatusEffectContainer->DelStatusEffect(EFFECT_LEVEL_RESTRICTION);
         ClearEnmityForEntity(entity);
-
+    }
     PEntity->PBattlefield.reset(nullptr);
     return found;
 }
@@ -410,7 +423,7 @@ void CBattlefield::DoTick(time_point time)
 {
     //todo : bcnm - update tick, fight tick, end if time is up
     m_Tick = time;
-    m_FightTick = m_Status != BATTLEFIELD_STATUS_LOST && m_Status != BATTLEFIELD_STATUS_WON ? time : m_FightTick;
+    m_FightTick = m_Status == BATTLEFIELD_STATUS_LOCKED ? time : m_FightTick;
 
     luautils::OnBattlefieldTick(this);
 }
@@ -434,7 +447,6 @@ void CBattlefield::Cleanup()
     ForEachPlayer([&](CCharEntity* PChar)
     {
         RemoveEntity(PChar, -1);
-        PChar->StatusEffectContainer->DelStatusEffectsByFlag(EFFECT_CONFRONTATION);
     });
 
     ForEachAlly([&](CMobEntity* PAlly)
@@ -602,7 +614,7 @@ void CBattlefield::ForEachPlayer(std::function<void(CCharEntity*)> func)
     {
         for (auto player : m_PlayerList)
         {
-            func((CCharEntity*)GetZone()->GetEntity(player, TYPE_PC));
+            func((CCharEntity*)GetZone()->GetCharByID(player));
         }
     }
 }

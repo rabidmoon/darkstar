@@ -7027,19 +7027,24 @@ inline int32 CLuaBaseEntity::registerBattlefield(lua_State* L)
     auto PZone = PChar->loc.zone == nullptr ? zoneutils::GetZone(PChar->loc.destination) : PChar->loc.zone;
 
     auto PEffect = PChar->StatusEffectContainer->GetStatusEffect(EFFECT_BATTLEFIELD);
-    auto battlefield = PEffect ? PEffect->GetPower() : lua_tointeger(L, 1);
-    auto area = PEffect ? PEffect->GetSubPower() : lua_tointeger(L, 2);
-    auto initiator = PEffect ? PEffect->GetSubID() : lua_tointeger(L, 3);
+    uint16 battlefield = -1;
+    uint8 area = 1;
+    uint32 initiator = 0;
 
-    if (PZone->m_BattlefieldHandler->RegisterBattlefield(PChar, battlefield, area, initiator))
+    if (PEffect && lua_isnil(L,1) && lua_isnil(L,2) && lua_isnil(L, 3))
     {
-        lua_pushinteger(L, 1);
+        battlefield = PEffect->GetPower();
+        area = PEffect->GetSubPower();
+        initiator = PEffect->GetSubID();
     }
     else
     {
-        ShowError("lua_baseentity::registerBattlefield unable to register battlefield for %s", PChar->name.c_str());
-        lua_pushinteger(L, 0);
+        battlefield = !lua_isnil(L,1) ? lua_tointeger(L, 1) : -1;
+        area = !lua_isnil(L,2) ? lua_tointeger(L, 2) : 1;
+        initiator = !lua_isnil(L,3) ? lua_tointeger(L, 3) : 0;
     }
+
+    lua_pushinteger(L, PZone->m_BattlefieldHandler->RegisterBattlefield(PChar, (uint16)battlefield, area, initiator));
     return 1;
 }
 
@@ -7058,7 +7063,7 @@ inline int32 CLuaBaseEntity::leaveBattlefield(lua_State* L)
     auto leavecode = lua_tointeger(L, 1);
     auto PEntity = static_cast<CBaseEntity*>(m_PBaseEntity);
 
-    lua_pushinteger(L, PEntity->loc.zone->m_BattlefieldHandler->RemoveFromBattlefield(PEntity, nullptr, leavecode));
+    lua_pushinteger(L, PEntity->loc.zone->m_BattlefieldHandler->RemoveFromBattlefield(PEntity, PEntity->PBattlefield.get(), leavecode));
     return 1;
 }
 
@@ -10187,7 +10192,7 @@ inline int32 CLuaBaseEntity::getNearbyEntities(lua_State* L)
 
     lua_newtable(L);
     int newTable = lua_gettop(L);
-    
+
     for (auto&& list : {iterTarget->SpawnMOBList, iterTarget->SpawnPCList, iterTarget->SpawnPETList})
     {
         for (auto&& entity : list)

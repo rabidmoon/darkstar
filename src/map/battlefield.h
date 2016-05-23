@@ -63,6 +63,16 @@ enum BATTLEFIELD_STATUS
     BATTLEFIELD_STATUS_LOST   = 3
 };
 
+enum BATTLEFIELD_RETURN_CODE
+{
+    BATTLEFIELD_RETURN_CODE_WAIT              = 1,
+    BATTLEFIELD_RETURN_CODE_CUTSCENE          = 2,
+    BATTLEFIELD_RETURN_CODE_INCREMENT_REQUEST = 3,
+    BATTLEFIELD_RETURN_CODE_LOCKED            = 4,
+    BATTLEFIELD_RETURN_CODE_REQS_NOT_MET      = 5,
+    BATTLEFIELD_RETURN_CODE_BATTLEFIELD_FULL  = 6
+};
+
 class CNpcEntity;
 class CMobEntity;
 class CCharEntity;
@@ -167,14 +177,14 @@ public:
 
     bool                   LoseBcnm();
 
-    std::vector<uint16>           m_PlayerList;
+    std::vector<uint32>           m_PlayerList;
     std::vector<uint16>           m_NpcList;
     std::vector<BattlefieldMob_t> m_EnemyList;
     std::vector<uint16>           m_AllyList;
 
 private:
     uint16                 m_ID;
-    std::unique_ptr<CZone> m_PZone;
+    uint16                 m_ZoneID;
     string_t               m_Name;
     BattlefieldInitiator_t m_Initiator;
     uint8                  m_Area;

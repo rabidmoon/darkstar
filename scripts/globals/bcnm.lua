@@ -156,29 +156,20 @@ function EventTriggerBCNM(player, npc)
     if (player:hasStatusEffect(EFFECT_BATTLEFIELD)) then
         if player:getBattlefield() then
             player:startEvent(0x7d03); -- Run Away or Stay menu
-        else -- You're not in the BCNM but you have the Battlefield effect. Think: non-trader in a party
-            local status = player:getStatusEffect(EFFECT_BATTLEFIELD);
-            local battlefieldid = status:getPower();
-            local validBattlefields = GetBattleBitmask(battlefieldid, player:getZoneID(), 1);
-            -- todo: check party member requirements
-            if (validBattlefields ~= -1 and bit.band(validBattlefields, checkNonTradeBCNM(player, npc))) then
-                -- This gives players who did not trade to go in the option of entering the fight
-                player:startEvent(0x7d00, 0, 0, 0, validBattlefields, 0, 0, 0, 0);
-            else
-                player:messageBasic(94, 0, 0);
-            end
-        end
+            return;
+        end;
+    end;
+    
+    if (checkNonTradeBCNM(player, npc)) then
         return true;
-    else
-        if (checkNonTradeBCNM(player, npc)) then
-            return true;
-        end
     end
 
     return false;
 end;
 
 function EventUpdateBCNM(player, csid, option, entrance)
+    local area = player:getLocalVar("[battlefield]area") or 1;
+    local id = player:getLocalVar("[battlefield]trade");
     -- return false;
     --[[
         what probably happens:
@@ -186,11 +177,50 @@ function EventUpdateBCNM(player, csid, option, entrance)
             that mask is slapped into oneventupdate
             client chooses event
             player gets registered oneventfinish
+            
+        todo:
+            [ ] handle party members conditions
+            [ ] attempt to register here
+            [ ] return code on registering determines param for updateEvent:
+                            -- param1
+                            --      2=generic enter cs
+                            --      3=spam increment instance requests
+                            --      4=cleared to enter but cant while ppl engaged
+                            --      5=dont meet req, access denied.
+                            --      6=room max cap
+                            -- param2 alters the eventfinish option (offset)
+                            -- param7/8 = does nothing??
+                            
+            
     ]]
-    local id = player:getVar("trade_bcnmid"); -- this is 0 if the bcnm isnt handled by new functions
     local skip = CutsceneSkip(player, npc);
+    
+    if csid == 0x7d00 then
+        local zone = player:getZoneID();
+        local mask = GetBattleBitmask(id, zone, 2);
+        local effect = player:getStatusEffect(EFFECT_BATTLEFIELD);
+        local skip = CutsceneSkip(player);
+        local result = player:registerBattlefield(-1, area);
 
-    player:PrintToPlayer(string.format("UPDATE csid %u option %u", csid, option));
+        -- GetBattleBitmask returns -1 if no valid mask found
+        if mask == -1 or mask == nil then
+            mask = checkNonTradeBCNM(player);
+        end;
+        
+        if option == 0 then
+            local param4 = 0;
+            if effect then
+                param4 = 1;
+            end
+            player:PrintToPlayer(string.format("UPDATE csid %u option %u mask %u", csid, option, mask));
+            player:updateEvent(result, mask, 0, 1, 1, 0);
+            player:setLocalVar("[battlefield]", area + 1);
+        elseif option == 255 then
+            player:updateEvent(0, 3, 0, 0, 1, 0);
+        end;
+        return;
+    end;
+
     -- seen: option 2, 3, 0 in that order
     if (csid == 0x7d03 and option == 2) then -- leaving a BCNM the player is currently in.
         player:delStatusEffect(EFFECT_BATTLEFIELD);
@@ -203,9 +233,10 @@ function EventUpdateBCNM(player, csid, option, entrance)
             player:registerBattlefield(id);
             return true;
         end
-        local effect = player:addStatusEffect(EFFECT_BATTLEFIELD, id, 0, 0, player:getID());
-        if (effect:getSubPower() ~= 0) then
-            player:updateEvent(0, 3, 0, 0, 1, 0);
+        local result = player:registerBattlefield(id, area);
+        if (result ~= 2) then
+            player:updateEvent(0, result, 0, 0, 1, 0);
+            player:setLocalVar("[battlefield]area", area + 1);
             -- player:tradeComplete();
         else
             -- no free battlefields at the moment!
@@ -225,8 +256,7 @@ function EventUpdateBCNM(player, csid, option, entrance)
             elseif (mask >= playerbcnmid) then
                 mask = GetBattleBitmask(id, player:getZoneID(), 2);
             end
-            player:setLocalVar("MASK", mask);
-            player:PrintToPlayer(string.format("EU mask %u | option %u", mask, option));
+
             player:updateEvent(2, mask, 0, 1, 1, skip); -- Add mask number for the correct entering CS
             
         -- elseif (player:getVar("bcnm_instanceid") == 255) then -- none free
@@ -243,7 +273,7 @@ function EventUpdateBCNM(player, csid, option, entrance)
        
         -- @pos -517 159 -209
         -- @pos -316 112 -103
-        -- player:updateEvent(msgid, bcnmFight, 0, record, numadventurers, skip); skip=1 to skip anim
+        -- player:updateEvent(msgid, bcnmFight, 0, record, numadventurers, skip); skip= 1 to skip anim
         -- msgid 1=wait a little longer, 2=enters
     end
 
@@ -252,13 +282,29 @@ end;
 
 function EventFinishBCNM(player, csid, option)
     print("FINISH csid "..csid.." option "..option);
+    
+    if csid == 0x7d00 then
+        player:PrintToPlayer(string.format("bit.band(option, 0x0F) == %u", bit.band(option, 0x0F)));
 
-    player:PrintToPlayer(string.format("EF mask %u | option %u", option, mask));
+        if bit.lshift(1, 30) < option then
+            local area = player:getLocalVar("[battlefield]area");
+            option = bit.rshift(option, 4);
+            player:PrintToPlayer(string.format("cs option: %u | battlefield: %u | area: %u", option,battlefield_bitmask_map[player:getZoneID()][option], area));
+            player:registerBattlefield(battlefield_bitmask_map[player:getZoneID()][option], area);
+         end;
+    end;
+        print("MODIFIED FINISH csid "..csid.." option "..option);
+    
+    if player:getBattlefield() and player:getBattlefield():getPlayerCount() == 1 then
+        battlefield:cleanup(true);
+    end;
+    
     if (player:hasStatusEffect(EFFECT_BATTLEFIELD) == false) then -- Temp condition for normal bcnm (started with onTrigger)
         return false;
     else
-        local item = trade:getItem();
+        local item = player:getLocalVar("[battlefield]trade");
         local id = player:getBattlefieldID();
+        if item == 0 then   return true end;
         if (id == 68 or id == 418 or id == 450 or id == 482 or id == 545 or id == 578 or id == 609 or id == 293) then
             player:tradeComplete(); -- Removes the item
         elseif ((item >= 1426 and item <= 1440) or item == 1130 or item == 1131 or item == 1175 or item == 1177 or item == 1180 or item == 1178 or item == 1551 or item == 1552 or item == 1553) then -- Orb and Testimony (one time item)
@@ -361,7 +407,7 @@ function ItemToBCNMID(player, zone, trade)
     for zoneindex = 1, table.getn(itemid_bcnmid_map), 2 do
         if (zone==itemid_bcnmid_map[zoneindex]) then -- matched zone
             for bcnmindex = 1, table.getn(itemid_bcnmid_map[zoneindex + 1]), 2 do -- loop bcnms in this zone
-                if (trade:getItem()==itemid_bcnmid_map[zoneindex+1][bcnmindex]) then
+                if (trade:getItem() == itemid_bcnmid_map[zoneindex+1][bcnmindex]) then
                     local item = trade:getItem();
                     local questTimelineOK = 0;
 
@@ -424,33 +470,33 @@ function checkNonTradeBCNM(player, npc)
 
     local tabre = {
         [6] = { -- Bearclaw_Pinnacle
-            [640] = function() return player:getCurrentMission(COP) == THREE_PATHS  and  player:getVar("COP_Ulmia_s_Path") == 6 end,
+            [640] = function() return player:getCurrentMission(COP) == THREE_PATHS and  player:getVar("COP_Ulmia_s_Path") == 6 end,
         },
         [8] = { -- Boneyard_Gully
-            [672] = function() return player:getCurrentMission(COP) == THREE_PATHS  and  player:getVar("COP_Ulmia_s_Path") == 5 end,
-            [673] = function() return player:hasKeyItem(MIASMA_FILTER)==true end,
+            [672] = function() return player:getCurrentMission(COP) == THREE_PATHS and  player:getVar("COP_Ulmia_s_Path") == 5 end,
+            [673] = function() return player:hasKeyItem(MIASMA_FILTER) == true end,
         },
         [10] = { -- The_Shrouded_Maw
-            [704] = function() return player:getCurrentMission(COP) == DARKNESS_NAMED  and  player:getVar("PromathiaStatus") == 2 end,
-            [706] = function() return player:hasKeyItem(VIAL_OF_DREAM_INCENSE)==true end,
+            [704] = function() return player:getCurrentMission(COP) == DARKNESS_NAMED and  player:getVar("PromathiaStatus") == 2 end,
+            [706] = function() return player:hasKeyItem(VIAL_OF_DREAM_INCENSE) == true end,
         },
         [13] = { -- Mine_Shaft_2716
-            [736] = function() return player:getCurrentMission(COP) == THREE_PATHS  and  player:getVar("COP_Louverance_s_Path") == 5 end,
+            [736] = function() return player:getCurrentMission(COP) == THREE_PATHS and  player:getVar("COP_Louverance_s_Path") == 5 end,
         },
         [17] = { -- Spire of Holla
-            [768] = function() return player:getCurrentMission(COP) == BELOW_THE_ARKS and player:getVar("PromathiaStatus") ==1  end,
+            [768] = function() return player:getCurrentMission(COP) == BELOW_THE_ARKS and player:getVar("PromathiaStatus") == 1  end,
             [768] = function() return player:getCurrentMission(COP) == THE_MOTHERCRYSTALS and player:hasKeyItem(LIGHT_OF_HOLLA) == false end,
         },
         [19] = { -- Spire of Dem
-            [800] = function() return player:getCurrentMission(COP) == BELOW_THE_ARKS and player:getVar("PromathiaStatus") ==1  end,
+            [800] = function() return player:getCurrentMission(COP) == BELOW_THE_ARKS and player:getVar("PromathiaStatus") == 1  end,
             [800] = function() return player:getCurrentMission(COP) == THE_MOTHERCRYSTALS and player:hasKeyItem(LIGHT_OF_DEM) == false end,
         },
         [21] = { -- Spire of Mea
-            [832] = function() return player:getCurrentMission(COP) == BELOW_THE_ARKS and player:getVar("PromathiaStatus") ==1  end,
+            [832] = function() return player:getCurrentMission(COP) == BELOW_THE_ARKS and player:getVar("PromathiaStatus") == 1  end,
             [832] = function() return player:getCurrentMission(COP) == THE_MOTHERCRYSTALS and player:hasKeyItem(LIGHT_OF_MEA) == false end,
         },
         [23] = { -- Spire of vahzl
-            [864] = function() return player:getCurrentMission(COP) == DESIRES_OF_EMPTINESS and player:getVar("PromathiaStatus")==8 end,
+            [864] = function() return player:getCurrentMission(COP) == DESIRES_OF_EMPTINESS and player:getVar("PromathiaStatus") == 8 end,
         },
         [29] = { -- Riverne Site #B01
             [896] = function() return player:getQuestStatus(JEUNO,STORMS_OF_FATE) == QUEST_ACCEPTED and player:getVar('StormsOfFate') == 2 end,
@@ -460,21 +506,21 @@ function checkNonTradeBCNM(player, npc)
             [961] = function() return player:getCurrentMission(COP) == THE_SAVAGE and player:getVar("PromathiaStatus") == 1 end,
         },
         [32] = { -- Sealion's Den
-            [992] = function() return player:getCurrentMission(COP) == ONE_TO_BE_FEARED and player:getVar("PromathiaStatus")==2 end,
+            [992] = function() return player:getCurrentMission(COP) == ONE_TO_BE_FEARED and player:getVar("PromathiaStatus") == 2 end,
             [993] = function() return player:getCurrentMission(COP) == THE_WARRIOR_S_PATH end,
         },
         [35] = { -- The Garden of RuHmet
-            [1024] = function() return player:getCurrentMission(COP) == WHEN_ANGELS_FALL and player:getVar("PromathiaStatus")==4 end,
+            [1024] = function() return player:getCurrentMission(COP) == WHEN_ANGELS_FALL and player:getVar("PromathiaStatus") == 4 end,
         },
         [36] = { -- Empyreal Paradox
-            [1056] = function() return player:getCurrentMission(COP) ==  DAWN and player:getVar("PromathiaStatus")==2 end,
+            [1056] = function() return player:getCurrentMission(COP) ==  DAWN and player:getVar("PromathiaStatus") == 2 end,
         },
         [139] = { -- Horlais Peak
             [0] = function() return (player:getCurrentMission(BASTOK) == THE_EMISSARY_SANDORIA2 or player:getCurrentMission(WINDURST) == THE_THREE_KINGDOMS_SANDORIA2) and player:getVar("MissionStatus") == 9 end,
             [3] = function() return player:getCurrentMission(SANDORIA) == THE_SECRET_WEAPON and player:getVar("SecretWeaponStatus") == 2 end,
         },
         [140] = { -- Ghelsba Outpost
-            [32] = function() local MissionStatus = player:getVar("MissionStatus") local sTcCompleted = player:hasCompletedMission(SANDORIA, SAVE_THE_CHILDREN) return player:getCurrentMission(SANDORIA) == SAVE_THE_CHILDREN and (sTcCompleted and MissionStatus <= 2 or sTcCompleted == false and MissionStatus == 2) end,
+            [32] = function() local MissionStatus = player:getVar("MissionStatus"); local sTcCompleted = player:hasCompletedMission(SANDORIA, SAVE_THE_CHILDREN); return player:getCurrentMission(SANDORIA) == SAVE_THE_CHILDREN and (sTcCompleted and MissionStatus <= 2 or sTcCompleted == false and MissionStatus == 2) end,
             [33] = function() return player:hasKeyItem(DRAGON_CURSE_REMEDY) end,
         },
         [144] = { -- Waughroon Shrine

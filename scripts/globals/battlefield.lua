@@ -47,7 +47,6 @@ function g_Battlefield.onBattlefieldTick(battlefield, timeinside)
     
     if killedallmobs then
         battlefield:setStatus(g_Battlefield.Status.WON);
-        battlefield:cleanup(true);
     end
 end;
 
@@ -63,7 +62,6 @@ function g_Battlefield.HandleTimePrompts(battlefield)
    
     if battlefield:getTimeInside() >= battlefield:getTimeLimit() and status == g_Battlefield.Status.LOCKED then
         battlefield:setStatus(g_Battlefield.Status.LOST);
-        battlefield:cleanup(true);
     end;
 end;
 

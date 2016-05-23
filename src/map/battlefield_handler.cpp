@@ -70,45 +70,52 @@ void CBattlefieldHandler::HandleBattlefields(time_point tick)
                 ++it;
         }
 
-        for (auto& PBattlefield : m_Battlefields)
+        // dont want this to run again if we removed a battlefield
+        if (m_Battlefields.size())
         {
-            PBattlefield.second->DoTick(server_clock::now());
+            for (auto& PBattlefield : m_Battlefields)
+            {
+                PBattlefield.second->DoTick(server_clock::now());
+            }
         }
     }
 }
 
-CBattlefield* CBattlefieldHandler::LoadBattlefield(CCharEntity* PChar, uint16 battlefield)
+uint8 CBattlefieldHandler::LoadBattlefield(CCharEntity* PChar, uint16 battlefieldID, uint8 area)
 {
     if (m_Battlefields.size() < m_MaxBattlefields)
     {
-        auto area = 1;
-
-        if (m_Battlefields.size() && m_Battlefields.find(area) != m_Battlefields.end())
+        for (auto&& battlefield : m_Battlefields)
         {
-            // there's already a battlefield in use so we'll start see if this area is already in use
-            for (auto i = 0; i < m_Battlefields.size(); ++i)
+            if (battlefield.first == area)
             {
-                if (m_Battlefields[i]->GetArea() != area)
-                    break;  // started from the bottom now we here
+                return BATTLEFIELD_RETURN_CODE_INCREMENT_REQUEST;
             }
+        }
+
+        // we're just checking if the battlefield can be loaded, not actually trying to create one
+        // todo: use precheck param instead of this cause it's dirty
+        if (battlefieldID == 0xFFFF)
+        {
+            // made it this far so looks like there's a free battlefield
+            return BATTLEFIELD_RETURN_CODE_CUTSCENE;
         }
 
         const int8* fmtQuery = "SELECT name, battlefieldId, fastestName, fastestTime, timeLimit, levelCap, lootDropId, rules, partySize, zoneId \
 						    FROM battlefield_info \
 							WHERE battlefieldId = %u";
 
-        int32 ret = Sql_Query(SqlHandle, fmtQuery, battlefield);
+        int32 ret = Sql_Query(SqlHandle, fmtQuery, battlefieldID);
 
         if (ret == SQL_ERROR ||
             Sql_NumRows(SqlHandle) == 0 ||
             Sql_NextRow(SqlHandle) != SQL_SUCCESS)
         {
-            ShowError("Cannot load battlefield : %u \n", battlefield);
-            return nullptr;
+            ShowError("Cannot load battlefield : %u \n", battlefieldID);
+            return BATTLEFIELD_RETURN_CODE_REQS_NOT_MET;
         }
         else
         {
-            auto PEffect = PChar->StatusEffectContainer->GetStatusEffect(EFFECT_BATTLEFIELD);
             auto name = Sql_GetData(SqlHandle, 0);
             auto recordholder = Sql_GetData(SqlHandle, 2);
             auto recordtime = std::chrono::seconds(Sql_GetUIntData(SqlHandle, 3));
@@ -118,8 +125,7 @@ CBattlefield* CBattlefieldHandler::LoadBattlefield(CCharEntity* PChar, uint16 ba
             auto maxplayers = Sql_GetUIntData(SqlHandle, 8);
             auto rulemask = Sql_GetUIntData(SqlHandle, 7);
 
-            PEffect->SetSubPower(area);
-            std::unique_ptr<CBattlefield> PBattlefield = std::make_unique<CBattlefield>(battlefield, m_PZone, area, PChar);
+            std::unique_ptr<CBattlefield> PBattlefield = std::make_unique<CBattlefield>(battlefieldID, m_PZone, area, PChar);
 
             PBattlefield->SetName(name);
             PBattlefield->SetRecord(recordholder, recordtime);
@@ -128,12 +134,16 @@ CBattlefield* CBattlefieldHandler::LoadBattlefield(CCharEntity* PChar, uint16 ba
             PBattlefield->SetLootID(lootid);
             PBattlefield->SetMaxParticipants(maxplayers);
             PBattlefield->SetRuleMask(rulemask);
+            PBattlefield->InsertEntity(PChar, true);
+
+            if (!PBattlefield->LoadMobs())
+                PBattlefield->CanCleanup(true);
 
             m_Battlefields.insert(std::make_pair(PBattlefield->GetArea(), std::move(PBattlefield)));
-            return m_Battlefields.find(area)->second.get();
+            return BATTLEFIELD_RETURN_CODE_CUTSCENE;
         }
     }
-    return nullptr;
+    return BATTLEFIELD_RETURN_CODE_WAIT;
 }
 
 CBattlefield* CBattlefieldHandler::GetBattlefield(CBaseEntity* PEntity)
@@ -150,28 +160,30 @@ CBattlefield* CBattlefieldHandler::GetBattlefield(CBaseEntity* PEntity)
     return nullptr;
 }
 
-CBattlefield* CBattlefieldHandler::RegisterBattlefield(CCharEntity* PChar, uint16 battlefield, uint8 area, uint32 initiator)
+uint8 CBattlefieldHandler::RegisterBattlefield(CCharEntity* PChar, uint16 battlefield, uint8 area, uint32 initiator)
 {
-    bool occupied = false;
-
     // attempt to add to an existing battlefield
     auto PBattlefield = GetBattlefield(PChar);
 
     // assume relogging, remove entity from battlefield
     if (RemoveFromBattlefield(PChar, PBattlefield))
-        return nullptr;
+        return BATTLEFIELD_RETURN_CODE_REQS_NOT_MET;
 
     // entity wasnt found in battlefield, assume they have the effect but not physically inside battlefield
     if (PBattlefield && PBattlefield->GetID() == battlefield && PBattlefield->GetArea() == area && PBattlefield->GetInitiator().id == initiator)
     {
-        if (!PBattlefield->InProgress() && (occupied = PBattlefield->IsOccupied()))
+        if (!PBattlefield->InProgress())
         {
-            PBattlefield->InsertEntity(PChar);
-            return PBattlefield;
+            // players havent started fighting yet, try entering
+            return PBattlefield->InsertEntity(PChar, true) ? BATTLEFIELD_RETURN_CODE_CUTSCENE : BATTLEFIELD_RETURN_CODE_BATTLEFIELD_FULL;
+        }
+        else
+        {
+            // can't enter, mobs been slapped
+            return BATTLEFIELD_RETURN_CODE_LOCKED;
         }
     }
-
-    return occupied ? nullptr : LoadBattlefield(PChar, battlefield);
+    return LoadBattlefield(PChar, battlefield, area);
 }
 
 bool CBattlefieldHandler::RemoveFromBattlefield(CBaseEntity* PEntity, CBattlefield* PBattlefield, uint8 leavecode)
