@@ -244,7 +244,7 @@ void CMobEntity::ResetGilPurse()
 
 bool CMobEntity::CanRoamHome()
 {
-    if (speed == 0 && !(m_roamFlags & ROAMFLAG_WORM)) return false;
+    if ((speed == 0 && !(m_roamFlags & ROAMFLAG_WORM)) || getMobMod(MOBMOD_NO_MOVE) > 0) return false;
 
     if (getMobMod(MOBMOD_NO_DESPAWN) != 0 ||
         map_config.mob_no_despawn)
@@ -257,7 +257,7 @@ bool CMobEntity::CanRoamHome()
 
 bool CMobEntity::CanRoam()
 {
-    return !(m_roamFlags & ROAMFLAG_EVENT) && PMaster == nullptr && (speed > 0 || (m_roamFlags & ROAMFLAG_WORM));
+    return !(m_roamFlags & ROAMFLAG_EVENT) && PMaster == nullptr && (speed > 0 || (m_roamFlags & ROAMFLAG_WORM)) && getMobMod(MOBMOD_NO_MOVE) == 0;
 }
 
 bool CMobEntity::CanLink(position_t* pos, int16 superLink)
@@ -274,6 +274,12 @@ bool CMobEntity::CanLink(position_t* pos, int16 superLink)
         return false;
     }
 
+    // Don't link I'm an underground worm
+    if ((m_roamFlags & ROAMFLAG_WORM) && IsNameHidden())
+    {
+        return false;
+    }
+
     // link only if I see him
     if (m_Detects & DETECT_SIGHT) {
 
@@ -283,13 +289,16 @@ bool CMobEntity::CanLink(position_t* pos, int16 superLink)
         }
     }
 
-    if (!PAI->PathFind->CanSeePoint(*pos))
+    if (distance(loc.p, *pos) > getMobMod(MOBMOD_LINK_RADIUS))
     {
         return false;
     }
 
-    // link if close enough
-    return distance(loc.p, *pos) <= getMobMod(MOBMOD_LINK_RADIUS);
+    if (!PAI->PathFind->CanSeePoint(*pos))
+    {
+        return false;
+    }
+    return true;
 }
 
 /************************************************************************
@@ -420,35 +429,35 @@ void CMobEntity::HideModel(bool hide)
     {
         // I got this from ambush antlion
         // i'm not sure if this is right
-        m_flags |= 0x80;
+        m_flags |= FLAG_HIDE_MODEL;
     }
     else
     {
-        m_flags &= ~0x80;
+        m_flags &= ~FLAG_HIDE_MODEL;
     }
 }
 
 bool CMobEntity::IsModelHidden()
 {
-    return (m_flags & 0x80) == 0x80;
+    return m_flags & FLAG_HIDE_MODEL;
 }
 
 void CMobEntity::HideHP(bool hide)
 {
     if (hide)
     {
-        m_flags |= 0x100;
+        m_flags |= FLAG_HIDE_HP;
     }
     else
     {
-        m_flags &= ~0x100;
+        m_flags &= ~FLAG_HIDE_HP;
     }
     updatemask |= UPDATE_HP;
 }
 
 bool CMobEntity::IsHPHidden()
 {
-    return (m_flags & 0x100) == 0x100;
+    return m_flags & FLAG_HIDE_HP;
 }
 
 
@@ -456,36 +465,36 @@ void CMobEntity::CallForHelp(bool call)
 {
     if (call)
     {
-        m_flags |= 0x20;
+        m_flags |= FLAG_CALL_FOR_HELP;
     }
     else
     {
-        m_flags &= ~0x20;
+        m_flags &= ~FLAG_CALL_FOR_HELP;
     }
     updatemask |= UPDATE_HP;
 }
 
 bool CMobEntity::CalledForHelp()
 {
-    return (m_flags & 0x20) == 0x20;
+    return m_flags & FLAG_CALL_FOR_HELP;
 }
 
 void CMobEntity::Untargetable(bool untargetable)
 {
     if (untargetable)
     {
-        m_flags |= 0x800;
+        m_flags |= FLAG_UNTARGETABLE;
     }
     else
     {
-        m_flags &= ~0x800;
+        m_flags &= ~FLAG_UNTARGETABLE;
     }
     updatemask |= UPDATE_HP;
 }
 
 bool CMobEntity::IsUntargetable()
 {
-    return (m_flags & 0x800) == 0x800;
+    return m_flags & FLAG_UNTARGETABLE;
 }
 
 void CMobEntity::PostTick()
@@ -566,14 +575,6 @@ void CMobEntity::Spawn()
     // spawn somewhere around my point
     loc.p = m_SpawnPoint;
 
-    if (m_roamFlags & ROAMFLAG_AMBUSH)
-    {
-        HideName(true);
-        animationsub = 0;
-        // this will hide the mob
-        HideModel(true);
-    }
-
     if (m_roamFlags & ROAMFLAG_STEALTH)
     {
         HideName(true);
@@ -636,7 +637,8 @@ void CMobEntity::OnMobSkillFinished(CMobSkillState& state, action_t& action)
     }
 
     action.id = id;
-    if (objtype == TYPE_PET && static_cast<CPetEntity*>(this)->getPetType() != PETTYPE_JUG_PET)
+    if (objtype == TYPE_PET && static_cast<CPetEntity*>(this)->getPetType() == PETTYPE_JUG_PET &&
+        static_cast<CPetEntity*>(this)->getPetType() == PETTYPE_AUTOMATON)
         action.actiontype = ACTION_PET_MOBABILITY_FINISH;
     else if (PSkill->getID() < 256)
         action.actiontype = ACTION_WEAPONSKILL_FINISH;

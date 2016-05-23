@@ -491,6 +491,7 @@ namespace charutils
             PChar->getStorage(LOC_MOGCASE)->AddBuff((uint8)Sql_GetIntData(SqlHandle, 5));
 
             PChar->getStorage(LOC_WARDROBE)->AddBuff(80); // Always 80..
+            PChar->getStorage(LOC_WARDROBE2)->AddBuff(80); // Always 80..
         }
 
         fmtQuery = "SELECT face, race, size, head, body, hands, legs, feet, main, sub, ranged "
@@ -1063,11 +1064,11 @@ namespace charutils
 
     void SendInventory(CCharEntity* PChar)
     {
-        for (uint8 LocationID = 0; LocationID < MAX_CONTAINER_ID; ++LocationID)
+        auto pushContainer = [&](auto LocationID)
         {
             CItemContainer* container = PChar->getStorage(LocationID);
             if (container == nullptr)
-                continue;
+                return;
 
             uint8 size = container->GetSize();
             for (uint8 slotID = 0; slotID <= size; ++slotID)
@@ -1078,6 +1079,14 @@ namespace charutils
                     PChar->pushPacket(new CInventoryItemPacket(PItem, LocationID, slotID));
                 }
             }
+        };
+
+        //Send important items first
+        //Note: it's possible that non-essential inventory items are sent in response to another packet
+        for (auto&& containerID : {LOC_INVENTORY, LOC_TEMPITEMS, LOC_WARDROBE, LOC_WARDROBE2, LOC_MOGSAFE,
+            LOC_STORAGE, LOC_MOGLOCKER, LOC_MOGSATCHEL, LOC_MOGSACK, LOC_MOGCASE, LOC_MOGSAFE2})
+        {
+            pushContainer(containerID);
         }
 
         for (int32 i = 0; i < 16; ++i)
@@ -3303,12 +3312,7 @@ namespace charutils
                             PMember->PTreasurePool->AddItem(4095 + PMob->m_Element, PMob);
                         }
                     }
-                    if (PMember->PParty != nullptr && PMember->PParty->m_PAlliance != nullptr && PMob->m_Type == MOBTYPE_NORMAL)
-                    {
-                        if ((Pzone > 38 && Pzone < 43) || (Pzone > 133 && Pzone < 136) || (Pzone > 184 && Pzone < 189)) charutils::AddExperiencePoints(false, PMember, PMob, exp, 1, false);
-                        else charutils::AddExperiencePoints(false, PMember, PMob, 1, 1, false);
-                    }
-                    else charutils::AddExperiencePoints(false, PMember, PMob, exp, baseexp, chainactive);
+                    charutils::AddExperiencePoints(false, PMember, PMob, exp, baseexp, chainactive);
                 }
             }
         });
@@ -4233,16 +4237,6 @@ namespace charutils
             MOD_LIGHT_AFFINITY_PERP,
             MOD_DARK_AFFINITY_PERP};
 
-        static const MODIFIER weak[8] = {
-            MOD_WATER_AFFINITY_PERP,
-            MOD_WIND_AFFINITY_PERP,
-            MOD_THUNDER_AFFINITY_PERP,
-            MOD_ICE_AFFINITY_PERP,
-            MOD_FIRE_AFFINITY_PERP,
-            MOD_EARTH_AFFINITY_PERP,
-            MOD_DARK_AFFINITY_PERP,
-            MOD_LIGHT_AFFINITY_PERP};
-
         static const WEATHER weatherStrong[8] = {
             WEATHER_HOT_SPELL,
             WEATHER_DUST_STORM,
@@ -4257,15 +4251,19 @@ namespace charutils
 
         DSP_DEBUG_BREAK_IF(element > 7);
 
-        reduction = reduction + PChar->getMod(strong[element]) - PChar->getMod(weak[element]) + PChar->getMod(MOD_ALL_AFFINITY_PERP);
+        reduction = reduction + PChar->getMod(strong[element]);
 
         if (CVanaTime::getInstance()->getWeekday() == element)
+        {
             reduction = reduction + PChar->getMod(MOD_DAY_REDUCTION);
+        }
 
         WEATHER weather = battleutils::GetWeather(PChar, false);
 
         if (weather == weatherStrong[element] || weather == weatherStrong[element] + 1)
+        {
             reduction = reduction + PChar->getMod(MOD_WEATHER_REDUCTION);
+        }
 
         return reduction;
     }
@@ -4525,7 +4523,10 @@ namespace charutils
             }
 
             CBattleEntity* PSyncTarget = PChar->PParty->GetSyncTarget();
-            if (PSyncTarget && !(PChar->StatusEffectContainer->HasStatusEffect(EFFECT_LEVEL_SYNC)) && PChar->getZone() == PSyncTarget->getZone() && PSyncTarget->StatusEffectContainer->HasStatusEffect(EFFECT_LEVEL_SYNC) && PSyncTarget->StatusEffectContainer->GetStatusEffect(EFFECT_LEVEL_SYNC)->GetDuration() == 0)
+            if (PSyncTarget && PChar->getZone() == PSyncTarget->getZone()
+                && !(PChar->StatusEffectContainer->HasStatusEffect(EFFECT_LEVEL_SYNC))
+                && PSyncTarget->StatusEffectContainer->HasStatusEffect(EFFECT_LEVEL_SYNC)
+                && PSyncTarget->StatusEffectContainer->GetStatusEffect(EFFECT_LEVEL_SYNC)->GetDuration() == 0)
             {
                 PChar->pushPacket(new CMessageBasicPacket(PChar, PChar, 0, PSyncTarget->GetMLevel(), 540));
                 PChar->StatusEffectContainer->AddStatusEffect(new CStatusEffect(

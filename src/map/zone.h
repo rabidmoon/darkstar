@@ -333,7 +333,7 @@ enum ZONEID : uint16
     ZONE_ESCHA_RUAUN                  = 289,
     ZONE_DESUETIA_EMPYREAL_PARADOX    = 290,
     ZONE_REISENJIMA                   = 291,
-    ZONE_292                          = 292,
+    ZONE_REISENJIMA_HENGE             = 292,
     ZONE_REISENJIMA_SANCTORIUM        = 293
 };
 
@@ -524,6 +524,7 @@ public:
 
     virtual CCharEntity*    GetCharByName(int8* name);                              // finds the player if exists in zone
     virtual CCharEntity*    GetCharByID(uint32 id);
+    // Gets an entity - ignores instances (use CBaseEntity->GetEntity if possible)
     virtual CBaseEntity*    GetEntity(uint16 targid, uint8 filter = -1);            // получаем указатель на любую сущность в зоне
 
     bool            IsWeatherStatic();                                              // погода в зоне не требует изменения (никогда не меняется)

@@ -282,6 +282,8 @@ public:
     int32 resetEnmity(lua_State*);          //resets enmity to player for specificed mob
     int32 lowerEnmity(lua_State*);          //lower enmity to player for specificed mob
     int32 transferEnmity(lua_State*);
+    int32 getCE(lua_State*);                //gets current CE the mob has towards the player
+    int32 getVE(lua_State*);                //gets current VE the mob has towards the player
 
     int32 hasImmunity(lua_State*);          // Check if the mob has immunity for a type of spell (list at mobentity.h)
     int32 getBattleTime(lua_State*);        // Get the time in second of the battle
@@ -296,6 +298,7 @@ public:
     int32 hasStatusEffect(lua_State*);        // Checks to see if character has specified effect
     int32 hasStatusEffectByFlag(lua_State*);  // Checks to see if a character has an effect with the specified flag
     int32 hasBustEffect(lua_State*);          // Checks to see if a character has a specified busted corsair roll
+    int32 numBustEffects(lua_State*);         // Gets the number of bust effects on the player
     int32 canGainStatusEffect(lua_State*);    // Returns true if the effect can be added
     int32 getStatusEffect(lua_State*);        //
     int32 getStatusEffects(lua_State*);
@@ -333,6 +336,8 @@ public:
 
     int32 getMobMod(lua_State*);
     int32 setMobMod(lua_State*);
+    int32 addMobMod(lua_State*);
+    int32 delMobMod(lua_State*);
 
     int32 hasTrait(lua_State*);
 
@@ -402,6 +407,7 @@ public:
     int32 resetRecast(lua_State*);          // Reset one recast ID
 
     int32 getCurrency(lua_State*);          // Get Currency
+    int32 setCurrency(lua_State*);          // Set Currency
     int32 addCurrency(lua_State*);          // Add Currency
     int32 delCurrency(lua_State*);          // Delete Currency
 
@@ -508,6 +514,7 @@ public:
     int32 hideName(lua_State* L);
     int32 untargetable(lua_State* L);
     int32 hideHP(lua_State* L);
+    int32 hideModel(lua_State* L);
     int32 breathDmgTaken(lua_State* L);
     int32 magicDmgTaken(lua_State* L);
     int32 physicalDmgTaken(lua_State* L);
@@ -536,6 +543,7 @@ public:
     int32 getModelId(lua_State* L);
     int32 setModelId(lua_State* L);
     int32 setTrueDetection(lua_State* L);
+    int32 setAggressive(lua_State* L);
     int32 instantiateMob(lua_State* L);
 
     int32 getActiveManeuvers(lua_State*);
@@ -563,12 +571,17 @@ public:
 
     int32 removeAmmo(lua_State* L);
     int32 takeWeaponskillDamage(lua_State* L);
+    int32 handleAfflatusMiseryDamage(lua_State* L);
 
     int32 setEquipBlock(lua_State* L);
     int32 setStatDebilitation(lua_State* L);
     int32 unequipItem(lua_State* L);
     int32 recalculateStats(lua_State* L);
     int32 checkImbuedItems(lua_State* L);
+
+    int32 getNearbyEntities(lua_State* L);
+    int32 getAutomatonFrame(lua_State* L);
+    int32 getAutomatonHead(lua_State* L);
 };
 
 #endif

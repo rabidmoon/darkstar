@@ -31,6 +31,7 @@ function onUseWeaponSkill(player, target, wsID, tp, primary)
     params.atkmulti = 1
 
     if (USE_ADOULIN_WEAPON_SKILL_CHANGES == true) then
+        params.ftp100 = 1.75; params.ftp200 = 1.75; params.ftp300 = 1.75;
         params.str_wsc = 0.4; params.dex_wsc = 0.4;
     end
 
@@ -44,7 +45,7 @@ function onUseWeaponSkill(player, target, wsID, tp, primary)
     end
 
 
-    if ((player:getEquipID(SLOT_MAIN) == 18989) and (player:getMainJob() == JOB_DNC)) then
+    if ((player:getEquipID(SLOT_MAIN) == 18989) and (player:getMainJob() == JOBS.DNC)) then
         if (damage > 0) then
             applyAftermathEffect(player, tp)
         end

@@ -1,7 +1,8 @@
-require("scripts/globals/magicburst")
-require("scripts/globals/status")
-require("scripts/globals/weather")
-require("scripts/globals/utils")
+require("scripts/globals/magicburst");
+require("scripts/globals/status");
+require("scripts/globals/weather");
+require("scripts/globals/utils");
+require("scripts/globals/settings");
 
     MMSG_BUFF_FAIL = 75;
 
@@ -49,9 +50,7 @@ require("scripts/globals/utils")
     elementalObiWeak = {MOD_FORCE_WATER_DWBONUS, MOD_FORCE_WIND_DWBONUS, MOD_FORCE_LIGHTNING_DWBONUS, MOD_FORCE_ICE_DWBONUS, MOD_FORCE_FIRE_DWBONUS, MOD_FORCE_EARTH_DWBONUS, MOD_FORCE_DARK_DWBONUS, MOD_FORCE_LIGHT_DWBONUS};
     spellAcc = {MOD_FIREACC, MOD_EARTHACC, MOD_WATERACC, MOD_WINDACC, MOD_ICEACC, MOD_THUNDERACC, MOD_LIGHTACC, MOD_DARKACC};
     strongAffinityDmg = {MOD_FIRE_AFFINITY_DMG, MOD_EARTH_AFFINITY_DMG, MOD_WATER_AFFINITY_DMG, MOD_WIND_AFFINITY_DMG, MOD_ICE_AFFINITY_DMG, MOD_THUNDER_AFFINITY_DMG, MOD_LIGHT_AFFINITY_DMG, MOD_DARK_AFFINITY_DMG};
-    weakAffinityDmg = {MOD_WATER_AFFINITY_DMG, MOD_WIND_AFFINITY_DMG, MOD_THUNDER_AFFINITY_DMG, MOD_ICE_AFFINITY_DMG, MOD_FIRE_AFFINITY_DMG, MOD_EARTH_AFFINITY_DMG, MOD_DARK_AFFINITY_DMG, MOD_LIGHT_AFFINITY_DMG};
     strongAffinityAcc = {MOD_FIRE_AFFINITY_ACC, MOD_EARTH_AFFINITY_ACC, MOD_WATER_AFFINITY_ACC, MOD_WIND_AFFINITY_ACC, MOD_ICE_AFFINITY_ACC, MOD_THUNDER_AFFINITY_ACC, MOD_LIGHT_AFFINITY_ACC, MOD_DARK_AFFINITY_ACC};
-    weakAffinityAcc = {MOD_WATER_AFFINITY_ACC, MOD_WIND_AFFINITY_ACC, MOD_THUNDER_AFFINITY_ACC, MOD_ICE_AFFINITY_ACC, MOD_FIRE_AFFINITY_ACC, MOD_EARTH_AFFINITY_ACC, MOD_DARK_AFFINITY_ACC, MOD_LIGHT_AFFINITY_ACC};
     resistMod = {MOD_FIRERES, MOD_EARTHRES, MOD_WATERRES, MOD_WINDRES, MOD_ICERES, MOD_THUNDERRES, MOD_LIGHTRES, MOD_DARKRES};
     defenseMod = {MOD_FIREDEF, MOD_EARTHDEF, MOD_WATERDEF, MOD_WINDDEF, MOD_ICEDEF, MOD_THUNDERDEF, MOD_LIGHTDEF, MOD_DARKDEF};
     absorbMod = {MOD_FIRE_ABSORB, MOD_EARTH_ABSORB, MOD_WATER_ABSORB, MOD_WIND_ABSORB, MOD_ICE_ABSORB, MOD_LTNG_ABSORB, MOD_LIGHT_ABSORB, MOD_DARK_ABSORB};
@@ -284,7 +283,7 @@ end;
 
 function AffinityBonusDmg(caster,ele)
 
-    local affinity = caster:getMod(strongAffinityDmg[ele]) - caster:getMod(weakAffinityDmg[ele]) + caster:getMod(MOD_ALL_AFFINITY_DMG);
+    local affinity = caster:getMod(strongAffinityDmg[ele]);
     local bonus = 1.00 + affinity * 0.05; -- 5% per level of affinity
     -- print(bonus);
     return bonus;
@@ -292,7 +291,7 @@ end;
 
 function AffinityBonusAcc(caster,ele)
 
-    local affinity = caster:getMod(strongAffinityAcc[ele]) - caster:getMod(weakAffinityAcc[ele]) + caster:getMod(MOD_ALL_AFFINITY_ACC);
+    local affinity = caster:getMod(strongAffinityAcc[ele]);
     local bonus = 0 + affinity * 10; -- 10 acc per level of affinity
     -- print(bonus);
     return bonus;
@@ -315,9 +314,11 @@ end;
 function applyResistanceEffect(player,spell,target,diff,skill,bonus,effect)
 
     -- If Stymie is active, as long as the mob is not immune then the effect is not resisted
-    if (skill == ENFEEBLING_MAGIC_SKILL and player:hasStatusEffect(EFFECT_STYMIE) and target:canGainStatusEffect(effect)) then
-        player:delStatusEffect(EFFECT_STYMIE);
-        return 1;
+    if (effect ~= nil) then -- Dispel's script doesn't have an "effect" to send here, nor should it.
+        if (skill == ENFEEBLING_MAGIC_SKILL and player:hasStatusEffect(EFFECT_STYMIE) and target:canGainStatusEffect(effect)) then
+            player:delStatusEffect(EFFECT_STYMIE);
+            return 1;
+        end
     end
 
     if (skill == SINGING_SKILL and player:hasStatusEffect(EFFECT_TROUBADOUR)) then
@@ -349,14 +350,14 @@ function applyResistanceEffect(player,spell,target,diff,skill,bonus,effect)
     return getMagicResist(p);
 end;
 
---Applies resistance for things that may not be spells - ie. Quick Draw
+-- Applies resistance for things that may not be spells - ie. Quick Draw
 function applyResistanceAbility(player,target,element,skill,bonus)
     local p = getMagicHitRate(player, target, skill, element, 0, bonus);
 
     return getMagicResist(p);
 end;
 
---Applies resistance for additional effects
+-- Applies resistance for additional effects
 function applyResistanceAddEffect(player,target,element,bonus)
 
     local p = getMagicHitRate(player, target, 0, element, 0, bonus);
@@ -482,7 +483,7 @@ function getEffectResistance(target, effect)
         effectres = MOD_CURSERES;
     elseif (effect == EFFECT_WEIGHT) then
         effectres = MOD_GRAVITYRES;
-    elseif (effect == EFFECT_SLOW) then
+    elseif (effect == EFFECT_SLOW or effect == EFFECT_ELEGY) then
         effectres = MOD_SLOWRES;
     elseif (effect == EFFECT_STUN) then
         effectres = MOD_STUNRES;
@@ -558,20 +559,19 @@ end;
 function handleAfflatusMisery(caster, spell, dmg)
     if (caster:hasStatusEffect(EFFECT_AFFLATUS_MISERY)) then
         local misery = caster:getMod(MOD_AFFLATUS_MISERY);
+        local miseryMax = caster:getMaxHP() / 4;
 
-        --BGwiki puts the boost capping at 200% bonus at around 300hp
-        if (misery > 300) then
-            misery = 300;
+        -- BGwiki puts the boost capping at 200% bonus at 1/4th max HP.
+        if (misery > miseryMax) then
+            misery = miseryMax;
         end;
 
-        --So, if wee capped at 300, we'll make the boost it boost 2x (200% damage)
-        local boost = 1 + (misery / 300);
-
-        local preboost = dmg;
+        -- Damage is 2x at boost cap.
+        local boost = 1 + (misery / miseryMax);
 
         dmg = math.floor(dmg * boost);
 
-        --printf("AFFLATUS MISERY: Boosting %d -> %f, Final %d", preboost, boost, dmg);
+        -- printf("AFFLATUS MISERY: Damage boosted by %f to %d", boost, dmg);
 
         --Afflatus Mod is Used Up...
         caster:setMod(MOD_AFFLATUS_MISERY, 0)
@@ -607,6 +607,17 @@ end;
         -- end
     end
 
+    local skill = spell:getSkillType();
+    if (skill == ELEMENTAL_MAGIC_SKILL) then
+        dmg = dmg * ELEMENTAL_POWER;
+    elseif (skill == DARK_MAGIC_SKILL) then
+        dmg = dmg * DARK_POWER;
+    elseif (skill == NINJUTSU_SKILL) then
+        dmg = dmg * NINJUTSU_POWER;
+    elseif (skill == DIVINE_MAGIC_SKILL) then
+        dmg = dmg * DIVINE_POWER;
+    end
+
     dmg = target:magicDmgTaken(dmg);
 
     if (dmg > 0) then
@@ -623,10 +634,11 @@ end;
         spell:setMsg(7);
     else
         target:delHP(dmg);
+        target:handleAfflatusMiseryDamage(dmg);
         target:updateEnmityFromDamage(caster,dmg);
         -- Only add TP if the target is a mob
         if (target:getObjType() ~= TYPE_PC) then
-            target:addTP(10);
+            target:addTP(100);
         end
     end
 
@@ -1118,6 +1130,12 @@ function doDivineNuke(V,M,caster,spell,target,hasMultipleTargetReduction,resistB
 end
 
 function doNinjutsuNuke(V,M,caster,spell,target,hasMultipleTargetReduction,resistBonus,mabBonus)
+    mabBonus = mabBonus or 0;
+
+    mabBonus = mabBonus + caster:getMod(MOD_NIN_NUKE_BONUS); -- "enhances ninjutsu damage" bonus
+    if (caster:hasStatusEffect(EFFECT_INNIN) and caster:isBehind(target, 23)) then -- Innin mag atk bonus from behind, guesstimating angle at 23 degrees
+        mabBonus = mabBonus + caster:getStatusEffect(EFFECT_INNIN):getPower();
+    end
     return doNuke(V,M,caster,spell,target,hasMultipleTargetReduction,resistBonus,NINJUTSU_SKILL,MOD_INT,mabBonus);
 end
 
@@ -1129,7 +1147,7 @@ function doNuke(V,M,caster,spell,target,hasMultipleTargetReduction,resistBonus,s
     --get the resisted damage
     dmg = dmg*resist;
     if (skill == NINJUTSU_SKILL) then
-        if (caster:getMainJob() == JOB_NIN) then -- NIN main gets a bonus to their ninjutsu nukes
+        if (caster:getMainJob() == JOBS.NIN) then -- NIN main gets a bonus to their ninjutsu nukes
             local ninSkillBonus = 100;
             if (spell:getID() % 3 == 2) then -- ichi nuke spell ids are 320, 323, 326, 329, 332, and 335
                 ninSkillBonus = 100 + math.floor((caster:getSkillLevel(SKILL_NIN) - 50)/2); -- getSkillLevel includes bonuses from merits and modifiers (ie. gear)
