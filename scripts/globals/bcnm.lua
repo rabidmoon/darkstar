@@ -1,3 +1,4 @@
+package.loaded["scripts/globals/bcnm"] = nil;
 require("scripts/globals/status");
 require("scripts/globals/keyitems");
 require("scripts/globals/missions");
@@ -204,7 +205,7 @@ function EventUpdateBCNM(player, csid, option, entrance)
 
         -- GetBattleBitmask returns -1 if no valid mask found
         if mask == -1 or mask == nil then
-            mask = checkNonTradeBCNM(player);
+            mask = checkNonTradeBCNM(player, nil, 1);
         end;
         
         if option == 0 then
@@ -214,7 +215,9 @@ function EventUpdateBCNM(player, csid, option, entrance)
             end
             player:PrintToPlayer(string.format("UPDATE csid %u option %u mask %u", csid, option, mask));
             player:updateEvent(result, mask, 0, 1, 1, 0);
-            player:setLocalVar("[battlefield]", area + 1);
+            if result ~= 2 then
+                player:setLocalVar("[battlefield]area", area + 1);
+            end;
         elseif option == 255 then
             player:updateEvent(0, 3, 0, 0, 1, 0);
         end;
@@ -286,17 +289,17 @@ function EventFinishBCNM(player, csid, option)
     if csid == 0x7d00 then
         player:PrintToPlayer(string.format("bit.band(option, 0x0F) == %u", bit.band(option, 0x0F)));
 
-        if bit.lshift(1, 30) < option then
+        if true then
             local area = player:getLocalVar("[battlefield]area");
             option = bit.rshift(option, 4);
             player:PrintToPlayer(string.format("cs option: %u | battlefield: %u | area: %u", option,battlefield_bitmask_map[player:getZoneID()][option], area));
-            player:registerBattlefield(battlefield_bitmask_map[player:getZoneID()][option], area);
+            player:registerBattlefield(battlefield_bitmask_map[player:getZoneID()][option], area + 1);
          end;
     end;
         print("MODIFIED FINISH csid "..csid.." option "..option);
     
-    if player:getBattlefield() and player:getBattlefield():getPlayerCount() == 1 then
-        battlefield:cleanup(true);
+    if player:getBattlefield() and #(player:getBattlefield():getPlayers()) == 1 then
+       -- if player:getBattlefield():getStatus() ~= 0 then print(1); player:getBattlefield():cleanup(true); end;
     end;
     
     if (player:hasStatusEffect(EFFECT_BATTLEFIELD) == false) then -- Temp condition for normal bcnm (started with onTrigger)
@@ -463,8 +466,8 @@ end;
 -- E.g. mission checks go here, you must know the right bcnmid for the mission you want to code.
 --      You also need to know the bitmask (event param) which should be put in bcnmid_param_map
 
-function checkNonTradeBCNM(player, npc)
-
+function checkNonTradeBCNM(player, npc, mode)
+    mode = mode or 2;
     local mask = 0;
     local Zone = player:getZoneID();
 
@@ -589,17 +592,18 @@ function checkNonTradeBCNM(player, npc)
     }
     local mask = nil;
     for keyid, condition in pairs(tabre[Zone]) do
-        if condition() and GetBattleBitmask(keyid, Zone, 1) ~= -1 then 
-                mask = mask + GetBattleBitmask(keyid, Zone, 1);
+        if condition() and GetBattleBitmask(keyid, Zone, mode) ~= -1 then 
+                mask = mask + GetBattleBitmask(keyid, Zone, mode);
         end;
     end;
-    mask = 0x18;
-    if mask then
+    if not mask then
+        mask = 0x18;
         --player:addStatusEffect(EFFECT_BATTLEFIELD, mask, 0, 0);
         --player:startEvent(0x7d00, 0, 17, 0x0b94, 0x0c, 0x0c, 0x00, 0x00);
-        player:startEvent(0x7d00, 0, 0, 0, mask, 0, 0, 0, 0);
     end;
-    
+    if mode == 2 then
+        player:startEvent(0x7d00, 0, 0, 0, mask, 0, 0, 0, 0);
+    end
     return mask;
 end;
 

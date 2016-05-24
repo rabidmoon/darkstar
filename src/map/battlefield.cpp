@@ -286,12 +286,13 @@ bool CBattlefield::IsOccupied()
 
 bool CBattlefield::InsertEntity(CBaseEntity* PEntity, bool inBattlefield, BATTLEFIELDMOBCONDITION conditions)
 {
+    DSP_DEBUG_BREAK_IF(PEntity == nullptr || m_PlayerList.size() > 1);
     if (PEntity->objtype == TYPE_PC)
     {
         if (GetPlayerCount() < GetMaxParticipants())
         {
             ApplyLevelCap(static_cast<CCharEntity*>(PEntity));
-            m_PlayerList.push_back(PEntity->targid);
+            m_PlayerList.push_back(PEntity->id);
         }
         else
         {
@@ -354,6 +355,8 @@ CBaseEntity* CBattlefield::GetEntity(CBaseEntity* PEntity)
 
 bool CBattlefield::RemoveEntity(CBaseEntity* PEntity, uint8 leavecode)
 {
+    DSP_DEBUG_BREAK_IF(PEntity == nullptr);
+
     auto found = false;
     auto check = [PEntity, &found](auto entity) { if (PEntity->targid == entity) { found = true; return found; } return false; };
 
@@ -571,12 +574,6 @@ void CBattlefield::OpenChest()
             // todo: handle loot
         }
     }
-
-    // start the event, they won
-    ForEachPlayer([&](CCharEntity* PChar)
-    {
-        luautils::OnBcnmLeave(PChar, this, LEAVE_WIN);
-    });
     m_GotBooty = true;
 }
 

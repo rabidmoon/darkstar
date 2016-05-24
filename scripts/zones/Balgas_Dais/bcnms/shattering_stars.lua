@@ -9,7 +9,7 @@ package.loaded["scripts/zones/Balgas_Dais/TextIDs"] = nil;
 require("scripts/globals/titles");
 require("scripts/globals/quests");
 require("scripts/zones/Balgas_Dais/TextIDs");
-
+require("scripts/globals/battlefield");
 -----------------------------------
 
 -- After registering the BCNM via bcnmRegister(bcnmid)
@@ -21,6 +21,9 @@ function onBcnmEnter(player,instance)
     -- player:messageSpecial(107);
 end;
 
+function onBattlefieldTick(battlefield, timeinside)
+    g_Battlefield.onBattlefieldTick(battlefield, timeinside);
+end;
 -- Leaving the BCNM by every mean possible, given by the LeaveCode
 -- 1=Select Exit on circle
 -- 2=Winning the BC

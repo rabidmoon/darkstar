@@ -33,14 +33,17 @@ g_Battlefield.Status = {
 };
 
 function g_Battlefield.onBattlefieldTick(battlefield, timeinside)
-    local tick = battlefield:getTick();
+    -- local tick = battlefield:getTick();
     local killedallmobs = true;
-    
-    for _, mob in pairs(battlefield:getMobs(true)) do
+
+    for i, mob in pairs(battlefield:getMobs(true, true)) do
+    printf("index %u", i);
+    if mob then
         if mob:getHP() > 0 then
             killedallmobs = false;
             break;
         end;
+    end
     end;
     g_Battlefield.HandleWipe(battlefield);
     g_Battlefield.HandleTimePrompts(battlefield);
@@ -51,7 +54,7 @@ function g_Battlefield.onBattlefieldTick(battlefield, timeinside)
 end;
 
 function g_Battlefield.HandleTimePrompts(battlefield)
-    local tick = battlefield:getTick();
+    local tick = battlefield:getTimeInside();
     local status = battlefield:getStatus();
     print(tick)
     if tick/1000 % 60 then
@@ -84,7 +87,6 @@ function g_Battlefield.HandleWipe(battlefield)
     if #players == totalrekt then
         if rekt then
             battlefield:setStatus(g_Battlefield.Status.LOST);
-            battlefield:cleanup(true);
         else
             battlefield:setWipeTime(battlefield:getStartTime() + battlefield:getTimeInside());
         end;
