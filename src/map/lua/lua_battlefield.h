@@ -58,6 +58,7 @@ public:
     int32 getAllies(lua_State*);
     int32 getRecord(lua_State*);
     int32 getStatus(lua_State*);
+    int32 canSpawnTreasure(lua_State*);
 
     int32 setTimeLimit(lua_State*);
     int32 setFightTick(lua_State*);

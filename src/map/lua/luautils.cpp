@@ -2617,11 +2617,6 @@ namespace luautils
         }
 
         int32 returns = lua_gettop(LuaHandle) - oldtop;
-        if (returns < 1)
-        {
-            ShowError("luautils::onBattlefieldTick (%s): 1 return expected, got %d\n", File, returns);
-            return -1;
-        }
 
         if (returns > 1)
         {

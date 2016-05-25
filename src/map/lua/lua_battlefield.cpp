@@ -122,7 +122,7 @@ inline int32 CLuaBattlefield::getWipeTime(lua_State* L)
 {
     DSP_DEBUG_BREAK_IF(m_PLuaBattlefield == nullptr);
 
-    auto count = std::chrono::duration_cast<std::chrono::milliseconds>(get_server_start_time() - m_PLuaBattlefield->GetWipeTime()).count();
+    auto count = std::chrono::duration_cast<std::chrono::seconds>(get_server_start_time() - m_PLuaBattlefield->GetWipeTime()).count();
 
     lua_pushinteger(L, count);
     return 1;
@@ -132,7 +132,7 @@ inline int32 CLuaBattlefield::getFightTime(lua_State* L)
 {
     DSP_DEBUG_BREAK_IF(m_PLuaBattlefield == nullptr);
 
-    lua_pushinteger(L, std::chrono::duration_cast<std::chrono::milliseconds>(get_server_start_time() - m_PLuaBattlefield->GetFightTime()).count());
+    lua_pushinteger(L, std::chrono::duration_cast<std::chrono::seconds>(get_server_start_time() - m_PLuaBattlefield->GetFightTime()).count());
     return 1;
 }
 
@@ -166,22 +166,7 @@ inline int32 CLuaBattlefield::getMobs(lua_State* L)
     auto required = lua_isnil(L, 1) ? true : lua_toboolean(L, 1);
     auto adds = lua_isnil(L, 2) ? false : lua_toboolean(L, 2);
 
-    int size = 0;
-
-    for (auto i = 0; i < m_PLuaBattlefield->m_EnemyList.size(); ++i)
-    {
-        CBaseEntity* PMob = nullptr;
-        auto mob = m_PLuaBattlefield->m_EnemyList[i];
-
-        if ((required && mob.condition & CONDITION_SPAWNED_AT_START) || adds)
-            PMob = m_PLuaBattlefield->GetZone()->GetEntity(mob.targid, TYPE_MOB | TYPE_PET);
-
-        if (PMob)
-            size++;
-    }
-
-    lua_createtable(L, size + 1, 0);
-    int8 newTable = lua_gettop(L);
+    lua_newtable(L);
 
     int i = 1;
     for (auto mob : m_PLuaBattlefield->m_EnemyList)
@@ -256,7 +241,7 @@ inline int32 CLuaBattlefield::getRecord(lua_State* L)
     DSP_DEBUG_BREAK_IF(m_PLuaBattlefield == nullptr);
 
     lua_pushstring(L, m_PLuaBattlefield->GetRecord().name.c_str());
-    lua_pushinteger(L, std::chrono::duration_cast<std::chrono::milliseconds>(m_PLuaBattlefield->GetRecord().time).count());
+    lua_pushinteger(L, std::chrono::duration_cast<std::chrono::seconds>(m_PLuaBattlefield->GetRecord().time).count());
     return 1;
 }
 
@@ -268,12 +253,20 @@ inline int32 CLuaBattlefield::getStatus(lua_State* L)
     return 1;
 }
 
+inline int32 CLuaBattlefield::canSpawnTreasure(lua_State* L)
+{
+    DSP_DEBUG_BREAK_IF(m_PLuaBattlefield == nullptr);
+
+    lua_pushboolean(L, m_PLuaBattlefield->CanSpawnTreasure());
+    return 1;
+}
+
 inline int32 CLuaBattlefield::setWipeTime(lua_State* L)
 {
     DSP_DEBUG_BREAK_IF(m_PLuaBattlefield == nullptr);
     DSP_DEBUG_BREAK_IF(lua_isnil(L, 1) || !lua_isnumber(L, 1));
 
-    m_PLuaBattlefield->SetWipeTime(get_server_start_time() + std::chrono::milliseconds(lua_tointeger(L, 1)));
+    m_PLuaBattlefield->SetWipeTime(get_server_start_time() + std::chrono::seconds(lua_tointeger(L, 1)));
     return 0;
 }
 
@@ -286,7 +279,16 @@ inline int32 CLuaBattlefield::setRecord(lua_State* L)
     auto name = lua_tostring(L, 1);
     auto time = lua_tointeger(L, 2);
 
-    m_PLuaBattlefield->SetRecord((int8*)name, std::chrono::milliseconds(time));
+    m_PLuaBattlefield->SetRecord((int8*)name, std::chrono::seconds(time));
+    return 0;
+}
+
+inline int32 CLuaBattlefield::setStatus(lua_State* L)
+{
+    DSP_DEBUG_BREAK_IF(m_PLuaBattlefield == nullptr);
+    DSP_DEBUG_BREAK_IF(lua_isnil(L, 1) || !lua_isnumber(L, 1));
+
+    m_PLuaBattlefield->SetStatus(lua_tointeger(L, 1));
     return 0;
 }
 
@@ -373,6 +375,7 @@ Lunar<CLuaBattlefield>::Register_t CLuaBattlefield::methods[] =
     LUNAR_DECLARE_METHOD(CLuaBattlefield,getStatus),
     LUNAR_DECLARE_METHOD(CLuaBattlefield,setWipeTime),
     LUNAR_DECLARE_METHOD(CLuaBattlefield,setRecord),
+    LUNAR_DECLARE_METHOD(CLuaBattlefield,setStatus),
     LUNAR_DECLARE_METHOD(CLuaBattlefield,loadMobs),
     LUNAR_DECLARE_METHOD(CLuaBattlefield,loadNPCs),
     LUNAR_DECLARE_METHOD(CLuaBattlefield,insertEntity),

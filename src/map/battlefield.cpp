@@ -523,6 +523,11 @@ bool CBattlefield::LoadMobs()
     return true;
 }
 
+bool CBattlefield::CanSpawnTreasure()
+{
+    return !m_SeenBooty;
+}
+
 bool CBattlefield::SpawnTreasureChest()
 {
     DSP_DEBUG_BREAK_IF(m_SeenBooty);

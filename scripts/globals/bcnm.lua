@@ -138,6 +138,8 @@ function TradeBCNM(player, zone, trade, npc)
             npc:messageBasic(246, 0, 0); -- this wont look right in other languages!
             return true;
         end
+        player:setLocalVar("[battlefield]trade", trade:getItem());
+        player:setLocalVar("[battlefield]id", id);
         player:startEvent(0x7d00, 0, 0, 0, mask, 0, 0, 0, 0);
         return true;
     end
@@ -169,7 +171,7 @@ function EventTriggerBCNM(player, npc)
 end;
 
 function EventUpdateBCNM(player, csid, option, entrance)
-    local area = player:getLocalVar("[battlefield]area") or 1;
+    local area = player:getLocalVar("[battlefield]area");
     local id = player:getLocalVar("[battlefield]trade");
     -- return false;
     --[[
@@ -198,37 +200,50 @@ function EventUpdateBCNM(player, csid, option, entrance)
     
     if csid == 0x7d00 then
         local zone = player:getZoneID();
-        local mask = GetBattleBitmask(id, zone, 2);
+        local mask = GetBattleBitmask(id, zone, 1);
         local effect = player:getStatusEffect(EFFECT_BATTLEFIELD);
         local skip = CutsceneSkip(player);
-        local result = player:registerBattlefield(-1, area);
-
-        -- GetBattleBitmask returns -1 if no valid mask found
-        if mask == -1 or mask == nil then
-            mask = checkNonTradeBCNM(player, nil, 1);
-        end;
         
         if option == 0 then
+            local record, name, cap = 0;
+            -- yes there's a bcnm with id 0
+            if id == 0 then
+                id = -1;
+            end;
+            
+            if area == 0 then
+                area = 1;
+            end;
+            
+            local result = player:registerBattlefield(id, area);
             local param4 = 0;
             if effect then
                 param4 = 1;
             end
+            
             player:PrintToPlayer(string.format("UPDATE csid %u option %u mask %u", csid, option, mask));
-            player:updateEvent(result, mask, 0, 1, 1, 0);
             if result ~= 2 then
                 player:setLocalVar("[battlefield]area", area + 1);
+            else
+                if id ~= -1 then
+                    local battlefield = player:getBattlefield();
+                    name, record = battlefield:getRecord();
+                end;
             end;
+            player:updateEvent(result, mask, name, record, param4, 0);
         elseif option == 255 then
             player:updateEvent(0, 3, 0, 0, 1, 0);
         end;
         return;
     end;
-
+--[[
     -- seen: option 2, 3, 0 in that order
     if (csid == 0x7d03 and option == 2) then -- leaving a BCNM the player is currently in.
         player:delStatusEffect(EFFECT_BATTLEFIELD);
         return true;
     end
+    ]]
+    --[[
     if (option == 255 and csid == 0x7d00) then -- Clicked yes, try to register bcnmid
         if (player:hasStatusEffect(EFFECT_BATTLEFIELD)) then
             -- You're entering a bcnm but you already had the battlefield effect, so you want to go to the
@@ -279,7 +294,7 @@ function EventUpdateBCNM(player, csid, option, entrance)
         -- player:updateEvent(msgid, bcnmFight, 0, record, numadventurers, skip); skip= 1 to skip anim
         -- msgid 1=wait a little longer, 2=enters
     end
-
+]]
     return true;
 end;
 
@@ -298,8 +313,8 @@ function EventFinishBCNM(player, csid, option)
     end;
         print("MODIFIED FINISH csid "..csid.." option "..option);
     
-    if player:getBattlefield() and #(player:getBattlefield():getPlayers()) == 1 then
-       -- if player:getBattlefield():getStatus() ~= 0 then print(1); player:getBattlefield():cleanup(true); end;
+    if csid == 0x7d03 and option == 4 and player:getBattlefield() and #(player:getBattlefield():getPlayers()) == 1 then
+        if player:getBattlefield():getStatus() ~= 0 then print(1); player:getBattlefield():cleanup(true); end;
     end;
     
     if (player:hasStatusEffect(EFFECT_BATTLEFIELD) == false) then -- Temp condition for normal bcnm (started with onTrigger)

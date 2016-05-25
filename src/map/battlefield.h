@@ -168,6 +168,7 @@ public:
 
     void                   PushMessageToAllInBcnm(uint16 msg, uint16 param);
 
+    bool                   CanSpawnTreasure();
     bool                   SpawnTreasureChest();
     void                   OpenChest();
 

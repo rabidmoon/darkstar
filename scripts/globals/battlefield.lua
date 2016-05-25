@@ -38,7 +38,7 @@ function g_Battlefield.onBattlefieldTick(battlefield, timeinside)
 
     for i, mob in pairs(battlefield:getMobs(true, true)) do
     printf("index %u", i);
-    if mob then
+    if mob ~= nil then
         if mob:getHP() > 0 then
             killedallmobs = false;
             break;
