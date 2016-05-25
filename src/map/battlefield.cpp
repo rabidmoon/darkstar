@@ -284,9 +284,10 @@ bool CBattlefield::IsOccupied()
     return m_PlayerList.size() > 0;
 }
 
-bool CBattlefield::InsertEntity(CBaseEntity* PEntity, bool inBattlefield, BATTLEFIELDMOBCONDITION conditions)
+bool CBattlefield::InsertEntity(CBaseEntity* PEntity, bool inBattlefield, BATTLEFIELDMOBCONDITION conditions, bool ally)
 {
-    DSP_DEBUG_BREAK_IF(PEntity == nullptr || m_PlayerList.size() > 1);
+    DSP_DEBUG_BREAK_IF(PEntity == nullptr);
+
     if (PEntity->objtype == TYPE_PC)
     {
         if (GetPlayerCount() < GetMaxParticipants())
@@ -305,16 +306,24 @@ bool CBattlefield::InsertEntity(CBaseEntity* PEntity, bool inBattlefield, BATTLE
     }
     else if (PEntity->objtype == TYPE_MOB)
     {
-        auto ally = PEntity->allegiance == ALLEGIANCE_PLAYER;
-
         // mobs
         if (!ally)
         {
-            // only apply conditions to mobs spawning by default
-            BattlefieldMob_t mob;
-            mob.targid = PEntity->targid;
-            mob.condition = conditions;
-            m_EnemyList.push_back(mob);
+            auto entity = dynamic_cast<CPetEntity*>(PEntity);
+
+            // dont enter player pet
+            if (!(entity && entity->PMaster && entity->PMaster->objtype == TYPE_PC))
+            {
+                // only apply conditions to mobs spawning by default
+                BattlefieldMob_t mob;
+                mob.targid = PEntity->targid;
+                mob.condition = conditions;
+
+                if (mob.condition & CONDITION_WIN_REQUIREMENT)
+                    m_RequiredEnemyList.push_back(mob);
+                else
+                    m_AdditionalEnemyList.push_back(mob);
+            }
         }
         // ally
         else
@@ -379,7 +388,7 @@ bool CBattlefield::RemoveEntity(CBaseEntity* PEntity, uint8 leavecode)
             if (leavecode == 2)
                 OpenChest();
 
-            luautils::OnBcnmLeave(static_cast<CCharEntity*>(PEntity), this, leavecode);
+            luautils::OnBattlefieldLeave(static_cast<CCharEntity*>(PEntity), this, leavecode);
         }
     }
     else if (PEntity->objtype == TYPE_NPC)
@@ -396,18 +405,12 @@ bool CBattlefield::RemoveEntity(CBaseEntity* PEntity, uint8 leavecode)
         if (PEntity->allegiance == ALLEGIANCE_PLAYER)
         {
             m_AllyList.erase(std::remove_if(m_AllyList.begin(), m_AllyList.end(), check), m_AllyList.end());
-
-            GetZone()->DeletePET(PEntity);
-            PEntity->PBattlefield.reset(nullptr);
-            delete PEntity; // todo: didnt wanna raw pointer but kj can fix
-
-            return found;
         }
         else
         {
             auto check = [PEntity, &found](auto entity) { if (entity.targid == PEntity->targid) { found = true; return found; } return false; };
-
-            m_EnemyList.erase(std::remove_if(m_EnemyList.begin(), m_EnemyList.end(), check), m_EnemyList.end());
+            m_RequiredEnemyList.erase(std::remove_if(m_RequiredEnemyList.begin(), m_RequiredEnemyList.end(), check), m_RequiredEnemyList.end());
+            m_AdditionalEnemyList.erase(std::remove_if(m_AdditionalEnemyList.begin(), m_AdditionalEnemyList.end(), check), m_AdditionalEnemyList.end());
         }
     }
     // assume its either a player or ally and remove any enmity
@@ -417,28 +420,40 @@ bool CBattlefield::RemoveEntity(CBaseEntity* PEntity, uint8 leavecode)
         entity->StatusEffectContainer->DelStatusEffectsByFlag(EFFECTFLAG_CONFRONTATION);
         entity->StatusEffectContainer->DelStatusEffect(EFFECT_LEVEL_RESTRICTION);
         ClearEnmityForEntity(entity);
+
+        if (entity->allegiance == ALLEGIANCE_PLAYER && found)
+        {
+            GetZone()->DeletePET(PEntity);
+            PEntity->PBattlefield.release();
+            delete PEntity; // todo: didnt wanna raw pointer but kj can fix
+
+            return found;
+        }
     }
-    PEntity->PBattlefield.reset(nullptr);
+    PEntity->PBattlefield.release();
     return found;
 }
 
 void CBattlefield::DoTick(time_point time)
 {
-    //todo : bcnm - update tick, fight tick, end if time is up
-    m_Tick = time;
-    m_FightTick = m_Status == BATTLEFIELD_STATUS_LOCKED ? time : m_FightTick;
-
-    // remove the char if they zone out
-    for (auto charid : m_PlayerList)
+    if (m_Tick + 1s < time)
     {
-        auto PChar = zoneutils::GetChar(charid);
-        if (!PChar || PChar->getZone() != GetZoneID())
-        {
-            RemoveEntity(PChar, -1);
-        }
-    }
+        //todo : bcnm - update tick, fight tick, end if time is up
+        m_Tick = time;
+        m_FightTick = m_Status == BATTLEFIELD_STATUS_LOCKED ? time : m_FightTick;
 
-    luautils::OnBattlefieldTick(this);
+        // remove the char if they zone out
+        for (auto charid : m_PlayerList)
+        {
+            auto PChar = zoneutils::GetChar(charid);
+            if (!PChar || PChar->getZone() != GetZoneID())
+            {
+                RemoveEntity(PChar, -1);
+            }
+        }
+
+        luautils::OnBattlefieldTick(this);
+    }
 }
 
 bool CBattlefield::CanCleanup(bool cleanup)
@@ -622,68 +637,46 @@ bool CBattlefield::InProgress()
 
 void CBattlefield::ForEachPlayer(std::function<void(CCharEntity*)> func)
 {
-    if (m_PlayerList.size())
+    for (auto player : m_PlayerList)
     {
-        for (auto player : m_PlayerList)
-        {
-            func((CCharEntity*)GetZone()->GetCharByID(player));
-        }
+        func((CCharEntity*)GetZone()->GetCharByID(player));
     }
 }
 
 void CBattlefield::ForEachEnemy(std::function<void(CMobEntity*)> func)
 {
-    if (m_EnemyList.size())
-    {
-        for (auto mob : m_EnemyList)
-        {
-            func((CMobEntity*)GetZone()->GetEntity(mob.targid, TYPE_MOB | TYPE_PET));
-        }
-    }
+    ForEachRequiredEnemy(func);
+    ForEachAdditionalEnemy(func);
 }
 
 void CBattlefield::ForEachRequiredEnemy(std::function<void(CMobEntity*)> func)
 {
-    if (m_EnemyList.size())
+    for (auto mob : m_RequiredEnemyList)
     {
-        for (auto mob : m_EnemyList)
-        {
-            if (mob.condition & CONDITION_WIN_REQUIREMENT)
-                func((CMobEntity*)GetZone()->GetEntity(mob.targid, TYPE_MOB | TYPE_PET));
-        }
+        func((CMobEntity*)GetZone()->GetEntity(mob.targid, TYPE_MOB | TYPE_PET));
     }
 }
 
 void CBattlefield::ForEachAdditionalEnemy(std::function<void(CMobEntity*)> func)
 {
-    if (m_EnemyList.size())
+    for (auto mob : m_AdditionalEnemyList)
     {
-        for (auto mob : m_EnemyList)
-        {
-            if (mob.condition == CONDITION_NONE)
-                func((CMobEntity*)GetZone()->GetEntity(mob.targid, TYPE_MOB | TYPE_PET));
-        }
+        func((CMobEntity*)GetZone()->GetEntity(mob.targid, TYPE_MOB | TYPE_PET));
     }
 }
 
 void CBattlefield::ForEachNpc(std::function<void(CNpcEntity*)> func)
 {
-    if (m_NpcList.size())
+    for (auto npc : m_NpcList)
     {
-        for (auto npc : m_NpcList)
-        {
-            func((CNpcEntity*)GetZone()->GetEntity(npc, TYPE_NPC));
-        }
+        func((CNpcEntity*)GetZone()->GetEntity(npc, TYPE_NPC));
     }
 }
 
 void CBattlefield::ForEachAlly(std::function<void(CMobEntity*)> func)
 {
-    if (m_AllyList.size())
+    for (auto ally : m_AllyList)
     {
-        for (auto ally : m_AllyList)
-        {
-            func((CMobEntity*)GetZone()->GetEntity(ally, TYPE_PET));
-        }
+        func((CMobEntity*)GetZone()->GetEntity(ally, TYPE_PET));
     }
 }

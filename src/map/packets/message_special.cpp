@@ -31,12 +31,12 @@
 
 
 CMessageSpecialPacket::CMessageSpecialPacket(
-	CBaseEntity* PEntity, 
-	uint16 messageID,  
-	uint32 param0, 
-	uint32 param1, 
-	uint32 param2, 
-	uint32 param3, 
+	CBaseEntity* PEntity,
+	uint16 messageID,
+	uint32 param0,
+	uint32 param1,
+	uint32 param2,
+	uint32 param3,
 	bool ShowName)
 {
 	this->type = 0x2A;
@@ -57,7 +57,7 @@ CMessageSpecialPacket::CMessageSpecialPacket(
 	{
 		this->size = 0x18;
 
-		memcpy(data+(0x1E), PEntity->GetName(), (PEntity->name.size() > 15 ? 15 : PEntity->name.size())); 
+		memcpy(data+(0x1E), PEntity->GetName(), (PEntity->name.size() > 15 ? 15 : PEntity->name.size()));
 	}
 	else if (PEntity->objtype == TYPE_PC)
 	{

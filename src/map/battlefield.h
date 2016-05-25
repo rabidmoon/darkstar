@@ -157,7 +157,7 @@ public:
 
     void                   ApplyLevelCap(CCharEntity* PChar);
     void                   ClearEnmityForEntity(CBattleEntity* PEntity);
-    bool                   InsertEntity(CBaseEntity* PEntity, bool inBattlefield = false, BATTLEFIELDMOBCONDITION conditions = CONDITION_NONE);
+    bool                   InsertEntity(CBaseEntity* PEntity, bool inBattlefield = false, BATTLEFIELDMOBCONDITION conditions = CONDITION_NONE, bool ally = false);
     CBaseEntity*           GetEntity(CBaseEntity* PEntity);
     bool                   RemoveEntity(CBaseEntity* PEntity, uint8 leavecode = 0);
     void                   DoTick(time_point time);
@@ -180,7 +180,8 @@ public:
 
     std::vector<uint32>           m_PlayerList;
     std::vector<uint16>           m_NpcList;
-    std::vector<BattlefieldMob_t> m_EnemyList;
+    std::vector<BattlefieldMob_t> m_RequiredEnemyList;
+    std::vector<BattlefieldMob_t> m_AdditionalEnemyList;
     std::vector<uint16>           m_AllyList;
 
 private:

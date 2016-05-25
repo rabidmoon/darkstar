@@ -193,7 +193,28 @@ function EventUpdateBCNM(player, csid, option, entrance)
                             --      6=room max cap
                             -- param2 alters the eventfinish option (offset)
                             -- param7/8 = does nothing??
-                            
+            
+            
+            
+            
+            
+            
+            [ ] EVENT UPDATE:
+                    check member requirements
+                    load battlefield if trade
+                    send item worn message
+                    send cap details (and subjob restriction if applicable through textid etc)
+            [ ] EVENT FINISH:
+                    spam messages including member clearance,, time limit, record
+                    
+            [ ] retail just spams messages on ending the cutscene, isnt part of event
+            [ ] for trades the battlefield is loaded in updateEvent
+            
+
+
+
+
+            
             
     ]]
     local skip = CutsceneSkip(player, npc);
@@ -215,6 +236,10 @@ function EventUpdateBCNM(player, csid, option, entrance)
                 area = 1;
             end;
             
+            if mask == -1 then
+                mask = checkNonTradeBCNM(player, nil, 1);
+            end;
+            
             local result = player:registerBattlefield(id, area);
             local param4 = 0;
             if effect then
@@ -228,9 +253,10 @@ function EventUpdateBCNM(player, csid, option, entrance)
                 if id ~= -1 then
                     local battlefield = player:getBattlefield();
                     name, record = battlefield:getRecord();
+                    cap = battlefield:getMaxPlayers();
                 end;
             end;
-            player:updateEvent(result, mask, name, record, param4, 0);
+            player:updateEvent(result, mask, name, record, cap, skip);
         elseif option == 255 then
             player:updateEvent(0, 3, 0, 0, 1, 0);
         end;

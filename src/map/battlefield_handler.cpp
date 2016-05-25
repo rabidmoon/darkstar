@@ -137,8 +137,10 @@ uint8 CBattlefieldHandler::LoadBattlefield(CCharEntity* PChar, uint16 battlefiel
             PBattlefield->InsertEntity(PChar, true);
 
             if (!PBattlefield->LoadMobs())
+            {
+                PBattlefield->SetStatus(BATTLEFIELD_STATUS_LOST);
                 PBattlefield->CanCleanup(true);
-
+            }
             m_Battlefields.insert(std::make_pair(PBattlefield->GetArea(), std::move(PBattlefield)));
             return BATTLEFIELD_RETURN_CODE_CUTSCENE;
         }

@@ -35,16 +35,20 @@ g_Battlefield.Status = {
 function g_Battlefield.onBattlefieldTick(battlefield, timeinside)
     -- local tick = battlefield:getTick();
     local killedallmobs = true;
-
-    for i, mob in pairs(battlefield:getMobs(true, true)) do
-    printf("index %u", i);
-    if mob ~= nil then
+    local mobs = battlefield:getMobs();
+    
+    if battlefield:getStatus() == g_Battlefield.Status.LOST then
+        
+    end;
+    
+    for _, mob in pairs(mobs) do
         if mob:getHP() > 0 then
             killedallmobs = false;
             break;
         end;
-    end
     end;
+    
+    
     g_Battlefield.HandleWipe(battlefield);
     g_Battlefield.HandleTimePrompts(battlefield);
     
@@ -56,14 +60,21 @@ end;
 function g_Battlefield.HandleTimePrompts(battlefield)
     local tick = battlefield:getTimeInside();
     local status = battlefield:getStatus();
-    print(tick)
-    if tick/1000 % 60 then
-        for _, player in pairs(battlefield:getPlayers()) do
-            player:messageBasic(202, battlefield:getRemainingTime());
+    local players = battlefield:getPlayers();
+    local remainingTimeLimit = battlefield:getRemainingTime();
+    
+    -- print(remainingTimeLimit)
+    if tick % 60 == 0 then
+        for _, player in pairs(players) do
+            if remainingTimeLimit > 0 then
+                 player:messageBasic(202, remainingTimeLimit);
+            else
+                player:leaveBattlefield(battlefield:getID());
+            end;
         end;
     end;
    
-    if battlefield:getTimeInside() >= battlefield:getTimeLimit() and status == g_Battlefield.Status.LOCKED then
+    if status == g_Battlefield.Status.LOCKED and remainingTimeLimit <= 0 then
         battlefield:setStatus(g_Battlefield.Status.LOST);
     end;
 end;
@@ -75,6 +86,7 @@ function g_Battlefield.HandleWipe(battlefield)
     local totalrekt = 0; 
     
     for _, player in pairs(players) do
+        -- print(player:getName());
         if player:getHP() == 0 then
             if player:getStatusEffect(EFFECT_RERAISE) then
                 rekt = false;

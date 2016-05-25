@@ -2564,7 +2564,7 @@ namespace luautils
     {
         DSP_DEBUG_BREAK_IF(PBattlefield == nullptr);
 
-        lua_prepscript("scripts/zones/%s/bcnms/%s.lua", PBattlefield->GetZone()->GetName(), PBattlefield->GetName());
+        lua_prepscript("scripts/zones/%s/bcnms/%s.lua", PBattlefield->GetZone()->GetName(), PBattlefield->GetName().c_str());
 
         if (prepFile(File, "onBattlefieldInitialise"))
         {
@@ -2581,15 +2581,10 @@ namespace luautils
         }
 
         int32 returns = lua_gettop(LuaHandle) - oldtop;
-        if (returns < 1)
-        {
-            ShowError("luautils::onBattlefieldInitialise (%s): 1 return expected, got %d\n", File, returns);
-            return -1;
-        }
 
-        if (returns > 1)
+        if (returns > 0)
         {
-            ShowError("luautils::onBattlefieldInitialise (%s): 1 return expected, got %d\n", File, returns);
+            ShowError("luautils::onBattlefieldInitialise (%s): 0 returns expected, got %d\n", File, returns);
             lua_pop(LuaHandle, returns);
         }
 
@@ -2608,7 +2603,7 @@ namespace luautils
 
         CLuaBattlefield LuaBattlefield(PBattlefield);
         Lunar<CLuaBattlefield>::push(LuaHandle, &LuaBattlefield);
-        lua_pushinteger(LuaHandle, std::chrono::duration_cast<std::chrono::milliseconds>(PBattlefield->GetTimeInside()).count());
+        lua_pushinteger(LuaHandle, std::chrono::duration_cast<std::chrono::seconds>(PBattlefield->GetTimeInside()).count());
 
         if (lua_pcall(LuaHandle, 2, LUA_MULTRET, 0))
         {
@@ -2618,9 +2613,9 @@ namespace luautils
 
         int32 returns = lua_gettop(LuaHandle) - oldtop;
 
-        if (returns > 1)
+        if (returns > 0)
         {
-            ShowError("luautils::onBattlefieldTick (%s): 1 return expected, got %d\n", File, returns);
+            ShowError("luautils::onBattlefieldTick (%s): 0 returns expected, got %d\n", File, returns);
             lua_pop(LuaHandle, returns);
         }
 
@@ -4140,16 +4135,16 @@ namespace luautils
     }
 
     /********************************************************************
-        onBcnmEnter - callback when you enter a BCNM via a lua call to bcnmEnter(bcnmid)
+        onBattlefieldEnter - callback when you enter a BCNM via a lua call to bcnmEnter(bcnmid)
     *********************************************************************/
-    int32 OnBcnmEnter(CCharEntity* PChar, CBattlefield* PBattlefield)
+    int32 OnBattlefieldEnter(CCharEntity* PChar, CBattlefield* PBattlefield)
     {
 
         CZone* PZone = PChar->loc.zone == nullptr ? zoneutils::GetZone(PChar->loc.destination) : PChar->loc.zone;
 
-        lua_prepscript("scripts/zones/%s/bcnms/%s.lua", PZone->GetName(), PBattlefield->GetName());
+        lua_prepscript("scripts/zones/%s/bcnms/%s.lua", PZone->GetName(), PBattlefield->GetName().c_str());
 
-        if (prepFile(File, "onBcnmEnter"))
+        if (prepFile(File, "onBattlefieldEnter"))
         {
             return 0;
         }
@@ -4162,21 +4157,21 @@ namespace luautils
 
         if (lua_pcall(LuaHandle, 2, LUA_MULTRET, 0))
         {
-            ShowError("luautils::onBcnmEnter: %s\n", lua_tostring(LuaHandle, -1));
+            ShowError("luautils::onBattlefieldEnter: %s\n", lua_tostring(LuaHandle, -1));
             lua_pop(LuaHandle, 1);
             return 0;
         }
         int32 returns = lua_gettop(LuaHandle) - oldtop;
         if (returns > 0)
         {
-            ShowError("luautils::onBcnmEnter (%s): 0 returns expected, got %d\n", File, returns);
+            ShowError("luautils::onBattlefieldEnter (%s): 0 returns expected, got %d\n", File, returns);
             lua_pop(LuaHandle, returns);
         }
         return 0;
     }
 
     /********************************************************************
-        onBcnmLeave - callback when you leave a BCNM via multiple means.
+        onBattlefieldLeave - callback when you leave a BCNM via multiple means.
         The method of leaving is given by the LeaveCode as follows:
         1 - Leaving via burning circle e.g. "run away"
         2 - Leaving via win
@@ -4185,14 +4180,14 @@ namespace luautils
         This callback is executed for everyone in the BCNM when they leave
         so if they leave via win, this will be called for each char.
     *********************************************************************/
-    int32 OnBcnmLeave(CCharEntity* PChar, CBattlefield* PBattlefield, uint8 LeaveCode)
+    int32 OnBattlefieldLeave(CCharEntity* PChar, CBattlefield* PBattlefield, uint8 LeaveCode)
     {
 
         CZone* PZone = PChar->loc.zone == nullptr ? zoneutils::GetZone(PChar->loc.destination) : PChar->loc.zone;
 
         lua_prepscript("scripts/zones/%s/bcnms/%s.lua", PZone->GetName(), PBattlefield->GetName());
 
-        if (prepFile(File, "onBcnmLeave"))
+        if (prepFile(File, "onBattlefieldLeave"))
         {
             return 0;
         }
@@ -4211,34 +4206,34 @@ namespace luautils
 
         if (lua_pcall(LuaHandle, 3, LUA_MULTRET, 0))
         {
-            ShowError("luautils::onBcnmLeave: %s\n", lua_tostring(LuaHandle, -1));
+            ShowError("luautils::onBattlefieldLeave: %s\n", lua_tostring(LuaHandle, -1));
             lua_pop(LuaHandle, 1);
             return 0;
         }
         int32 returns = lua_gettop(LuaHandle) - oldtop;
         if (returns > 0)
         {
-            ShowError("luautils::onBcnmLeave (%s): 0 returns expected, got %d\n", File, returns);
+            ShowError("luautils::onBattlefieldLeave (%s): 0 returns expected, got %d\n", File, returns);
             lua_pop(LuaHandle, returns);
         }
         return 0;
     }
 
     /********************************************************************
-        onBcnmRegister - callback when you successfully register a BCNM.
+        onBattlefieldRegister - callback when you successfully register a BCNM.
         For example, trading an orb, selecting the battle.
         Called AFTER assigning BCNM status to all valid characters.
         This callback is called only for the character initiating the
         registration, and after CBattlefield:init() procedure.
     *********************************************************************/
-    int32 OnBcnmRegister(CCharEntity* PChar, CBattlefield* PBattlefield)
+    int32 OnBattlefieldRegister(CCharEntity* PChar, CBattlefield* PBattlefield)
     {
 
         CZone* PZone = PChar->loc.zone == nullptr ? zoneutils::GetZone(PChar->loc.destination) : PChar->loc.zone;
 
-        lua_prepscript("scripts/zones/%s/bcnms/%s.lua", PZone->GetName(), PBattlefield->GetName());
+        lua_prepscript("scripts/zones/%s/bcnms/%s.lua", PZone->GetName(), PBattlefield->GetName().c_str());
 
-        if (prepFile(File, "onBcnmRegister"))
+        if (prepFile(File, "onBattlefieldRegister"))
         {
             return 0;
         }
@@ -4250,7 +4245,7 @@ namespace luautils
         Lunar<CLuaBattlefield>::push(LuaHandle, &LuaBattlefieldEntity);
         if (lua_pcall(LuaHandle, 2, LUA_MULTRET, 0))
         {
-            ShowError("luautils::onBcnmRegister: %s\n", lua_tostring(LuaHandle, -1));
+            ShowError("luautils::onBattlefieldRegister: %s\n", lua_tostring(LuaHandle, -1));
             lua_pop(LuaHandle, 1);
             return 0;
         }
@@ -4258,21 +4253,21 @@ namespace luautils
 
         if (returns > 0)
         {
-            ShowError("luautils::onBcnmRegister (%s): 0 returns expected, got %d\n", File, returns);
+            ShowError("luautils::onBattlefieldRegister (%s): 0 returns expected, got %d\n", File, returns);
             lua_pop(LuaHandle, returns);
         }
         return 0;
     }
 
     /********************************************************************
-    onBcnmDestroy - called when BCNM is destroyed (cleanup)
+    onBattlefieldDestroy - called when BCNM is destroyed (cleanup)
     *********************************************************************/
-    int32 OnBcnmDestroy(CBattlefield* PBattlefield)
+    int32 OnBattlefieldDestroy(CBattlefield* PBattlefield)
     {
 
-        lua_prepscript("scripts/zones/%s/bcnms/%s.lua", PBattlefield->GetZone()->GetName());
+        lua_prepscript("scripts/zones/%s/bcnms/%s.lua", PBattlefield->GetZone()->GetName(), PBattlefield->GetName().c_str());
 
-        if (prepFile(File, "onBcnmDestroy"))
+        if (prepFile(File, "onBattlefieldDestroy"))
         {
             return 0;
         }
@@ -4282,7 +4277,7 @@ namespace luautils
 
         if (lua_pcall(LuaHandle, 1, LUA_MULTRET, 0))
         {
-            ShowError("luautils::onBcnmDestroy: %s\n", lua_tostring(LuaHandle, -1));
+            ShowError("luautils::onBattlefieldDestroy: %s\n", lua_tostring(LuaHandle, -1));
             lua_pop(LuaHandle, 1);
             return 0;
         }
@@ -4290,7 +4285,7 @@ namespace luautils
 
         if (returns > 0)
         {
-            ShowError("luautils::onBcnmDestroy (%s): 0 returns expected, got %d\n", File, returns);
+            ShowError("luautils::onBattlefieldDestroy (%s): 0 returns expected, got %d\n", File, returns);
             lua_pop(LuaHandle, returns);
         }
         return 0;

@@ -106,7 +106,7 @@ inline int32 CLuaBattlefield::getRemainingTime(lua_State* L)
 {
     DSP_DEBUG_BREAK_IF(m_PLuaBattlefield == nullptr);
 
-    lua_pushinteger(L, m_PLuaBattlefield->GetRemainingTime().count());
+    lua_pushinteger(L, std::chrono::duration_cast<std::chrono::seconds>(m_PLuaBattlefield->GetRemainingTime()).count());
     return 1;
 }
 
@@ -144,17 +144,19 @@ inline int32 CLuaBattlefield::getPlayers(lua_State* L)
     int8 newTable = lua_gettop(L);
     int i = 1;
 
-    for (auto player : m_PLuaBattlefield->m_PlayerList)
+    m_PLuaBattlefield->ForEachPlayer([&](CCharEntity* PChar)
     {
         lua_getglobal(L, CLuaBaseEntity::className);
         lua_pushstring(L, "new");
         lua_gettable(L, -2);
         lua_insert(L, -2);
-        lua_pushlightuserdata(L, (void*)m_PLuaBattlefield->GetZone()->GetEntity(player, TYPE_NPC));
-        lua_pcall(L, 2, 1, 0);
+        lua_pushlightuserdata(L, PChar);
+
+        if (lua_pcall(L, 2, 1, 0))
+            return;
 
         lua_rawseti(L, -2, i++);
-    }
+    });
     return 1;
 }
 
@@ -165,28 +167,47 @@ inline int32 CLuaBattlefield::getMobs(lua_State* L)
     // do we want just required mobs, all mobs, or just mobs not needed to win
     auto required = lua_isnil(L, 1) ? true : lua_toboolean(L, 1);
     auto adds = lua_isnil(L, 2) ? false : lua_toboolean(L, 2);
+    int size = 0;
 
-    lua_newtable(L);
+    size = required ? m_PLuaBattlefield->m_RequiredEnemyList.size() : 0;
+    size += adds ? m_PLuaBattlefield->m_AdditionalEnemyList.size() : 0;
 
+    lua_createtable(L, size, 0);
     int i = 1;
-    for (auto mob : m_PLuaBattlefield->m_EnemyList)
+
+    if (required)
     {
-        CBaseEntity* PMob = nullptr;
-
-        if ((required && mob.condition & CONDITION_SPAWNED_AT_START) || adds)
-            PMob = m_PLuaBattlefield->GetZone()->GetEntity(mob.targid, TYPE_MOB | TYPE_PET);
-
-        if (PMob)
+        m_PLuaBattlefield->ForEachRequiredEnemy([&](CMobEntity* PMob)
         {
             lua_getglobal(L, CLuaBaseEntity::className);
             lua_pushstring(L, "new");
             lua_gettable(L, -2);
             lua_insert(L, -2);
-            lua_pushlightuserdata(L, (void*)PMob);
-            lua_pcall(L, 2, 1, 0);
+            lua_pushlightuserdata(L, PMob);
+
+            if (lua_pcall(L, 2, 1, 0))
+                return 0;
 
             lua_rawseti(L, -2, i++);
-        }
+        });
+    }
+
+    if (adds)
+    {
+        m_PLuaBattlefield->ForEachAdditionalEnemy([&](CMobEntity* PMob)
+        {
+            lua_getglobal(L, CLuaBaseEntity::className);
+            lua_pushstring(L, "new");
+            lua_gettable(L, -2);
+            lua_insert(L, -2);
+            lua_pushlightuserdata(L, PMob);
+
+            if (lua_pcall(L, 2, 1, 0))
+                return 0;
+
+            lua_rawseti(L, -2, i++);
+
+        });
     }
     return 1;
 }
@@ -199,17 +220,19 @@ inline int32 CLuaBattlefield::getNPCs(lua_State* L)
     int8 newTable = lua_gettop(L);
     int i = 1;
 
-    for (auto npc : m_PLuaBattlefield->m_NpcList)
+    m_PLuaBattlefield->ForEachNpc([&](CNpcEntity* PNpc)
     {
         lua_getglobal(L, CLuaBaseEntity::className);
         lua_pushstring(L, "new");
         lua_gettable(L, -2);
         lua_insert(L, -2);
-        lua_pushlightuserdata(L, (void*)m_PLuaBattlefield->GetZone()->GetEntity(npc, TYPE_NPC));
-        lua_pcall(L, 2, 1, 0);
+        lua_pushlightuserdata(L, PNpc);
+
+        if (lua_pcall(L, 2, 1, 0))
+            return;
 
         lua_rawseti(L, -2, i++);
-    }
+    });
     return 1;
 }
 
@@ -217,21 +240,23 @@ inline int32 CLuaBattlefield::getAllies(lua_State* L)
 {
     DSP_DEBUG_BREAK_IF(m_PLuaBattlefield == nullptr);
 
-
     lua_createtable(L, m_PLuaBattlefield->m_AllyList.size(), 0);
     int8 newTable = lua_gettop(L);
     int i = 1;
-    for (auto ally : m_PLuaBattlefield->m_AllyList)
+
+    m_PLuaBattlefield->ForEachAlly([&](CMobEntity* PAlly)
     {
         lua_getglobal(L, CLuaBaseEntity::className);
         lua_pushstring(L, "new");
         lua_gettable(L, -2);
         lua_insert(L, -2);
-        lua_pushlightuserdata(L, (void*)m_PLuaBattlefield->GetZone()->GetEntity(ally, TYPE_MOB | TYPE_PET));
-        lua_pcall(L, 2, 1, 0);
+        lua_pushlightuserdata(L, PAlly);
+
+        if (lua_pcall(L, 2, 1, 0))
+            return;
 
         lua_rawseti(L, -2, i++);
-    }
+    });
 
     return 1;
 }
@@ -312,7 +337,7 @@ inline int32 CLuaBattlefield::insertEntity(lua_State* L)
     DSP_DEBUG_BREAK_IF(lua_isnil(L, 1) || !lua_isnumber(L, 1));
 
     auto targid = lua_tointeger(L, 1);
-    bool ally = !lua_isnil(L,2) ? lua_tointeger(L, 2) : false;
+    bool ally = !lua_isnil(L,2) ? lua_toboolean(L, 2) : false;
     bool inBattlefield = !lua_isnil(L, 3) ? lua_toboolean(L, 3) : false;
     BATTLEFIELDMOBCONDITION conditions = static_cast<BATTLEFIELDMOBCONDITION>(!lua_isnil(L, 4) ? lua_tointeger(L, 4) : 0);
 
@@ -344,7 +369,7 @@ inline int32 CLuaBattlefield::cleanup(lua_State* L)
 {
     DSP_DEBUG_BREAK_IF(m_PLuaBattlefield == nullptr);
 
-    auto cleanup = !lua_isnil(L, 1) ? lua_tointeger(L, 1) : false;
+    auto cleanup = !lua_isnil(L, 1) ? lua_toboolean(L, 1) : false;
 
     lua_pushboolean(L, m_PLuaBattlefield->CanCleanup(cleanup));
     return 1;
