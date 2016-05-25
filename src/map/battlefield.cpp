@@ -428,6 +428,16 @@ void CBattlefield::DoTick(time_point time)
     m_Tick = time;
     m_FightTick = m_Status == BATTLEFIELD_STATUS_LOCKED ? time : m_FightTick;
 
+    // remove the char if they zone out
+    for (auto charid : m_PlayerList)
+    {
+        auto PChar = zoneutils::GetChar(charid);
+        if (!PChar || PChar->getZone() != GetZoneID())
+        {
+            RemoveEntity(PChar, -1);
+        }
+    }
+
     luautils::OnBattlefieldTick(this);
 }
 
