@@ -47,7 +47,7 @@ function g_Battlefield.onBattlefieldTick(battlefield, timeinside)
         leavecode = 2;
     end;
     
-    if leavecode ~= -1 or true then
+    if leavecode ~= -1 then
         local players = battlefield:getPlayers();
         for _, player in pairs(players) do
             player:leaveBattlefield(leavecode);
@@ -56,6 +56,7 @@ function g_Battlefield.onBattlefieldTick(battlefield, timeinside)
     end;
     
     for _, mob in pairs(mobs) do
+        print(mob:getName());
         if mob:getHP() > 0 then
             killedallmobs = false;
             break;
@@ -103,14 +104,13 @@ function g_Battlefield.HandleWipe(battlefield)
 
     -- pure stolen from instance.lua
     if (wipeTime == 0) then
-        local wipe = true;
         for i,v in pairs(players) do
             if v:getHP() ~= 0 then
-                wipe = false;
+                rekt = false;
                 break;
             end
         end
-        if (wipe) then
+        if rekt then
             for i,v in pairs(players) do
                 v:messageSpecial(ID, 3);
             end
@@ -119,7 +119,6 @@ function g_Battlefield.HandleWipe(battlefield)
     else
         if (elapsed - wipeTime) > 180 then
             battlefield:setStatus(g_Battlefield.Status.LOST);
-            return;
         else
             for i,v in pairs(players) do
                 if v:getHP() ~= 0 then

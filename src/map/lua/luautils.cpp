@@ -2594,7 +2594,7 @@ namespace luautils
     {
         DSP_DEBUG_BREAK_IF(PBattlefield == nullptr);
 
-        lua_prepscript("scripts/zones/%s/bcnms/%s.lua", PBattlefield->GetZone()->GetName(), PBattlefield->GetName());
+        lua_prepscript("scripts/zones/%s/bcnms/%s.lua", PBattlefield->GetZone()->GetName(), PBattlefield->GetName().c_str());
 
         if (prepFile(File, "onBattlefieldTick"))
         {
@@ -4185,7 +4185,7 @@ namespace luautils
 
         CZone* PZone = PChar->loc.zone == nullptr ? zoneutils::GetZone(PChar->loc.destination) : PChar->loc.zone;
 
-        lua_prepscript("scripts/zones/%s/bcnms/%s.lua", PZone->GetName(), PBattlefield->GetName());
+        lua_prepscript("scripts/zones/%s/bcnms/%s.lua", PZone->GetName(), PBattlefield->GetName().c_str());
 
         if (prepFile(File, "onBattlefieldLeave"))
         {

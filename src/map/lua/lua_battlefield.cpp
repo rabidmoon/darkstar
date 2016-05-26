@@ -173,6 +173,7 @@ inline int32 CLuaBattlefield::getMobs(lua_State* L)
     size += adds ? m_PLuaBattlefield->m_AdditionalEnemyList.size() : 0;
 
     lua_createtable(L, size, 0);
+    int8 newTable = lua_gettop(L);
     int i = 1;
 
     if (required)

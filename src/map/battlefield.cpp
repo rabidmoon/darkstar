@@ -104,7 +104,7 @@ BattlefieldRecord_t CBattlefield::GetRecord()
 
 uint8 CBattlefield::GetStatus()
 {
-    return InProgress() ? BATTLEFIELD_STATUS_LOCKED : m_Status;
+    return m_Status;
 }
 
 uint16 CBattlefield::GetRuleMask()
@@ -196,6 +196,8 @@ void CBattlefield::SetArea(uint8 area)
 
 void CBattlefield::SetRecord(int8* name, duration time)
 {
+    time = std::chrono::duration_cast<std::chrono::seconds>(time);
+
     m_Record.name = name ? name : "your mum";
     m_Record.time = time.count() ? time : 3600s;
 
@@ -403,7 +405,7 @@ bool CBattlefield::RemoveEntity(CBaseEntity* PEntity, uint8 leavecode)
         PEntity->status = STATUS_DISAPPEAR;
 
         // allies targid >= 0x700
-        if (!PEntity->targid < 0x700)
+        if (PEntity->targid >= 0x700)
         {
             m_AllyList.erase(std::remove_if(m_AllyList.begin(), m_AllyList.end(), check), m_AllyList.end());
             GetZone()->DeletePET(PEntity);
@@ -446,7 +448,6 @@ void CBattlefield::DoTick(time_point time)
                 RemoveEntity(PChar, -1);
             }
         }
-
         luautils::OnBattlefieldTick(this);
     }
 }
@@ -483,9 +484,9 @@ void CBattlefield::Cleanup()
         RemoveEntity(PNpc);
     });
 
-    if (GetRecord().time > (m_FightTick - m_StartTime))
+    if (std::chrono::duration_cast<std::chrono::seconds>(GetRecord().time) > std::chrono::duration_cast<std::chrono::seconds>(m_FightTick - m_StartTime))
     {
-        SetRecord((int8*)m_Initiator.name.c_str(), (m_FightTick - m_StartTime));
+        SetRecord((int8*)m_Initiator.name.c_str(), std::chrono::duration_cast<std::chrono::seconds>(m_FightTick - m_StartTime));
     }
 }
 

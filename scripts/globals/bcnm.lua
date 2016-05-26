@@ -255,11 +255,12 @@ function EventUpdateBCNM(player, csid, option, entrance)
                     local battlefield = player:getBattlefield();
                     name, record = battlefield:getRecord();
                     cap = battlefield:getMaxPlayers();
+                    mask = battlefield:getID();
                 end;
             end;
             player:updateEvent(result, mask, name, record, cap, skip);
         elseif option == 255 then
-            player:updateEvent(0, 3, 0, 0, 1, 0);
+            player:updateEvent(1, 1, 0, 0, 0, 0);
         end;
         return;
     end;
@@ -340,7 +341,7 @@ function EventFinishBCNM(player, csid, option)
     end;
         print("MODIFIED FINISH csid "..csid.." option "..option);
     
-    if (csid == 0x7d03 and option == 4 or csid == 0x7d02) and player:getBattlefield() and #(player:getBattlefield():getPlayers()) == 1 then
+    if ((csid == 0x7d03 and option == 4 ) or (csid == 0x7d02)) and player:getBattlefield() and #(player:getBattlefield():getPlayers()) == 1 then
         if player:getBattlefield():getStatus() ~= 0 then player:getBattlefield():cleanup(true); end;
     end;
     
