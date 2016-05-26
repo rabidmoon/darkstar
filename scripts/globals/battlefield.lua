@@ -56,7 +56,7 @@ function g_Battlefield.onBattlefieldTick(battlefield, timeinside)
     end;
     
     for _, mob in pairs(mobs) do
-        if mob:getHP() > 0 then;
+        if mob:getHP() > 0 then
             killedallmobs = false;
             break;
         end;
