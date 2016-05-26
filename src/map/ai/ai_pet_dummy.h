@@ -66,8 +66,11 @@ protected:
 	uint32 m_curillaVokeRecast;
     uint32 m_magicHealCast;
 	uint32 m_curillaFlashRecast;
+	uint32 m_curillaBashRecast;
+	uint32 m_curillaReprisalRecast;
 	uint32 m_kupipiHealCast;
 	uint32 m_kupipiHealRecast;
+	uint32 m_kupipiSolaceRecast;
 	uint32 m_kupipiEnhanceRecast;
 	uint32 m_nanaacheck;
 	uint32 m_nanaaSneakAttackRecast;
@@ -78,6 +81,8 @@ protected:
 	uint32 m_exeHjumpRecast;
 	uint32 m_exeSjumpRecast;
 	uint32 m_ayameThirdEyeRecast;
+	uint32 m_ayameSekkaRecast;
+	int8 m_sekkaStatus;
 
 	
 

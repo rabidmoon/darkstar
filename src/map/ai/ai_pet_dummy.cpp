@@ -79,7 +79,10 @@ CAIPetDummy::CAIPetDummy(CPetEntity* PPet)
 	m_kupipiHealRecast = 18000;
 	m_kupipiEnhanceRecast = 10000;  // Enhancing such as Haste Pro/Shell and ~na's will share the same cast timer
 	m_kupipiHealCast = 0;
+	m_kupipiSolaceRecast = 7200000; // two hour duraton
 	m_curillaFlashRecast = 50000;
+	m_curillaBashRecast = 180000;
+	m_curillaReprisalRecast = 180000;
 	m_magicKupipiRecast = 4000;
 	m_nanaacheck = 5000;  //For Nanaa Mihgo to check every 5 seconds if she is facing target or not
 	m_nanaaSneakAttackRecast = 50000;
@@ -91,6 +94,8 @@ CAIPetDummy::CAIPetDummy(CPetEntity* PPet)
 	m_exeHjumpRecast = 120000;
 	m_exeSjumpRecast = 180000;
 	m_ayameThirdEyeRecast = 45000;
+	m_ayameSekkaRecast = 60000;  //300000;
+	m_sekkaStatus = 0; //Sekka off 0; Sekka Closing WS 1; Sekka Opening SC 2;
 	
 
 	
@@ -162,6 +167,15 @@ void CAIPetDummy::ActionAbilityStart()
     {
         return;
     }
+	
+     //********************************************************//
+	//   For Ayame to SC with.  Looks for your SC used       //
+	//   element and decides on which SC to use             //
+	//*****************************************************//
+	
+	uint32 masterscID = charutils::GetVar((CCharEntity*)m_PPet->PMaster,"AyameSCElement");
+	// ->getPrimarySkillchain()
+	
 
     
 	
@@ -344,9 +358,105 @@ void CAIPetDummy::ActionAbilityStart()
 			return;	
             }			
 				
+//Ayame Self Skillchain Decisions based on what element the player has used.  She will try to two step with player to close based on the WS they used most recently
+//TODO set something if no element has been decided
+	 if (m_PPet->m_PetID == PETID_AYAME && m_PPet->health.tp >= 2000 && m_PBattleTarget != nullptr && m_sekkaStatus == 2){  //start self sc
+			int16 mobwsID = -1;		
+			if (lvl > 71) {
+            for (int i = 0; i < m_PPet->PetSkills.size(); i++) {
+                auto PMobSkill = battleutils::GetMobSkill(m_PPet->PetSkills.at(i));
+  					if (PMobSkill->getID() == 3784 && masterscID == 4) { //Tachi Kasha
+                    mobwsID = 152;
+					SetCurrentMobSkill(PMobSkill);
+					SetCurrentWeaponSkill(mobwsID);
+			        //ShowWarning("Tachi: Kasha \n");
+                    break;
+                    } 
+  					else if (PMobSkill->getID() == 3783 && (masterscID == 2 || masterscID == 5 || masterscID == 12)) { //Tachi Gekko
+                    mobwsID = 151;
+					SetCurrentMobSkill(PMobSkill);
+					SetCurrentWeaponSkill(mobwsID);
+			        //ShowWarning("Tachi: Gekko \n");
+                    break;
+                    } 
+  					else if (PMobSkill->getID() == 3782 && (masterscID == 1 || masterscID == 6 || masterscID == 11)) { //Tachi Yuki
+                    mobwsID = 150;
+					SetCurrentMobSkill(PMobSkill);
+					SetCurrentWeaponSkill(mobwsID);
+			        //ShowWarning("Tachi: Yuki \n");
+                    break;
+                    }
+  					else if (PMobSkill->getID() == 3781 && (masterscID == 3 || masterscID == 10)) { //Tachi Jinpu
+                    mobwsID = 148;
+					SetCurrentMobSkill(PMobSkill);
+					SetCurrentWeaponSkill(mobwsID);
+			        //ShowWarning("Tachi: Jinpu \n");
+                    break;
+                    }
+  					else if (PMobSkill->getID() == 3779 && (masterscID == 7 || masterscID == 8 || masterscID == 9)) { //Tachi Enpi
+                    mobwsID = 144;
+					SetCurrentMobSkill(PMobSkill);
+					SetCurrentWeaponSkill(mobwsID);
+			        //ShowWarning("Tachi: Enpi \n");
+                    break;
+                    }					
+
+                }
+			}
+			m_sekkaStatus = 1; //set for closing sekka skillchain
+			preparePetAbility(m_PBattleSubTarget);
+            return;
+        }	
+//Ayame closing self SC		
+	 if (m_PPet->m_PetID == PETID_AYAME && m_PPet->health.tp >= 1000 && m_PBattleTarget != nullptr && m_sekkaStatus == 1){  //end self sc
+			int16 mobwsID = -1;		
+			if (lvl > 71) {
+            for (int i = 0; i < m_PPet->PetSkills.size(); i++) {
+                auto PMobSkill = battleutils::GetMobSkill(m_PPet->PetSkills.at(i));
+  					if (PMobSkill->getID() == 3784 && (masterscID == 1 || masterscID == 6 || masterscID == 10 || masterscID == 12)) { //Tachi Kasha
+                    mobwsID = 152;
+					SetCurrentMobSkill(PMobSkill);
+					SetCurrentWeaponSkill(mobwsID);
+			        //ShowWarning("Tachi: Kasha \n");
+                    break;
+                    } 
+  					else if (PMobSkill->getID() == 3783 && (masterscID == 7 || masterscID == 8 || masterscID == 11)) { //Tachi Gekko
+                    mobwsID = 151;
+					SetCurrentMobSkill(PMobSkill);
+					SetCurrentWeaponSkill(mobwsID);
+			        //ShowWarning("Tachi: Gekko \n");
+                    break;
+                    } 
+  					else if (PMobSkill->getID() == 3782 && (masterscID == 2 || masterscID == 5)) { //Tachi Yuki
+                    mobwsID = 150;
+					SetCurrentMobSkill(PMobSkill);
+					SetCurrentWeaponSkill(mobwsID);
+			        //ShowWarning("Tachi: Yuki \n");
+                    break;
+                    }
+  					else if (PMobSkill->getID() == 3779 && (masterscID == 3 || masterscID == 4 || masterscID == 9)) { //Tachi Enpi
+                    mobwsID = 144;
+					SetCurrentMobSkill(PMobSkill);
+					SetCurrentWeaponSkill(mobwsID);
+			        //ShowWarning("Tachi: Enpi \n");
+                    break;
+                    }					
+
+                }
+			}
+			m_sekkaStatus = 0; //Set Sekka status to 0 or off
+			preparePetAbility(m_PBattleSubTarget);
+            return;
+        }	
+
+
+
+
+
+
            
         
-	 if (m_PPet->m_PetID == PETID_AYAME && m_PPet->health.tp >= 1000 && m_PBattleTarget != nullptr){
+	 if (m_PPet->m_PetID == PETID_AYAME && m_PPet->health.tp >= 1000 && m_PBattleTarget != nullptr && (masterscID == 0 || masterscID == 10 || masterscID > 12)){  //no sc element detected from user or usable sc
 			int16 mobwsID = -1;		
 			if (lvl > 71) {
 			uint8 wsrandom = dsprand::GetRandomNumber(1, 3); //Gekko or Kasha only 70+ for right now
@@ -476,6 +586,153 @@ void CAIPetDummy::ActionAbilityStart()
 			preparePetAbility(m_PBattleSubTarget);
             return;
         }		
+	 if (m_PPet->m_PetID == PETID_AYAME && m_PPet->health.tp >= 1000 && m_PBattleTarget != nullptr && masterscID > 0){  //sc element detected from user
+			int16 mobwsID = -1;		
+			if (lvl > 71) {
+            for (int i = 0; i < m_PPet->PetSkills.size(); i++) {
+                auto PMobSkill = battleutils::GetMobSkill(m_PPet->PetSkills.at(i));
+  					if (PMobSkill->getID() == 3784 && (masterscID == 1 || masterscID == 2 || masterscID == 6 || masterscID == 12)) { //Tachi Kasha
+                    mobwsID = 152;
+					SetCurrentMobSkill(PMobSkill);
+					SetCurrentWeaponSkill(mobwsID);
+			        //ShowWarning("Tachi: Kasha \n");
+                    break;
+                    } 
+  					else if (PMobSkill->getID() == 3783 && (masterscID == 7 || masterscID == 8 || masterscID == 9 || masterscID == 11)) { //Tachi Gekko
+                    mobwsID = 151;
+					SetCurrentMobSkill(PMobSkill);
+					SetCurrentWeaponSkill(mobwsID);
+			        //ShowWarning("Tachi: Gekko \n");
+                    break;
+					}
+  					else if (PMobSkill->getID() == 3782 && (masterscID == 4 || masterscID == 5)) { //Tachi Yukki
+                    mobwsID = 150;
+					SetCurrentMobSkill(PMobSkill);
+					SetCurrentWeaponSkill(mobwsID);
+			        //ShowWarning("Tachi: Yukki \n");
+                    break;					
+                    } 
+  					else if (PMobSkill->getID() == 3779 && (masterscID == 3)) { //Tachi Enpi
+                    mobwsID = 148;
+					SetCurrentMobSkill(PMobSkill);
+					SetCurrentWeaponSkill(mobwsID);
+			        //ShowWarning("Tachi: Yukki \n");
+                    break;					
+                    }					
+
+                }
+			}
+			else if (lvl > 64) {
+			uint8 wsrandom = dsprand::GetRandomNumber(1, 3); //Gekko or Kasha only 70+ for right now
+            for (int i = 0; i < m_PPet->PetSkills.size(); i++) {
+                auto PMobSkill = battleutils::GetMobSkill(m_PPet->PetSkills.at(i));
+  					if (PMobSkill->getID() == 3783 && wsrandom >= 2) { //Tachi Gekko
+                    mobwsID = 151;
+					SetCurrentMobSkill(PMobSkill);
+					SetCurrentWeaponSkill(mobwsID);
+			        //ShowWarning("Tachi: Gekko \n");
+                    break;
+                    } 
+  					else if (PMobSkill->getID() == 3782 && wsrandom < 2) { //Tachi Yuki
+                    mobwsID = 150;
+					SetCurrentMobSkill(PMobSkill);
+					SetCurrentWeaponSkill(mobwsID);
+			        //ShowWarning("Tachi: Yuki \n");
+                    break;
+                    } 					
+
+                }
+			}				
+			else if (lvl > 59) {
+			uint8 wsrandom = dsprand::GetRandomNumber(1, 3); //Yuki or Jinpu only 
+            for (int i = 0; i < m_PPet->PetSkills.size(); i++) {
+                auto PMobSkill = battleutils::GetMobSkill(m_PPet->PetSkills.at(i));
+  					if (PMobSkill->getID() == 3782 && wsrandom >= 2) { //Tachi Yuki
+                    mobwsID = 150;
+					SetCurrentMobSkill(PMobSkill);
+					SetCurrentWeaponSkill(mobwsID);
+			        //ShowWarning("Tachi: Yuki \n");
+                    break;
+                    } 
+  					else if (PMobSkill->getID() == 3781 && wsrandom < 2) { //Tachi Jinpu
+                    mobwsID = 148;
+					SetCurrentMobSkill(PMobSkill);
+					SetCurrentWeaponSkill(mobwsID);
+			        //ShowWarning("Tachi: Jinpu \n");
+                    break;
+                    } 					
+
+                }
+			}
+			else if (lvl > 54) {
+			uint8 wsrandom = dsprand::GetRandomNumber(1, 4); //Jinpu or goten or Enpi
+            for (int i = 0; i < m_PPet->PetSkills.size(); i++) {
+                auto PMobSkill = battleutils::GetMobSkill(m_PPet->PetSkills.at(i));
+  					if (PMobSkill->getID() == 3779 && wsrandom <= 2) { //Tachi Enpi
+                    mobwsID = 144;
+					SetCurrentMobSkill(PMobSkill);
+					SetCurrentWeaponSkill(mobwsID);
+			        //ShowWarning("Tachi: Enpi \n");
+                    break;
+                    }
+  					else if (PMobSkill->getID() == 3780 && wsrandom == 3) { //Tachi Goten
+                    mobwsID = 146;
+					SetCurrentMobSkill(PMobSkill);
+					SetCurrentWeaponSkill(mobwsID);
+			        //ShowWarning("Tachi: Goten \n");
+                    break;
+                    } 								
+  					else if (PMobSkill->getID() == 3781 && wsrandom == 4) { //Tachi Jinpu
+                    mobwsID = 148;
+					SetCurrentMobSkill(PMobSkill);
+					SetCurrentWeaponSkill(mobwsID);
+			        //ShowWarning("Tachi: Jinpu \n");
+                    break;
+                    } 					
+
+                }
+			}			
+			else if (lvl > 23) {
+			uint8 wsrandom = dsprand::GetRandomNumber(1, 3); //Jinpu or goten or Enpi
+            for (int i = 0; i < m_PPet->PetSkills.size(); i++) {
+                auto PMobSkill = battleutils::GetMobSkill(m_PPet->PetSkills.at(i));
+  					if (PMobSkill->getID() == 3779 && wsrandom >= 2) { //Tachi Enpi
+                    mobwsID = 144;
+					SetCurrentMobSkill(PMobSkill);
+					SetCurrentWeaponSkill(mobwsID);
+			        //ShowWarning("Tachi: Enpi \n");
+                    break;
+                    }
+  					else if (PMobSkill->getID() == 3780 && wsrandom < 2) { //Tachi Goten
+                    mobwsID = 146;
+					SetCurrentMobSkill(PMobSkill);
+					SetCurrentWeaponSkill(mobwsID);
+			        //ShowWarning("Tachi: Goten \n");
+                    break;
+                    } 													
+
+                }
+			}
+			else if (lvl > 4) {
+            for (int i = 0; i < m_PPet->PetSkills.size(); i++) {
+                auto PMobSkill = battleutils::GetMobSkill(m_PPet->PetSkills.at(i));
+  					if (PMobSkill->getID() == 3779) { //Tachi Enpi
+                    mobwsID = 144;
+					SetCurrentMobSkill(PMobSkill);
+					SetCurrentWeaponSkill(mobwsID);
+			        //ShowWarning("Tachi: Enpi \n");
+                    break;
+					}						
+
+                }
+			}			
+			preparePetAbility(m_PBattleSubTarget);
+            return;
+        }				
+		
+		
+		
+		
 	 if (m_PPet->m_PetID == PETID_NAJI && m_PPet->health.tp >= 1000 && m_PBattleTarget != nullptr){
 			int16 mobwsID = -1;		
 			if (lvl > 59) {
@@ -1281,6 +1538,7 @@ void CAIPetDummy::ActionAbilityFinish() {
         }
 		
 		//Test End for SC
+
 		
 		
 		
@@ -1396,7 +1654,7 @@ void CAIPetDummy::ActionWeaponSkillFinish()
 	
 
 		
-	m_PPet->m_ActionList.push_back(Action);
+	//m_PPet->m_ActionList.push_back(Action);
 
     	
 	   uint16 msg = 0;
@@ -1447,6 +1705,7 @@ void CAIPetDummy::ActionWeaponSkillFinish()
                     SUBEFFECT effect = battleutils::GetSkillChainEffect(m_PBattleSubTarget, PWeaponSkill);
                     if (effect != SUBEFFECT_NONE)
                     {
+					    ShowWarning(CL_GREEN"SUBEFFECT TRIGGERED!!! \n" CL_RESET);
                         int32 skillChainDamage = battleutils::TakeSkillchainDamage(m_PPet, PTarget, Action.param);
                         if (skillChainDamage < 0)
                         {
@@ -1455,7 +1714,8 @@ void CAIPetDummy::ActionWeaponSkillFinish()
                         }
                         else
                         {
-                            Action.addEffectParam = skillChainDamage;
+                            ShowWarning(CL_GREEN"DAMAGE IS GREATER THAN 0 \n" CL_RESET);
+   						    Action.addEffectParam = skillChainDamage;
                             Action.addEffectMessage = 287 + effect;
                         }
                         Action.additionalEffect = effect;
@@ -1499,12 +1759,23 @@ void CAIPetDummy::ActionWeaponSkillFinish()
 	int16 baseTp = 0;
 	int16 delay = m_PPet->GetWeaponDelay(true);
 	float ratio = 1.0f;
+	
 
 	baseTp = CalculateBaseTP((delay * 60) / 1000) / ratio;
 
-		
+	if (m_PPet->StatusEffectContainer->HasStatusEffect(EFFECT_SEKKANOKI) == true){
+	ShowWarning(CL_RED"Sekkanoki Acive setting TP \n" CL_RESET);
+    m_PPet->health.tp = 1000;
+	m_PPet->StatusEffectContainer->DelStatusEffect(EFFECT_SEKKANOKI);
+	m_LastSkillchainStart = m_Tick;
+	charutils::UpdateHealth((CCharEntity*)m_PPet->PMaster);
+	//TODO set a new timer here
+	}
+    else {	
 	m_PPet->health.tp = ((baseTp)* (1.0f + 0.01f * (float)(m_PPet->getMod(MOD_STORETP))));
 	charutils::UpdateHealth((CCharEntity*)m_PPet->PMaster);
+	}
+	
 	m_PBattleSubTarget = nullptr;
     m_ActionType = ACTION_ATTACK;
  
@@ -1681,9 +1952,10 @@ bool CAIPetDummy::PetIsHealing() {
     }
 	
 	
-	
+	if (m_PPet->getZone() == m_PPet->PMaster->getZone()){
 	m_PPet->updatemask |= UPDATE_HP;
 	charutils::UpdateHealth((CCharEntity*)m_PPet->PMaster);
+	}
 
  
     return isMasterHealing;
@@ -1709,7 +1981,10 @@ void CAIPetDummy::ActionRoaming()
             return;
         }
     }
+	if (m_PPet->getZone() == m_PPet->PMaster->getZone()){
+	m_PPet->updatemask |= UPDATE_HP;
 	charutils::UpdateHealth((CCharEntity*)m_PPet->PMaster);
+	}
 	
 	
     if (m_PBattleTarget != nullptr) {
@@ -1813,6 +2088,7 @@ void CAIPetDummy::ActionAttack()
 	uint8 trustlevel = m_PPet->GetMLevel();
     charutils::UpdateHealth((CCharEntity*)m_PPet->PMaster); // To update pet health at all time
 	
+	
 	//****************************************************************//
 	//   TRUST ABILITIES BY TRUST NAME                               //
 	//**************************************************************//
@@ -1836,10 +2112,29 @@ void CAIPetDummy::ActionAttack()
 				ActionMagicStart();
 				return;
 			    }
-		    }		
-				
-				
+		    }
+		 if (m_Tick >= m_LastKupipiSolaceTime + m_kupipiSolaceRecast && trustlevel >= 40)
+			{
+			m_PWeaponSkill = nullptr;
+            int16 mobjaID = -1;			
+			for (int i = 0; i < m_PPet->PetSkills.size(); i++) {
+                    auto PMobSkill = battleutils::GetMobSkill(m_PPet->PetSkills.at(i));
+                            
+                        if (PMobSkill->getID() == 3767) { //Solace
+						    mobjaID = 229;
+                            SetCurrentMobSkill(PMobSkill);
+							SetCurrentJobAbility(mobjaID);
+							m_PBattleSubTarget = m_PPet;
+							break;
+                        }
+			        }
+				preparePetAbility(m_PBattleSubTarget);
+				m_LastKupipiSolaceTime = m_Tick;
+				return;	
+				}						
 		}
+		
+		
 	
 	
 	
@@ -1883,6 +2178,32 @@ void CAIPetDummy::ActionAttack()
 				}				
 				
 		}
+
+		 if (m_PPet->m_PetID == PETID_CURILLA && trustlevel >=15)
+		{		
+		 if ((m_Tick >= m_LastCurillaBashTime + m_curillaBashRecast) && (m_Tick >= m_LastEngageStart + 7000)) // Only use shield bash if mob is casting??  actionTarget.messageID = 327
+			{
+			m_PWeaponSkill = nullptr;
+            int16 mobjaID = -1;			
+			for (int i = 0; i < m_PPet->PetSkills.size(); i++) {
+                    auto PMobSkill = battleutils::GetMobSkill(m_PPet->PetSkills.at(i));
+                            
+                        if (PMobSkill->getID() == 3709) { //Shieldbash
+						    mobjaID = 30;
+                            SetCurrentMobSkill(PMobSkill);
+							SetCurrentJobAbility(mobjaID);
+							m_PBattleSubTarget = m_PBattleTarget;  
+							break;
+                        }
+			        }
+				preparePetAbility(m_PBattleSubTarget);
+				m_LastCurillaBashTime = m_Tick;
+				return;	
+				}		
+	     }
+		 
+		
+		
 		
 		 if (m_PPet->m_PetID == PETID_NANAA_MIHGO && trustlevel >=15)
 		{		
@@ -1929,10 +2250,33 @@ void CAIPetDummy::ActionAttack()
 				
 				
 		}
+		 if (m_PPet->m_PetID == PETID_AYAME && trustlevel >=40)
+		{		
+		 if ((m_Tick >= m_LastAyameSekkaTime + m_ayameSekkaRecast) && m_PPet->health.tp > 700) // Only use Sekka when higher than 75% TP
+			{
+			m_PWeaponSkill = nullptr;
+            int16 mobjaID = -1;			
+			for (int i = 0; i < m_PPet->PetSkills.size(); i++) {
+                    auto PMobSkill = battleutils::GetMobSkill(m_PPet->PetSkills.at(i));
+                            
+                        if (PMobSkill->getID() == 3717) { //Sekkanoki
+						    mobjaID = 214;
+                            SetCurrentMobSkill(PMobSkill);
+							SetCurrentJobAbility(mobjaID);
+							m_PBattleSubTarget = m_PPet;  //Target Self
+							break;
+                        }
+			        }
+				m_sekkaStatus = 2; //turn on sekkanoki check	
+				preparePetAbility(m_PBattleSubTarget);
+				m_LastAyameSekkaTime = m_Tick;
+				return;	
+				}		
+	     }		
 		
 		 if (m_PPet->m_PetID == PETID_AYAME && trustlevel >=30)
 		{		
-		 if ((m_Tick >= m_LastAyameMeditateTime + m_ayameMeditateRecast) && m_PPet->health.tp < 250) // Only use Meditate when TP is less than 25%
+		 if ((m_Tick >= m_LastAyameMeditateTime + m_ayameMeditateRecast) && m_PPet->StatusEffectContainer->HasStatusEffect(EFFECT_SEKKANOKI) == true) // If meditate is available use it if Sekkanoki is up
 			{
 			m_PWeaponSkill = nullptr;
             int16 mobjaID = -1;			
@@ -1950,11 +2294,30 @@ void CAIPetDummy::ActionAttack()
 				preparePetAbility(m_PBattleSubTarget);
 				m_LastAyameMeditateTime = m_Tick;
 				return;	
-				}		
+				}
+		 else if ((m_Tick >= m_LastAyameMeditateTime + m_ayameMeditateRecast) && m_PPet->health.tp < 250 && (m_Tick < m_LastAyameMeditateTime + m_ayameMeditateRecast)) // use Meditate when TP is less than 25% and Sekkanoki is not up
+			{
+			m_PWeaponSkill = nullptr;
+            int16 mobjaID = -1;			
+			for (int i = 0; i < m_PPet->PetSkills.size(); i++) {
+                    auto PMobSkill = battleutils::GetMobSkill(m_PPet->PetSkills.at(i));
+                            
+                        if (PMobSkill->getID() == 3715) { //Meditate
+						    mobjaID = 47;
+                            SetCurrentMobSkill(PMobSkill);
+							SetCurrentJobAbility(mobjaID);
+							m_PBattleSubTarget = m_PPet;  //Target Self
+							break;
+                        }
+			        }
+				preparePetAbility(m_PBattleSubTarget);
+				m_LastAyameMeditateTime = m_Tick;
+				return;	
+				}				
 	     }
 		 if (m_PPet->m_PetID == PETID_AYAME && trustlevel >=15)
 		{		
-		 if ((m_Tick >= m_LastAyameThirdEyeTime + m_ayameThirdEyeRecast) && m_PPet->GetHPP() < 85 || m_PPet->health.tp < 20) // Use Third eye when HP is lower than 85% or tp is less than 20% to activate after WS
+		 if ((m_Tick >= m_LastAyameThirdEyeTime + m_ayameThirdEyeRecast) && m_PPet->GetHPP() < 85) // Use Third eye when HP is lower than 85% or tp is less than 20% to activate after WS
 			{
 			m_PWeaponSkill = nullptr;
             int16 mobjaID = -1;			
@@ -2143,15 +2506,36 @@ void CAIPetDummy::ActionAttack()
         ActionAbilityStart();
         return;
 	}
-	    //Ayame will use WS if player TP is less than 80%
-		if (m_PPet->getPetType() == PETTYPE_TRUST && m_Tick >= m_LastEngageStart + 7000 && m_PPet->m_PetID == PETID_AYAME && m_PPet->health.tp >= 1000 && m_PPet->PetSkills.size() > 0 && m_PPet->PMaster->health.tp < 800)
+	    //Ayame will wait until 200% if sekkanoki is active
+		if (m_PPet->getPetType() == PETTYPE_TRUST && m_Tick >= m_LastEngageStart + 7000 && m_PPet->m_PetID == PETID_AYAME && m_PPet->health.tp >= 2000 && m_PPet->PetSkills.size() > 0
+		&& m_PPet->StatusEffectContainer->HasStatusEffect(EFFECT_SEKKANOKI) == true && m_sekkaStatus == 2)
     {
 		m_PBattleSubTarget = m_PBattleTarget;
         m_ActionType = ACTION_MOBABILITY_START;
         ActionAbilityStart();
         return;
 	}
-		if (m_PPet->getPetType() == PETTYPE_TRUST && m_Tick >= m_LastEngageStart + 7000 && m_PPet->m_PetID == PETID_AYAME && m_PPet->health.tp >= 1000 && m_PPet->PetSkills.size() > 0 && m_PPet->PMaster->health.tp >= 1000)
+	    //Ayame will use WS right after using Sekkanoki	
+		if (m_PPet->getPetType() == PETTYPE_TRUST && m_Tick >= m_LastEngageStart + 7000 && m_PPet->m_PetID == PETID_AYAME && m_PPet->health.tp >= 1000 && m_PPet->PetSkills.size() > 0 && 
+		(m_Tick >= m_LastSkillchainStart + 6000) && m_PPet->StatusEffectContainer->HasStatusEffect(EFFECT_SEKKANOKI) == false && m_sekkaStatus == 1)
+    {
+		m_PBattleSubTarget = m_PBattleTarget;
+        m_ActionType = ACTION_MOBABILITY_START;
+        ActionAbilityStart();
+        return;
+	}	
+	    //Ayame will use WS if player TP is less than 80%  //TODO sekka off = 0	
+		if (m_PPet->getPetType() == PETTYPE_TRUST && m_Tick >= m_LastEngageStart + 7000 && m_PPet->m_PetID == PETID_AYAME && m_PPet->health.tp >= 1000 && m_PPet->PetSkills.size() > 0 && m_PPet->PMaster->health.tp < 800
+		&& m_PPet->StatusEffectContainer->HasStatusEffect(EFFECT_SEKKANOKI) == false && m_sekkaStatus == 0)
+    {
+		m_PBattleSubTarget = m_PBattleTarget;
+        m_ActionType = ACTION_MOBABILITY_START;
+        ActionAbilityStart();
+        return;
+	}
+	    //Ayame will use WS Once player has 100%		
+		if (m_PPet->getPetType() == PETTYPE_TRUST && m_Tick >= m_LastEngageStart + 7000 && m_PPet->m_PetID == PETID_AYAME && m_PPet->health.tp >= 1000 && m_PPet->PetSkills.size() > 0 && m_PPet->PMaster->health.tp >= 1000
+		&& m_PPet->StatusEffectContainer->HasStatusEffect(EFFECT_SEKKANOKI) == false && m_sekkaStatus == 0)
     {
 		m_PBattleSubTarget = m_PBattleTarget;
         m_ActionType = ACTION_MOBABILITY_START;
@@ -2751,7 +3135,8 @@ int16 CAIPetDummy::KupipiSpell()
 		        {
 				 spellID = -1;
 				} 
-		m_LastKupipiMagicTime = m_Tick;		
+		m_LastKupipiMagicTime = m_Tick;	
+        m_kupipiHealRecast = 18000; 		
 		if (m_PPet->StatusEffectContainer->HasStatusEffect(EFFECT_SILENCE) == true)
 		{
 	    spellID = -1;
@@ -2924,7 +3309,7 @@ int16 CAIPetDummy::KupipiSpell()
 		}
 		else if (m_PPet->PMaster->StatusEffectContainer->HasStatusEffect(EFFECT_PROTECT) == false) 
 			{
-			m_PBattleSubTarget = m_PPet; //Target Self for Potectra
+			m_PBattleSubTarget = m_PPet->PMaster; //Target master to hit all members
 			if (level >= 63)
 				if (m_PPet->health.mp > 64)
 					{
@@ -3183,6 +3568,21 @@ if (m_Tick >= m_LastMagicTimeHeal + m_magicHealRecast)  // Look for last magic h
 				}	
 		m_curillaFlashRecast = 50000;
         m_LastCurillaFlash = m_Tick;
+    }
+	else if (m_Tick >= m_LastCurillaReprisalTime + m_curillaReprisalRecast)  // Look for last time Reprisal was used
+	{
+	    m_PBattleSubTarget = m_PPet;
+        if (level >= 61)
+		    if (m_PPet->health.mp > 23)  	
+			    {
+				 spellID = 97;
+				}
+			else
+			    {
+				 spellID = -1;
+				}	
+		m_curillaReprisalRecast = 180000;
+        m_LastCurillaReprisalTime = m_Tick;
     }		
 	
 	return spellID;

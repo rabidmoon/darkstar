@@ -2449,7 +2449,7 @@ INSERT INTO `mob_skill_lists` VALUES ('Nanaa_Mihgo',730,2214);
 INSERT INTO `mob_skill_lists` VALUES ('Nanaa_Mihgo',730,3800); -- Viper Bite
 INSERT INTO `mob_skill_lists` VALUES ('Nanaa_Mihgo',730,3801); -- Sneak Attack
 
--- INSERT INTO `mob_skill_lists` VALUES ('Kupipi',731,3058);
+INSERT INTO `mob_skill_lists` VALUES ('Kupipi',731,3767); -- Solace
 INSERT INTO `mob_skill_lists` VALUES ('Kupipi',731,3770); -- Shining Strike
 INSERT INTO `mob_skill_lists` VALUES ('Kupipi',731,3771); -- Brainshaker
 INSERT INTO `mob_skill_lists` VALUES ('Kupipi',731,3772); -- True Strike
@@ -2466,6 +2466,7 @@ INSERT INTO `mob_skill_lists` VALUES ('Naji',732,3742); -- Vorpal Blade
 
 INSERT INTO `mob_skill_lists` VALUES ('Ayame',733,3715); -- Meditate
 INSERT INTO `mob_skill_lists` VALUES ('Ayame',733,3716); -- Third Eye
+INSERT INTO `mob_skill_lists` VALUES ('Ayame',733,3717); -- Sekkanoki
 INSERT INTO `mob_skill_lists` VALUES ('Ayame',733,3779); -- Tachi Enpi
 INSERT INTO `mob_skill_lists` VALUES ('Ayame',733,3780); -- Tachi Goten
 INSERT INTO `mob_skill_lists` VALUES ('Ayame',733,3781); -- Tachi Jinpu
@@ -2480,6 +2481,8 @@ INSERT INTO `mob_skill_lists` VALUES ('Curilla',734,3740); -- Red Lotus Blade
 INSERT INTO `mob_skill_lists` VALUES ('Curilla',734,3742); -- Vorpal Blade
 INSERT INTO `mob_skill_lists` VALUES ('Curilla',734,3743); -- Swift Blade
 INSERT INTO `mob_skill_lists` VALUES ('Curilla',734,3711); -- Provoke
+INSERT INTO `mob_skill_lists` VALUES ('Curilla',734,3709); -- Shield Bash
+INSERT INTO `mob_skill_lists` VALUES ('Curilla',734,3710); -- Reprisal
 
 INSERT INTO `mob_skill_lists` VALUES ('Excenmille',735,3712); -- Jump
 INSERT INTO `mob_skill_lists` VALUES ('Excenmille',735,3713); -- High Jump

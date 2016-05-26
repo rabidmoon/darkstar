@@ -154,18 +154,23 @@ public:
 	void			SetLastMagicTimeEnhance(uint32 time);
 	void			SetLastCurillaVokeTime(uint32 time);
     void            SetLastCurillaFlash(uint32 time);
+    void            SetLastCurillaBashTime(uint32 time);
+    void            SetLastCurillaReprisalTime(uint32 time);	
 	void            SetLastKupipiMagicTime(uint32 time);
 	void            SetLastKupipiEnhanceTime(uint32 time);
+	void            SetLastKupipiSolaceTime(uint32 time);	
 	void			SetLastNanaaCheckTime(uint32 time);
 	void			SetLastNanaaSneakAttackTime(uint32 time);
 	void			SetLastAyameMeditateTime(uint32 time);
 	void			SetLastAyameThirdEyeTime(uint32 time);
+	void			SetLastAyameSekkaTime(uint32 time);	
 	void			SetLastNajiBerserkTime(uint32 time);
 	void			SetLastNajiWarcryTime(uint32 time);			
 	void			SetLastExeJumpTime(uint32 time);	
 	void			SetLastExeHjumpTime(uint32 time);	
 	void			SetLastExeSjumpTime(uint32 time);
-    void			SetLastEngageStart(uint32 time);	
+    void			SetLastEngageStart(uint32 time);
+    void			SetLastSkillchainStart(uint32 time);	
 	
 	
 	void			SetCurrentAction(ACTIONTYPE Action, uint16 TargetID = 0);
@@ -216,12 +221,16 @@ protected:
 	uint32			m_LastMagicTimeEnhance;	
 	uint32          m_LastCurillaVokeTime;
 	uint32          m_LastCurillaFlash;
+	uint32          m_LastCurillaBashTime;
+	uint32          m_LastCurillaReprisalTime;	
 	uint32          m_LastKupipiMagicTime;
 	uint32			m_LastKupipiEnhanceTime;
+	uint32			m_LastKupipiSolaceTime;	
 	uint32          m_LastNanaaCheckTime;  //Last time Nanaa Mihgo checked if facing target
 	uint32			m_LastNanaaSneakAttackTime;
 	uint32			m_LastAyameMeditateTime;
 	uint32			m_LastAyameThirdEyeTime;
+	uint32			m_LastAyameSekkaTime;	
 	uint32			m_LastNajiBerserkTime;
 	uint32			m_LastNajiWarcryTime;
 	uint32          m_LastExeJumpTime;
@@ -229,6 +238,7 @@ protected:
 	uint32			m_LastExeSjumpTime;
 	
 	uint32			m_LastEngageStart;
+	uint32 			m_LastSkillchainStart;
 
 
     uint32			m_Tick;					// текущее значение времени

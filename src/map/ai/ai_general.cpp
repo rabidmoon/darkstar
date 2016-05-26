@@ -95,16 +95,21 @@ void CAIGeneral::Reset()
 	m_LastMagicTimeEle = 0;
 	m_LastMagicTimeEnhance = 0;
 	m_LastEngageStart = 0;
+	m_LastSkillchainStart = 0;
 	
 	m_LastCurillaVokeTime = 0;
 	m_LastCurillaFlash = 0;
+	m_LastCurillaBashTime = 0;
+	m_LastCurillaReprisalTime = 0;	
 	m_LastKupipiMagicTime = 0;
 	m_LastKupipiEnhanceTime = 0;
+	m_LastKupipiSolaceTime = 0;	
     m_LastNanaaCheckTime = 0;
 	m_LastNanaaSneakAttackTime = 0;
 	
 	m_LastAyameMeditateTime = 0;
 	m_LastAyameThirdEyeTime = 0;
+	m_LastAyameSekkaTime = 0;	
 	m_LastNajiBerserkTime = 0;
 	m_LastNajiWarcryTime = 0;
 	m_LastExeJumpTime = 0;
@@ -363,6 +368,16 @@ void CAIGeneral::SetLastCurillaFlash(uint32 time)
 	m_LastCurillaFlash = time;
 }
 
+void CAIGeneral::SetLastCurillaBashTime(uint32 time)
+{
+	m_LastCurillaBashTime = time;
+}
+
+void CAIGeneral::SetLastCurillaReprisalTime(uint32 time)
+{
+	m_LastCurillaReprisalTime = time;
+}
+
 void CAIGeneral::SetLastKupipiMagicTime(uint32 time)
 {
 	m_LastKupipiMagicTime = time;
@@ -371,6 +386,11 @@ void CAIGeneral::SetLastKupipiMagicTime(uint32 time)
 void CAIGeneral::SetLastKupipiEnhanceTime(uint32 time)
 {
 	m_LastKupipiEnhanceTime = time;
+}
+
+void CAIGeneral::SetLastKupipiSolaceTime(uint32 time)
+{
+	m_LastKupipiSolaceTime = time;
 }
 
 void CAIGeneral::SetLastNanaaCheckTime(uint32 time)
@@ -391,6 +411,11 @@ void CAIGeneral::SetLastAyameMeditateTime(uint32 time)
 void CAIGeneral::SetLastAyameThirdEyeTime(uint32 time)
 {
 	m_LastAyameThirdEyeTime = time;
+}
+
+void CAIGeneral::SetLastAyameSekkaTime(uint32 time)
+{
+	m_LastAyameSekkaTime = time;
 } 
 
 void CAIGeneral::SetLastNajiBerserkTime(uint32 time)
@@ -421,6 +446,11 @@ void CAIGeneral::SetLastExeSjumpTime(uint32 time)
 void CAIGeneral::SetLastEngageStart(uint32 time)
 {
 	m_LastEngageStart = time;
+} 
+
+void CAIGeneral::SetLastSkillchainStart(uint32 time)
+{
+	m_LastSkillchainStart = time;
 } 
 
 
