@@ -234,6 +234,7 @@ function EventUpdateBCNM(player, csid, option, entrance)
             
             if area == 0 then
                 area = 1;
+                player:setLocalVar("[battlefield]area", area);
             end;
             
             if mask == -1 then
@@ -334,13 +335,13 @@ function EventFinishBCNM(player, csid, option)
             local area = player:getLocalVar("[battlefield]area");
             option = bit.rshift(option, 4);
             player:PrintToPlayer(string.format("cs option: %u | battlefield: %u | area: %u", option,battlefield_bitmask_map[player:getZoneID()][option], area));
-            player:registerBattlefield(battlefield_bitmask_map[player:getZoneID()][option], area + 1);
+            player:registerBattlefield(battlefield_bitmask_map[player:getZoneID()][option-1], area);
          end;
     end;
         print("MODIFIED FINISH csid "..csid.." option "..option);
     
-    if csid == 0x7d03 and option == 4 and player:getBattlefield() and #(player:getBattlefield():getPlayers()) == 1 then
-        if player:getBattlefield():getStatus() ~= 0 then print(1); player:getBattlefield():cleanup(true); end;
+    if (csid == 0x7d03 and option == 4 or csid == 0x7d02) and player:getBattlefield() and #(player:getBattlefield():getPlayers()) == 1 then
+        if player:getBattlefield():getStatus() ~= 0 then player:getBattlefield():cleanup(true); end;
     end;
     
     if (player:hasStatusEffect(EFFECT_BATTLEFIELD) == false) then -- Temp condition for normal bcnm (started with onTrigger)

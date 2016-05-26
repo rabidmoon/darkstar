@@ -402,9 +402,13 @@ bool CBattlefield::RemoveEntity(CBaseEntity* PEntity, uint8 leavecode)
         PEntity->PAI->Despawn();
         PEntity->status = STATUS_DISAPPEAR;
 
-        if (PEntity->allegiance == ALLEGIANCE_PLAYER)
+        // allies targid >= 0x700
+        if (!PEntity->targid < 0x700)
         {
             m_AllyList.erase(std::remove_if(m_AllyList.begin(), m_AllyList.end(), check), m_AllyList.end());
+            GetZone()->DeletePET(PEntity);
+            delete PEntity;
+            return found;
         }
         else
         {
@@ -420,15 +424,6 @@ bool CBattlefield::RemoveEntity(CBaseEntity* PEntity, uint8 leavecode)
         entity->StatusEffectContainer->DelStatusEffectsByFlag(EFFECTFLAG_CONFRONTATION);
         entity->StatusEffectContainer->DelStatusEffect(EFFECT_LEVEL_RESTRICTION);
         ClearEnmityForEntity(entity);
-
-        if (entity->allegiance == ALLEGIANCE_PLAYER && found)
-        {
-            GetZone()->DeletePET(PEntity);
-            PEntity->PBattlefield.release();
-            delete PEntity; // todo: didnt wanna raw pointer but kj can fix
-
-            return found;
-        }
     }
     PEntity->PBattlefield.release();
     return found;

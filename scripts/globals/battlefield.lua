@@ -36,18 +36,31 @@ function g_Battlefield.onBattlefieldTick(battlefield, timeinside)
     -- local tick = battlefield:getTick();
     local killedallmobs = true;
     local mobs = battlefield:getMobs();
+    local status = battlefield:getStatus();
+    local leavecode = -1;
+
+    if status == g_Battlefield.Status.LOST then
+        print("lost");
+        leavecode = 4;
+    elseif status == g_Battlefield.Status.WON then
+        print("won");
+        leavecode = 2;
+    end;
     
-    if battlefield:getStatus() == g_Battlefield.Status.LOST then
-        
+    if leavecode ~= -1 or true then
+        local players = battlefield:getPlayers();
+        for _, player in pairs(players) do
+            player:leaveBattlefield(leavecode);
+        end;
+        return;
     end;
     
     for _, mob in pairs(mobs) do
-        if mob:getHP() > 0 then
+        if mob:getHP() > 0 then;
             killedallmobs = false;
             break;
         end;
     end;
-    
     
     g_Battlefield.HandleWipe(battlefield);
     g_Battlefield.HandleTimePrompts(battlefield);
@@ -69,7 +82,8 @@ function g_Battlefield.HandleTimePrompts(battlefield)
             if remainingTimeLimit > 0 then
                  player:messageBasic(202, remainingTimeLimit);
             else
-                player:leaveBattlefield(battlefield:getID());
+                player:messageSpecial(ID, PARAM);
+                battlefield:setStatus(g_Battlefield.Status.LOST);
             end;
         end;
     end;
@@ -84,23 +98,41 @@ function g_Battlefield.HandleWipe(battlefield)
     
     local players = battlefield:getPlayers();
     local totalrekt = 0; 
-    
-    for _, player in pairs(players) do
-        -- print(player:getName());
-        if player:getHP() == 0 then
-            if player:getStatusEffect(EFFECT_RERAISE) then
-                rekt = false;
+    local wipeTime = battlefield:getWipeTime();
+    local elapsed = battlefield:getTimeInside();
+
+    -- pure stolen from instance.lua
+    if (wipeTime == 0) then
+        local wipe = true;
+        for i,v in pairs(players) do
+            if v:getHP() ~= 0 then
+                wipe = false;
                 break;
-            end;
-            totalrekt = totalrekt + 1;
-        end;
-    end;
-    
-    if #players == totalrekt then
-        if rekt then
+            end
+        end
+        if (wipe) then
+            for i,v in pairs(players) do
+                v:messageSpecial(ID, 3);
+            end
+            battlefield:setWipeTime(elapsed);
+        end
+    else
+        if (elapsed - wipeTime) > 180 then
             battlefield:setStatus(g_Battlefield.Status.LOST);
+            return;
         else
-            battlefield:setWipeTime(battlefield:getStartTime() + battlefield:getTimeInside());
-        end;
-    end;
+            for i,v in pairs(players) do
+                if v:getHP() ~= 0 then
+                    battlefield:setWipeTime(0);
+                    rekt = false;
+                    break;
+                end
+            end
+            
+            if rekt then
+                battlefield:setStatus(g_Battlefield.Status.LOST);
+            end;
+        end
+    end
+    
 end;
