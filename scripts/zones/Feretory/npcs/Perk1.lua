@@ -173,9 +173,9 @@ else if (aura > 3) and (mageboon == 4) then
 player:PrintToPlayer("Dolan-Nolan : Looking to upgrade your Mage Boon? Bring me a 4-Leaf Mandragora Bud and 35,000 Infamy Points.", 0xD);
 else if (aura > 4) and (mageboon == 5) then
 player:PrintToPlayer("Dolan-Nolan : Looking to upgrade your Mage Boon? Bring me 3 Magic Pot Shards and 40,000 Infamy Points.", 0xD);
-else if (aura > 5) and (meleeboon == 6) then
+else if (aura > 5) and (mageeboon == 6) then
 player:PrintToPlayer("Dolan-Nolan : Looking to upgrade your Mage Boon? Bring me 12 Demon Horns and 50,000 Infamy Points.", 0xD);
-else if (aura > 6) and (meleeboon == 7) then
+else if (aura > 6) and (mageboon == 7) then
 player:PrintToPlayer("Dolan-Nolan : Looking to upgrade your Mage Boon? Bring me a White Mage Testimony and 75,000 Infamy Points.", 0xD);
 else
 player:PrintToPlayer("Dolan-Nolan : Your Aura isn't high enough.", 0xD);
