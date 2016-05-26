@@ -51,7 +51,7 @@ function onTrigger(player,npc)
 	player:PrintToPlayer("Your Red Institute Card flashes brilliantly!", 0x1C);
     player:PrintToPlayer("Kupipi : Ah a Red Institute Card.  From now on, you can summon me to help you with your battles", 0xD);
     player:addSpell(898);	
-    elseif (player:getNation() == 1) and (player:hasKeyItem(BLUE_INSTITUTE_CARD)) and (player:hasSpell(898) == false) and (currentMission == THE_EMISSARY_WINDURST) then  -- Bastok Nation and mission 2-3
+    elseif (player:getNation() == 1) and (player:hasKeyItem(BLUE_INSTITUTE_CARD)) and (player:hasSpell(898) == false) and (currentMission == THE_EMISSARY) then  -- Bastok Nation and mission 2-3
 	player:PrintToPlayer("Your Blue Institute Card flashes brilliantly!", 0x1C);
     player:PrintToPlayer("Kupipi : Ah a Red Institute Card.  From now on, you can summon me to help you with your battles", 0xD);
     player:addSpell(898);
@@ -59,7 +59,7 @@ function onTrigger(player,npc)
 	player:PrintToPlayer("Your Red Institute Card flashes brilliantly!", 0x1C);
     player:PrintToPlayer("Kupipi : Ah a Red Institute Card.  From now on, you can summon me to help you with your battles", 0xD);
     player:addSpell(898);	
-    elseif (player:getNation() == 1) and (player:hasKeyItem(BLUE_INSTITUTE_CARD)) and (player:hasSpell(898) == false) and (player:hasCompletedMission(BASTOK,THE_EMISSARY_WINDURST) == true) then  -- Bastok Nation and mission 2-3 completed
+    elseif (player:getNation() == 1) and (player:hasKeyItem(BLUE_INSTITUTE_CARD)) and (player:hasSpell(898) == false) and (player:hasCompletedMission(BASTOK,THE_EMISSARY) == true) then  -- Bastok Nation and mission 2-3 completed
 	player:PrintToPlayer("Your Blue Institute Card flashes brilliantly!", 0x1C);
     player:PrintToPlayer("Kupipi : Ah a Red Institute Card.  From now on, you can summon me to help you with your battles", 0xD);
     player:addSpell(898);
