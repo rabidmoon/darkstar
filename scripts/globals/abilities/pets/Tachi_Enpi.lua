@@ -38,11 +38,7 @@ function onPetAbility(target, pet, skill)
  
     local dmg = MobFinalAdjustments(info.dmg,pet,skill,target,MOBSKILL_PHYSICAL,MOBPARAM_SLASH,info.hitslanded);
 	
-	local hits = automatonhitslanded;
-	local firsthit = 0;
-	local remaining = 0;
-	local finaltp = 0;
-	
+
 	
 
 	

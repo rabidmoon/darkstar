@@ -26,7 +26,7 @@ function onPetAbility(target, pet, skill)
 	local agi_wsc = 0;
 	local vit_wsc = 0;
 	local mnd_wsc = 0.50;
-    skill:setSkillchain(42);
+    skill:setSkillchain(41);
 	
 	
 	
