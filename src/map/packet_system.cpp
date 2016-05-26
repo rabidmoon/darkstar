@@ -2689,6 +2689,7 @@ void SmallPacket0x05E(map_session_data_t* session, CCharEntity* PChar, CBasicPac
                 break;
 
             case PETTYPE_AVATAR:
+			case PETTYPE_TRUST:
                 petutils::DespawnPet(PChar);
 
             default:
@@ -5071,6 +5072,7 @@ void SmallPacket0x100(map_session_data_t* session, CCharEntity* PChar, CBasicPac
         if ((sjob > 0x00) && (sjob < MAX_JOBTYPE) && (PChar->jobs.unlocked & (1 << sjob)))
         {
             JOBTYPE prevsjob = PChar->GetSJob();
+            PChar->resetPetZoningInfo();			
 
             PChar->SetSJob(sjob);
             PChar->SetSLevel(PChar->jobs.job[PChar->GetSJob()]);
