@@ -26,6 +26,10 @@ function doPhysicalWeaponskill(attacker, target, params)
         local neck = attacker:getEquipID(SLOT_NECK);
         local belt = attacker:getEquipID(SLOT_WAIST);
         local SCProp1, SCProp2, SCProp3 = attacker:getWSSkillchainProp();
+		
+		-- store Primary SC to variable
+		attacker:setVar("AyameSCElement", SCProp1);
+		-- print(SCProp1);
 
         for i,v in ipairs(elementalGorget) do
             if (neck == v) then
