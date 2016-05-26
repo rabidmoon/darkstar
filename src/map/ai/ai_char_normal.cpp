@@ -2852,6 +2852,7 @@ void CAICharNormal::ActionWeaponSkillFinish()
     {
         m_PChar->setWeaponSkillKill(true);
     }
+	
 
     m_PWeaponSkill = nullptr;
     m_PBattleSubTarget = nullptr;
@@ -3069,7 +3070,7 @@ void CAICharNormal::ActionRaiseMenuSelection()
     m_PChar->animation = ANIMATION_NONE;
 
     uint8 weaknessLvl = 1;
-	int32 wktimer = charutils::GetVar(PChar, "WeakTimer");
+	int32 wktimer = charutils::GetVar(m_PChar, "WeakTimer");
 	int32 newwktime = (300 - wktimer);
     if (m_PChar->StatusEffectContainer->HasStatusEffect(EFFECT_WEAKNESS))
     {
