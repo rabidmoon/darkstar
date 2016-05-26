@@ -37,6 +37,7 @@ This file is part of DarkStar-server source code.
 #include "zoneutils.h"
 #include "../entities/mobentity.h"
 #include "../ability.h"
+#include "../modifier.h"
 
 #include "../ai/ai_automaton_dummy.h"
 #include "../ai/ai_pet_dummy.h"
@@ -1071,6 +1072,7 @@ namespace petutils
 		uint16 modstat = (floor(PAlly->GetMLevel() * 1.0));
 		uint16 hpstat = (floor(PAlly->GetMLevel() * 2));
 		uint16 accstat = (floor(PAlly->GetMLevel() * 0.5));
+		uint16 shielddef = (floor(20 + (PAlly->GetMLevel() * 0.40)));
 		//ShowWarning(CL_GREEN"CURILLA TRIGGERED SPAWN ALLY!!! \n" CL_RESET);
 		PAlly->setModifier(MOD_ACC, battleutils::GetMaxSkill(SKILL_GAX, JOB_WAR, PAlly->GetMLevel()) + accstat); //A+ Acc
 		PAlly->setModifier(MOD_EVA, battleutils::GetMaxSkill(SKILL_SYH, JOB_WAR, PAlly->GetMLevel())); //B+ Evasion
@@ -1078,12 +1080,15 @@ namespace petutils
 		PAlly->setModifier(MOD_DEF, battleutils::GetMaxSkill(SKILL_GAX, JOB_WAR, PAlly->GetMLevel()) + defrate);// A+ Defense
 		PAlly->setModifier(MOD_HEALING, battleutils::GetMaxSkill(SKILL_SYH, JOB_WAR, PAlly->GetMLevel()));// B+ Healing
 		PAlly->setModifier(MOD_DIVINE, battleutils::GetMaxSkill(SKILL_SYH, JOB_WAR, PAlly->GetMLevel()));// A+ Divine Magic
+		PAlly->setModifier(MOD_SHIELD, battleutils::GetMaxSkill(SKILL_SYH, JOB_WAR, PAlly->GetMLevel()));// A+ Shield Skill	
 		PAlly->setModifier(MOD_ENMITY, 45);
 		PAlly->setModifier(MOD_ENMITY_LOSS_REDUCTION, 20);
 		PAlly->m_Weapons[SLOT_MAIN]->setDamage(floor(PAlly->GetMLevel()*0.48f) + 6);// D:42 @75
 		PAlly->m_Weapons[SLOT_MAIN]->setDelay(floor(1000.0f*(260.0f / 60.0f))); //260 delay
-		PAlly->m_Weapons[SLOT_SUB]->setShieldSize(5);
-		PAlly->setModifier(MOD_SHIELDBLOCKRATE, 35); //35% Shield Block Rate
+		PAlly->m_Weapons[SLOT_SUB]->setShieldSize(4);
+		uint8 curillashieldsize = PAlly->m_Weapons[SLOT_SUB]->getShieldSize();
+		//PAlly->m_Weapons[SLOT_SUB]->IsShield();
+		PAlly->m_Weapons[SLOT_SUB]->addModifier(new CModifier(MOD_DEF, shielddef));
 		PAlly->health.maxmp = (int16)(15 + (2.72f*(plvl * 2.72f))); 
 		PAlly->UpdateHealth();
         PAlly->health.mp = PAlly->health.maxmp;
@@ -1128,7 +1133,11 @@ namespace petutils
         PAlly->PMaster = PMaster;
 
         PMaster->loc.zone->InsertPET(PAlly);
-        PMaster->PParty->ReloadParty();		
+        PMaster->PParty->ReloadParty();	
+        if (PMaster->objtype == TYPE_PC)
+         {
+          static_cast<CCharEntity*>(PMaster)->resetPetZoningInfo();
+         }		 
 
     }
 	

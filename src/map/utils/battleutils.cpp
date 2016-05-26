@@ -1732,6 +1732,12 @@ namespace battleutils
             else
                 return 0;
         }
+        else if (PDefender->objtype == TYPE_PET)
+        {
+			CPetEntity* PPet = (CPetEntity*)PDefender;
+			if (PPet->m_PetID != PETID_CURILLA)
+                return 0;
+        }		
         else if (PDefender->objtype == TYPE_MOB && PDefender->GetMJob() == JOB_PLD)
         {
             CMobEntity* PMob = (CMobEntity*)PDefender;
@@ -2286,10 +2292,18 @@ namespace battleutils
             PAttacker->StatusEffectContainer->HasStatusEffect(EFFECT_MIGHTY_STRIKES)) {
             return 100;
         }
-        else if (PAttacker->objtype == TYPE_PC || PAttacker->objtype == TYPE_PET && (!ignoreSneakTrickAttack) && PAttacker->StatusEffectContainer->HasStatusEffect(EFFECT_SNEAK_ATTACK))
+        else if (PAttacker->objtype == TYPE_PC && (!ignoreSneakTrickAttack) && PAttacker->StatusEffectContainer->HasStatusEffect(EFFECT_SNEAK_ATTACK))
+        {
+
+            if (abs(PDefender->loc.p.rotation - PAttacker->loc.p.rotation) < 23 || PAttacker->StatusEffectContainer->HasStatusEffect(EFFECT_HIDE))
+            {
+                crithitrate = 100;
+            }
+        }		
+        else if (PAttacker->objtype == TYPE_PET && (!ignoreSneakTrickAttack) && PAttacker->StatusEffectContainer->HasStatusEffect(EFFECT_SNEAK_ATTACK))
         {
             //ShowWarning(CL_GREEN"BATTLEUTILS SNEAK ATTACK IS TRIGGERED! /n" CL_RESET);
-            if (abs(PDefender->loc.p.rotation - PAttacker->loc.p.rotation) < 23 || PAttacker->StatusEffectContainer->HasStatusEffect(EFFECT_HIDE))
+            if (abs(PDefender->loc.p.rotation - PAttacker->loc.p.rotation) < 23)
             {
                 crithitrate = 100;
             }
