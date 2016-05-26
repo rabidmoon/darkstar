@@ -31511,10 +31511,10 @@ INSERT INTO `mob_droplist` VALUES (5000,0,1449,550); -- T Whiteshell
 INSERT INTO `mob_droplist` VALUES (5000,0,1449,350); -- T Whiteshell
 INSERT INTO `mob_droplist` VALUES (5000,0,1449,250); -- T Whiteshell
 INSERT INTO `mob_droplist` VALUES (5000,0,1449,200); -- T Whiteshell
-INSERT INTO `mob_droplist` VALUES (5000,0,15665,10);  -- WAR Head
+INSERT INTO `mob_droplist` VALUES (5000,0,15245,10);  -- WAR Head
 INSERT INTO `mob_droplist` VALUES (5000,0,15667,10);  -- WHM Feet
 INSERT INTO `mob_droplist` VALUES (5000,0,14912,10);  -- BLM Gloves
-INSERT INTO `mob_droplist` VALUES (5000,0,15520,10);  -- THF Head
+INSERT INTO `mob_droplist` VALUES (5000,0,15250,10);  -- THF Head
 
 INSERT INTO `mob_droplist` VALUES (5000,0,4247,0); -- Miratetes Memoirs
 INSERT INTO `mob_droplist` VALUES (5000,0,1450,0); -- L Jadeshell
