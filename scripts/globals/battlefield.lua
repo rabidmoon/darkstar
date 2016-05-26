@@ -39,6 +39,9 @@ function g_Battlefield.onBattlefieldTick(battlefield, timeinside)
     local status = battlefield:getStatus();
     local leavecode = -1;
 
+    if #(battlefield:getPlayers()) == 0 then
+        battlefield:cleanup(true);
+    end;
     if status == g_Battlefield.Status.LOST then
         print("lost");
         leavecode = 4;

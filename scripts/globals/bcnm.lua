@@ -258,9 +258,9 @@ function EventUpdateBCNM(player, csid, option, entrance)
                     mask = battlefield:getID();
                 end;
             end;
-            player:updateEvent(result, mask, name, record, cap, skip);
+            player:updateEvent(result, mask, 0, record, cap, skip);
         elseif option == 255 then
-            player:updateEvent(1, 1, 0, 0, 0, 0);
+            player:updateEvent(2, mask, 0, 0, 0, 0);
         end;
         return;
     end;
@@ -332,11 +332,11 @@ function EventFinishBCNM(player, csid, option)
     if csid == 0x7d00 then
         player:PrintToPlayer(string.format("bit.band(option, 0x0F) == %u", bit.band(option, 0x0F)));
 
-        if true then
+        if bit.band(option, 0x0F) == 3 then
             local area = player:getLocalVar("[battlefield]area");
             option = bit.rshift(option, 4);
             player:PrintToPlayer(string.format("cs option: %u | battlefield: %u | area: %u", option,battlefield_bitmask_map[player:getZoneID()][option], area));
-            player:registerBattlefield(battlefield_bitmask_map[player:getZoneID()][option-1], area);
+            player:registerBattlefield(battlefield_bitmask_map[player:getZoneID()][option-2], area);
          end;
     end;
         print("MODIFIED FINISH csid "..csid.." option "..option);
@@ -423,7 +423,7 @@ function GetBattleBitmask(id, zone, mode)
         for index, battlefield in ipairs(battlefield_bitmask_map[zone]) do
             if id == battlefield then
                 if mode == 1 then
-                    ret = mask + bit.lshift(index, 2);
+                    ret = mask + bit.lshift(index + 1, 2);
                 else
                     ret = mask + index;
                 end
