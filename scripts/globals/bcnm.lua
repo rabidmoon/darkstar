@@ -173,6 +173,7 @@ end;
 function EventUpdateBCNM(player, csid, option, entrance)
     local area = player:getLocalVar("[battlefield]area");
     local id = player:getLocalVar("[battlefield]trade");
+    
     -- return false;
     --[[
         what probably happens:
@@ -258,7 +259,11 @@ function EventUpdateBCNM(player, csid, option, entrance)
                     mask = battlefield:getID();
                 end;
             end;
-            player:updateEvent(result, mask, 0, record, cap, skip);
+            
+            -- params(result, battlefieldindex, ?, recordTime, recordPartySize, skip);
+            player:updateEvent(7, 3, 0, 500, 2, 0);
+            -- params(name, name, name, name, ? (possibly bitmask?), ?, ?, ?, ?, ?, ?, ?, ?);
+            player:updateEventString('cuntbagdickface', 'faggot', 'shitbag', 'fuckin', 'work', 0, 0, 0);
         elseif option == 255 then
             player:updateEvent(2, mask, 0, 0, 0, 0);
         end;

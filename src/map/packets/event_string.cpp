@@ -31,7 +31,7 @@
 
 CEventStringPacket::CEventStringPacket(
 	CCharEntity* PChar,
-	uint16 EventID, 
+	uint16 EventID,
     string_t string0,
     string_t string1,
     string_t string2,

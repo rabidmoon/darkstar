@@ -373,17 +373,8 @@ bool CBattlefield::RemoveEntity(CBaseEntity* PEntity, uint8 leavecode)
 
     if (PEntity->objtype == TYPE_PC)
     {
-        auto i = 0;
-        for (; i < m_PlayerList.size(); ++i)
-        {
-            if (m_PlayerList[i] == PEntity->id)
-            {
-                found = true;
-                break;
-            }
-        }
-        if (found)
-            m_PlayerList.erase(m_PlayerList.begin() + i);
+        auto check = [PEntity, &found](auto entity) { if (PEntity->id == entity) found = true; return found; return false; };
+        m_PlayerList.erase(std::remove_if(m_PlayerList.begin(), m_PlayerList.end(), check), m_PlayerList.end());
 
         if (leavecode != 255)
         {
@@ -463,7 +454,12 @@ bool CBattlefield::CanCleanup(bool cleanup)
 void CBattlefield::Cleanup()
 {
     // wipe enmity from all mobs in list if needed
-    ForEachEnemy([&](CMobEntity* PMob)
+    ForEachRequiredEnemy([&](CMobEntity* PMob)
+    {
+        RemoveEntity(PMob);
+    });
+
+    ForEachAdditionalEnemy([&](CMobEntity* PMob)
     {
         RemoveEntity(PMob);
     });
@@ -605,13 +601,11 @@ void CBattlefield::OpenChest()
 
 void CBattlefield::ClearEnmityForEntity(CBattleEntity* PEntity)
 {
-    ForEachEnemy([PEntity](CMobEntity* PMob)
-    {
-        if (PEntity->PPet)
-            PMob->PEnmityContainer->Clear(PEntity->PPet->id);
+    auto func = [&](auto mob) { if (PEntity->PPet) mob->PEnmityContainer->Clear(PEntity->PPet->id);
+    mob->PEnmityContainer->Clear(PEntity->id); };
 
-        PMob->PEnmityContainer->Clear(PEntity->id);
-    });
+    ForEachRequiredEnemy(func);
+    ForEachAdditionalEnemy(func);
 }
 
 bool CBattlefield::InProgress()
