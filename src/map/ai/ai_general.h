@@ -170,7 +170,11 @@ public:
 	void			SetLastExeHjumpTime(uint32 time);	
 	void			SetLastExeSjumpTime(uint32 time);
     void			SetLastEngageStart(uint32 time);
-    void			SetLastSkillchainStart(uint32 time);	
+    void			SetLastSkillchainStart(uint32 time);
+	void 			SetLastChainTime(uint32 time);
+	void            SetLastBlueCheck(uint32 time);
+	void			SetLastBlueMagicCast(uint32 time);
+	void			SetLastBlueMagicHealCast(uint32 time);
 	
 	
 	void			SetCurrentAction(ACTIONTYPE Action, uint16 TargetID = 0);
@@ -236,6 +240,10 @@ protected:
 	uint32          m_LastExeJumpTime;
 	uint32			m_LastExeHjumpTime;
 	uint32			m_LastExeSjumpTime;
+	uint32			m_LastChainTime;
+    uint32          m_LastBlueCheck;
+    uint32          m_LastBlueMagicCast;
+	uint32          m_LastBlueMagicHealCast;
 	
 	uint32			m_LastEngageStart;
 	uint32 			m_LastSkillchainStart;

@@ -60,6 +60,7 @@ protected:
 	//individual universal recast timers
 	uint32 m_magicRecast;
 	uint32 m_magicKupipiRecast;
+	uint32 m_blueCheck;
 	
 	//individual spell timers
 	uint32 m_magicHealRecast;
@@ -82,7 +83,11 @@ protected:
 	uint32 m_exeSjumpRecast;
 	uint32 m_ayameThirdEyeRecast;
 	uint32 m_ayameSekkaRecast;
+	uint32 m_blueChainAffinityRecast;
+    uint32 m_blueMagicRecast;
+	uint32 m_blueMagicHealRecast;
 	int8 m_sekkaStatus;
+	int8 m_chainAffinityStatus;
 
 	
 
@@ -112,6 +117,7 @@ protected:
 	
 	int16 CurillaSpell();
 	int16 KupipiSpell();
+	int16 BlueSpell();
 	CBattleEntity* getWounded(uint8 threshold);
 	CBattleEntity* getWoundedLow(uint8 threshold);	
 

@@ -106,6 +106,9 @@ void CAIGeneral::Reset()
 	m_LastKupipiSolaceTime = 0;	
     m_LastNanaaCheckTime = 0;
 	m_LastNanaaSneakAttackTime = 0;
+	m_LastBlueCheck = 0;
+	m_LastBlueMagicHealCast = 0;
+	m_LastBlueMagicCast = 0;
 	
 	m_LastAyameMeditateTime = 0;
 	m_LastAyameThirdEyeTime = 0;
@@ -115,6 +118,7 @@ void CAIGeneral::Reset()
 	m_LastExeJumpTime = 0;
 	m_LastExeHjumpTime = 0;
 	m_LastExeSjumpTime = 0;
+	m_LastChainTime = 0;
     m_WaitTime = 0;
     m_LastWaitTime = 0;
     m_interruptSpell = false;
@@ -451,8 +455,27 @@ void CAIGeneral::SetLastEngageStart(uint32 time)
 void CAIGeneral::SetLastSkillchainStart(uint32 time)
 {
 	m_LastSkillchainStart = time;
+}
+
+void CAIGeneral::SetLastChainTime(uint32 time)
+{
+	m_LastChainTime = time;
+}
+
+void CAIGeneral::SetLastBlueCheck(uint32 time)
+{
+	m_LastBlueCheck = time;
 } 
 
+void CAIGeneral::SetLastBlueMagicCast(uint32 time)
+{
+	m_LastBlueMagicCast = time;
+}  
+
+void CAIGeneral::SetLastBlueMagicHealCast(uint32 time)
+{
+    m_LastBlueMagicHealCast = time;
+}	
 
 
 void CAIGeneral::SetBattleTarget(CBattleEntity* PEntity)

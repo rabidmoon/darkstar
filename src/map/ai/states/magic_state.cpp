@@ -27,6 +27,7 @@
 #include "../../lua/luautils.h"
 #include "../../utils/battleutils.h"
 #include "../../utils/charutils.h"
+#include "../../utils/petutils.h"
 #include "../ai_pet_dummy.h"
 #include "../../packets/char_update.h"
 
@@ -722,13 +723,45 @@ void CMagicState::FinishSpell()
 
 void CMagicState::CharOnTarget(apAction_t* action, int16 ce, int16 ve)
 {
+    CBattleEntity* PTarget = action->ActionTarget;
+    bool enmityApplied = false;
+
+    if(action->param > 0 && m_PSpell->dealsDamage() && m_PSpell->getSpellGroup() == SPELLGROUP_BLUE &&
+        m_PEntity->StatusEffectContainer->HasStatusEffect(EFFECT_CHAIN_AFFINITY) && ((CBlueSpell*)m_PSpell)->getPrimarySkillchain() != 0)
+    {
+	    ShowWarning(CL_GREEN"CHAIN AFFINITY BLUE SPELL DETECTED \n" CL_RESET);
+
+        SUBEFFECT effect = battleutils::GetSkillChainEffect(PTarget, (CBlueSpell*)m_PSpell);
+        if (effect != SUBEFFECT_NONE)
+        {
+		ShowWarning(CL_GREEN"SKILLCHAIN ELEMENT DETECTED \n" CL_RESET);
+            uint16 skillChainDamage = battleutils::TakeSkillchainDamage(m_PEntity, PTarget, action->param);
+
+    
+            action->addEffectParam = skillChainDamage;
+            action->addEffectMessage = 287 + effect;
+            action->additionalEffect = effect;
+
+        }
+        if (m_PEntity->StatusEffectContainer->HasStatusEffect(EFFECT_SEKKANOKI) || m_PEntity->StatusEffectContainer->HasStatusEffect(EFFECT_MEIKYO_SHISUI))
+        {
+            m_PEntity->health.tp = (m_PEntity->health.tp > 1000 ? m_PEntity->health.tp - 1000 : 0);
+        }
+        else
+        {
+            m_PEntity->health.tp = 0;
+        }
+        ShowWarning(CL_GREEN"REMOVING CHAIN AFFINITY \n" CL_RESET);  
+        m_PEntity->StatusEffectContainer->DelStatusEffectSilent(EFFECT_CHAIN_AFFINITY);
+    }
+
+
+
     if(m_PEntity->objtype != TYPE_PC)
     {
         return;
     }
 
-    CBattleEntity* PTarget = action->ActionTarget;
-    bool enmityApplied = false;
 
     if (m_PEntity->StatusEffectContainer->HasStatusEffect(EFFECT_TRANQUILITY) && m_PSpell->getSpellGroup() == SPELLGROUP_WHITE)
     {
@@ -774,9 +807,10 @@ void CMagicState::CharOnTarget(apAction_t* action, int16 ce, int16 ve)
             m_PEntity->StatusEffectContainer->DelStatusEffect(EFFECT_EQUANIMITY);
     }
 
-    if(action->param > 0 && m_PSpell->dealsDamage() && m_PSpell->getSpellGroup() == SPELLGROUP_BLUE &&
+  /*  if(action->param > 0 && m_PSpell->dealsDamage() && m_PSpell->getSpellGroup() == SPELLGROUP_BLUE &&
         m_PEntity->StatusEffectContainer->HasStatusEffect(EFFECT_CHAIN_AFFINITY) && ((CBlueSpell*)m_PSpell)->getPrimarySkillchain() != 0)
     {
+	    //ShowWarning(CL_GREEN"CHAIN AFFINITY BLUE SPELL DETECTED \n" CL_RESET);
 
         SUBEFFECT effect = battleutils::GetSkillChainEffect(PTarget, (CBlueSpell*)m_PSpell);
         if (effect != SUBEFFECT_NONE)
@@ -799,7 +833,7 @@ void CMagicState::CharOnTarget(apAction_t* action, int16 ce, int16 ve)
         }
 
         m_PEntity->StatusEffectContainer->DelStatusEffectSilent(EFFECT_CHAIN_AFFINITY);
-    }
+    } */
 }
 
 void CMagicState::CharAfterFinish()

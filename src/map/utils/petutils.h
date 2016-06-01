@@ -65,7 +65,9 @@ enum PETID
 	PETID_AYAME              = 77,
 	PETID_NANAA_MIHGO        = 78,
 	PETID_CURILLA            = 79,
-	PETID_EXCENMILLE         = 80
+	PETID_EXCENMILLE         = 80,
+	PETID_BLUE               = 81,
+	PETID_ADELHIED              = 82
 };
 
 

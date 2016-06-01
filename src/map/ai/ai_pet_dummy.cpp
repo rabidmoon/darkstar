@@ -95,7 +95,13 @@ CAIPetDummy::CAIPetDummy(CPetEntity* PPet)
 	m_exeSjumpRecast = 180000;
 	m_ayameThirdEyeRecast = 45000;
 	m_ayameSekkaRecast = 60000;  //300000;
+	m_blueMagicRecast = 20000; //20 seconds Blue Magic Casting
 	m_sekkaStatus = 0; //Sekka off 0; Sekka Closing WS 1; Sekka Opening SC 2;
+	
+	m_blueCheck = 4000;  //Blue magic cast Check
+	m_blueChainAffinityRecast = 120000;
+	m_blueMagicHealRecast = 12000;
+	m_chainAffinityStatus = 0;  //CA off 0; CA closing 1; CA open with WS 2;
 	
 
 	
@@ -958,7 +964,108 @@ void CAIPetDummy::ActionAbilityStart()
 			}			
             preparePetAbility(m_PBattleSubTarget);
             return;
-        }	
+        }
+		
+    //If BLUE MAGE has Chain Affinity Active
+	if (m_PPet->m_PetID == PETID_BLUE && m_PPet->health.tp >= 1000 && m_PBattleTarget != nullptr && m_PPet->StatusEffectContainer->HasStatusEffect(EFFECT_CHAIN_AFFINITY) == true && m_chainAffinityStatus == 2){
+			int16 mobwsID = -1;		
+			if (lvl > 71) {
+			m_PJobAbility = nullptr;
+            for (int i = 0; i < m_PPet->PetSkills.size(); i++) {
+                auto PMobSkill = battleutils::GetMobSkill(m_PPet->PetSkills.at(i));
+  					if (PMobSkill->getID() == 3744) { //Savage Blade
+                    mobwsID = 42;
+					SetCurrentMobSkill(PMobSkill);
+					SetCurrentWeaponSkill(mobwsID);
+                    break;
+                    } 					
+
+                }
+			}
+			else if (lvl > 39) {
+			m_PJobAbility = nullptr;
+            for (int i = 0; i < m_PPet->PetSkills.size(); i++) {
+                auto PMobSkill = battleutils::GetMobSkill(m_PPet->PetSkills.at(i));
+  					if (PMobSkill->getID() == 3740) { //Red Lotus
+                    mobwsID = 34;
+					SetCurrentMobSkill(PMobSkill);
+					SetCurrentWeaponSkill(mobwsID);
+			        //ShowWarning("Red Lotus Blade \n");
+                    break;					
+                    } 					
+
+                }
+			}	
+            m_LastBlueCheck = m_Tick + 1000;
+            m_chainAffinityStatus = 1;			
+            preparePetAbility(m_PBattleSubTarget);
+            return;
+        }
+
+
+
+		
+
+		if (m_PPet->m_PetID == PETID_BLUE && m_PPet->health.tp >= 1000 && m_PBattleTarget != nullptr){
+			int16 mobwsID = -1;		
+			if (lvl > 59) {
+			m_PJobAbility = nullptr;
+			uint8 wsrandom = dsprand::GetRandomNumber(1, 10); //Swift Blade or Vorpal
+            for (int i = 0; i < m_PPet->PetSkills.size(); i++) {
+                auto PMobSkill = battleutils::GetMobSkill(m_PPet->PetSkills.at(i));
+  					if (PMobSkill->getID() == 3740 && wsrandom >= 6) { //Red Lotus Blade
+                    mobwsID = 34;
+					SetCurrentMobSkill(PMobSkill);
+					SetCurrentWeaponSkill(mobwsID);
+                    break;
+                    } 
+  					else if (PMobSkill->getID() == 3742 && wsrandom < 6) { //Vorpal Blade
+                    mobwsID = 40;
+					SetCurrentMobSkill(PMobSkill);
+					SetCurrentWeaponSkill(mobwsID);
+                    break;
+                    } 					
+
+                }
+			}
+			else if (lvl > 16) {
+			m_PJobAbility = nullptr;
+			uint8 wsrandom = dsprand::GetRandomNumber(1, 10);
+            for (int i = 0; i < m_PPet->PetSkills.size(); i++) {
+                auto PMobSkill = battleutils::GetMobSkill(m_PPet->PetSkills.at(i));
+  					if (PMobSkill->getID() == 3740 && wsrandom >= 6) { //Red Lotus
+                    mobwsID = 34;
+					SetCurrentMobSkill(PMobSkill);
+					SetCurrentWeaponSkill(mobwsID);
+			        //ShowWarning("Red Lotus Blade \n");
+                    break;
+                    } 
+  					else if (PMobSkill->getID() == 3739 && wsrandom < 6) { //Fast
+                    mobwsID = 32;
+					SetCurrentMobSkill(PMobSkill);
+					SetCurrentWeaponSkill(mobwsID);
+                    break;					
+                    } 					
+
+                }
+			}				
+			else if (lvl > 4) {
+			m_PJobAbility = nullptr;
+            for (int i = 0; i < m_PPet->PetSkills.size(); i++) {
+                auto PMobSkill = battleutils::GetMobSkill(m_PPet->PetSkills.at(i));
+  					if (PMobSkill->getID() == 3739) { //Fast Blade
+                    mobwsID = 32;
+					SetCurrentMobSkill(PMobSkill);
+					SetCurrentWeaponSkill(mobwsID);
+			        //ShowWarning("Red Lotus Blade \n");
+                    break;
+                    } 					
+
+                }
+			}			
+            preparePetAbility(m_PBattleSubTarget);
+            return;
+        }
 
 
 
@@ -2031,6 +2138,7 @@ void CAIPetDummy::ActionRoaming()
 		if (m_PPet->StatusEffectContainer->HasStatusEffect(EFFECT_HEALING) == false)
 		{
 		m_PPet->StatusEffectContainer->AddStatusEffect(new CStatusEffect(EFFECT_HEALING, 0, 0, 5, 0));
+		m_PPet->animation = ANIMATION_NONE;
 		}
     }
 
@@ -2445,7 +2553,48 @@ void CAIPetDummy::ActionAttack()
 				return;	
 				}
 		 			
-	     }		
+	     }
+
+	  if (m_PPet->m_PetID == PETID_BLUE)
+		{
+		 //BLUE MAGE CHECK
+		 if (m_Tick >= m_LastBlueCheck + m_blueCheck) // Check Every 4 Seconds as universal check for blu spells
+			{
+			    int16 spellID = -1;
+				uint16 family = m_PPet->m_Family;
+				uint16 petID = m_PPet->m_PetID;
+        
+		
+				spellID = BlueSpell();
+				if (spellID != -1)
+				{
+				SetCurrentSpell(spellID);
+				m_ActionType = ACTION_MAGIC_START;
+				ActionMagicStart();
+				return;
+			    }
+		    }
+		 if (m_Tick >= m_LastChainTime + m_blueChainAffinityRecast && trustlevel >= 40 && m_PPet->health.tp > 850)  //Only use CA when above 85% TP
+			{
+			m_PWeaponSkill = nullptr;
+            int16 mobjaID = -1;			
+			for (int i = 0; i < m_PPet->PetSkills.size(); i++) {
+                    auto PMobSkill = battleutils::GetMobSkill(m_PPet->PetSkills.at(i));
+                            
+                        if (PMobSkill->getID() == 3760) { //Chain Affinity
+						    mobjaID = 78;
+                            SetCurrentMobSkill(PMobSkill);
+							SetCurrentJobAbility(mobjaID);
+							m_PBattleSubTarget = m_PPet;
+							break;
+                        }
+			        }
+				m_chainAffinityStatus = 2;	
+				preparePetAbility(m_PBattleSubTarget);
+				m_LastChainTime = m_Tick;
+				return;	
+				}						
+		}		 
 
 
 	
@@ -2586,6 +2735,13 @@ void CAIPetDummy::ActionAttack()
         ActionAbilityStart();
         return;
 	} 
+		if (m_PPet->getPetType() == PETTYPE_TRUST && m_Tick >= m_LastEngageStart + 7000 && m_PPet->m_PetID == PETID_BLUE && m_PPet->health.tp >= 1000 && m_PPet->PetSkills.size() > 0)
+    {
+		m_PBattleSubTarget = m_PBattleTarget;
+        m_ActionType = ACTION_MOBABILITY_START;
+        ActionAbilityStart();
+        return;
+	} 	
 
     m_PPathFind->LookAt(m_PBattleTarget->loc.p);
 
@@ -3589,6 +3745,605 @@ if (m_Tick >= m_LastMagicTimeHeal + m_magicHealRecast)  // Look for last magic h
  
  
 
+}
+
+
+int16 CAIPetDummy::BlueSpell()
+{
+    uint8 trustlvl = m_PPet->GetMLevel();
+	uint8 trigger = 35; // HP Trigger Threshold
+	uint8 lowHPP = 31;
+	uint8 level = m_PPet->GetMLevel();
+    int16 spellID = -1;
+	
+ CBattleEntity* master = m_PPet->PMaster;  
+ CBattleEntity* mostWounded = getWounded(trigger);
+if (m_Tick >= m_LastBlueMagicHealCast + m_blueMagicHealRecast)  // Look for last time blue magic was used
+	{
+		if (mostWounded != nullptr)
+		{
+        m_PBattleSubTarget = mostWounded;
+		if (level > 57)
+			if (m_PPet->health.mp > 71)
+				{
+				 spellID = 593; //Magic Fruit
+				}
+			else if (m_PPet->health.mp > 36)  	
+			    {
+				 spellID = 578;  // Wild Carrot
+				}
+			else 
+			    {
+				 spellID = -1;
+				} 
+		else if (level > 29)
+			if (m_PPet->health.mp > 36)  	
+			    {
+				 spellID = 578;
+				}
+			else
+			    {
+				 spellID = -1;
+				}
+		if (m_PPet->StatusEffectContainer->HasStatusEffect(EFFECT_SILENCE) == true)
+		{
+	    spellID = -1;
+		} 
+        m_blueMagicHealRecast = 8000; 
+		}
+		else
+		{
+		m_LastBlueMagicHealCast = m_Tick; // reset mtick no eligible healing spell to cast
+		m_blueMagicHealRecast = 8000;		
+       }
+	} 
+	//TODO Check for Chain Affinity here
+	else if (m_Tick >= m_LastBlueMagicCast + m_blueMagicRecast && m_PPet->StatusEffectContainer->HasStatusEffect(EFFECT_CHAIN_AFFINITY) == true && m_chainAffinityStatus == 1)  //Chain Affinity Spell Closer
+	{
+	    m_PBattleSubTarget = m_PBattleTarget;
+		uint8 blurandom = dsprand::GetRandomNumber(1, 40); //Randomizes Blu Spells for skillchain setup later?
+	    if (level >= 72)
+			if (m_PPet->health.mp > 73)  	
+			    {
+				 spellID = 611;  //Savage Blade -> Disseverment
+				}
+		else if (level >= 60)
+            if (m_PPet->health.mp > 60)  	
+			    {
+				 spellID = 560;  //RLB -> Death Scissors
+				}
+		else if (level >= 60)
+            if (m_PPet->health.mp > 40)  	
+			    {
+				 spellID = 545;  //RLB -> Sickle Slash
+				}
+		else if (level >= 40)
+            if (m_PPet->health.mp > 46)  	
+			    {
+				 spellID = 569;  //RLB -> Jet Stream
+				}	
+        m_blueMagicRecast = 20000;
+		m_chainAffinityStatus = 0;
+        m_LastBlueMagicCast = m_Tick;
+        }		
+	else if (m_Tick >= m_LastBlueMagicCast + m_blueMagicRecast && m_PPet->StatusEffectContainer->HasStatusEffect(EFFECT_CHAIN_AFFINITY) == false && 
+	m_PPet->StatusEffectContainer->HasStatusEffect(EFFECT_HASTE) == false && m_PBattleTarget->GetHPP() > 80 && trustlvl >= 48)  // See if haste should be cast
+	{
+	    m_PBattleSubTarget = m_PPet;
+	    if (m_PPet->health.mp > 28)  	
+			    {
+				 spellID = 530;
+				}
+	    else  	
+			    {
+				 spellID = -1;
+				}
+	    m_blueMagicRecast = 5000;
+        m_LastBlueMagicCast = m_Tick;
+        }		
+	
+	else if (m_Tick >= m_LastBlueMagicCast + m_blueMagicRecast && m_PPet->StatusEffectContainer->HasStatusEffect(EFFECT_CHAIN_AFFINITY) == false && m_PBattleTarget->GetHPP() < 93)  // Look for last time offensive blue magic was cast
+	{
+	    m_PBattleSubTarget = m_PBattleTarget;
+		uint8 blurandom = dsprand::GetRandomNumber(1, 40); //Randomizes Blu Spells
+        if (level >= 72)
+			if (blurandom >= 30) //Disseverment
+				if (m_PPet->health.mp > 73)  	
+			    {
+				 spellID = 611;
+				}
+				else if (m_PPet->health.mp > 60)  	
+			    {
+				 spellID = 641;
+				}
+				else if (m_PPet->health.mp > 50)  	
+			    {
+				 spellID = 554;
+				}
+				else  	
+			    {
+				 spellID = -1;
+				}
+			if (blurandom >= 20 && blurandom < 30)//Hysteric Barrage
+				if (m_PPet->health.mp > 60)  	
+			    {
+				 spellID = 641;
+				}
+				else if (m_PPet->health.mp > 50)  	
+			    {
+				 spellID = 554;
+				}
+				else  	
+			    {
+				 spellID = -1;
+				}
+			if (blurandom >= 10 && blurandom < 20)//Frenetic Rip
+				if (m_PPet->health.mp > 60)  	
+			    {
+				 spellID = 560;
+				}
+				else if (m_PPet->health.mp > 50)  	
+			    {
+				 spellID = 554;
+				}
+				else  	
+			    {
+				 spellID = -1;
+				}
+			if (blurandom >= 0 && blurandom < 10)//Death Scissors
+                if (m_PPet->health.mp > 50)  	
+			    {
+				 spellID = 554;
+				}
+				else  	
+			    {
+				 spellID = -1;
+				}					
+        if (level >= 69)
+			if (blurandom >= 30)
+				if (m_PPet->health.mp > 60)  	
+			    {
+				 spellID = 641;  //HB
+				}
+				else if (m_PPet->health.mp > 60)  	
+			    {
+				 spellID = 560;  //FR
+				}
+				else if (m_PPet->health.mp > 50)  	
+			    {
+				 spellID = 554; //DS
+				}
+				else if (m_PPet->health.mp > 40)  	
+			    {
+				 spellID = 545; //SS
+				}				
+				else  	
+			    {
+				 spellID = -1;
+				}
+			if (blurandom >= 20 && blurandom < 30)//Frenetic Rip
+				if (m_PPet->health.mp > 60)  	
+			    {
+				 spellID = 560;  //FR
+				}
+				else if (m_PPet->health.mp > 50)  	
+			    {
+				 spellID = 554; //DS
+				}
+				else if (m_PPet->health.mp > 40)  	
+			    {
+				 spellID = 545; //SS
+				}				
+				else  	
+			    {
+				 spellID = -1;
+				}
+			if (blurandom >= 10 && blurandom < 20)//Death Scissors
+                if (m_PPet->health.mp > 50)  	
+			    {
+				 spellID = 554; //DS
+				}
+				else if (m_PPet->health.mp > 40)  	
+			    {
+				 spellID = 545; //SS
+				}				
+				else  	
+			    {
+				 spellID = -1;
+				}
+			if (blurandom < 10)//Sickle Slash
+                if (m_PPet->health.mp > 40)  	
+			    {
+				 spellID = 545; //SS
+				}				
+				else  	
+			    {
+				 spellID = -1;
+				}			
+		if (level >= 63)
+		    if (blurandom >= 30)
+			    if (m_PPet->health.mp > 61)  	
+			    {
+				 spellID = 560;  //Frentic Rip
+				}
+				else if (m_PPet->health.mp > 50)  	
+			    {
+				 spellID = 554;  //Death Scissors
+				}
+			    else if (m_PPet->health.mp > 46)  	
+			    {
+				 spellID = 569;  //Jet Stream
+				}
+			    else if (m_PPet->health.mp > 40)  	
+			    {
+				 spellID = 545;  //Sickle Slash
+				}					
+				else  	
+			    {
+				 spellID = -1;
+				}				
+		    if (blurandom >= 20 && blurandom < 30)
+			    if (m_PPet->health.mp > 50)  	
+			    {
+				 spellID = 554;  //Death Scissors
+				}
+			    else if (m_PPet->health.mp > 46)  	
+			    {
+				 spellID = 569;  //Jet Stream
+				}
+			    else if (m_PPet->health.mp > 40)  	
+			    {
+				 spellID = 545;  //Sickle Slash
+				}					
+				else  	
+			    {
+				 spellID = -1;
+				}				
+		    if (blurandom >= 10 && blurandom < 20)
+			    if (m_PPet->health.mp > 46)  	
+			    {
+				 spellID = 569;  //Jet Stream
+				}
+			    else if (m_PPet->health.mp > 40)  	
+			    {
+				 spellID = 545;  //Sickle Slash
+				}					
+				else  	
+			    {
+				 spellID = -1;
+				}
+		    if (blurandom < 10)
+			    if (m_PPet->health.mp > 40)  	
+			    {
+				 spellID = 545;  //Sickle Slash
+				}					
+				else  	
+			    {
+				 spellID = -1;
+				}							
+		if (level >= 60)
+		    if (blurandom >= 30)
+			    if (m_PPet->health.mp > 50)  	
+			    {
+				 spellID = 554;  //Death Scissors
+				}
+			    else if (m_PPet->health.mp > 46)  	
+			    {
+				 spellID = 569;  //Jet Stream
+				}
+			    else if (m_PPet->health.mp > 40)  	
+			    {
+				 spellID = 545;  //Sickle Slash
+				}
+			    else if (m_PPet->health.mp > 20)  	
+			    {
+				 spellID = 519;  //Screwdriver
+				}					
+				else  	
+			    {
+				 spellID = -1;
+				}				
+		    if (blurandom >= 20 && blurandom < 30)
+                if (m_PPet->health.mp > 46)  	
+			    {
+				 spellID = 569;  //Jet Stream
+				}
+			    else if (m_PPet->health.mp > 40)  	
+			    {
+				 spellID = 545;  //Sickle Slash
+				}
+			    else if (m_PPet->health.mp > 20)  	
+			    {
+				 spellID = 519;  //Screwdriver
+				}					
+				else  	
+			    {
+				 spellID = -1;
+				}				
+		    if (blurandom >= 10 && blurandom < 20)
+                if (m_PPet->health.mp > 40)  	
+			    {
+				 spellID = 545;  //Sickle Slash
+				}
+			    else if (m_PPet->health.mp > 20)  	
+			    {
+				 spellID = 519;  //Screwdriver
+				}					
+				else  	
+			    {
+				 spellID = -1;
+				}				
+		    if (blurandom < 10)
+                if (m_PPet->health.mp > 20)  	
+			    {
+				 spellID = 519;  //Screwdriver
+				}					
+				else  	
+			    {
+				 spellID = -1;
+				}								
+		if (level >= 48)
+		    if (blurandom >= 30)
+			    if (m_PPet->health.mp > 46)  	
+			    {
+				 spellID = 569;  //Jet Stream
+				}
+			    else if (m_PPet->health.mp > 40)  	
+			    {
+				 spellID = 545;  //Sickle Slash
+				}
+			    else if (m_PPet->health.mp > 20)  	
+			    {
+				 spellID = 519;  //Screwdriver
+				}
+			    else if (m_PPet->health.mp > 15)  	
+			    {
+				 spellID = 529;  //Bludgeon
+				}					
+				else  	
+			    {
+				 spellID = -1;
+				}					
+		    if (blurandom >= 20 && blurandom < 30)
+			    if (m_PPet->health.mp > 40)  	
+			    {
+				 spellID = 545;  //Sickle Slash
+				}
+			    else if (m_PPet->health.mp > 20)  	
+			    {
+				 spellID = 519;  //Screwdriver
+				}
+			    else if (m_PPet->health.mp > 15)  	
+			    {
+				 spellID = 529;  //Bludgeon
+				}					
+				else  	
+			    {
+				 spellID = -1;
+				}				
+		    if (blurandom >= 10 && blurandom < 20)
+			    if (m_PPet->health.mp > 20)  	
+			    {
+				 spellID = 519;  //Screwdriver
+				}
+			    else if (m_PPet->health.mp > 15)  	
+			    {
+				 spellID = 529;  //Bludgeon
+				}					
+				else  	
+			    {
+				 spellID = -1;
+				}	
+		    if (blurandom < 10)
+                if (m_PPet->health.mp > 15)  	
+			    {
+				 spellID = 529;  //Bludgeon
+				}					
+				else  	
+			    {
+				 spellID = -1;
+				}				
+				
+		if (level >= 38)
+		    if (blurandom >= 30)
+			    if (m_PPet->health.mp > 46)  	
+			    {
+				 spellID = 569;  //Jet Stream
+				}
+			    else if (m_PPet->health.mp > 20)  	
+			    {
+				 spellID = 519;  //Screwdriver
+				}
+			    else if (m_PPet->health.mp > 15)  	
+			    {
+				 spellID = 529;  //Bludgeon
+				}
+			    else if (m_PPet->health.mp > 11)  	
+			    {
+				 spellID = 623;  //Head Butt
+				}					
+				else  	
+			    {
+				 spellID = -1;
+				}				
+		    if (blurandom >= 20 && blurandom < 30)
+			    if (m_PPet->health.mp > 20)  	
+			    {
+				 spellID = 519;  //Screwdriver
+				}
+			    else if (m_PPet->health.mp > 15)  	
+			    {
+				 spellID = 529;  //Bludgeon
+				}
+			    else if (m_PPet->health.mp > 11)  	
+			    {
+				 spellID = 623;  //Head Butt
+				}					
+				else  	
+			    {
+				 spellID = -1;
+				}
+            if (blurandom >= 10 && blurandom < 20)
+			    if (m_PPet->health.mp > 15)  	
+			    {
+				 spellID = 529;  //Bludgeon
+				}
+			    else if (m_PPet->health.mp > 11)  	
+			    {
+				 spellID = 623;  //Head Butt
+				}					
+				else  	
+			    {
+				 spellID = -1;
+				}				
+            if (blurandom < 10)
+			    if (m_PPet->health.mp > 11)  	
+			    {
+				 spellID = 623;  //Head Butt
+				}					
+				else  	
+			    {
+				 spellID = -1;
+				}				
+		if (level >= 26)
+		    if (blurandom >= 30)
+			    if (m_PPet->health.mp > 20)  	
+			    {
+				 spellID = 519;  //Screwdriver
+				}
+			    else if (m_PPet->health.mp > 15)  	
+			    {
+				 spellID = 529;  //Bludgeon
+				}
+			    else if (m_PPet->health.mp > 11)  	
+			    {
+				 spellID = 623;  //Head Butt
+				}			
+				else if (m_PPet->health.mp > 4)  	
+			    {
+				 spellID = 551;  //Power Attack
+				}			
+				else  	
+			    {
+				 spellID = -1;
+				}
+		    if (blurandom >= 20 && blurandom < 30)
+                if (m_PPet->health.mp > 15)  	
+			    {
+				 spellID = 529;  //Bludgeon
+				}
+			    else if (m_PPet->health.mp > 11)  	
+			    {
+				 spellID = 623;  //Head Butt
+				}			
+				else if (m_PPet->health.mp > 4)  	
+			    {
+				 spellID = 551;  //Power Attack
+				}			
+				else  	
+			    {
+				 spellID = -1;
+				}
+		    if (blurandom >= 10 && blurandom < 20)
+                if (m_PPet->health.mp > 11)  	
+			    {
+				 spellID = 623;  //Head Butt
+				}			
+				else if (m_PPet->health.mp > 4)  	
+			    {
+				 spellID = 551;  //Power Attack
+				}			
+				else  	
+			    {
+				 spellID = -1;
+				}
+		    if (blurandom < 10)
+                if (m_PPet->health.mp > 4)  	
+			    {
+				 spellID = 551;  //Power Attack
+				}			
+				else  	
+			    {
+				 spellID = -1;
+				}						
+		if (level >= 18)
+		    if (blurandom >= 25)
+			    if (m_PPet->health.mp > 15)  	
+			    {
+				 spellID = 529;  //Bludgeon
+				}
+			    else if (m_PPet->health.mp > 11)  	
+			    {
+				 spellID = 623;  //Head Butt
+				}			
+				else if (m_PPet->health.mp > 4)  	
+			    {
+				 spellID = 551;  //Power Attack
+				}			
+				else  	
+			    {
+				 spellID = -1;
+				}	
+            if (blurandom < 25 && blurandom >=10)
+                if (m_PPet->health.mp > 11)  	
+			    {
+				 spellID = 623;  //Head Butt
+				}			
+				else if (m_PPet->health.mp > 4)  	
+			    {
+				 spellID = 551;  //Power Attack
+				}			
+				else  	
+			    {
+				 spellID = -1;
+				}
+            if (blurandom < 10)
+                if (m_PPet->health.mp > 4)  	
+			    {
+				 spellID = 551;  //Power Attack
+				}			
+				else  	
+			    {
+				 spellID = -1;
+				}					
+		if (level >= 12)
+		    if (blurandom >= 20)
+			    if (m_PPet->health.mp > 11)  	
+			    {
+				 spellID = 623;  //Head Butt
+				}			
+				else if (m_PPet->health.mp > 4)  	
+			    {
+				 spellID = 551;  //Power Attack
+				}
+				else  	
+			    {
+				 spellID = -1;
+				}	
+		    if (blurandom < 20)
+                if (m_PPet->health.mp > 4)  	
+			    {
+				 spellID = 551;  //Power Attack
+				}			
+				else  	
+			    {
+				 spellID = -1;
+				}					
+		if (level >= 5)
+				if (m_PPet->health.mp > 4)  	
+			    {
+				 spellID = 551;  //Power Attack
+				}			
+				else  	
+			    {
+				 spellID = -1;
+				}
+				
+				
+		m_blueMagicRecast = 20000;
+        m_LastBlueMagicCast = m_Tick;
+    }	
+	return spellID;
 }
 
 

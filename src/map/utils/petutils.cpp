@@ -1006,7 +1006,7 @@ namespace petutils
 		PAlly->health.maxmp = (int16)(22 + (3.66f*(plvl * 3.66f))); 
 		PAlly->UpdateHealth();
         PAlly->health.mp = PAlly->health.maxmp;
-		   if (plvl > 49){
+		   if (plvl > 24){
 		        PAlly->setModifier(MOD_REFRESH, 1);
 		   }
 		}
@@ -1096,6 +1096,9 @@ namespace petutils
 				PAlly->setModifier(MOD_DOUBLE_ATTACK, 10);
 
 		   }
+		   if (plvl > 29){
+				PAlly->setModifier(MOD_REFRESH, 1);
+		   }
 		}
 		else if (PetID == PETID_EXCENMILLE)
 		{
@@ -1125,6 +1128,52 @@ namespace petutils
 			  PAlly->setModifier(MOD_STORETP, 15); // Small Store TP Bonus
 		    }
 		}
+		else if (PetID == PETID_BLUE)
+		{
+		uint16 bmoddatt = (PAlly->GetMLevel() * 1.0);
+		uint16 bmoddacc = (PAlly->GetMLevel() * 0.5);
+		uint16 bstr = (PAlly->GetMLevel() * 0.5);
+		uint16 bdex = (PAlly->GetMLevel() * 0.4);
+		PAlly->setModifier(MOD_STR, bstr); //added str for spells
+		PAlly->setModifier(MOD_DEX, bdex); //added dex for spells
+		PAlly->setModifier(MOD_ACC, battleutils::GetMaxSkill(SKILL_GAX, JOB_WAR, PAlly->GetMLevel()) + bmoddacc); //A+ Acc
+		PAlly->setModifier(MOD_EVA, battleutils::GetMaxSkill(SKILL_SYH, JOB_WAR, PAlly->GetMLevel())); //B+ Evasion
+		PAlly->setModifier(MOD_ATT, battleutils::GetMaxSkill(SKILL_GAX, JOB_WAR, PAlly->GetMLevel()) + bmoddatt);// A+ Attack
+		PAlly->setModifier(MOD_DEF, battleutils::GetMaxSkill(SKILL_POL, JOB_WAR, PAlly->GetMLevel()));// B- Defense
+		PAlly->setModifier(MOD_BLUE, battleutils::GetMaxSkill(SKILL_GAX, JOB_WAR, PAlly->GetMLevel()));// A+ Blue Magic
+		PAlly->setModifier(MOD_DUAL_WIELD, 20); // Dual Wield
+		PAlly->m_Weapons[SLOT_MAIN]->setDamage(floor(PAlly->GetMLevel()*0.54f));// D:40 @75
+		PAlly->m_Weapons[SLOT_MAIN]->setDelay(floor(1000.0f*(240.0f / 60.0f))); //240 delay
+        PAlly->health.maxmp = (int16)(22 + (3.66f*(plvl * 3.66f))); 
+		PAlly->UpdateHealth();
+        PAlly->health.mp = PAlly->health.maxmp;
+		   if (plvl > 74){
+				PAlly->setModifier(MOD_DOUBLE_ATTACK, 3);
+		   }
+		   if (plvl > 60){
+				PAlly->setModifier(MOD_REFRESH, 1);
+		   }
+		}
+		else if (PetID == PETID_ADELHIED)
+		{
+		uint16 moddatt = (PAlly->GetMLevel() * 1.0);
+		uint16 moddacc = (PAlly->GetMLevel() * 0.5);
+		PAlly->setModifier(MOD_ACC, battleutils::GetMaxSkill(SKILL_POL, JOB_WAR, PAlly->GetMLevel()) + moddacc); //B+ Acc
+		PAlly->setModifier(MOD_EVA, battleutils::GetMaxSkill(SKILL_POL, JOB_WAR, PAlly->GetMLevel())); //B+ Evasion
+		PAlly->setModifier(MOD_ATT, battleutils::GetMaxSkill(SKILL_POL, JOB_WAR, PAlly->GetMLevel()) + moddatt);// B+ Attack
+		PAlly->setModifier(MOD_DEF, battleutils::GetMaxSkill(SKILL_POL, JOB_WAR, PAlly->GetMLevel()));// B- Defense
+		PAlly->setModifier(MOD_HEALING, battleutils::GetMaxSkill(SKILL_H2H, JOB_WAR, PAlly->GetMLevel()));// D Healing
+		PAlly->setModifier(MOD_DIVINE, battleutils::GetMaxSkill(SKILL_H2H, JOB_WAR, PAlly->GetMLevel()));// D Divine
+		PAlly->setModifier(MOD_ELEMENTAL, battleutils::GetMaxSkill(SKILL_H2H, JOB_WAR, PAlly->GetMLevel()));// D Elemental
+		PAlly->setModifier(MOD_ENFEEBLING, battleutils::GetMaxSkill(SKILL_H2H, JOB_WAR, PAlly->GetMLevel()));// D Enfeebling		
+		PAlly->m_Weapons[SLOT_MAIN]->setDamage(floor(PAlly->GetMLevel()*0.49f));// D:37 @75
+		PAlly->m_Weapons[SLOT_MAIN]->setDelay(floor(1000.0f*(340.0f / 60.0f))); //340 delay	
+		PAlly->health.maxmp = (int16)(22 + (3.46f*(plvl * 3.46f))); 
+        PAlly->health.mp = PAlly->health.maxmp;
+		 if (plvl > 24){
+				PAlly->setModifier(MOD_REFRESH, 1);
+		   }
+		}		
 		
 		
         PAlly->PBattleAI = new CAIPetDummy(PAlly);
@@ -1477,7 +1526,7 @@ namespace petutils
 	   
     CPetEntity* LoadAlly(CBattleEntity* PMaster, uint32 PetID, bool spawningFromZone)
     {
-	    ShowWarning(CL_GREEN"LOAD ALLY \n" CL_RESET);
+	    //ShowWarning(CL_GREEN"LOAD ALLY \n" CL_RESET);
         DSP_DEBUG_BREAK_IF(PetID >= g_PPetList.size());
         Pet_t* PPetData = g_PPetList.at(PetID);
         PETTYPE petType = PETTYPE_TRUST;

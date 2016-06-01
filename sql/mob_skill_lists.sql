@@ -2491,3 +2491,9 @@ INSERT INTO `mob_skill_lists` VALUES ('Excenmille',735,3789); -- Double Thrust
 INSERT INTO `mob_skill_lists` VALUES ('Excenmille',735,3790); -- Leg Sweep
 INSERT INTO `mob_skill_lists` VALUES ('Excenmille',735,3791); -- Penta Thrus
 INSERT INTO `mob_skill_lists` VALUES ('Excenmille',735,3792); -- Wheeling Thrust
+
+INSERT INTO `mob_skill_lists` VALUES ('Blue_Mage',736,3739); -- Fast Blade
+INSERT INTO `mob_skill_lists` VALUES ('Blue_Mage',736,3740); -- Red Lotus Blade
+INSERT INTO `mob_skill_lists` VALUES ('Blue_Mage',736,3742); -- Vorpal Blade
+INSERT INTO `mob_skill_lists` VALUES ('Blue_Mage',736,3744); -- Savage Blade
+INSERT INTO `mob_skill_lists` VALUES ('Blue_Mage',736,3760); -- Chain Affinity
