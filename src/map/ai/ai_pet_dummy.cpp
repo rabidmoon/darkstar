@@ -94,7 +94,7 @@ CAIPetDummy::CAIPetDummy(CPetEntity* PPet)
 	m_exeHjumpRecast = 120000;
 	m_exeSjumpRecast = 180000;
 	m_ayameThirdEyeRecast = 45000;
-	m_ayameSekkaRecast = 60000;  //300000;
+	m_ayameSekkaRecast = 300000;  //300000;
 	m_blueMagicRecast = 20000; //20 seconds Blue Magic Casting
 	m_sekkaStatus = 0; //Sekka off 0; Sekka Closing WS 1; Sekka Opening SC 2;
 	
