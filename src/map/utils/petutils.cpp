@@ -36,6 +36,7 @@ This file is part of DarkStar-server source code.
 #include "petutils.h"
 #include "zoneutils.h"
 #include "../entities/mobentity.h"
+#include "../entities/charentity.h"
 #include "../ability.h"
 #include "../modifier.h"
 
@@ -940,8 +941,10 @@ namespace petutils
     void SpawnAlly(CBattleEntity* PMaster, uint32 PetID, bool spawningFromZone)
     {
         //Check to see if in full party
-		ShowWarning(CL_GREEN"SPAWN ALLY \n" CL_RESET);
+		//ShowWarning(CL_GREEN"SPAWN ALLY \n" CL_RESET);
+		CCharEntity* PChar = (CCharEntity*)PMaster;
         uint16 partySize = PMaster->PAlly.size();
+		int32 trustsize = charutils::GetVar(PChar, "Trustsize");
 		
         if (PMaster->PParty != nullptr)
         {
@@ -954,14 +957,24 @@ namespace petutils
 		else
         {
 			partySize += 1;
-        }        
-        if (partySize > 6)
+        } 
+        
+		//Can't summon more than 4 Trusts
+        if (partySize > 7){
             return;
-        
-        
-        if (PMaster->PAlly.size() > 2)
+        }
+		
+        if (PMaster->PAlly.size() > 2 && trustsize == 0)
         {
+		    ShowWarning(CL_RED"Can't summon more than 3 Trusts \n" CL_RESET);
             PMaster->PAlly[2]->PBattleAI->SetCurrentAction(ACTION_FALL);
+            PMaster->PAlly.pop_back();
+        }		
+        
+        else if (PMaster->PAlly.size() > 3 && trustsize == 1)
+        {
+		    ShowWarning(CL_RED"Maximum Trusts Spawned \n" CL_RESET);
+            PMaster->PAlly[3]->PBattleAI->SetCurrentAction(ACTION_FALL);
             PMaster->PAlly.pop_back();
         }
         if (PMaster->PParty == nullptr)
@@ -1164,8 +1177,8 @@ namespace petutils
 		PAlly->setModifier(MOD_DEF, battleutils::GetMaxSkill(SKILL_POL, JOB_WAR, PAlly->GetMLevel()));// B- Defense
 		PAlly->setModifier(MOD_HEALING, battleutils::GetMaxSkill(SKILL_H2H, JOB_WAR, PAlly->GetMLevel()));// D Healing
 		PAlly->setModifier(MOD_DIVINE, battleutils::GetMaxSkill(SKILL_H2H, JOB_WAR, PAlly->GetMLevel()));// D Divine
-		PAlly->setModifier(MOD_ELEMENTAL, battleutils::GetMaxSkill(SKILL_H2H, JOB_WAR, PAlly->GetMLevel()));// D Elemental
-		PAlly->setModifier(MOD_ENFEEBLING, battleutils::GetMaxSkill(SKILL_H2H, JOB_WAR, PAlly->GetMLevel()));// D Enfeebling		
+		PAlly->setModifier(MOD_ELEM, battleutils::GetMaxSkill(SKILL_H2H, JOB_WAR, PAlly->GetMLevel()));// D Elemental
+		PAlly->setModifier(MOD_ENFEEBLE, battleutils::GetMaxSkill(SKILL_H2H, JOB_WAR, PAlly->GetMLevel()));// D Enfeebling		
 		PAlly->m_Weapons[SLOT_MAIN]->setDamage(floor(PAlly->GetMLevel()*0.49f));// D:37 @75
 		PAlly->m_Weapons[SLOT_MAIN]->setDelay(floor(1000.0f*(340.0f / 60.0f))); //340 delay	
 		PAlly->health.maxmp = (int16)(22 + (3.46f*(plvl * 3.46f))); 

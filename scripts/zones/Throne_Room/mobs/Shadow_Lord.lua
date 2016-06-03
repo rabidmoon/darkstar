@@ -92,6 +92,9 @@ function onMobDeath(mob,killer)
 		killer:setVar("mobid",mob:getID());
 	else
 		killer:addTitle(SHADOW_BANISHER);
+		if (killer:getVar("Trustsize") < 1)
+		killer:setVar("Trustsize",1)
+		end
 	end
 	--reset everything on death
 	mob:AnimationSub(0);
