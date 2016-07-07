@@ -21,11 +21,17 @@ require("scripts/zones/Lower_Jeuno/TextIDs");
 -----------------------------------
 
 function onTrade(player,npc,trade)
-	if (player:getQuestStatus(JEUNO,THE_REQUIEM) == QUEST_ACCEPTED and player:getVar("TheRequiemCS") == 2) then 
+    if (trade:getGil(1000) and player:getMainJob() == 10 and player:getMainLvl() >= 5 and player:getVar("BRDJudgesBow") == 0) then
+	player:setVar("BRDJudgesBow", 1);
+	player:messageSpecial(ITEM_OBTAINED,17174);
+    player:PrintToPlayer("Bki Tbujhja : Remember, only Bards can use this.  If you need special arrows speak to Oboro in Port.", 0xD); 
+    player:addItem(17174,1,750,31,751,24); 
+	elseif (player:getQuestStatus(JEUNO,THE_REQUIEM) == QUEST_ACCEPTED and player:getVar("TheRequiemCS") == 2) then 
 		if (trade:hasItemQty(4154,1) == true and trade:getItemCount() == 1) then 
 			player:startEvent(0x0097); -- After trade Holy water for "The Requiem"
 		end
 	end
+	
 end; 
 
 -----------------------------------
@@ -40,6 +46,8 @@ function onTrigger(player,npc)
 		player:startEvent(0x00b5); -- For the quest "The Old Monument"
 	elseif (player:getQuestStatus(JEUNO,A_MINSTREL_IN_DESPAIR) == QUEST_COMPLETED and player:getVar("PathOfTheBard_Event") == 0) then
 		player:startEvent(0x00b6); -- Start Quest "Path of the Bard" (with var)
+	elseif (player:getMainJob() == 10 and player:getMainLvl() >= 5 and player:getVar("BRDJudgesBow") == 0) then
+    player:PrintToPlayer("Bki Tbujhja : Trade me 1000g and I'll craft you a special Bow", 0xD);  	
 	elseif (player:getMainJob() == 10 and player:getMainLvl() >= 50 and PainfulMemory == QUEST_COMPLETED and TheRequiem == QUEST_AVAILABLE) then 
 		if (player:getVar("TheRequiemCS") == 0) then
 			player:startEvent(0x0091); -- Long dialog & Start Quest "The Requiem"
