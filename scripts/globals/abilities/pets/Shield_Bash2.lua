@@ -27,24 +27,16 @@ end;
 
 function onPetAbility(target, pet, skill)
 
-    local shieldSize = pet:getShieldSize();
-    local damage = 0;
 
     local chance = 90;
-    damage = pet:getMod(MOD_SHIELD_BASH);
-
-    if (shieldSize == 1 or shieldSize == 5) then
-        damage = 25 + damage;
-    elseif (shieldSize == 2) then
-        damage = 38 + damage;
-    elseif (shieldSize == 3) then
-        damage = 65 + damage;
-    elseif (shieldSize == 4) then
-        damage = 90 + damage;
-    end
 
 
-    damage = math.floor(damage);
+
+    local damage = 65;
+    
+
+
+   
  
 
     chance = chance + (pet:getMainLvl() - target:getMainLvl())*5;

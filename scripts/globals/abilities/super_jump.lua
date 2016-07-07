@@ -22,4 +22,5 @@ end;
 -----------------------------------
 
 function onUseAbility(player,target,ability)
+   return 0;
 end;
