@@ -92,6 +92,11 @@ function onTrigger(player,npc)
     else
         player:startEvent(0x000F);
     end
+	
+	if (player:getMainJob() == 20) and (player:hasSpell(968) == false) and (player:getMainLvl() >= 15) then
+	player:addItem(10153);
+    player:messageSpecial(ITEM_OBTAINED,10153);
+	end
     
 end; 
 

@@ -35,8 +35,8 @@ stock =
 	0x1269,7074,   -- Scroll of Enwater
 	0x1262,100800, -- Scroll of Enlight
 	0x12FB,9000,   -- Scroll of Shock Spikes
-	0x09C5,29950,  -- Black Puppet Turban
-	0x09C6,29950   -- White Puppet Turban
+	0x09C5,10950,  -- Black Puppet Turban
+	0x09C6,10950   -- White Puppet Turban
 }
  
 showShop(player, STATIC, stock);
