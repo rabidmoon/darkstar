@@ -53,7 +53,7 @@ a2 = 1;
 end
  
 local a3 = 0;
-if (player:hasSpell(13) == true) then
+if (player:hasSpell(12) == true) then
 a3 = 1;
 end
 
@@ -63,10 +63,30 @@ a4 = 1;
 end
 
 local a5 = 0; -- Level 75 Nin, create a list in the player.lua table that checks for all jobs and give them a playervar
+if (player:getVar("NIN75") == 1) then
+a5 = 1;
+end
+
 local a6 = 0;
+if (player:hasSpell(13) == true) then
+a6 = 1;
+end
+
 local a7 = 0;
+if (player:getQuestStatus(OUTLANDS,BUGI_SODEN) == QUEST_COMPLETED) then
+a7 = 1;
+end
+
 local a8 = 0;
+if (player:getQuestStatus(OUTLANDS,TRUE_WILL) == QUEST_COMPLETED) then
+a8 = 1;
+end
+
 local a9 = 0;
+if (player:hasSpell(140) == true) then
+a9 = 1;
+end
+
 local a10 = 0;
 
 local plvl = player:getMainLvl();

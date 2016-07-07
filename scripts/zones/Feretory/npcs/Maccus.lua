@@ -215,9 +215,9 @@ if (player:getVar("FerretoryPlantoidComplete") == 1) then
 	
 				---------------- Start Ferretory Quest #10 -------------------	
 	if (player:getVar("FerretoryQuest75") == 10) and (plvl > 74) then
-	player:PrintToPlayer("Maccus : Defeat 150 experience yielding Luminian or Lumorian type monsters.  I'll give you a nice surpise.", 0xD);  -- give the task for the quest
+	player:PrintToPlayer("Maccus : Defeat 200 experience yielding Beastmen.  I'll give you a nice surpise.", 0xD);  -- give the task for the quest
 	player:setVar("FerretoryQuest75noaura",10); -- enable the quest
-	player:setVar("FerretoryLuminian",150); -- set the quest monster number needed to defeat
+	player:setVar("FerretoryBeastmen",200); -- set the quest monster number needed to defeat
 	end
 	
 	if (player:getVar("FerretoryLv75Complete") == 10) then
@@ -225,7 +225,9 @@ if (player:getVar("FerretoryPlantoidComplete") == 1) then
 	player:setVar("FerretoryLv75Complete",0);
 	player:setVar("FerretoryQuest75",11); -- New Non Aura Quests
 	player:setVar("infamymult",10);
+	player:setVar("Trustsize",1);
 	player:PrintToPlayer("Your bonus infamy multiplier has increased!", 0x15);
+    player:PrintToPlayer("You now have the ability to summon a 4th Trust!", 0x15);
 	end	
 	
 			  ---------------- Start Ferretory Quest #11 -------------------	
