@@ -25,6 +25,8 @@ end;
 function onTrigger(player,npc)
 
     local IPpoint = player:getCurrency("imperial_standing");
+	
+
 
 	if (player:getCurrentMission(TOAU) == IMMORTAL_SENTRIES) then
 		if (player:hasKeyItem(SUPPLIES_PACKAGE)) then
@@ -41,6 +43,11 @@ function onTrigger(player,npc)
 		end
 	else
 		player:startEvent(0x0004);
+	end
+	
+	if (player:getMainJob() == 16) and (player:hasSpell(991) == false) and (player:getMainLvl() >= 15) then
+	player:addItem(10183);
+    player:messageSpecial(ITEM_OBTAINED,10183);
 	end
 
 end;
