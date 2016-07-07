@@ -507,6 +507,123 @@ end
 end
 
 
+--------------------------------------------------------
+--          BRD TRADE JUDGES BOW 17174                --
+--------------------------------------------------------
+
+if (job == 10 and (trade:hasItemQty(17174, 1)) and level >= 15 and (player:getVar("BRDJudgesBow") == 1)) then
+            -- Complete the trade..
+            player:tradeComplete();
+			player:PrintToPlayer("Oboro : Remember after level 45 I require 5000g per upgrade for this bow!", 0xD);
+			player:addItem(17174,1,750,31,751,18); -- DMG -82
+            player:setVar("BRDJudgesBow",2);
+			player:messageSpecial(ITEM_OBTAINED, 17174);
+end
+    if (job == 10 and (trade:hasItemQty(17174, 1)) and level >= 25 and (player:getVar("BRDJudgesBow") == 2)) then
+            -- Complete the trade..
+            player:tradeComplete();
+			player:PrintToPlayer("Oboro : Remember after level 45 I require 5000g per upgrade for this bow!", 0xD);
+			player:addItem(17174,1,750,31,751,9);  -- DMG -73
+            player:setVar("BRDJudgesBow",3);
+			player:messageSpecial(ITEM_OBTAINED, 17174);
+end
+    if (job == 10 and (trade:hasItemQty(17174, 1)) and level >= 35 and (player:getVar("BRDJudgesBow") == 3)) then
+            -- Complete the trade..
+            player:tradeComplete();
+			player:PrintToPlayer("Oboro : Remember after level 45 I require 5000g per upgrade for this bow!", 0xD);
+			player:addItem(17174,1,750,31,751,1);  -- DMG -64
+            player:setVar("BRDJudgesBow",4);
+			player:messageSpecial(ITEM_OBTAINED, 17174);
+end
+    if (job == 10 and (trade:hasItemQty(17174, 1)) and level >= 45 and (player:getVar("BRDJudgesBow") == 4)) then
+            -- Complete the trade..
+            player:tradeComplete();
+			player:PrintToPlayer("Oboro : Remember after level 45 I require 5000g per upgrade for this bow!", 0xD);
+			player:addItem(17174,1,750,24,751,0);  -- DMG -58
+            player:setVar("BRDJudgesBow",5);
+			player:messageSpecial(ITEM_OBTAINED, 17174);
+end	
+    if (job == 10 and (trade:hasItemQty(17174, 1)) and level >= 55 and (player:getVar("BRDJudgesBow") == 5) and trade:getGil() == 5000) then
+            -- Complete the trade..
+            player:tradeComplete();
+			player:PrintToPlayer("Oboro : Next time I require 5000g to upgrade this bow!", 0xD);
+			player:addItem(17174,1,750,16,751,0,35,5);  -- DMG -48/Magic Acc+5
+            player:setVar("BRDJudgesBow",6);
+			player:messageSpecial(ITEM_OBTAINED, 17174);
+	elseif (job == 10 and (trade:hasItemQty(17174, 1)) and level >= 55 and (player:getVar("BRDJudgesBow") == 5)) then
+			player:PrintToPlayer("Oboro : I require 5000g to upgrade this bow!", 0xD);	
+end	
+    if (job == 10 and (trade:hasItemQty(17174, 1)) and level >= 65 and (player:getVar("BRDJudgesBow") == 6) and trade:getGil() == 5000) then
+            -- Complete the trade..
+            player:tradeComplete();
+			player:PrintToPlayer("Oboro : Next time I require 10000g to upgrade this bow!", 0xD);
+			player:addItem(17174,1,750,6,751,0,35,7);  -- DMG -39
+            player:setVar("BRDJudgesBow",7);
+			player:messageSpecial(ITEM_OBTAINED, 17174);
+	elseif (job == 10 and (trade:hasItemQty(17174, 1)) and level >= 65 and (player:getVar("BRDJudgesBow") == 6)) then
+			player:PrintToPlayer("Oboro : I require 5000g to upgrade this bow!", 0xD);		
+end	
+    if (job == 10 and (trade:hasItemQty(17174, 1)) and level >= 75 and (player:getVar("BRDJudgesBow") == 7)) and trade:getGil(10000) then
+            -- Complete the trade..
+            player:tradeComplete();
+			player:PrintToPlayer("Oboro : Here you go!  Not much else I can do at this time.", 0xD);
+			player:addItem(17174,1,750,31,35,10,27,19);  -- DMG -32
+            player:setVar("BRDJudgesBow",8);
+			player:messageSpecial(ITEM_OBTAINED, 17174);
+	elseif (job == 10 and (trade:hasItemQty(17174, 1)) and level >= 75 and (player:getVar("BRDJudgesBow") == 7)) then
+			player:PrintToPlayer("Oboro : I require 10000g to upgrade this bow!", 0xD);		
+end	
+		
+			
+  
+ --------------------------------------------------------
+--          BRD TRADE JUDGES ARROW 17324              --
+--------------------------------------------------------   
+local tcount = trade:getItemQty(17330);
+
+if (tcount > 0 and job == 10 and level >=65 and trade:hasItemQty(17330,tcount)) then
+          player:tradeComplete();
+		  player:addItem(17326,tcount,751,31,212,9)
+          player:PrintToPlayer("Oboro : Here you go!  Not much else I can do at this time.", 0xD);
+		  player:messageSpecial(ITEM_OBTAINED, 17326);
+elseif(tcount > 0 and job == 10 and level >=55 and trade:hasItemQty(17330,tcount)) then
+          player:tradeComplete();
+		  player:addItem(17326,tcount,750,4,751,31)
+          player:PrintToPlayer("Oboro : Here you go!", 0xD);
+		  player:messageSpecial(ITEM_OBTAINED, 17326);
+elseif(tcount > 0 and job == 10 and level >=45 and trade:hasItemQty(17330,tcount)) then
+          player:tradeComplete();
+		  player:addItem(17326,tcount,750,7,751,31)
+          player:PrintToPlayer("Oboro : Here you go!", 0xD);
+		  player:messageSpecial(ITEM_OBTAINED, 17326);			  
+elseif(tcount > 0 and job == 10 and level >=55 and trade:hasItemQty(17330,tcount)) then
+          player:tradeComplete();
+		  player:addItem(17326,tcount,750,10,751,31)
+          player:PrintToPlayer("Oboro : Here you go!", 0xD);
+		  player:messageSpecial(ITEM_OBTAINED, 17326);	
+elseif(tcount > 0 and job == 10 and level >=35 and trade:hasItemQty(17330,tcount)) then
+          player:tradeComplete();
+		  player:addItem(17326,tcount,750,14,751,31)
+          player:PrintToPlayer("Oboro : Here you go!", 0xD);
+		  player:messageSpecial(ITEM_OBTAINED, 17326);	
+elseif(tcount > 0 and job == 10 and level >=25 and trade:hasItemQty(17330,tcount)) then
+          player:tradeComplete();
+		  player:addItem(17326,tcount,750,17,751,31)
+          player:PrintToPlayer("Oboro : Here you go!", 0xD);
+		  player:messageSpecial(ITEM_OBTAINED, 17326);	
+elseif(tcount > 0 and job == 10 and level >=15 and trade:hasItemQty(17330,tcount)) then
+          player:tradeComplete();
+		  player:addItem(17326,tcount,750,22,751,31)
+          player:PrintToPlayer("Oboro : Here you go!", 0xD);
+		  player:messageSpecial(ITEM_OBTAINED, 17326);	
+elseif(tcount > 0 and job == 10 and level >=5 and trade:hasItemQty(17330,tcount)) then
+          player:tradeComplete();
+		  player:addItem(17326,tcount,750,29,751,31)
+          player:PrintToPlayer("Oboro : Here you go!", 0xD);
+		  player:messageSpecial(ITEM_OBTAINED, 17326);
+end
+		  
+
 
 --------------------------------------------------------
 --      RNG TRADE SNIPING BOW 17188                   --

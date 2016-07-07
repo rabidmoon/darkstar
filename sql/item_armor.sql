@@ -6889,7 +6889,7 @@ INSERT INTO `item_armor` VALUES (17167,'royal_archers_longbow',10,0,3265,37,0,0,
 INSERT INTO `item_armor` VALUES (17170,'speed_bow',38,0,7665,46,0,0,4,0);
 INSERT INTO `item_armor` VALUES (17172,'wrapped_bow_+1',24,0,7665,43,0,0,4,0);
 INSERT INTO `item_armor` VALUES (17173,'war_bow_+1',50,0,3265,33,0,0,4,0);
-INSERT INTO `item_armor` VALUES (17174,'judges_bow',1,0,4194303,40,0,0,4,0);
+INSERT INTO `item_armor` VALUES (17174,'judges_bow',1,0,512,40,0,1,4,0);
 INSERT INTO `item_armor` VALUES (17175,'shortbow_+1',1,0,7665,50,0,0,4,0);
 INSERT INTO `item_armor` VALUES (17176,'self_bow_+1',7,0,7665,40,0,0,4,0);
 INSERT INTO `item_armor` VALUES (17177,'longbow_+1',5,0,3265,37,0,0,4,0);
@@ -7041,7 +7041,7 @@ INSERT INTO `item_armor` VALUES (17322,'fire_arrow',45,0,7665,0,0,0,8,0);
 INSERT INTO `item_armor` VALUES (17323,'ice_arrow',45,0,7665,0,0,0,8,0);
 INSERT INTO `item_armor` VALUES (17324,'lightning_arrow',45,0,7665,0,0,0,8,0);
 INSERT INTO `item_armor` VALUES (17325,'kabura_arrow',70,0,7665,0,0,0,8,0);
-INSERT INTO `item_armor` VALUES (17326,'judges_arrow',1,0,4194303,0,0,0,8,0);
+INSERT INTO `item_armor` VALUES (17326,'judges_arrow',1,0,512,0,0,1,8,0);
 INSERT INTO `item_armor` VALUES (17327,'grand_knights_arrow',60,0,7665,0,0,0,8,0);
 INSERT INTO `item_armor` VALUES (17328,'gold_musketeers_bolt',60,0,1153,0,0,0,8,0);
 INSERT INTO `item_armor` VALUES (17329,'patriarch_protectors_arrow',60,0,7665,0,0,0,8,0);
