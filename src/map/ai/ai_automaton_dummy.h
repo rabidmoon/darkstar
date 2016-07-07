@@ -82,6 +82,7 @@ private:
     void ActionFall();
     void ActionAttack();
 	void ActionSpawn();
+	void ActionRoaming();
 	void ActionAbilityStart();
 	void ActionAbilityFinish();
 	void ActionMagicStart();
