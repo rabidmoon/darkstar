@@ -27,7 +27,7 @@ function onMobDeathEx(mob, killer, isKillShot, isWeaponSkillKill)
 	local killa = killer:getVar("FerretoryUndead");
 	local killb = killer:getVar("FerretoryArcana");
 	local killc = killer:getVar("FerretoryDragonDemon");
-	local killd = killer:getVar("FerretoryLuminian");
+	local killd = killer:getVar("FerretoryBeastmen");
 	local job = killer:getMainJob();
 	local ferretoryblmquest = killer:getVar("FerretoryBLM"); -- turns quest on
 	local ferretoryblmkills = killer:getVar("FerretoryBLMkills"); -- sets kill number
@@ -237,15 +237,15 @@ end
 		end	
 end	
 
-	-------------------- Ferretory Quest #10 (Luminian/Lumorian) -----------------------
+	-------------------- Ferretory Quest #10 (Beastmen) -----------------------
 	
-	if ((mobfamily == 15) or (mobfamily == 16)) and (killer:getVar("FerretoryQuest75") == 10) and (mob:checkBaseExp()) then  -- check for Birds, check if quest is active, and check if the level difference is less than 10
-		if  (killer:getVar("FerretoryLuminian")) > 0 then  -- if the kills needed are greater than 0
-		killer:setVar("FerretoryLuminian",killd - 1);  -- Subtract kill
-		killd = killer:getVar("FerretoryLuminian");
-		if (killer:getVar("FerretoryLuminian") > 0) then 
+	if ((mobfamily == 7) and (killer:getVar("FerretoryQuest75") == 10) and (mob:checkBaseExp())) then 
+		if (killer:getVar("FerretoryBeastmen")) > 0 then  -- if the kills needed are greater than 0
+		killer:setVar("FerretoryBeastmen",killd - 1);  -- Subtract kill
+		killd = killer:getVar("FerretoryBeastmen");
+		if (killer:getVar("FerretoryBeastmen") > 0) then 
 		killer:PrintToPlayer("Feretory Quest #10 Objectives Remaining: " ..killd..".", 0x15);  -- Print objectives remaining
-		else if (killer:getVar("FerretoryLuminian") == 0) then  -- check to see kills have been completed
+		else if (killer:getVar("FerretoryBeastmen") == 0) then  -- check to see kills have been completed
 		killer:PrintToPlayer("You have completed your objective.  Please report to Maccus for your reward", 0x15);  -- Print message to player
 		killer:setVar("FerretoryLv75Complete",10);
 		end

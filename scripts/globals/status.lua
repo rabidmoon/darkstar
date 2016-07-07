@@ -739,6 +739,12 @@ EFFECT_SKILLCHAIN               = 799
 EFFECT_DYNAMIS                  = 800
 EFFECT_MEDITATE                 = 801 -- Dummy effect for SAM Meditate JA
 EFFECT_RESTING_BONUS            = 802
+EFFECT_TRUST_LIGHT_ARTS         = 803
+EFFECT_TRUST_DARK_ARTS          = 804
+EFFECT_TRUST_EBULLIENCE         = 805
+EFFECT_TRUST_ACCESSION          = 806
+EFFECT_TRUST_SUBLIMATION_ACTIVATED = 807
+EFFECT_TRUST_SUBLIMATION_COMPLETE = 808
 -- EFFECT_PLACEHOLDER              = 802 -- Description
 -- 802-1022
 -- EFFECT_PLACEHOLDER             = 1023 -- The client dat file seems to have only this many "slots", results of exceeding that are untested.

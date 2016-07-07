@@ -2497,3 +2497,11 @@ INSERT INTO `mob_skill_lists` VALUES ('Blue_Mage',736,3740); -- Red Lotus Blade
 INSERT INTO `mob_skill_lists` VALUES ('Blue_Mage',736,3742); -- Vorpal Blade
 INSERT INTO `mob_skill_lists` VALUES ('Blue_Mage',736,3744); -- Savage Blade
 INSERT INTO `mob_skill_lists` VALUES ('Blue_Mage',736,3760); -- Chain Affinity
+
+INSERT INTO `mob_skill_lists` VALUES ('Adelhied',737,3718); -- Light Arts
+INSERT INTO `mob_skill_lists` VALUES ('Adelhied',737,3719); -- Dark Arts
+INSERT INTO `mob_skill_lists` VALUES ('Adelhied',737,3722); -- Ebullience Arts
+INSERT INTO `mob_skill_lists` VALUES ('Adelhied',737,3720); -- Accession
+INSERT INTO `mob_skill_lists` VALUES ('Adelhied',737,3723); -- Sublimation
+INSERT INTO `mob_skill_lists` VALUES ('Adelhied',737,3770); -- Shining Strike
+

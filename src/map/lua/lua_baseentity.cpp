@@ -8640,7 +8640,7 @@ inline int32 CLuaBaseEntity::getMaster(lua_State* L)
 inline int32 CLuaBaseEntity::recalculateAbilitiesTable(lua_State* L)
 {
     DSP_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
-    DSP_DEBUG_BREAK_IF(m_PBaseEntity->objtype != TYPE_PC)
+    //DSP_DEBUG_BREAK_IF(m_PBaseEntity->objtype != TYPE_PC)
 
         CCharEntity* PChar = (CCharEntity*)m_PBaseEntity;
 
@@ -8657,7 +8657,7 @@ inline int32 CLuaBaseEntity::recalculateAbilitiesTable(lua_State* L)
 inline int32 CLuaBaseEntity::recalculateSkillsTable(lua_State* L)
 {
     DSP_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
-    DSP_DEBUG_BREAK_IF(m_PBaseEntity->objtype != TYPE_PC)
+    //DSP_DEBUG_BREAK_IF(m_PBaseEntity->objtype != TYPE_PC)
 
         CCharEntity* PChar = (CCharEntity*)m_PBaseEntity;
 
