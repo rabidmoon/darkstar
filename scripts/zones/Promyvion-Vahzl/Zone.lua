@@ -154,7 +154,7 @@ function onEventFinish(player,csid,option)
 	if (csid ==0x0032) then
 		player:setVar("PromathiaStatus",1);
 		if (ENABLE_COP_ZONE_CAP == 1) then
-			player:addStatusEffect(EFFECT_LEVEL_RESTRICTION,50,0,0);-- ZONE LEVEL RESTRICTION
+			player:addStatusEffect(EFFECT_LEVEL_RESTRICTION,60,0,0);-- ZONE LEVEL RESTRICTION
 		end
 	elseif (csid ==0x002D and option == 1) then
 		player:setPos(-379.947, 48.045, 334.059, 192, 9); -- To Pso'Xja {R}

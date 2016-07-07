@@ -210,7 +210,7 @@ function onEventFinish(player,csid,option)
 	elseif (csid == 0x0032) then
 		player:setVar("FirstPromyvionHolla",0);
 		if (ENABLE_COP_ZONE_CAP == 1) then
-			player:addStatusEffect(EFFECT_LEVEL_RESTRICTION,30,0,0); -- ZONE LEVEL RESTRICTION
+			player:addStatusEffect(EFFECT_LEVEL_RESTRICTION,40,0,0); -- ZONE LEVEL RESTRICTION
 		end
 	end
 
