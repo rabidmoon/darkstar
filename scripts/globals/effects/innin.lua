@@ -13,6 +13,7 @@ function onEffectGain(target,effect) --power=30 initially, subpower=20 for enmit
     target:addMod(MOD_EVA,-effect:getPower());
     target:addMod(MOD_ENMITY,-effect:getSubPower());
     target:addMod(MOD_CRITHITRATE,effect:getPower());
+	target:addMod(MOD_NIN_NUKE_BONUS,effect:getPower());
 end;
 
 -----------------------------------
@@ -41,4 +42,5 @@ function onEffectLose(target,effect)
     target:delMod(MOD_EVA,-effect:getPower());
     target:delMod(MOD_CRITHITRATE,effect:getPower());
     target:delMod(MOD_ENMITY,-effect:getSubPower());
+	target:delMod(MOD_NIN_NUKE_BONUS,-effect:getPower());
 end;

@@ -17,8 +17,28 @@ function onSpellCast(caster,target,spell)
 
     -- Pull base stats.
     dINT = (caster:getStat(MOD_INT) - target:getStat(MOD_INT));
-
+    local plvl = caster:getMainLvl();
+	local mlvl = target:getMainLvl();
+	
+	local diff = mlvl - plvl;
+	
+	if (caster:getObjType() == TYPE_PC) then
+		if (diff > 7) then
+		power = 1;
+		elseif (diff > 3) then
+		power = 3;
+		elseif (diff == 0) then
+		power = 5;
+		elseif ((diff < 0) and (diff > -3) then
+		power = 7;
+		else
+		power = 10;
+		end
+	end	
+	
+	if (caster:getObjType() == TYPE_MOB) then
     power = 50;
+	end
 
     -- Duration, including resistance.  Unconfirmed.
     duration = 300 * applyResistanceEffect(caster,spell,target,dINT,35,0,EFFECT_CURSE_I);

@@ -20,6 +20,9 @@ require("scripts/globals/titles");
 function onTrade(player,npc,trade)
 
 	local count = trade:getItemCount();
+	
+	local lvl = player:getMainLvl();
+	local job = player:getMainJob();
 	-- Curses Foiled Again!
 	if (player:getQuestStatus(WINDURST,CURSES_FOILED_AGAIN_1) == QUEST_ACCEPTED) then
 		if (trade:hasItemQty(928,1) and trade:hasItemQty(880,2) and count == 3) then
@@ -38,6 +41,16 @@ function onTrade(player,npc,trade)
 	
 		
 	end
+	if (trade:hasItemQty(955,3) and (job == 4) and (lvl >= 50) and (player:hasSpell(257) == false)) then
+	player:PrintToPlayer("Shantotto : No pain, no gain!", 0xD);
+    player:addSpell(257);
+    end
+     
+	if (trade:hasItemQty(935,3) and (job == 5) and (lvl >= 50) and (player:hasSpell(256) == false)) then
+	player:PrintToPlayer("Shantotto : No pain, no gain!", 0xD);
+    player:addSpell(256);
+    end  
+	
 end; 
 
 -----------------------------------
@@ -55,9 +68,15 @@ function onTrigger(player,npc)
 	local wsnm = player:getVar("RETRIBUTION");
 	local mainlvl = player:getMainLvl();
 	local skill = player:getSkillLevel(13);
+	
+	local lvl = player:getMainLvl();
+	local job = player:getMainJob();
 
-
-	if (player:getCurrentMission(WINDURST) == THE_JESTER_WHO_D_BE_KING and player:getVar("MissionStatus") == 7) then
+	if ((job == 4) and (lvl >= 50) and (player:hasSpell(257) == false)) then
+	player:PrintToPlayer("Shantotto : A black mage can never show all their cards.  A new spell for you for 3 Golem Shards", 0xD);
+	elseif ((job == 5) and (lvl >= 50) and (player:hasSpell(256) == false)) then
+	player:PrintToPlayer("Shantotto : Jack of all trades if there is such a thing. A new spell for you for 3 Ahriman Wings", 0xD);
+	elseif (player:getCurrentMission(WINDURST) == THE_JESTER_WHO_D_BE_KING and player:getVar("MissionStatus") == 7) then
 		player:startEvent(0x18d,0,0,0,282);
 	elseif (player:getQuestStatus(WINDURST,LURE_OF_THE_WILDCAT_WINDURST) == QUEST_ACCEPTED and player:getMaskBit(WildcatWindurst,6) == false) then
 		player:startEvent(0x01f2);

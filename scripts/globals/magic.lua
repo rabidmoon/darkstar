@@ -841,6 +841,13 @@ function addBonuses(caster, spell, target, dmg, bonusmab)
     end
 
     dmg = math.floor(dmg * mabbonus);
+	
+	if (caster:hasStatusEffect(EFFECT_TRUST_EBULLIENCE)) then
+            dmg = dmg * 1.35;
+
+        caster:delStatusEffectSilent(EFFECT_TRUST_EBULLIENCE);
+    end
+	
 
     if (caster:hasStatusEffect(EFFECT_EBULLIENCE)) then
         local equippedHead = caster:getEquipID(SLOT_HEAD);

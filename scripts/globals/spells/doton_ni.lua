@@ -27,5 +27,9 @@ function onSpellCast(caster,target,spell)
     local dmg = doNinjutsuNuke(68,1,caster,spell,target,false,bonusAcc,bonusMab);
     handleNinjutsuDebuff(caster,target,spell,30,duration,MOD_WINDRES);
 
+	if (caster:getStatusEffect(EFFECT_INNIN) == true) then
+	target:addStatusEffect(EFFECT_ACCURACY_DOWN, 15, 0, 60);
+	end
+	
     return dmg;
 end;

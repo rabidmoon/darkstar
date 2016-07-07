@@ -44,6 +44,12 @@ function onSpellCast(caster,target,spell)
     if (dot > 0) then
         target:addStatusEffect(EFFECT_HELIX,dot,3,duration);
     end;
+	
+	local schlvl = caster:getMainLvl();
+	local statdown = math.floor(schlvl / 5);
+	if ((caster:getMainJob() == 20) or (caster:getObjType() == TYPE_NPC)) then
+	target:addStatusEffect(EFFECT_INT_DOWN,statdown,0,60);
+	end
 
     return dmg;
 end;
