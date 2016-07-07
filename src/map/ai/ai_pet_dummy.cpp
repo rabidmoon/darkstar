@@ -63,6 +63,7 @@ This file is part of DarkStar-server source code.
 *																		*
 ************************************************************************/
 
+
 CAIPetDummy::CAIPetDummy(CPetEntity* PPet)
 {
     m_PPet = PPet;
@@ -77,6 +78,7 @@ CAIPetDummy::CAIPetDummy(CPetEntity* PPet)
 	m_magicHealRecast = 25000;
 	m_magicHealCast = 0;
 	m_kupipiHealRecast = 18000;
+	m_adelhiedHealRecast = 20000;
 	m_kupipiEnhanceRecast = 10000;  // Enhancing such as Haste Pro/Shell and ~na's will share the same cast timer
 	m_kupipiHealCast = 0;
 	m_kupipiSolaceRecast = 7200000; // two hour duraton
@@ -96,12 +98,18 @@ CAIPetDummy::CAIPetDummy(CPetEntity* PPet)
 	m_ayameThirdEyeRecast = 45000;
 	m_ayameSekkaRecast = 300000;  //300000;
 	m_blueMagicRecast = 20000; //20 seconds Blue Magic Casting
+	m_schEleRecast = 18000;
+	m_schEnhRecast = 8000;
 	m_sekkaStatus = 0; //Sekka off 0; Sekka Closing WS 1; Sekka Opening SC 2;
 	
 	m_blueCheck = 4000;  //Blue magic cast Check
+	m_schCheck = 4000; //SCH Magic Cast Check
 	m_blueChainAffinityRecast = 120000;
 	m_blueMagicHealRecast = 12000;
 	m_chainAffinityStatus = 0;  //CA off 0; CA closing 1; CA open with WS 2;
+	m_magicburst = 0;
+	
+
 	
 
 	
@@ -409,6 +417,108 @@ void CAIPetDummy::ActionAbilityStart()
 
                 }
 			}
+			if (lvl >= 65) {
+            for (int i = 0; i < m_PPet->PetSkills.size(); i++) {
+                auto PMobSkill = battleutils::GetMobSkill(m_PPet->PetSkills.at(i));
+  					if (PMobSkill->getID() == 3783 && (masterscID == 2 || masterscID == 5 || masterscID == 12)) { //Tachi Gekko
+                    mobwsID = 151;
+					SetCurrentMobSkill(PMobSkill);
+					SetCurrentWeaponSkill(mobwsID);
+			        //ShowWarning("Tachi: Gekko \n");
+                    break;
+                    } 
+  					else if (PMobSkill->getID() == 3782 && (masterscID == 1 || masterscID == 6 || masterscID == 11)) { //Tachi Yuki
+                    mobwsID = 150;
+					SetCurrentMobSkill(PMobSkill);
+					SetCurrentWeaponSkill(mobwsID);
+			        //ShowWarning("Tachi: Yuki \n");
+                    break;
+                    }
+  					else if (PMobSkill->getID() == 3781 && (masterscID == 3 || masterscID == 10)) { //Tachi Jinpu
+                    mobwsID = 148;
+					SetCurrentMobSkill(PMobSkill);
+					SetCurrentWeaponSkill(mobwsID);
+			        //ShowWarning("Tachi: Jinpu \n");
+                    break;
+                    }
+  					else if (PMobSkill->getID() == 3779 && (masterscID == 7 || masterscID == 8 || masterscID == 9)) { //Tachi Enpi
+                    mobwsID = 144;
+					SetCurrentMobSkill(PMobSkill);
+					SetCurrentWeaponSkill(mobwsID);
+			        //ShowWarning("Tachi: Enpi \n");
+                    break;
+                    }
+                    else { //Tachi Enpi
+                    mobwsID = 144;
+					SetCurrentMobSkill(PMobSkill);
+					SetCurrentWeaponSkill(mobwsID);
+			        //ShowWarning("Tachi: Enpi \n");
+                    break;
+                    }						
+
+                }
+			}
+			if (lvl >= 60) {
+            for (int i = 0; i < m_PPet->PetSkills.size(); i++) {
+                auto PMobSkill = battleutils::GetMobSkill(m_PPet->PetSkills.at(i));
+  					if (PMobSkill->getID() == 3782 && (masterscID == 1 || masterscID == 6 || masterscID == 11)) { //Tachi Yuki
+                    mobwsID = 150;
+					SetCurrentMobSkill(PMobSkill);
+					SetCurrentWeaponSkill(mobwsID);
+			        //ShowWarning("Tachi: Yuki \n");
+                    break;
+                    }
+  					else if (PMobSkill->getID() == 3781 && (masterscID == 3 || masterscID == 10)) { //Tachi Jinpu
+                    mobwsID = 148;
+					SetCurrentMobSkill(PMobSkill);
+					SetCurrentWeaponSkill(mobwsID);
+			        //ShowWarning("Tachi: Jinpu \n");
+                    break;
+                    }
+  					else if (PMobSkill->getID() == 3779 && (masterscID == 7 || masterscID == 8 || masterscID == 9)) { //Tachi Enpi
+                    mobwsID = 144;
+					SetCurrentMobSkill(PMobSkill);
+					SetCurrentWeaponSkill(mobwsID);
+			        //ShowWarning("Tachi: Enpi \n");
+                    break;
+                    }
+                    else { //Tachi Enpi
+                    mobwsID = 144;
+					SetCurrentMobSkill(PMobSkill);
+					SetCurrentWeaponSkill(mobwsID);
+			        //ShowWarning("Tachi: Enpi \n");
+                    break;
+                    }						
+
+                }
+			}	
+			if (lvl >= 55) {
+            for (int i = 0; i < m_PPet->PetSkills.size(); i++) {
+                auto PMobSkill = battleutils::GetMobSkill(m_PPet->PetSkills.at(i));
+  					if (PMobSkill->getID() == 3781 && (masterscID == 3 || masterscID == 10)) { //Tachi Jinpu
+                    mobwsID = 148;
+					SetCurrentMobSkill(PMobSkill);
+					SetCurrentWeaponSkill(mobwsID);
+			        //ShowWarning("Tachi: Jinpu \n");
+                    break;
+                    }
+  					else if (PMobSkill->getID() == 3779 && (masterscID == 7 || masterscID == 8 || masterscID == 9)) { //Tachi Enpi
+                    mobwsID = 144;
+					SetCurrentMobSkill(PMobSkill);
+					SetCurrentWeaponSkill(mobwsID);
+			        //ShowWarning("Tachi: Enpi \n");
+                    break;
+                    }
+                    else { //Tachi Enpi
+                    mobwsID = 144;
+					SetCurrentMobSkill(PMobSkill);
+					SetCurrentWeaponSkill(mobwsID);
+			        //ShowWarning("Tachi: Enpi \n");
+                    break;
+                    }						
+
+                }
+			}			
 			m_sekkaStatus = 1; //set for closing sekka skillchain
 			preparePetAbility(m_PBattleSubTarget);
             return;
@@ -446,10 +556,98 @@ void CAIPetDummy::ActionAbilityStart()
 					SetCurrentWeaponSkill(mobwsID);
 			        //ShowWarning("Tachi: Enpi \n");
                     break;
+                    }
+                    else { //Tachi Enpi
+                    mobwsID = 144;
+					SetCurrentMobSkill(PMobSkill);
+					SetCurrentWeaponSkill(mobwsID);
+			        //ShowWarning("Tachi: Enpi \n");
+                    break;
+                    }						
+
+                }
+			}
+			else if (lvl >= 65) {
+            for (int i = 0; i < m_PPet->PetSkills.size(); i++) {
+                auto PMobSkill = battleutils::GetMobSkill(m_PPet->PetSkills.at(i));
+                    if (PMobSkill->getID() == 3783 && (masterscID == 7 || masterscID == 8 || masterscID == 11)) { //Tachi Gekko
+                    mobwsID = 151;
+					SetCurrentMobSkill(PMobSkill);
+					SetCurrentWeaponSkill(mobwsID);
+			        //ShowWarning("Tachi: Gekko \n");
+                    break;
+                    } 
+  					else if (PMobSkill->getID() == 3782 && (masterscID == 2 || masterscID == 5)) { //Tachi Yuki
+                    mobwsID = 150;
+					SetCurrentMobSkill(PMobSkill);
+					SetCurrentWeaponSkill(mobwsID);
+			        //ShowWarning("Tachi: Yuki \n");
+                    break;
+                    }
+  					else if (PMobSkill->getID() == 3779 && (masterscID == 3 || masterscID == 4 || masterscID == 9)) { //Tachi Enpi
+                    mobwsID = 144;
+					SetCurrentMobSkill(PMobSkill);
+					SetCurrentWeaponSkill(mobwsID);
+			        //ShowWarning("Tachi: Enpi \n");
+                    break;
+                    }
+                    else { //Tachi Enpi
+                    mobwsID = 144;
+					SetCurrentMobSkill(PMobSkill);
+					SetCurrentWeaponSkill(mobwsID);
+			        //ShowWarning("Tachi: Enpi \n");
+                    break;
+                    }					
+
+                }
+			}	
+			else if (lvl >= 60) {
+            for (int i = 0; i < m_PPet->PetSkills.size(); i++) {
+                auto PMobSkill = battleutils::GetMobSkill(m_PPet->PetSkills.at(i));
+                    if (PMobSkill->getID() == 3782 && (masterscID == 2 || masterscID == 5)) { //Tachi Yuki
+                    mobwsID = 150;
+					SetCurrentMobSkill(PMobSkill);
+					SetCurrentWeaponSkill(mobwsID);
+			        //ShowWarning("Tachi: Yuki \n");
+                    break;
+                    }
+  					else if (PMobSkill->getID() == 3779 && (masterscID == 3 || masterscID == 4 || masterscID == 9)) { //Tachi Enpi
+                    mobwsID = 144;
+					SetCurrentMobSkill(PMobSkill);
+					SetCurrentWeaponSkill(mobwsID);
+			        //ShowWarning("Tachi: Enpi \n");
+                    break;
+                    }
+                    else { //Tachi Enpi
+                    mobwsID = 144;
+					SetCurrentMobSkill(PMobSkill);
+					SetCurrentWeaponSkill(mobwsID);
+			        //ShowWarning("Tachi: Enpi \n");
+                    break;
                     }					
 
                 }
 			}
+			else if (lvl >= 5) {
+            for (int i = 0; i < m_PPet->PetSkills.size(); i++) {
+                auto PMobSkill = battleutils::GetMobSkill(m_PPet->PetSkills.at(i));
+                    if (PMobSkill->getID() == 3779 && (masterscID == 3 || masterscID == 4 || masterscID == 9)) { //Tachi Enpi
+                    mobwsID = 144;
+					SetCurrentMobSkill(PMobSkill);
+					SetCurrentWeaponSkill(mobwsID);
+			        //ShowWarning("Tachi: Enpi \n");
+                    break;
+                    }
+                    else { //Tachi Enpi
+                    mobwsID = 144;
+					SetCurrentMobSkill(PMobSkill);
+					SetCurrentWeaponSkill(mobwsID);
+			        //ShowWarning("Tachi: Enpi \n");
+                    break;
+                    }					
+
+                }
+			}			
 			m_sekkaStatus = 0; //Set Sekka status to 0 or off
 			preparePetAbility(m_PBattleSubTarget);
             return;
@@ -1067,6 +1265,26 @@ void CAIPetDummy::ActionAbilityStart()
             return;
         }
 
+	 if (m_PPet->m_PetID == PETID_ADELHIED && m_PPet->health.tp >= 1000 && m_PBattleTarget != nullptr){
+			int16 mobwsID = -1;		
+			if (lvl > 4) {
+			m_PJobAbility = nullptr;
+            for (int i = 0; i < m_PPet->PetSkills.size(); i++) {
+                auto PMobSkill = battleutils::GetMobSkill(m_PPet->PetSkills.at(i));
+  					if (PMobSkill->getID() == 3770) { //Shinning Strike
+					mobwsID = 162;
+					SetCurrentMobSkill(PMobSkill);
+			        SetCurrentWeaponSkill(mobwsID);
+                    break;
+                    } 					
+
+                }
+			}		
+            preparePetAbility(m_PBattleSubTarget);
+            return;
+        }
+		
+
 
 
 		
@@ -1628,6 +1846,7 @@ void CAIPetDummy::ActionAbilityFinish() {
                     if (effect != SUBEFFECT_NONE)
                     {
                         int32 skillChainDamage = battleutils::TakeSkillchainDamage(m_PPet, PTarget, Action.param);
+						
                         if (skillChainDamage < 0)
                         {
                             Action.addEffectParam = -skillChainDamage;
@@ -1700,6 +1919,7 @@ void CAIPetDummy::ActionAbilityFinish() {
         }
         return x;
     }
+	
 
 void CAIPetDummy::ActionWeaponSkillFinish() 
 {
@@ -1812,7 +2032,49 @@ void CAIPetDummy::ActionWeaponSkillFinish()
                     SUBEFFECT effect = battleutils::GetSkillChainEffect(m_PBattleSubTarget, PWeaponSkill);
                     if (effect != SUBEFFECT_NONE)
                     {
-					    ShowWarning(CL_GREEN"SUBEFFECT TRIGGERED!!! \n" CL_RESET);
+					    //Set Magic Burst Pattern if trust closes WS (mostly for Ayame)
+						int32 value = 10;
+						if (effect == SUBEFFECT_LIGHT || effect == SUBEFFECT_FRAGMENTATION || effect == SUBEFFECT_IMPACTION){
+						int32 value = 6;
+					    std::string varname;
+						const int8* fmtQuery = "INSERT INTO char_vars SET charid = %u, varname = 'TrustMB', value = '6' ON DUPLICATE KEY UPDATE value = '6';";
+                        Sql_Query(SqlHandle, fmtQuery, m_PPet->PMaster->id, varname, value, value);
+					    printf("Setting Magic Burst to: %d \n", value);
+						ShowWarning(CL_GREEN"Thunder Based Magic Burst.  Start Casting \n" CL_RESET);						
+						}
+						else if (effect == SUBEFFECT_DARKNESS || effect == SUBEFFECT_DISTORTION || effect == SUBEFFECT_INDURATION){
+						value = 5;  //Blizzard
+						printf("Setting Magic Burst to: %d \n", value);
+						ShowWarning(CL_GREEN"Ice Based Magic Burst.  Start Casting \n" CL_RESET);
+						}
+						else if (effect == SUBEFFECT_LIGHT || effect == SUBEFFECT_FUSION || effect == SUBEFFECT_LIQUEFACATION){
+						value = 4;  //Fire
+						printf("Setting Magic Burst to: %d \n", value);
+						ShowWarning(CL_GREEN"Fire Based Magic Burst.  Start Casting \n" CL_RESET);						
+						}
+						else if (effect == SUBEFFECT_LIGHT || effect == SUBEFFECT_FRAGMENTATION || effect == SUBEFFECT_DETONATION){
+						value = 3;  //Aero
+						printf("Setting Magic Burst to: %d \n", value);
+						ShowWarning(CL_GREEN"Wind Based Magic Burst.  Start Casting \n" CL_RESET);							
+						}
+						else if (effect == SUBEFFECT_DARKNESS || effect == SUBEFFECT_DISTORTION || effect == SUBEFFECT_REVERBERATION){
+						value = 2;  //Water
+						printf("Setting Magic Burst to: %d \n", value);
+						ShowWarning(CL_GREEN"Water Based Magic Burst.  Start Casting \n" CL_RESET);							
+						}
+						else if (effect == SUBEFFECT_DARKNESS || effect == SUBEFFECT_GRAVITATION || effect == SUBEFFECT_SCISSION){
+						value = 1;  //Stone
+						printf("Setting Magic Burst to: %d \n", value);
+						ShowWarning(CL_GREEN"Stone Based Magic Burst.  Start Casting \n" CL_RESET);							
+						}	
+
+                        //Write Magic Burst Number to player Variable called TrustMB
+                        
+						
+						//SetVar 11
+						
+
+						
                         int32 skillChainDamage = battleutils::TakeSkillchainDamage(m_PPet, PTarget, Action.param);
                         if (skillChainDamage < 0)
                         {
@@ -1821,7 +2083,7 @@ void CAIPetDummy::ActionWeaponSkillFinish()
                         }
                         else
                         {
-                            ShowWarning(CL_GREEN"DAMAGE IS GREATER THAN 0 \n" CL_RESET);
+                            //ShowWarning(CL_GREEN"DAMAGE IS GREATER THAN 0 \n" CL_RESET);
    						    Action.addEffectParam = skillChainDamage;
                             Action.addEffectMessage = 287 + effect;
                         }
@@ -1867,11 +2129,10 @@ void CAIPetDummy::ActionWeaponSkillFinish()
 	int16 delay = m_PPet->GetWeaponDelay(true);
 	float ratio = 1.0f;
 	
-
+    
 	baseTp = CalculateBaseTP((delay * 60) / 1000) / ratio;
 
 	if (m_PPet->StatusEffectContainer->HasStatusEffect(EFFECT_SEKKANOKI) == true){
-	ShowWarning(CL_RED"Sekkanoki Acive setting TP \n" CL_RESET);
     m_PPet->health.tp = 1000;
 	m_PPet->StatusEffectContainer->DelStatusEffect(EFFECT_SEKKANOKI);
 	m_LastSkillchainStart = m_Tick;
@@ -1936,7 +2197,8 @@ void CAIPetDummy::ActionJobAbilityFinish()
 	apAction_t Action;
 	Action.ActionTarget = m_PBattleSubTarget;
 	Action.param = m_PJobAbility->getID();
-        if (m_PJobAbility->getID() == 50 || m_PJobAbility->getID() == 51) 
+	//Job abilities that do damage (Jump, Shield Bash, Weapon Bash, etc) need to be placed below so it sends the proper message
+        if (m_PJobAbility->getID() == 30 || m_PJobAbility->getID() == 50 || m_PJobAbility->getID() == 51) 
 	    {	
 		Action.reaction = REACTION_HIT; //   SPECEFFECT_NONE;
 		Action.speceffect = SPECEFFECT_HIT;
@@ -2076,7 +2338,7 @@ bool CAIPetDummy::PetIsHealing() {
 
 void CAIPetDummy::ActionRoaming()
 {
-    if (m_PPet->PMaster == nullptr || m_PPet->PMaster->isDead()) {
+    if (m_PPet->PMaster == nullptr || m_PPet->PMaster->isDead() || m_PPet->PMaster->getZone() != m_PPet->getZone()) {
         m_ActionType = ACTION_FALL;
         ActionFall();
         return;
@@ -2194,7 +2456,9 @@ void CAIPetDummy::ActionAttack()
     }
 	
 	uint8 trustlevel = m_PPet->GetMLevel();
-    charutils::UpdateHealth((CCharEntity*)m_PPet->PMaster); // To update pet health at all time
+	if (m_PPet->getZone() == m_PPet->PMaster->getZone()){
+    charutils::UpdateHealth((CCharEntity*)m_PPet->PMaster); // To update pet health at all time if pet and master are in the same zone; this is for zoning purposes
+	}
 	
 	
 	//****************************************************************//
@@ -2375,7 +2639,7 @@ void CAIPetDummy::ActionAttack()
 							break;
                         }
 			        }
-				m_sekkaStatus = 2; //turn on sekkanoki check	
+				m_sekkaStatus = 2; //turn on sekkanoki check				
 				preparePetAbility(m_PBattleSubTarget);
 				m_LastAyameSekkaTime = m_Tick;
 				return;	
@@ -2594,7 +2858,85 @@ void CAIPetDummy::ActionAttack()
 				m_LastChainTime = m_Tick;
 				return;	
 				}						
-		}		 
+		}
+
+	  if (m_PPet->m_PetID == PETID_ADELHIED)
+		{
+		 if (trustlevel >= 35 && m_PPet->StatusEffectContainer->HasStatusEffect(EFFECT_TRUST_SUBLIMATION_COMPLETE) == true && m_PPet->GetMPP() < 50)
+		    {
+			ShowWarning(CL_RED"SUBLIMATION COMPLETED\n" CL_RESET);
+			m_PWeaponSkill = nullptr;
+            int16 mobjaID = -1;			
+			for (int i = 0; i < m_PPet->PetSkills.size(); i++) {
+                    auto PMobSkill = battleutils::GetMobSkill(m_PPet->PetSkills.at(i));
+                            
+                        if (PMobSkill->getID() == 3723) { //Sublimation
+						    mobjaID = 217;
+                            SetCurrentMobSkill(PMobSkill);
+							SetCurrentJobAbility(mobjaID);
+							m_PBattleSubTarget = m_PPet;
+							break;
+                        }
+			        }
+				preparePetAbility(m_PBattleSubTarget);
+				m_LastChainTime = m_Tick;
+				return;	
+				}		
+		 if (trustlevel >= 35 && m_PPet->StatusEffectContainer->HasStatusEffect(EFFECT_TRUST_SUBLIMATION_ACTIVATED) == false && m_PPet->StatusEffectContainer->HasStatusEffect(EFFECT_TRUST_SUBLIMATION_COMPLETE) == false)
+		    {
+			m_PWeaponSkill = nullptr;
+            int16 mobjaID = -1;			
+			for (int i = 0; i < m_PPet->PetSkills.size(); i++) {
+                    auto PMobSkill = battleutils::GetMobSkill(m_PPet->PetSkills.at(i));
+                            
+                        if (PMobSkill->getID() == 3723) { //Sublimation
+						    mobjaID = 217;
+                            SetCurrentMobSkill(PMobSkill);
+							SetCurrentJobAbility(mobjaID);
+							m_PBattleSubTarget = m_PPet;
+							break;
+                        }
+			        }
+				preparePetAbility(m_PBattleSubTarget);
+				m_LastChainTime = m_Tick;
+				return;	
+				}
+		 if (m_Tick >= m_LastSchCheck + m_schCheck) // Check Every 4 Seconds as universal check for sch spells
+			{
+			    int16 spellID = -1;
+				uint16 family = m_PPet->m_Family;
+				uint16 petID = m_PPet->m_PetID;
+     
+				spellID = AdelhiedSpell();
+				if (spellID != -1)
+				{
+				SetCurrentSpell(spellID);
+				m_ActionType = ACTION_MAGIC_START;
+				ActionMagicStart();
+				return;
+			    }
+		    }
+		/* if (m_Tick >= m_LastChainTime + m_blueChainAffinityRecast && trustlevel >= 40 && m_PPet->health.tp > 850)  //Only use CA when above 85% TP
+			{
+			m_PWeaponSkill = nullptr;
+            int16 mobjaID = -1;			
+			for (int i = 0; i < m_PPet->PetSkills.size(); i++) {
+                    auto PMobSkill = battleutils::GetMobSkill(m_PPet->PetSkills.at(i));
+                            
+                        if (PMobSkill->getID() == 3760) { //Chain Affinity
+						    mobjaID = 78;
+                            SetCurrentMobSkill(PMobSkill);
+							SetCurrentJobAbility(mobjaID);
+							m_PBattleSubTarget = m_PPet;
+							break;
+                        }
+			        }
+				m_chainAffinityStatus = 2;	
+				preparePetAbility(m_PBattleSubTarget);
+				m_LastChainTime = m_Tick;
+				return;	
+				}	*/					
+		}		
 
 
 	
@@ -2742,6 +3084,13 @@ void CAIPetDummy::ActionAttack()
         ActionAbilityStart();
         return;
 	} 	
+		if (m_PPet->getPetType() == PETTYPE_TRUST && m_Tick >= m_LastEngageStart + 7000 && m_PPet->m_PetID == PETID_ADELHIED && m_PPet->health.tp >= 1000 && m_PPet->PetSkills.size() > 0)
+    {
+		m_PBattleSubTarget = m_PBattleTarget;
+        m_ActionType = ACTION_MOBABILITY_START;
+        ActionAbilityStart();
+        return;
+	} 	
 
     m_PPathFind->LookAt(m_PBattleTarget->loc.p);
 
@@ -2775,8 +3124,76 @@ void CAIPetDummy::ActionAttack()
 	
 	
 	    //go to target if its too far away
-    if (currentDistance > m_PBattleTarget->m_ModelSize && m_PPet->m_PetID != PETID_NANAA_MIHGO && m_PPet->speed != 0)
+		
+	/*	
+		if (currentDistance < 10 && m_PPet->m_PetID == PETID_ADELHIED)
     {
+	    position_t* pos = &m_PBattleTarget->loc.p;
+		position_t nearEntity = nearPosition(*pos, 8.0f, M_PI);
+        if (m_PPathFind->PathTo(nearEntity, PATHFLAG_RUN | PATHFLAG_WALLHACK))
+        {
+            m_PPathFind->FollowPath();
+
+            // recalculate
+            currentDistance = distance(m_PPet->loc.p, m_PBattleTarget->loc.p);
+        }
+    } */
+    	
+	
+	
+    if (currentDistance < 8 && m_PPet->m_PetID == PETID_ADELHIED && m_PPet->speed != 0)
+    {
+	    position_t* pos = &m_PBattleTarget->loc.p;
+		position_t nearEntity = nearPosition(*pos, 13.0f, M_PI);
+        if (m_PPathFind->PathAround(nearEntity, PATHFLAG_RUN | PATHFLAG_WALLHACK))
+        {
+            m_PPathFind->FollowPath();
+
+            // recalculate
+            //currentDistance = distance(m_PPet->loc.p, m_PBattleTarget->loc.p);
+			
+        }
+    }	
+	
+	 /*  if (currentDistance < 9 && m_PPet->m_PetID == PETID_ADELHIED && m_PPet->speed != 0)
+    {
+	    ShowWarning(CL_GREEN"Adelhied Distance is less than 9\n" CL_RESET);
+	    position_t nearEntity = {m_PBattleTarget->loc.p.x + 10, m_PBattleTarget->loc.p.y, m_PBattleTarget->loc.p.z};
+		
+		
+        if (m_PPathFind->PathTo(nearEntity, PATHFLAG_RUN | PATHFLAG_WALLHACK))
+        {
+            m_PPathFind->FollowPath();
+
+            // recalculate
+           // currentDistance = distance(m_PPet->loc.p, m_PBattleTarget->loc.p);
+			
+        }
+    }	*/
+	
+	
+	
+	
+	/*
+    if (currentDistance < 8 && m_PPet->m_PetID == PETID_ADELHIED && m_PPet->speed != 0)
+    {
+        if (m_PPathFind->PathAround(m_PBattleTarget->loc.p, 11.0f, PATHFLAG_RUN | PATHFLAG_WALLHACK))
+        {
+            m_PPathFind->FollowPath();
+
+            // recalculate
+            currentDistance = distance(m_PPet->loc.p, m_PBattleTarget->loc.p);
+			
+        }
+    }	*/
+	
+		
+		
+		
+		
+    if (currentDistance > m_PBattleTarget->m_ModelSize && (m_PPet->m_PetID != PETID_NANAA_MIHGO && m_PPet->m_PetID != PETID_ADELHIED) && m_PPet->speed != 0)
+    {
+	    ShowWarning(CL_RED"Wrong Distance triggered\n" CL_RESET);
         if (m_PPathFind->PathAround(m_PBattleTarget->loc.p, 2.0f, PATHFLAG_RUN | PATHFLAG_WALLHACK))
         {
             m_PPathFind->FollowPath();
@@ -3864,7 +4281,7 @@ if (m_Tick >= m_LastBlueMagicHealCast + m_blueMagicHealRecast)  // Look for last
 			    {
 				 spellID = -1;
 				}
-			if (blurandom >= 20 && blurandom < 30)//Hysteric Barrage
+			else if (blurandom >= 20 && blurandom < 30)//Hysteric Barrage
 				if (m_PPet->health.mp > 60)  	
 			    {
 				 spellID = 641;
@@ -3877,7 +4294,7 @@ if (m_Tick >= m_LastBlueMagicHealCast + m_blueMagicHealRecast)  // Look for last
 			    {
 				 spellID = -1;
 				}
-			if (blurandom >= 10 && blurandom < 20)//Frenetic Rip
+			else if (blurandom >= 10 && blurandom < 20)//Frenetic Rip
 				if (m_PPet->health.mp > 60)  	
 			    {
 				 spellID = 560;
@@ -3890,7 +4307,7 @@ if (m_Tick >= m_LastBlueMagicHealCast + m_blueMagicHealRecast)  // Look for last
 			    {
 				 spellID = -1;
 				}
-			if (blurandom >= 0 && blurandom < 10)//Death Scissors
+			else if (blurandom >= 0 && blurandom < 10)//Death Scissors
                 if (m_PPet->health.mp > 50)  	
 			    {
 				 spellID = 554;
@@ -3899,7 +4316,7 @@ if (m_Tick >= m_LastBlueMagicHealCast + m_blueMagicHealRecast)  // Look for last
 			    {
 				 spellID = -1;
 				}					
-        if (level >= 69)
+        else if (level >= 69)
 			if (blurandom >= 30)
 				if (m_PPet->health.mp > 60)  	
 			    {
@@ -3921,7 +4338,7 @@ if (m_Tick >= m_LastBlueMagicHealCast + m_blueMagicHealRecast)  // Look for last
 			    {
 				 spellID = -1;
 				}
-			if (blurandom >= 20 && blurandom < 30)//Frenetic Rip
+			else if (blurandom >= 20 && blurandom < 30)//Frenetic Rip
 				if (m_PPet->health.mp > 60)  	
 			    {
 				 spellID = 560;  //FR
@@ -3938,7 +4355,7 @@ if (m_Tick >= m_LastBlueMagicHealCast + m_blueMagicHealRecast)  // Look for last
 			    {
 				 spellID = -1;
 				}
-			if (blurandom >= 10 && blurandom < 20)//Death Scissors
+			else if (blurandom >= 10 && blurandom < 20)//Death Scissors
                 if (m_PPet->health.mp > 50)  	
 			    {
 				 spellID = 554; //DS
@@ -3951,7 +4368,7 @@ if (m_Tick >= m_LastBlueMagicHealCast + m_blueMagicHealRecast)  // Look for last
 			    {
 				 spellID = -1;
 				}
-			if (blurandom < 10)//Sickle Slash
+			else if (blurandom < 10)//Sickle Slash
                 if (m_PPet->health.mp > 40)  	
 			    {
 				 spellID = 545; //SS
@@ -3960,7 +4377,7 @@ if (m_Tick >= m_LastBlueMagicHealCast + m_blueMagicHealRecast)  // Look for last
 			    {
 				 spellID = -1;
 				}			
-		if (level >= 63)
+		else if (level >= 63)
 		    if (blurandom >= 30)
 			    if (m_PPet->health.mp > 61)  	
 			    {
@@ -3982,7 +4399,7 @@ if (m_Tick >= m_LastBlueMagicHealCast + m_blueMagicHealRecast)  // Look for last
 			    {
 				 spellID = -1;
 				}				
-		    if (blurandom >= 20 && blurandom < 30)
+		   else if (blurandom >= 20 && blurandom < 30)
 			    if (m_PPet->health.mp > 50)  	
 			    {
 				 spellID = 554;  //Death Scissors
@@ -3999,7 +4416,7 @@ if (m_Tick >= m_LastBlueMagicHealCast + m_blueMagicHealRecast)  // Look for last
 			    {
 				 spellID = -1;
 				}				
-		    if (blurandom >= 10 && blurandom < 20)
+		   else if (blurandom >= 10 && blurandom < 20)
 			    if (m_PPet->health.mp > 46)  	
 			    {
 				 spellID = 569;  //Jet Stream
@@ -4012,7 +4429,7 @@ if (m_Tick >= m_LastBlueMagicHealCast + m_blueMagicHealRecast)  // Look for last
 			    {
 				 spellID = -1;
 				}
-		    if (blurandom < 10)
+		   else if (blurandom < 10)
 			    if (m_PPet->health.mp > 40)  	
 			    {
 				 spellID = 545;  //Sickle Slash
@@ -4021,7 +4438,7 @@ if (m_Tick >= m_LastBlueMagicHealCast + m_blueMagicHealRecast)  // Look for last
 			    {
 				 spellID = -1;
 				}							
-		if (level >= 60)
+		else if (level >= 60)
 		    if (blurandom >= 30)
 			    if (m_PPet->health.mp > 50)  	
 			    {
@@ -4043,7 +4460,7 @@ if (m_Tick >= m_LastBlueMagicHealCast + m_blueMagicHealRecast)  // Look for last
 			    {
 				 spellID = -1;
 				}				
-		    if (blurandom >= 20 && blurandom < 30)
+		  else if (blurandom >= 20 && blurandom < 30)
                 if (m_PPet->health.mp > 46)  	
 			    {
 				 spellID = 569;  //Jet Stream
@@ -4060,7 +4477,7 @@ if (m_Tick >= m_LastBlueMagicHealCast + m_blueMagicHealRecast)  // Look for last
 			    {
 				 spellID = -1;
 				}				
-		    if (blurandom >= 10 && blurandom < 20)
+		  else if (blurandom >= 10 && blurandom < 20)
                 if (m_PPet->health.mp > 40)  	
 			    {
 				 spellID = 545;  //Sickle Slash
@@ -4073,7 +4490,7 @@ if (m_Tick >= m_LastBlueMagicHealCast + m_blueMagicHealRecast)  // Look for last
 			    {
 				 spellID = -1;
 				}				
-		    if (blurandom < 10)
+		  else if (blurandom < 10)
                 if (m_PPet->health.mp > 20)  	
 			    {
 				 spellID = 519;  //Screwdriver
@@ -4082,7 +4499,7 @@ if (m_Tick >= m_LastBlueMagicHealCast + m_blueMagicHealRecast)  // Look for last
 			    {
 				 spellID = -1;
 				}								
-		if (level >= 48)
+		else if (level >= 48)
 		    if (blurandom >= 30)
 			    if (m_PPet->health.mp > 46)  	
 			    {
@@ -4104,7 +4521,7 @@ if (m_Tick >= m_LastBlueMagicHealCast + m_blueMagicHealRecast)  // Look for last
 			    {
 				 spellID = -1;
 				}					
-		    if (blurandom >= 20 && blurandom < 30)
+		 else if (blurandom >= 20 && blurandom < 30)
 			    if (m_PPet->health.mp > 40)  	
 			    {
 				 spellID = 545;  //Sickle Slash
@@ -4121,7 +4538,7 @@ if (m_Tick >= m_LastBlueMagicHealCast + m_blueMagicHealRecast)  // Look for last
 			    {
 				 spellID = -1;
 				}				
-		    if (blurandom >= 10 && blurandom < 20)
+		   else if (blurandom >= 10 && blurandom < 20)
 			    if (m_PPet->health.mp > 20)  	
 			    {
 				 spellID = 519;  //Screwdriver
@@ -4134,7 +4551,7 @@ if (m_Tick >= m_LastBlueMagicHealCast + m_blueMagicHealRecast)  // Look for last
 			    {
 				 spellID = -1;
 				}	
-		    if (blurandom < 10)
+		   else if (blurandom < 10)
                 if (m_PPet->health.mp > 15)  	
 			    {
 				 spellID = 529;  //Bludgeon
@@ -4144,7 +4561,7 @@ if (m_Tick >= m_LastBlueMagicHealCast + m_blueMagicHealRecast)  // Look for last
 				 spellID = -1;
 				}				
 				
-		if (level >= 38)
+		else if (level >= 38)
 		    if (blurandom >= 30)
 			    if (m_PPet->health.mp > 46)  	
 			    {
@@ -4166,7 +4583,7 @@ if (m_Tick >= m_LastBlueMagicHealCast + m_blueMagicHealRecast)  // Look for last
 			    {
 				 spellID = -1;
 				}				
-		    if (blurandom >= 20 && blurandom < 30)
+		   else if (blurandom >= 20 && blurandom < 30)
 			    if (m_PPet->health.mp > 20)  	
 			    {
 				 spellID = 519;  //Screwdriver
@@ -4183,7 +4600,7 @@ if (m_Tick >= m_LastBlueMagicHealCast + m_blueMagicHealRecast)  // Look for last
 			    {
 				 spellID = -1;
 				}
-            if (blurandom >= 10 && blurandom < 20)
+           else if (blurandom >= 10 && blurandom < 20)
 			    if (m_PPet->health.mp > 15)  	
 			    {
 				 spellID = 529;  //Bludgeon
@@ -4196,7 +4613,7 @@ if (m_Tick >= m_LastBlueMagicHealCast + m_blueMagicHealRecast)  // Look for last
 			    {
 				 spellID = -1;
 				}				
-            if (blurandom < 10)
+           else if (blurandom < 10)
 			    if (m_PPet->health.mp > 11)  	
 			    {
 				 spellID = 623;  //Head Butt
@@ -4205,7 +4622,7 @@ if (m_Tick >= m_LastBlueMagicHealCast + m_blueMagicHealRecast)  // Look for last
 			    {
 				 spellID = -1;
 				}				
-		if (level >= 26)
+		else if (level >= 26)
 		    if (blurandom >= 30)
 			    if (m_PPet->health.mp > 20)  	
 			    {
@@ -4227,7 +4644,7 @@ if (m_Tick >= m_LastBlueMagicHealCast + m_blueMagicHealRecast)  // Look for last
 			    {
 				 spellID = -1;
 				}
-		    if (blurandom >= 20 && blurandom < 30)
+		   else if (blurandom >= 20 && blurandom < 30)
                 if (m_PPet->health.mp > 15)  	
 			    {
 				 spellID = 529;  //Bludgeon
@@ -4244,7 +4661,7 @@ if (m_Tick >= m_LastBlueMagicHealCast + m_blueMagicHealRecast)  // Look for last
 			    {
 				 spellID = -1;
 				}
-		    if (blurandom >= 10 && blurandom < 20)
+		   else if (blurandom >= 10 && blurandom < 20)
                 if (m_PPet->health.mp > 11)  	
 			    {
 				 spellID = 623;  //Head Butt
@@ -4257,7 +4674,7 @@ if (m_Tick >= m_LastBlueMagicHealCast + m_blueMagicHealRecast)  // Look for last
 			    {
 				 spellID = -1;
 				}
-		    if (blurandom < 10)
+		   else if (blurandom < 10)
                 if (m_PPet->health.mp > 4)  	
 			    {
 				 spellID = 551;  //Power Attack
@@ -4266,7 +4683,7 @@ if (m_Tick >= m_LastBlueMagicHealCast + m_blueMagicHealRecast)  // Look for last
 			    {
 				 spellID = -1;
 				}						
-		if (level >= 18)
+		else if (level >= 18)
 		    if (blurandom >= 25)
 			    if (m_PPet->health.mp > 15)  	
 			    {
@@ -4284,7 +4701,7 @@ if (m_Tick >= m_LastBlueMagicHealCast + m_blueMagicHealRecast)  // Look for last
 			    {
 				 spellID = -1;
 				}	
-            if (blurandom < 25 && blurandom >=10)
+          else if (blurandom < 25 && blurandom >=10)
                 if (m_PPet->health.mp > 11)  	
 			    {
 				 spellID = 623;  //Head Butt
@@ -4297,7 +4714,7 @@ if (m_Tick >= m_LastBlueMagicHealCast + m_blueMagicHealRecast)  // Look for last
 			    {
 				 spellID = -1;
 				}
-            if (blurandom < 10)
+           else if (blurandom < 10)
                 if (m_PPet->health.mp > 4)  	
 			    {
 				 spellID = 551;  //Power Attack
@@ -4306,7 +4723,7 @@ if (m_Tick >= m_LastBlueMagicHealCast + m_blueMagicHealRecast)  // Look for last
 			    {
 				 spellID = -1;
 				}					
-		if (level >= 12)
+		else if (level >= 12)
 		    if (blurandom >= 20)
 			    if (m_PPet->health.mp > 11)  	
 			    {
@@ -4320,7 +4737,7 @@ if (m_Tick >= m_LastBlueMagicHealCast + m_blueMagicHealRecast)  // Look for last
 			    {
 				 spellID = -1;
 				}	
-		    if (blurandom < 20)
+		   else if (blurandom < 20)
                 if (m_PPet->health.mp > 4)  	
 			    {
 				 spellID = 551;  //Power Attack
@@ -4329,7 +4746,7 @@ if (m_Tick >= m_LastBlueMagicHealCast + m_blueMagicHealRecast)  // Look for last
 			    {
 				 spellID = -1;
 				}					
-		if (level >= 5)
+		else if (level >= 5)
 				if (m_PPet->health.mp > 4)  	
 			    {
 				 spellID = 551;  //Power Attack
@@ -4346,6 +4763,1350 @@ if (m_Tick >= m_LastBlueMagicHealCast + m_blueMagicHealRecast)  // Look for last
 	return spellID;
 }
 
+
+int16 CAIPetDummy::AdelhiedSpell()
+{
+	uint8 level = m_PPet->GetMLevel();
+	uint8 moblvl = m_PBattleTarget->GetMLevel();
+	uint8 lvldif = moblvl - level;
+    uint32 adelhiedMB = charutils::GetVar((CCharEntity*)m_PPet->PMaster,"TrustMB");
+    int16 spellID = -1;
+	uint8 nukeHPP = 75;
+	uint8 trigger = 50;
+	CBattleEntity* mostWounded = getWounded(trigger);
+    //printf("Variable Obtained: %d \n", adelhiedMB);
+	m_PBattleSubTarget = m_PBattleTarget;
+	if (adelhiedMB < 7){
+		if (level >= 10 && m_PPet->StatusEffectContainer->HasStatusEffect(EFFECT_TRUST_DARK_ARTS) == false){
+	        m_PWeaponSkill = nullptr;
+            int16 mobjaID = -1;			
+			for (int i = 0; i < m_PPet->PetSkills.size(); i++) {
+                    auto PMobSkill = battleutils::GetMobSkill(m_PPet->PetSkills.at(i));
+                            
+                        if (PMobSkill->getID() == 3719) { //Dark Arts
+						    mobjaID = 196;
+                            SetCurrentMobSkill(PMobSkill);
+							SetCurrentJobAbility(mobjaID);
+							m_PBattleSubTarget = m_PPet;  //Target Self
+							break;
+                        }
+			        }
+				preparePetAbility(m_PBattleSubTarget);
+				printf("Using Dark Arts");
+				//return;	
+	}
+	if (level >= 55 && m_PPet->StatusEffectContainer->HasStatusEffect(EFFECT_EBULLIENCE) == false){
+	        m_PWeaponSkill = nullptr;
+            int16 mobjaID = -1;			
+			for (int i = 0; i < m_PPet->PetSkills.size(); i++) {
+                    auto PMobSkill = battleutils::GetMobSkill(m_PPet->PetSkills.at(i));
+                            
+                        if (PMobSkill->getID() == 3722) { //Ebullience
+						    mobjaID = 205;
+                            SetCurrentMobSkill(PMobSkill);
+							SetCurrentJobAbility(mobjaID);
+							m_PBattleSubTarget = m_PPet;  //Target Self
+							break;
+                        }
+			        }
+				preparePetAbility(m_PBattleSubTarget);
+			    printf("Using Ebullience");
+				//return;	
+	}
+	if (adelhiedMB == 6){
+    //Dark Arts then Ebullience if possible
+    m_PBattleSubTarget = m_PBattleTarget;	
+		if (level >= 75)
+			if (m_PPet->health.mp > 195)
+				{
+				 spellID = 167;
+				}
+			else if (m_PPet->health.mp > 90)	
+                {
+				 spellID = 166;
+			    }
+			else if (m_PPet->health.mp > 36)	
+                {
+				 spellID = 165;
+			    }
+			else if (m_PPet->health.mp > 8)	
+                {
+				 spellID = 164;
+			    }
+            else
+				{
+				spellID = -1;
+				}	
+		else if (level >= 69)
+			if (m_PPet->health.mp > 90)	
+                {
+				 spellID = 166;
+			    }
+			else if (m_PPet->health.mp > 36)	
+                {
+				 spellID = 165;
+			    }
+			else if (m_PPet->health.mp > 8)	
+                {
+				 spellID = 164;
+			    }
+            else
+				{
+				 spellID = -1;
+				}
+		else if (level >= 51)
+			if (m_PPet->health.mp > 36)	
+                {
+				 spellID = 165;
+			    }
+			else if (m_PPet->health.mp > 8)	
+                {
+				 spellID = 164;
+			    }
+            else
+				{
+				 spellID = -1;
+				}
+		else if (level >= 24)
+			if (m_PPet->health.mp > 8)	
+                {
+				 spellID = 164;
+			    }
+            else
+				{
+				 spellID = -1;
+				}
+		else
+                {
+                 spellID = -1;
+                }			 
+
+		m_schEleRecast = 20000;
+		m_LastSchCheck = m_Tick;
+		//Resets Magic Burst Value to 10
+		int32 value = 10;
+        std::string varname;
+	    const int8* fmtQuery = "INSERT INTO char_vars SET charid = %u, varname = 'TrustMB', value = '10' ON DUPLICATE KEY UPDATE value = '10';";
+        Sql_Query(SqlHandle, fmtQuery, m_PPet->PMaster->id, varname, value, value);
+		//m_burstElement = 0;
+		}
+       else if (adelhiedMB == 5){	
+		      if (level >= 74)
+			if (m_PPet->health.mp > 161)
+				{
+				 spellID = 152;
+				}
+			else if (m_PPet->health.mp > 74)	
+                {
+				 spellID = 151;
+			    }
+			else if (m_PPet->health.mp > 30)	
+                {
+				 spellID = 150;
+			    }
+			else if (m_PPet->health.mp > 7)	
+                {
+				 spellID = 149;
+			    }
+            else
+				{
+				 spellID = -1;
+				}
+		else if (level >= 66)
+			if (m_PPet->health.mp > 74)	
+                {
+				 spellID = 151;
+			    }
+			else if (m_PPet->health.mp > 30)	
+                {
+				 spellID = 150;
+			    }
+			else if (m_PPet->health.mp > 7)	
+                {
+				 spellID = 149;
+			    }
+            else
+				{
+				 spellID = -1;
+				}
+        else if (level >= 46)
+			if (m_PPet->health.mp > 30)	
+                {
+				 spellID = 150;
+			    }
+			else if (m_PPet->health.mp > 7)	
+                {
+				 spellID = 149;
+			    }
+            else
+				{
+				 spellID = -1;
+				}
+        else if (level >= 20)
+			if (m_PPet->health.mp > 7)	
+                {
+				 spellID = 149;
+			    }
+            else
+				{
+				 spellID = -1;
+				}
+        m_schEleRecast = 10000;
+		m_LastSchCheck = m_Tick;
+        }		
+    else if (adelhiedMB == 4){	
+		if (level >= 73)
+			if (m_PPet->health.mp > 134)
+				{
+				 spellID = 147;
+				}
+			else if (m_PPet->health.mp > 62)	
+                {
+				 spellID = 146;
+			    }
+			else if (m_PPet->health.mp > 25)	
+                {
+				 spellID = 145;
+			    }
+			else if (m_PPet->health.mp > 6)	
+                {
+				 spellID = 144;
+			    }
+            else
+				{
+				 spellID = -1;
+				}
+		else if (level >= 63)
+			if (m_PPet->health.mp > 62)	
+                {
+				 spellID = 146;
+			    }
+			else if (m_PPet->health.mp > 25)	
+                {
+				 spellID = 145;
+			    }
+			else if (m_PPet->health.mp > 6)	
+                {
+				 spellID = 144;
+			    }
+            else
+				{
+				 spellID = -1;
+				}
+        else if (level >= 42)
+			if (m_PPet->health.mp > 25)	
+                {
+				 spellID = 145;
+			    }
+			else if (m_PPet->health.mp > 6)	
+                {
+				 spellID = 144;
+			    }
+            else
+				{
+				 spellID = -1;
+				}
+        else if (level >= 16)
+			if (m_PPet->health.mp > 6)	
+                {
+				 spellID = 144;
+			    }
+            else
+				{
+				 spellID = -1;
+				}	    
+    m_schEleRecast = 10000;
+	m_LastSchCheck = m_Tick;
+    }
+    else if (adelhiedMB == 3){	
+		if (level >= 72)
+			if (m_PPet->health.mp > 114)
+				{
+				 spellID = 157;
+				}
+			else if (m_PPet->health.mp > 53)	
+                {
+				 spellID = 156;
+			    }
+			else if (m_PPet->health.mp > 21)	
+                {
+				 spellID = 155;
+			    }
+			else if (m_PPet->health.mp > 5)	
+                {
+				 spellID = 154;
+			    }
+            else
+				{
+				 spellID = -1;
+				}
+		else if (level >= 60)
+			if (m_PPet->health.mp > 53)	
+                {
+				 spellID = 156;
+			    }
+			else if (m_PPet->health.mp > 21)	
+                {
+				 spellID = 155;
+			    }
+			else if (m_PPet->health.mp > 5)	
+                {
+				 spellID = 144;
+			    }
+            else
+				{
+				 spellID = -1;
+				}
+        else if (level >= 38)
+			if (m_PPet->health.mp > 21)	
+                {
+				 spellID = 155;
+			    }
+			else if (m_PPet->health.mp > 5)	
+                {
+				 spellID = 154;
+			    }
+            else
+				{
+				 spellID = -1;
+				}
+        else if (level >= 12)
+			if (m_PPet->health.mp > 5)	
+                {
+				 spellID = 154;
+			    }
+            else
+				{
+				 spellID = -1;
+				}	
+    m_schEleRecast = 10000;
+	m_LastSchCheck = m_Tick;
+    }
+    else if (adelhiedMB == 2){	
+		if (level >= 71)
+			if (m_PPet->health.mp > 98)
+				{
+				 spellID = 172;
+				}
+			else if (m_PPet->health.mp > 45)	
+                {
+				 spellID = 171;
+			    }
+			else if (m_PPet->health.mp > 18)	
+                {
+				 spellID = 170;
+			    }
+			else if (m_PPet->health.mp > 4)	
+                {
+				 spellID = 169;
+			    }
+            else
+				{
+				 spellID = -1;
+				}
+		else if (level >= 57)
+			if (m_PPet->health.mp > 45)	
+                {
+				 spellID = 171;
+			    }
+			else if (m_PPet->health.mp > 18)	
+                {
+				 spellID = 170;
+			    }
+			else if (m_PPet->health.mp > 4)	
+                {
+				 spellID = 169;
+			    }
+            else
+				{
+				 spellID = -1;
+				}
+        else if (level >= 34)
+			if (m_PPet->health.mp > 18)	
+                {
+				 spellID = 170;
+			    }
+			else if (m_PPet->health.mp > 4)	
+                {
+				 spellID = 169;
+			    }
+            else
+				{
+				 spellID = -1;
+				}
+        else if (level >= 8)
+			if (m_PPet->health.mp > 4)	
+                {
+				 spellID = 169;
+			    }
+            else
+				{
+				 spellID = -1;
+				}	
+    m_schEleRecast = 10000;
+	m_LastSchCheck = m_Tick;
+    }
+    else if (adelhiedMB == 1){	
+		if (level >= 70)
+			if (m_PPet->health.mp > 87)
+				{
+				 spellID = 162;
+				}
+			else if (m_PPet->health.mp > 39)	
+                {
+				 spellID = 161;
+			    }
+			else if (m_PPet->health.mp > 15)	
+                {
+				 spellID = 160;
+			    }
+			else if (m_PPet->health.mp > 3)	
+                {
+				 spellID = 159;
+			    }
+            else
+				{
+				 spellID = -1;
+				}
+		else if (level >= 54)
+			if (m_PPet->health.mp > 39)	
+                {
+				 spellID = 161;
+			    }
+			else if (m_PPet->health.mp > 15)	
+                {
+				 spellID = 160;
+			    }
+			else if (m_PPet->health.mp > 3)	
+                {
+				 spellID = 159;
+			    }
+            else
+				{
+				 spellID = -1;
+				}
+        else if (level >= 30)
+			if (m_PPet->health.mp > 15)	
+                {
+				 spellID = 160;
+			    }
+			else if (m_PPet->health.mp > 3)	
+                {
+				 spellID = 159;
+			    }
+            else
+				{
+				 spellID = -1;
+				}
+        else if (level >= 4)
+			if (m_PPet->health.mp > 3)	
+                {
+				 spellID = 159;
+			    }
+            else
+				{
+				 spellID = -1;
+				}
+    m_schEleRecast = 10000;
+	m_LastSchCheck = m_Tick;
+    }
+	}
+//MB END Check for normal Spells
+
+//Now do Healing -> Enhancing -> Nuking
+//Cures
+  else if (adelhiedMB == 10){
+  //ShowWarning(CL_RED"NO MB FOUND CYCLING THROUGH OTHER SPELLS OPTIONS\n" CL_RESET);
+  if (m_Tick >= m_LastAdelhiedHeal + m_adelhiedHealRecast && m_ActionType != ACTION_MAGIC_CASTING)
+    {
+	 if (mostWounded != nullptr)
+	    {
+        m_PBattleSubTarget = mostWounded;
+		if (level >= 10 && m_PPet->StatusEffectContainer->HasStatusEffect(EFFECT_TRUST_LIGHT_ARTS) == false){
+	        m_PWeaponSkill = nullptr;
+            int16 mobjaID = -1;			
+			for (int i = 0; i < m_PPet->PetSkills.size(); i++) {
+                    auto PMobSkill = battleutils::GetMobSkill(m_PPet->PetSkills.at(i));
+                            
+                        if (PMobSkill->getID() == 3718) { //Light Arts
+						    mobjaID = 195;
+                            SetCurrentMobSkill(PMobSkill);
+							SetCurrentJobAbility(mobjaID);
+							m_PBattleSubTarget = m_PPet;  //Target Self
+							break;
+                        }
+			        }
+				preparePetAbility(m_PBattleSubTarget);
+				printf("Using Light Arts");
+				//return;	
+	    }
+        m_PBattleSubTarget = mostWounded;		
+		if (level > 54)
+			if (m_PPet->health.mp > 88)
+				{
+				 spellID = 4;
+				}
+			else if (m_PPet->health.mp > 46)  	
+			    {
+				 spellID = 3;
+				}
+			else if (m_PPet->health.mp > 24)  	
+			    {
+				 spellID = 2;
+				}				
+			else if (m_PPet->health.mp > 7)  	
+			    {
+				 spellID = 1;
+				}
+			else 
+			    {
+				 spellID = -1;
+				} 
+		else if (level > 29)
+			if (m_PPet->health.mp > 46)  	
+			    {
+				 spellID = 3;
+				}
+			else if (m_PPet->health.mp > 24)  	
+			    {
+				 spellID = 2;
+				}				
+			else if (m_PPet->health.mp > 7)  	
+			    {
+				 spellID = 1;
+				}
+			else
+			    {
+				 spellID = -1;
+				}
+		else if (level > 16)
+			if (m_PPet->health.mp > 24)  	
+			    {
+				 spellID = 2;
+				}				
+			else if (m_PPet->health.mp > 7)  	
+			    {
+				 spellID = 1;
+				}
+			else
+			    {
+				 spellID = -1;
+				}
+		else if (level > 4)
+			if (m_PPet->health.mp > 7)  	
+			    {
+				 spellID = 1;
+				}
+			else
+			    {
+				 spellID = -1;
+				} 
+		else
+		        {
+				 spellID = -1;
+				} 
+		m_LastAdelhiedHeal = m_Tick;		
+     }
+	 else
+	 { 
+	   m_LastAdelhiedHeal = m_Tick;
+	   m_adelhiedHealRecast = 12000; //No eligible Healing Spell set new recast to 12 seconds
+	 }
+	 }
+
+  else if (m_Tick >= m_LastSchEnh + m_schEnhRecast && m_ActionType != ACTION_MAGIC_CASTING) // Look for last time Sscholar used enhancing... will do Regen on Master.  If level is 40 and above will use Acession to AoE 
+    {
+	 //ShowWarning("ENHANCING CHECK TRIGGERED\n");
+	 m_PBattleSubTarget = m_PBattleTarget;
+	 if (m_PPet->PMaster->GetHPP() > 65 && m_PPet->PMaster->GetHPP() < 95 && m_PPet->PMaster->StatusEffectContainer->HasStatusEffect(EFFECT_REGEN) == false)
+     {
+	    //printf("REGEN TRIGGERED\n!!");
+		if (level >= 10 && m_PPet->StatusEffectContainer->HasStatusEffect(EFFECT_TRUST_LIGHT_ARTS) == false){
+	        m_PWeaponSkill = nullptr;
+            int16 mobjaID = -1;			
+			for (int i = 0; i < m_PPet->PetSkills.size(); i++) {
+                    auto PMobSkill = battleutils::GetMobSkill(m_PPet->PetSkills.at(i));
+                            
+                        if (PMobSkill->getID() == 3718) { //Light Arts
+						    mobjaID = 195;
+                            SetCurrentMobSkill(PMobSkill);
+							SetCurrentJobAbility(mobjaID);
+							m_PBattleSubTarget = m_PPet;  //Target Self
+							break;
+                        }
+			        }
+				preparePetAbility(m_PBattleSubTarget);
+				//printf("Using Light Arts\n");
+				//return;	
+	}
+	if (level >= 40 && m_PPet->StatusEffectContainer->HasStatusEffect(EFFECT_TRUST_ACCESSION) == false){
+	        m_PWeaponSkill = nullptr;
+            int16 mobjaID = -1;			
+			for (int i = 0; i < m_PPet->PetSkills.size(); i++) {
+                    auto PMobSkill = battleutils::GetMobSkill(m_PPet->PetSkills.at(i));
+                            
+                        if (PMobSkill->getID() == 3720) { //Accession
+						    mobjaID = 202;
+                            SetCurrentMobSkill(PMobSkill);
+							SetCurrentJobAbility(mobjaID);
+							m_PBattleSubTarget = m_PPet;  //Target Self
+							break;
+                        }
+			        }
+				preparePetAbility(m_PBattleSubTarget);
+			    printf("Using Accession");
+				//return;	
+	}	 
+	 m_PBattleSubTarget = m_PPet->PMaster;
+	 if (level >= 59)
+             if (m_PPet->health.mp >= 64)
+		            {
+				     spellID = 111;
+					}
+                else if (m_PPet->health.mp >= 36)
+					{
+					 spellID = 110;
+					}
+                else if (m_PPet->health.mp >= 15)
+					{
+					 spellID = 109;
+					}					
+				else 
+			        {
+				     spellID = -1;
+				    } 
+			else if (level >= 37)
+                if (m_PPet->health.mp >= 36)
+					{
+					 spellID = 110;
+					}
+                else if (m_PPet->health.mp >= 15)
+					{
+					 spellID = 109;
+					}					
+				else 
+			        {
+				     spellID = -1;
+				    }
+			else if (level >= 18)
+                if (m_PPet->health.mp >= 15)
+					{
+					 spellID = 109;
+					}					
+				else 
+			        {
+				     spellID = -1;
+				    }					
+			else
+		        {
+				 spellID = -1;
+				} 
+	  m_LastSchEnh = m_Tick;	
+	 }
+	 else
+	 {
+	  m_LastSchEnh = m_Tick;
+      m_schEnhRecast = 11000; //No Eligible Enhancing Spell to cast, set check to 11 seconds
+	 }
+	 }
+  else if (m_Tick >= m_LastSchEleCast + m_schEleRecast && m_ActionType != ACTION_MAGIC_CASTING)  // Look for last time Scholar Casted
+	{
+	 //Helix Spells First if mob HP is above 75%
+     if (m_PBattleTarget != nullptr && m_PBattleTarget->getMod(MOD_THUNDERRES) < 0 && m_PBattleTarget->GetHPP() >= nukeHPP && m_PBattleTarget->StatusEffectContainer->HasStatusEffect(EFFECT_HELIX) == false)  // Weak to Thunder use Ionohelix
+	 {
+	 m_PBattleSubTarget = m_PBattleTarget;
+		if (level >= 28)
+			if (m_PPet->health.mp > 25)
+				{
+				 spellID = 283;
+				}
+            else
+				{
+				 spellID = -1;
+				}			 
+		m_schEleRecast = 10000;
+    }
+	 else if (m_PBattleTarget != nullptr && m_PBattleTarget->getMod(MOD_ICERES) < 0 && m_PBattleTarget->GetHPP() >= nukeHPP && m_PBattleTarget->StatusEffectContainer->HasStatusEffect(EFFECT_HELIX) == false)  // Weak to Ice use Cryohelix
+	{
+	 	if (level >= 10 && m_PPet->StatusEffectContainer->HasStatusEffect(EFFECT_TRUST_DARK_ARTS) == false){
+	        m_PWeaponSkill = nullptr;
+            int16 mobjaID = -1;			
+			for (int i = 0; i < m_PPet->PetSkills.size(); i++) {
+                    auto PMobSkill = battleutils::GetMobSkill(m_PPet->PetSkills.at(i));
+                            
+                        if (PMobSkill->getID() == 3719) { //Dark Arts
+						    mobjaID = 196;
+                            SetCurrentMobSkill(PMobSkill);
+							SetCurrentJobAbility(mobjaID);
+							m_PBattleSubTarget = m_PPet;  //Target Self
+							break;
+                        }
+			        }
+				preparePetAbility(m_PBattleSubTarget);
+				printf("Using Dark Arts");
+				//return;	
+	    }
+	 m_PBattleSubTarget = m_PBattleTarget;
+		if (level >= 26)
+			if (m_PPet->health.mp > 25)
+				{
+				 spellID = 282;
+				}
+            else
+				{
+				 spellID = -1;
+				}			 
+		m_schEleRecast = 10000;			
+    }
+	 else if (m_PBattleTarget != nullptr && m_PBattleTarget->getMod(MOD_FIRERES) < 0 && m_PBattleTarget->GetHPP() >= nukeHPP && m_PBattleTarget->StatusEffectContainer->HasStatusEffect(EFFECT_HELIX) == false)  // Weak to Fire use Pyrohelix
+	{
+	 	if (level >= 10 && m_PPet->StatusEffectContainer->HasStatusEffect(EFFECT_TRUST_DARK_ARTS) == false){
+	        m_PWeaponSkill = nullptr;
+            int16 mobjaID = -1;			
+			for (int i = 0; i < m_PPet->PetSkills.size(); i++) {
+                    auto PMobSkill = battleutils::GetMobSkill(m_PPet->PetSkills.at(i));
+                            
+                        if (PMobSkill->getID() == 3719) { //Dark Arts
+						    mobjaID = 196;
+                            SetCurrentMobSkill(PMobSkill);
+							SetCurrentJobAbility(mobjaID);
+							m_PBattleSubTarget = m_PPet;  //Target Self
+							break;
+                        }
+			        }
+				preparePetAbility(m_PBattleSubTarget);
+				printf("Using Dark Arts");
+				//return;	
+	    }	
+	 m_PBattleSubTarget = m_PBattleTarget;
+		if (level >= 24)
+			if (m_PPet->health.mp > 25)
+				{
+				 spellID = 281;
+				}
+            else
+				{
+				 spellID = -1;
+				}			 
+		m_schEleRecast = 10000;	
+    }
+	 else if (m_PBattleTarget != nullptr && m_PBattleTarget->getMod(MOD_WINDRES) < 0 && m_PBattleTarget->GetHPP() >= nukeHPP && m_PBattleTarget->StatusEffectContainer->HasStatusEffect(EFFECT_HELIX) == false)  // Weak to Wind use Amenohelix
+	{
+	 	if (level >= 10 && m_PPet->StatusEffectContainer->HasStatusEffect(EFFECT_TRUST_DARK_ARTS) == false){
+	        m_PWeaponSkill = nullptr;
+            int16 mobjaID = -1;			
+			for (int i = 0; i < m_PPet->PetSkills.size(); i++) {
+                    auto PMobSkill = battleutils::GetMobSkill(m_PPet->PetSkills.at(i));
+                            
+                        if (PMobSkill->getID() == 3719) { //Dark Arts
+						    mobjaID = 196;
+                            SetCurrentMobSkill(PMobSkill);
+							SetCurrentJobAbility(mobjaID);
+							m_PBattleSubTarget = m_PPet;  //Target Self
+							break;
+                        }
+			        }
+				preparePetAbility(m_PBattleSubTarget);
+				printf("Using Dark Arts");
+				//return;	
+	    }	
+	 m_PBattleSubTarget = m_PBattleTarget;
+		if (level >= 22)
+			if (m_PPet->health.mp > 25)
+				{
+				 spellID = 280;
+				}
+            else
+				{
+				 spellID = -1;
+				}			 
+		m_schEleRecast = 10000;
+    }
+	 else if (m_PBattleTarget != nullptr && m_PBattleTarget->getMod(MOD_WATERRES) < 0 && m_PBattleTarget->GetHPP() >= nukeHPP && m_PBattleTarget->StatusEffectContainer->HasStatusEffect(EFFECT_HELIX) == false)  // Weak to Water use Hydrohelix
+	{
+	 	if (level >= 10 && m_PPet->StatusEffectContainer->HasStatusEffect(EFFECT_TRUST_DARK_ARTS) == false){
+	        m_PWeaponSkill = nullptr;
+            int16 mobjaID = -1;			
+			for (int i = 0; i < m_PPet->PetSkills.size(); i++) {
+                    auto PMobSkill = battleutils::GetMobSkill(m_PPet->PetSkills.at(i));
+                            
+                        if (PMobSkill->getID() == 3719) { //Dark Arts
+						    mobjaID = 196;
+                            SetCurrentMobSkill(PMobSkill);
+							SetCurrentJobAbility(mobjaID);
+							m_PBattleSubTarget = m_PPet;  //Target Self
+							break;
+                        }
+			        }
+				preparePetAbility(m_PBattleSubTarget);
+				printf("Using Dark Arts");
+				//return;	
+	    }	
+	 m_PBattleSubTarget = m_PBattleTarget;
+		if (level >= 20)
+			if (m_PPet->health.mp > 25)
+				{
+				 spellID = 279;
+				}
+            else
+				{
+				 spellID = -1;
+				}			 
+		m_schEleRecast = 10000;
+    }
+    else if (m_PBattleTarget != nullptr && m_PBattleTarget->getMod(MOD_EARTHRES) < 0 && m_PBattleTarget->GetHPP() >= nukeHPP && m_PBattleTarget->StatusEffectContainer->HasStatusEffect(EFFECT_HELIX) == false)  // Weak to Earth use Geohelix
+	{
+	 	if (level >= 10 && m_PPet->StatusEffectContainer->HasStatusEffect(EFFECT_TRUST_DARK_ARTS) == false){
+	        m_PWeaponSkill = nullptr;
+            int16 mobjaID = -1;			
+			for (int i = 0; i < m_PPet->PetSkills.size(); i++) {
+                    auto PMobSkill = battleutils::GetMobSkill(m_PPet->PetSkills.at(i));
+                            
+                        if (PMobSkill->getID() == 3719) { //Dark Arts
+						    mobjaID = 196;
+                            SetCurrentMobSkill(PMobSkill);
+							SetCurrentJobAbility(mobjaID);
+							m_PBattleSubTarget = m_PPet;  //Target Self
+							break;
+                        }
+			        }
+				preparePetAbility(m_PBattleSubTarget);
+				printf("Using Dark Arts");
+				//return;	
+	    }	
+	 m_PBattleSubTarget = m_PBattleTarget;
+		if (level >= 18)
+			if (m_PPet->health.mp > 25)
+				{
+				 spellID = 278;
+				}
+            else
+				{
+				 spellID = -1;
+				}			 
+		m_schEleRecast = 10000;
+    }
+	//Start looking for weakness if the mobs HP is below 75% for regular nukes
+	else if (m_PBattleTarget != nullptr && m_PBattleTarget->getMod(MOD_THUNDERRES) < 0 && m_PBattleTarget->GetHPP() <= nukeHPP){
+	 	if (level >= 10 && m_PPet->StatusEffectContainer->HasStatusEffect(EFFECT_TRUST_DARK_ARTS) == false){
+	        m_PWeaponSkill = nullptr;
+            int16 mobjaID = -1;			
+			for (int i = 0; i < m_PPet->PetSkills.size(); i++) {
+                    auto PMobSkill = battleutils::GetMobSkill(m_PPet->PetSkills.at(i));
+                            
+                        if (PMobSkill->getID() == 3719) { //Dark Arts
+						    mobjaID = 196;
+                            SetCurrentMobSkill(PMobSkill);
+							SetCurrentJobAbility(mobjaID);
+							m_PBattleSubTarget = m_PPet;  //Target Self
+							break;
+                        }
+			        }
+				preparePetAbility(m_PBattleSubTarget);
+				printf("Using Dark Arts");
+				//return;	
+	    }	
+		m_PBattleSubTarget = m_PBattleTarget;
+		if (level >= 75)
+			if (m_PPet->health.mp > 195)
+				{
+				 spellID = 167;
+				 printf("Spell Should Be: %d \n", spellID);
+				}
+			else if (m_PPet->health.mp > 90)	
+                {
+				 spellID = 166;
+			    }
+			else if (m_PPet->health.mp > 36)	
+                {
+				 spellID = 165;
+			    }
+			else if (m_PPet->health.mp > 8)	
+                {
+				 spellID = 164;
+			    }
+            else
+				{
+				spellID = -1;
+				}	
+		else if (level >= 69)
+			if (m_PPet->health.mp > 90)	
+                {
+				 spellID = 166;
+			    }
+			else if (m_PPet->health.mp > 36)	
+                {
+				 spellID = 165;
+			    }
+			else if (m_PPet->health.mp > 8)	
+                {
+				 spellID = 164;
+			    }
+            else
+				{
+				 spellID = -1;
+				}
+		else if (level >= 51)
+			if (m_PPet->health.mp > 36)	
+                {
+				 spellID = 165;
+			    }
+			else if (m_PPet->health.mp > 8)	
+                {
+				 spellID = 164;
+			    }
+            else
+				{
+				 spellID = -1;
+				}
+		else if (level >= 24)
+			if (m_PPet->health.mp > 8)	
+                {
+				 spellID = 164;
+			    }
+            else
+				{
+				 spellID = -1;
+				}
+		else
+                {
+                 spellID = -1;
+                }			 
+
+		m_schEleRecast = 18000;
+		m_LastSchCheck = m_Tick;
+		//m_burstElement = 0;
+		}
+       else if (m_PBattleTarget != nullptr && m_PBattleTarget->getMod(MOD_ICERES) < 0 && m_PBattleTarget->GetHPP() <= nukeHPP){
+	 	if (level >= 10 && m_PPet->StatusEffectContainer->HasStatusEffect(EFFECT_TRUST_DARK_ARTS) == false){
+	        m_PWeaponSkill = nullptr;
+            int16 mobjaID = -1;			
+			for (int i = 0; i < m_PPet->PetSkills.size(); i++) {
+                    auto PMobSkill = battleutils::GetMobSkill(m_PPet->PetSkills.at(i));
+                            
+                        if (PMobSkill->getID() == 3719) { //Dark Arts
+						    mobjaID = 196;
+                            SetCurrentMobSkill(PMobSkill);
+							SetCurrentJobAbility(mobjaID);
+							m_PBattleSubTarget = m_PPet;  //Target Self
+							break;
+                        }
+			        }
+				preparePetAbility(m_PBattleSubTarget);
+				printf("Using Dark Arts");
+				//return;	
+	    }	
+        m_PBattleSubTarget = m_PBattleTarget;		
+	    if (level >= 74)
+			if (m_PPet->health.mp > 161)
+				{
+				 spellID = 152;
+				}
+			else if (m_PPet->health.mp > 74)	
+                {
+				 spellID = 151;
+			    }
+			else if (m_PPet->health.mp > 30)	
+                {
+				 spellID = 150;
+			    }
+			else if (m_PPet->health.mp > 7)	
+                {
+				 spellID = 149;
+			    }
+            else
+				{
+				 spellID = -1;
+				}
+		else if (level >= 66)
+			if (m_PPet->health.mp > 74)	
+                {
+				 spellID = 151;
+			    }
+			else if (m_PPet->health.mp > 30)	
+                {
+				 spellID = 150;
+			    }
+			else if (m_PPet->health.mp > 7)	
+                {
+				 spellID = 149;
+			    }
+            else
+				{
+				 spellID = -1;
+				}
+        else if (level >= 46)
+			if (m_PPet->health.mp > 30)	
+                {
+				 spellID = 150;
+			    }
+			else if (m_PPet->health.mp > 7)	
+                {
+				 spellID = 149;
+			    }
+            else
+				{
+				 spellID = -1;
+				}
+        else if (level >= 20)
+			if (m_PPet->health.mp > 7)	
+                {
+				 spellID = 149;
+			    }
+            else
+				{
+				 spellID = -1;
+				}
+        m_schEleRecast = 18000;
+		m_LastSchCheck = m_Tick;
+        }		
+    else if (m_PBattleTarget != nullptr && m_PBattleTarget->getMod(MOD_FIRERES) < 0 && m_PBattleTarget->GetHPP() <= nukeHPP){
+	 	if (level >= 10 && m_PPet->StatusEffectContainer->HasStatusEffect(EFFECT_TRUST_DARK_ARTS) == false){
+	        m_PWeaponSkill = nullptr;
+            int16 mobjaID = -1;			
+			for (int i = 0; i < m_PPet->PetSkills.size(); i++) {
+                    auto PMobSkill = battleutils::GetMobSkill(m_PPet->PetSkills.at(i));
+                            
+                        if (PMobSkill->getID() == 3719) { //Dark Arts
+						    mobjaID = 196;
+                            SetCurrentMobSkill(PMobSkill);
+							SetCurrentJobAbility(mobjaID);
+							m_PBattleSubTarget = m_PPet;  //Target Self
+							break;
+                        }
+			        }
+				preparePetAbility(m_PBattleSubTarget);
+				printf("Using Dark Arts");
+				//return;	
+	    }	
+		m_PBattleSubTarget = m_PBattleTarget;
+		if (level >= 73)
+			if (m_PPet->health.mp > 134)
+				{
+				 spellID = 147;
+				}
+			else if (m_PPet->health.mp > 62)	
+                {
+				 spellID = 146;
+			    }
+			else if (m_PPet->health.mp > 25)	
+                {
+				 spellID = 145;
+			    }
+			else if (m_PPet->health.mp > 6)	
+                {
+				 spellID = 144;
+			    }
+            else
+				{
+				 spellID = -1;
+				}
+		else if (level >= 63)
+			if (m_PPet->health.mp > 62)	
+                {
+				 spellID = 146;
+			    }
+			else if (m_PPet->health.mp > 25)	
+                {
+				 spellID = 145;
+			    }
+			else if (m_PPet->health.mp > 6)	
+                {
+				 spellID = 144;
+			    }
+            else
+				{
+				 spellID = -1;
+				}
+        else if (level >= 42)
+			if (m_PPet->health.mp > 25)	
+                {
+				 spellID = 145;
+			    }
+			else if (m_PPet->health.mp > 6)	
+                {
+				 spellID = 144;
+			    }
+            else
+				{
+				 spellID = -1;
+				}
+        else if (level >= 16)
+			if (m_PPet->health.mp > 6)	
+                {
+				 spellID = 144;
+			    }
+            else
+				{
+				 spellID = -1;
+				}	    
+    m_schEleRecast = 18000;
+	m_LastSchCheck = m_Tick;
+    }
+    else if (m_PBattleTarget != nullptr && m_PBattleTarget->getMod(MOD_WINDRES) < 0 && m_PBattleTarget->GetHPP() <= nukeHPP){
+	 	if (level >= 10 && m_PPet->StatusEffectContainer->HasStatusEffect(EFFECT_TRUST_DARK_ARTS) == false){
+	        m_PWeaponSkill = nullptr;
+            int16 mobjaID = -1;			
+			for (int i = 0; i < m_PPet->PetSkills.size(); i++) {
+                    auto PMobSkill = battleutils::GetMobSkill(m_PPet->PetSkills.at(i));
+                            
+                        if (PMobSkill->getID() == 3719) { //Dark Arts
+						    mobjaID = 196;
+                            SetCurrentMobSkill(PMobSkill);
+							SetCurrentJobAbility(mobjaID);
+							m_PBattleSubTarget = m_PPet;  //Target Self
+							break;
+                        }
+			        }
+				preparePetAbility(m_PBattleSubTarget);
+				printf("Using Dark Arts");
+				//return;	
+	    }	
+		m_PBattleSubTarget = m_PBattleTarget;
+		if (level >= 72)
+			if (m_PPet->health.mp > 114)
+				{
+				 spellID = 157;
+				}
+			else if (m_PPet->health.mp > 53)	
+                {
+				 spellID = 156;
+			    }
+			else if (m_PPet->health.mp > 21)	
+                {
+				 spellID = 155;
+			    }
+			else if (m_PPet->health.mp > 5)	
+                {
+				 spellID = 154;
+			    }
+            else
+				{
+				 spellID = -1;
+				}
+		else if (level >= 60)
+			if (m_PPet->health.mp > 53)	
+                {
+				 spellID = 156;
+			    }
+			else if (m_PPet->health.mp > 21)	
+                {
+				 spellID = 155;
+			    }
+			else if (m_PPet->health.mp > 5)	
+                {
+				 spellID = 144;
+			    }
+            else
+				{
+				 spellID = -1;
+				}
+        else if (level >= 38)
+			if (m_PPet->health.mp > 21)	
+                {
+				 spellID = 155;
+			    }
+			else if (m_PPet->health.mp > 5)	
+                {
+				 spellID = 154;
+			    }
+            else
+				{
+				 spellID = -1;
+				}
+        else if (level >= 12)
+			if (m_PPet->health.mp > 5)	
+                {
+				 spellID = 154;
+			    }
+            else
+				{
+				 spellID = -1;
+				}	
+    m_schEleRecast = 18000;
+	m_LastSchCheck = m_Tick;
+    }
+    else if (m_PBattleTarget != nullptr && m_PBattleTarget->getMod(MOD_WATERRES) < 0 && m_PBattleTarget->GetHPP() <= nukeHPP){
+	 	if (level >= 10 && m_PPet->StatusEffectContainer->HasStatusEffect(EFFECT_TRUST_DARK_ARTS) == false){
+	        m_PWeaponSkill = nullptr;
+            int16 mobjaID = -1;			
+			for (int i = 0; i < m_PPet->PetSkills.size(); i++) {
+                    auto PMobSkill = battleutils::GetMobSkill(m_PPet->PetSkills.at(i));
+                            
+                        if (PMobSkill->getID() == 3719) { //Dark Arts
+						    mobjaID = 196;
+                            SetCurrentMobSkill(PMobSkill);
+							SetCurrentJobAbility(mobjaID);
+							m_PBattleSubTarget = m_PPet;  //Target Self
+							break;
+                        }
+			        }
+				preparePetAbility(m_PBattleSubTarget);
+				printf("Using Dark Arts");
+				//return;	
+	    }	
+		m_PBattleSubTarget = m_PBattleTarget;
+		if (level >= 71)
+			if (m_PPet->health.mp > 98)
+				{
+				 spellID = 172;
+				}
+			else if (m_PPet->health.mp > 45)	
+                {
+				 spellID = 171;
+			    }
+			else if (m_PPet->health.mp > 18)	
+                {
+				 spellID = 170;
+			    }
+			else if (m_PPet->health.mp > 4)	
+                {
+				 spellID = 169;
+			    }
+            else
+				{
+				 spellID = -1;
+				}
+		else if (level >= 57)
+			if (m_PPet->health.mp > 45)	
+                {
+				 spellID = 171;
+			    }
+			else if (m_PPet->health.mp > 18)	
+                {
+				 spellID = 170;
+			    }
+			else if (m_PPet->health.mp > 4)	
+                {
+				 spellID = 169;
+			    }
+            else
+				{
+				 spellID = -1;
+				}
+        else if (level >= 34)
+			if (m_PPet->health.mp > 18)	
+                {
+				 spellID = 170;
+			    }
+			else if (m_PPet->health.mp > 4)	
+                {
+				 spellID = 169;
+			    }
+            else
+				{
+				 spellID = -1;
+				}
+        else if (level >= 8)
+			if (m_PPet->health.mp > 4)	
+                {
+				 spellID = 169;
+			    }
+            else
+				{
+				 spellID = -1;
+				}	
+    m_schEleRecast = 18000;
+	m_LastSchCheck = m_Tick;
+    }
+    else if (m_PBattleTarget != nullptr && m_PBattleTarget->getMod(MOD_EARTHRES) < 0 && m_PBattleTarget->GetHPP() <= nukeHPP){
+	 	if (level >= 10 && m_PPet->StatusEffectContainer->HasStatusEffect(EFFECT_TRUST_DARK_ARTS) == false){
+	        m_PWeaponSkill = nullptr;
+            int16 mobjaID = -1;			
+			for (int i = 0; i < m_PPet->PetSkills.size(); i++) {
+                    auto PMobSkill = battleutils::GetMobSkill(m_PPet->PetSkills.at(i));
+                            
+                        if (PMobSkill->getID() == 3719) { //Dark Arts
+						    mobjaID = 196;
+                            SetCurrentMobSkill(PMobSkill);
+							SetCurrentJobAbility(mobjaID);
+							m_PBattleSubTarget = m_PPet;  //Target Self
+							break;
+                        }
+			        }
+				preparePetAbility(m_PBattleSubTarget);
+				printf("Using Dark Arts");
+				//return;	
+	    }
+        m_PBattleSubTarget = m_PBattleTarget;		
+		if (level >= 70)
+			if (m_PPet->health.mp > 87)
+				{
+				 spellID = 162;
+				}
+			else if (m_PPet->health.mp > 39)	
+                {
+				 spellID = 161;
+			    }
+			else if (m_PPet->health.mp > 15)	
+                {
+				 spellID = 160;
+			    }
+			else if (m_PPet->health.mp > 3)	
+                {
+				 spellID = 159;
+			    }
+            else
+				{
+				 spellID = -1;
+				}
+		else if (level >= 54)
+			if (m_PPet->health.mp > 39)	
+                {
+				 spellID = 161;
+			    }
+			else if (m_PPet->health.mp > 15)	
+                {
+				 spellID = 160;
+			    }
+			else if (m_PPet->health.mp > 3)	
+                {
+				 spellID = 159;
+			    }
+            else
+				{
+				 spellID = -1;
+				}
+        else if (level >= 30)
+			if (m_PPet->health.mp > 15)	
+                {
+				 spellID = 160;
+			    }
+			else if (m_PPet->health.mp > 3)	
+                {
+				 spellID = 159;
+			    }
+            else
+				{
+				 spellID = -1;
+				}
+        else if (level >= 4)
+			if (m_PPet->health.mp > 3)	
+                {
+				 spellID = 159;
+			    }
+            else
+				{
+				 spellID = -1;
+				}
+    m_schEleRecast = 18000;
+	m_LastSchCheck = m_Tick;
+    }	
+	//TODO Add regular casting when weakness cannot be found
+	else {
+    m_schEleRecast = 10000; //No Eligible Spell to cast
+	}
+	m_LastSchEleCast = m_Tick;
+
+	}
+	}
+
+	
+
+
+	m_LastSchCheck = m_Tick;
+	return spellID;
+}	
 
 
 CBattleEntity* CAIPetDummy::getWounded(uint8 threshold)

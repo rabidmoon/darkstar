@@ -175,6 +175,10 @@ public:
 	void            SetLastBlueCheck(uint32 time);
 	void			SetLastBlueMagicCast(uint32 time);
 	void			SetLastBlueMagicHealCast(uint32 time);
+	void 			SetLastSchEleCast(uint32 time);
+	void			SetLastSchCheck(uint32 time);
+	void			SetLastSchEnh(uint32 time);
+	void			SetLastAdelhiedHeal(uint32 time);
 	
 	
 	void			SetCurrentAction(ACTIONTYPE Action, uint16 TargetID = 0);
@@ -244,6 +248,10 @@ protected:
     uint32          m_LastBlueCheck;
     uint32          m_LastBlueMagicCast;
 	uint32          m_LastBlueMagicHealCast;
+	uint32			m_LastSchEleCast;
+	uint32          m_LastSchCheck;
+	uint32			m_LastAdelhiedHeal;
+	uint32			m_LastSchEnh;
 	
 	uint32			m_LastEngageStart;
 	uint32 			m_LastSkillchainStart;

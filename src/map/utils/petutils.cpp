@@ -1171,6 +1171,7 @@ namespace petutils
 		{
 		uint16 moddatt = (PAlly->GetMLevel() * 1.0);
 		uint16 moddacc = (PAlly->GetMLevel() * 0.5);
+		uint16 modmab = (PAlly->GetMLevel() / 2);
 		PAlly->setModifier(MOD_ACC, battleutils::GetMaxSkill(SKILL_POL, JOB_WAR, PAlly->GetMLevel()) + moddacc); //B+ Acc
 		PAlly->setModifier(MOD_EVA, battleutils::GetMaxSkill(SKILL_POL, JOB_WAR, PAlly->GetMLevel())); //B+ Evasion
 		PAlly->setModifier(MOD_ATT, battleutils::GetMaxSkill(SKILL_POL, JOB_WAR, PAlly->GetMLevel()) + moddatt);// B+ Attack
@@ -1179,9 +1180,11 @@ namespace petutils
 		PAlly->setModifier(MOD_DIVINE, battleutils::GetMaxSkill(SKILL_H2H, JOB_WAR, PAlly->GetMLevel()));// D Divine
 		PAlly->setModifier(MOD_ELEM, battleutils::GetMaxSkill(SKILL_H2H, JOB_WAR, PAlly->GetMLevel()));// D Elemental
 		PAlly->setModifier(MOD_ENFEEBLE, battleutils::GetMaxSkill(SKILL_H2H, JOB_WAR, PAlly->GetMLevel()));// D Enfeebling		
+		PAlly->setModifier(MOD_MATT, modmab); //Magic Attack Bonus		
 		PAlly->m_Weapons[SLOT_MAIN]->setDamage(floor(PAlly->GetMLevel()*0.49f));// D:37 @75
 		PAlly->m_Weapons[SLOT_MAIN]->setDelay(floor(1000.0f*(340.0f / 60.0f))); //340 delay	
 		PAlly->health.maxmp = (int16)(22 + (3.46f*(plvl * 3.46f))); 
+		PAlly->UpdateHealth();
         PAlly->health.mp = PAlly->health.maxmp;
 		 if (plvl > 24){
 				PAlly->setModifier(MOD_REFRESH, 1);

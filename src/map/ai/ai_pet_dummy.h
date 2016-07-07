@@ -51,7 +51,7 @@ public:
 	uint16	m_MasterCommand; //used for avatars/wyverns atm
 	std::map<char,int> timers;
     bool  m_queueSic;
-
+	
 protected:
 	virtual void TransitionBack(bool skipWait = false);
 
@@ -61,6 +61,7 @@ protected:
 	uint32 m_magicRecast;
 	uint32 m_magicKupipiRecast;
 	uint32 m_blueCheck;
+	uint32 m_schCheck;
 	
 	//individual spell timers
 	uint32 m_magicHealRecast;
@@ -86,8 +87,14 @@ protected:
 	uint32 m_blueChainAffinityRecast;
     uint32 m_blueMagicRecast;
 	uint32 m_blueMagicHealRecast;
+	uint32 m_schEleRecast;
+	uint32 m_schEnhRecast;
+	uint32 m_adelhiedHealRecast;
+	uint32 m_schHealing;
+	int8 m_magicburst;
 	int8 m_sekkaStatus;
 	int8 m_chainAffinityStatus;
+	
 
 	
 
@@ -118,6 +125,7 @@ protected:
 	int16 CurillaSpell();
 	int16 KupipiSpell();
 	int16 BlueSpell();
+	int16 AdelhiedSpell();
 	CBattleEntity* getWounded(uint8 threshold);
 	CBattleEntity* getWoundedLow(uint8 threshold);	
 

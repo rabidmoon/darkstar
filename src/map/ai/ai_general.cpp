@@ -109,6 +109,10 @@ void CAIGeneral::Reset()
 	m_LastBlueCheck = 0;
 	m_LastBlueMagicHealCast = 0;
 	m_LastBlueMagicCast = 0;
+	m_LastSchCheck = 0;
+	m_LastSchEleCast = 0;
+	m_LastAdelhiedHeal = 0;
+	m_LastSchEnh = 0;
 	
 	m_LastAyameMeditateTime = 0;
 	m_LastAyameThirdEyeTime = 0;
@@ -476,6 +480,26 @@ void CAIGeneral::SetLastBlueMagicHealCast(uint32 time)
 {
     m_LastBlueMagicHealCast = time;
 }	
+
+void CAIGeneral::SetLastSchCheck(uint32 time)
+{
+    m_LastSchCheck = time;
+}
+
+void CAIGeneral::SetLastSchEleCast(uint32 time)
+{
+    m_LastSchEleCast = time;
+}
+
+void CAIGeneral::SetLastSchEnh(uint32 time)
+{
+    m_LastSchEnh = time;
+}
+
+void CAIGeneral::SetLastAdelhiedHeal(uint32 time)
+{
+    m_LastAdelhiedHeal = time;
+}
 
 
 void CAIGeneral::SetBattleTarget(CBattleEntity* PEntity)

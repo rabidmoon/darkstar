@@ -16,8 +16,14 @@ require("scripts/globals/keyitems");
 -----------------------------------
 
 function onTrade(player,npc,trade)
-	
-
+if ((trade:hasItemQty(10183,1) and (player:hasSpell(991) == false) and (player:getNation() == 1) and (player:hasKeyItem(BASTOK_TRUST_PERMIT) == true))) then	
+player:addSpell(991);
+player:PrintToPlayer("You may now summon Darrcullin as a Trust!", 0x15);
+else if ((trade:hasItemQty(10153,1) and (player:hasSpell(968) == false) and (player:getNation() == 1) and (player:hasKeyItem(BASTOK_TRUST_PERMIT) == true))) then	
+player:addSpell(968);
+player:PrintToPlayer("You may now summon Adelhied as a Trust!", 0x15);
+end
+end
 end;
 
 -----------------------------------

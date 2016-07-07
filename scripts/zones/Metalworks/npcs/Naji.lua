@@ -38,9 +38,9 @@ end;
 -----------------------------------
 
 function onTrigger(player,npc)
-    local srank = player:getNationRank(SANDORIA);
-	local wrank = player:getNationRank(WINDURST);
-	local brank = player:getNationRank(BASTOK);
+    local srank = player:getRank();
+	local wrank = player:getRank();
+	local brank = player:getRank();
 	
 	if (srank >= 4) and (player:hasKeyItem(RED_INSTITUTE_CARD)) and (player:hasSpell(897) == false) then  -- Sandy Rnak 4 or higher
 	player:PrintToPlayer("Your Red Institute Card flashes brilliantly!", 0x1C);

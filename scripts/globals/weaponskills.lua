@@ -52,6 +52,8 @@ function doPhysicalWeaponskill(attacker, target, params)
         end
         --printf("bonusacc = %u bonusfTP = %f", bonusacc, bonusfTP);
     end
+	
+	bonusfTP, bonusacc = bonusfTP, bonusacc + handleStorms(attacker);
 
 	--get fstr
 	local fstr = fSTR(attacker:getStat(MOD_STR),target:getStat(MOD_VIT),attacker:getWeaponDmgRank());
@@ -920,3 +922,81 @@ function getFlourishAnimation(skill)
 		return 0;
 	end	
 end
+
+
+function handleStorms(attacker)
+    local ftpBonus = 0;
+    local accBonus = 0;
+	local element = 0;
+	local SCProp1, SCProp2, SCProp3 = attacker:getWSSkillchainProp();
+   if (attacker:hasStatusEffect(EFFECT_SANDSTORM)) then
+   element = 1;
+   elseif (attacker:hasStatusEffect(EFFECT_RAINSTORM)) then
+   element = 2;
+   elseif (attacker:hasStatusEffect(EFFECT_WINDSTORM)) then
+   element = 3;
+   elseif (attacker:hasStatusEffect(EFFECT_FIRESTORM)) then
+   element = 4;
+   elseif (attacker:hasStatusEffect(EFFECT_HAILSTORM)) then
+   element = 5;
+   elseif (attacker:hasStatusEffect(EFFECT_THUNDERSTORM)) then
+   element = 6;
+   elseif (attacker:hasStatusEffect(EFFECT_AURORASTORM)) then
+   element = 7;
+   elseif (attacker:hasStatusEffect(EFFECT_VOIDSTORM)) then
+   element = 8;
+   end
+   
+   -- Scission/Gravitation/Darkness
+   if ((SCProp1 == 4) or (SCProp2 == 4) or (SCProp3 == 4) or (SCProp1 == 11) or (SCProp2 == 11) or (SCProp3 == 11) or
+   (SCProp1 == 12) or (SCProp2 == 12) or (SCProp3 == 12) and (element == 1)) then
+   accBonus = accBonus + 10;
+   ftpBonus = ftpBonus + 0.1;
+
+   -- Reverberation/Distortion/Darkness
+   elseif ((SCProp1 == 3) or (SCProp2 == 3) or (SCProp3 == 3) or (SCProp1 == 10) or (SCProp2 == 10) or (SCProp3 == 10) or
+   (SCProp1 == 12) or (SCProp2 == 12) or (SCProp3 == 12) and (element == 2)) then
+   accBonus = accBonus + 10;
+   ftpBonus = ftpBonus + 0.1;   
+   
+   -- Detonation/Fragmentation/Light
+   elseif ((SCProp1 == 2) or (SCProp2 == 2) or (SCProp3 == 2) or (SCProp1 == 9) or (SCProp2 == 9) or (SCProp3 == 9) or
+   (SCProp1 == 13) or (SCProp2 == 13) or (SCProp3 == 13) and (element == 3)) then
+   accBonus = accBonus + 10;
+   ftpBonus = ftpBonus + 0.1;
+ 
+    -- Liquefication/Fusion/Light
+   elseif ((SCProp1 == 6) or (SCProp2 == 6) or (SCProp3 == 6) or (SCProp1 == 8) or (SCProp2 == 8) or (SCProp3 == 8) or
+   (SCProp1 == 13) or (SCProp2 == 13) or (SCProp3 == 13) and (element == 4)) then
+   accBonus = accBonus + 10;
+   ftpBonus = ftpBonus + 0.1;
+   
+    -- Induration/Distortion/Darkness
+   elseif ((SCProp1 == 5) or (SCProp2 == 5) or (SCProp3 == 5) or (SCProp1 == 10) or (SCProp2 == 10) or (SCProp3 == 10) or
+   (SCProp1 == 12) or (SCProp2 == 12) or (SCProp3 == 12) and (element == 5)) then
+   accBonus = accBonus + 10;
+   ftpBonus = ftpBonus + 0.1;
+   
+   -- Impaction/Fragmentation/Light
+   elseif ((SCProp1 == 0) or (SCProp2 == 0) or (SCProp3 == 0) or (SCProp1 == 9) or (SCProp2 == 9) or (SCProp3 == 9) or
+   (SCProp1 == 13) or (SCProp2 == 13) or (SCProp3 == 13)  and (element == 6)) then
+   accBonus = accBonus + 10;
+   ftpBonus = ftpBonus + 0.1;
+   
+   -- Transfixion/Fusion/Light
+   elseif ((SCProp1 == 1) or (SCProp2 == 1) or (SCProp3 == 1) or (SCProp1 == 8) or (SCProp2 == 8) or (SCProp3 == 8) or
+   (SCProp1 == 13) or (SCProp2 == 13) or (SCProp3 == 13)  and (element == 7)) then
+   accBonus = accBonus + 10;
+   ftpBonus = ftpBonus + 0.1;
+
+   -- Compression/Gravitation/Darkness
+   elseif ((SCProp1 == 7) or (SCProp2 == 7) or (SCProp3 == 7) or (SCProp1 == 10) or (SCProp2 == 11) or (SCProp3 == 11) or
+   (SCProp1 == 11) or (SCProp2 == 12) or (SCProp3 == 12)  and (element == 8)) then
+   accBonus = accBonus + 10;
+   ftpBonus = ftpBonus + 0.1;
+   end    
+   
+   return ftpBonus, accBonus;
+
+	
+end	

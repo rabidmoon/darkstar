@@ -12,7 +12,8 @@ require("scripts/globals/summon");
 
 function onMagicCastingCheck(caster,target,spell)
  local zone = caster:getZoneID();
-	if (zone == 185) or (zone == 186) or (zone == 187) then
+	local dynamis = caster:getVar("TrustDynamis");
+	if (zone == 185) or (zone == 186) or (zone == 187) and (dynamis ~= 1) then
 	caster:PrintToPlayer("You cannot summon a trust in this area",0xD);
 	else if(not caster:canUsePet()) then
 		return MSGBASIC_CANT_BE_USED_IN_AREA;
