@@ -92,7 +92,9 @@ function onMobDeath(mob,killer)
 		killer:setVar("mobid",mob:getID());
 	else
 		killer:addTitle(SHADOW_BANISHER);
-		if (killer:getVar("TrustDynamis") ~= 1) then
+		if (killer:getVar("TrustDynamis") == 1) then
+		killer:setVar("TrustDynamis",1);
+		else
 		killer:PrintToPlayer("You may now summon Trusts inside Dynamis!", 0xD);
 		killer:setVar("TrustDynamis",1);
 		end

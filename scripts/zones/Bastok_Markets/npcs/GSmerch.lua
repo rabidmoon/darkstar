@@ -41,7 +41,7 @@ stock = {0x02F2,30000, -- Platinum Sheet
 		 0x06CC,30000, -- Iolite
 		 0x032D,10000, -- Deathstone
 		 0x032C,10000, -- Angelstone
-		 0x051F,25000, -- Oxblood Orb
+		 0x0AB7,25000, -- Oxblood Orb
 		 0x0AB8,45000} -- Angelskin Orb
  
 showShop(player, STATIC, stock);

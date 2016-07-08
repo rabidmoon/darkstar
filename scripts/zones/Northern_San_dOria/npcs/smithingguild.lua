@@ -31,7 +31,7 @@ function onTrigger(player,npc)
 
 stock = {0x028C,15000, -- Steel Ingot
 		 0x028E,9000, -- Darksteel Ingot
-		 0x0087,12000, --Paktong Ingot
+		 0x0663,12000, --Paktong Ingot
 		 0x06CA,9000, -- Shakudo Ingot
 		 0x028F,9000, -- Adaman Ingot
 		 0x06AF,33000} -- Molybdenum Ingot
