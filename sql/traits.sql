@@ -389,7 +389,12 @@ INSERT INTO `traits` VALUES ('84','recycle','11','30','2','305','25','TOAU');
 INSERT INTO `traits` VALUES ('84','recycle','11','50','3','305','45','TOAU');
 INSERT INTO `traits` VALUES ('84','recycle','11','70','4','305','55','TOAU');
 INSERT INTO `traits` VALUES ('84','recycle','11','90','5','305','65','TOAU');
-INSERT INTO `traits` VALUES ('84','recycle','17','35','1','305','10','TOAU');
+INSERT INTO `traits` VALUES ('84','recycle','17','20','1','305','10','TOAU'); -- COR REcycle
+INSERT INTO `traits` VALUES ('84','recycle','17','40','2','305','25','TOAU'); -- COR REcycle
+INSERT INTO `traits` VALUES ('84','recycle','17','60','3','305','45','TOAU'); -- COR REcycle
+INSERT INTO `traits` VALUES ('84','recycle','10','25','1','305','10','TOAU'); -- BRD REcycle
+INSERT INTO `traits` VALUES ('84','recycle','10','50','2','305','25','TOAU'); -- BRD REcycle
+INSERT INTO `traits` VALUES ('84','recycle','10','75','3','305','45','TOAU'); -- BRD REcycle
 INSERT INTO `traits` VALUES ('85','ikishoten','12','75','1','0','0','TOAU');
 INSERT INTO `traits` VALUES ('86','overwhelm','12','75','1','0','0','TOAU');
 INSERT INTO `traits` VALUES ('87','ninja tool expert.','13','15','1','308','10','TOAU'); -- NIN Tool Exp
