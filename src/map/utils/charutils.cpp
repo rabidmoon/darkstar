@@ -1539,7 +1539,9 @@ namespace charutils
                         PChar->look.ranged = 0;
                     }
                     PChar->PBattleAI->SetCurrentAction(ACTION_RANGED_INTERRUPT);
+					if (PChar->GetMJob() != JOB_BRD) {
                     PChar->health.tp = 0;
+					}
                     BuildingCharWeaponSkills(PChar);
                     UpdateWeaponStyle(PChar, equipSlotID, nullptr);
                 }
@@ -2043,7 +2045,27 @@ namespace charutils
                 }
             }
         }
-        if (equipSlotID == SLOT_MAIN || equipSlotID == SLOT_RANGED || equipSlotID == SLOT_SUB)
+        if ((equipSlotID == SLOT_MAIN || equipSlotID == SLOT_RANGED || equipSlotID == SLOT_SUB) && PChar->GetMJob() != JOB_BRD)
+        {
+		    ShowWarning(CL_GREEN"Unequip Occured \n" CL_RESET);
+            PChar->health.tp = 0;
+            /*// fixes logging in with no h2h
+            if(PChar->m_Weapons[SLOT_MAIN]->getDmgType() == DAMAGE_NONE && PChar->GetMJob() == JOB_MNK){
+            PChar->m_Weapons[SLOT_MAIN] = itemutils::GetUnarmedH2HItem();
+            } else if(PChar->m_Weapons[SLOT_MAIN] == itemutils::GetUnarmedH2HItem() && PChar->GetMJob() != JOB_MNK) {
+            // return back to normal if changed jobs
+            PChar->m_Weapons[SLOT_MAIN] = itemutils::GetUnarmedItem();
+            }*/
+            if (!PChar->getEquip(SLOT_MAIN) || !PChar->getEquip(SLOT_MAIN)->isType(ITEM_ARMOR) || PChar->m_Weapons[SLOT_MAIN] == itemutils::GetUnarmedH2HItem())
+            {
+                CheckUnarmedWeapon(PChar);
+            }
+
+            BuildingCharWeaponSkills(PChar);
+            PChar->pushPacket(new CCharAbilitiesPacket(PChar));
+        }
+		
+		if (equipSlotID == SLOT_MAIN || equipSlotID == SLOT_SUB && PChar->GetMJob() == JOB_BRD)
         {
             PChar->health.tp = 0;
             /*// fixes logging in with no h2h
