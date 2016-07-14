@@ -282,7 +282,7 @@ if ((mobfamily == 17) and (killer:getVar("FerretoryQuest1") > 1)) or ((mobfamily
 ((mobfamily == 2) and (killer:getVar("FerretoryQuest1") > 7)) or ((mobfamily == 3) and (killer:getVar("FerretoryQuest75") > 8)) or
 ((mobfamily == 19) and (killer:getVar("FerretoryQuest75") > 8)) or ((mobfamily == 9) and (killer:getVar("FerretoryQuest75") > 9)) or 
 ((mobfamily == 10) and (killer:getVar("FerretoryQuest75") > 9)) or ((mobfamily == 15) and (killer:getVar("FerretoryQuest75") > 10)) or
-((mobfamily == 16) and (killer:getVar("FerretoryQuest75") > 10) or ((mobfamily == 7) and (killer:getVar("FerretoryLv75Complete") >= 10))) then
+((mobfamily == 16) and (killer:getVar("FerretoryQuest75") > 10) or ((mobfamily == 7) and (killer:getVar("FerretoryQuest75") >= 11))) then
 
 
 

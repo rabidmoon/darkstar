@@ -20,7 +20,7 @@ local balance = 0;
 local questweakness = 175000; 
 local pinfamy = player:getCurrency("infamy");
 
-if (trade:hasItemQty(4104,1)) and (player:getVar("FerretoryLv75") >= 11) then 
+if (trade:hasItemQty(4104,1)) and (player:getVar("FerretoryQuest75noaura") >= 11) then 
     if (pinfamy >= questweakness) then   
     player:delCurrency("infamy", questweakness);
     player:tradeComplete();
