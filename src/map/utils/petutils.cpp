@@ -1057,6 +1057,8 @@ namespace petutils
 		PAlly->m_Weapons[SLOT_MAIN]->setDelay(floor(1000.0f*(450.0f / 60.0f))); //420 delay
 		PAlly->setModifier(MOD_HASTE_ABILITY, 102); //Constant Hasso
 		PAlly->setModifier(MOD_HASTE_GEAR, haste);
+		PAlly->setModifier(MOD_CONVMPTOHP, 1);
+		PAlly->setModifier(MOD_CONVHPTOMP, 1);
 		   if (plvl > 9){
 		        PAlly->setModifier(MOD_STORETP, 15);
 		   }
@@ -1101,6 +1103,8 @@ namespace petutils
 		PAlly->m_Weapons[SLOT_SUB]->setShieldSize(4);
 		uint8 curillashieldsize = PAlly->m_Weapons[SLOT_SUB]->getShieldSize();
 		//PAlly->m_Weapons[SLOT_SUB]->IsShield();
+		PAlly->setModifier(MOD_CONVMPTOHP, 1);
+		PAlly->setModifier(MOD_CONVHPTOMP, 1);
 		PAlly->m_Weapons[SLOT_SUB]->addModifier(new CModifier(MOD_DEF, shielddef));
 		PAlly->health.maxmp = (int16)(15 + (2.72f*(plvl * 2.72f))); 
 		PAlly->UpdateHealth();
@@ -1155,11 +1159,15 @@ namespace petutils
 		PAlly->setModifier(MOD_DEF, battleutils::GetMaxSkill(SKILL_POL, JOB_WAR, PAlly->GetMLevel()));// B- Defense
 		PAlly->setModifier(MOD_BLUE, battleutils::GetMaxSkill(SKILL_GAX, JOB_WAR, PAlly->GetMLevel()));// A+ Blue Magic
 		PAlly->setModifier(MOD_DUAL_WIELD, 20); // Dual Wield
+	    PAlly->setModifier(MOD_CONVMPTOHP, 1);
+		PAlly->setModifier(MOD_CONVHPTOMP, 1);
 		PAlly->m_Weapons[SLOT_MAIN]->setDamage(floor(PAlly->GetMLevel()*0.54f));// D:40 @75
 		PAlly->m_Weapons[SLOT_MAIN]->setDelay(floor(1000.0f*(240.0f / 60.0f))); //240 delay
-        PAlly->health.maxmp = (int16)(22 + (3.66f*(plvl * 3.66f))); 
+        PAlly->health.maxmp = (int16)(15 + (3.66f*(plvl * 1.55f))); 
+		PAlly->health.maxhp = (int16)(22 + (3.85f*(plvl * 3.66f))); 
 		PAlly->UpdateHealth();
         PAlly->health.mp = PAlly->health.maxmp;
+        PAlly->health.mp = PAlly->health.maxhp;		
 		   if (plvl > 74){
 				PAlly->setModifier(MOD_DOUBLE_ATTACK, 3);
 		   }
@@ -1183,7 +1191,10 @@ namespace petutils
 		PAlly->setModifier(MOD_MATT, modmab); //Magic Attack Bonus		
 		PAlly->m_Weapons[SLOT_MAIN]->setDamage(floor(PAlly->GetMLevel()*0.49f));// D:37 @75
 		PAlly->m_Weapons[SLOT_MAIN]->setDelay(floor(1000.0f*(340.0f / 60.0f))); //340 delay	
+		PAlly->setModifier(MOD_CONVMPTOHP, 1);
+		PAlly->setModifier(MOD_CONVHPTOMP, 1);
 		PAlly->health.maxmp = (int16)(22 + (3.46f*(plvl * 3.46f))); 
+		PAlly->health.maxhp = (int16)(24 + (3.70f*(plvl * 3.70f))); 		
 		PAlly->UpdateHealth();
         PAlly->health.mp = PAlly->health.maxmp;
 		 if (plvl > 24){
