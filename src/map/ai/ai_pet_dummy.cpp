@@ -413,8 +413,14 @@ void CAIPetDummy::ActionAbilityStart()
 					SetCurrentWeaponSkill(mobwsID);
 			        //ShowWarning("Tachi: Enpi \n");
                     break;
-                    }					
-
+                    }
+                    else if (PMobSkill->getID() == 3779 && (masterscID == 4)) { //Tachi Enpi
+                    mobwsID = 144;
+					SetCurrentMobSkill(PMobSkill);
+					SetCurrentWeaponSkill(mobwsID);
+			        ShowWarning("No matching element Self SC Tachi: Enpi to Tachi: Enpi \n");
+                    break;					
+                    } 
                 }
 			}
 			if (lvl >= 65) {
@@ -448,11 +454,11 @@ void CAIPetDummy::ActionAbilityStart()
 			        //ShowWarning("Tachi: Enpi \n");
                     break;
                     }
-                    else { //Tachi Enpi
+                    else if (PMobSkill->getID() == 3779 && (masterscID == 4)) { //Tachi Enpi
                     mobwsID = 144;
 					SetCurrentMobSkill(PMobSkill);
 					SetCurrentWeaponSkill(mobwsID);
-			        //ShowWarning("Tachi: Enpi \n");
+			        ShowWarning("No matching element Self SC Tachi: Enpi to Tachi: Enpi \n");
                     break;
                     }						
 
@@ -479,14 +485,14 @@ void CAIPetDummy::ActionAbilityStart()
                     mobwsID = 144;
 					SetCurrentMobSkill(PMobSkill);
 					SetCurrentWeaponSkill(mobwsID);
-			        //ShowWarning("Tachi: Enpi \n");
+			        //ShowWarning("Starting Skillchain, Element 7, 8, or 9, Tachi: Enpi \n");
                     break;
                     }
-                    else { //Tachi Enpi
+                    else if(PMobSkill->getID() == 3779 & (masterscID == 2 || masterscID == 4 || masterscID == 5 || masterscID == 12)) { //Tachi Enpi
                     mobwsID = 144;
 					SetCurrentMobSkill(PMobSkill);
 					SetCurrentWeaponSkill(mobwsID);
-			        //ShowWarning("Tachi: Enpi \n");
+			        ShowWarning("No matching element Self SC Tachi: Enpi to Tachi: Enpi \n");
                     break;
                     }						
 
@@ -509,16 +515,37 @@ void CAIPetDummy::ActionAbilityStart()
 			        //ShowWarning("Tachi: Enpi \n");
                     break;
                     }
-                    else { //Tachi Enpi
+                    else if (PMobSkill->getID() == 3779 & (masterscID == 1 || masterscID == 2 || masterscID == 4 || masterscID == 5 || masterscID == 6 || masterscID == 11 || masterscID == 12)) { //Tachi Enpi
+                    mobwsID = 144;
+					SetCurrentMobSkill(PMobSkill);
+					SetCurrentWeaponSkill(mobwsID);
+			        ShowWarning("No matching element Self SC Tachi: Enpi to Tachi: Enpi \n");
+                    break;
+                    }						
+
+                }
+			}
+			if (lvl >= 40) {
+            for (int i = 0; i < m_PPet->PetSkills.size(); i++) {
+                auto PMobSkill = battleutils::GetMobSkill(m_PPet->PetSkills.at(i));
+  					if (PMobSkill->getID() == 3779 && (masterscID == 7 || masterscID == 8 || masterscID == 9)) { //Tachi Enpi
                     mobwsID = 144;
 					SetCurrentMobSkill(PMobSkill);
 					SetCurrentWeaponSkill(mobwsID);
 			        //ShowWarning("Tachi: Enpi \n");
                     break;
+                    }
+                    else if (PMobSkill->getID() == 3779 && (masterscID == 1 || masterscID == 2 || masterscID == 3 || masterscID == 4 || masterscID == 5 
+					 || masterscID == 6 || masterscID == 10 || masterscID == 11 || masterscID == 12)) { //Tachi Enpi
+                    mobwsID = 144;
+					SetCurrentMobSkill(PMobSkill);
+					SetCurrentWeaponSkill(mobwsID);
+			        ShowWarning("No matching element Self SC Tachi: Enpi to Tachi: Enpi \n");
+                    break;
                     }						
 
                 }
-			}			
+			}				
 			m_sekkaStatus = 1; //set for closing sekka skillchain
 			preparePetAbility(m_PBattleSubTarget);
             return;
@@ -591,7 +618,7 @@ void CAIPetDummy::ActionAbilityStart()
 			        //ShowWarning("Tachi: Enpi \n");
                     break;
                     }
-                    else { //Tachi Enpi
+                    else if (PMobSkill->getID() == 3779 && (masterscID == 1 || masterscID == 6 || masterscID == 10 || masterscID == 12)) { //Tachi Enpi
                     mobwsID = 144;
 					SetCurrentMobSkill(PMobSkill);
 					SetCurrentWeaponSkill(mobwsID);
@@ -615,14 +642,14 @@ void CAIPetDummy::ActionAbilityStart()
                     mobwsID = 144;
 					SetCurrentMobSkill(PMobSkill);
 					SetCurrentWeaponSkill(mobwsID);
-			        //ShowWarning("Tachi: Enpi \n");
+			        ShowWarning("Tachi: Enpi with Element 3,4, or 9 \n");
                     break;
                     }
-                    else { //Tachi Enpi
+                    else if (PMobSkill->getID() == 3779 && (masterscID == 1 || masterscID == 6 || masterscID == 7 || masterscID == 8 || masterscID == 10 || masterscID == 11 || masterscID == 12)) { //Tachi Enpi
                     mobwsID = 144;
 					SetCurrentMobSkill(PMobSkill);
 					SetCurrentWeaponSkill(mobwsID);
-			        //ShowWarning("Tachi: Enpi \n");
+			        ShowWarning("Tachi: Enpi nothing else found \n");
                     break;
                     }					
 
@@ -638,7 +665,8 @@ void CAIPetDummy::ActionAbilityStart()
 			        //ShowWarning("Tachi: Enpi \n");
                     break;
                     }
-                    else { //Tachi Enpi
+                    else if (PMobSkill->getID() == 3779 && (masterscID == 1 || masterscID == 2 || masterscID == 5 || masterscID == 6 || masterscID == 7 || masterscID == 8 || 
+					masterscID == 10 || masterscID == 11 || masterscID == 12)) { //Tachi Enpi
                     mobwsID = 144;
 					SetCurrentMobSkill(PMobSkill);
 					SetCurrentWeaponSkill(mobwsID);
@@ -817,10 +845,10 @@ void CAIPetDummy::ActionAbilityStart()
                     break;					
                     } 
   					else if (PMobSkill->getID() == 3779 && (masterscID == 3)) { //Tachi Enpi
-                    mobwsID = 148;
+                    mobwsID = 144;
 					SetCurrentMobSkill(PMobSkill);
 					SetCurrentWeaponSkill(mobwsID);
-			        //ShowWarning("Tachi: Yukki \n");
+			        //ShowWarning("Tachi: Enpi \n");
                     break;					
                     }					
 
@@ -2352,7 +2380,7 @@ void CAIPetDummy::ActionRoaming()
     }
 	if (m_PPet->getZone() == m_PPet->PMaster->getZone()){
 	m_PPet->updatemask |= UPDATE_HP;
-	charutils::UpdateHealth((CCharEntity*)m_PPet->PMaster);
+	//charutils::UpdateHealth((CCharEntity*)m_PPet->PMaster);
 	}
 	
 	
@@ -3193,7 +3221,7 @@ void CAIPetDummy::ActionAttack()
 		
     if (currentDistance > m_PBattleTarget->m_ModelSize && (m_PPet->m_PetID != PETID_NANAA_MIHGO && m_PPet->m_PetID != PETID_ADELHIED) && m_PPet->speed != 0)
     {
-	    ShowWarning(CL_RED"Wrong Distance triggered\n" CL_RESET);
+	    //ShowWarning(CL_RED"Wrong Distance triggered\n" CL_RESET);
         if (m_PPathFind->PathAround(m_PBattleTarget->loc.p, 2.0f, PATHFLAG_RUN | PATHFLAG_WALLHACK))
         {
             m_PPathFind->FollowPath();
@@ -3460,7 +3488,7 @@ void CAIPetDummy::ActionFall()
 
 void CAIPetDummy::ActionDeath()
 {
-    if (m_Tick - m_LastActionTime > 3000) {
+    if (m_Tick - m_LastActionTime > 1000) {
         m_PPet->status = STATUS_DISAPPEAR;
         m_PPet->StatusEffectContainer->DelStatusEffectsByFlag(EFFECTFLAG_DEATH, true);
 
@@ -4263,7 +4291,8 @@ if (m_Tick >= m_LastBlueMagicHealCast + m_blueMagicHealRecast)  // Look for last
 	{
 	    m_PBattleSubTarget = m_PBattleTarget;
 		uint8 blurandom = dsprand::GetRandomNumber(1, 40); //Randomizes Blu Spells
-        if (level >= 72)
+		printf("Setting Blue Random Number to %d \n", blurandom);
+        if (level >= 72){
 			if (blurandom >= 30) //Disseverment
 				if (m_PPet->health.mp > 73)  	
 			    {
@@ -4315,8 +4344,10 @@ if (m_Tick >= m_LastBlueMagicHealCast + m_blueMagicHealRecast)  // Look for last
 				else  	
 			    {
 				 spellID = -1;
-				}					
-        else if (level >= 69)
+				}
+            }				
+        else if (level >= 69){
+		printf("BLU LVL >= 69");
 			if (blurandom >= 30)
 				if (m_PPet->health.mp > 60)  	
 			    {
@@ -4376,8 +4407,10 @@ if (m_Tick >= m_LastBlueMagicHealCast + m_blueMagicHealRecast)  // Look for last
 				else  	
 			    {
 				 spellID = -1;
-				}			
-		else if (level >= 63)
+				}
+            }				
+		else if (level >= 63){
+		printf("BLU LVL >= 63");
 		    if (blurandom >= 30)
 			    if (m_PPet->health.mp > 61)  	
 			    {
@@ -4437,8 +4470,10 @@ if (m_Tick >= m_LastBlueMagicHealCast + m_blueMagicHealRecast)  // Look for last
 				else  	
 			    {
 				 spellID = -1;
-				}							
-		else if (level >= 60)
+				}	
+            }				
+		else if (level >= 60){
+		printf("BLU LVL >= 60");
 		    if (blurandom >= 30)
 			    if (m_PPet->health.mp > 50)  	
 			    {
@@ -4498,8 +4533,10 @@ if (m_Tick >= m_LastBlueMagicHealCast + m_blueMagicHealRecast)  // Look for last
 				else  	
 			    {
 				 spellID = -1;
-				}								
-		else if (level >= 48)
+				}	
+            }				
+		else if (level >= 48){
+		printf("BLU LVL >= 48");
 		    if (blurandom >= 30)
 			    if (m_PPet->health.mp > 46)  	
 			    {
@@ -4560,8 +4597,9 @@ if (m_Tick >= m_LastBlueMagicHealCast + m_blueMagicHealRecast)  // Look for last
 			    {
 				 spellID = -1;
 				}				
-				
-		else if (level >= 38)
+			}	
+		else if (level >= 38){
+		printf("BLU LVL >= 38");
 		    if (blurandom >= 30)
 			    if (m_PPet->health.mp > 46)  	
 			    {
@@ -4621,8 +4659,10 @@ if (m_Tick >= m_LastBlueMagicHealCast + m_blueMagicHealRecast)  // Look for last
 				else  	
 			    {
 				 spellID = -1;
-				}				
-		else if (level >= 26)
+				}
+            }				
+		else if (level >= 26){
+		printf("BLU LVL >= 60");
 		    if (blurandom >= 30)
 			    if (m_PPet->health.mp > 20)  	
 			    {
@@ -4682,8 +4722,10 @@ if (m_Tick >= m_LastBlueMagicHealCast + m_blueMagicHealRecast)  // Look for last
 				else  	
 			    {
 				 spellID = -1;
-				}						
-		else if (level >= 18)
+				}
+			}	
+		else if (level >= 18){
+		printf("BLU LVL >= 18");
 		    if (blurandom >= 25)
 			    if (m_PPet->health.mp > 15)  	
 			    {
@@ -4722,8 +4764,10 @@ if (m_Tick >= m_LastBlueMagicHealCast + m_blueMagicHealRecast)  // Look for last
 				else  	
 			    {
 				 spellID = -1;
-				}					
-		else if (level >= 12)
+				}
+            }				
+		else if (level >= 12){
+		printf("BLU LVL >= 12");
 		    if (blurandom >= 20)
 			    if (m_PPet->health.mp > 11)  	
 			    {
@@ -4747,6 +4791,7 @@ if (m_Tick >= m_LastBlueMagicHealCast + m_blueMagicHealRecast)  // Look for last
 				 spellID = -1;
 				}					
 		else if (level >= 5)
+		printf("BLU LVL >= 5");
 				if (m_PPet->health.mp > 4)  	
 			    {
 				 spellID = 551;  //Power Attack
@@ -4755,7 +4800,7 @@ if (m_Tick >= m_LastBlueMagicHealCast + m_blueMagicHealRecast)  // Look for last
 			    {
 				 spellID = -1;
 				}
-				
+		}		
 				
 		m_blueMagicRecast = 20000;
         m_LastBlueMagicCast = m_Tick;
@@ -5369,7 +5414,7 @@ int16 CAIPetDummy::AdelhiedSpell()
 					}
                 else if (m_PPet->health.mp >= 15)
 					{
-					 spellID = 109;
+					 spellID = 108;
 					}					
 				else 
 			        {
@@ -5382,7 +5427,7 @@ int16 CAIPetDummy::AdelhiedSpell()
 					}
                 else if (m_PPet->health.mp >= 15)
 					{
-					 spellID = 109;
+					 spellID = 108;
 					}					
 				else 
 			        {
@@ -5391,7 +5436,7 @@ int16 CAIPetDummy::AdelhiedSpell()
 			else if (level >= 18)
                 if (m_PPet->health.mp >= 15)
 					{
-					 spellID = 109;
+					 spellID = 108;
 					}					
 				else 
 			        {
