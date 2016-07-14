@@ -112,6 +112,7 @@ public:
     bool isWithinArea(position_t* pos);
     bool isWithinCone(position_t* pos);
     bool isWithinRange(position_t* pos, float range);
+	void addNearby(CBattleEntity* PTarget, float radius, uint16 flags = 0);
 
     CBattleEntity* getValidTarget(uint16 actionTargetID, uint8 validTargetFlags);
 
