@@ -63,4 +63,12 @@ end;
 	
 function onMobDeath(mob,killer)	
 	checkRegime(killer,mob,119,2);
+end;
+
+function onMobDespawn(mob)
+
+    local wait = math.random(75600,76500); -- 21 hours to 21 hours 15 min
+    SetServerVariable("[POP]Shikigami_Weapon", os.time(t) + wait);
+	mob:setRespawnTime(wait);
+
 end;	
