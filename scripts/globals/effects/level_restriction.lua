@@ -19,6 +19,7 @@ end;
 function onEffectTick(target,effect)
  local duration = target:getStatusEffect(EFFECT_LEVEL_RESTRICTION):getTimeRemaining();
 	local seconds = math.floor(duration / 1000);
+if (target:getObjType() == TYPE_PC) then	
 	if (target:getVar("Dynamis_Time_Remaining") > 180000) then
 	    target:setVar("Dynamis_Time_Remaining",duration);
 		-- target:PrintToPlayer(duration);
@@ -39,6 +40,7 @@ function onEffectTick(target,effect)
 	    target:setVar("Dynamis_Time_Remaining",duration);
        -- target:PrintToPlayer(duration);
 	end	
+end	
 end;
 
 -----------------------------------
