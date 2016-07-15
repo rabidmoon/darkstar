@@ -34,7 +34,9 @@ local weakener = target:getVar("DynaWeakener");
    mob:setMod(MOD_HTHRES,1500);
    target:setVar("DynaWeakener",0);
   --  SetDropRate(5004,3415,300);
+if (target:getObjType() == TYPE_PC) then 
 target:PrintToPlayer("The Monster may not prove to be a challenge", 0xD); 
+end
 elseif (weakener == 3) then
    mob:setMod(MOD_HPP,-57);
    mob:setMod(MOD_DEFP,-57);
@@ -47,7 +49,9 @@ elseif (weakener == 3) then
    mob:setMod(MOD_HTHRES,1200);   
    target:setVar("DynaWeakener",0);
   --  SetDropRate(5004,3415,300);
+if (target:getObjType() == TYPE_PC) then  
 target:PrintToPlayer("You have significantly weakened the monster!", 0xD);
+end
 elseif (weakener == 2) then
    mob:setMod(MOD_HPP,-38);
    mob:setMod(MOD_DEFP,-20);
@@ -60,7 +64,9 @@ elseif (weakener == 2) then
    mob:setMod(MOD_HTHRES,1000);   
    target:setVar("DynaWeakener",0);
   --  SetDropRate(5004,3415,500);
+if (target:getObjType() == TYPE_PC) then  
 target:PrintToPlayer("You have weakened the monster!", 0xD);
+end
 elseif (weakener == 1) then
    mob:setMod(MOD_HPP,-20);
    mob:setMod(MOD_DEFP,-10);
@@ -73,12 +79,16 @@ elseif (weakener == 1) then
    mob:setMod(MOD_HTHRES,900);   
    target:setVar("DynaWeakener",0);
     -- SetDropRate(5004,3415,700);
+if (target:getObjType() == TYPE_PC) then	
 target:PrintToPlayer("You have weakened the monster ever so slightly", 0xD);
+end
 elseif (weakener == 0) then
  -- mob:setMod(MOD_ACC,100);
  -- mob:setMod(MOD_EVA,100);
    target:setVar("DynaWeakener",0);
+if (target:getObjType() == TYPE_PC) then
 target:PrintToPlayer("You have summoned a Monster.", 0xD);  
+end
 end  
 
 end;

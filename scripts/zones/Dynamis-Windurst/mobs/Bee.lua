@@ -167,19 +167,25 @@ if (mob:getBattleTime() - changeTime > randomTime) then
 local changeres = math.random(1,3);
 
 if (changeres == 1) then
+if (target:getObjType() == TYPE_PC) then
 target:PrintToPlayer("There is a change in the Monsters behavior.", 0x1C);
+end
 mob:setMod(MOD_SLASHRES,300);
 mob:setMod(MOD_PIERCERES,1000);
 mob:setMod(MOD_HTHRES,2000);
 mob:setLocalVar("changeTime", mob:getBattleTime());
 elseif (changeres == 2) then
+if (target:getObjType() == TYPE_PC) then
 target:PrintToPlayer("There is a change in the Monsters behavior.", 0x1C);
+end
 mob:setMod(MOD_SLASHRES,1000);
 mob:setMod(MOD_PIERCERES,2000);
 mob:setMod(MOD_HTHRES,300);
 mob:setLocalVar("changeTime", mob:getBattleTime());
 else
+if (target:getObjType() == TYPE_PC) then
 target:PrintToPlayer("There is a change in the Monsters behavior.", 0x1C);
+end
 mob:setMod(MOD_SLASHRES,3000);
 mob:setMod(MOD_PIERCERES,300);
 mob:setMod(MOD_HTHRES,2000);
@@ -216,7 +222,7 @@ function onMobDeath(mob,killer)
 	
 	
 	
-	
+	if (killer:getObjType() == TYPE_PC) then
 	
 	local randombuff = math.random(1,100)
 	if (randombuff >= 50) then
@@ -231,5 +237,6 @@ function onMobDeath(mob,killer)
 	end
 	killer:addCurrency("scyld", scyld);
 	killer:PrintToPlayer(string.format("%s gains "..scyld.." scyld.", killer:getName()), 0x15);
+	end
 	
 end;
