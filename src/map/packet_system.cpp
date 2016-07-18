@@ -350,6 +350,11 @@ void SmallPacket0x00C(map_session_data_t* session, CCharEntity* PChar, CBasicPac
             PChar->resetPetZoningInfo();
         }
     }
+	else
+	{
+		// reset the petZoning info
+        PChar->resetPetZoningInfo();
+	}
 
     return;
 }
@@ -430,7 +435,9 @@ void SmallPacket0x00D(map_session_data_t* session, CCharEntity* PChar, CBasicPac
     charutils::SaveCharPoints(PChar);
 
     PChar->status = STATUS_DISAPPEAR;
-    PChar->PBattleAI->Reset();
+
+    //PChar->PBattleAI->Reset();
+	PChar->resetPetZoningInfo();
     return;
 }
 

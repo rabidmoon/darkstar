@@ -230,7 +230,7 @@ void CZoneEntities::DecreaseZoneCounter(CCharEntity* PChar)
 		// It may have been nullptred by DespawnPet
 		if (PChar->PPet != nullptr) {
 			PChar->PPet->PBattleAI->SetCurrentAction(ACTION_NONE);
-			DeletePET(PChar->PPet);//remove the TID for this pet
+			//DeletePET(PChar->PPet);//remove the TID for this pet
 
 			for (EntityList_t::const_iterator it = m_charList.begin(); it != m_charList.end(); ++it)
 			{
@@ -940,13 +940,23 @@ void CZoneEntities::ZoneServer(uint32 tick)
 		PPet->StatusEffectContainer->CheckEffects(tick);
 		PPet->PBattleAI->CheckCurrentAction(tick);
 		PPet->StatusEffectContainer->CheckRegen(tick);
-		if (PPet->status == STATUS_DISAPPEAR){
-			m_petList.erase(pit++);
-		}
-		else{
-			++pit;
-		}
-	}
+        if (PPet->status == STATUS_DISAPPEAR)
+        {
+            for (auto PMobIt : m_mobList)
+            {
+                CMobEntity* PCurrentMob = (CMobEntity*)PMobIt.second;
+                PCurrentMob->PEnmityContainer->Clear(PPet->id);
+            }			
+            if (PPet->getPetType() != PETTYPE_AUTOMATON)
+            {
+                delete pit->second;
+            }
+             m_petList.erase(pit++);
+         }
+         else {
+             ++pit;
+         }
+     }
 
 	for (EntityList_t::const_iterator it = m_charList.begin(); it != m_charList.end(); ++it)
 	{
