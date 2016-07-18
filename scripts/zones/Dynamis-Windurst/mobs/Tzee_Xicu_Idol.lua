@@ -14,13 +14,7 @@ function onMobSpawn(mob)
 mob:addMod(MOD_EVA,50);
 mob:addMod(MOD_ACC,50);
 mob:setMod(MOD_FASTCAST,50);
-end;
 
------------------------------------
--- onMobEngaged
------------------------------------
-
-function onMobEngaged(mob,target)
 local weakener = target:getVar("DynaWeakener");
  if (weakener == 4) then
    mob:setMod(MOD_HPP,-75);
@@ -90,6 +84,17 @@ if (target:getObjType() == TYPE_PC) then
 target:PrintToPlayer("You have summoned a Monster.", 0xD);  
 end
 end  
+
+
+
+end;
+
+-----------------------------------
+-- onMobEngaged
+-----------------------------------
+
+function onMobEngaged(mob,target)
+
 
 end;
 

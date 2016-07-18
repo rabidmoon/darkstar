@@ -52,6 +52,7 @@ end;
 -----------------------------------
 function onWeaponskillHit(mob, attacker, weaponskill)
 -- Staggering Function
+if (target:getObjType() == TYPE_PC) then
 local isweak = mob:getLocalVar("WeakenedTrigger");
 
 local wsweakness = math.random(1,200);
@@ -130,7 +131,7 @@ SetDropRate(5002,0,3418,0); -- Fiendish Tome 15
 mob:setLocalVar("WeakenedTrigger",1);
 end
 
-
+end
 
 
 
