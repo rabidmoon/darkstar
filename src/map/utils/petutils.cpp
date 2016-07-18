@@ -1977,7 +1977,6 @@ namespace petutils
 		//set C magic evasion
 		PPet->setModifier(MOD_MEVA, battleutils::GetMaxSkill(SKILL_ELE, JOB_RDM, PPet->GetMLevel()));
 		PPet->health.tp = 0;
-		ShowWarning(CL_YELLOW"FinalizePetStatstics in Petutils update health" CL_RESET);
 		PPet->UpdateHealth();
 
 		PMaster->applyPetModifiers(PPet);

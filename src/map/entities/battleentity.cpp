@@ -121,7 +121,8 @@ void CBattleEntity::UpdateHealth()
 	
 
 	
-	if (objtype == TYPE_PC || objtype == TYPE_MOB){
+	if (objtype == TYPE_PC || objtype == TYPE_MOB || ((CPetEntity*)this)->getPetType() == PETTYPE_AVATAR || ((CPetEntity*)this)->getPetType() == PETTYPE_WYVERN || ((CPetEntity*)this)->getPetType() == PETTYPE_JUG_PET ||
+	((CPetEntity*)this)->getPetType() == PETTYPE_AUTOMATON){
 	dif = (getMod(MOD_CONVMPTOHP) - getMod(MOD_CONVHPTOMP));
 	
 	
