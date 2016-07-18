@@ -23,6 +23,7 @@ function onTrade(player,npc,trade)
 	
 	local lvl = player:getMainLvl();
 	local job = player:getMainJob();
+	local viruscurse = player:getVar("BLMVirusCurse");
 	-- Curses Foiled Again!
 	if (player:getQuestStatus(WINDURST,CURSES_FOILED_AGAIN_1) == QUEST_ACCEPTED) then
 		if (trade:hasItemQty(928,1) and trade:hasItemQty(880,2) and count == 3) then
@@ -41,14 +42,16 @@ function onTrade(player,npc,trade)
 	
 		
 	end
-	if (trade:hasItemQty(955,3) and (job == 4) and (lvl >= 50) and (player:hasSpell(257) == false)) then
+	if (trade:hasItemQty(955,3) and (job == 4) and (lvl >= 50) and (viruscurse == 1) and (player:hasSpell(257) == false)) then
 	player:PrintToPlayer("Shantotto : No pain, no gain!", 0xD);
     player:addSpell(257);
+	player:setVar("BLMVirusCurse",2);
     end
      
-	if (trade:hasItemQty(935,3) and (job == 5) and (lvl >= 50) and (player:hasSpell(256) == false)) then
+	if (trade:hasItemQty(935,3) and (job == 4) and (lvl >= 50) and (viruscurse == 3) and (player:hasSpell(256) == false)) then
 	player:PrintToPlayer("Shantotto : No pain, no gain!", 0xD);
     player:addSpell(256);
+	player:setVar("BLMVirusCurse",0);
     end  
 	
 end; 
@@ -68,14 +71,16 @@ function onTrigger(player,npc)
 	local wsnm = player:getVar("RETRIBUTION");
 	local mainlvl = player:getMainLvl();
 	local skill = player:getSkillLevel(13);
-	
+	local viruscurse = player:getVar("BLMVirusCurse");
 	local lvl = player:getMainLvl();
 	local job = player:getMainJob();
 
 	if ((job == 4) and (lvl >= 50) and (player:hasSpell(257) == false)) then
 	player:PrintToPlayer("Shantotto : A black mage can never show all their cards.  A new spell for you for 3 Golem Shards", 0xD);
-	elseif ((job == 5) and (lvl >= 50) and (player:hasSpell(256) == false)) then
-	player:PrintToPlayer("Shantotto : Jack of all trades if there is such a thing. A new spell for you for 3 Ahriman Wings", 0xD);
+	player:setVar("BLMVirusCurse",1);
+	elseif ((job == 5) and (lvl >= 50) and (viruscurse == 2) and (player:hasSpell(256) == false)) then
+	player:PrintToPlayer("Shantotto : I have something for you amongst all these things. A new spell for you for 3 Ahriman Wings", 0xD);
+	player:setVar("BLMVirusCurse",3);
 	elseif (player:getCurrentMission(WINDURST) == THE_JESTER_WHO_D_BE_KING and player:getVar("MissionStatus") == 7) then
 		player:startEvent(0x18d,0,0,0,282);
 	elseif (player:getQuestStatus(WINDURST,LURE_OF_THE_WILDCAT_WINDURST) == QUEST_ACCEPTED and player:getMaskBit(WildcatWindurst,6) == false) then
