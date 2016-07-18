@@ -998,6 +998,14 @@ namespace petutils
 		PAlly->setModifier(MOD_DEF, battleutils::GetMaxSkill(SKILL_POL, JOB_WAR, PAlly->GetMLevel()));// B- Defense
 		PAlly->m_Weapons[SLOT_MAIN]->setDamage(floor(PAlly->GetMLevel()*0.46f) + 1);// D:35 @75
 		PAlly->m_Weapons[SLOT_MAIN]->setDelay(floor(1000.0f*(200.0f / 60.0f))); //2000 delay
+		PAlly->setModifier(MOD_CONVMPTOHP, 1);
+		PAlly->setModifier(MOD_CONVHPTOMP, 1);
+		PAlly->setModifier(MOD_FOOD_MPP, 1);
+		PAlly->setModifier(MOD_FOOD_MP_CAP, 1);
+		PAlly->setModifier(MOD_MPP, 1);
+		PAlly->setModifier(MOD_HPP, 1);
+		PAlly->health.maxhp = (int16)(14 + (3.75f*(plvl * 3.75f)));
+		PAlly->UpdateHealth();
 		   if (plvl > 54){
 		        PAlly->setModifier(MOD_TRIPLE_ATTACK, 8);
 				PAlly->setModifier(MOD_TREASURE_HUNTER, 1);
@@ -1007,7 +1015,7 @@ namespace petutils
 		{
 		uint16 kupatt = (PAlly->GetMLevel() * 1.0);
 		uint16 kupacc = (PAlly->GetMLevel() * 0.5);
-		//ShowWarning(CL_GREEN"KUPIPI TRIGGERED SPAWN ALLY!!! \n" CL_RESET);
+		
 		PAlly->setModifier(MOD_ACC, battleutils::GetMaxSkill(SKILL_GAX, JOB_WAR, PAlly->GetMLevel()) + kupacc); //A+ Acc
 		PAlly->setModifier(MOD_EVA, battleutils::GetMaxSkill(SKILL_POL, JOB_WAR, PAlly->GetMLevel())); //B- Evasion
 		PAlly->setModifier(MOD_ATT, battleutils::GetMaxSkill(SKILL_POL, JOB_WAR, PAlly->GetMLevel()) + kupatt);// B- Attack
@@ -1016,6 +1024,12 @@ namespace petutils
 		PAlly->setModifier(MOD_DIVINE, battleutils::GetMaxSkill(SKILL_GAX, JOB_WAR, PAlly->GetMLevel()));// A+ Divine Magic
 		PAlly->m_Weapons[SLOT_MAIN]->setDamage(floor(PAlly->GetMLevel()*0.52f) + 3);// D:42 @75
 		PAlly->m_Weapons[SLOT_MAIN]->setDelay(floor(1000.0f*(320.0f / 60.0f))); //320 delay
+		PAlly->setModifier(MOD_CONVMPTOHP, 1);
+		PAlly->setModifier(MOD_CONVHPTOMP, 1);
+		PAlly->setModifier(MOD_FOOD_MPP, 1);
+		PAlly->setModifier(MOD_FOOD_MP_CAP, 1);
+		PAlly->setModifier(MOD_MPP, 1);
+		PAlly->setModifier(MOD_HPP, 1);		
 		PAlly->health.maxmp = (int16)(22 + (3.66f*(plvl * 3.66f))); 
 		PAlly->UpdateHealth();
         PAlly->health.mp = PAlly->health.maxmp;
@@ -1034,6 +1048,12 @@ namespace petutils
 		PAlly->setModifier(MOD_DEF, battleutils::GetMaxSkill(SKILL_POL, JOB_WAR, PAlly->GetMLevel()));// B- Defense
 		PAlly->m_Weapons[SLOT_MAIN]->setDamage(floor(PAlly->GetMLevel()*0.56f));// D:42 @75
 		PAlly->m_Weapons[SLOT_MAIN]->setDelay(floor(1000.0f*(240.0f / 60.0f))); //240 delay
+		PAlly->setModifier(MOD_CONVMPTOHP, 1);
+		PAlly->setModifier(MOD_CONVHPTOMP, 1);	
+		PAlly->setModifier(MOD_FOOD_MPP, 1);
+		PAlly->setModifier(MOD_FOOD_MP_CAP, 1);	
+		PAlly->setModifier(MOD_MPP, 1);
+		PAlly->setModifier(MOD_HPP, 1);		
 		   if (plvl > 24){
 				PAlly->setModifier(MOD_DOUBLE_ATTACK, 15);
 		   }
@@ -1059,6 +1079,13 @@ namespace petutils
 		PAlly->setModifier(MOD_HASTE_GEAR, haste);
 		PAlly->setModifier(MOD_CONVMPTOHP, 1);
 		PAlly->setModifier(MOD_CONVHPTOMP, 1);
+		PAlly->setModifier(MOD_FOOD_MPP, 1);
+		PAlly->setModifier(MOD_FOOD_MP_CAP, 1);	
+		PAlly->setModifier(MOD_MPP, 1);
+		PAlly->setModifier(MOD_HPP, 1);	
+		PAlly->health.maxhp = (int16)(14 + (3.8f*(plvl * 4.0f)));
+		PAlly->UpdateHealth();
+        PAlly->health.mp = PAlly->health.maxhp;		
 		   if (plvl > 9){
 		        PAlly->setModifier(MOD_STORETP, 15);
 		   }
@@ -1105,7 +1132,12 @@ namespace petutils
 		//PAlly->m_Weapons[SLOT_SUB]->IsShield();
 		PAlly->setModifier(MOD_CONVMPTOHP, 1);
 		PAlly->setModifier(MOD_CONVHPTOMP, 1);
+		PAlly->setModifier(MOD_FOOD_MPP, 1);
+		PAlly->setModifier(MOD_FOOD_MP_CAP, 1);	
+		PAlly->setModifier(MOD_MPP, 1);
+		PAlly->setModifier(MOD_HPP, 1);		
 		PAlly->m_Weapons[SLOT_SUB]->addModifier(new CModifier(MOD_DEF, shielddef));
+		PAlly->health.maxhp = (int16)(15 + hpstat + (3.66f*(plvl * 4.10f)));
 		PAlly->health.maxmp = (int16)(15 + (2.72f*(plvl * 2.72f))); 
 		PAlly->UpdateHealth();
         PAlly->health.mp = PAlly->health.maxmp;
@@ -1135,7 +1167,13 @@ namespace petutils
 		PAlly->m_Weapons[SLOT_MAIN]->setDamage(floor(PAlly->GetMLevel()*0.96f) + 15);// D:15 @5 / D:87 @ 75
 		PAlly->m_Weapons[SLOT_MAIN]->setDelay(floor(1000.0f*(492.0f / 60.0f))); //492 delay
 		PAlly->setModifier(MOD_HASTE_GEAR, haste);
-		PAlly->health.maxhp = (int16)(11 + (3.5*(plvl * 5.0f))); 
+		PAlly->setModifier(MOD_CONVMPTOHP, 1);
+		PAlly->setModifier(MOD_CONVHPTOMP, 1);
+		PAlly->setModifier(MOD_FOOD_MPP, 1);
+		PAlly->setModifier(MOD_FOOD_MP_CAP, 1);	
+		PAlly->setModifier(MOD_MPP, 1);
+		PAlly->setModifier(MOD_HPP, 1);		
+		PAlly->health.maxhp = (int16)(11 + (3.5*(plvl * 4.5f))); 
 		PAlly->UpdateHealth();
         PAlly->health.hp = PAlly->health.maxhp;
 		    if (plvl > 49)
@@ -1161,9 +1199,13 @@ namespace petutils
 		PAlly->setModifier(MOD_DUAL_WIELD, 20); // Dual Wield
 	    PAlly->setModifier(MOD_CONVMPTOHP, 1);
 		PAlly->setModifier(MOD_CONVHPTOMP, 1);
+		PAlly->setModifier(MOD_FOOD_MPP, 1);
+		PAlly->setModifier(MOD_FOOD_MP_CAP, 1);	
+		PAlly->setModifier(MOD_MPP, 1);
+		PAlly->setModifier(MOD_HPP, 1);		
 		PAlly->m_Weapons[SLOT_MAIN]->setDamage(floor(PAlly->GetMLevel()*0.54f));// D:40 @75
 		PAlly->m_Weapons[SLOT_MAIN]->setDelay(floor(1000.0f*(240.0f / 60.0f))); //240 delay
-        PAlly->health.maxmp = (int16)(15 + (3.66f*(plvl * 1.55f))); 
+        PAlly->health.maxmp = (int16)(15 + (3.66f*(plvl * 2.95f))); 
 		PAlly->health.maxhp = (int16)(22 + (3.85f*(plvl * 3.66f))); 
 		PAlly->UpdateHealth();
         PAlly->health.mp = PAlly->health.maxmp;
@@ -1193,6 +1235,10 @@ namespace petutils
 		PAlly->m_Weapons[SLOT_MAIN]->setDelay(floor(1000.0f*(340.0f / 60.0f))); //340 delay	
 		PAlly->setModifier(MOD_CONVMPTOHP, 1);
 		PAlly->setModifier(MOD_CONVHPTOMP, 1);
+		PAlly->setModifier(MOD_FOOD_MPP, 1);
+		PAlly->setModifier(MOD_FOOD_MP_CAP, 1);
+		PAlly->setModifier(MOD_MPP, 1);
+		PAlly->setModifier(MOD_HPP, 1);
 		PAlly->health.maxmp = (int16)(22 + (3.46f*(plvl * 3.46f))); 
 		PAlly->health.maxhp = (int16)(24 + (3.70f*(plvl * 3.70f))); 		
 		PAlly->UpdateHealth();
@@ -1931,6 +1977,7 @@ namespace petutils
 		//set C magic evasion
 		PPet->setModifier(MOD_MEVA, battleutils::GetMaxSkill(SKILL_ELE, JOB_RDM, PPet->GetMLevel()));
 		PPet->health.tp = 0;
+		ShowWarning(CL_YELLOW"FinalizePetStatstics in Petutils update health" CL_RESET);
 		PPet->UpdateHealth();
 
 		PMaster->applyPetModifiers(PPet);
