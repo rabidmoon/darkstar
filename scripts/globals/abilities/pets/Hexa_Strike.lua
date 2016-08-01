@@ -21,14 +21,14 @@ function onPetAbility(target, pet, skill)
     local numhits = 6;
 	local attmod = 1;
     local accmod = 1;
-	local str_wsc = 0.60;
-	local dex_wsc = 0.60;
+	local str_wsc = 0.30;
+	local dex_wsc = 0.30;
 	local agi_wsc = 0;
 	local vit_wsc = 0;
 	local mnd_wsc = 0;
     skill:setSkillchain(198);
 	
-	local randcrit = math.random(1,9);
+	local randcrit = math.random(1,4);
 	local crit = (1 + (randcrit/100));
 	
 
