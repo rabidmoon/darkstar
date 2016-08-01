@@ -134,7 +134,7 @@ function onTrigger(player,npc)
 	   player:PrintToPlayer("Cid : Detonator?  Use it 100 times and then come see me afterwards.",0x0D);
 	   player:setVar("DETONATOR",100);
 	   player:addQuest(BASTOK,SHOOT_FIRST_ASK_QUESTIONS_LATER);
-	elseif (wsnm == 1 and player:getQuestStatus(BASTOK,SHOOT_FIRST_ASK_QUESTIONS_LATER) == true) then
+	elseif (wsnm == 1 and player:getQuestStatus(BASTOK,SHOOT_FIRST_ASK_QUESTIONS_LATER) == QUEST_ACCEPTED) then
 	   player:PrintToPlayer("Cid : Good Job.  Travel to the Boyhada Tree and fight the monster that dwells there.",0x0D);
 	   player:addKeyItem(MAP_TO_THE_ANNALS_OF_TRUTH);
  	   player:messageSpecial(MAP_TO_THE_ANNALS_OF_TRUTH);

@@ -43,7 +43,7 @@ function onTrigger(player,npc)
 	   player:PrintToPlayer("Kuroido-Moido : Black Halo not to your liking?  Use it 100 times and then come see me afterwards.",0x0D);
 	   player:setVar("BLAC_HALO",100);
 	   player:addQuest(WINDURST,ORASTARY_WOES);
-    elseif (wsnm == 1 and player:getQuestStatus(WINDURST,ORASTARY_WOES) == true) then
+    elseif (wsnm == 1 and player:getQuestStatus(WINDURST,ORASTARY_WOES) == QUEST_ACCEPTED) then
 	   player:PrintToPlayer("Kuroido-Moido : Good Job.  Take this to Ro'Maeve and kill the monster there.",0x0D);
 	   player:addKeyItem(MAP_TO_THE_ANNALS_OF_TRUTH);
  	   player:messageSpecial(MAP_TO_THE_ANNALS_OF_TRUTH);

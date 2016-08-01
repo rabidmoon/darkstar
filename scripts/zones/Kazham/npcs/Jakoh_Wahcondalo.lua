@@ -39,7 +39,7 @@ player:PrintToPlayer(mainlvl);
 	   player:PrintToPlayer("Jakoh Wahcondalo : Evisceration eh?  Use it 100 times and then come see me afterwards.",0x0D);
 	   player:setVar("EVISCERATION",100);
 	   player:addQuest(OUTLANDS,CLOAK_AND_DAGGER);
-	elseif (wsnm == 1 and player:getQuestStatus(OUTLANDS,CLOAK_AND_DAGGER) == true) then
+	elseif (wsnm == 1 and player:getQuestStatus(OUTLANDS,CLOAK_AND_DAGGER) == QUEST_ACCEPTED) then
 	   player:PrintToPlayer("Jakoh Wahcondalo : Good Job.  Take this to Gustav Tunnel and kill the monster there.",0x0D);
 	   player:addKeyItem(MAP_TO_THE_ANNALS_OF_TRUTH);
  	   player:messageSpecial(MAP_TO_THE_ANNALS_OF_TRUTH);

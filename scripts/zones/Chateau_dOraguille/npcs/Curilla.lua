@@ -62,7 +62,7 @@ function onTrigger(player,npc)
 	   player:PrintToPlayer("Curilla : Savage Blade eh?  Use it 100 times and then come see me afterwards.",0x0D);
 	   player:setVar("SAVAGE_BLADE",100);
 	   player:addQuest(SANDORIA,OLD_WOUNDS);
-    elseif (wsnm == 1) and (player:getQuestStatus(SANDORIA,OLD_WOUNDS) == true) then
+    elseif (wsnm == 1) and (player:getQuestStatus(SANDORIA,OLD_WOUNDS) == QUEST_ACCEPTED) then
 	   player:PrintToPlayer("Curilla : Good Job.  Take this to Quicksand Caves and kill the monster there.",0x0D);
 	   player:addKeyItem(MAP_TO_THE_ANNALS_OF_TRUTH);
  	   player:messageSpecial(MAP_TO_THE_ANNALS_OF_TRUTH);

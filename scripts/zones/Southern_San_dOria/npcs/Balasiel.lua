@@ -88,7 +88,7 @@ function onTrigger(player,npc)
 	   player:PrintToPlayer("Balasiel : Impulse Drive eh?  Use it 100 times and then come see me afterwards.",0x0D);
 	   player:setVar("IMPULSE_DRIVE",100);
 	   player:addQuest(SANDORIA,METHODS_CREATE_MADNESS);
-	elseif (wsnm == 1 and player:getQuestStatus(SANDORIA,METHODS_CREATE_MADNESS) == true) then
+	elseif (wsnm == 1 and player:getQuestStatus(SANDORIA,METHODS_CREATE_MADNESS) == QUEST_ACCEPTED) then
 	   player:PrintToPlayer("Balasiel :  Good Job.  Go to Sea Serpent Grotto and fight the monster that dwells there.",0x0D);
 	   player:addKeyItem(MAP_TO_THE_ANNALS_OF_TRUTH);
  	   player:messageSpecial(MAP_TO_THE_ANNALS_OF_TRUTH);

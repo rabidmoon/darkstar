@@ -96,7 +96,7 @@ function onTrigger(player,npc)
 	   player:PrintToPlayer("Novalmauge : Spiral Hell eh?  Use it 100 times and then come see me afterwards.",0x0D);
 	   player:setVar("SPIRAL_HELL",100);
 	   player:addQuest(SANDORIA,SOULS_IN_SHADOWS);
-    elseif (wsnm == 1 and player:getQuestStatus(SANDORIA,SOULS_IN_SHADOWS) == true) then
+    elseif (wsnm == 1 and player:getQuestStatus(SANDORIA,SOULS_IN_SHADOWS) == QUEST_ACCEPTED) then
 	   player:PrintToPlayer("Novalmauge :  Good Job.  Go to the Den of Rancor and fight the monster that dwells there.",0x0D);
 	   player:addKeyItem(MAP_TO_THE_ANNALS_OF_TRUTH);
  	   player:messageSpecial(MAP_TO_THE_ANNALS_OF_TRUTH);

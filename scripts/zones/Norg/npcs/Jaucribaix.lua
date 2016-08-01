@@ -133,7 +133,7 @@ function onTrigger(player,npc)
 	   player:PrintToPlayer("Jaucribaix : Tachi: Kasha eh?  Use it 100 times and then come see me afterwards.",0x0D);
 	   player:setVar("TACHI_KASHA",100);
 	   player:addQuest(OUTLANDS,THE_POTENTIAL_WITHIN);
-	elseif (wsnm == 1 and player:getQuestStatus(OUTLANDS,THE_POTENTIAL_WITHIN) == true) then
+	elseif (wsnm == 1 and player:getQuestStatus(OUTLANDS,THE_POTENTIAL_WITHIN) == QUEST_ACCEPTED) then
 	   player:PrintToPlayer("Jaucribaix :  Good Job.  Travel to Kuftal Tunnel and fight the monster that dwells there.",0x0D);
 	   player:addKeyItem(MAP_TO_THE_ANNALS_OF_TRUTH);
  	   player:messageSpecial(MAP_TO_THE_ANNALS_OF_TRUTH);

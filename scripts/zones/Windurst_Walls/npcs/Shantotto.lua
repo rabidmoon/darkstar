@@ -129,7 +129,7 @@ function onTrigger(player,npc)
 	   player:PrintToPlayer("Shantotto : Full power Retribution you say?  100 enemies with it you must slay!",0x0D);
 	   player:setVar("RETRIBUTION",100);
 	   player:addQuest(WINDURST,BLOOD_AND_GLORY);
-	elseif (wsnm == 1 and player:getQuestStatus(WINDURST,BLOOD_AND_GLORY) == true) then
+	elseif (wsnm == 1 and player:getQuestStatus(WINDURST,BLOOD_AND_GLORY) == QUEST_ACCEPTED) then
 	   player:PrintToPlayer("Shantotto : You finished your task with such flair. Now defeat the monster near Ifrit's Lair!",0x0D);
 	   player:addKeyItem(MAP_TO_THE_ANNALS_OF_TRUTH);
  	   player:messageSpecial(MAP_TO_THE_ANNALS_OF_TRUTH);

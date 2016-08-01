@@ -99,7 +99,7 @@ function onTrigger(player,npc)
 	   player:PrintToPlayer("Perih Vashai : Empyreal Arrow?  Use it 100 times and then come see me afterwards.",0x0D);
 	   player:setVar("EMPYREAL_ARROW",100);
 	   player:addQuest(WINDURST,FROM_SAPLINGS_GROW);
-	elseif (wsnm == 1 and player:getQuestStatus(WINDURST,FROM_SAPLINGS_GROW) == true) then
+	elseif (wsnm == 1 and player:getQuestStatus(WINDURST,FROM_SAPLINGS_GROW) == QUEST_ACCEPTED) then
 	   player:PrintToPlayer("Perih Vashai :  Grrreat!!.  Travel to Cape Terrigan and fight the monster that dwells there.",0x0D);
 	   player:addKeyItem(MAP_TO_THE_ANNALS_OF_TRUTH);
  	   player:messageSpecial(MAP_TO_THE_ANNALS_OF_TRUTH);
