@@ -1029,7 +1029,8 @@ namespace petutils
 		PAlly->setModifier(MOD_FOOD_MPP, 1);
 		PAlly->setModifier(MOD_FOOD_MP_CAP, 1);
 		PAlly->setModifier(MOD_MPP, 1);
-		PAlly->setModifier(MOD_HPP, 1);		
+		PAlly->setModifier(MOD_HPP, 1);	
+		PAlly->health.maxhp = (int16)(14 + (3.0f*(plvl * 3.75f))); 		
 		PAlly->health.maxmp = (int16)(22 + (3.66f*(plvl * 3.66f))); 
 		PAlly->UpdateHealth();
         PAlly->health.mp = PAlly->health.maxmp;
@@ -1053,7 +1054,9 @@ namespace petutils
 		PAlly->setModifier(MOD_FOOD_MPP, 1);
 		PAlly->setModifier(MOD_FOOD_MP_CAP, 1);	
 		PAlly->setModifier(MOD_MPP, 1);
-		PAlly->setModifier(MOD_HPP, 1);		
+		PAlly->setModifier(MOD_HPP, 1);
+		PAlly->health.maxhp = (int16)(14 + (3.30f*(plvl * 4.15f))); 		
+		PAlly->UpdateHealth();		
 		   if (plvl > 24){
 				PAlly->setModifier(MOD_DOUBLE_ATTACK, 15);
 		   }

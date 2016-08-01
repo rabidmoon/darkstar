@@ -77,7 +77,7 @@ CAIPetDummy::CAIPetDummy(CPetEntity* PPet)
 	m_magicRecast = 6000;
 	m_magicHealRecast = 25000;
 	m_magicHealCast = 0;
-	m_kupipiHealRecast = 18000;
+	m_kupipiHealRecast = 12000;
 	m_adelhiedHealRecast = 20000;
 	m_kupipiEnhanceRecast = 10000;  // Enhancing such as Haste Pro/Shell and ~na's will share the same cast timer
 	m_kupipiHealCast = 0;
@@ -578,13 +578,6 @@ void CAIPetDummy::ActionAbilityStart()
                     break;
                     }
   					else if (PMobSkill->getID() == 3779 && (masterscID == 3 || masterscID == 4 || masterscID == 9)) { //Tachi Enpi
-                    mobwsID = 144;
-					SetCurrentMobSkill(PMobSkill);
-					SetCurrentWeaponSkill(mobwsID);
-			        //ShowWarning("Tachi: Enpi \n");
-                    break;
-                    }
-                    else { //Tachi Enpi
                     mobwsID = 144;
 					SetCurrentMobSkill(PMobSkill);
 					SetCurrentWeaponSkill(mobwsID);
@@ -2366,7 +2359,7 @@ bool CAIPetDummy::PetIsHealing() {
 
 void CAIPetDummy::ActionRoaming()
 {
-    if (m_PPet->PMaster == nullptr || m_PPet->PMaster->isDead() || m_PPet->PMaster->getZone() != m_PPet->getZone()) {
+    if (m_PPet->PMaster == nullptr || m_PPet->PMaster->isDead()) { // || m_PPet->PMaster->getZone() != m_PPet->getZone()) {
         m_ActionType = ACTION_FALL;
         ActionFall();
         return;
@@ -3488,7 +3481,11 @@ void CAIPetDummy::ActionFall()
 
 void CAIPetDummy::ActionDeath()
 {
-    if (m_Tick - m_LastActionTime > 1000) {
+    
+	
+	//if (m_PPet->getZone() == m_PPet->PMaster->getZone()){	
+    //ShowWarning(CL_GREEN"Trust in Same Zone, Disappear in 3 seconds \n" CL_RESET);
+	if (m_Tick - m_LastActionTime > 2500) {
         m_PPet->status = STATUS_DISAPPEAR;
         m_PPet->StatusEffectContainer->DelStatusEffectsByFlag(EFFECTFLAG_DEATH, true);
 
@@ -3496,6 +3493,9 @@ void CAIPetDummy::ActionDeath()
 
         m_ActionType = ACTION_NONE;
     }
+  // }
+  
+
 }
 
 void CAIPetDummy::ActionMagicStart()
@@ -3737,18 +3737,18 @@ int16 CAIPetDummy::KupipiSpell()
 				 spellID = -1;
 				} 
 		m_LastKupipiMagicTime = m_Tick;	
-        m_kupipiHealRecast = 18000; 		
+        m_kupipiHealRecast = 12000; 		
 		if (m_PPet->StatusEffectContainer->HasStatusEffect(EFFECT_SILENCE) == true)
 		{
 	    spellID = -1;
 		} 
-        m_kupipiHealRecast = 18000; 
+        m_kupipiHealRecast = 12000; 
 		m_kupipiHealCast = 1; // 1 means casting a spell
 		}
 		else
 		{
 		m_LastKupipiMagicTime = m_Tick; // reset mtick no eligible healing spell to cast
-		m_kupipiHealRecast = 11000;		
+		m_kupipiHealRecast = 8000;		
        }
 	}
 	
