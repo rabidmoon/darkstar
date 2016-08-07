@@ -352,6 +352,22 @@ void CAICharNormal::ActionEngage()
 
                     m_PChar->animation = ANIMATION_ATTACK;
                     m_PChar->PLatentEffectContainer->CheckLatentsWeaponDraw(true);
+					if (m_PChar->GetMJob() == JOB_DRK && m_PChar->StatusEffectContainer->HasStatusEffect(EFFECT_LAST_RESORT) == true && 
+					m_PChar->StatusEffectContainer->HasStatusEffect(EFFECT_REFRESH_DOWN) == false){
+					ShowWarning(CL_GREEN"ENGAGE - Last Resort On, Refresh Down set to ON\n" CL_RESET);
+					uint32 lastresortlevel = charutils::GetVar((CCharEntity*)m_PChar,"LastResortLevelMod");
+					uint32 mppower = 0;
+					mppower = (lastresortlevel / 15) + 1;
+					m_PChar->addModifier(MOD_ABSORB_PHYSDMG_TO_MP, 5);
+					m_PChar->StatusEffectContainer->AddStatusEffect(new CStatusEffect(EFFECT_REFRESH_DOWN,EFFECT_REFRESH, mppower, 3, 180));
+					}
+					else if (m_PChar->GetMJob() == JOB_DRK && m_PChar->StatusEffectContainer->HasStatusEffect(EFFECT_LAST_RESORT) == false && 
+					m_PChar->StatusEffectContainer->HasStatusEffect(EFFECT_REFRESH_DOWN) == true){
+					ShowWarning(CL_RED"ENGAGE - Last Resort Off, Refresh Down set to OFF\n" CL_RESET);
+					m_PChar->StatusEffectContainer->DelStatusEffect(EFFECT_REFRESH_DOWN);
+					m_PChar->delModifier(MOD_ABSORB_PHYSDMG_TO_MP, 5);
+					}					
+
                     m_PChar->pushPacket(new CLockOnPacket(m_PChar, m_PBattleTarget));
                     m_PChar->updatemask |= UPDATE_HP;
                     return;
@@ -438,6 +454,19 @@ void CAICharNormal::ActionDisengage()
     m_PChar->updatemask |= UPDATE_HP;
     m_PChar->pushPacket(new CCharUpdatePacket(m_PChar));
     m_PChar->PLatentEffectContainer->CheckLatentsWeaponDraw(false);
+	
+	if (m_PChar->GetMJob() == JOB_DRK && m_PChar->StatusEffectContainer->HasStatusEffect(EFFECT_LAST_RESORT) == true && 
+	m_PChar->StatusEffectContainer->HasStatusEffect(EFFECT_REFRESH_DOWN) == true){  //Last Resort and Refresh Down is up, remove Refresh Down
+    m_PChar->StatusEffectContainer->DelStatusEffect(EFFECT_REFRESH_DOWN);
+	ShowWarning(CL_RED"DISENGAGE - Last Resort On, Refresh Down set to OFF\n" CL_RESET);
+    	
+	}
+	else if (m_PChar->GetMJob() == JOB_DRK && m_PChar->StatusEffectContainer->HasStatusEffect(EFFECT_LAST_RESORT) == false && 
+	m_PChar->StatusEffectContainer->HasStatusEffect(EFFECT_REFRESH_DOWN) == true){  //Last Resort Down But Refresh Down is up, remove Refresh Down
+    m_PChar->StatusEffectContainer->DelStatusEffect(EFFECT_REFRESH_DOWN);
+	ShowWarning(CL_RED"DISENGAGE - Last Resort Off, Refresh Down set to OFF\n" CL_RESET);
+    }	
+
 
     if (m_PChar->PPet != nullptr && m_PChar->PPet->objtype == TYPE_PET && ((CPetEntity*)m_PChar->PPet)->getPetType() == PETTYPE_WYVERN)
     {
@@ -1660,11 +1689,44 @@ void CAICharNormal::ActionJobAbilityFinish()
             Action.param = roll;
             Action.knockback = 0;
 
+			if (m_PChar->PAlly.size() != 0)
+            {
+                 for (auto ally : m_PChar->PAlly)
+                 {
+                    CCharEntity* PTarget = (CCharEntity*)ally;
+ 
+                    if (!PTarget->isDead() &&
+                        PTarget->getZone() == m_PChar->getZone() &&
+                        distance(m_PChar->loc.p, PTarget->loc.p) <= m_PJobAbility->getRange())
+                    {
+                        Action.ActionTarget = PTarget;
+                        luautils::OnUseAbilityRoll(m_PChar, Action.ActionTarget, GetCurrentJobAbility(), roll);
+                        if (PTarget->id == m_PChar->id){
+                            if (m_PJobAbility->getMessage() == MSGBASIC_ROLL_SUB_FAIL){
+                                Action.messageID = MSGBASIC_ROLL_MAIN_FAIL;
+                            }
+                            else {
+                                Action.messageID = m_PJobAbility->getMessage();
+                            }
+                        }
+                        else if (m_PJobAbility->getMessage() == MSGBASIC_ROLL_SUB_FAIL){
+                            Action.messageID = MSGBASIC_ROLL_SUB_FAIL;
+                        }
+                        else {
+                            Action.messageID = MSGBASIC_ROLL_SUB;
+                        }
+                        m_PChar->m_ActionList.push_back(Action);
+                    }
+                }
+            }
+			
+			
+			
             if (m_PChar->PParty != nullptr)
             {
                 for (uint32 i = 0; i < m_PChar->PParty->members.size(); i++)
                 {
-                    CCharEntity* PTarget = (CCharEntity*)m_PChar->PParty->members[i];
+					CCharEntity* PTarget = (CCharEntity*)m_PChar->PParty->members[i];
 
                     if (!PTarget->isDead() &&
                         PTarget->getZone() == m_PChar->getZone() &&
@@ -2905,7 +2967,16 @@ void CAICharNormal::ActionAttack()
         m_PChar->PBattleAI->SetCurrentAction(ACTION_DISENGAGE);
         return;
     }
-
+    
+	if (m_PChar->GetMJob() == JOB_DRK && m_PChar->StatusEffectContainer->HasStatusEffect(EFFECT_LAST_RESORT) == true && 
+					m_PChar->StatusEffectContainer->HasStatusEffect(EFFECT_REFRESH_DOWN) == false){
+					ShowWarning(CL_GREEN"Last Resort Activated During Fight - Refresh Down set to ON\n" CL_RESET);
+					uint32 lastresortlevel = charutils::GetVar((CCharEntity*)m_PChar,"LastResortLevelMod");
+					uint32 mppower = 0;
+					mppower = (lastresortlevel / 15) + 1;
+					m_PChar->addModifier(MOD_ABSORB_PHYSDMG_TO_MP, 5);
+					m_PChar->StatusEffectContainer->AddStatusEffect(new CStatusEffect(EFFECT_REFRESH_DOWN,EFFECT_REFRESH, mppower, 3, 180));
+					}
 
     CMobEntity* Monster = (CMobEntity*)m_PBattleTarget;
     if (Monster->m_HiPCLvl < m_PChar->GetMLevel())
