@@ -197,7 +197,7 @@ public:
     uint8           updatemask;         // what to update next server tick to players nearby
 
     std::unique_ptr<CAIContainer> PAI;          // AI container
-    std::unique_ptr<CBattlefield> PBattlefield; // pointer to battlefield (if in one)
+    std::shared_ptr<CBattlefield> PBattlefield; // pointer to battlefield (if in one)
     CInstance*		PInstance;
 protected:
     std::map<std::string, uint32> m_localVars;

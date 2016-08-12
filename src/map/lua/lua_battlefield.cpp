@@ -176,7 +176,7 @@ inline int32 CLuaBattlefield::getMobs(lua_State* L)
     int8 newTable = lua_gettop(L);
     int i = 1;
 
-    if (required)
+    if (required && m_PLuaBattlefield->m_RequiredEnemyList.size() > 0)
     {
         m_PLuaBattlefield->ForEachRequiredEnemy([&](CMobEntity* PMob)
         {
@@ -193,7 +193,7 @@ inline int32 CLuaBattlefield::getMobs(lua_State* L)
         });
     }
 
-    if (adds)
+    if (adds && m_PLuaBattlefield->m_AdditionalEnemyList.size() > 0)
     {
         m_PLuaBattlefield->ForEachAdditionalEnemy([&](CMobEntity* PMob)
         {

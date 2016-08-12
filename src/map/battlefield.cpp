@@ -338,7 +338,7 @@ bool CBattlefield::InsertEntity(CBaseEntity* PEntity, bool inBattlefield, BATTLE
 
     // set their battlefield to this as they're now physically inside that battlefield
     if (inBattlefield)
-        PEntity->PBattlefield = std::unique_ptr<CBattlefield>(this);
+        PEntity->PBattlefield = shared_from_this();
 
     // mob, initiator or ally
     if (entity && !entity->StatusEffectContainer->GetStatusEffect(EFFECT_BATTLEFIELD))
@@ -366,7 +366,9 @@ CBaseEntity* CBattlefield::GetEntity(CBaseEntity* PEntity)
 
 bool CBattlefield::RemoveEntity(CBaseEntity* PEntity, uint8 leavecode)
 {
-    DSP_DEBUG_BREAK_IF(PEntity == nullptr);
+    // player's already zoned, we dont need to do anything
+    if(!PEntity)
+        return false;
 
     auto found = false;
     auto check = [PEntity, &found](auto entity) { if (PEntity->targid == entity) { found = true; return found; } return false; };
@@ -418,7 +420,7 @@ bool CBattlefield::RemoveEntity(CBaseEntity* PEntity, uint8 leavecode)
         entity->StatusEffectContainer->DelStatusEffect(EFFECT_LEVEL_RESTRICTION);
         ClearEnmityForEntity(entity);
     }
-    PEntity->PBattlefield.release();
+    PEntity->PBattlefield.reset();
     return found;
 }
 
@@ -433,8 +435,15 @@ void CBattlefield::DoTick(time_point time)
         // remove the char if they zone out
         for (auto charid : m_PlayerList)
         {
-            auto PChar = zoneutils::GetChar(charid);
-            if (!PChar || PChar->getZone() != GetZoneID())
+            auto PChar = GetZone()->GetCharByID(charid);
+
+            if(!PChar)
+            {
+                auto it = std::find(m_PlayerList.begin(), m_PlayerList.end(), charid);
+                if (it != m_PlayerList.end())
+                    m_PlayerList.erase(it);
+            }
+            else
             {
                 RemoveEntity(PChar, -1);
             }

@@ -100,7 +100,7 @@ typedef struct
     uint32 id;
 } BattlefieldInitiator_t;
 
-class CBattlefield
+class CBattlefield : std::enable_shared_from_this<CBattlefield>
 {
 public:
 

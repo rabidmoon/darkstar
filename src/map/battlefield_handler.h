@@ -50,7 +50,7 @@ public:
 private:
     CZone*                                       m_PZone;
     uint8                                        m_MaxBattlefields; // usually 3 except dynamis, einherjar, besieged, ...
-    std::map<int, std::unique_ptr<CBattlefield>> m_Battlefields;    // area
+    std::map<int, std::shared_ptr<CBattlefield>> m_Battlefields;    // area
 };
 
 #endif

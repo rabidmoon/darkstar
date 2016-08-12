@@ -1,4 +1,5 @@
-local MaxAreas = {
+local MaxAreas =
+{
     -- temenos
     {Max = 8, Zones = {37}},
     
@@ -25,7 +26,8 @@ end;
 
 g_Battlefield = {};
 
-g_Battlefield.Status = {
+g_Battlefield.Status =
+{
     OPEN     = 0,
     LOCKED  = 1,
     WON      = 2,
@@ -78,15 +80,15 @@ function g_Battlefield.HandleTimePrompts(battlefield)
     local tick = battlefield:getTimeInside();
     local status = battlefield:getStatus();
     local players = battlefield:getPlayers();
-    local remainingTimeLimit = battlefield:getRemainingTime();
+    local remainingTime = battlefield:getRemainingTime();
     
     -- print(remainingTimeLimit)
     if tick % 60 == 0 then
         for _, player in pairs(players) do
-            if remainingTimeLimit > 0 then
-                 player:messageBasic(202, remainingTimeLimit);
+            if remainingTime > 0 then
+                 player:messageBasic(202, remainingTime);
             else
-                player:messageSpecial(ID, PARAM);
+                --player:messageSpecial(ID, PARAM);
                 battlefield:setStatus(g_Battlefield.Status.LOST);
             end;
         end;
@@ -115,7 +117,7 @@ function g_Battlefield.HandleWipe(battlefield)
         end
         if rekt then
             for i,v in pairs(players) do
-                v:messageSpecial(ID, 3);
+                -- v:messageSpecial(ID, 3);
             end
             battlefield:setWipeTime(elapsed);
         end

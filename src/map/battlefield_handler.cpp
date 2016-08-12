@@ -125,7 +125,7 @@ uint8 CBattlefieldHandler::LoadBattlefield(CCharEntity* PChar, uint16 battlefiel
             auto maxplayers = Sql_GetUIntData(SqlHandle, 8);
             auto rulemask = Sql_GetUIntData(SqlHandle, 7);
 
-            std::unique_ptr<CBattlefield> PBattlefield = std::make_unique<CBattlefield>(battlefieldID, m_PZone, area, PChar);
+            std::shared_ptr<CBattlefield> PBattlefield = std::make_shared<CBattlefield>(battlefieldID, m_PZone, area, PChar);
 
             PBattlefield->SetName(name);
             PBattlefield->SetRecord(recordholder, recordtime);
