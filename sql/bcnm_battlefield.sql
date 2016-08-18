@@ -2347,6 +2347,9 @@ INSERT INTO `bcnm_battlefield` VALUES ('1301', '4','16929084','1');-- Temenos Ae
 INSERT INTO `bcnm_battlefield` VALUES ('1301', '4','16929085','1');-- Temenos Aern
 INSERT INTO `bcnm_battlefield` VALUES ('1301', '4','16929086','1');-- Temenos Aern
 INSERT INTO `bcnm_battlefield` VALUES ('1301', '4','16929087','1');-- Temenos Aern
+
+INSERT INTO `bcnm_battlefield` VALUES ('1375', '1','17129764','3');-- Dark Ixion
+INSERT INTO `bcnm_battlefield` VALUES ('1376', '1','17129768','3');-- Ixion
 -- -----------------------------------------
 -- -----------------------------------------
 

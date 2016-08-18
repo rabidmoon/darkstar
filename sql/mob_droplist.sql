@@ -6851,6 +6851,7 @@ INSERT INTO `mob_droplist` VALUES (1298,0,510,50);
 INSERT INTO `mob_droplist` VALUES (1298,0,511,70);
 INSERT INTO `mob_droplist` VALUES (1298,2,748,0);
 INSERT INTO `mob_droplist` VALUES (1298,0,2525,20);
+INSERT INTO `mob_droplist` VALUES (1298,0,19210,300); -- Stygian Ash
 INSERT INTO `mob_droplist` VALUES (1299,0,510,20);
 INSERT INTO `mob_droplist` VALUES (1299,0,511,30);
 INSERT INTO `mob_droplist` VALUES (1299,2,748,0);
@@ -7064,6 +7065,7 @@ INSERT INTO `mob_droplist` VALUES (1338,0,507,20);
 INSERT INTO `mob_droplist` VALUES (1338,0,508,20);
 INSERT INTO `mob_droplist` VALUES (1338,2,748,0);
 INSERT INTO `mob_droplist` VALUES (1338,0,2525,20);
+INSERT INTO `mob_droplist` VALUES (1338,0,19210,300); -- Stygian Ash
 INSERT INTO `mob_droplist` VALUES (1339,0,1027,80);
 INSERT INTO `mob_droplist` VALUES (1339,0,13364,140);
 INSERT INTO `mob_droplist` VALUES (1340,0,510,50);
@@ -7078,6 +7080,7 @@ INSERT INTO `mob_droplist` VALUES (1342,0,510,50);
 INSERT INTO `mob_droplist` VALUES (1342,0,511,70);
 INSERT INTO `mob_droplist` VALUES (1342,2,748,0);
 INSERT INTO `mob_droplist` VALUES (1342,0,2525,20);
+INSERT INTO `mob_droplist` VALUES (1342,0,19210,300); -- Stygian Ash
 INSERT INTO `mob_droplist` VALUES (1343,0,511,70);
 INSERT INTO `mob_droplist` VALUES (1343,2,750,0);
 INSERT INTO `mob_droplist` VALUES (1344,0,507,20);
@@ -8065,6 +8068,7 @@ INSERT INTO `mob_droplist` VALUES (1493,2,748,0);
 INSERT INTO `mob_droplist` VALUES (1493,0,2525,20);
 INSERT INTO `mob_droplist` VALUES (1493,0,2542,80);
 INSERT INTO `mob_droplist` VALUES (1493,0,2543,80);
+INSERT INTO `mob_droplist` VALUES (1493,0,19210,300); -- Stygian Ash
 INSERT INTO `mob_droplist` VALUES (1494,0,510,110);
 INSERT INTO `mob_droplist` VALUES (1494,0,511,140);
 INSERT INTO `mob_droplist` VALUES (1494,2,749,0);
@@ -31554,7 +31558,7 @@ INSERT INTO `mob_droplist` VALUES (5002,0,1449,200); -- T Whiteshell
 INSERT INTO `mob_droplist` VALUES (5002,0,15594,10);  -- SMN Legs
 INSERT INTO `mob_droplist` VALUES (5002,0,15257,10);  -- NIN Head
 INSERT INTO `mob_droplist` VALUES (5002,0,15591,10);  -- SAM Legs
-INSERT INTO `mob_droplist` VALUES (5002,0,11381,10);  -- BLU Feet
+INSERT INTO `mob_droplist` VALUES (5002,0,11383,10);  -- BLU Feet
 
 INSERT INTO `mob_droplist` VALUES (5002,0,4247,0); -- Miratetes Memoirs
 INSERT INTO `mob_droplist` VALUES (5002,0,1450,0); -- L Jadeshell

@@ -1675,3 +1675,37 @@ INSERT INTO `bcnm_loot` VALUES ('179','17946','100','3');
 INSERT INTO `bcnm_loot` VALUES ('179','18358','100','3');
 INSERT INTO `bcnm_loot` VALUES ('179','16976','100','3');
 INSERT INTO `bcnm_loot` VALUES ('179','4990','230','3');
+
+
+INSERT INTO `bcnm_loot` VALUES ('200','11289','100','1'); -- Ixion Cloak
+INSERT INTO `bcnm_loot` VALUES ('200','19107','130','1'); -- Azoth
+INSERT INTO `bcnm_loot` VALUES ('200','17554','300','1'); -- Jupiter staff
+INSERT INTO `bcnm_loot` VALUES ('200','1303','800','1'); -- Thunder bead
+INSERT INTO `bcnm_loot` VALUES ('200','14638','130','2'); -- Ring
+INSERT INTO `bcnm_loot` VALUES ('200','2654','700','2'); -- Horn
+INSERT INTO `bcnm_loot` VALUES ('200','17299','630','2'); -- Asrealagos
+INSERT INTO `bcnm_loot` VALUES ('200','4775','300','3');
+INSERT INTO `bcnm_loot` VALUES ('200','4804','500','3');
+INSERT INTO `bcnm_loot` VALUES ('200','4820','250','3');
+INSERT INTO `bcnm_loot` VALUES ('200','17299','430','3'); -- Asrealagos
+INSERT INTO `bcnm_loot` VALUES ('200','4108','530','4'); -- Azoth
+INSERT INTO `bcnm_loot` VALUES ('200','4100','630','4'); -- Azoth
+INSERT INTO `bcnm_loot` VALUES ('200','17299','730','5'); -- Asrealagos
+INSERT INTO `bcnm_loot` VALUES ('200','17299','1000','6'); -- Asrealagos
+
+
+INSERT INTO `bcnm_loot` VALUES ('201','16242','100','1'); -- Ixion Cape
+INSERT INTO `bcnm_loot` VALUES ('201','19107','130','1'); -- Azoth
+INSERT INTO `bcnm_loot` VALUES ('201','17558','300','1'); -- Appolos staff
+INSERT INTO `bcnm_loot` VALUES ('201','1305','800','1'); -- Thunder bead
+INSERT INTO `bcnm_loot` VALUES ('201','14642','130','2'); -- Ring
+INSERT INTO `bcnm_loot` VALUES ('201','2654','700','2'); -- Horn
+INSERT INTO `bcnm_loot` VALUES ('201','17299','630','2'); -- Asrealagos
+INSERT INTO `bcnm_loot` VALUES ('201','4647','300','3'); -- Banishga II
+INSERT INTO `bcnm_loot` VALUES ('201','4638','500','3'); -- Banish III
+INSERT INTO `bcnm_loot` VALUES ('201','4629','250','3'); -- Holy
+INSERT INTO `bcnm_loot` VALUES ('201','17299','430','3'); -- Asrealagos
+INSERT INTO `bcnm_loot` VALUES ('201','4110','530','4'); -- Light Cluster
+INSERT INTO `bcnm_loot` VALUES ('201','4102','630','4'); -- Light Crystal
+INSERT INTO `bcnm_loot` VALUES ('201','17299','730','5'); -- Asrealagos
+INSERT INTO `bcnm_loot` VALUES ('201','17299','1000','6'); -- Asrealagos

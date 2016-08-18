@@ -1483,6 +1483,16 @@ INSERT INTO `mob_spell_lists` VALUES ('Bahamut', 144, 359, 1, 255);  -- Silenceg
 INSERT INTO `mob_spell_lists` VALUES ('Bahamut', 144, 360, 1, 255);  -- Dispelga
 INSERT INTO `mob_spell_lists` VALUES ('Bahamut', 144, 366, 1, 255);  -- Graviga
 
+INSERT INTO `mob_spell_lists` VALUES ('Dark_Ixion', 270, 165, 1, 255); -- Thunder II
+INSERT INTO `mob_spell_lists` VALUES ('Dark_Ixion', 270, 194, 1, 255); -- Thundaga 
+INSERT INTO `mob_spell_lists` VALUES ('Dark_Ixion', 270, 212, 1, 255); -- Burst
+
+INSERT INTO `mob_spell_lists` VALUES ('Light_Ixion', 271, 21, 1, 255); -- Holy
+INSERT INTO `mob_spell_lists` VALUES ('Light_Ixion', 271, 22, 1, 255); -- Holy II
+INSERT INTO `mob_spell_lists` VALUES ('Light_Ixion', 271, 32, 1, 255); -- Banish V
+INSERT INTO `mob_spell_lists` VALUES ('Light_Ixion', 271, 41, 1, 255); -- Banishga IV
+INSERT INTO `mob_spell_lists` VALUES ('Light_Ixion', 271, 36, 1, 255); -- Diaga IV
+INSERT INTO `mob_spell_lists` VALUES ('Light_Ixion', 271, 112, 1, 255); -- Flash
 
 /*!40000 ALTER TABLE `mob_spell_lists` ENABLE KEYS */;
 UNLOCK TABLES;

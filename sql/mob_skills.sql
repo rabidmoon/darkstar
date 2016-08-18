@@ -1217,7 +1217,7 @@ INSERT INTO `mob_skills` VALUES (1143,1035,'noname2',0,15.0,2000,1500,4,0,0,0); 
 -- INSERT INTO `mob_skills` VALUES (1169,1169,'Marionette_Dice',0,7.0,2000,1500,4,0,0,0);
 -- INSERT INTO `mob_skills` VALUES (1170,1170,'Marionette_Dice',0,7.0,2000,1500,4,0,0,0);
 -- INSERT INTO `mob_skills` VALUES (1171,1171,'Marionette_Dice',0,7.0,2000,1500,4,0,0,0);
-INSERT INTO `mob_skills` VALUES (1172,1172,'Warcry',0,7.0,2000,1500,4,0,0,0);
+INSERT INTO `mob_skills` VALUES (1172,1172,'Warcry',1,7.0,2000,1500,4,0,0,0);
 -- INSERT INTO `mob_skills` VALUES (1173,1173,'Counterstance',0,7.0,2000,1500,4,0,0,0);
 -- INSERT INTO `mob_skills` VALUES (1174,1174,'Steal',0,7.0,2000,1500,4,0,0,0);
 INSERT INTO `mob_skills` VALUES (1175,803,'Shield_Bash',0,7.0,2000,1500,4,0,0,0);
@@ -2125,7 +2125,7 @@ INSERT INTO `mob_skills` VALUES (2045,1488,'Magic_Mortar',0,10.0,2000,0,4,0,225,
 -- INSERT INTO `mob_skills` VALUES (2077,2077,'.',0,7.0,2000,1500,4,0,0,0);
 INSERT INTO `mob_skills` VALUES (2078,1640,'Wrath_of_zeus',4,10.0,2000,1000,4,0,0,0);
 INSERT INTO `mob_skills` VALUES (2079,1639,'Lightning_spear',4,10.0,2000,1000,4,0,0,0);
-INSERT INTO `mob_skills` VALUES (2080,1642,'Acheron_kick',4,10.0,2000,1000,4,0,0,0);
+INSERT INTO `mob_skills` VALUES (2080,1642,'Acheron_kick',1,10.0,2000,1000,4,0,0,0);
 INSERT INTO `mob_skills` VALUES (2081,1653,'Damsel_memento',0,7.0,2000,1000,1,0,0,0);
 INSERT INTO `mob_skills` VALUES (2082,1641,'Rampant_stance',1,15.0,2000,1000,4,0,0,0);
 -- INSERT INTO `mob_skills` VALUES (2083,2083,'.',0,7.0,2000,1500,4,0,0,0);
@@ -2158,8 +2158,8 @@ INSERT INTO `mob_skills` VALUES (2082,1641,'Rampant_stance',1,15.0,2000,1000,4,0
 -- INSERT INTO `mob_skills` VALUES (2110,2110,'Mine_Blast',0,7.0,2000,1500,4,0,0,0);
 -- INSERT INTO `mob_skills` VALUES (2111,2111,'Moribund_Hack',0,7.0,2000,1500,4,0,0,0);
 -- INSERT INTO `mob_skills` VALUES (2112,2112,'Damsel_Memento',0,7.0,2000,1500,4,0,0,0);
-INSERT INTO `mob_skills` VALUES (2113,1652,'Scintillant_lance',4,10.0,2000,1000,4,0,0,0);
--- INSERT INTO `mob_skills` VALUES (2114,2114,'Grace_of_Hera',0,7.0,2000,1500,4,0,0,0);
+INSERT INTO `mob_skills` VALUES (2113,1651,'Scintillant_lance',4,10.0,2000,1000,4,0,0,0);
+INSERT INTO `mob_skills` VALUES (2114,1652,'Grace_of_Hera',1,7.0,2000,1500,4,0,0,0);
 -- INSERT INTO `mob_skills` VALUES (2115,2115,'Noxious_Spray',0,7.0,2000,1500,4,0,0,0);
 -- INSERT INTO `mob_skills` VALUES (2116,2116,'Hellborn_Yawp',0,7.0,2000,1500,4,0,0,0);
 -- INSERT INTO `mob_skills` VALUES (2117,2117,'Veil_of_Chaos',0,7.0,2000,1500,4,0,0,0);
@@ -2620,7 +2620,7 @@ INSERT INTO `mob_skills` VALUES (2534,1962,'Oblivions_mantle',1,15.0,2000,1000,4
 INSERT INTO `mob_skills` VALUES (2572,911,'Jettatura',4,10,2000,3000,4,0,0,0);
 -- INSERT INTO `mob_skills` VALUES (2573,2573,'Aqua_Breath',0,7.0,2000,1500,4,0,0,0);
 -- INSERT INTO `mob_skills` VALUES (2574,2574,'Royal_Decree',0,7.0,2000,1500,4,0,0,0);
--- INSERT INTO `mob_skills` VALUES (2575,2575,'Grace_of_Hera',0,7.0,2000,1500,4,0,0,0);
+INSERT INTO `mob_skills` VALUES (2575,1652,'Grace_of_Hera',0,7.0,2000,1500,4,0,0,0);
 -- INSERT INTO `mob_skills` VALUES (2576,2576,'.',0,7.0,2000,1500,4,0,0,0);
 -- INSERT INTO `mob_skills` VALUES (2577,2577,'.',0,7.0,2000,1500,4,0,0,0);
 -- INSERT INTO `mob_skills` VALUES (2578,2578,'.',0,7.0,2000,1500,4,0,0,0);

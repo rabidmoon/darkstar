@@ -138,7 +138,7 @@ INSERT INTO `mob_skill_lists` VALUES ('Avatar-Ifrit',38,590);
 INSERT INTO `mob_skill_lists` VALUES ('Avatar-Ifrit',38,591);
 INSERT INTO `mob_skill_lists` VALUES ('Avatar-Ifrit',38,592);
 -- INSERT INTO `mob_skill_lists` VALUES ('Avatar-Ixion',39,2078);
-INSERT INTO `mob_skill_lists` VALUES ('Avatar-Ixion',39,2078);
+-- INSERT INTO `mob_skill_lists` VALUES ('Avatar-Ixion',39,2078);
 INSERT INTO `mob_skill_lists` VALUES ('Avatar-Ixion',39,2079);
 INSERT INTO `mob_skill_lists` VALUES ('Avatar-Ixion',39,2080);
 INSERT INTO `mob_skill_lists` VALUES ('Avatar-Ixion',39,2081);
@@ -1146,6 +1146,11 @@ INSERT INTO `mob_skill_lists` VALUES ('GuivreWyvern',267,560);
 INSERT INTO `mob_skill_lists` VALUES ('GuivreWyvern',267,561);
 INSERT INTO `mob_skill_lists` VALUES ('GuivreWyvern',267,562);
 INSERT INTO `mob_skill_lists` VALUES ('GuivreWyvern',267,565);
+INSERT INTO `mob_skill_lists` VALUES ('Avatar-Ixion',268,2079);
+INSERT INTO `mob_skill_lists` VALUES ('Avatar-Ixion',268,2080);
+INSERT INTO `mob_skill_lists` VALUES ('Avatar-Ixion',268,2081);
+INSERT INTO `mob_skill_lists` VALUES ('Avatar-Ixion',268,2082);
+INSERT INTO `mob_skill_lists` VALUES ('Avatar-Ixion',268,2113);
 INSERT INTO `mob_skill_lists` VALUES ('Xzomit',269,1091);
 INSERT INTO `mob_skill_lists` VALUES ('Xzomit',269,1092);
 INSERT INTO `mob_skill_lists` VALUES ('Xzomit',269,1093);
@@ -2504,4 +2509,14 @@ INSERT INTO `mob_skill_lists` VALUES ('Adelhied',737,3722); -- Ebullience Arts
 INSERT INTO `mob_skill_lists` VALUES ('Adelhied',737,3720); -- Accession
 INSERT INTO `mob_skill_lists` VALUES ('Adelhied',737,3723); -- Sublimation
 INSERT INTO `mob_skill_lists` VALUES ('Adelhied',737,3770); -- Shining Strike
+
+INSERT INTO `mob_skill_lists` VALUES ('Bahamut-Pet',738,1296); -- GigaFlare
+INSERT INTO `mob_skill_lists` VALUES ('Light_Ixion',739,2114); -- Grace of Hera
+INSERT INTO `mob_skill_lists` VALUES ('Pet_Dark_Ixion',740,2078); -- Wrath of Zeus
+
+INSERT INTO `mob_skill_lists` VALUES ('Avatar-Light-Ixion',741,2113);
+INSERT INTO `mob_skill_lists` VALUES ('Avatar-Light-Ixion',741,2080);
+INSERT INTO `mob_skill_lists` VALUES ('Avatar-Light-Ixion',741,2081);
+INSERT INTO `mob_skill_lists` VALUES ('Avatar-Light-Ixion',741,2082);
+
 
