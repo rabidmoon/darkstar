@@ -259,7 +259,8 @@ namespace petutils
         if (!PPet->StatusEffectContainer->HasPreventActionEffect())
         {
             PPet->PBattleAI->SetBattleTarget(PTarget);
-            if (!(PPet->objtype == TYPE_PET && ((CPetEntity*)PPet)->m_PetID == PETID_ODIN))
+            if (!(PPet->objtype == TYPE_PET && ((CPetEntity*)PPet)->m_PetID == PETID_ODIN || ((CPetEntity*)PPet)->m_PetID == PETID_BAHAMUT ||
+			((CPetEntity*)PPet)->m_PetID == PETID_DARK_IXION || ((CPetEntity*)PPet)->m_PetID == PETID_LIGHT_IXION))
                 PPet->PBattleAI->SetCurrentAction(ACTION_ENGAGE);
         }
     }
@@ -789,7 +790,8 @@ namespace petutils
 
         // Расчет бонусных HP
         bonusStat = (mainLevelOver10 + mainLevelOver50andUnder60) * 2;
-        if (PPet->m_PetID == PETID_ODIN || PPet->m_PetID == PETID_ALEXANDER)
+        if (PPet->m_PetID == PETID_ODIN || PPet->m_PetID == PETID_ALEXANDER || PPet->m_PetID == PETID_BAHAMUT || PPet->m_PetID == PETID_DARK_IXION ||
+		PPet->m_PetID == PETID_LIGHT_IXION)
             bonusStat += 6800;
         PPet->health.maxhp = (int16)(raceStat + jobStat + bonusStat + sJobStat);
         PPet->health.hp = PPet->health.maxhp;
@@ -891,8 +893,22 @@ namespace petutils
 		
         PMaster->StatusEffectContainer->CopyConfrontationEffect(PPet);
 
-        if (PetID == PETID_ALEXANDER || PetID == PETID_ODIN)
+        if (PetID == PETID_ALEXANDER || PetID == PETID_ODIN || PetID == PETID_BAHAMUT || PetID == PETID_DARK_IXION || PetID == PETID_LIGHT_IXION)
         {
+		    if (PetID == PETID_DARK_IXION)
+	        {
+				apAction_t Action;
+				PPet->m_ActionList.clear();
+
+				Action.ActionTarget = PPet;
+				Action.reaction = REACTION_NONE;
+				Action.speceffect = SPECEFFECT_NONE;
+				Action.animation = 607;
+				ShowWarning(CL_GREEN"Setting to Spawn Animation 607!!! \n" CL_RESET);
+				PPet->m_ActionList.push_back(Action);
+				//PPet->loc.zone->PushPacket(PPet, CHAR_INRANGE, new CActionPacket(PPet));
+			}
+
             PPet->PBattleAI = new CAIUltimateSummon(PPet);
         }
         else if (PetID >= PETID_HARLEQUINFRAME && PetID <= PETID_STORMWAKERFRAME)
@@ -1034,9 +1050,13 @@ namespace petutils
 		PAlly->health.maxmp = (int16)(22 + (3.66f*(plvl * 3.66f))); 
 		PAlly->UpdateHealth();
         PAlly->health.mp = PAlly->health.maxmp;
-		   if (plvl > 24){
-		        PAlly->setModifier(MOD_REFRESH, 1);
+		   if (plvl > 74){
+		   PAlly->setModifier(MOD_REFRESH, 3);
 		   }
+		   else if (plvl > 24){
+		   PAlly->setModifier(MOD_REFRESH, 1);
+		   }
+		   
 		}
 		else if (PetID == PETID_NAJI)
 		{
@@ -1115,9 +1135,9 @@ namespace petutils
 		{
 		uint16 defrate = (floor(PAlly->GetMLevel() * 4.2));
 		uint16 modstat = (floor(PAlly->GetMLevel() * 1.0));
-		uint16 hpstat = (floor(PAlly->GetMLevel() * 2));
+		uint16 hpstat = (floor(PAlly->GetMLevel() * 3.2));
 		uint16 accstat = (floor(PAlly->GetMLevel() * 0.5));
-		uint16 shielddef = (floor(20 + (PAlly->GetMLevel() * 0.40)));
+		uint16 shielddef = (floor(20 + (PAlly->GetMLevel() * 0.30)));
 		//ShowWarning(CL_GREEN"CURILLA TRIGGERED SPAWN ALLY!!! \n" CL_RESET);
 		PAlly->setModifier(MOD_ACC, battleutils::GetMaxSkill(SKILL_GAX, JOB_WAR, PAlly->GetMLevel()) + accstat); //A+ Acc
 		PAlly->setModifier(MOD_EVA, battleutils::GetMaxSkill(SKILL_SYH, JOB_WAR, PAlly->GetMLevel())); //B+ Evasion
@@ -1246,10 +1266,23 @@ namespace petutils
 		PAlly->health.maxhp = (int16)(24 + (3.70f*(plvl * 3.70f))); 		
 		PAlly->UpdateHealth();
         PAlly->health.mp = PAlly->health.maxmp;
-		 if (plvl > 24){
-				PAlly->setModifier(MOD_REFRESH, 1);
-		   }
-		}		
+		if (plvl > 74){
+			PAlly->setModifier(MOD_MATT, 85);
+			PAlly->setModifier(MOD_SUBLIMATION_BONUS, 7);
+			PAlly->setModifier(MOD_REFRESH, 3);
+		}
+        else if (plvl > 50){
+			PAlly->setModifier(MOD_MATT, 75);
+			PAlly->setModifier(MOD_SUBLIMATION_BONUS, 5);
+		}
+		else if (plvl > 25){
+			PAlly->setModifier(MOD_MATT, 35);
+			PAlly->setModifier(MOD_REFRESH, 1);
+		}
+		else {
+			PAlly->setModifier(MOD_MATT, 15);
+		}	
+        }		
 		
 		
         PAlly->PBattleAI = new CAIPetDummy(PAlly);
@@ -1960,6 +1993,8 @@ namespace petutils
 		}
 		PPet->SetMJob(JOB_DRG);
 		PPet->SetMLevel(PMaster->GetMLevel());
+		
+		uint8 plvl = PMaster->GetMLevel();
 
 		LoadAvatarStats(PPet); //follows PC calcs (w/o SJ)
 		PPet->m_Weapons[SLOT_MAIN]->setDelay(floor(1000.0f*(320.0f / 60.0f))); //320 delay
@@ -1967,9 +2002,19 @@ namespace petutils
 		//Set A+ weapon skill
 		PPet->setModifier(MOD_ATT, battleutils::GetMaxSkill(SKILL_GAX, JOB_WAR, PPet->GetMLevel()));
 		PPet->setModifier(MOD_ACC, battleutils::GetMaxSkill(SKILL_GAX, JOB_WAR, PPet->GetMLevel()));
-		//Set D evasion and def
-		PPet->setModifier(MOD_EVA, battleutils::GetMaxSkill(SKILL_H2H, JOB_WAR, PPet->GetMLevel()));
-		PPet->setModifier(MOD_DEF, battleutils::GetMaxSkill(SKILL_H2H, JOB_WAR, PPet->GetMLevel()));
+		//Set B- evasion and def
+		PPet->setModifier(MOD_EVA, battleutils::GetMaxSkill(SKILL_POL, JOB_WAR, PPet->GetMLevel()));
+		PPet->setModifier(MOD_DEF, battleutils::GetMaxSkill(SKILL_POL, JOB_WAR, PPet->GetMLevel()));
+		
+		if (plvl > 50){
+			PPet->setModifier(MOD_MATT, 75);
+		}
+		else if (plvl > 25){
+			PPet->setModifier(MOD_MATT, 35);
+		}
+		else {
+			PPet->setModifier(MOD_MATT, 15);
+		}
 
 		if (finalize) {
 			FinalizePetStatistics(PMaster, PPet);

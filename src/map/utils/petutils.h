@@ -67,7 +67,10 @@ enum PETID
 	PETID_CURILLA            = 79,
 	PETID_EXCENMILLE         = 80,
 	PETID_BLUE               = 81,
-	PETID_ADELHIED           = 82
+	PETID_ADELHIED           = 82,
+	PETID_BAHAMUT            = 83,
+	PETID_DARK_IXION         = 84,
+	PETID_LIGHT_IXION        = 85
 };
 
 
