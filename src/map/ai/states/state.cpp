@@ -76,6 +76,13 @@ bool CState::CheckValidTarget(CBattleEntity* PTarget)
 {
 	if(PTarget == nullptr)
 	{
+		ShowWarning(CL_RED"CheckValidTarget is Null\n" CL_RESET);
+		return false;
+	}
+
+	if (PTarget->getZone() != m_PEntity->getZone())
+	{
+		ShowWarning(CL_RED"CheckValidTarget is Not in Same Zone\n" CL_RESET);
 		return false;
 	}
 

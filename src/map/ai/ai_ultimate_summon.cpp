@@ -532,6 +532,8 @@ void CAIUltimateSummon::ActionSpawn()
 		ActionFall();
 		return;
 	}
+	
+
 
 	if (m_Tick > m_LastActionTime + 3500)
 	{

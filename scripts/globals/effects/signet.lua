@@ -18,6 +18,7 @@ require("scripts/globals/status");
 -----------------------------------
 
 function onEffectGain(target,effect)
+    if (target:getObjType() == TYPE_PC) then
     local level = target:getMainLvl();
 	if (level < 49) then
 	target:setVar("SignetBoost",1);
@@ -32,6 +33,7 @@ function onEffectGain(target,effect)
 	target:addMod(MOD_REFRESH,modboost);
 	target:addMod(MOD_REGEN,modboost);
 	target:addMod(MOD_REGAIN,regain);
+	end
 end;
 
 -----------------------------------
@@ -46,6 +48,7 @@ end;
 -----------------------------------
 
 function onEffectLose(target,effect)
+    if (target:getObjType() == TYPE_PC) then
     local modboost = target:getVar("SignetBoost");
 	local regain = modboost * 5;
 	target:delMod(MOD_DEF,15);
@@ -53,4 +56,5 @@ function onEffectLose(target,effect)
 	target:addMod(MOD_REFRESH,modboost);
 	target:addMod(MOD_REGEN,modboost);
 	target:addMod(MOD_REGAIN,regain);
+	end
 end;

@@ -23,6 +23,7 @@ itemid_bcnmid_map = {6, {0, 0}, -- Bearclaw_Pinnacle
                    32, {0, 0}, -- Sealion's Den
                    35, {0, 0}, -- The Garden of RuHmet
                    36, {0, 0}, -- Empyreal Paradox
+				   129, {0, 0}, 
                    139, {1177, 4, 1552, 10, 1553, 11, 1131, 12, 1175, 15, 1180, 17}, -- Horlais Peak
                    140, {1551, 34, 1552, 35, 1552, 36}, -- Ghelsba Outpost
                    144, {1166, 68, 1178, 81, 1553, 76, 1180, 82, 1130, 79, 1552, 73}, -- Waughroon Shrine
@@ -59,6 +60,8 @@ bcnmid_param_map = {6, {640, 0},
                   32, {992, 0, 993, 1},
                   35, {1024, 0},
                   36, {1056, 0},
+				 -- 86, {1376, 0}, -- Everbloom Hollow (Ixion)
+				 -- 98, {1375, 4}, -- Everbloom Hollow/Ghoyus Reverie (Dark Ixion)				  
                   139, {0, 0, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 10, 10, 11, 11, 12, 12, 15, 15, 17, 17},
                   140, {32, 0, 33, 1, 34, 2, 35, 3, 36, 4},
                   144, {65, 1, 73, 9, 64, 0, 67, 3, 68, 4, 70, 6, 71, 7, 72, 8, 81, 17, 76, 12, 82, 18, 79, 15},
@@ -183,6 +186,7 @@ function EventUpdateBCNM(player, csid, option, entrance)
             player:setVar("bcnm_instanceid", 255);
             player:setVar("bcnm_instanceid_tick", 0);
         end
+		
     elseif (option == 0 and csid == 0x7d00) then -- Requesting an Instance
         -- Increment the instance ticker.
         -- The client will send a total of THREE EventUpdate packets for each one of the free instances.
@@ -481,6 +485,12 @@ function checkNonTradeBCNM(player, npc)
             mask = GetBattleBitmask(1056, Zone, 1);
             player:setVar("trade_bcnmid", 1056);
         end
+	--elseif (Zone == 98) then -- Sauromugue Champaign [S]
+       -- if (player:hasKeyItem(MOON_BAUBLE)) then -- Dark Ixion
+		    -- player:PrintToPlayer("ACCEPTED!!!!!");
+         --   mask = GetBattleBitmask(1375, Zone, 1);
+          --  player:setVar("trade_bcnmid", 1375);
+      --  end			
 
     elseif (Zone == 139) then -- Horlais Peak
         if ((player:getCurrentMission(BASTOK) == THE_EMISSARY_SANDORIA2 or
@@ -642,6 +652,10 @@ function checkNonTradeBCNM(player, npc)
     if (mask == -1) then
         print("BCNMID/Mask pair not found"); -- something went wrong
         return true;
+	 elseif (mask ~= 0) and (Zone == 98) then
+       player:startEvent(0x00ca, mask, 0, 0, 0, 0, 0, 0, 0);
+       print("BCNMID found with Zone at 98 and mask "..mask);
+       return true;	
     elseif (mask ~= 0) then
         player:startEvent(0x7d00, 0, 0, 0, mask, 0, 0, 0, 0);
         print("BCNMID found with mask "..mask);
