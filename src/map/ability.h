@@ -622,6 +622,7 @@ enum ABILITY
     ABILITY_ZEALOUS_SNORT      = 750,
     ABILITY_PENTAPECK          = 751
 
+
 };
 
 #define MAX_ABILITY_ID  752
