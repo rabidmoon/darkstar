@@ -37,15 +37,15 @@ function onUseWeaponSkill(player, target, wsID)
 
 	local wsnm = player:getVar("BLACK_HALO");
 	local unlock = 0;
-    if (player:hasCompleteQuest(WINDURST,ORASTERY_WOES) == true) then -- Black Halo Quest is done
+    if (player:hasCompleteQuest(WINDURST,ORASTERY_WOES) == QUEST_ACCEPTED) then -- Black Halo Quest is done
 	unlock = 1;
-	elseif (player:getQuestStatus(WINDURST,ORASTERY_WOES) == true and wsnm > 1) then -- Black Halo Quest Active
+	elseif (player:getQuestStatus(WINDURST,ORASTERY_WOES) == QUEST_ACCEPTED and wsnm > 1) then -- Black Halo Quest Active
 	wsnm = wsnm - 1;
 	if (wsnm < 1) then
 	wsnm = 1;
 	end
 	player:setVar("BLACK_HALO",wsnm);
-	elseif (player:getQuestStatus(WINDURST,ORASTERY_WOES) == true and wsnm <= 1) then -- Black Halo powered up
+	elseif (player:getQuestStatus(WINDURST,ORASTERY_WOES) == QUEST_ACCEPTED and wsnm <= 1) then -- Black Halo powered up
 	unlock = 0.30;
 	else
 	unlock = 0.05;

@@ -105,11 +105,11 @@ function onTrigger(player,npc)
                 player:startEvent(0x0097);
         elseif (player:getQuestStatus(JEUNO,PATH_OF_THE_BEASTMASTER) == QUEST_COMPLETED) then
                 player:startEvent(0x0014);
-		elseif (mainlvl >= 71 and skill >= 240 and player:getQuestStatus(BASTOK,AXE_THE_COMPETITION) ~= QUEST_ACCEPTED) then
+		elseif (mainlvl >= 71 and skill >= 240 and player:getQuestStatus(JEUNO,AXE_THE_COMPETITION) ~= QUEST_ACCEPTED) then
 	    player:PrintToPlayer("Brutus : Decimation eh?  Use it 100 times and then come see me afterwards.",0x0D);
 	    player:setVar("DECIMATION",100);
-	    player:addQuest(BASTOK,AXE_THE_COMPETITION);
-        elseif (wsnm == 1 and player:getQuestStatus(BASTOK,AXE_THE_COMPETITION) == QUEST_ACCEPTED) then
+	    player:addQuest(JEUNO,AXE_THE_COMPETITION);
+        elseif (wsnm == 1 and player:getQuestStatus(JEUNO,AXE_THE_COMPETITION) == QUEST_ACCEPTED) then
 	    player:PrintToPlayer("Brutus :  Good Job.  Now go to the Temple of Uggalepih and fight the monster that dwells there.",0x0D);
 	    player:addKeyItem(MAP_TO_THE_ANNALS_OF_TRUTH);
  	    player:messageSpecial(MAP_TO_THE_ANNALS_OF_TRUTH);
@@ -117,7 +117,7 @@ function onTrigger(player,npc)
         elseif (player:hasKeyItem(ANNALS_OF_TRUTH) and player:getVar("DECIMATION_WIN") == 2) then
 	    player:PrintToPlayer("Brutus : You have done well.  Decimation is now at full power!",0x0D);
 	    player:delKeyItem(ANNALS_OF_TRUTH);
-	    player:completeQuest(BASTOK,AXE_THE_COMPETITION);		
+	    player:completeQuest(JEUNO,AXE_THE_COMPETITION);		
         else
                 player:startEvent(0x0042, player:getMainLvl());
         end
