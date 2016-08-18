@@ -77,10 +77,11 @@ function onRegionEnter(player,region)
                     player:startEvent(0x008F);
                 end
             end
-        end
-    elseif (player:getCurrentMission(TOAU) == EASTERLY_WINDS) then  -- cleaned up but the original doesn't have a regionID check. is this correct?
+      elseif (player:getCurrentMission(TOAU) == EASTERLY_WINDS) then        
+
         player:startEvent(0x276E);
     end
+	end
 end;
 -----------------------------------
 -- onRegionLeave

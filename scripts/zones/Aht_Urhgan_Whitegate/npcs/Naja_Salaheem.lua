@@ -25,7 +25,7 @@ end;
 function onTrigger(player,npc)
 
 	local TOAUM3_DAY = player:getVar("TOAUM3_STARTDAY");
-	local realday = tonumber(os.date("%j")); -- %M for next minute, %j for next day
+	local realday = tonumber(os.date("%M")); -- %M for next minute, %j for next day
 	local needToZone = player:needToZone();
 	
 	if (player:getCurrentMission(TOAU) == IMMORTAL_SENTRIES) then
@@ -34,7 +34,7 @@ function onTrigger(player,npc)
 	 	end
 	elseif (player:getCurrentMission(TOAU) == PRESIDENT_SALAHEEM and player:getVar("TOAUM3") == 1) then
             player:startEvent(0x0049,0,0,0,0,0,0,0,0,0);
-	elseif (player:getCurrentMission(TOAU) == PRESIDENT_SALAHEEM and player:getVar("TOAUM3") == 2 and TOAUM3_DAY ~= realday and needToZone == true) then
+	elseif (player:getCurrentMission(TOAU) == PRESIDENT_SALAHEEM and player:getVar("TOAUM3") == 2 and TOAUM3_DAY ~= realday and needToZone == false) then
             player:startEvent(0x0BCC,0,0,0,0,0,0,0,0,0);
         elseif (player:getCurrentMission(TOAU) == KNIGHT_OF_GOLD and player:getVar("TOAUM4") == 0) then
             player:startEvent(0x0bcd,0,0,0,0,0,0,0,0,0);
@@ -92,7 +92,7 @@ function onEventFinish(player,csid,option)
 		player:setVar("TOAUM3_DAY", 0);
 	elseif (csid == 0x0049) then
 		player:setVar("TOAUM3",2);
-		player:setVar("TOAUM3_DAY", os.date("%j")); -- %M for next minute, %j for next day
+		player:setVar("TOAUM3_DAY", os.date("%M")); -- %M for next minute, %j for next day
         elseif (csid == 0x0bd4) then
             player:setVar("TOAUM7",0)
             player:completeMission(TOAU,WESTERLY_WINDS)
