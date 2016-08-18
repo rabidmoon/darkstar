@@ -90,6 +90,7 @@ protected:
 	uint32 m_schEleRecast;
 	uint32 m_schEnhRecast;
 	uint32 m_adelhiedHealRecast;
+	uint32 m_adelhiedSub;
 	uint32 m_schHealing;
 	int8 m_magicburst;
 	int8 m_sekkaStatus;

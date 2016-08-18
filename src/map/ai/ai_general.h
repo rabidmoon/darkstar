@@ -179,6 +179,7 @@ public:
 	void			SetLastSchCheck(uint32 time);
 	void			SetLastSchEnh(uint32 time);
 	void			SetLastAdelhiedHeal(uint32 time);
+	void            SetLastAdelhiedSub(uint32 time);
 	
 	
 	void			SetCurrentAction(ACTIONTYPE Action, uint16 TargetID = 0);
@@ -251,6 +252,7 @@ protected:
 	uint32			m_LastSchEleCast;
 	uint32          m_LastSchCheck;
 	uint32			m_LastAdelhiedHeal;
+	uint32          m_LastAdelhiedSub;
 	uint32			m_LastSchEnh;
 	
 	uint32			m_LastEngageStart;

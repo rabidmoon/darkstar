@@ -1336,9 +1336,10 @@ void CAICharNormal::ActionMagicStart()
         MagicStartError();
         return;
     }
+	
+	STATESTATUS status = m_PMagicState->CastSpell(GetCurrentSpell(), m_PTargetFind->getValidTarget(m_ActionTargetID, m_PSpell->getValidTarget()));
 
-    STATESTATUS status = m_PMagicState->CastSpell(GetCurrentSpell(), m_PTargetFind->getValidTarget(m_ActionTargetID, m_PSpell->getValidTarget()));
-
+	
 
     if (status == STATESTATUS_START)
     {

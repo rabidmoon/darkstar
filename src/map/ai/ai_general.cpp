@@ -112,6 +112,7 @@ void CAIGeneral::Reset()
 	m_LastSchCheck = 0;
 	m_LastSchEleCast = 0;
 	m_LastAdelhiedHeal = 0;
+	m_LastAdelhiedSub = 0;
 	m_LastSchEnh = 0;
 	
 	m_LastAyameMeditateTime = 0;
@@ -501,6 +502,10 @@ void CAIGeneral::SetLastAdelhiedHeal(uint32 time)
     m_LastAdelhiedHeal = time;
 }
 
+void CAIGeneral::SetLastAdelhiedSub(uint32 time)
+{
+    m_LastAdelhiedSub = time;
+}
 
 void CAIGeneral::SetBattleTarget(CBattleEntity* PEntity)
 {

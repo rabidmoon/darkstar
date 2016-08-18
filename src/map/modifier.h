@@ -608,6 +608,8 @@ enum MODIFIER
     MOD_FORCE_DARK_DWBONUS        = 538, // Set to 1 to force dark day/weather spell bonus/penalty. Do not have it total more than 1.
     MOD_STONESKIN_BONUS_HP        = 539, // Bonus "HP" granted to Stoneskin spell.
 
+	MOD_ELEMENTAL_CELERITY        = 840, // Quickens spells that are Elemental Magic Based
+	MOD_OCCULT_ACUMEN             = 841, // Adds % of TP based on spell cost
     // MOD_SPARE = 92, // stuff
     // MOD_SPARE = 93, // stuff
     // MOD_SPARE = 94, // stuff
