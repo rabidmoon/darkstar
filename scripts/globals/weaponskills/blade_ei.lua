@@ -31,6 +31,7 @@ function onUseWeaponSkill(player, target, wsID)
 
 	local damage, tpHits, extraHits = doMagicWeaponskill(player, target, params);
 	damage = damage * WEAPON_SKILL_POWER
+
 	return tpHits, extraHits, criticalHit, damage;
 
 end
