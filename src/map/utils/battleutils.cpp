@@ -1910,11 +1910,14 @@ namespace battleutils
             if (isBlocked)
             {
                 uint8 absorb = 100;
+				uint8 shieldm = 0;
                 if (PDefender->m_Weapons[SLOT_SUB]->IsShield())
                 {
                     if (PDefender->objtype == TYPE_PC)
                     {
-                        absorb = dsp_cap(100 - PDefender->m_Weapons[SLOT_SUB]->getShieldAbsorption(), 0, 100);
+					    shieldm = PDefender->getMod(MOD_SHIELD_MASTERY_TP);
+						shieldm = shieldm / 5;
+                        absorb = dsp_cap(100 - PDefender->m_Weapons[SLOT_SUB]->getShieldAbsorption() + shieldm, 0, 100);
 
                         //Shield Mastery
                         if ((dsp_max(damage - (PDefender->getMod(MOD_PHALANX) + PDefender->getMod(MOD_STONESKIN)), 0) > 0)
@@ -2095,7 +2098,7 @@ namespace battleutils
                     charutils::UpdateHealth((CCharEntity*)PDefender);
                 }
                 else
-                    PDefender->addTP(tpMultiplier * ((baseTp + 30) * sBlowMult * (1.0f + 0.01f * (float)PDefender->getMod(MOD_STORETP)))); //subtle blow also reduces the "+30" on mob tp gain
+                    PDefender->addTP(tpMultiplier * (((baseTp / 2) + 50)  * sBlowMult * (1.0f + 0.01f * (float)PDefender->getMod(MOD_STORETP)))); //subtle blow also reduces the "+30" on mob tp gain
             }
         }
         else if (PDefender->objtype == TYPE_MOB)
@@ -4365,6 +4368,8 @@ namespace battleutils
             int16 absorbedMP = (float)(damage * PDefender->getMod(MOD_ABSORB_DMG_TO_MP) / 100);
             if (absorbedMP > 0)
                 PDefender->addMP(absorbedMP);
+
+				
         }
 
         return damage;
@@ -4424,8 +4429,15 @@ namespace battleutils
             damage = HandleSevereDamage(PDefender, damage);
             int16 absorbedMP = (float)(damage * (PDefender->getMod(MOD_ABSORB_DMG_TO_MP) + PDefender->getMod(MOD_ABSORB_PHYSDMG_TO_MP)) / 100);
             if (absorbedMP > 0)
-                PDefender->addMP(absorbedMP);
+                
             damage = HandleFanDance(PDefender, damage);
+			PDefender->addMP(absorbedMP);
+				apAction_t Action;
+				PDefender->m_ActionList.clear();
+
+                Action.ActionTarget = PDefender;
+                Action.speceffect = SPECEFFECT_NONE;
+                Action.messageID = 152;
         }
 
         return damage;
