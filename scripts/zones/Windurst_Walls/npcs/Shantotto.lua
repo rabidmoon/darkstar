@@ -70,7 +70,7 @@ function onTrigger(player,npc)
 	local WildcatWindurst = player:getVar("WildcatWindurst");
 	local wsnm = player:getVar("RETRIBUTION");
 	local mainlvl = player:getMainLvl();
-	local skill = player:getSkillLevel(13);
+	local skill = player:getSkillLevel(12);
 	local viruscurse = player:getVar("BLMVirusCurse");
 	local lvl = player:getMainLvl();
 	local job = player:getMainJob();
