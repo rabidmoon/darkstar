@@ -157,6 +157,10 @@ local bonus = 0;
         player:addHP( 50000 );
         player:setMP( 50000 );
     end
+	
+	if (player:getMainJob() == 13) and (player:getMainLvl() == 75) and (player:getVar("NIN75") ~=1) then
+	player:setVar("NIN75",1);
+	end
 
     if (player:getVar("GMHidden") == 1) then
         player:setGMHidden(true);
