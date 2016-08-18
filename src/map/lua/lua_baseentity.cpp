@@ -812,6 +812,47 @@ inline int32 CLuaBaseEntity::addItem(lua_State *L)
     lua_pushboolean(L, (SlotID != ERROR_SLOTID));
     return 1;
 }
+
+
+int32 CLuaBaseEntity::delItem(lua_State* L)
+{
+    DSP_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
+    DSP_DEBUG_BREAK_IF(m_PBaseEntity->objtype != TYPE_PC);
+
+    DSP_DEBUG_BREAK_IF(lua_isnil(L, 1) || !lua_isnumber(L, 1));
+    auto quantity = 0;
+    auto location = 0;
+
+    if (!lua_isnil(L, 2) && lua_isnumber(L, 2))
+    {
+        quantity = (uint32)lua_tointeger(L, 2);
+    }
+
+    if (!lua_isnil(L, 3) && lua_isnumber(L, 3))
+    {
+        if ((uint32)lua_tointeger(L, 3) < MAX_CONTAINER_ID)
+        {
+            location = (uint32)lua_tointeger(L, 3);
+        }
+        else
+        {
+            ShowWarning(CL_YELLOW"Lua::delItem: Attempting to delete an item from an invalid slot. Defaulting to main inventory.\n" CL_RESET);
+        }
+    }
+
+    auto PChar = static_cast<CCharEntity*>(m_PBaseEntity);
+    auto SlotID = PChar->getStorage(location)->SearchItem(lua_tointeger(L, 1));
+    if (SlotID != ERROR_SLOTID)
+    {
+        charutils::UpdateItem(PChar, location, SlotID, -quantity);
+        lua_pushboolean(L, true);
+        PChar->pushPacket(new CInventoryFinishPacket());
+        return 1;
+    }
+    lua_pushboolean(L, false);
+    return 1;
+}
+
 //==========================================================//
 
 inline int32 CLuaBaseEntity::addTempItem(lua_State *L)
@@ -2515,6 +2556,27 @@ inline int32 CLuaBaseEntity::release(lua_State *L)
         // Message: Event skipped
         releaseType = RELEASE_SKIPPING;
         PChar->pushPacket(new CMessageSystemPacket(0, 0, 117));
+    }
+    PChar->pushPacket(new CReleasePacket(PChar, releaseType));
+    PChar->pushPacket(new CReleasePacket(PChar, RELEASE_EVENT));
+    return 0;
+}
+
+
+inline int32 CLuaBaseEntity::killcs(lua_State *L)
+{
+    DSP_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
+    DSP_DEBUG_BREAK_IF(m_PBaseEntity->objtype != TYPE_PC);
+
+    CCharEntity* PChar = (CCharEntity*)m_PBaseEntity;
+
+    RELEASE_TYPE releaseType = RELEASE_STANDARD;
+
+    if (PChar->m_event.EventID != -1)
+    {
+        // Message: Event skipped
+        releaseType = RELEASE_SKIPPING;
+        //PChar->pushPacket(new CMessageSystemPacket(0, 0, 117));
     }
     PChar->pushPacket(new CReleasePacket(PChar, releaseType));
     PChar->pushPacket(new CReleasePacket(PChar, RELEASE_EVENT));
@@ -7409,6 +7471,10 @@ inline int32 CLuaBaseEntity::injectActionPacket(lua_State* L)
         case 11: actiontype = ACTION_MOBABILITY_FINISH; break;
         case 13: actiontype = ACTION_RAISE_MENU_SELECTION; break;
         case 14: actiontype = ACTION_DANCE; break;
+		case 16: actiontype = ACTION_ROAMING; break;
+		case 17: actiontype = ACTION_ENGAGE; break;
+		case 25: actiontype = ACTION_SPAWN; break;
+		case 28: actiontype = ACTION_ITEM_USING; break;
     }
 
     apAction_t Action;
@@ -9811,6 +9877,17 @@ inline int32 CLuaBaseEntity::getActiveManeuvers(lua_State* L)
     return 1;
 }
 
+inline int32 CLuaBaseEntity::getActiveBoosts(lua_State* L)
+{
+    DSP_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
+
+    CBattleEntity* PEntity = (CBattleEntity*)m_PBaseEntity;
+
+    lua_pushinteger(L, PEntity->StatusEffectContainer->GetActiveBoosts());
+
+    return 1;
+}
+
 inline int32 CLuaBaseEntity::getEffectsCount(lua_State* L)
 {
     DSP_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
@@ -9829,6 +9906,17 @@ inline int32 CLuaBaseEntity::removeOldestManeuver(lua_State* L)
     CBattleEntity* PEntity = (CBattleEntity*)m_PBaseEntity;
 
     PEntity->StatusEffectContainer->RemoveOldestManeuver();
+
+    return 0;
+}
+
+inline int32 CLuaBaseEntity::removeOldestBoost(lua_State* L)
+{
+    DSP_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
+
+    CBattleEntity* PEntity = (CBattleEntity*)m_PBaseEntity;
+
+    PEntity->StatusEffectContainer->RemoveOldestBoost();
 
     return 0;
 }
@@ -9861,6 +9949,18 @@ inline int32 CLuaBaseEntity::removeAllManeuvers(lua_State* L)
 
     return 0;
 }
+
+inline int32 CLuaBaseEntity::removeAllBoosts(lua_State* L)
+{
+    DSP_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
+
+    CBattleEntity* PEntity = (CBattleEntity*)m_PBaseEntity;
+
+    PEntity->StatusEffectContainer->RemoveAllBoosts();
+
+    return 0;
+}
+
 
 inline int32 CLuaBaseEntity::getRecentAlly(lua_State* L)
 {
@@ -10186,6 +10286,7 @@ Lunar<CLuaBaseEntity>::Register_t CLuaBaseEntity::methods[] =
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,getMaxHP),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,getMaxMP),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,addItem),
+    LUNAR_DECLARE_METHOD(CLuaBaseEntity,delItem),	
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,addTempItem),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,getSpawnPos),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,hasItem),
@@ -10272,6 +10373,7 @@ Lunar<CLuaBaseEntity>::Register_t CLuaBaseEntity::methods[] =
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,countMaskBits),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,isMaskFull),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,release),
+    LUNAR_DECLARE_METHOD(CLuaBaseEntity,killcs),	
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,startEvent),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,startEventString),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,updateEvent),
@@ -10581,9 +10683,12 @@ Lunar<CLuaBaseEntity>::Register_t CLuaBaseEntity::methods[] =
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,unsetAggroFlag),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,instantiateMob),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,getActiveManeuvers),
+    LUNAR_DECLARE_METHOD(CLuaBaseEntity,getActiveBoosts),	
 	LUNAR_DECLARE_METHOD(CLuaBaseEntity,getEffectsCount),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,removeOldestManeuver),
+    LUNAR_DECLARE_METHOD(CLuaBaseEntity,removeOldestBoost),	
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,removeAllManeuvers),
+    LUNAR_DECLARE_METHOD(CLuaBaseEntity,removeAllBoosts),	
 	LUNAR_DECLARE_METHOD(CLuaBaseEntity,getRecentAlly),
 	LUNAR_DECLARE_METHOD(CLuaBaseEntity,spawnAlly),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,isUniqueAlly),	

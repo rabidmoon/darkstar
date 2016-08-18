@@ -235,6 +235,15 @@ int16 CBattleEntity::GetWeaponDelay(bool tp)
             WeaponDelay -= getMod(MOD_MARTIAL_ARTS) * 1000 / 60;
         }
     }
+	else if (m_Weapons[SLOT_MAIN]->getSkillType() == SKILL_STF)
+	{
+	    if (!StatusEffectContainer->HasStatusEffect(EFFECT_FOOTWORK))
+        {
+            WeaponDelay -= (getMod(MOD_MARTIAL_ARTS) * 0.25) * 1000 / 60;
+        }
+	
+	}
+	
     else if (m_Weapons[SLOT_SUB]->getDmgType() > 0 &&
              m_Weapons[SLOT_SUB]->getDmgType() < 4)
     {
@@ -321,10 +330,15 @@ uint16 CBattleEntity::GetMainWeaponDmg()
     {
         if ((m_Weapons[SLOT_MAIN]->getReqLvl() > GetMLevel()) && objtype == TYPE_PC)
         {
+		    uint16 mnkStaff = 1;
+			if ((m_Weapons[SLOT_MAIN]->getSkillType() == SKILL_STF) && ((CCharEntity*)this)->GetMJob() == JOB_MNK){
+			mnkStaff = 1 + ((getMod(MOD_MARTIAL_ARTS) / 15) / 100);
+			}
             uint16 dmg = m_Weapons[SLOT_MAIN]->getDamage();
             dmg *= GetMLevel() * 3;
             dmg /= 4;
             dmg /= m_Weapons[SLOT_MAIN]->getReqLvl();
+			dmg *= mnkStaff;
             return dmg + getMod(MOD_MAIN_DMG_RATING);
         }
         else

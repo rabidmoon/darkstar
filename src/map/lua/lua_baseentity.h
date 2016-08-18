@@ -118,6 +118,7 @@ public:
     int32 canUsePet(lua_State *L);          // check to see if character can call pet, 0 if so
 
     int32 addItem(lua_State*);              // Add item to Entity inventory (additem(itemNumber,quantity))
+	int32 delItem(lua_State*);
     int32 hasItem(lua_State*);              // Check to see if Entity has item in inventory (hasItem(itemNumber))
     int32 addTempItem(lua_State*);          // Add temp item to Entity Temp inventory
     int32 getFreeSlotsCount(lua_State*);    // Gets value of free slots in Entity inventory
@@ -197,6 +198,7 @@ public:
     int32 clearTargID(lua_State*);          // clears target of entity
 
     int32 release(lua_State*);              // Stops event
+	int32 killcs(lua_State*);               // Kills Event
     int32 startEvent(lua_State*);           // Begins Event
     int32 startEventString(lua_State*);     // Begins Event with string param (0x33 packet)
     int32 updateEvent(lua_State*);          // Updates event
@@ -553,11 +555,14 @@ public:
 
     int32 getActiveManeuvers(lua_State*);
     int32 removeOldestManeuver(lua_State*);
+	int32 getActiveBoosts(lua_State*);
+	int32 removeOldestBoost(lua_State*);
 	int32 getEffectsCount(lua_State* L);
 	int32 getRecentAlly(lua_State*);
     int32 isUniqueAlly(lua_State* L);	
 	
     int32 removeAllManeuvers(lua_State*);
+	int32 removeAllBoosts(lua_State*);
     int32 addBurden(lua_State* L);
 
     int32 setElevator(lua_State* L);

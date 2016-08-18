@@ -32,6 +32,10 @@ function onSpellCast(caster,target,spell)
             spell:setMsg(75);
         end
 	end
+	
+	if (caster:getMainJob() == 8) and (caster:getObjType() == TYPE_PC) and (caster:hasStatusEffect(EFFECT_LAST_RESORT)) then
+	target:addEnmity(caster, 180, 1280);
+	end
 
 	return EFFECT_STUN;
 end;

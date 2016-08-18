@@ -52,6 +52,12 @@ function onUseAbility(player,target,ability)
     else
         thfLevel = player:getSubLvl();
     end
+	
+	local tpreturn = 0;
+	local targtp = target:getTP();
+	local tppercent = math.random(50,80);
+	local tpreturn = (tppercent / 100) * targtp;
+	local finaltp = 0;
 
     local stealMod = player:getMod(MOD_STEAL);
 
@@ -69,6 +75,15 @@ function onUseAbility(player,target,ability)
     else
         ability:setMsg(153); -- Failed to steal
     end
+	if (targtp > 0 and player:getMainJob() == JOB_THF) then  
+	    if (targtp > 1000) then
+		tpreturn -= 50;
+		end
+		target:delTP(tpreturn);
+		player:addTP(tpreturn);
+	end	
+	    
+	
 
     return stolen;
 end;

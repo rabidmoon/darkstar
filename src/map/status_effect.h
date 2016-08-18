@@ -643,6 +643,7 @@ enum EFFECT
     EFFECT_HASTE_II                 = 580,
     EFFECT_FLURRY_II                = 581,
     EFFECT_APOGEE                   = 583,
+	EFFECT_CASCADE                  = 598,
 
     // Effect icons in packet can go from 0-767, so no custom effects should go in that range.
 
@@ -692,13 +693,14 @@ enum EFFECT
 	EFFECT_TRUST_ACCESSION          = 806,
 	EFFECT_TRUST_SUBLIMATION_ACTIVATED = 807,
 	EFFECT_TRUST_SUBLIMATION_COMPLETE = 808,
+	EFFECT_REFRESH_DOWN              = 809,
 
     // EFFECT_PLACEHOLDER              = 802 // Description
     // 802-1022
     // EFFECT_PLACEHOLDER             = 1023 // The client dat file seems to have only this many "slots", results of exceeding that are untested.
 };
 
-#define MAX_EFFECTID    809  // 768 real + 32 custom
+#define MAX_EFFECTID    810  // 768 real + 32 custom
 
 /************************************************************************
 *                                                                       *

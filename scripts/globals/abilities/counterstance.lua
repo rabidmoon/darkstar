@@ -22,8 +22,10 @@ end;
 -----------------------------------
 
 function onUseAbility(player,target,ability)
-    local power = 50;
-
+    local power = player:getActiveBoosts() * 20;
+	if (power == 0) then
+	power = 10;
+    end
     local feet = player:getEquipID(SLOT_FEET);
     if (feet == 15133 or feet == 15666) then
         power = power + 10;
@@ -31,4 +33,5 @@ function onUseAbility(player,target,ability)
 
     target:delStatusEffect(EFFECT_COUNTERSTANCE); --if not found this will do nothing
     target:addStatusEffect(EFFECT_COUNTERSTANCE,power,0,300);
+	player:removeAllBoosts();
 end;

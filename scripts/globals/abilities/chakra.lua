@@ -24,6 +24,11 @@ function onUseAbility(player,target,ability)
     local hp = player:getHP();
     local vit = player:getStat(MOD_VIT);
     local multi = 2;
+	local boost = target:getActiveBoosts();
+	boost = boost + 1;
+	if (boost == 0) then
+	boost = 1;
+	end
     local merits = player:getMerit(MERIT_INVIGORATE);
     local body = player:getEquipID(SLOT_BODY);
     local hand = player:getEquipID(SLOT_HANDS);
@@ -50,7 +55,7 @@ function onUseAbility(player,target,ability)
         multi = multi + 0.6;
     end
 
-    local recover = (multi * vit);
+    local recover = (multi * vit * boost);
     player:setHP((hp + recover));
 
     if (merits >= 1) then
@@ -59,6 +64,7 @@ function onUseAbility(player,target,ability)
         end
         player:addStatusEffect(EFFECT_REGEN,10,0,merits,0,0,1);
     end
-
+    player:removeAllBoosts();
     return recover;
+	
 end;

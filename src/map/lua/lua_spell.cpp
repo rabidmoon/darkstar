@@ -117,6 +117,7 @@ inline int32 CLuaSpell::setMPCost(lua_State* L)
     return 0;
 }
 
+
 inline int32 CLuaSpell::castTime(lua_State* L)
 {
     DSP_DEBUG_BREAK_IF(m_PLuaSpell == nullptr);
@@ -199,6 +200,13 @@ inline int32 CLuaSpell::getFlag(lua_State *L)
     return 1;
 }
 
+inline int32 CLuaSpell::getMPCost(lua_State *L)
+{
+	DSP_DEBUG_BREAK_IF(m_PLuaSpell == NULL);
+	lua_pushinteger(L,m_PLuaSpell->getMPCost());
+	return 1;
+}
+	
 /************************************************************************
 *																		*
 *  Инициализация методов в lua											*
@@ -215,6 +223,7 @@ Lunar<CLuaSpell>::Register_t CLuaSpell::methods[] =
     LUNAR_DECLARE_METHOD(CLuaSpell,setAnimation),
     LUNAR_DECLARE_METHOD(CLuaSpell,setMPCost),
     LUNAR_DECLARE_METHOD(CLuaSpell,isAoE),
+	LUNAR_DECLARE_METHOD(CLuaSpell, getMPCost),	
     LUNAR_DECLARE_METHOD(CLuaSpell,tookEffect),
     LUNAR_DECLARE_METHOD(CLuaSpell,getMagicBurstMessage),
     LUNAR_DECLARE_METHOD(CLuaSpell,getElement),

@@ -23,12 +23,19 @@ end;
 
 function onUseAbility(player,target,ability)
     local boost = player:getStatusEffect(EFFECT_BOOST);
+	local lvl = player:getMainLvl();
+	local rand = math.random(25,50);
+	local rand = (rand / 100) + 1;
     local multiplier = 1.0;
     if (boost ~= nil) then
-        multiplier = (boost:getPower()/100) * 4; --power is the raw % atk boost
+        multiplier = player:getActiveBoosts();
+		multiplier = multiplier + 1;
     end
+	
+	local slow = multiplier * 8;
+	local duration = multiplier * 5;
     
-    local dmg = math.floor(player:getStat(MOD_MND)*(0.5+(math.random()/2))) * multiplier;
+    local dmg = math.floor((player:getStat(MOD_MND) + (lvl * 0.66)) * multiplier);
 
     dmg = utils.stoneskin(target, dmg);
     
@@ -36,6 +43,7 @@ function onUseAbility(player,target,ability)
     
     target:updateClaim(player);
     target:updateEnmityFromDamage(player,dmg);
-    player:delStatusEffect(EFFECT_BOOST);
+    player:removeAllBoosts();
+	player:addStatusEffect(EFFECT_SLOW,duration,0,15)
     return dmg;
 end;

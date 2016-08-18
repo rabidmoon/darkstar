@@ -135,6 +135,12 @@ CSpell* CMagicState::GetSpell()
 
 STATESTATUS CMagicState::Update(uint32 tick)
 {
+	if (m_PTarget == nullptr)
+	{
+		return STATESTATUS_INTERRUPT;
+	}
+	
+	
 	if(CState::Update(tick) == STATESTATUS_ERROR || !CheckValidTarget(m_PTarget))
 	{
 		return STATESTATUS_ERROR;
@@ -260,7 +266,16 @@ uint32 CMagicState::CalculateCastTime(CSpell* PSpell)
         cast = cast * (1.0f - ((songcasting > 50 ? 50 : songcasting) / 100.0f));
     }
 
-    int16 fastCast = dsp_cap(m_PEntity->getMod(MOD_FASTCAST), -100, 50);
+    int16 fastCast = dsp_cap(m_PEntity->getMod(MOD_FASTCAST), -100, 80);
+	if (PSpell->getSpellGroup() == SPELLGROUP_BLACK) { // If Black Magic spells are cast
+	    fastCast += m_PEntity->getMod(MOD_ELEMENTAL_CELERITY);
+		fastCast = dsp_cap(fastCast, -100, 80);
+		//ShowWarning(CL_GREEN"ELE CELERITY TRIGGERED! \n" CL_RESET);
+		//printf("Fast Cast is: %d \n", fastCast);
+	}	
+	
+	
+	
     if (PSpell->isCure()) // Cure cast time reductions
     {
         fastCast += m_PEntity->getMod(MOD_CURE_CAST_TIME);

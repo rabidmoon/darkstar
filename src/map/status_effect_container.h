@@ -88,6 +88,10 @@ public:
     uint8 GetActiveManeuvers();
     void RemoveOldestManeuver();
     void RemoveAllManeuvers();
+	
+	uint8 GetActiveBoosts();
+	void RemoveOldestBoost();
+	void RemoveAllBoosts();
 
     void WakeUp(); // remove sleep effects
     bool IsAsleep();

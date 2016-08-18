@@ -12,8 +12,13 @@ require("scripts/globals/status");
 
 function onEffectGain(target,effect)
 	target:addMod(MOD_EVA,effect:getPower());
-	target:addMod(MOD_COUNTER,10);
-	target:addMod(MOD_GUARD,10);
+	local activeboost = target:getVar("MNKBoostNumberDodge");
+    if (activeboost >= 1) then
+    local gboost = activeboost * 4;
+    local cboost = activeboost * 3;
+	target:addMod(MOD_COUNTER,cboost);
+	target:addMod(MOD_GUARD,gboost);
+	end
 end;
 
 -----------------------------------
@@ -29,6 +34,12 @@ end;
 
 function onEffectLose(target,effect)
 	target:delMod(MOD_EVA,effect:getPower());
-	target:delMod(MOD_COUNTER,10);
-	target:delMod(MOD_GUARD,10);
+	local activeboost = target:getVar("MNKBoostNumberDodge");
+    if (activeboost >= 1) then
+    local gboost = activeboost * 4;
+    local cboost = activeboost * 3;
+	target:delMod(MOD_COUNTER,cboost);
+	target:delMod(MOD_GUARD,gboost);
+    end
+	target:setVar("MNKBoostNumberDodge",0);
 end;

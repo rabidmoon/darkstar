@@ -149,6 +149,7 @@ INSERT INTO `traits` VALUES ('10','auto refresh','4','30','1','369','1',null); -
 INSERT INTO `traits` VALUES ('10','auto refresh','5','30','1','369','1',null); -- RDM Auto Ref
 INSERT INTO `traits` VALUES ('10','auto refresh','21','25','1','369','1',null); -- GEO Auto Ref
 INSERT INTO `traits` VALUES ('10','auto refresh','22','35','1','369','1','SOA'); -- RUN Auto Ref
+INSERT INTO `traits` VALUES ('10','auto refresh','8','30','1','369','1','SOA'); -- DRK Auto Ref
 INSERT INTO `traits` VALUES ('10','auto refresh','7','95','2','369','2',null);  -- PLD Auto Ref II
 INSERT INTO `traits` VALUES ('10','auto refresh','3','90','2','369','2',null); -- WHM Auto Ref II
 INSERT INTO `traits` VALUES ('10','auto refresh','4','90','2','369','2',null); -- BLM Auto Ref II
@@ -255,10 +256,10 @@ INSERT INTO `traits` VALUES ('24','clear mind','20','96','6','71','18','ABYSSEA'
 INSERT INTO `traits` VALUES ('24','clear mind','20','96','6','295','3','ABYSSEA');
 INSERT INTO `traits` VALUES ('25','shield mastery','5','87','10','485','1',null);
 INSERT INTO `traits` VALUES ('25','shield mastery','5','97','20','485','2',null);
-INSERT INTO `traits` VALUES ('25','shield mastery','7','25','10','485','1',null);
-INSERT INTO `traits` VALUES ('25','shield mastery','7','50','20','485','2',null);
-INSERT INTO `traits` VALUES ('25','shield mastery','7','75','30','485','3',null);
-INSERT INTO `traits` VALUES ('25','shield mastery','7','96','40','485','4','ABYSSEA');
+INSERT INTO `traits` VALUES ('25','shield mastery','7','15','10','485','1',null);
+INSERT INTO `traits` VALUES ('25','shield mastery','7','35','20','485','2',null);
+INSERT INTO `traits` VALUES ('25','shield mastery','7','55','30','485','3',null);
+INSERT INTO `traits` VALUES ('25','shield mastery','7','75','40','485','4','ABYSSEA');
 INSERT INTO `traits` VALUES ('32','beast killer','9','70','1','230','8',null);
 INSERT INTO `traits` VALUES ('33','plantoid killer','9','60','1','229','8',null);
 INSERT INTO `traits` VALUES ('34','vermin killer','9','10','1','224','8',null);
@@ -434,18 +435,29 @@ INSERT INTO `traits` VALUES ('106','skillchain bonus','19','58','2','174','12','
 INSERT INTO `traits` VALUES ('106','skillchain bonus','19','71','3','174','16','ABYSSEA');
 INSERT INTO `traits` VALUES ('106','skillchain bonus','19','84','4','174','20','ABYSSEA');
 INSERT INTO `traits` VALUES ('106','skillchain bonus','19','97','4','174','23','ABYSSEA');
-INSERT INTO `traits` VALUES ('110','mag. burst bonus','4','45','1','487','5','ABYSSEA');
-INSERT INTO `traits` VALUES ('110','mag. burst bonus','4','58','2','487','7','ABYSSEA');
-INSERT INTO `traits` VALUES ('110','mag. burst bonus','4','71','3','487','9','ABYSSEA');
-INSERT INTO `traits` VALUES ('110','mag. burst bonus','4','84','4','487','11','ABYSSEA');
-INSERT INTO `traits` VALUES ('110','mag. burst bonus','4','97','5','487','13','ABYSSEA');
-INSERT INTO `traits` VALUES ('110','mag. burst bonus','5','85','1','487','5','ABYSSEA');
-INSERT INTO `traits` VALUES ('110','mag. burst bonus','5','95','2','487','7','ABYSSEA');
+INSERT INTO `traits` VALUES ('109','occult acumen','4','25','1','841','25',null);  -- BLM Occult Acumen
+INSERT INTO `traits` VALUES ('109','occult acumen','4','50','2','841','50',null);  -- BLM Occult Acumen
+INSERT INTO `traits` VALUES ('109','occult acumen','4','75','3','841','75',null);  -- BLM Occult Acumen
+INSERT INTO `traits` VALUES ('109','occult acumen','8','15','1','841','25',null);  -- DRK Occult Acumen
+INSERT INTO `traits` VALUES ('109','occult acumen','8','33','2','841','50',null);  -- DRK Occult Acumen
+INSERT INTO `traits` VALUES ('109','occult acumen','8','57','3','841','75',null);  -- DRK Occult Acumen
+INSERT INTO `traits` VALUES ('109','occult acumen','8','71','4','841','100',null);  -- DRK Occult Acumen
+INSERT INTO `traits` VALUES ('110','mag. burst bonus','4','15','1','487','5','ABYSSEA');
+INSERT INTO `traits` VALUES ('110','mag. burst bonus','4','35','2','487','8','ABYSSEA');
+INSERT INTO `traits` VALUES ('110','mag. burst bonus','4','50','3','487','12','ABYSSEA');
+INSERT INTO `traits` VALUES ('110','mag. burst bonus','4','75','4','487','15','ABYSSEA');
+INSERT INTO `traits` VALUES ('110','mag. burst bonus','4','97','5','487','18','ABYSSEA');
+INSERT INTO `traits` VALUES ('110','mag. burst bonus','5','30','1','487','5','ABYSSEA');
+INSERT INTO `traits` VALUES ('110','mag. burst bonus','5','45','2','487','8','ABYSSEA');
 INSERT INTO `traits` VALUES ('110','mag. burst bonus','13','80','1','487','5','ABYSSEA');
 INSERT INTO `traits` VALUES ('110','mag. burst bonus','13','90','2','487','7','ABYSSEA');
 INSERT INTO `traits` VALUES ('110','mag. burst bonus','20','79','1','487','5','ABYSSEA');
 INSERT INTO `traits` VALUES ('110','mag. burst bonus','20','89','2','487','7','ABYSSEA');
 INSERT INTO `traits` VALUES ('110','mag. burst bonus','20','99','3','487','9','ABYSSEA');
+INSERT INTO `traits` VALUES ('112','elemental celerity','4','30','1','840','10',null);  -- BLM Elemental Celerity
+INSERT INTO `traits` VALUES ('112','elemental celerity','4','45','2','840','15',null);  -- BLM Elemental Celerity
+INSERT INTO `traits` VALUES ('112','elemental celerity','4','60','3','840','20',null);  -- BLM Elemental Celerity
+INSERT INTO `traits` VALUES ('112','elemental celerity','4','75','4','840','25',null);  -- BLM Elemental Celerity
 INSERT INTO `traits` VALUES ('114','tranquil heart','3','21','1','0','0','ABYSSEA');
 INSERT INTO `traits` VALUES ('114','tranquil heart','5','26','1','0','0','ABYSSEA');
 INSERT INTO `traits` VALUES ('114','tranquil heart','20','30','1','0','0','ABYSSEA');
