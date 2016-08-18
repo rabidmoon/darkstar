@@ -76,6 +76,48 @@ require("scripts/globals/utils")
 SOFT_CAP = 60; --guesstimated
 HARD_CAP = 120; --guesstimated
 
+function calculateCascade(player, spell)
+	local currenttp = player:getTP();
+	if (player:hasStatusEffect(EFFECT_CASCADE)) then
+	bonus = ((currenttp * 0.10) / 100) + 1;
+	player:setTP(0);
+	player:delStatusEffect(EFFECT_CASCADE);
+	else
+	bonus = 1;
+	end
+end
+	
+	
+
+
+function calculateAcumen(player, spell)
+	local occult = player:getMod(MOD_OCCULT_ACUMEN);
+	if (occult == 0) then 
+	    print("No Occult Found!!!")
+		return
+	end
+	local mp = spell:getMPCost();
+	local spelltime = spell:castTime();
+	local level = player:getMainLvl();
+	local tpreturn = 0;
+	
+    if (mp > 91) then
+	tpreturn = ((occult / 100) * (mp / 10));
+	elseif (mp > 38) then
+	tpreturn = ((occult / 100) * (mp / 6));	
+	elseif (mp > 17) then
+	tpreturn = ((occult / 100) * (mp / 4));		
+	elseif (mp > 1) then
+	tpreturn = ((occult / 100) * (mp / 2)) + 1;
+    end
+    print(tpreturn);
+
+	
+	player:addTP(tpreturn);
+end	
+
+
+
 function calculateMagicDamage(V,M,player,spell,target,skilltype,atttype,hasMultipleTargetReduction)
 
     local dint = player:getStat(atttype) - target:getStat(atttype);
@@ -1166,6 +1208,12 @@ function doElementalNuke(caster, spell, target, spellParams)
 
     --add in final adjustments
     DMG = finalMagicAdjustments(caster, target, spell, DMG);
+	
+	calculateAcumen(caster,spell);
+	
+	calculateCascade(caster,spell);
+	
+	DMG = DMG * bonus;
 
     return DMG;
 end
@@ -1221,6 +1269,7 @@ function doDivineBanishNuke(V,M,caster,spell,target,hasMultipleTargetReduction,r
     dmg = handleAfflatusMisery(caster, spell, dmg);
     --add in final adjustments
     dmg = finalMagicAdjustments(caster,target,spell,dmg);
+	
     return dmg;
 end
 

@@ -70,7 +70,7 @@ INSERT INTO `abilities` VALUES ('19', 'provoke', '1', '5', '4', '30', '5', '0', 
 INSERT INTO `abilities` VALUES ('20', 'focus', '2', '25', '1', '300', '13', '120', '0', '4', '20.0', '0', '1', '300', '448', '0',null);
 INSERT INTO `abilities` VALUES ('21', 'dodge', '2', '15', '1', '300', '14', '121', '0', '5', '20.0', '0', '1', '300', '450', '0',null);
 INSERT INTO `abilities` VALUES ('22', 'chakra', '2', '35', '1', '300', '15', '102', '0', '6', '20.0', '0', '1', '300', '452', '0',null);
-INSERT INTO `abilities` VALUES ('23', 'boost', '2', '5', '1', '15', '16', '116', '0', '7', '20.0', '0', '1', '300', '0', '0',null);
+INSERT INTO `abilities` VALUES ('23', 'boost', '2', '5', '1', '15', '16', '116', '0', '7', '20.0', '0', '1', '120', '0', '0',null);
 INSERT INTO `abilities` VALUES ('24', 'counterstance', '2', '45', '1', '300', '17', '0', '0', '8', '20.0', '0', '1', '900', '0', '0',null);
 INSERT INTO `abilities` VALUES ('25', 'steal', '6', '5', '4', '300', '60', '125', '0', '181', '4.4', '0', '1', '300', '0', '0',null);
 INSERT INTO `abilities` VALUES ('26', 'flee', '6', '25', '1', '300', '62', '126', '0', '9', '20.0', '0', '1', '80', '704', '0',null);
@@ -80,9 +80,9 @@ INSERT INTO `abilities` VALUES ('29', 'mug', '6', '35', '4', '900', '65', '129',
 INSERT INTO `abilities` VALUES ('30', 'shield_bash', '7', '15', '4', '180', '73', '0', '0', '185', '4.4', '0', '1', '900', '768', '0',null);
 INSERT INTO `abilities` VALUES ('31', 'holy_circle', '7', '5', '1', '600', '74', '0', '0', '29', '20.0', '1', '1', '20', '770', '0',null);
 INSERT INTO `abilities` VALUES ('32', 'sentinel', '7', '30', '1', '300', '75', '0', '0', '11', '20.0', '0', '1', '1800', '772', '0',null);
-INSERT INTO `abilities` VALUES ('33', 'souleater', '8', '30', '1', '360', '85', '0', '0', '20', '20.0', '0', '1', '1300', '832', '0',null);
+INSERT INTO `abilities` VALUES ('33', 'souleater', '8', '45', '1', '360', '85', '0', '0', '20', '20.0', '0', '1', '1300', '832', '0',null);
 INSERT INTO `abilities` VALUES ('34', 'arcane_circle', '8', '5', '1', '600', '86', '0', '0', '30', '20.0', '1', '1', '20', '834', '0',null);
-INSERT INTO `abilities` VALUES ('35', 'last_resort', '8', '15', '1', '300', '87', '0', '0', '12', '20.0', '0', '1', '1300', '836', '0',null);
+INSERT INTO `abilities` VALUES ('35', 'last_resort', '8', '30', '1', '300', '87', '0', '0', '12', '20.0', '0', '1', '1300', '836', '0',null);
 INSERT INTO `abilities` VALUES ('36', 'charm', '9', '1', '4', '15', '97', '0', '0', '13', '18.0', '0', '320', '0', '0', '0',null);
 INSERT INTO `abilities` VALUES ('37', 'gauge', '9', '10', '4', '30', '98', '0', '0', '14', '23.0', '0', '0', '0', '0', '0',null);
 INSERT INTO `abilities` VALUES ('38', 'tame', '9', '30', '4', '600', '99', '0', '0', '15', '18.0', '0', '0', '0', '904', '0',null);
@@ -108,7 +108,7 @@ INSERT INTO `abilities` VALUES ('57', 'stay', '9', '15', '1', '5', '101', '0', '
 INSERT INTO `abilities` VALUES ('58', 'divine_seal', '3', '15', '1', '600', '26', '0', '0', '81', '20.0', '0', '1', '80', '512', '0',null);
 INSERT INTO `abilities` VALUES ('59', 'elemental_seal', '4', '15', '1', '600', '38', '0', '0', '80', '20.0', '0', '1', '80', '576', '0',null);
 INSERT INTO `abilities` VALUES ('60', 'trick_attack', '6', '30', '1', '60', '66', '0', '0', '82', '20.0', '0', '0', '0', '710', '0',null);
-INSERT INTO `abilities` VALUES ('61', 'weapon_bash', '8', '20', '4', '180', '88', '0', '0', '201', '4.4', '0', '1', '900', '0', '0',null);
+INSERT INTO `abilities` VALUES ('61', 'weapon_bash', '8', '15', '4', '180', '88', '0', '0', '201', '4.4', '0', '1', '900', '0', '0',null);
 INSERT INTO `abilities` VALUES ('62', 'reward', '9', '12', '1', '90', '103', '0', '0', '84', '18.0', '0', '0', '0', '898', '0',null);
 INSERT INTO `abilities` VALUES ('63', 'cover', '7', '35', '2', '180', '76', '0', '0', '86', '20.0', '0', '0', '35', '0', '0',null);
 INSERT INTO `abilities` VALUES ('64', 'spirit_link', '14', '25', '1', '90', '162', '0', '0', '94', '20.0', '0', '0', '0', '1224', '4',null); -- ROTZ
@@ -280,6 +280,7 @@ INSERT INTO `abilities` VALUES ('259', 'spontaneity', '5', '95', '3', '600', '37
 INSERT INTO `abilities` VALUES ('267', 'tenuto', '10', '83', '1', '5', '47', '0', '0', '257', '20.0', '0', '0', '0', '0', '0','ABYSSEA');
 INSERT INTO `abilities` VALUES ('268', 'marcato', '10', '95', '1', '600', '48', '0', '0', '251', '20.0', '0', '0', '0', '0', '0','ABYSSEA');
 INSERT INTO `abilities` VALUES ('275', 'issekigan', '13', '95', '1', '300', '57', '0', '0', '246', '20.0', '0', '1', '0', '0', '0','ABYSSEA');
+INSERT INTO `abilities` VALUES ('294', 'deus_ex_automata', '18', '5', '1', '300', '210', '0', '0', '333', '18.0', '0', '1', '0', '0', '0','TOAU');
 INSERT INTO `abilities` VALUES ('304', 'konzen-ittai', '12', '65', '4', '180', '132', '529', '0', '36', '4.4', '0', '1', '300', '0', '0','ABYSSEA');
 INSERT INTO `abilities` VALUES ('311', 'stymie', '5', '96', '1', '3600', '254', '0', '0', '275', '20.0', '0', '1', '0', '0', '0','SOA');
 INSERT INTO `abilities` VALUES ('319', 'mikage', '13', '96', '1', '3600', '254', '0', '0', '283', '20.0', '0', '1', '0', '0', '0','SOA');
@@ -314,7 +315,7 @@ INSERT INTO `abilities` VALUES ('364', 'Effusion', '22', '1', '1', '0', '0', '0'
 
 INSERT INTO `abilities` VALUES ('367', 'Vivacious_pulse', '22', '1', '1', '300', '0', '0', '0', '327', '20.0', '0', '1', '300', '0', '0',null);
 INSERT INTO `abilities` VALUES ('369', 'apogee', '15', '70', '1', '180', '108', '0', '0', '333', '20.0', '0', '1', '0', '0', '0',null);
-
+INSERT INTO `abilities` VALUES ('372', 'cascade', '4', '45', '1', '60', '0', '0', '0', '176', '20.0', '0', '1', '80', '0', '0',null);
 -- run
 
 INSERT INTO `abilities` VALUES ('496', 'healing_ruby', '15', '1', '3', '60', '174', '0', '0', '6', '18.0', '0', '1', '60', '0', '0',null); -- ROTZ
@@ -393,7 +394,10 @@ INSERT INTO `abilities` VALUES ('643', 'ultimate_terror', '15', '37', '4', '60',
 INSERT INTO `abilities` VALUES ('644', 'noctoshield', '15', '49', '1', '60', '174', '0', '0', '92', '18.0', '0', '1', '60', '0', '0',null); -- ROTZ
 INSERT INTO `abilities` VALUES ('645', 'dream_shroud', '15', '56', '1', '60', '174', '0', '0', '121', '18.0', '0', '1', '60', '0', '0',null); -- ROTZ
 INSERT INTO `abilities` VALUES ('646', 'nether_blast', '15', '65', '4', '60', '173', '0', '0', '109', '18.0', '0', '1', '60', '0', '0',null); -- ROTZ
-INSERT INTO `abilities` VALUES ('822', 'deus_ex_automata', '18', '5', '1', '300', '210', '0', '0', '333', '18.0', '0', '1', '0', '0', '0','TOAU');
+INSERT INTO `abilities` VALUES ('1456', 'howl', '1', '40', '1', '300', '1', '115', '0', '211', '20.0', '0', '1', '80', '384', '0',null);
+
+
+
 
 
 -- For old school server simply comment out the matching 1 hour abilities above, and uncomment the 2hrs below.

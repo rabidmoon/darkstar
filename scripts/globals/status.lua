@@ -696,6 +696,7 @@ EFFECT_COMMITMENT               = 579
 EFFECT_HASTE_II                 = 580
 EFFECT_FLURRY_II                = 581
 EFFECT_APOGEE                   = 583
+EFFECT_CASCADE   			    = 598
 
 -- Effect icons in packet can go from 0-767, so no custom effects should go in that range.
 
@@ -745,6 +746,7 @@ EFFECT_TRUST_EBULLIENCE         = 805
 EFFECT_TRUST_ACCESSION          = 806
 EFFECT_TRUST_SUBLIMATION_ACTIVATED = 807
 EFFECT_TRUST_SUBLIMATION_COMPLETE = 808
+EFFECT_REFRESH_DOWN               = 809
 -- EFFECT_PLACEHOLDER              = 802 -- Description
 -- 802-1022
 -- EFFECT_PLACEHOLDER             = 1023 -- The client dat file seems to have only this many "slots", results of exceeding that are untested.
@@ -1293,6 +1295,8 @@ MOD_AUGMENTS_SA        = 526 -- Adds Critical Attack Bonus to Sneak Attack, perc
 MOD_AUGMENTS_TA        = 527 -- Adds Critical Attack Bonus to Trick Attack, percentage based.
 MOD_JUG_LEVEL_RANGE    = 564 -- Decreases the level range of spawned jug pets. Maxes out at 2.
 
+MOD_ELEMENTAL_CELERITY = 840
+MOD_OCCULT_ACUMEN = 841
 
 -- The entire mod list is in desperate need of kind of some organizing.
 -- The spares take care of finding the next ID to use so long as we don't forget to list IDs that have been freed up by refactoring.

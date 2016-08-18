@@ -84,7 +84,7 @@ INSERT INTO `status_effects` VALUES (41,'shell',33,0,0,0,0,0,7,0);
 INSERT INTO `status_effects` VALUES (42,'regen',33,0,0,0,0,0,7,0);
 INSERT INTO `status_effects` VALUES (43,'refresh',33,0,0,0,0,0,7,0);
 INSERT INTO `status_effects` VALUES (44,'mighty_strikes',32,0,0,0,0,0,1,0);
-INSERT INTO `status_effects` VALUES (45,'boost',37,0,0,0,0,0,1,0);
+INSERT INTO `status_effects` VALUES (45,'boost',32,0,0,4,0,0,0,0);
 INSERT INTO `status_effects` VALUES (46,'hundred_fists',32,0,0,0,0,0,6,0);
 INSERT INTO `status_effects` VALUES (47,'manafont',32,0,0,0,0,0,3,0);
 INSERT INTO `status_effects` VALUES (48,'chainspell',32,0,0,0,0,0,6,0);
@@ -607,6 +607,7 @@ INSERT INTO `status_effects` VALUES (579,'commitment',32,0,0,0,0,0,0,0);
 INSERT INTO `status_effects` VALUES (580,'haste_ii',32,0,0,0,0,0,0,0);
 INSERT INTO `status_effects` VALUES (581,'flurry_ii',32,0,0,0,0,0,0,0);
 INSERT INTO `status_effects` VALUES (583,'apogee',2097185,0,0,0,0,0,0,0);
+INSERT INTO `status_effects` VALUES (598,'cascade',32,0,0,0,0,0,3,0);
 
 
 INSERT INTO `status_effects` VALUES (768,'abyssea_str',256,0,0,0,0,0,1,0);
@@ -650,6 +651,7 @@ INSERT INTO `status_effects` VALUES (805,'trust_ebullience',32,0,0,0,0,0,0,0);
 INSERT INTO `status_effects` VALUES (806,'trust_accession',32,0,0,0,0,0,0,0);
 INSERT INTO `status_effects` VALUES (807,'trust_sublimation_activated',32,0,0,0,0,0,0,0);
 INSERT INTO `status_effects` VALUES (808,'trust_sublimation_complete',32,0,0,0,0,0,0,0);
+INSERT INTO `status_effects` VALUES (809,'refresh_down',32,0,0,0,0,0,0,0);
 /*!40000 ALTER TABLE `status_effects` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
