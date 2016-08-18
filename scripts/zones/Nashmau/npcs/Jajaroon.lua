@@ -33,10 +33,10 @@ stock = {0x0880,48,		-- Fire Card
 	 0x0886,48,		-- Light Card
 	 0x0887,48,		-- Dark Card
 	 0x16ee,10000,		-- Trump Card Case
-	 0x1570,35200,		-- Samurai Die
+	 0x1570,10200,		-- Samurai Die
 	 0x1571,600,		-- Ninja Die
-	 0x1572,82500,		-- Dragoon Die
-	 0x1573,40000,		-- Summoner Die
+	 0x1572,8250,		-- Dragoon Die
+	 0x1573,9000,		-- Summoner Die
 	 0x1574,3525,		-- Blue Mage Die
 	 0x1575,316,		-- Corsar Die
 	 0x1576,9216}		-- Puppetmaster Die
