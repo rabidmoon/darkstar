@@ -18,6 +18,8 @@ function onPetAbility(target, pet, skill, master)
    -- 1 for first merit
    -- 0.25 for each merit after the first
    -- TODO: 0.1 per merit for augmented AF2 (10663 *w/ augment*)
+   local wyvlevel = pet:getMainLvl();
+   local dur = (wylevel / 3.75) + 10;
    local deep = 1;
    if (pet:hasStatusEffect(EFFECT_MAGIC_ATK_BOOST) == true) then
       deep = deep + 1 + (master:getMerit(MERIT_DEEP_BREATHING)-1)*0.25;
@@ -30,6 +32,7 @@ function onPetAbility(target, pet, skill, master)
    dmgmod = (dmgmod * (1+gear))*deep;
 
 	local dmg = MobFinalAdjustments(dmgmod,pet,skill,target,MOBSKILL_MAGICAL,MOBPARAM_WIND,MOBPARAM_IGNORE_SHADOWS);
+	target:addStatusEffect(EFFECT_SILENCE, 1, 0 , dur);
 	target:delHP(dmg);
 	return dmg;
 end

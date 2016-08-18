@@ -26,7 +26,7 @@ function onPetAbility(target, pet, skill)
 	local agi_wsc = 0;
 	local vit_wsc = 0;
 	local mnd_wsc = 0;
-    skill:setSkillchain(198);
+    skill:setSkillchain(168);
 	
 	local randcrit = math.random(1,4);
 	local crit = (1 + (randcrit/100));

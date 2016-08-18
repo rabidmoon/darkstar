@@ -21,10 +21,10 @@ function onEffectTick(target,effect)
 	level = target:getMainLvl();
 
 	local basemp = math.floor((level - 15)/10);
-	-- local bonus = target:getMod(MOD_SUBLIMATION_BONUS);
+	local bonus = target:getMod(MOD_SUBLIMATION_BONUS);
 	
 	local dmg = 2; -- Add Bonus into petutils later on
-	-- local dmg = 2 + bonus;
+	local dmg = 2 + bonus;
 	
 	local store = effect:getPower() + basemp;
 	

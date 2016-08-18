@@ -11,6 +11,7 @@ require("scripts/globals/status");
 -----------------------------------
 
 function onEffectGain(target,effect)
+    
     --reduce HP and MP by the power amount. Add 100% slow
     --NOTE: The power amount dictates the amount to REDUCE MAX VALUES BY. E.g. Power=75 means 'reduce max hp/mp by 75%'
     target:addMod(MOD_HPP,-75);
@@ -25,6 +26,8 @@ function onEffectGain(target,effect)
         target:addMod(MOD_RACCP,-100);
         target:addMod(MOD_MATT,-999);
     end
+	
+	
 end;
 
 -----------------------------------
