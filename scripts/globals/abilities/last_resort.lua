@@ -14,6 +14,9 @@ require("scripts/globals/status");
 -----------------------------------
 
 function onAbilityCheck(player,target,ability)
+    local level = player:getMainLvl();
+	
+	player:setVar("LastResortLevelMod",level);
 	return 0,0;
 end;
 
@@ -22,5 +25,14 @@ end;
 -----------------------------------
 
 function onUseAbility(player,target,ability)
-    player:addStatusEffect(EFFECT_LAST_RESORT,player:getMerit(MERIT_DESPERATE_BLOWS),0,180);
+    
+	local lspower = player:getVar("LastResortLevelMod");
+	local mppower = (lspower / 15 + 1);
+
+	player:PrintToPlayer(mppower);
+	
+
+
+    player:addStatusEffect(EFFECT_LAST_RESORT,player:getMerit(MERIT_DESPERATE_BLOWS),3,180);
+	
 end;
