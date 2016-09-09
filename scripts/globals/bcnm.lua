@@ -28,7 +28,7 @@ itemid_bcnmid_map = {6, {0, 0}, -- Bearclaw_Pinnacle
                    140, {1551, 34, 1552, 35, 1552, 36}, -- Ghelsba Outpost
                    144, {1166, 68, 1178, 81, 1553, 76, 1180, 82, 1130, 79, 1552, 73}, -- Waughroon Shrine
                    146, {1553, 107, 1551, 105, 1177, 100}, -- Balgas Dias
-                   163, {1130, 129}, -- Sacrificial Chamber
+                   163, {1130, 129, 1130, 130}, -- Sacrificial Chamber
                    168, {0, 0}, -- Chamber of Oracles
                    170, {0, 0}, -- Full Moon Fountain
                    180, {1550, 293}, -- LaLoff Amphitheater
@@ -107,7 +107,7 @@ function TradeBCNM(player, zone, trade, npc)
     if (player:hasStatusEffect(EFFECT_BATTLEFIELD)) then -- cant start a new bc
         player:messageBasic(94, 0, 0);
         return false;
-    elseif (player:hasWornItem(trade:getItem())) then -- If already used orb or testimony
+    elseif (player:hasWornItem(trade:getItemId())) then -- If already used orb or testimony
         player:messageBasic(56, 0, 0); -- i need correct dialog
         return false;
     end
@@ -371,7 +371,7 @@ function CheckMaatFights(player, zone, trade, npc)
     -- check for maat fights (one maat fight per zone in the db, but >1 mask entries depending on job, so we
     -- need to choose the right one depending on the players job, and make sure the right testimony is traded,
     -- and make sure the level is right!
-    local itemid = trade:getItem();
+    local itemid = trade:getItemId();
     local job = player:getMainJob();
     local lvl = player:getMainLvl();
 
@@ -458,8 +458,8 @@ function ItemToBCNMID(player, zone, trade)
     for zoneindex = 1, table.getn(itemid_bcnmid_map), 2 do
         if (zone==itemid_bcnmid_map[zoneindex]) then -- matched zone
             for bcnmindex = 1, table.getn(itemid_bcnmid_map[zoneindex + 1]), 2 do -- loop bcnms in this zone
-                if (trade:getItem() == itemid_bcnmid_map[zoneindex+1][bcnmindex]) then
-                    local item = trade:getItem();
+                if (trade:getItemId()==itemid_bcnmid_map[zoneindex+1][bcnmindex]) then
+                    local item = trade:getItemId();
                     local questTimelineOK = 0;
 
                     -- Job/lvl condition for smn battle lvl20
