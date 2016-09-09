@@ -337,9 +337,9 @@ bool CBattlefield::InsertEntity(CBaseEntity* PEntity, bool inBattlefield, BATTLE
     auto entity = dynamic_cast<CBattleEntity*>(PEntity);
 
     // set their battlefield to this as they're now physically inside that battlefield
-    if (inBattlefield)
+    if( inBattlefield )
         PEntity->PBattlefield = shared_from_this();
-
+    ShowDebug( "refcount %u\n", PEntity->PBattlefield.use_count() );
     // mob, initiator or ally
     if (entity && !entity->StatusEffectContainer->GetStatusEffect(EFFECT_BATTLEFIELD))
         entity->StatusEffectContainer->AddStatusEffect(new CStatusEffect(EFFECT_BATTLEFIELD, EFFECT_BATTLEFIELD, this->GetID(),
@@ -420,7 +420,7 @@ bool CBattlefield::RemoveEntity(CBaseEntity* PEntity, uint8 leavecode)
         entity->StatusEffectContainer->DelStatusEffect(EFFECT_LEVEL_RESTRICTION);
         ClearEnmityForEntity(entity);
     }
-    PEntity->PBattlefield.reset();
+    PEntity->PBattlefield = nullptr;
     return found;
 }
 
@@ -433,20 +433,20 @@ void CBattlefield::DoTick(time_point time)
         m_FightTick = m_Status == BATTLEFIELD_STATUS_LOCKED ? time : m_FightTick;
 
         // remove the char if they zone out
-        for (auto charid : m_PlayerList)
+        for (auto& charid = m_PlayerList.begin(); charid != m_PlayerList.end();)
         {
-            auto PChar = GetZone()->GetCharByID(charid);
+            auto PChar = GetZone()->GetCharByID(*charid);
 
             if(!PChar)
             {
-                auto it = std::find(m_PlayerList.begin(), m_PlayerList.end(), charid);
-                if (it != m_PlayerList.end())
-                    m_PlayerList.erase(it);
+                if( charid != m_PlayerList.end() )
+                    charid = m_PlayerList.erase( charid );
             }
-            else
+            else if ( PChar->getZone() != GetZoneID() )
             {
                 RemoveEntity(PChar, -1);
             }
+            charid++;
         }
         luautils::OnBattlefieldTick(this);
     }

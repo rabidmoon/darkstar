@@ -162,7 +162,7 @@ function EventTriggerBCNM(player, npc)
             return;
         end;
     end;
-    
+
     if (checkNonTradeBCNM(player, npc)) then
         return true;
     end
@@ -173,7 +173,7 @@ end;
 function EventUpdateBCNM(player, csid, option, entrance)
     local area = player:getLocalVar("[battlefield]area");
     local id = player:getLocalVar("[battlefield]trade");
-    
+
     -- return false;
     --[[
         what probably happens:
@@ -181,7 +181,7 @@ function EventUpdateBCNM(player, csid, option, entrance)
             that mask is slapped into oneventupdate
             client chooses event
             player gets registered oneventfinish
-            
+
         todo:
             [ ] handle party members conditions
             [ ] attempt to register here
@@ -194,12 +194,12 @@ function EventUpdateBCNM(player, csid, option, entrance)
                             --      6=room max cap
                             -- param2 alters the eventfinish option (offset)
                             -- param7/8 = does nothing??
-            
-            
-            
-            
-            
-            
+
+
+
+
+
+
             [ ] EVENT UPDATE:
                     check member requirements
                     load battlefield if trade
@@ -207,47 +207,47 @@ function EventUpdateBCNM(player, csid, option, entrance)
                     send cap details (and subjob restriction if applicable through textid etc)
             [ ] EVENT FINISH:
                     spam messages including member clearance,, time limit, record
-                    
+
             [ ] retail just spams messages on ending the cutscene, isnt part of event
             [ ] for trades the battlefield is loaded in updateEvent
-            
 
 
 
 
-            
-            
+
+
+
     ]]
     local skip = CutsceneSkip(player, npc);
-    
+
     if csid == 0x7d00 then
         local zone = player:getZoneID();
         local mask = GetBattleBitmask(id, zone, 1);
         local effect = player:getStatusEffect(EFFECT_BATTLEFIELD);
         local skip = CutsceneSkip(player);
-        
+
         if option == 0 then
             local record, name, cap = 0;
             -- yes there's a bcnm with id 0
             if id == 0 then
                 id = -1;
             end;
-            
+
             if area == 0 then
                 area = 1;
                 player:setLocalVar("[battlefield]area", area);
             end;
-            
+
             if mask == -1 then
                 mask = checkNonTradeBCNM(player, nil, 1);
             end;
-            
+
             local result = player:registerBattlefield(id, area);
             local param4 = 0;
             if effect then
                 param4 = 1;
             end
-            
+
             player:PrintToPlayer(string.format("UPDATE csid %u option %u mask %u", csid, option, mask));
             if result ~= 2 then
                 player:setLocalVar("[battlefield]area", area + 1);
@@ -259,9 +259,9 @@ function EventUpdateBCNM(player, csid, option, entrance)
                     mask = battlefield:getID();
                 end;
             end;
-            
+
             -- params(result, battlefieldindex, ?, recordTime, recordPartySize, skip);
-            player:updateEvent(7, 3, 0, 500, 2, 0);
+            player:updateEvent(result, mask, 0, record, 5, 0);
             -- params(name, name, name, name, ? (possibly bitmask?), ?, ?, ?, ?, ?, ?, ?, ?);
             player:updateEventString('cuntbagdickface', 'faggot', 'shitbag', 'fuckin', 'work', 0, 0, 0);
         elseif option == 255 then
@@ -298,7 +298,7 @@ function EventUpdateBCNM(player, csid, option, entrance)
         -- The client will send a total of THREE EventUpdate packets for each one of the free instances.
         -- If the first instance is free, it should respond to the first packet
         -- If the second instance is free, it should respond to the second packet, etc
-      
+
             local mask = GetBattleBitmask(id, player:getZoneID(), 2);
             local status = player:addStatusEffect(EFFECT_BATTLEFIELD);
             local playerbcnmid = status:getPower();
@@ -309,7 +309,7 @@ function EventUpdateBCNM(player, csid, option, entrance)
             end
 
             player:updateEvent(2, mask, 0, 1, 1, skip); -- Add mask number for the correct entering CS
-            
+
         -- elseif (player:getVar("bcnm_instanceid") == 255) then -- none free
             -- print("nfa");
             -- player:updateEvent(2, 5, 0, 0, 1, 0);  -- @cs 32000 0 0 0 0 0 0 0 2
@@ -321,7 +321,7 @@ function EventUpdateBCNM(player, csid, option, entrance)
             -- 6=room max cap
             -- param2 alters the eventfinish option (offset)
             -- param7/8 = does nothing??
-       
+
         -- @pos -517 159 -209
         -- @pos -316 112 -103
         -- player:updateEvent(msgid, bcnmFight, 0, record, numadventurers, skip); skip= 1 to skip anim
@@ -333,7 +333,7 @@ end;
 
 function EventFinishBCNM(player, csid, option)
     print("FINISH csid "..csid.." option "..option);
-    
+
     if csid == 0x7d00 then
         player:PrintToPlayer(string.format("bit.band(option, 0x0F) == %u", bit.band(option, 0x0F)));
 
@@ -345,11 +345,12 @@ function EventFinishBCNM(player, csid, option)
          end;
     end;
         print("MODIFIED FINISH csid "..csid.." option "..option);
-    
-    if ((csid == 0x7d03 and option == 4 ) or (csid == 0x7d02)) and player:getBattlefield() and #(player:getBattlefield():getPlayers()) == 1 then
+
+    if (csid == 0x7d03 and option == 4 ) or (csid == 0x7d02) and player:getBattlefield() and #(player:getBattlefield():getPlayers()) == 1 then
         if player:getBattlefield():getStatus() ~= 0 then player:getBattlefield():cleanup(true); end;
+        print(1);
     end;
-    
+
     if (player:hasStatusEffect(EFFECT_BATTLEFIELD) == false) then -- Temp condition for normal bcnm (started with onTrigger)
         return false;
     else
@@ -394,9 +395,9 @@ function CheckMaatFights(player, zone, trade, npc)
                             [168] = {1437, 12, 4, 194, 1438, 13, 8, 195, 1439, 14, 16, 196},    -- Chamber of Oracles [SAM NIN DRG]
                             [206] = {1432, 7, 32, 517, 1433, 8, 64, 518, 1435, 10, 128, 519}
                         };-- Qu'Bia Arena [PLD DRK BRD]
-                    
+
         local list = maatList[zone];
-        
+
 
         for nb = 1, table.getn(maatList), 2 do
             if (maatList[nb] == zone) then
@@ -421,9 +422,9 @@ function GetBattleBitmask(id, zone, mode)
     -- normal sweep for NON MAAT FIGHTS
     local ret = -1;
     local mask = 0;
-    
+
     local battlefieldlist = battlefield_bitmask_map[zone]
-    
+
     if battlefieldlist then
         for index, battlefield in ipairs(battlefield_bitmask_map[zone]) do
             if id == battlefield then
@@ -640,7 +641,7 @@ function checkNonTradeBCNM(player, npc, mode)
     }
     local mask = nil;
     for keyid, condition in pairs(tabre[Zone]) do
-        if condition() and GetBattleBitmask(keyid, Zone, mode) ~= -1 then 
+        if condition() and GetBattleBitmask(keyid, Zone, mode) ~= -1 then
                 mask = mask + GetBattleBitmask(keyid, Zone, mode);
         end;
     end;

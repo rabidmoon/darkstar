@@ -125,7 +125,7 @@ uint8 CBattlefieldHandler::LoadBattlefield(CCharEntity* PChar, uint16 battlefiel
             auto maxplayers = Sql_GetUIntData(SqlHandle, 8);
             auto rulemask = Sql_GetUIntData(SqlHandle, 7);
 
-            std::shared_ptr<CBattlefield> PBattlefield = std::make_shared<CBattlefield>(battlefieldID, m_PZone, area, PChar);
+            auto PBattlefield = std::make_shared<CBattlefield>(battlefieldID, m_PZone, area, PChar);
 
             PBattlefield->SetName(name);
             PBattlefield->SetRecord(recordholder, recordtime);
@@ -140,8 +140,10 @@ uint8 CBattlefieldHandler::LoadBattlefield(CCharEntity* PChar, uint16 battlefiel
             {
                 PBattlefield->SetStatus(BATTLEFIELD_STATUS_LOST);
                 PBattlefield->CanCleanup(true);
+                ShowDebug( "battlefield loading failed\n" );
+                return BATTLEFIELD_RETURN_CODE_WAIT;
             }
-            m_Battlefields.insert(std::make_pair(PBattlefield->GetArea(), std::move(PBattlefield)));
+            m_Battlefields.insert(std::make_pair(PBattlefield->GetArea(), PBattlefield));
             return BATTLEFIELD_RETURN_CODE_CUTSCENE;
         }
     }

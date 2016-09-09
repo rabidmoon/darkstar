@@ -946,7 +946,7 @@ void CZoneEntities::ZoneServer(time_point tick)
     {
         CMobEntity* PMob = (CMobEntity*)it->second;
 
-        if (PMob->PBCNM && PMob->PBCNM->cleared())
+        if (PMob->PBattlefield && PMob->PBattlefield->GetStatus() >= BATTLEFIELD_STATUS_WON)
         {
             continue;
         }

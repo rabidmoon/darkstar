@@ -2,10 +2,10 @@ local MaxAreas =
 {
     -- temenos
     {Max = 8, Zones = {37}},
-    
+
     -- apollyon
     {Max = 6, Zones = {38}},
-    
+
     -- dynamis
     {Max = 1, Zones = {39, 40, 41, 42, 134, 135, 185, 186, 187, 188,
                                 140}}, -- ghelsba
@@ -41,9 +41,6 @@ function g_Battlefield.onBattlefieldTick(battlefield, timeinside)
     local status = battlefield:getStatus();
     local leavecode = -1;
 
-    if #(battlefield:getPlayers()) == 0 then
-        battlefield:cleanup(true);
-    end;
     if status == g_Battlefield.Status.LOST then
         print("lost");
         leavecode = 4;
@@ -51,15 +48,16 @@ function g_Battlefield.onBattlefieldTick(battlefield, timeinside)
         print("won");
         leavecode = 2;
     end;
-    
+
     if leavecode ~= -1 then
         local players = battlefield:getPlayers();
         for _, player in pairs(players) do
             player:leaveBattlefield(leavecode);
         end;
+        battlefield:cleanup(true);
         return;
     end;
-    
+
     for _, mob in pairs(mobs) do
         print(mob:getName());
         if mob:getHP() > 0 then
@@ -67,10 +65,10 @@ function g_Battlefield.onBattlefieldTick(battlefield, timeinside)
             break;
         end;
     end;
-    
+
     g_Battlefield.HandleWipe(battlefield);
     g_Battlefield.HandleTimePrompts(battlefield);
-    
+
     if killedallmobs then
         battlefield:setStatus(g_Battlefield.Status.WON);
     end
@@ -81,7 +79,7 @@ function g_Battlefield.HandleTimePrompts(battlefield)
     local status = battlefield:getStatus();
     local players = battlefield:getPlayers();
     local remainingTime = battlefield:getRemainingTime();
-    
+
     -- print(remainingTimeLimit)
     if tick % 60 == 0 then
         for _, player in pairs(players) do
@@ -93,7 +91,7 @@ function g_Battlefield.HandleTimePrompts(battlefield)
             end;
         end;
     end;
-   
+
     if status == g_Battlefield.Status.LOCKED and remainingTimeLimit <= 0 then
         battlefield:setStatus(g_Battlefield.Status.LOST);
     end;
@@ -101,9 +99,9 @@ end;
 
 function g_Battlefield.HandleWipe(battlefield)
     local rekt = true;
-    
+
     local players = battlefield:getPlayers();
-    local totalrekt = 0; 
+    local totalrekt = 0;
     local wipeTime = battlefield:getWipeTime();
     local elapsed = battlefield:getTimeInside();
 
@@ -132,11 +130,11 @@ function g_Battlefield.HandleWipe(battlefield)
                     break;
                 end
             end
-            
+
             if rekt then
                 battlefield:setStatus(g_Battlefield.Status.LOST);
             end;
         end
     end
-    
+
 end;
