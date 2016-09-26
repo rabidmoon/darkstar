@@ -167,14 +167,13 @@ inline int32 CLuaBattlefield::getMobs(lua_State* L)
     // do we want just required mobs, all mobs, or just mobs not needed to win
     auto required = lua_isnil(L, 1) ? true : lua_toboolean(L, 1);
     auto adds = lua_isnil(L, 2) ? false : lua_toboolean(L, 2);
-    int size = 0;
 
-    size = required ? m_PLuaBattlefield->m_RequiredEnemyList.size() : 0;
+    auto size = required ? m_PLuaBattlefield->m_RequiredEnemyList.size() : 0;
     size += adds ? m_PLuaBattlefield->m_AdditionalEnemyList.size() : 0;
 
     lua_createtable(L, size, 0);
-    int8 newTable = lua_gettop(L);
-    int i = 1;
+
+    auto i = 1;
 
     if (required && m_PLuaBattlefield->m_RequiredEnemyList.size() > 0)
     {

@@ -65,104 +65,119 @@ CBattlefield::CBattlefield(uint16 id, CZone* PZone, uint8 area, CCharEntity* PIn
 CBattlefield::~CBattlefield()
 {
     Cleanup();
+
+    for (auto mob : m_RequiredEnemyList)
+    {
+        delete mob.PMob;
+    }
+
+    for (auto mob : m_AdditionalEnemyList)
+    {
+        delete mob.PMob;
+    }
+
+    for (auto npc : m_NpcList)
+    {
+        delete npc;
+    }
 }
 
-uint16 CBattlefield::GetID()
+uint16 CBattlefield::GetID() const
 {
     return m_ID;
 }
 
-CZone* CBattlefield::GetZone()
+CZone* CBattlefield::GetZone() const
 {
     return zoneutils::GetZone(m_ZoneID);
 }
 
-uint16 CBattlefield::GetZoneID()
+uint16 CBattlefield::GetZoneID() const
 {
     return m_ZoneID;
 }
 
-string_t CBattlefield::GetName()
+string_t CBattlefield::GetName() const
 {
     return m_Name;
 }
 
-BattlefieldInitiator_t CBattlefield::GetInitiator()
+BattlefieldInitiator_t CBattlefield::GetInitiator() const
 {
     return m_Initiator;
 }
 
-uint8 CBattlefield::GetArea()
+uint8 CBattlefield::GetArea() const
 {
     return m_Area;
 }
 
-BattlefieldRecord_t CBattlefield::GetRecord()
+BattlefieldRecord_t CBattlefield::GetRecord() const
 {
     return m_Record;
 }
 
-uint8 CBattlefield::GetStatus()
+uint8 CBattlefield::GetStatus() const
 {
     return m_Status;
 }
 
-uint16 CBattlefield::GetRuleMask()
+uint16 CBattlefield::GetRuleMask() const
 {
     return m_Rules;
 }
 
-time_point CBattlefield::GetStartTime()
+time_point CBattlefield::GetStartTime() const
 {
     return m_StartTime;
 }
 
-duration CBattlefield::GetTimeInside()
+duration CBattlefield::GetTimeInside() const
 {
     return m_Tick - m_StartTime;
 }
 
-time_point CBattlefield::GetFightTime()
+time_point CBattlefield::GetFightTime() const
 {
     return m_FightTick;
 }
 
-duration CBattlefield::GetTimeLimit()
+duration CBattlefield::GetTimeLimit() const
 {
     return m_TimeLimit;
 }
 
-time_point CBattlefield::GetWipeTime()
+time_point CBattlefield::GetWipeTime() const
 {
     return m_WipeTime;
 }
 
-duration CBattlefield::GetFinishTime()
+duration CBattlefield::GetFinishTime() const
 {
     return m_FinishTime;
 }
 
-duration CBattlefield::GetRemainingTime()
+duration CBattlefield::GetRemainingTime() const
 {
     return GetTimeLimit() - GetTimeInside();
 }
 
-uint8 CBattlefield::GetMaxParticipants()
+uint8 CBattlefield::GetMaxParticipants() const
 {
     return m_MaxParticipants;
 }
 
-uint8 CBattlefield::GetPlayerCount()
+uint8 CBattlefield::GetPlayerCount() const
 {
     return m_PlayerList.size();
 }
 
-uint8 CBattlefield::GetLevelCap()
+uint8 CBattlefield::GetLevelCap() const
 {
     return m_LevelCap;
 }
 
-uint16 CBattlefield::GetLootID()
+uint16 CBattlefield::GetLootID() const
 {
     return m_LootID;
 }
@@ -233,7 +248,7 @@ void CBattlefield::SetLootID(uint16 id)
     m_LootID = id;
 }
 
-void CBattlefield::ApplyLevelCap(CCharEntity* PChar)
+void CBattlefield::ApplyLevelCap(CCharEntity* PChar) const
 {
     //adjust player's level to the appropriate cap and remove buffs
 
@@ -281,7 +296,7 @@ bool CBattlefield::AllEnemiesDefeated()
     return true;
 }
 
-bool CBattlefield::IsOccupied()
+bool CBattlefield::IsOccupied() const
 {
     return m_PlayerList.size() > 0;
 }
@@ -304,21 +319,24 @@ bool CBattlefield::InsertEntity(CBaseEntity* PEntity, bool inBattlefield, BATTLE
     }
     else if (PEntity->objtype == TYPE_NPC)
     {
-        m_NpcList.push_back(PEntity->targid);
+        m_NpcList.push_back(static_cast<CNpcEntity*>(PEntity));
     }
-    else if (PEntity->objtype == TYPE_MOB)
+    else if (PEntity->objtype == TYPE_MOB || PEntity->objtype == TYPE_PET)
     {
         // mobs
         if (!ally)
         {
-            auto entity = dynamic_cast<CPetEntity*>(PEntity);
+            auto pet = dynamic_cast<CPetEntity*>(PEntity);
 
             // dont enter player pet
-            if (!(entity && entity->PMaster && entity->PMaster->objtype == TYPE_PC))
+            if (pet && pet->PMaster && pet->PMaster->objtype == TYPE_PC)
+            {
+            }
+            else
             {
                 // only apply conditions to mobs spawning by default
                 BattlefieldMob_t mob;
-                mob.targid = PEntity->targid;
+                mob.PMob = static_cast<CMobEntity*>(PEntity);
                 mob.condition = conditions;
 
                 if (mob.condition & CONDITION_WIN_REQUIREMENT)
@@ -330,7 +348,7 @@ bool CBattlefield::InsertEntity(CBaseEntity* PEntity, bool inBattlefield, BATTLE
         // ally
         else
         {
-            m_AllyList.push_back(PEntity->targid);
+            m_AllyList.push_back(static_cast<CMobEntity*>(PEntity));
         }
     }
 
@@ -371,11 +389,11 @@ bool CBattlefield::RemoveEntity(CBaseEntity* PEntity, uint8 leavecode)
         return false;
 
     auto found = false;
-    auto check = [PEntity, &found](auto entity) { if (PEntity->targid == entity) { found = true; return found; } return false; };
+    auto check = [PEntity, &found](auto entity) { if (PEntity == entity) { found = true; return found; } return false; };
 
     if (PEntity->objtype == TYPE_PC)
     {
-        auto check = [PEntity, &found](auto entity) { if (PEntity->id == entity) found = true; return found; return false; };
+        auto check = [PEntity, &found](auto entity) { if (PEntity->targid == entity) found = true; return found; return false; };
         m_PlayerList.erase(std::remove_if(m_PlayerList.begin(), m_PlayerList.end(), check), m_PlayerList.end());
 
         if (leavecode != 255)
@@ -407,7 +425,7 @@ bool CBattlefield::RemoveEntity(CBaseEntity* PEntity, uint8 leavecode)
         }
         else
         {
-            auto check = [PEntity, &found](auto entity) { if (entity.targid == PEntity->targid) { found = true; return found; } return false; };
+            auto check = [PEntity, &found](auto entity) { if (entity.PMob == PEntity) { found = true; return found; } return false; };
             m_RequiredEnemyList.erase(std::remove_if(m_RequiredEnemyList.begin(), m_RequiredEnemyList.end(), check), m_RequiredEnemyList.end());
             m_AdditionalEnemyList.erase(std::remove_if(m_AdditionalEnemyList.begin(), m_AdditionalEnemyList.end(), check), m_AdditionalEnemyList.end());
         }
@@ -426,7 +444,7 @@ bool CBattlefield::RemoveEntity(CBaseEntity* PEntity, uint8 leavecode)
 
 void CBattlefield::DoTick(time_point time)
 {
-    if (m_Tick + 1s < time)
+    if (time > m_Tick + 1s)
     {
         //todo : bcnm - update tick, fight tick, end if time is up
         m_Tick = time;
@@ -446,7 +464,7 @@ void CBattlefield::DoTick(time_point time)
             {
                 RemoveEntity(PChar, -1);
             }
-            charid++;
+            ++charid;
         }
         luautils::OnBattlefieldTick(this);
     }
@@ -549,7 +567,7 @@ bool CBattlefield::LoadMobs()
     return true;
 }
 
-bool CBattlefield::CanSpawnTreasure()
+bool CBattlefield::CanSpawnTreasure() const
 {
     return !m_SeenBooty;
 }
@@ -652,7 +670,7 @@ void CBattlefield::ForEachRequiredEnemy(std::function<void(CMobEntity*)> func)
 {
     for (auto mob : m_RequiredEnemyList)
     {
-        func((CMobEntity*)GetZone()->GetEntity(mob.targid, TYPE_MOB | TYPE_PET));
+        func(mob.PMob);
     }
 }
 
@@ -660,7 +678,7 @@ void CBattlefield::ForEachAdditionalEnemy(std::function<void(CMobEntity*)> func)
 {
     for (auto mob : m_AdditionalEnemyList)
     {
-        func((CMobEntity*)GetZone()->GetEntity(mob.targid, TYPE_MOB | TYPE_PET));
+        func(mob.PMob);
     }
 }
 
@@ -668,7 +686,7 @@ void CBattlefield::ForEachNpc(std::function<void(CNpcEntity*)> func)
 {
     for (auto npc : m_NpcList)
     {
-        func((CNpcEntity*)GetZone()->GetEntity(npc, TYPE_NPC));
+        func(npc);
     }
 }
 
@@ -676,6 +694,6 @@ void CBattlefield::ForEachAlly(std::function<void(CMobEntity*)> func)
 {
     for (auto ally : m_AllyList)
     {
-        func((CMobEntity*)GetZone()->GetEntity(ally, TYPE_PET));
+        func(ally);
     }
 }

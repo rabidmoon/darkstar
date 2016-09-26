@@ -83,7 +83,7 @@ class CZone;
 
 typedef struct
 {
-    uint16 targid;                       // mob's targid
+    CMobEntity* PMob;
     BATTLEFIELDMOBCONDITION condition; // whether it has died or not
 } BattlefieldMob_t;
 
@@ -108,30 +108,30 @@ public:
     ~CBattlefield();
 
     //bcnm related functions
-    uint16                 GetID();
-    CZone*                 GetZone();
-    uint16                 GetZoneID();
-    string_t               GetName();
-    BattlefieldInitiator_t GetInitiator();
-    uint8                  GetArea();
-    BattlefieldRecord_t    GetRecord();
-    uint8                  GetStatus();
-    uint16                 GetRuleMask();
-    time_point             GetStartTime();
-    duration               GetTimeInside();
-    time_point             GetFightTime();
-    duration               GetTimeLimit();
-    time_point             GetWipeTime();
-    uint8                  GetMaxParticipants();
-    uint8                  GetPlayerCount();
-    uint8                  GetLevelCap();
-    uint16                 GetLootID();
-    duration               GetFinishTime();
-    duration               GetRemainingTime();
+    uint16                 GetID() const;
+    CZone*                 GetZone() const;
+    uint16                 GetZoneID() const;
+    string_t               GetName() const;
+    BattlefieldInitiator_t GetInitiator() const;
+    uint8                  GetArea() const;
+    BattlefieldRecord_t    GetRecord() const;
+    uint8                  GetStatus() const;
+    uint16                 GetRuleMask() const;
+    time_point             GetStartTime() const;
+    duration               GetTimeInside() const;
+    time_point             GetFightTime() const;
+    duration               GetTimeLimit() const;
+    time_point             GetWipeTime() const;
+    uint8                  GetMaxParticipants() const;
+    uint8                  GetPlayerCount() const;
+    uint8                  GetLevelCap() const;
+    uint16                 GetLootID() const;
+    duration               GetFinishTime() const;
+    duration               GetRemainingTime() const;
 
     bool                   AllPlayersDead();
     bool                   InProgress();
-    bool                   IsOccupied();
+    bool                   IsOccupied() const;
 
     void                   ForEachPlayer(std::function<void(CCharEntity*)> func);
     void                   ForEachEnemy(std::function<void(CMobEntity*)> func);
@@ -155,7 +155,7 @@ public:
     void                   SetLevelCap(uint8 cap);
     void                   SetLootID(uint16 id);
 
-    void                   ApplyLevelCap(CCharEntity* PChar);
+    void                   ApplyLevelCap(CCharEntity* PChar) const;
     void                   ClearEnmityForEntity(CBattleEntity* PEntity);
     bool                   InsertEntity(CBaseEntity* PEntity, bool inBattlefield = false, BATTLEFIELDMOBCONDITION conditions = CONDITION_NONE, bool ally = false);
     CBaseEntity*           GetEntity(CBaseEntity* PEntity);
@@ -168,7 +168,7 @@ public:
 
     void                   PushMessageToAllInBcnm(uint16 msg, uint16 param);
 
-    bool                   CanSpawnTreasure();
+    bool                   CanSpawnTreasure() const;
     bool                   SpawnTreasureChest();
     void                   OpenChest();
 
@@ -179,10 +179,10 @@ public:
     bool                   LoseBcnm();
 
     std::vector<uint32>           m_PlayerList;
-    std::vector<uint16>           m_NpcList;
+    std::vector<CNpcEntity*>      m_NpcList;
     std::vector<BattlefieldMob_t> m_RequiredEnemyList;
     std::vector<BattlefieldMob_t> m_AdditionalEnemyList;
-    std::vector<uint16>           m_AllyList;
+    std::vector<CMobEntity*>      m_AllyList;
 
 private:
     uint16                 m_ID;
