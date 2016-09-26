@@ -28,6 +28,7 @@
 #include <unordered_map>
 
 class CBattleEntity;
+class CMobEntity;
 class CCharEntity;
 
 struct EnmityObject_t
@@ -45,7 +46,7 @@ class CEnmityContainer
 {
 public:
 
-    CEnmityContainer(CBattleEntity* holder);
+    CEnmityContainer(CMobEntity* holder);
    ~CEnmityContainer();
 
     CBattleEntity*	GetHighestEnmity();			// Decays VE and gets target with highest enmity
@@ -68,9 +69,9 @@ public:
     EnmityList_t* GetEnmityList();
 
 private:
-
+	
     EnmityList_t    m_EnmityList;
-    CBattleEntity*  m_EnmityHolder; //usually a monster
+    CMobEntity*  m_EnmityHolder; //usually a monster
 };
 
 #endif

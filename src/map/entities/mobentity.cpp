@@ -613,7 +613,6 @@ void CMobEntity::OnWeaponSkillFinished(CWeaponSkillState& state, action_t& actio
 
     auto PSkill = state.GetSkill();
     auto PBattleTarget = static_cast<CBattleEntity*>(state.GetTarget());
-    PAI->EventHandler.triggerListener("WEAPONSKILL_USE", this, PSkill->getID());
 
     static_cast<CMobController*>(PAI->GetController())->TapDeaggroTime();
 }
@@ -977,7 +976,10 @@ void CMobEntity::Die()
     PAI->Internal_Die(15s);
     CBattleEntity::Die();
     PAI->QueueAction(queueAction_t(std::chrono::milliseconds(m_DropItemTime), false, [this](CBaseEntity* PEntity) {
-        DropItems();
+        if (static_cast<CMobEntity*>(PEntity)->isDead())
+        {
+            DropItems();
+        }
     }));
     if (PMaster && PMaster->PPet == this && PMaster->objtype == TYPE_PC)
     {

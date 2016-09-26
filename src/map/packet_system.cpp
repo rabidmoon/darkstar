@@ -343,8 +343,8 @@ void SmallPacket0x00C(map_session_data_t* session, CCharEntity* PChar, CBasicPac
     // respawn any pets from last zone
     if (PChar->petZoningInfo.respawnPet == true)
     {
-        // only repawn pet in valid zones and al zahbi (for beseiged)
-        if (PChar->loc.zone->CanUseMisc(MISC_PET) == true || PChar->loc.zone->GetID() == 48)
+        // only repawn pet in valid zones
+        if (PChar->loc.zone->CanUseMisc(MISC_PET) && !PChar->m_moghouseID)
         {
             switch (PChar->petZoningInfo.petType)
             {
@@ -5078,7 +5078,7 @@ void SmallPacket0x100(map_session_data_t* session, CCharEntity* PChar, CBasicPac
         charutils::BuildingCharAbilityTable(PChar);
         charutils::BuildingCharWeaponSkills(PChar);
 
-        PChar->StatusEffectContainer->DelStatusEffectsByFlag(EFFECTFLAG_DISPELABLE);
+        PChar->StatusEffectContainer->DelStatusEffectsByFlag(EFFECTFLAG_DISPELABLE | EFFECTFLAG_ON_JOBCHANGE);
 
         PChar->ForParty([](CBattleEntity* PMember)
         {

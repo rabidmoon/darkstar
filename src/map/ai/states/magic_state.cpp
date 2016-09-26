@@ -38,8 +38,8 @@
 CMagicState::CMagicState(CBattleEntity* PEntity, uint16 targid, uint16 spellid, uint8 flags) :
     CState(PEntity, targid),
     m_PEntity(PEntity),
-    m_flags(flags),
-    m_PSpell(nullptr)
+    m_PSpell(nullptr),
+    m_flags(flags)
 {
     CSpell* PSpell = spell::GetSpell(spellid);
 
@@ -122,6 +122,7 @@ bool CMagicState::Update(time_point tick)
         {
             m_PEntity->OnCastFinished(*this,action);
             m_PEntity->PAI->EventHandler.triggerListener("MAGIC_USE", m_PEntity, PTarget, m_PSpell.get(), &action);
+            PTarget->PAI->EventHandler.triggerListener("MAGIC_TAKE", PTarget, m_PEntity, m_PSpell.get(), &action);
         }
         m_PEntity->loc.zone->PushPacket(m_PEntity, CHAR_INRANGE_SELF, new CActionPacket(action));
         Complete();
@@ -190,6 +191,13 @@ bool CMagicState::CanCastSpell(CBattleEntity* PTarget)
     {
         m_errorMsg = std::make_unique<CMessageBasicPacket>(m_PEntity, PTarget, m_PSpell->getID(), 0, MSGBASIC_OUT_OF_RANGE_UNABLE_CAST);
         return false;
+    }
+    if (dynamic_cast<CMobEntity*>(m_PEntity))
+    {
+        if (distanceSquared(m_PEntity->loc.p, PTarget->loc.p) > square(28.5f))
+        {
+            return false;
+        }
     }
     if (!m_PEntity->PAI->TargetFind->canSee(&PTarget->loc.p))
     {
@@ -290,6 +298,8 @@ void CMagicState::ApplyEnmity(CBattleEntity* PTarget, int ce, int ve)
                 ((CMobEntity*)PTarget)->updatemask |= UPDATE_STATUS;
             }
             ((CMobEntity*)PTarget)->PEnmityContainer->UpdateEnmity(m_PEntity, ce, ve);
+            if (PTarget && ((CMobEntity*)PTarget)->m_HiPCLvl < m_PEntity->GetMLevel())
+                ((CMobEntity*)PTarget)->m_HiPCLvl = m_PEntity->GetMLevel();
             enmityApplied = true;
         }
     }

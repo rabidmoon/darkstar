@@ -1455,7 +1455,7 @@ namespace luautils
         auto ret = luaL_loadfile(LuaHandle, File);
         if (ret)
         {
-            ShowError("luautils::%s: %s\n", "onTrigger", lua_tostring(LuaHandle, -1));
+            ShowWarning("luautils::%s: %s\n", "onTrigger", lua_tostring(LuaHandle, -1));
             lua_pop(LuaHandle, 1);
             return -1;
         }
@@ -1806,7 +1806,7 @@ namespace luautils
         return 0;
     }
 
-    int32 OnSpikesDamage(CBattleEntity* PDefender, CBattleEntity* PAttacker, apAction_t* Action, uint32 damage)
+    int32 OnSpikesDamage(CBattleEntity* PDefender, CBattleEntity* PAttacker, actionTarget_t* Action, uint32 damage)
     {
         lua_prepscript("scripts/zones/%s/mobs/%s.lua", PDefender->loc.zone->GetName(), PDefender->GetName());
 
@@ -2881,7 +2881,7 @@ namespace luautils
                     lua_getglobal(LuaHandle, "onMobDeath");
                     if (lua_isnil(LuaHandle, -1))
                     {
-                        ShowError("luautils::onMobDeath: undefined procedure onMobDeath\n");
+                        ShowError("luautils::onMobDeath (%s): undefined procedure onMobDeath\n", File);
                         lua_pop(LuaHandle, 1);
                         return;
                     }
@@ -2935,7 +2935,7 @@ namespace luautils
             lua_getglobal(LuaHandle, "onMobDeath");
             if (lua_isnil(LuaHandle, -1))
             {
-                ShowError("luautils::onMobDeath: undefined procedure onMobDeath\n");
+                ShowError("luautils::onMobDeath (%s): undefined procedure onMobDeath\n", File);
                 lua_pop(LuaHandle, 1);
                 return -1;
             }
@@ -3230,7 +3230,7 @@ namespace luautils
             CLuaBaseEntity LuaTrickAttackEntity(taChar);
             Lunar<CLuaBaseEntity>::push(LuaHandle, &LuaTrickAttackEntity);
         }
-        
+
 
         if (lua_pcall(LuaHandle, 7, LUA_MULTRET, 0))
         {

@@ -2559,15 +2559,19 @@ namespace charutils
 
             if (MaxMSkill != 0)
             {
-                PChar->WorkingSkills.skill[i] = skillBonus + (PChar->RealSkills.skill[i] / 10 >= MaxMSkill ? MaxMSkill + 0x8000 : PChar->RealSkills.skill[i] / 10);
+                auto cap {PChar->RealSkills.skill[i] / 10 > MaxMSkill};
+                PChar->WorkingSkills.skill[i] = std::max(0, cap ? skillBonus + MaxMSkill : skillBonus + PChar->RealSkills.skill[i] / 10);
+                if (cap) PChar->WorkingSkills.skill[i] |= 0x8000;
             }
             else if (MaxSSkill != 0)
             {
-                PChar->WorkingSkills.skill[i] = skillBonus + (PChar->RealSkills.skill[i] / 10 >= MaxSSkill ? MaxSSkill + 0x8000 : PChar->RealSkills.skill[i] / 10);
+                auto cap {PChar->RealSkills.skill[i] / 10 > MaxSSkill};
+                PChar->WorkingSkills.skill[i] = std::max(0, cap ? skillBonus + MaxSSkill : skillBonus + PChar->RealSkills.skill[i] / 10);
+                if (cap) PChar->WorkingSkills.skill[i] |= 0x8000;
             }
             else
             {
-                PChar->WorkingSkills.skill[i] = skillBonus + 0x8000;
+                PChar->WorkingSkills.skill[i] = std::max<uint16>(0, skillBonus) | 0x8000;
             }
         }
 
@@ -2755,7 +2759,7 @@ namespace charutils
     bool seenKeyItem(CCharEntity* PChar, uint16 KeyItemID)
     {
         auto table = KeyItemID / 512;
-        return PChar->keys.tables[table].keyList[KeyItemID % 512];
+        return PChar->keys.tables[table].seenList[KeyItemID % 512];
     }
 
     void unseenKeyItem(CCharEntity* PChar, uint16 KeyItemID)
