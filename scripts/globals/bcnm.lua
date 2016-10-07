@@ -261,11 +261,12 @@ function EventUpdateBCNM(player, csid, option, entrance)
             end;
 
             -- params(result, battlefieldindex, ?, recordTime, recordPartySize, skip);
-            player:updateEvent(result, mask, 0, record, 5, 0);
+            player:updateEvent(0, mask, 0, record, 5, 0);
             -- params(name, name, name, name, ? (possibly bitmask?), ?, ?, ?, ?, ?, ?, ?, ?);
             player:updateEventString('cuntbagdickface', 'faggot', 'shitbag', 'fuckin', 'work', 0, 0, 0);
         elseif option == 255 then
-            player:updateEvent(2, mask, 0, 0, 0, 0);
+        print("ass")
+         --   player:updateEvent(0, 3, 0, 0, 1, 0);
         end;
         return;
     end;
@@ -337,7 +338,7 @@ function EventFinishBCNM(player, csid, option)
     if csid == 0x7d00 then
         player:PrintToPlayer(string.format("bit.band(option, 0x0F) == %u", bit.band(option, 0x0F)));
 
-        if bit.band(option, 0x0F) == 3 then
+        if true or bit.band(option, 0x0F) == 3 then
             local area = player:getLocalVar("[battlefield]area");
             option = bit.rshift(option, 4);
             player:PrintToPlayer(string.format("cs option: %u | battlefield: %u | area: %u", option,battlefield_bitmask_map[player:getZoneID()][option], area));
@@ -347,8 +348,8 @@ function EventFinishBCNM(player, csid, option)
         print("MODIFIED FINISH csid "..csid.." option "..option);
 
     if (csid == 0x7d03 and option == 4 ) or (csid == 0x7d02) and player:getBattlefield() and #(player:getBattlefield():getPlayers()) == 1 then
-        if player:getBattlefield():getStatus() ~= 0 then player:getBattlefield():cleanup(true); end;
-        print(1);
+        if player:getBattlefield():getStatus() ~= 0 then player:getBattlefield():cleanup(true); --end;
+        print(1); end;
     end;
 
     if (player:hasStatusEffect(EFFECT_BATTLEFIELD) == false) then -- Temp condition for normal bcnm (started with onTrigger)

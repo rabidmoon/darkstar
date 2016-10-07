@@ -29,7 +29,7 @@ g_Battlefield = {};
 g_Battlefield.Status =
 {
     OPEN     = 0,
-    LOCKED  = 1,
+    LOCKED   = 1,
     WON      = 2,
     LOST     = 3,
 };
@@ -40,7 +40,7 @@ function g_Battlefield.onBattlefieldTick(battlefield, timeinside)
     local mobs = battlefield:getMobs();
     local status = battlefield:getStatus();
     local leavecode = -1;
-
+    print("shit")
     if status == g_Battlefield.Status.LOST then
         print("lost");
         leavecode = 4;
@@ -52,9 +52,9 @@ function g_Battlefield.onBattlefieldTick(battlefield, timeinside)
     if leavecode ~= -1 then
         local players = battlefield:getPlayers();
         for _, player in pairs(players) do
+            print(player:getName())
             player:leaveBattlefield(leavecode);
         end;
-        battlefield:cleanup(true);
         return;
     end;
 
@@ -70,7 +70,7 @@ function g_Battlefield.onBattlefieldTick(battlefield, timeinside)
     g_Battlefield.HandleTimePrompts(battlefield);
 
     if killedallmobs then
-        battlefield:setStatus(g_Battlefield.Status.WON);
+        --battlefield:setStatus(g_Battlefield.Status.WON);
     end
 end;
 
@@ -80,7 +80,7 @@ function g_Battlefield.HandleTimePrompts(battlefield)
     local players = battlefield:getPlayers();
     local remainingTime = battlefield:getRemainingTime();
 
-    -- print(remainingTimeLimit)
+    print(remainingTimeLimit)
     if tick % 60 == 0 then
         for _, player in pairs(players) do
             if remainingTime > 0 then
