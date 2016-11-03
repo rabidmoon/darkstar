@@ -233,7 +233,7 @@ INSERT INTO `zone_settings` VALUES (184,3,'127.0.0.1',54230,'Lower_Delkfutts_Tow
 INSERT INTO `zone_settings` VALUES (185,2,'127.0.0.1',54230,'Dynamis-San_dOria',121,121,121,121,0,0.00,400);
 INSERT INTO `zone_settings` VALUES (186,2,'127.0.0.1',54230,'Dynamis-Bastok',121,121,121,121,0,0.00,400);
 INSERT INTO `zone_settings` VALUES (187,2,'127.0.0.1',54230,'Dynamis-Windurst',121,121,121,121,0,0.00,400);
-INSERT INTO `zone_settings` VALUES (188,5,'127.0.0.1',54230,'Dynamis-Jeuno',121,121,121,121,0,0.00,400);
+INSERT INTO `zone_settings` VALUES (188,2,'127.0.0.1',54230,'Dynamis-Jeuno',121,121,121,121,0,0.00,400);
 INSERT INTO `zone_settings` VALUES (189,0,'127.0.0.1',0,'189',0,0,0,0,0,0.00,0);
 INSERT INTO `zone_settings` VALUES (190,3,'127.0.0.1',54230,'King_Ranperres_Tomb',0,0,115,102,0,0.00,145);
 INSERT INTO `zone_settings` VALUES (191,3,'127.0.0.1',54230,'Dangruf_Wadi',0,0,115,102,0,0.00,145);

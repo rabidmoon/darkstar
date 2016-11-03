@@ -1,6 +1,6 @@
 -----------------------------------
 -- Area: Dynamis Jeuno
--- NPC:  ??? (Spawn when mega is defeated)
+-- NPC:  Spawns Goatmug and Hexhands
 -----------------------------------
 package.loaded["scripts/zones/Dynamis-Jeuno/TextIDs"] = nil;
 -----------------------------------
@@ -13,7 +13,52 @@ require("scripts/zones/Dynamis-Jeuno/TextIDs");
 -----------------------------------
 
 function onTrade(player,npc,trade)
+
+local qm1 = GetNPCByID(17547510);
+-- Goatmug
+if (GetMobAction(17547396) == 0 and trade:hasItemQty(3356,1) and trade:hasItemQty(3853,3)) then
+	player:setVar("DynaWeakener",3);
+	SpawnMob(17547396):updateClaim(player);
+    qm1:setStatus(STATUS_DISAPPEAR);
+elseif (GetMobAction(17547396) == 0 and trade:hasItemQty(3356,1) and trade:hasItemQty(3853,2)) then
+	player:setVar("DynaWeakener",2);
+	SpawnMob(17547396):updateClaim(player);
+	qm1:setStatus(STATUS_DISAPPEAR);
+elseif (GetMobAction(17547396) == 0 and trade:hasItemQty(3356,1) and trade:hasItemQty(3853,1)) then
+	player:setVar("DynaWeakener",1);
+	SpawnMob(17547396):updateClaim(player);
+	qm1:setStatus(STATUS_DISAPPEAR);
+elseif (GetMobAction(17547396) == 0 and trade:hasItemQty(3356,1)) then
+player:setVar("DynaWeakener",0);
+	SpawnMob(17547396):updateClaim(player);
+	qm1:setStatus(STATUS_DISAPPEAR);
+end	
+
+-- Hexhands
+
+if (GetMobAction(17547493) == 0 and trade:hasItemQty(3420,1) and trade:hasItemQty(3853,3)) then
+	player:setVar("DynaWeakener",3);
+	SpawnMob(17547493):updateClaim(player);
+	qm1:setStatus(STATUS_DISAPPEAR);
+elseif (GetMobAction(17547493) == 0 and trade:hasItemQty(3420,1) and trade:hasItemQty(3853,2)) then
+	player:setVar("DynaWeakener",2);
+	SpawnMob(17547493):updateClaim(player);
+	qm1:setStatus(STATUS_DISAPPEAR);
+elseif (GetMobAction(17547493) == 0 and trade:hasItemQty(3420,1) and trade:hasItemQty(3853,1)) then
+	player:setVar("DynaWeakener",1);
+	SpawnMob(17547493):updateClaim(player);
+	qm1:setStatus(STATUS_DISAPPEAR);
+elseif (GetMobAction(17547493) == 0 and trade:hasItemQty(3420,1)) then
+player:setVar("DynaWeakener",0);
+	SpawnMob(17547493):updateClaim(player);
+	qm1:setStatus(STATUS_DISAPPEAR);
+end
 end;
+
+
+
+
+
 
 -----------------------------------
 -- onTrigger
@@ -21,11 +66,7 @@ end;
 
 function onTrigger(player,npc)
 	
-	if (player:hasKeyItem(HYDRA_CORPS_TACTICAL_MAP) == false) then
-		player:setVar("DynaJeuno_Win",1);
-		player:addKeyItem(HYDRA_CORPS_TACTICAL_MAP);
-		player:messageSpecial(KEYITEM_OBTAINED,HYDRA_CORPS_TACTICAL_MAP);
-	end
+player:messageSpecial(NOTHING_OUT_OF_ORDINARY);	
 	
 end;
 
