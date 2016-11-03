@@ -12,6 +12,7 @@ cmdprops =
 
 function onTrigger(player,page)
 local level = player:getMainLvl();
+local aura = player:getVar("FerretoryAura");
 
 
     if (page == 0 or page == nil) then
@@ -507,7 +508,7 @@ local level = player:getMainLvl();
         end
 	
 	
-		elseif (page == 8) then
+		elseif (page == 8) and (aura >= 4) then
 	    local stock_8 =
         {
 			1042,    25000,   -- Davoi Coffer Key
@@ -528,11 +529,43 @@ local level = player:getMainLvl();
 			17583,   7000, 
 			17584,   7000,   
 			17585,   7000,
+			606,     2000,        -- Fetich Head
+			607,     2000,        -- Fetich Torso
+			608,     2000,        -- Fetich Arms
+			609,     2000,        -- Fetich Legs
 			
 			
         };
         showShop(player, STATIC, stock_8);
         player:PrintToPlayer("Merchant Moogle : Miscellaneous items Kupo", 0x1F);	
+		elseif (page == 8) and (aura < 4) and (aura > 1) then
+	    local stock_8 =
+        {
+			17583,   7000, 
+			17584,   7000,   
+			17585,   7000,
+			606,     2000,        -- Fetich Head
+			607,     2000,        -- Fetich Torso
+			608,     2000,        -- Fetich Arms
+			609,     2000,        -- Fetich Legs
+			
+			
+        };
+        showShop(player, STATIC, stock_8);
+        player:PrintToPlayer("Merchant Moogle : Miscellaneous items Kupo.  Unlock more items with Feretory Aura!", 0x1F);			
+		elseif (page == 8) and (aura < 2) then
+	    local stock_8 =
+        {
+			606,     2000,        -- Fetich Head
+			607,     2000,        -- Fetich Torso
+			608,     2000,        -- Fetich Arms
+			609,     2000,        -- Fetich Legs
+			
+			
+        };
+        showShop(player, STATIC, stock_8);
+        player:PrintToPlayer("Merchant Moogle : Miscellaneous items Kupo.  Unlock more items with Feretory Aura!", 0x1F);
+		
 		elseif (page == 9) then
 	    local stock_9 =
         {
