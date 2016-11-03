@@ -6,6 +6,7 @@
 require("scripts/globals/status");
 require("scripts/globals/titles");
 require("scripts/globals/dynamis");
+require("scripts/globals/keyitems");
 
 -----------------------------------
 -- onMobSpawn Action
@@ -90,10 +91,10 @@ end;
 function onMobDeath(mob,killer)
 killer:setVar("DynaWeakener",0);
 
-	if (killer:hasKeyItem(HYDRA_CORPS_EYEGLASS) == false) then
+	if (killer:hasKeyItem(HYDRA_CORPS_TACTICAL_MAP) == false) then
 		killer:setVar("DynaBastok_Win",1);
-		killer:addKeyItem(HYDRA_CORPS_EYEGLASS);
-		killer:messageSpecial(KEYITEM_OBTAINED,HYDRA_CORPS_EYEGLASS);
+		killer:addKeyItem(HYDRA_CORPS_TACTICAL_MAP);
+		killer:messageSpecial(KEYITEM_OBTAINED,HYDRA_CORPS_TACTICAL_MAP);
 		killer:addTitle(DYNAMISBASTOK_INTERLOPER); -- Add title
 	end
 

@@ -44,20 +44,25 @@ if (GetMobAction(17534977) == 0 and trade:hasItemQty(3405,1)) and trade:hasItemQ
 	player:setVar("DynaWeakener",4);
 	SpawnMob(17534977):updateClaim(player);
 	player:delKeyItem(ALABASTER_GRANULES_OF_TIME);
+	player:tradeComplete();
 elseif (GetMobAction(17534977) == 0 and trade:hasItemQty(3405,1)) and trade:hasItemQty(3406,1) and trade:hasItemQty(3407,1) and trade:hasItemQty(3408,1) and player:hasKeyItem(AMBER_GRANULES_OF_TIME) then
 	player:setVar("DynaWeakener",2);
 	SpawnMob(17534977):updateClaim(player);
     player:delKeyItem(AMBER_GRANULES_OF_TIME);
+	player:tradeComplete();
 elseif (GetMobAction(17534977) == 0 and trade:hasItemQty(3405,1)) and trade:hasItemQty(3406,1) and trade:hasItemQty(3407,1) and trade:hasItemQty(3408,1) and player:hasKeyItem(AZURE_GRANULES_OF_TIME) then
 	player:setVar("DynaWeakener",2);
 	SpawnMob(17534977):updateClaim(player);
 	player:delKeyItem(AZURE_GRANULES_OF_TIME);
+	player:tradeComplete();
 elseif (GetMobAction(17534977) == 0 and trade:hasItemQty(3405,1)) and trade:hasItemQty(3406,1) and trade:hasItemQty(3407,1) and trade:hasItemQty(3408,1) and player:hasKeyItem(CRIMSON_GRANULES_OF_TIME) then
     player:setVar("DynaWeakener",1);
 	SpawnMob(17534977):updateClaim(player);
-	player:delKeyItem(CRIMSON_GRANULES_OF_TIME);	
+	player:delKeyItem(CRIMSON_GRANULES_OF_TIME);
+    player:tradeComplete();	
 elseif (GetMobAction(17534977) == 0 and trade:hasItemQty(3405,1)) and trade:hasItemQty(3406,1) and trade:hasItemQty(3407,1) and trade:hasItemQty(3408,1) then
 player:setVar("DynaWeakener",0);
+    player:tradeComplete();
 	SpawnMob(17534977):updateClaim(player);	
 end	
 

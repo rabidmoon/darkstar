@@ -15,9 +15,12 @@ require("scripts/zones/Dynamis-Windurst/TextIDs");
 -----------------------------------
 
 function onMobSpawn(mob)
+local vulture = mob:getID()
+GetMobByID(vulture):setDropID(5026); -- Default Drop ID
 mob:setMod(MOD_ACC,260);
 mob:setMod(MOD_EVA,295);
 mob:setMod(MOD_DEF,220);
+
 
 
 
@@ -52,84 +55,47 @@ end;
 -----------------------------------
 function onWeaponskillHit(mob, attacker, weaponskill)
 -- Staggering Function
-if (target:getObjType() == TYPE_PC) then
-local isweak = mob:getLocalVar("WeakenedTrigger");
+if (attacker:getObjType() == TYPE_PC) then
+	local isweak = mob:getLocalVar("WeakenedTrigger");
+	local vulture = mob:getID()
+	
+	local wsweakness = math.random(1,1000);
+	attacker:PrintToPlayer(wsweakness);
+	if (wsweakness > 180) and (wsweakness < 401) and (isweak ~= 1) then
+		mob:weaknessTrigger(0); -- Yellow Stagger Increase Scyld 55% of Triggers
+		mob:addStatusEffect(EFFECT_TERROR,1,0,10);
+		local randomscyld = math.random(10,20);
+		local oldscyld = attacker:getVar("ScyldMultiplier");
+		local newscyld = (randomscyld + oldscyld);
+		attacker:setVar("ScyldMultiplier",newscyld);
+		mob:setLocalVar("WeakenedTrigger",1);
+		attacker:PrintToPlayer("You have been granted a "..randomscyld.."% scyld bonus.  Total Bonus: "..newscyld.."%.", 0x15);
+	elseif (wsweakness > 80) and (wsweakness < 181) and (isweak ~= 1) then
+		mob:weaknessTrigger(1); -- Blue Stagger drops Memoirs which grants 4-8 currency  15%
+		mob:addStatusEffect(EFFECT_TERROR,1,0,10);
+		GetMobByID(vulture):setDropID(6048); -- Miratetes Memoirs
+		mob:setLocalVar("WeakenedTrigger",1);
+	elseif (wsweakness > 20) and (wsweakness < 81) and (isweak ~= 1) then
+		mob:weaknessTrigger(2); -- Red Stagger drops Pop Items 10%
+		mob:addStatusEffect(EFFECT_TERROR,1,0,10);
+		local itemdrop = math.random(1,4);
+		if (itemdrop == 1) then
+			GetMobByID(vulture):setDropID(6050); -- Fiendish Tome 2
+		elseif (itemdrop == 2) then
+			GetMobByID(vulture):setDropID(6051); -- Fiendish Tome 3
+		elseif (itemdrop == 3) then
+			GetMobByID(vulture):setDropID(6052); -- Fiendish Tome 4
+		elseif (itemdrop == 4) then
+			GetMobByID(vulture):setDropID(6053); -- Fiendish Tome 5
+		end
+		mob:setLocalVar("WeakenedTrigger",1);
+	elseif (wsweakness < 21) and (isweak ~= 1) then
+		mob:weaknessTrigger(3); -- White Stagger drops 100's
+		mob:addStatusEffect(EFFECT_TERROR,1,0,10);
+		GetMobByID(vulture):setDropID(6049); -- Montiont Silverpiece
+		mob:setLocalVar("WeakenedTrigger",1);
+	end
 
-local wsweakness = math.random(1,200);
-attacker:PrintToPlayer(wsweakness);
-if (wsweakness > 145) and (isweak ~= 1) then
-mob:weaknessTrigger(0); -- Yellow Stagger Increase Scyld  27.5%
-mob:addStatusEffect(EFFECT_TERROR,1,0,10);
-SetDropRate(5026,4248,0); -- Memoirs
-SetDropRate(5026,1453,0); -- Montiont Silverpiece
-SetDropRate(5026,3405,0); -- Fiendish Tome 2
-SetDropRate(5026,3406,0); -- Fiendish Tome 3
-SetDropRate(5026,3407,0); -- Fiendish Tome 4
-SetDropRate(5026,3408,0); -- Fiendish Tome 5
-
-local randomscyld = math.random(10,20);
-local oldscyld = attacker:getVar("ScyldMultiplier");
-local newscyld = (randomscyld + oldscyld);
-attacker:setVar("ScyldMultiplier",newscyld);
-mob:setLocalVar("WeakenedTrigger",1);
-attacker:PrintToPlayer("You have been granted a "..randomscyld.."% scyld bonus", 0x15);
-elseif (wsweakness > 20) and (wsweakness < 50) and (isweak ~= 1) then
-mob:weaknessTrigger(1); -- Blue Stagger drops Memoirs which grants 4-8 currency  15%
-mob:addStatusEffect(EFFECT_TERROR,1,0,10);
-SetDropRate(5026,4248,1000); -- Memoirs
-SetDropRate(5026,1453,0); -- Montiont Silverpiece
-SetDropRate(5026,3405,0); -- Fiendish Tome 2
-SetDropRate(5026,3406,0); -- Fiendish Tome 3
-SetDropRate(5026,3407,0); -- Fiendish Tome 4
-SetDropRate(5026,3408,0); -- Fiendish Tome 5
-
-mob:setLocalVar("WeakenedTrigger",1);
-elseif (wsweakness > 90) and (wsweakness < 110) and (isweak ~= 1) then
-mob:weaknessTrigger(2); -- Red Stagger drops Pop Items 10%
-mob:addStatusEffect(EFFECT_TERROR,1,0,10);
-local itemdrop = math.random(1,4);
-if (itemdrop == 1) then
-SetDropRate(5026,4248,0); -- Memoirs
-SetDropRate(5026,1453,0); -- Montiont Silverpiece
-SetDropRate(5026,3405,1000); -- Fiendish Tome 2
-SetDropRate(5026,3406,0); -- Fiendish Tome 3
-SetDropRate(5026,3407,0); -- Fiendish Tome 4
-SetDropRate(5026,3408,0); -- Fiendish Tome 5
-elseif (itemdrop == 2) then
-SetDropRate(5026,4248,0); -- Memoirs
-SetDropRate(5026,1453,0); -- Montiont Silverpiece
-SetDropRate(5026,3405,0); -- Fiendish Tome 2
-SetDropRate(5026,3406,1000); -- Fiendish Tome 3
-SetDropRate(5026,3407,0); -- Fiendish Tome 4
-SetDropRate(5026,3408,0); -- Fiendish Tome 5
-elseif (itemdrop == 3) then
-SetDropRate(5026,4248,0); -- Memoirs
-SetDropRate(5026,1453,0); -- Montiont Silverpiece
-SetDropRate(5026,3405,0); -- Fiendish Tome 2
-SetDropRate(5026,3406,0); -- Fiendish Tome 3
-SetDropRate(5026,3407,1000); -- Fiendish Tome 4
-SetDropRate(5026,3408,0); -- Fiendish Tome 5
-elseif (itemdrop == 4) then
-SetDropRate(5026,4248,0); -- Memoirs
-SetDropRate(5026,1453,0); -- Montiont Silverpiece
-SetDropRate(5026,3405,0); -- Fiendish Tome 2
-SetDropRate(5026,3406,0); -- Fiendish Tome 3
-SetDropRate(5026,3407,0); -- Fiendish Tome 4
-SetDropRate(5026,3408,1000); -- Fiendish Tome 5
-end
-mob:setLocalVar("WeakenedTrigger",1);
-elseif (wsweakness < 4) and (isweak ~= 1) then
-mob:weaknessTrigger(3); -- White Stagger drops 100's
-mob:addStatusEffect(EFFECT_TERROR,1,0,10);
-SetDropRate(5026,4248,0); -- Memoirs
-SetDropRate(5026,1453,1000); -- Montiont Silverpiece
-SetDropRate(5026,3405,0); -- Fiendish Tome 2
-SetDropRate(5026,3406,0); -- Fiendish Tome 3
-SetDropRate(5026,3407,0); -- Fiendish Tome 4
-SetDropRate(5026,3408,0); -- Fiendish Tome 5
-
-mob:setLocalVar("WeakenedTrigger",1);
-end
 end
 
 
@@ -219,7 +185,9 @@ function onMobDeath(mob,killer)
 	local level = killer:getMainLvl();
 	local scyld = math.floor((level - 65) * (1 + (scyldmult/100)));
 	local stagger = mob:getLocalVar("MonsterStagger");
-	
+
+
+		
 	
 	
 	
@@ -239,5 +207,11 @@ function onMobDeath(mob,killer)
 	killer:addCurrency("scyld", scyld);
 	killer:PrintToPlayer(string.format("%s gains "..scyld.." scyld.", killer:getName()), 0x15);
 	end
+
 	
+end;
+
+function onMobDespawn(mob)
+
+
 end;

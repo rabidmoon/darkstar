@@ -15,6 +15,8 @@ require("scripts/zones/Dynamis-Windurst/TextIDs");
 -----------------------------------
 
 function onMobSpawn(mob)
+local worm = mob:getID()
+GetMobByID(worm):setDropID(5014); -- Default Drop ID
 mob:setMod(MOD_ACC,260);
 mob:setMod(MOD_EVA,295);
 mob:setMod(MOD_DEF,220);
@@ -53,84 +55,46 @@ end;
 -----------------------------------
 function onWeaponskillHit(mob, attacker, weaponskill)
 -- Staggering Function
-if (target:getObjType() == TYPE_PC) then
-local isweak = mob:getLocalVar("WeakenedTrigger");
+if (attacker:getObjType() == TYPE_PC) then
+	local isweak = mob:getLocalVar("WeakenedTrigger");
+	local worm = mob:getID()
 
-local wsweakness = math.random(1,1000); -- 40% stagger Rate
-attacker:PrintToPlayer(wsweakness);
-if (wsweakness > 180) and (wsweakness < 401) and (isweak ~= 1) then
-mob:weaknessTrigger(0); -- Yellow Stagger Increase Scyld 55% of Triggers
-mob:addStatusEffect(EFFECT_TERROR,1,0,10);
-SetDropRate(5014,0,4249,0); -- Schultz Battle Theorum
-SetDropRate(5014,0,1456,0); -- 100 Byne Bill
-SetDropRate(5014,0,3410,0); -- Fiendish Tome 7
-SetDropRate(5014,0,3411,0); -- Fiendish Tome 8
-SetDropRate(5014,0,3412,0); -- Fiendish Tome 9
-SetDropRate(5014,0,3413,0); -- Fiendish Tome 10
-
-local randomscyld = math.random(10,20);
-local oldscyld = attacker:getVar("ScyldMultiplier");
-local newscyld = (randomscyld + oldscyld);
-attacker:setVar("ScyldMultiplier",newscyld);
-mob:setLocalVar("WeakenedTrigger",1);
-attacker:PrintToPlayer("You have been granted a "..randomscyld.."% scyld bonus", 0x15);
-elseif (wsweakness > 80) and (wsweakness < 181) and (isweak ~= 1) then
-mob:weaknessTrigger(1); -- Blue Stagger drops Memoirs which grants 4-8 currency  25% of Triggers 
-mob:addStatusEffect(EFFECT_TERROR,1,0,10);
-SetDropRate(5014,0,4249,1000); -- Schultz Battle Theorum
-SetDropRate(5014,0,1456,0); -- 100 Byne Bill
-SetDropRate(5014,0,3410,0); -- Fiendish Tome 7
-SetDropRate(5014,0,3411,0); -- Fiendish Tome 8
-SetDropRate(5014,0,3412,0); -- Fiendish Tome 9
-SetDropRate(5014,0,3413,0); -- Fiendish Tome 10
-
-mob:setLocalVar("WeakenedTrigger",1);
-elseif (wsweakness > 20) and (wsweakness < 81) and (isweak ~= 1) then
-mob:weaknessTrigger(2); -- Red Stagger drops Pop Items 15% of Triggers
-mob:addStatusEffect(EFFECT_TERROR,1,0,10);
-local itemdrop = math.random(1,4);
-if (itemdrop == 1) then
-SetDropRate(5014,0,4249,0); -- Schultz Battle Theorum
-SetDropRate(5014,0,1456,0); -- 100 Byne Bill
-SetDropRate(5014,0,3410,1000); -- Fiendish Tome 7
-SetDropRate(5014,0,3411,0); -- Fiendish Tome 8
-SetDropRate(5014,0,3412,0); -- Fiendish Tome 9
-SetDropRate(5014,0,3413,0); -- Fiendish Tome 10
-elseif (itemdrop == 2) then
-SetDropRate(5014,0,4249,0); -- Schultz Battle Theorum
-SetDropRate(5014,0,1456,0); -- 100 Byne Bill
-SetDropRate(5014,0,3410,0); -- Fiendish Tome 7
-SetDropRate(5014,0,3411,1000); -- Fiendish Tome 8
-SetDropRate(5014,0,3412,0); -- Fiendish Tome 9
-SetDropRate(5014,0,3413,0); -- Fiendish Tome 10
-elseif (itemdrop == 3) then
-SetDropRate(5014,0,4249,0); -- Schultz Battle Theorum
-SetDropRate(5014,0,1456,0); -- 100 Byne Bill
-SetDropRate(5014,0,3410,0); -- Fiendish Tome 7
-SetDropRate(5014,0,3411,0); -- Fiendish Tome 8
-SetDropRate(5014,0,3412,1000); -- Fiendish Tome 9
-SetDropRate(5014,0,3413,0); -- Fiendish Tome 10
-elseif (itemdrop == 4) then
-SetDropRate(5014,0,4249,0); -- Schultz Battle Theorum
-SetDropRate(5014,0,1456,0); -- 100 Byne Bill
-SetDropRate(5014,0,3410,0); -- Fiendish Tome 7
-SetDropRate(5014,0,3411,0); -- Fiendish Tome 8
-SetDropRate(5014,0,3412,0); -- Fiendish Tome 9
-SetDropRate(5014,0,3413,1000); -- Fiendish Tome 10
-end
-mob:setLocalVar("WeakenedTrigger",1);
-elseif (wsweakness < 21) and (isweak ~= 1) then
-mob:weaknessTrigger(3); -- White Stagger drops 100's  5% of Triggers
-mob:addStatusEffect(EFFECT_TERROR,1,0,10);
-SetDropRate(5014,0,4249,0); -- Schultz Battle Theorum
-SetDropRate(5014,0,1456,1000); -- 100 Byne Bill
-SetDropRate(5014,0,3410,0); -- Fiendish Tome 7
-SetDropRate(5014,0,3411,0); -- Fiendish Tome 8
-SetDropRate(5014,0,3412,0); -- Fiendish Tome 9
-SetDropRate(5014,0,3413,0); -- Fiendish Tome 10
-
-mob:setLocalVar("WeakenedTrigger",1);
-end
+	local wsweakness = math.random(1,1000); -- 40% stagger Rate
+	attacker:PrintToPlayer(wsweakness);
+	if (wsweakness > 180) and (wsweakness < 401) and (isweak ~= 1) then
+		mob:weaknessTrigger(0); -- Yellow Stagger Increase Scyld 55% of Triggers
+		mob:addStatusEffect(EFFECT_TERROR,1,0,10);
+		local randomscyld = math.random(10,20);
+		local oldscyld = attacker:getVar("ScyldMultiplier");
+		local newscyld = (randomscyld + oldscyld);
+		attacker:setVar("ScyldMultiplier",newscyld);
+		mob:setLocalVar("WeakenedTrigger",1);
+		attacker:PrintToPlayer("You have been granted a "..randomscyld.."% scyld bonus.  Total Bonus: "..newscyld.."%.", 0x15);
+	elseif (wsweakness > 80) and (wsweakness < 181) and (isweak ~= 1) then
+		mob:weaknessTrigger(1); -- Blue Stagger drops Memoirs which grants 4-8 currency  25% of Triggers 
+		mob:addStatusEffect(EFFECT_TERROR,1,0,10);
+		GetMobByID(worm):setDropID(6030); -- Shultz
+		mob:setLocalVar("WeakenedTrigger",1);
+	elseif (wsweakness > 20) and (wsweakness < 81) and (isweak ~= 1) then
+		mob:weaknessTrigger(2); -- Red Stagger drops Pop Items 15% of Triggers
+		mob:addStatusEffect(EFFECT_TERROR,1,0,10);
+		local itemdrop = math.random(1,4);
+		if (itemdrop == 1) then
+			GetMobByID(worm):setDropID(6032); -- Fiendish Tome 7
+		elseif (itemdrop == 2) then
+			GetMobByID(worm):setDropID(6033); -- Fiendish Tome 8
+		elseif (itemdrop == 3) then
+			GetMobByID(worm):setDropID(6034); -- Fiendish Tome 9
+		elseif (itemdrop == 4) then
+			GetMobByID(worm):setDropID(6035); -- Fiendish Tome 10
+		end
+		mob:setLocalVar("WeakenedTrigger",1);
+	elseif (wsweakness < 21) and (isweak ~= 1) then
+		mob:weaknessTrigger(3); -- White Stagger drops 100's  5% of Triggers
+		mob:addStatusEffect(EFFECT_TERROR,1,0,10);
+		GetMobByID(worm):setDropID(6031); -- 100 Byne Bill
+		mob:setLocalVar("WeakenedTrigger",1);
+	end
 end
 
 

@@ -8,6 +8,7 @@ package.loaded["scripts/zones/Dynamis-Windurst/TextIDs"] = nil;
 
 require("scripts/globals/settings");
 require("scripts/zones/Dynamis-Windurst/TextIDs");
+require("scripts/globals/keyitems");
 
 -----------------------------------
 --  onInitialize
@@ -34,14 +35,20 @@ end;
 
 function onZoneIn(player,prevZone)
     local cs = -1;
-	if (player:getObjType() == TYPE_PC) then
-	 player:addStatusEffect(EFFECT_LEVEL_RESTRICTION,75,3,5400);
-     player:PrintToPlayer("You have 60 minutes remaining in Dynamis", 0xD);
+	local d1 = 0;
+	local d2 = 0;
+	local d3 = 0;
+	local d4 = 0;
+	local d5 = 0;
+	local d6 = 0;
+	local reduction = 0;
+	local reentertime = 43200;
+	
+	
 	 player:setVar("Dynamis_Time_Remaining",5400000);
 	 player:setVar("ScyldMultiplier",0);
-	 player:setVar("Dynamis_Reenter",os.time() + 14400);
+	 player:setVar("Dynamis_Reenter",os.time() + reentertime);
 	return cs;
-	end
 end;
 
 -----------------------------------

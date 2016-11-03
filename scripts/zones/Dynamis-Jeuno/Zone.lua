@@ -8,6 +8,7 @@ package.loaded["scripts/zones/Dynamis-Jeuno/TextIDs"] = nil;
 
 require("scripts/globals/settings");
 require("scripts/zones/Dynamis-Jeuno/TextIDs");
+require("scripts/globals/keyitems");
 
 -----------------------------------
 --  onInitialize
@@ -35,36 +36,15 @@ end;
 function onZoneIn(player,prevZone)
     local cs = -1;
 
-    local realDay = os.time();
-    local dynaWaitxDay = player:getVar("dynaWaitxDay");
+	local reentertime = player:getVar("Dyna_Reduction");
 
-    if ((dynaWaitxDay + (BETWEEN_2DYNA_WAIT_TIME * 24 * 60 * 60)) < realDay or player:getVar("DynamisID") == GetServerVariable("[DynaJeuno]UniqueID")) then
-        if (player:isBcnmsFull() == 1) then
-            if (player:hasStatusEffect(EFFECT_DYNAMIS, 0) == false) then
-                inst = player:addPlayerToDynamis(1283);
+	player:addStatusEffect(EFFECT_LEVEL_RESTRICTION,75,3,5400);
 
-                if (inst == 1) then
-                    player:bcnmEnter(1283);
-                else
-                     cs = 0;
-                end
-            else
-                player:bcnmEnter(1283);
-            end
-        else
-            inst = player:bcnmRegister(1283);
-
-            if (inst == 1) then
-                player:bcnmEnter(1283);
-            else
-                cs = 0;
-            end
-        end
-    else
-        cs = 0;
-    end
-
-    return cs;
+	 player:setVar("Dynamis_Time_Remaining",5400000);
+	 player:setVar("ScyldMultiplier",0);
+	 player:setVar("Dynamis_Reenter",os.time() + reentertime);
+	 
+	 return cs;
 end;
 
 -----------------------------------
