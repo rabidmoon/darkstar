@@ -1993,9 +1993,13 @@ void CAIMobDummy::TryLink()
         }
     }
    
-    if (m_PBattleTarget->PAlly.size() != 0)
+  
+   // Code below will force Trusts to fight anything that agros.  Disabled for now 
+   uint32 bodygaurd = charutils::GetVar((CCharEntity*)m_PBattleTarget, "TrustBodygaurd");
+   
+   if (m_PBattleTarget->PAlly.size() != 0 && bodygaurd == 1)
     {
-        for ( auto ally : m_PBattleTarget->PAlly)
+       for ( auto ally : m_PBattleTarget->PAlly)
         {
             ally->PBattleAI->SetBattleTarget(m_PMob);
         }        
