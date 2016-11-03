@@ -248,6 +248,7 @@ uint8 CAttack::GetHitRate()
         if (m_hitRate == 100)
         {
             m_attackRound->SetSATA(true);
+			//ShowWarning(CL_RED"Attack.CPP SNEAK ATTACK IS TRUE! /n" CL_RESET);
         }
 	}
 	// Left hand hitrate
@@ -310,10 +311,10 @@ void CAttack::ProcessDamage()
 	// Sneak attack Nanaa.
 	if (m_attacker->objtype == TYPE_PET && 
 	    m_isFirstSwing &&
-		m_attacker->StatusEffectContainer->HasStatusEffect(EFFECT_SNEAK_ATTACK) &&
+		m_attacker->StatusEffectContainer->HasStatusEffect(EFFECT_TRUST_SNEAK_ATTACK) &&
 		((abs(m_victim->loc.p.rotation - m_attacker->loc.p.rotation) < 23)))
 	{
-		//ShowWarning(CL_GREEN"SNEAK ATTACK BY NANAA IS TRIGGERED!!!!!!\n" CL_RESET);
+		ShowWarning(CL_GREEN"SNEAK ATTACK BY NANAA IS TRIGGERED!!!!!!\n" CL_RESET);
 		m_trickAttackDamage = m_attacker->DEX();
 	}
 

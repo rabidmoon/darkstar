@@ -15,7 +15,7 @@ function onMobSkillCheck(target,mob,skill)
 end;
 
 function onPetAbility(target, pet, skill)
- pet:addStatusEffect(EFFECT_SNEAK_ATTACK,1,0,60);
+ pet:addStatusEffect(EFFECT_TRUST_SNEAK_ATTACK,1,0,60);
  return EFFECT_SNEAK_ATTACK;
 
 end;

@@ -747,6 +747,7 @@ EFFECT_TRUST_ACCESSION          = 806
 EFFECT_TRUST_SUBLIMATION_ACTIVATED = 807
 EFFECT_TRUST_SUBLIMATION_COMPLETE = 808
 EFFECT_REFRESH_DOWN               = 809
+EFFECT_TRUST_SNEAK_ATTACK         = 810
 -- EFFECT_PLACEHOLDER              = 802 -- Description
 -- 802-1022
 -- EFFECT_PLACEHOLDER             = 1023 -- The client dat file seems to have only this many "slots", results of exceeding that are untested.

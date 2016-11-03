@@ -652,6 +652,7 @@ INSERT INTO `status_effects` VALUES (806,'trust_accession',32,0,0,0,0,0,0,0);
 INSERT INTO `status_effects` VALUES (807,'trust_sublimation_activated',32,0,0,0,0,0,0,0);
 INSERT INTO `status_effects` VALUES (808,'trust_sublimation_complete',32,0,0,0,0,0,0,0);
 INSERT INTO `status_effects` VALUES (809,'refresh_down',32,0,0,0,0,0,0,0);
+INSERT INTO `status_effects` VALUES (810,'trust_sneak_attack',32,0,0,0,0,0,0,0);
 /*!40000 ALTER TABLE `status_effects` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
