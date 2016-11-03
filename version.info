@@ -3,7 +3,8 @@
 #Expected Client version (wrong version cannot log in)
 #CLIENT_VER: 30160203_0
 #CLIENT_VER: 3016029_0
-CLIENT_VER: 30160629_0
+#CLIENT_VER: 30160728_0
+CLIENT_VER: 30161004_1
 
 #Current Server Version. Not the same thing as source revision.
 #DSP_VER: Unused because we aren't even close to a "release" yet.
