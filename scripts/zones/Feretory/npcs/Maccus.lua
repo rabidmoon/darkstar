@@ -85,6 +85,7 @@ if (player:getVar("FerretoryPlantoidComplete") == 1) then
 	player:setVar("FerretoryAura",2);
 	aura = player:getVar("FerretoryAura");
 	player:PrintToPlayer("Your Aura has reached Level "..aura.."!", 0x15);
+	player:PrintToPlayer("Signet Staff is now available in Mogshop #8", 0x15);
 
     end
 	
@@ -123,6 +124,7 @@ if (player:getVar("FerretoryPlantoidComplete") == 1) then
 	player:setVar("FerretoryAura",4);
 	aura = player:getVar("FerretoryAura");
 	player:PrintToPlayer("Your Aura has reached Level "..aura.."!", 0x15);
+	player:PrintToPlayer("Coffer Keys are now available in Mogshop #8", 0x15);	
 
     end
 	
@@ -194,7 +196,7 @@ if (player:getVar("FerretoryPlantoidComplete") == 1) then
 	player:setVar("FerretoryLv75Complete",0);
 	player:setVar("FerretoryQuest75",9); -- New Non Aura Quests
 	player:setVar("infamycap",100000);
-	player:setVar("infamymult",4);
+	player:setVar("infamymult",2);
 	player:PrintToPlayer("Your infamy cap has increased and you now have a bonus infamy multiplier!", 0x15);
 	end
 	
@@ -209,7 +211,7 @@ if (player:getVar("FerretoryPlantoidComplete") == 1) then
 	player:PrintToPlayer("Maccus : Great Job.  While I can't raise your aura yet, you can have this..", 0xD);
 	player:setVar("FerretoryLv75Complete",0);
 	player:setVar("FerretoryQuest75",10); -- New Non Aura Quests
-	player:setVar("infamymult",6);
+	player:setVar("infamymult",4);
 	player:PrintToPlayer("Your bonus infamy multiplier has increased!", 0x15);
 	end
 	
@@ -224,7 +226,7 @@ if (player:getVar("FerretoryPlantoidComplete") == 1) then
 	player:PrintToPlayer("Maccus : Great Job.  While I can't raise your aura yet, you can have this..", 0xD);
 	player:setVar("FerretoryLv75Complete",0);
 	player:setVar("FerretoryQuest75",11); -- New Non Aura Quests
-	player:setVar("infamymult",10);
+	player:setVar("infamymult",5);
 	player:setVar("Trustsize",1);
 	player:PrintToPlayer("Your bonus infamy multiplier has increased!", 0x15);
     player:PrintToPlayer("You now have the ability to summon a 4th Trust!", 0x15);
