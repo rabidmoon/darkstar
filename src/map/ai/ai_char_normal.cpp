@@ -3385,5 +3385,6 @@ void CAICharNormal::DoAttack()
     /////////////////////////////////////////////////////////////////////////////////////////////
 
     m_PChar->StatusEffectContainer->DelStatusEffectsByFlag(EFFECTFLAG_ATTACK | EFFECTFLAG_DETECTABLE);
+	//ShowWarning(CL_RED"AI_CHAR_NORMAL SNEAK ATTACK IS TRIGGERED! \n" CL_RESET);
     m_PChar->loc.zone->PushPacket(m_PChar, CHAR_INRANGE_SELF, new CActionPacket(m_PChar));
 }

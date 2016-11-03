@@ -129,6 +129,7 @@ protected:
 	int16 AdelhiedSpell();
 	CBattleEntity* getWounded(uint8 threshold);
 	CBattleEntity* getWoundedLow(uint8 threshold);	
+	CBattleEntity* getWoundedAga(uint8 threshold);
 
     void SendTooFarInterruptMessage(CBattleEntity* PTarg);
 

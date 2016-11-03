@@ -1133,11 +1133,11 @@ namespace petutils
 		}
 		else if (PetID == PETID_CURILLA)
 		{
-		uint16 defrate = (floor(PAlly->GetMLevel() * 4.2));
+		uint16 defrate = (floor(PAlly->GetMLevel() * 2.8));
 		uint16 modstat = (floor(PAlly->GetMLevel() * 1.0));
 		uint16 hpstat = (floor(PAlly->GetMLevel() * 3.2));
 		uint16 accstat = (floor(PAlly->GetMLevel() * 0.5));
-		uint16 shielddef = (floor(20 + (PAlly->GetMLevel() * 0.30)));
+		uint16 shielddef = (floor(10 + (PAlly->GetMLevel() / 8)));
 		//ShowWarning(CL_GREEN"CURILLA TRIGGERED SPAWN ALLY!!! \n" CL_RESET);
 		PAlly->setModifier(MOD_ACC, battleutils::GetMaxSkill(SKILL_GAX, JOB_WAR, PAlly->GetMLevel()) + accstat); //A+ Acc
 		PAlly->setModifier(MOD_EVA, battleutils::GetMaxSkill(SKILL_SYH, JOB_WAR, PAlly->GetMLevel())); //B+ Evasion
@@ -1150,7 +1150,7 @@ namespace petutils
 		PAlly->setModifier(MOD_ENMITY_LOSS_REDUCTION, 20);
 		PAlly->m_Weapons[SLOT_MAIN]->setDamage(floor(PAlly->GetMLevel()*0.48f) + 6);// D:42 @75
 		PAlly->m_Weapons[SLOT_MAIN]->setDelay(floor(1000.0f*(260.0f / 60.0f))); //260 delay
-		PAlly->m_Weapons[SLOT_SUB]->setShieldSize(4);
+		PAlly->m_Weapons[SLOT_SUB]->setShieldSize(3);
 		uint8 curillashieldsize = PAlly->m_Weapons[SLOT_SUB]->getShieldSize();
 		//PAlly->m_Weapons[SLOT_SUB]->IsShield();
 		PAlly->setModifier(MOD_CONVMPTOHP, 1);
@@ -1218,7 +1218,7 @@ namespace petutils
 		PAlly->setModifier(MOD_EVA, battleutils::GetMaxSkill(SKILL_SYH, JOB_WAR, PAlly->GetMLevel())); //B+ Evasion
 		PAlly->setModifier(MOD_ATT, battleutils::GetMaxSkill(SKILL_GAX, JOB_WAR, PAlly->GetMLevel()) + bmoddatt);// A+ Attack
 		PAlly->setModifier(MOD_DEF, battleutils::GetMaxSkill(SKILL_POL, JOB_WAR, PAlly->GetMLevel()));// B- Defense
-		PAlly->setModifier(MOD_BLUE, battleutils::GetMaxSkill(SKILL_GAX, JOB_WAR, PAlly->GetMLevel()));// A+ Blue Magic
+		PAlly->setModifier(MOD_BLUE, battleutils::GetMaxSkill(SKILL_SYH, JOB_WAR, PAlly->GetMLevel()));// B+ Blue Magic
 		PAlly->setModifier(MOD_DUAL_WIELD, 20); // Dual Wield
 	    PAlly->setModifier(MOD_CONVMPTOHP, 1);
 		PAlly->setModifier(MOD_CONVHPTOMP, 1);
@@ -1245,6 +1245,7 @@ namespace petutils
 		uint16 moddatt = (PAlly->GetMLevel() * 1.0);
 		uint16 moddacc = (PAlly->GetMLevel() * 0.5);
 		uint16 modmab = (PAlly->GetMLevel() / 2);
+		uint16 modmacc = (PAlly->GetMLevel() / 2);
 		PAlly->setModifier(MOD_ACC, battleutils::GetMaxSkill(SKILL_POL, JOB_WAR, PAlly->GetMLevel()) + moddacc); //B+ Acc
 		PAlly->setModifier(MOD_EVA, battleutils::GetMaxSkill(SKILL_POL, JOB_WAR, PAlly->GetMLevel())); //B+ Evasion
 		PAlly->setModifier(MOD_ATT, battleutils::GetMaxSkill(SKILL_POL, JOB_WAR, PAlly->GetMLevel()) + moddatt);// B+ Attack
@@ -1253,7 +1254,8 @@ namespace petutils
 		PAlly->setModifier(MOD_DIVINE, battleutils::GetMaxSkill(SKILL_H2H, JOB_WAR, PAlly->GetMLevel()));// D Divine
 		PAlly->setModifier(MOD_ELEM, battleutils::GetMaxSkill(SKILL_H2H, JOB_WAR, PAlly->GetMLevel()));// D Elemental
 		PAlly->setModifier(MOD_ENFEEBLE, battleutils::GetMaxSkill(SKILL_H2H, JOB_WAR, PAlly->GetMLevel()));// D Enfeebling		
-		PAlly->setModifier(MOD_MATT, modmab); //Magic Attack Bonus		
+		PAlly->setModifier(MOD_MATT, modmab); //Magic Attack Bonus	
+		PAlly->setModifier(MOD_MACC, modmacc); //Magic Accuracy Bonus
 		PAlly->m_Weapons[SLOT_MAIN]->setDamage(floor(PAlly->GetMLevel()*0.49f));// D:37 @75
 		PAlly->m_Weapons[SLOT_MAIN]->setDelay(floor(1000.0f*(340.0f / 60.0f))); //340 delay	
 		PAlly->setModifier(MOD_CONVMPTOHP, 1);

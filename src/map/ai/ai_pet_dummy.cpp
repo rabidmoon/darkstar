@@ -2360,6 +2360,7 @@ bool CAIPetDummy::PetIsHealing() {
 
 void CAIPetDummy::ActionRoaming()
 {
+    uint32 trustassist = charutils::GetVar((CCharEntity*)m_PPet->PMaster,"TrustAssist");
     if (m_PPet->PMaster == nullptr || m_PPet->PMaster->isDead()) { // || m_PPet->PMaster->getZone() != m_PPet->getZone()) {
         m_ActionType = ACTION_FALL;
         ActionFall();
@@ -2379,9 +2380,16 @@ void CAIPetDummy::ActionRoaming()
 	
 	
     if (m_PBattleTarget != nullptr) {
+	   if (m_PPet->getPetType() == PETTYPE_TRUST && battleutils::HasClaim(m_PPet, m_PBattleTarget)) {
         m_ActionType = ACTION_ENGAGE;
         ActionEngage();
         return;
+		}
+		else if (m_PPet->getPetType() != PETTYPE_TRUST || trustassist == 1 ) { // put or variable turned on for toggle
+        m_ActionType = ACTION_ENGAGE;
+        ActionEngage();
+        return;	
+        }		
     }
 	//ShowWarning(CL_RED"PET IS ACTION ROAMING\n" CL_RESET);
     //((CCharEntity*)m_PPet->PMaster)->pushPacket(new CCharHealthPacket((CCharEntity*)m_PPet->PMaster));
@@ -3068,7 +3076,7 @@ void CAIPetDummy::ActionAttack()
 	} */
 	    //Use WS if SA is active
 		if (m_PPet->getPetType() == PETTYPE_TRUST && m_Tick >= m_LastEngageStart + 7000 && m_PPet->m_PetID == PETID_NANAA_MIHGO && m_PPet->health.tp >= 1000 && m_PPet->PetSkills.size() > 0
-		&& m_PPet->StatusEffectContainer->HasStatusEffect(EFFECT_SNEAK_ATTACK))
+		&& m_PPet->StatusEffectContainer->HasStatusEffect(EFFECT_TRUST_SNEAK_ATTACK))
     {
 		m_PBattleSubTarget = m_PBattleTarget;
         m_ActionType = ACTION_MOBABILITY_START;
@@ -3391,7 +3399,7 @@ void CAIPetDummy::ActionAttack()
                                 Action.speceffect = SPECEFFECT_CRITICAL_HIT;
                                 Action.messageID = 67;
                             }
-						    if (m_PPet->StatusEffectContainer->HasStatusEffect(EFFECT_SNEAK_ATTACK))
+						    if (m_PPet->StatusEffectContainer->HasStatusEffect(EFFECT_TRUST_SNEAK_ATTACK))
 			                {					
                                 damage = (int32)((m_PPet->GetMainWeaponDmg() + m_PPet->DEX() + battleutils::GetFSTR(m_PPet, m_PBattleTarget, SLOT_MAIN)) * DamageRatio);
                             }
@@ -3399,10 +3407,10 @@ void CAIPetDummy::ActionAttack()
 							{
 							    damage = (int32)((m_PPet->GetMainWeaponDmg() + battleutils::GetFSTR(m_PPet, m_PBattleTarget, SLOT_MAIN)) * DamageRatio);
 						    }
-							if (m_PPet->StatusEffectContainer->HasStatusEffect(EFFECT_SNEAK_ATTACK))
+							if (m_PPet->StatusEffectContainer->HasStatusEffect(EFFECT_TRUST_SNEAK_ATTACK))
 			                {
-					            //ShowWarning(CL_GREEN"HIT OCCURED REMOVING SA \n" CL_RESET);
-						        m_PPet->StatusEffectContainer->DelStatusEffect(EFFECT_SNEAK_ATTACK);
+					            ShowWarning(CL_GREEN"HIT OCCURED REMOVING SA in AI PET DUMMY \n" CL_RESET);
+						        m_PPet->StatusEffectContainer->DelStatusEffect(EFFECT_TRUST_SNEAK_ATTACK);
 					        }	
 			
                         }
@@ -3684,15 +3692,65 @@ int16 CAIPetDummy::KupipiSpell()
 	uint8 trigger = 60; // HP Trigger Threshold
 	uint8 lowHPP = 31;
 	uint8 lowtrigger = 30;	
+	uint8 lowtriggercuraga = 35;
 	uint8 level = m_PPet->GetMLevel();
     int16 spellID = -1;
 	
  CBattleEntity* master = m_PPet->PMaster;  
  CBattleEntity* mostWounded = getWounded(trigger);
  CBattleEntity* mostWoundedLow = getWounded(lowtrigger);
+ CBattleEntity* mostWoundedAga = getWounded(lowtriggercuraga);
  if (m_Tick >= m_LastKupipiMagicTime + m_kupipiHealRecast)  // Look for last magic healing spell time 
 	{
- 		if (mostWoundedLow != nullptr)
+	    // Curaga
+ 		if (mostWoundedAga != nullptr)
+		{
+        m_PBattleSubTarget = mostWounded;
+		if (level > 50)
+			if (m_PPet->health.mp > 179)  // Curaga III
+				{
+				 spellID = 9;
+				}		
+			else if (m_PPet->health.mp > 119)  // Curaga II
+				{
+				 spellID = 8;
+				}
+			else if (m_PPet->health.mp > 59)  // Curaga
+			    {
+				 spellID = 7;
+				}
+			else 
+			    {
+				 spellID = -1;
+				}
+		else if (level > 30)
+			if (m_PPet->health.mp > 119)  // Curaga II
+				{
+				 spellID = 8;
+				}
+			else if (m_PPet->health.mp > 59)  // Curaga
+			    {
+				 spellID = 7;
+				}
+			else 
+			    {
+				 spellID = -1;
+				}
+		else if (level > 15)
+			if (m_PPet->health.mp > 59)  // Curaga
+			    {
+				 spellID = 7;
+				}
+			else 
+			    {
+				 spellID = -1;
+				}
+        else
+		        {
+				 spellID = -1;
+				} 							
+	    }	
+ 		else if (mostWoundedLow != nullptr)
 		{
         m_PBattleSubTarget = mostWounded;
 		if (level > 60)
@@ -4252,6 +4310,9 @@ int16 CAIPetDummy::BlueSpell()
 	uint8 lowHPP = 31;
 	uint8 level = m_PPet->GetMLevel();
     int16 spellID = -1;
+	uint16 randtimer = dsprand::GetRandomNumber(1, 10);
+	randtimer = randtimer * 100;
+	
 	
  CBattleEntity* master = m_PPet->PMaster;  
  CBattleEntity* mostWounded = getWounded(trigger);
@@ -4319,7 +4380,7 @@ if (m_Tick >= m_LastBlueMagicHealCast + m_blueMagicHealRecast)  // Look for last
 			    {
 				 spellID = 569;  //RLB -> Jet Stream
 				}	
-        m_blueMagicRecast = 20000;
+        m_blueMagicRecast = 20000 + randtimer;
 		m_chainAffinityStatus = 0;
         m_LastBlueMagicCast = m_Tick;
         }		
@@ -4335,7 +4396,7 @@ if (m_Tick >= m_LastBlueMagicHealCast + m_blueMagicHealRecast)  // Look for last
 			    {
 				 spellID = -1;
 				}
-	    m_blueMagicRecast = 5000;
+        m_blueMagicRecast = 20000 + randtimer;
         m_LastBlueMagicCast = m_Tick;
         }		
 	
@@ -4854,7 +4915,7 @@ if (m_Tick >= m_LastBlueMagicHealCast + m_blueMagicHealRecast)  // Look for last
 				}
 		}		
 				
-		m_blueMagicRecast = 20000;
+        m_blueMagicRecast = 20000 + randtimer;
         m_LastBlueMagicCast = m_Tick;
     }	
 	return spellID;
@@ -7639,6 +7700,57 @@ CBattleEntity* CAIPetDummy::getWoundedLow(uint8 threshold)
     if (lowest <= threshold)
     {
         return mostWoundedLow;
+    }
+    else
+    {
+        return nullptr;
+    }
+
+}
+
+
+CBattleEntity* CAIPetDummy::getWoundedAga(uint8 threshold)
+{
+    uint8 lowest = 35;
+	uint8 allies = 0;
+    CBattleEntity* mostWoundedAga = nullptr;
+    if (m_PPet->PMaster == nullptr)
+        return nullptr;
+
+    if (m_PPet->PMaster->PParty != nullptr)  //For Party Members
+    {
+        for (auto member : m_PPet->PMaster->PParty->members)
+        {
+            if ( member->GetHPP() < lowest)
+            {
+                allies += 1;
+				if (allies == 3)
+				{
+				lowest = member->GetHPP();
+                mostWoundedAga = member;
+				}
+            }
+        }
+    }
+    if (m_PPet->PMaster->PAlly.size() > 0)  //For Trusts
+    {
+        for (auto ally : m_PPet->PMaster->PAlly)
+        {
+            if ( ally->GetHPP() < lowest)
+            {
+                allies += 1;
+				if (allies == 3)
+				{
+				lowest = ally->GetHPP();
+                mostWoundedAga = ally;
+				}
+            }
+        }
+    }
+    
+    if (lowest <= threshold)
+    {
+        return mostWoundedAga;
     }
     else
     {

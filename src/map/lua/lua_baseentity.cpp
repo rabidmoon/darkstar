@@ -741,6 +741,29 @@ inline int32 CLuaBaseEntity::getSpawnPos(lua_State* L)
 
 //==========================================================//
 
+inline int32 CLuaBaseEntity::addTreasure(lua_State *L)
+{
+    DSP_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
+    //DSP_DEBUG_BREAK_IF(m_PBaseEntity->objtype != TYPE_PC);
+
+    DSP_DEBUG_BREAK_IF(lua_isnil(L, 1) || !lua_isnumber(L, 1));
+
+    CCharEntity* PChar = (CCharEntity*)m_PBaseEntity;
+
+    if (PChar->PTreasurePool != nullptr)
+    {
+        PChar->PTreasurePool->AddItem((uint16)lua_tointeger(L, 1), PChar);
+    }
+    else
+    {
+        ShowError(CL_RED"Lua::addTreasure: Tried to add item to a treasure pool that was nullptr! \n" CL_RESET);
+    }
+    return 0;
+}
+
+
+//==========================================================//
+
 inline int32 CLuaBaseEntity::addItem(lua_State *L)
 {
     DSP_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
@@ -10254,6 +10277,29 @@ inline int32 CLuaBaseEntity::copyConfrontationEffect(lua_State* L)
     lua_pushinteger(L, power);
     return 1;
 }
+
+
+int32 CLuaBaseEntity::getDropID(lua_State* L)
+{
+    DSP_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
+    DSP_DEBUG_BREAK_IF(m_PBaseEntity->objtype != TYPE_MOB);
+
+    lua_pushinteger(L, static_cast<CMobEntity*>(m_PBaseEntity)->m_DropID);
+    return 1;
+}
+
+int32 CLuaBaseEntity::setDropID(lua_State* L)
+{
+    DSP_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
+    DSP_DEBUG_BREAK_IF(m_PBaseEntity->objtype != TYPE_MOB);
+    DSP_DEBUG_BREAK_IF(lua_isnil(L, 1) || !lua_isnumber(L, 1));
+
+    static_cast<CMobEntity*>(m_PBaseEntity)->m_DropID = lua_tointeger(L, 1);
+    return 0;
+}
+
+
+
 //==========================================================//
 
 const int8 CLuaBaseEntity::className[] = "CBaseEntity";
@@ -10285,6 +10331,7 @@ Lunar<CLuaBaseEntity>::Register_t CLuaBaseEntity::methods[] =
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,getStat),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,getMaxHP),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,getMaxMP),
+    LUNAR_DECLARE_METHOD(CLuaBaseEntity,addTreasure),	
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,addItem),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,delItem),	
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,addTempItem),
@@ -10704,5 +10751,7 @@ Lunar<CLuaBaseEntity>::Register_t CLuaBaseEntity::methods[] =
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,addPetMod),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,delPetMod),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,setPetMod),
+    LUNAR_DECLARE_METHOD(CLuaBaseEntity,getDropID),
+    LUNAR_DECLARE_METHOD(CLuaBaseEntity,setDropID),	
     {nullptr,nullptr}
 };

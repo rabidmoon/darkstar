@@ -116,7 +116,8 @@ public:
     int32 canUseCostume(lua_State*);        // check to see if character can use costume, 0 if so
     int32 canUseChocobo(lua_State *L);      // check to see if character can use chocobo, 0 if so
     int32 canUsePet(lua_State *L);          // check to see if character can call pet, 0 if so
-
+	
+	int32 addTreasure(lua_State*);
     int32 addItem(lua_State*);              // Add item to Entity inventory (additem(itemNumber,quantity))
 	int32 delItem(lua_State*);
     int32 hasItem(lua_State*);              // Check to see if Entity has item in inventory (hasItem(itemNumber))
@@ -567,6 +568,9 @@ public:
 
     int32 setElevator(lua_State* L);
 
+	int32 getDropID(lua_State* L);
+    int32 setDropID(lua_State* L);
+	
     int32 storeWithPorterMoogle(lua_State* L);
     int32 getRetrievableItemsForSlip(lua_State *L);
     int32 retrieveItemFromSlip(lua_State *L);

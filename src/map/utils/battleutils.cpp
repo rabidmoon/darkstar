@@ -2063,7 +2063,7 @@ namespace battleutils
 
                 baseTp = CalculateBaseTP((delay * 60) / 1000) / ratio;
             }
-
+		 
 
             if (giveTPtoAttacker)
             {
@@ -2104,8 +2104,7 @@ namespace battleutils
         else if (PDefender->objtype == TYPE_MOB)
             ((CMobEntity*)PDefender)->PEnmityContainer->UpdateEnmityFromDamage(PAttacker, 0);
 
-        if (PAttacker->objtype == TYPE_PC && !isRanged)
-            PAttacker->StatusEffectContainer->DelStatusEffectsByFlag(EFFECTFLAG_ATTACK);
+
 
         return damage;
     }
@@ -2223,8 +2222,9 @@ namespace battleutils
         if (PDefender->objtype == TYPE_PC)
             charutils::UpdateHealth((CCharEntity*)PDefender);
 
-        if (!isRanged)
+        if (!isRanged && PChar->objtype == TYPE_PC)
             PChar->StatusEffectContainer->DelStatusEffectsByFlag(EFFECTFLAG_ATTACK);
+			//ShowWarning(CL_GREEN"BATTLEUTILS SNEAK ATTACK IS TRIGGERED! \n" CL_RESET);
 
         return damage;
     }
@@ -2240,11 +2240,15 @@ namespace battleutils
     {
         int32 hitrate = 75;
 
-        if (PAttacker->objtype == TYPE_PC || PAttacker->objtype == TYPE_PET && ((PAttacker->StatusEffectContainer->HasStatusEffect(EFFECT_SNEAK_ATTACK) && (abs(PDefender->loc.p.rotation - PAttacker->loc.p.rotation) < 23 || PAttacker->StatusEffectContainer->HasStatusEffect(EFFECT_HIDE))) ||
+        if (PAttacker->objtype == TYPE_PC && ((PAttacker->StatusEffectContainer->HasStatusEffect(EFFECT_SNEAK_ATTACK) && (abs(PDefender->loc.p.rotation - PAttacker->loc.p.rotation) < 23 || PAttacker->StatusEffectContainer->HasStatusEffect(EFFECT_HIDE))) ||
             (charutils::hasTrait((CCharEntity*)PAttacker, TRAIT_ASSASSIN) && PAttacker->StatusEffectContainer->HasStatusEffect(EFFECT_TRICK_ATTACK) && battleutils::getAvailableTrickAttackChar(PAttacker, PDefender))))
         {
             hitrate = 100; //attack with SA active or TA/Assassin cannot miss
         }
+		else if (PAttacker->objtype == TYPE_PET && ((PAttacker->StatusEffectContainer->HasStatusEffect(EFFECT_TRUST_SNEAK_ATTACK) && (abs(PDefender->loc.p.rotation - PAttacker->loc.p.rotation) < 23))))
+		{
+			hitrate = 100; //attack with SA active or TA/Assassin cannot miss
+		}
         else
         {
             //Check For Ambush Merit - Melee
@@ -2303,7 +2307,7 @@ namespace battleutils
                 crithitrate = 100;
             }
         }		
-        else if (PAttacker->objtype == TYPE_PET && (!ignoreSneakTrickAttack) && PAttacker->StatusEffectContainer->HasStatusEffect(EFFECT_SNEAK_ATTACK))
+        else if (PAttacker->objtype == TYPE_PET && (!ignoreSneakTrickAttack) && PAttacker->StatusEffectContainer->HasStatusEffect(EFFECT_TRUST_SNEAK_ATTACK))
         {
             //ShowWarning(CL_GREEN"BATTLEUTILS SNEAK ATTACK IS TRIGGERED! /n" CL_RESET);
             if (abs(PDefender->loc.p.rotation - PAttacker->loc.p.rotation) < 23)
