@@ -26,5 +26,5 @@ end;
 function onItemUse(target)
     local currencyrand = math.random(4,8);
 	target:addItem(1455,currencyrand);
-
+    target:PrintToPlayer("You obtain "..currencyrand.." Byne Bills.", 0x15);
 end;

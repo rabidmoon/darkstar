@@ -61,6 +61,10 @@ function onSpellCast(caster,target,spell)
 			target:delStatusEffect(EFFECT_DIA);
 		end
 	end
+	
+	if (caster:getMainJob() == 8) and (caster:getObjType() == TYPE_PC) and (caster:hasStatusEffect(EFFECT_LAST_RESORT)) then
+	target:addEnmity(caster, 180, 800);
+	end
 
 	return final;
 

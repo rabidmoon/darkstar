@@ -29,11 +29,9 @@ end;
 
 
 function onSpellCast(caster,target,spell)
+if (caster:getObjType() == TYPE_PC) then
 local ixion = caster:getVar("DarkIxionWin");
     
-	--caster:addMod(MOD_UFASTCAST, -200);
- 
-
 	if (caster:hasStatusEffect(EFFECT_ASTRAL_FLOW) == true) and (ixion == 1) then
 	caster:PrintToPlayer("Dark Ixion: You dare summon me...?  I shall honor thy pact at a price...",0x0D);
 	caster:spawnPet(84);
@@ -42,14 +40,11 @@ local ixion = caster:getVar("DarkIxionWin");
 	caster:spawnPet(PET_THUNDER_SPIRIT);
 
     end
+else
+	caster:spawnPet(PET_THUNDER_SPIRIT);
+end
 
-    
-	
-	local pet = caster:getPet();
-	if (pet ~= nil) then
-	--pet:injectActionPacket(4, 261);
-	--caster:PrintToPlayer("TEST");
-	end
-	
+
+
 	return 0;
 end;

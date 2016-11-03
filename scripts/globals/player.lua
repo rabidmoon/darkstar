@@ -24,6 +24,7 @@ local logintime = player:getVar("restingLogin");
 local lastlogin = player:getVar("logoutRestStart");
 local bonus = 0;
 
+
     if (not zoning) then -- Things checked ONLY during logon go here.
         if (firstlogin) then
             CharCreate(player);
@@ -158,7 +159,7 @@ local bonus = 0;
         player:setMP( 50000 );
     end
 	
-	if (player:getMainJob() == 13) and (player:getMainLvl() == 75) and (player:getVar("NIN75") ~=1) then
+	if (player:getMainJob() == 13) and (player:getMainLvl() == 75) and (player:getVar("NIN75") ~=1) and (player:getObjType() == TYPE_PC) then
 	player:setVar("NIN75",1);
 	end
 

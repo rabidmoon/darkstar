@@ -29,6 +29,7 @@ function onMagicCastingCheck(caster,target,spell)
 end;
 
 function onSpellCast(caster,target,spell)
+if (caster:getObjType() == TYPE_PC) then
 local ixion = caster:getVar("IxionWin");
 
 if (caster:hasStatusEffect(EFFECT_ASTRAL_FLOW) == true) and (ixion == 1) then
@@ -39,14 +40,12 @@ if (caster:hasStatusEffect(EFFECT_ASTRAL_FLOW) == true) and (ixion == 1) then
 	caster:spawnPet(PET_LIGHT_SPIRIT);
 
     end
-
+else
+    caster:spawnPet(PET_LIGHT_SPIRIT);
+end		
     
 	
-	local pet = caster:getPet();
-	if (pet ~= nil) then
-	--pet:injectActionPacket(4, 261);
-	--caster:PrintToPlayer("TEST");
-	end
+
 	
 	return 0;
 end;
