@@ -31,7 +31,7 @@ end;
 
 function onTrigger(player,npc)
     local ixion = player:getVar("IxionStart");
-	if (player:hasItem(19210) == true) and (ixion == 3) then
+	if (player:hasItem(19210) == true) and (ixion == 2) then
 	player:startEvent(0x00CA, 10);
 	--player:startEvent(0x00C9, 0, 0, 0, 5, 0, 0, 0, 0);
 	else

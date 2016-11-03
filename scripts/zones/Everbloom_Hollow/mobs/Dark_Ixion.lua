@@ -86,24 +86,14 @@ end;
 function onMobDeath(mob,killer)
     local ixion = killer:getVar("DarkIxionWin");
 	killer:PrintToPlayer("Dark Ixion: A mere mortal defeat me...???",0x0D);
-	killer:setVar("IxionChest",1);
+	killer:setVar("IxionKill",1);
 	if (ixion ~= 1) then
 	killer:setVar("DarkIxionWin",1);
 	killer:PrintToPlayer("You may now summon Dark Ixion using Thunder Spirit pact under Astral Flow",0x15);
 	end
-	local timeleft = killer:getSpecialBattlefieldLeftTime();
-	local reset = 600;
-	local addtime = 0;
+
 	
-	if (timeleft > reset) then
-    addtime = timeleft - reset;
-    killer:addTimeToSpecialBattlefield(-addtime);
-    killer:PrintToPlayer("Battlefield Timer has been reset to 5 minutes",0x0D);	
-	elseif (timeleft <= reset) then
-    addtime = timeleft + reset;
-    killer:addTimeToSpecialBattlefield(addtime);
-    killer:PrintToPlayer("Battlefield Timer has been reset to 5 minutes",0x0D);
-	end
+
 
 
 end;
