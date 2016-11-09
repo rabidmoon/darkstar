@@ -40,7 +40,8 @@ function g_Battlefield.onBattlefieldTick(battlefield, timeinside)
     local mobs = battlefield:getMobs();
     local status = battlefield:getStatus();
     local leavecode = -1;
-    print("shit")
+    local players = battlefield:getPlayers();
+
     if status == g_Battlefield.Status.LOST then
         print("lost");
         leavecode = 4;
@@ -48,13 +49,14 @@ function g_Battlefield.onBattlefieldTick(battlefield, timeinside)
         print("won");
         leavecode = 2;
     end;
+    print(leavecode);
 
     if leavecode ~= -1 then
-        local players = battlefield:getPlayers();
         for _, player in pairs(players) do
             print(player:getName())
             player:leaveBattlefield(leavecode);
         end;
+        battlefield:cleanup(true);
         return;
     end;
 
@@ -70,7 +72,7 @@ function g_Battlefield.onBattlefieldTick(battlefield, timeinside)
     g_Battlefield.HandleTimePrompts(battlefield);
 
     if killedallmobs then
-        --battlefield:setStatus(g_Battlefield.Status.WON);
+        battlefield:setStatus(g_Battlefield.Status.WON);
     end
 end;
 

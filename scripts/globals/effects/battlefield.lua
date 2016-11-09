@@ -29,6 +29,7 @@ function onEffectLose(target,effect)
     if (target:getPet()) then
         target:getPet():delStatusEffect(EFFECT_BATTLEFIELD);
     end
+    target:setLocalVar("[battlefield]area", 0);
 end;
 
 -----------------------------------
