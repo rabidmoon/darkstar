@@ -9,11 +9,12 @@ package.loaded["scripts/zones/Balgas_Dais/TextIDs"] = nil;
 require("scripts/globals/keyitems");
 require("scripts/zones/Balgas_Dais/TextIDs");
 require("scripts/globals/missions");
-
+require("scripts/globals/battlefield");
 -----------------------------------
 
 -- After registering the BCNM via bcnmRegister(bcnmid)
-function onBcnmRegister(player,instance)
+function onBattlefieldTick(battlefield)
+    g_Battlefield.onBattlefieldTick(battlefield);
 end;
 
 -- Physically entering the BCNM via bcnmEnter(bcnmid)
@@ -30,7 +31,7 @@ end;
 
 function onBcnmLeave(player,instance,leavecode)
 -- print("leave code "..leavecode);
-    
+
     if (leavecode == 2) then -- play end CS. Need time and battle id for record keeping + storage
         if (player:hasCompletedMission(WINDURST,SAINTLY_INVITATION)) then
             player:startEvent(0x7d01,1,1,1,instance:getTimeInside(),1,3,1);
@@ -40,16 +41,16 @@ function onBcnmLeave(player,instance,leavecode)
     elseif (leavecode == 4) then
         player:startEvent(0x7d02);
     end
-    
+
 end;
 
 function onEventUpdate(player,csid,option)
 -- print("bc update csid "..csid.." and option "..option);
 end;
-    
+
 function onEventFinish(player,csid,option)
 -- print("bc finish csid "..csid.." and option "..option);
-    
+
     if (csid == 0x7d01) then
         if (player:getCurrentMission(WINDURST) == SAINTLY_INVITATION) then
             player:addTitle(VICTOR_OF_THE_BALGA_CONTEST);
@@ -58,5 +59,5 @@ function onEventFinish(player,csid,option)
             player:setVar("MissionStatus",2);
         end
     end
-    
+
 end;

@@ -2539,8 +2539,23 @@ void SmallPacket0x05A(map_session_data_t* session, CCharEntity* PChar, CBasicPac
 
 void SmallPacket0x05B(map_session_data_t* session, CCharEntity* PChar, CBasicPacket data)
 {
-    uint16 EventID = RBUFW(data, (0x12));
-    uint32 Result = RBUFL(data, (0x08));
+    auto CharID = data.ref<uint32>( 0x04 );
+
+    auto Result = data.ref<uint32>( 0x08 );
+    auto u16Result = data.ref<uint16>( 0x08 );
+    auto Result2 = data.ref<uint16>( 0x0A );
+
+    auto shit8 = data.ref<uint8>( 0x0C );
+    auto crap8 = data.ref<uint8>( 0x0D );
+    auto shit16 = data.ref<uint16>( 0x0C );
+
+    auto wat = data.ref<uint16>( 0x0E );
+    auto ZoneID = data.ref<uint16>( 0x10 );
+
+    auto EventID = data.ref<uint16>(0x12);
+
+    ShowDebug("\nFUCKIN 0x05B \n event(0x12): %u | \n u32result(0x08): %u |  u16result(0x08): %u u16result2(0x0a): %u | \n zoneid(0x10): %u | \n wat(0x0e): %u | shit16(0x0c): %u | shit8(0x0c): %u crap8(0x0d): %u | charid(0x04): %u \n", EventID, Result, u16Result, Result2, ZoneID, wat, shit16, shit8, crap8, CharID);
+    PrintPacket(data);
 
     if (PChar->m_event.EventID == EventID)
     {
@@ -2552,10 +2567,11 @@ void SmallPacket0x05B(map_session_data_t* session, CCharEntity* PChar, CBasicPac
         }
         else
         {
-            if (((uint8)Result & 0x0F) == 3) //battlefield selected
-                ShowDebug(CL_CYAN"%s Selected BCNM Index %u in Zone %u!\n" CL_RESET, PChar->name.c_str(), (uint16)Result >> 4, PChar->getZone()); //index 0-29, per zone (client supports max 30 choices)
-            else if (EventID == 0x7d00) PrintPacket(data);
-
+            if ( ( (uint8)Result & 0x0F ) == 3 ) //battlefield selected
+            {
+                ShowDebug( CL_CYAN"%s Selected BCNM Index %u in Zone %u!\n" CL_RESET, PChar->name.c_str(), (uint16)Result >> 4, PChar->getZone() ); //index 0-29, per zone (client supports max 30 choices)
+                //PrintPacket( data );
+            }
             luautils::OnEventFinish(PChar, EventID, Result);
             //reset if this event did not initiate another event
             if (PChar->m_event.EventID == EventID)
@@ -2577,7 +2593,21 @@ void SmallPacket0x05B(map_session_data_t* session, CCharEntity* PChar, CBasicPac
 
 void SmallPacket0x05C(map_session_data_t* session, CCharEntity* PChar, CBasicPacket data)
 {
-    uint16 EventID = RBUFW(data, (0x1A));
+    auto CharID = data.ref<uint32>(0x10);
+    auto Result = data.ref<uint32>(0x14);
+    auto u16Result = data.ref<uint16>(0x14);
+    auto Result2 = data.ref<uint16>(0x16);
+    auto ZoneID = data.ref<uint16>(0x18);
+
+    auto EventID = data.ref<uint16>(0x1A);
+    auto wat = data.ref<uint16>(0x1C);
+
+    auto shit16 = data.ref<uint16>(0x1E);
+    auto shit8 = data.ref<uint8>(0x1E);
+    auto crap8 = data.ref<uint8>(0x1F);
+
+    ShowDebug("\nFAGGOT 0x05C \n event(0x1A): %u | \n u32result(0x14): %u | u16result(0x14): %u u16result2(0x16): %u | \n zoneid(0x18): %u | \n wat(0x1c): %u | shit16(0x1e): %u | shit8(0x1e): %u crap8(0x1f): %u | charid(0x10): %u \n", EventID, Result, u16Result, Result2, ZoneID, wat, shit16, shit8, crap8, CharID);
+    PrintPacket(data);
 
     if (PChar->m_event.EventID == EventID)
     {
@@ -2585,7 +2615,8 @@ void SmallPacket0x05C(map_session_data_t* session, CCharEntity* PChar, CBasicPac
         PChar->loc.p.y = RBUFF(data, (0x08));
         PChar->loc.p.z = RBUFF(data, (0x0C));
         PChar->loc.p.rotation = RBUFB(data, (0x1F));
-
+        //ShowDebug("0x05C pos: %02X %02X %02X %02X \n", PChar->loc.p.x, PChar->loc.p.y, PChar->loc.p.z, PChar->loc.p.rotation);
+        //PrintPacket( data );
         if (RBUFB(data, (0x1E)) != 0)
         {
             luautils::OnEventUpdate(PChar, EventID, 0);

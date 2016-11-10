@@ -260,7 +260,7 @@ function EventUpdateBCNM(player, csid, option, entrance)
                 end;
             end;
             print(tick);
-            if tick < 3 then
+            if tick <= 1 then
                 player:updateEvent(1, mask, 0, 0, 1, 1);
             else
                 -- params(result, battlefieldindex, ?, recordTime, recordPartySize, skip);

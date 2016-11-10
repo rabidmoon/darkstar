@@ -2598,7 +2598,9 @@ namespace luautils
 
         if (prepFile(File, "onBattlefieldTick"))
         {
-            return -1;
+            lua_prepscript("scripts/globals/battlefield.lua");
+            if (prepFile(File, "g_Battlefield.onBattlefieldTick"))
+                return -1;
         }
 
         CLuaBattlefield LuaBattlefield(PBattlefield);

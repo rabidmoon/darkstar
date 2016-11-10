@@ -66,16 +66,25 @@ CBattlefield::~CBattlefield()
 {
     for (auto mob : m_RequiredEnemyList)
     {
+        if (mob.PMob->isAlive() && mob.PMob->PAI->IsSpawned())
+            mob.PMob->Die();
+
         delete mob.PMob;
     }
 
     for (auto mob : m_AdditionalEnemyList)
     {
+        if (mob.PMob->isAlive() && mob.PMob->PAI->IsSpawned())
+            mob.PMob->Die();
+
         delete mob.PMob;
     }
 
     for (auto npc : m_NpcList)
     {
+        if (npc->PAI->IsSpawned() )
+            npc->PAI->Despawn();
+
         delete npc;
     }
 }
@@ -341,6 +350,10 @@ bool CBattlefield::InsertEntity(CBaseEntity* PEntity, bool inBattlefield, BATTLE
                     m_RequiredEnemyList.push_back(mob);
                 else
                     m_AdditionalEnemyList.push_back(mob);
+
+                if ( mob.PMob->isAlive() )
+                    mob.PMob->Die();
+                mob.PMob->Spawn();
             }
         }
         // ally
@@ -405,17 +418,16 @@ bool CBattlefield::RemoveEntity(CBaseEntity* PEntity, uint8 leavecode)
     else if (PEntity->objtype == TYPE_NPC)
     {
         PEntity->loc.zone->PushPacket(PEntity, CHAR_INRANGE, new CEntityAnimationPacket(PEntity, CEntityAnimationPacket::Fade_Out));
-        PEntity->PAI->Despawn();
         m_NpcList.erase(std::remove_if(m_NpcList.begin(), m_NpcList.end(), check), m_NpcList.end());
     }
-    else if (PEntity->objtype == TYPE_MOB)
+    else if (PEntity->objtype == TYPE_MOB || PEntity->objtype == TYPE_PET)
     {
-        PEntity->PAI->Despawn();
-        PEntity->status = STATUS_DISAPPEAR;
-
         // allies targid >= 0x700
         if (PEntity->targid >= 0x700)
         {
+            if (static_cast<CPetEntity*>(PEntity)->isAlive() && PEntity->PAI->IsSpawned())
+                static_cast<CPetEntity*>(PEntity)->Die();
+
             m_AllyList.erase(std::remove_if(m_AllyList.begin(), m_AllyList.end(), check), m_AllyList.end());
             GetZone()->DeletePET(PEntity);
             delete PEntity;
@@ -468,6 +480,11 @@ void CBattlefield::DoTick(time_point time)
             ++charid;
         }
         luautils::OnBattlefieldTick(this);
+
+        // been here too long, gtfo
+        if (GetTimeInside() >= GetTimeLimit())
+            CanCleanup(true);
+
     }
 }
 
@@ -476,7 +493,7 @@ bool CBattlefield::CanCleanup(bool cleanup)
     if (cleanup)
         m_Cleanup = cleanup;
 
-    return m_Cleanup;
+    return m_Cleanup || m_PlayerList.size() == 0;
 }
 
 void CBattlefield::Cleanup()
@@ -508,9 +525,9 @@ void CBattlefield::Cleanup()
         RemoveEntity(PNpc);
     });
 
-    if (std::chrono::duration_cast<std::chrono::seconds>(GetRecord().time) > std::chrono::duration_cast<std::chrono::seconds>(m_FightTick - m_StartTime))
+    if (GetStatus() == BATTLEFIELD_STATUS_WON && GetRecord().time > m_FightTick - m_StartTime)
     {
-        SetRecord(const_cast<int8*>(m_Initiator.name.c_str()), std::chrono::duration_cast<std::chrono::seconds>(m_FightTick - m_StartTime));
+        SetRecord(const_cast<int8*>(m_Initiator.name.c_str()), m_FightTick - m_StartTime);
     }
 }
 
@@ -535,28 +552,11 @@ bool CBattlefield::LoadMobs()
         {
             auto mobid = Sql_GetUIntData(SqlHandle, 0);
             auto condition = Sql_GetUIntData(SqlHandle, 1);
-            auto PMob = static_cast<CMobEntity*>(zoneutils::GetEntity(mobid, TYPE_MOB));
+            auto PMob = static_cast<CMobEntity*>(zoneutils::GetEntity(mobid, TYPE_MOB | TYPE_PET));
 
-            if (PMob != nullptr)
+            if (PMob)
             {
-                if (condition & CONDITION_SPAWNED_AT_START)
-                {
-                    if (!PMob->PAI->IsSpawned())
-                    {
-                        PMob->Spawn();
-                        //ShowDebug("Spawned %s (%u) id %i inst %i \n",PMob->GetName(),PMob->id,battlefield->GetID(),battlefield->GetArea());
-                        this->InsertEntity(PMob, true, static_cast<BATTLEFIELDMOBCONDITION>(condition));
-                    }
-                    else
-                    {
-                        this->InsertEntity(PMob, true);
-                        ShowDebug(CL_CYAN"Battlefield::LoadMobs() <%s> (%u) is already spawned\n" CL_RESET, PMob->GetName(), PMob->id);
-                    }
-                }
-                else
-                {
-                    this->InsertEntity(PMob, true, static_cast<BATTLEFIELDMOBCONDITION>(condition));
-                }
+                this->InsertEntity(PMob, true, static_cast<BATTLEFIELDMOBCONDITION>(condition));
             }
             else
             {

@@ -37,10 +37,14 @@ g_Battlefield.Status =
 function g_Battlefield.onBattlefieldTick(battlefield, timeinside)
     -- local tick = battlefield:getTick();
     local killedallmobs = true;
-    local mobs = battlefield:getMobs();
+    local mobs = battlefield:getMobs(true, true);
     local status = battlefield:getStatus();
     local leavecode = -1;
     local players = battlefield:getPlayers();
+
+    if true then return end;
+
+    print("shit")
 
     if status == g_Battlefield.Status.LOST then
         print("lost");
@@ -72,7 +76,7 @@ function g_Battlefield.onBattlefieldTick(battlefield, timeinside)
     g_Battlefield.HandleTimePrompts(battlefield);
 
     if killedallmobs then
-        battlefield:setStatus(g_Battlefield.Status.WON);
+        --battlefield:setStatus(g_Battlefield.Status.WON);
     end
 end;
 
@@ -82,7 +86,8 @@ function g_Battlefield.HandleTimePrompts(battlefield)
     local players = battlefield:getPlayers();
     local remainingTime = battlefield:getRemainingTime();
 
-    print(remainingTimeLimit)
+    print(battlefield:getTimeLimit())
+    print(remainingTime)
     if tick % 60 == 0 then
         for _, player in pairs(players) do
             if remainingTime > 0 then

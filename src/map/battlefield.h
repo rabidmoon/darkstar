@@ -31,7 +31,7 @@
 #include "../common/cbasetypes.h"
 #include "../common/mmo.h"
 
-enum BCRULES
+enum BCRULES : uint8
 {
     RULES_ALLOW_SUBJOBS         = 0x01,
     RULES_LOSE_EXP              = 0x02,
@@ -40,14 +40,14 @@ enum BCRULES
     RULES_MAAT                  = 0x10
 };
 
-enum BATTLEFIELDMOBCONDITION
+enum BATTLEFIELDMOBCONDITION : uint8
 {
     CONDITION_NONE             = 0x00,
     CONDITION_SPAWNED_AT_START = 0x01,
     CONDITION_WIN_REQUIREMENT  = 0x02
 };
 
-enum LEAVE_CODE
+enum LEAVE_CODE : uint8
 {
     LEAVE_EXIT   = 1,
     LEAVE_WIN    = 2,
@@ -55,7 +55,7 @@ enum LEAVE_CODE
     LEAVE_LOSE   = 4
 };
 
-enum BATTLEFIELD_STATUS
+enum BATTLEFIELD_STATUS : uint8
 {
     BATTLEFIELD_STATUS_OPEN   = 0,
     BATTLEFIELD_STATUS_LOCKED = 1,
@@ -63,7 +63,7 @@ enum BATTLEFIELD_STATUS
     BATTLEFIELD_STATUS_LOST   = 3
 };
 
-enum BATTLEFIELD_RETURN_CODE
+enum BATTLEFIELD_RETURN_CODE : uint8
 {
     BATTLEFIELD_RETURN_CODE_WAIT              = 1,
     BATTLEFIELD_RETURN_CODE_CUTSCENE          = 2,
@@ -199,6 +199,7 @@ private:
     duration               m_TimeLimit;
     time_point             m_WipeTime;
     duration               m_FinishTime;
+    duration               m_LastPromptTime;
     uint8                  m_MaxParticipants;
     uint8                  m_LevelCap;
     uint32                 m_LootID;
