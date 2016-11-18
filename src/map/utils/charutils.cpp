@@ -2905,8 +2905,21 @@ namespace charutils
 
         PChar->updatemask |= UPDATE_HP;
 
+		if (PChar->updatemask)
+		{
+			if (PChar->PAlly.size() > 0)
+			{
+				for (auto ally : PChar->PAlly)
+				{
+					PChar->PParty->PushPacket(ally->id, ally->getZone(), new CCharHealthPacket(ally));
+				}
+			}
+
+		}
+
+
         if (PChar->PParty != nullptr)
-        {
+        {	
             if (PChar->PParty->m_PAlliance == nullptr)
             {
                 PChar->PParty->PushPacket(PChar->id, PChar->getZone(), new CCharHealthPacket(PChar));

@@ -143,6 +143,7 @@ CEntityUpdatePacket::CEntityUpdatePacket(CBaseEntity* PEntity, ENTITYUPDATE type
 		break;
 		case TYPE_PET:
 		{
+		    CPetEntity* PPet = (CPetEntity*)PEntity;
 			if(((CPetEntity*)PEntity)->PBattleAI->GetCurrentAction()==ACTION_FALL){
 				WBUFB(data,(0x21)) = 0x99;
                 WBUFB(data,(0x25)) = 0x08;
@@ -156,13 +157,20 @@ CEntityUpdatePacket::CEntityUpdatePacket(CBaseEntity* PEntity, ENTITYUPDATE type
 			else{
 				if (updatemask & UPDATE_HP)
 				{
-					WBUFB(data,(0x1E)) = ((CPetEntity*)PEntity)->GetHPP();
+					WBUFB(data,(0x1E)) = PPet->GetHPP();
                     WBUFB(data,(0x1F)) = PEntity->animation;
                     WBUFB(data,(0x2A)) = PEntity->animationsub;
+					WBUFB(data,(0x25)) = PPet->health.hp > 0 ? 0x08 : 0;
                     WBUFB(data,(0x27)) = 0x08 | ((CPetEntity*)PEntity)->m_name_prefix;
                     WBUFB(data,(0x28)) |= (((CPetEntity*)PEntity)->StatusEffectContainer->HasStatusEffect(EFFECT_TERROR) ? 0x10 : 0x00);
+					WBUFB(data,(0x28)) |= PPet->health.hp > 0 && PPet->animation == ANIMATION_DEATH ? 0x08 : 0;
                     WBUFB(data,(0x29)) = PEntity->allegiance;
+					WBUFB(data,(0x2B)) = PEntity->namevis;
 				}
+			    if (updatemask & UPDATE_STATUS)
+                {
+                    WBUFL(data, (0x2C)) = PPet->m_OwnerID.id;
+                }
 				if (updatemask & UPDATE_NAME)
 				{
 					this->size = 0x24;

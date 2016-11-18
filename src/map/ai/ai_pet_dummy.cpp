@@ -2345,7 +2345,7 @@ bool CAIPetDummy::PetIsHealing() {
 	
 	if (m_PPet->getZone() == m_PPet->PMaster->getZone()){
 	m_PPet->updatemask |= UPDATE_HP;
-	charutils::UpdateHealth((CCharEntity*)m_PPet->PMaster);
+	//charutils::UpdateHealth((CCharEntity*)m_PPet->PMaster);
 	}
 
  
@@ -2373,10 +2373,23 @@ void CAIPetDummy::ActionRoaming()
             return;
         }
     }
-	if (m_PPet->getZone() == m_PPet->PMaster->getZone()){
-	m_PPet->updatemask |= UPDATE_HP;
+	//if (m_PPet->getZone() == m_PPet->PMaster->getZone()){
+	//m_PPet->updatemask |= UPDATE_HP;
 	//charutils::UpdateHealth((CCharEntity*)m_PPet->PMaster);
+	//}
+
+ 	if (m_PPet->PMaster->PAlly.size() > 0)
+	{
+		//ShowWarning(CL_RED"Pushing Packet on Roaming!!!\n" CL_RESET);
+		m_PPet->PMaster->PParty->PushPacket(m_PPet->id, m_PPet->getZone(), new CCharHealthPacket(m_PPet));
+		// for (auto ally : m_PPet->PMaster->PAlly)
+		// {
+		// 	ShowWarning(CL_RED"Pushing Packet on Roaming\n" CL_RESET);
+		// 	m_PPet->PMaster->PParty->PushPacket(ally->id, ally->getZone(), new CCharHealthPacket(ally));
+		// }
 	}
+
+
 	
 	
     if (m_PBattleTarget != nullptr) {
@@ -2392,7 +2405,7 @@ void CAIPetDummy::ActionRoaming()
         }		
     }
 	//ShowWarning(CL_RED"PET IS ACTION ROAMING\n" CL_RESET);
-    //((CCharEntity*)m_PPet->PMaster)->pushPacket(new CCharHealthPacket((CCharEntity*)m_PPet->PMaster));
+    ((CCharEntity*)m_PPet->PMaster)->pushPacket(new CCharHealthPacket((CCharEntity*)m_PPet->PMaster));
     float currentDistance = distance(m_PPet->loc.p, m_PPet->PMaster->loc.p);
 
 
@@ -2487,7 +2500,8 @@ void CAIPetDummy::ActionAttack()
 	
 	uint8 trustlevel = m_PPet->GetMLevel();
 	if (m_PPet->getZone() == m_PPet->PMaster->getZone()){
-    charutils::UpdateHealth((CCharEntity*)m_PPet->PMaster); // To update pet health at all time if pet and master are in the same zone; this is for zoning purposes
+	m_PPet->updatemask |= UPDATE_HP;
+    //charutils::UpdateHealth((CCharEntity*)m_PPet->PMaster); // To update pet health at all time if pet and master are in the same zone; this is for zoning purposes
 	}
 	
 	

@@ -783,7 +783,7 @@ void CParty::ReloadParty()
 				{
 				    //ShowWarning(CL_RED"ALLY SIZE IS GREATER THAN 0\n" CL_RESET); 
 					uint16 zoneid = PChar->getZone();
-					PChar->pushPacket(new CPartyMemberUpdatePacket(ally, j, zoneid));
+					PChar->pushPacket(new CPartyMemberUpdatePacket(ally, j, 0, zoneid));
 					j++;
 
 				}
@@ -845,7 +845,7 @@ void CParty::ReloadPartyMembers(CCharEntity* PChar)
 				{
 				    //ShowWarning(CL_RED"ALLY SIZE IS GREATER THAN 0 RELOAD PARTY\n" CL_RESET); 
 					uint16 zoneid = PChar->getZone();
-					PChar->pushPacket(new CPartyMemberUpdatePacket(ally, j, zoneid));
+					PChar->pushPacket(new CPartyMemberUpdatePacket(ally, j, 0, zoneid));
 					j++;
 
 				}
