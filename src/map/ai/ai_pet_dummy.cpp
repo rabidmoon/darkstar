@@ -419,7 +419,7 @@ void CAIPetDummy::ActionAbilityStart()
                     mobwsID = 144;
 					SetCurrentMobSkill(PMobSkill);
 					SetCurrentWeaponSkill(mobwsID);
-			        ShowWarning("No matching element Self SC Tachi: Enpi to Tachi: Enpi \n");
+			        //ShowWarning("No matching element Self SC Tachi: Enpi to Tachi: Enpi \n");
                     break;					
                     } 
                 }
@@ -459,7 +459,7 @@ void CAIPetDummy::ActionAbilityStart()
                     mobwsID = 144;
 					SetCurrentMobSkill(PMobSkill);
 					SetCurrentWeaponSkill(mobwsID);
-			        ShowWarning("No matching element Self SC Tachi: Enpi to Tachi: Enpi \n");
+			        //ShowWarning("No matching element Self SC Tachi: Enpi to Tachi: Enpi \n");
                     break;
                     }						
 
@@ -493,7 +493,7 @@ void CAIPetDummy::ActionAbilityStart()
                     mobwsID = 144;
 					SetCurrentMobSkill(PMobSkill);
 					SetCurrentWeaponSkill(mobwsID);
-			        ShowWarning("No matching element Self SC Tachi: Enpi to Tachi: Enpi \n");
+			        //ShowWarning("No matching element Self SC Tachi: Enpi to Tachi: Enpi \n");
                     break;
                     }						
 
@@ -520,7 +520,7 @@ void CAIPetDummy::ActionAbilityStart()
                     mobwsID = 144;
 					SetCurrentMobSkill(PMobSkill);
 					SetCurrentWeaponSkill(mobwsID);
-			        ShowWarning("No matching element Self SC Tachi: Enpi to Tachi: Enpi \n");
+			        //ShowWarning("No matching element Self SC Tachi: Enpi to Tachi: Enpi \n");
                     break;
                     }						
 
@@ -541,7 +541,7 @@ void CAIPetDummy::ActionAbilityStart()
                     mobwsID = 144;
 					SetCurrentMobSkill(PMobSkill);
 					SetCurrentWeaponSkill(mobwsID);
-			        ShowWarning("No matching element Self SC Tachi: Enpi to Tachi: Enpi \n");
+			        //ShowWarning("No matching element Self SC Tachi: Enpi to Tachi: Enpi \n");
                     break;
                     }						
 
@@ -636,14 +636,14 @@ void CAIPetDummy::ActionAbilityStart()
                     mobwsID = 144;
 					SetCurrentMobSkill(PMobSkill);
 					SetCurrentWeaponSkill(mobwsID);
-			        ShowWarning("Tachi: Enpi with Element 3,4, or 9 \n");
+			        //ShowWarning("Tachi: Enpi with Element 3,4, or 9 \n");
                     break;
                     }
                     else if (PMobSkill->getID() == 3779 && (masterscID == 1 || masterscID == 6 || masterscID == 7 || masterscID == 8 || masterscID == 10 || masterscID == 11 || masterscID == 12)) { //Tachi Enpi
                     mobwsID = 144;
 					SetCurrentMobSkill(PMobSkill);
 					SetCurrentWeaponSkill(mobwsID);
-			        ShowWarning("Tachi: Enpi nothing else found \n");
+			        //ShowWarning("Tachi: Enpi nothing else found \n");
                     break;
                     }					
 
@@ -2061,33 +2061,33 @@ void CAIPetDummy::ActionWeaponSkillFinish()
 					    std::string varname;
 						const int8* fmtQuery = "INSERT INTO char_vars SET charid = %u, varname = 'TrustMB', value = '6' ON DUPLICATE KEY UPDATE value = '6';";
                         Sql_Query(SqlHandle, fmtQuery, m_PPet->PMaster->id, varname, value, value);
-					    printf("Setting Magic Burst to: %d \n", value);
-						ShowWarning(CL_GREEN"Thunder Based Magic Burst.  Start Casting \n" CL_RESET);						
+					    //printf("Setting Magic Burst to: %d \n", value);
+						//ShowWarning(CL_GREEN"Thunder Based Magic Burst.  Start Casting \n" CL_RESET);						
 						}
 						else if (effect == SUBEFFECT_DARKNESS || effect == SUBEFFECT_DISTORTION || effect == SUBEFFECT_INDURATION){
 						value = 5;  //Blizzard
-						printf("Setting Magic Burst to: %d \n", value);
-						ShowWarning(CL_GREEN"Ice Based Magic Burst.  Start Casting \n" CL_RESET);
+						//printf("Setting Magic Burst to: %d \n", value);
+						//ShowWarning(CL_GREEN"Ice Based Magic Burst.  Start Casting \n" CL_RESET);
 						}
 						else if (effect == SUBEFFECT_LIGHT || effect == SUBEFFECT_FUSION || effect == SUBEFFECT_LIQUEFACATION){
 						value = 4;  //Fire
-						printf("Setting Magic Burst to: %d \n", value);
-						ShowWarning(CL_GREEN"Fire Based Magic Burst.  Start Casting \n" CL_RESET);						
+						//printf("Setting Magic Burst to: %d \n", value);
+						//ShowWarning(CL_GREEN"Fire Based Magic Burst.  Start Casting \n" CL_RESET);						
 						}
 						else if (effect == SUBEFFECT_LIGHT || effect == SUBEFFECT_FRAGMENTATION || effect == SUBEFFECT_DETONATION){
 						value = 3;  //Aero
-						printf("Setting Magic Burst to: %d \n", value);
-						ShowWarning(CL_GREEN"Wind Based Magic Burst.  Start Casting \n" CL_RESET);							
+						//printf("Setting Magic Burst to: %d \n", value);
+						//ShowWarning(CL_GREEN"Wind Based Magic Burst.  Start Casting \n" CL_RESET);							
 						}
 						else if (effect == SUBEFFECT_DARKNESS || effect == SUBEFFECT_DISTORTION || effect == SUBEFFECT_REVERBERATION){
 						value = 2;  //Water
-						printf("Setting Magic Burst to: %d \n", value);
-						ShowWarning(CL_GREEN"Water Based Magic Burst.  Start Casting \n" CL_RESET);							
+						//printf("Setting Magic Burst to: %d \n", value);
+						//ShowWarning(CL_GREEN"Water Based Magic Burst.  Start Casting \n" CL_RESET);							
 						}
 						else if (effect == SUBEFFECT_DARKNESS || effect == SUBEFFECT_GRAVITATION || effect == SUBEFFECT_SCISSION){
 						value = 1;  //Stone
-						printf("Setting Magic Burst to: %d \n", value);
-						ShowWarning(CL_GREEN"Stone Based Magic Burst.  Start Casting \n" CL_RESET);							
+						//printf("Setting Magic Burst to: %d \n", value);
+						//ShowWarning(CL_GREEN"Stone Based Magic Burst.  Start Casting \n" CL_RESET);							
 						}	
 
                         //Write Magic Burst Number to player Variable called TrustMB
@@ -3423,7 +3423,7 @@ void CAIPetDummy::ActionAttack()
 						    }
 							if (m_PPet->StatusEffectContainer->HasStatusEffect(EFFECT_TRUST_SNEAK_ATTACK))
 			                {
-					            ShowWarning(CL_GREEN"HIT OCCURED REMOVING SA in AI PET DUMMY \n" CL_RESET);
+					            //ShowWarning(CL_GREEN"HIT OCCURED REMOVING SA in AI PET DUMMY \n" CL_RESET);
 						        m_PPet->StatusEffectContainer->DelStatusEffect(EFFECT_TRUST_SNEAK_ATTACK);
 					        }	
 			
@@ -4418,7 +4418,7 @@ if (m_Tick >= m_LastBlueMagicHealCast + m_blueMagicHealRecast)  // Look for last
 	{
 	    m_PBattleSubTarget = m_PBattleTarget;
 		uint8 blurandom = dsprand::GetRandomNumber(1, 40); //Randomizes Blu Spells
-		printf("Setting Blue Random Number to %d \n", blurandom);
+		//printf("Setting Blue Random Number to %d \n", blurandom);
         if (level >= 72){
 			if (blurandom >= 30) //Disseverment
 				if (m_PPet->health.mp > 73)  	
@@ -4474,7 +4474,7 @@ if (m_Tick >= m_LastBlueMagicHealCast + m_blueMagicHealRecast)  // Look for last
 				}
             }				
         else if (level >= 69){
-		printf("BLU LVL >= 69");
+		//printf("BLU LVL >= 69");
 			if (blurandom >= 30)
 				if (m_PPet->health.mp > 60)  	
 			    {
@@ -4537,7 +4537,7 @@ if (m_Tick >= m_LastBlueMagicHealCast + m_blueMagicHealRecast)  // Look for last
 				}
             }				
 		else if (level >= 63){
-		printf("BLU LVL >= 63");
+		//printf("BLU LVL >= 63");
 		    if (blurandom >= 30)
 			    if (m_PPet->health.mp > 61)  	
 			    {
@@ -4600,7 +4600,7 @@ if (m_Tick >= m_LastBlueMagicHealCast + m_blueMagicHealRecast)  // Look for last
 				}	
             }				
 		else if (level >= 60){
-		printf("BLU LVL >= 60");
+		//printf("BLU LVL >= 60");
 		    if (blurandom >= 30)
 			    if (m_PPet->health.mp > 50)  	
 			    {
@@ -4663,7 +4663,7 @@ if (m_Tick >= m_LastBlueMagicHealCast + m_blueMagicHealRecast)  // Look for last
 				}	
             }				
 		else if (level >= 48){
-		printf("BLU LVL >= 48");
+		//printf("BLU LVL >= 48");
 		    if (blurandom >= 30)
 			    if (m_PPet->health.mp > 46)  	
 			    {
@@ -4726,7 +4726,7 @@ if (m_Tick >= m_LastBlueMagicHealCast + m_blueMagicHealRecast)  // Look for last
 				}				
 			}	
 		else if (level >= 38){
-		printf("BLU LVL >= 38");
+		//printf("BLU LVL >= 38");
 		    if (blurandom >= 30)
 			    if (m_PPet->health.mp > 46)  	
 			    {
@@ -4789,7 +4789,7 @@ if (m_Tick >= m_LastBlueMagicHealCast + m_blueMagicHealRecast)  // Look for last
 				}
             }				
 		else if (level >= 26){
-		printf("BLU LVL >= 60");
+		//printf("BLU LVL >= 60");
 		    if (blurandom >= 30)
 			    if (m_PPet->health.mp > 20)  	
 			    {
@@ -4852,7 +4852,7 @@ if (m_Tick >= m_LastBlueMagicHealCast + m_blueMagicHealRecast)  // Look for last
 				}
 			}	
 		else if (level >= 18){
-		printf("BLU LVL >= 18");
+		//printf("BLU LVL >= 18");
 		    if (blurandom >= 25)
 			    if (m_PPet->health.mp > 15)  	
 			    {
@@ -4894,7 +4894,7 @@ if (m_Tick >= m_LastBlueMagicHealCast + m_blueMagicHealRecast)  // Look for last
 				}
             }				
 		else if (level >= 12){
-		printf("BLU LVL >= 12");
+		//printf("BLU LVL >= 12");
 		    if (blurandom >= 20)
 			    if (m_PPet->health.mp > 11)  	
 			    {
@@ -4918,7 +4918,7 @@ if (m_Tick >= m_LastBlueMagicHealCast + m_blueMagicHealRecast)  // Look for last
 				 spellID = -1;
 				}					
 		else if (level >= 5)
-		printf("BLU LVL >= 5");
+		//printf("BLU LVL >= 5");
 				if (m_PPet->health.mp > 4)  	
 			    {
 				 spellID = 551;  //Power Attack
@@ -4964,7 +4964,7 @@ int16 CAIPetDummy::AdelhiedSpell()
                         }
 			        }
 				preparePetAbility(m_PBattleSubTarget);
-				printf("Using Dark Arts");
+				//printf("Using Dark Arts");
 				//return;	
 	}
 	if (level >= 55 && m_PPet->StatusEffectContainer->HasStatusEffect(EFFECT_EBULLIENCE) == false){
@@ -4982,7 +4982,7 @@ int16 CAIPetDummy::AdelhiedSpell()
                         }
 			        }
 				preparePetAbility(m_PBattleSubTarget);
-			    printf("Using Ebullience");
+			    //printf("Using Ebullience");
 				//return;	
 	}
 	if (adelhiedMB == 6){
@@ -5409,7 +5409,7 @@ int16 CAIPetDummy::AdelhiedSpell()
                         }
 			        }
 				preparePetAbility(m_PBattleSubTarget);
-				printf("Using Light Arts");
+				//printf("Using Light Arts");
 				//return;	
 	    }
         m_PBattleSubTarget = mostWounded;		
@@ -5526,7 +5526,7 @@ int16 CAIPetDummy::AdelhiedSpell()
                         }
 			        }
 				preparePetAbility(m_PBattleSubTarget);
-			    printf("Using Accession");
+			    //printf("Using Accession");
 				//return;	
 	}	 
 	 m_PBattleSubTarget = m_PPet->PMaster;
@@ -5615,7 +5615,7 @@ int16 CAIPetDummy::AdelhiedSpell()
                         }
 			        }
 				preparePetAbility(m_PBattleSubTarget);
-				printf("Using Dark Arts");
+				//printf("Using Dark Arts");
 				//return;	
 	    }
 	 m_PBattleSubTarget = m_PBattleTarget;
@@ -5647,7 +5647,7 @@ int16 CAIPetDummy::AdelhiedSpell()
                         }
 			        }
 				preparePetAbility(m_PBattleSubTarget);
-				printf("Using Dark Arts");
+				//printf("Using Dark Arts");
 				//return;	
 	    }	
 	 m_PBattleSubTarget = m_PBattleTarget;
@@ -5679,7 +5679,7 @@ int16 CAIPetDummy::AdelhiedSpell()
                         }
 			        }
 				preparePetAbility(m_PBattleSubTarget);
-				printf("Using Dark Arts");
+				//printf("Using Dark Arts");
 				//return;	
 	    }	
 	 m_PBattleSubTarget = m_PBattleTarget;
@@ -5711,7 +5711,7 @@ int16 CAIPetDummy::AdelhiedSpell()
                         }
 			        }
 				preparePetAbility(m_PBattleSubTarget);
-				printf("Using Dark Arts");
+				//printf("Using Dark Arts");
 				//return;	
 	    }	
 	 m_PBattleSubTarget = m_PBattleTarget;
@@ -5743,7 +5743,7 @@ int16 CAIPetDummy::AdelhiedSpell()
                         }
 			        }
 				preparePetAbility(m_PBattleSubTarget);
-				printf("Using Dark Arts");
+				//printf("Using Dark Arts");
 				//return;	
 	    }	
 	 m_PBattleSubTarget = m_PBattleTarget;
@@ -5775,7 +5775,7 @@ int16 CAIPetDummy::AdelhiedSpell()
                         }
 			        }
 				preparePetAbility(m_PBattleSubTarget);
-				printf("Using Dark Arts");
+				//printf("Using Dark Arts");
 				//return;	
 	    }	
 		m_PBattleSubTarget = m_PBattleTarget;
@@ -5783,7 +5783,7 @@ int16 CAIPetDummy::AdelhiedSpell()
 			if (m_PPet->health.mp > 195)
 				{
 				 spellID = 167;
-				 printf("Spell Should Be: %d \n", spellID);
+				 //printf("Spell Should Be: %d \n", spellID);
 				}
 			else if (m_PPet->health.mp > 90)	
                 {
@@ -5865,7 +5865,7 @@ int16 CAIPetDummy::AdelhiedSpell()
                         }
 			        }
 				preparePetAbility(m_PBattleSubTarget);
-				printf("Using Dark Arts");
+				//printf("Using Dark Arts");
 				//return;	
 	    }	
         m_PBattleSubTarget = m_PBattleTarget;		
@@ -5948,7 +5948,7 @@ int16 CAIPetDummy::AdelhiedSpell()
                         }
 			        }
 				preparePetAbility(m_PBattleSubTarget);
-				printf("Using Dark Arts");
+				//printf("Using Dark Arts");
 				//return;	
 	    }	
 		m_PBattleSubTarget = m_PBattleTarget;
@@ -6031,7 +6031,7 @@ int16 CAIPetDummy::AdelhiedSpell()
                         }
 			        }
 				preparePetAbility(m_PBattleSubTarget);
-				printf("Using Dark Arts");
+				//printf("Using Dark Arts");
 				//return;	
 	    }	
 		m_PBattleSubTarget = m_PBattleTarget;
@@ -6114,7 +6114,7 @@ int16 CAIPetDummy::AdelhiedSpell()
                         }
 			        }
 				preparePetAbility(m_PBattleSubTarget);
-				printf("Using Dark Arts");
+				//printf("Using Dark Arts");
 				//return;	
 	    }	
 		m_PBattleSubTarget = m_PBattleTarget;
@@ -6197,7 +6197,7 @@ int16 CAIPetDummy::AdelhiedSpell()
                         }
 			        }
 				preparePetAbility(m_PBattleSubTarget);
-				printf("Using Dark Arts");
+				//printf("Using Dark Arts");
 				//return;	
 	    }
         m_PBattleSubTarget = m_PBattleTarget;		
@@ -6280,7 +6280,7 @@ int16 CAIPetDummy::AdelhiedSpell()
                         }
 			        }
 				preparePetAbility(m_PBattleSubTarget);
-				printf("Using Dark Arts");
+				//printf("Using Dark Arts");
 				//return;	
 	    }	
 		m_PBattleSubTarget = m_PBattleTarget;
