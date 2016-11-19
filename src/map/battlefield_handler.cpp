@@ -72,6 +72,8 @@ void CBattlefieldHandler::handleBattlefields(time_point tick) {
             auto time_elapsed = std::chrono::duration_cast<std::chrono::seconds>(tick - PBattlefield->getStartTime());
             auto time_remaining = std::chrono::duration_cast<std::chrono::seconds>(PBattlefield->getTimeLimit() - time_elapsed).count();
 
+            PBattlefield->m_PlayerList.erase(std::remove_if(PBattlefield->m_PlayerList.begin(), PBattlefield->m_PlayerList.end(), [&instzone](auto PChar) { return !(PChar && PChar->getZone() == instzone); }), PBattlefield->m_PlayerList.end());
+
             //Dynamis zone (need to add COP Dyna)
             if (instzone > 184 && instzone < 189 || instzone > 133 && instzone < 136 || instzone > 38 && instzone < 43) {
                 //handle death time
