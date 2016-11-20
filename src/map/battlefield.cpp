@@ -537,7 +537,7 @@ void CBattlefield::cleanupDynamis() {
             uint32 mobid = Sql_GetUIntData(SqlHandle, 0);
             CMobEntity* PMob = (CMobEntity*)zoneutils::GetEntity(mobid, TYPE_MOB);
 
-            if (PMob != nullptr)
+            if (PMob && PMob->isAlive())
                 PMob->PAI->Despawn();
         }
     }
