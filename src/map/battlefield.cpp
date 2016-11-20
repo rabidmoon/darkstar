@@ -269,10 +269,6 @@ bool CBattlefield::delPlayerFromBcnm(CCharEntity* PChar) {
             PChar->StatusEffectContainer->DelStatusEffectSilent(EFFECT_BATTLEFIELD);
             PChar->StatusEffectContainer->DelStatusEffectSilent(EFFECT_LEVEL_RESTRICTION);
             m_PlayerList.erase(m_PlayerList.begin() + i);
-            if (m_PlayerList.empty())
-            {
-                cleanup();
-            }
             return true;
         }
     }

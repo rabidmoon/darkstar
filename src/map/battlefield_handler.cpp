@@ -74,6 +74,11 @@ void CBattlefieldHandler::handleBattlefields(time_point tick) {
 
             PBattlefield->m_PlayerList.erase(std::remove_if(PBattlefield->m_PlayerList.begin(), PBattlefield->m_PlayerList.end(), [&instzone](auto PChar) { return !(PChar && PChar->getZone() == instzone); }), PBattlefield->m_PlayerList.end());
 
+            if (PBattlefield->m_PlayerList.empty())
+            {
+                PBattlefield->cleanup();
+            }
+
             //Dynamis zone (need to add COP Dyna)
             if (instzone > 184 && instzone < 189 || instzone > 133 && instzone < 136 || instzone > 38 && instzone < 43) {
                 //handle death time
