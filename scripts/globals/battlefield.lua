@@ -12,14 +12,16 @@ local MaxAreas =
 };
 
 function onBattlefieldHandlerInitialise(zone)
+    local id = zone:getID();
+    local default = 3;
     for _, battlefield in pairs(MaxAreas) do
         for _, zoneid in pairs(battlefield.Zones) do
-            if zone:getID() == zoneid then
+            if id == zoneid then
                 return battlefield.Max;
              end;
         end
     end;
-    return 3;
+    return default;
 end;
 
 
@@ -99,7 +101,7 @@ function g_Battlefield.HandleTimePrompts(battlefield)
         end;
     end;
 
-    if status == g_Battlefield.Status.LOCKED and remainingTimeLimit <= 0 then
+    if status ~= g_Battlefield.Status.WON and remainingTimeLimit <= 0 then
         battlefield:setStatus(g_Battlefield.Status.LOST);
     end;
 end;
@@ -111,6 +113,7 @@ function g_Battlefield.HandleWipe(battlefield)
     local totalrekt = 0;
     local wipeTime = battlefield:getWipeTime();
     local elapsed = battlefield:getTimeInside();
+
 
     -- pure stolen from instance.lua
     if (wipeTime == 0) then
@@ -143,5 +146,23 @@ function g_Battlefield.HandleWipe(battlefield)
             end;
         end
     end
+
+end;
+
+
+function g_Battlefield.onBattlefieldStatusChange(battlefield, status)
+    if status == g_Battlefield.Status.WON then
+        if battlefield:getLocalVar("LootID") and battlefield:getLocalVar("LootSpawned") then
+        -- todo: spawn loot
+        end
+        local players = battlefield:getPlayers();
+        return;
+    end;
+end;
+
+function g_Battlefield.HandleLootRolls(battlefield, lootTable)
+    lootTable = lootTable or nil;
+
+    local players = battlefield:getPlayers();
 
 end;

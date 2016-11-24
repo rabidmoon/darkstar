@@ -49,6 +49,7 @@
 #include "utils/itemutils.h"
 #include "utils/zoneutils.h"
 #include "zone.h"
+#include <chrono>
 
 CBattlefield::CBattlefield(uint16 id, CZone* PZone, uint8 area, CCharEntity* PInitiator)
 {
@@ -60,6 +61,8 @@ CBattlefield::CBattlefield(uint16 id, CZone* PZone, uint8 area, CCharEntity* PIn
 
     m_StartTime = server_clock::now();
     m_Tick = m_StartTime;
+
+    luautils::OnBattlefieldInitialise(this);
 }
 
 CBattlefield::~CBattlefield()
@@ -68,24 +71,18 @@ CBattlefield::~CBattlefield()
     {
         if (mob.PMob->isAlive() && mob.PMob->PAI->IsSpawned())
             mob.PMob->Die();
-
-        delete mob.PMob;
     }
 
     for (auto mob : m_AdditionalEnemyList)
     {
         if (mob.PMob->isAlive() && mob.PMob->PAI->IsSpawned())
             mob.PMob->Die();
-
-        delete mob.PMob;
     }
 
     for (auto npc : m_NpcList)
     {
-        if (npc->PAI->IsSpawned() )
+        if (npc->PAI->IsSpawned())
             npc->PAI->Despawn();
-
-        delete npc;
     }
 }
 
@@ -169,6 +166,17 @@ duration CBattlefield::GetRemainingTime() const
     return GetTimeLimit() - GetTimeInside();
 }
 
+duration CBattlefield::GetLastTimeUpdate() const
+{
+    return m_LastPromptTime;
+}
+
+int64_t CBattlefield::GetLocalVar(std::string name) const
+{
+    auto var = m_LocalVars.find(name);
+    return var != m_LocalVars.end() ? var->second : 0;
+}
+
 uint8 CBattlefield::GetMaxParticipants() const
 {
     return m_MaxParticipants;
@@ -220,11 +228,11 @@ void CBattlefield::SetRecord(int8* name, duration time)
 {
     time = std::chrono::duration_cast<std::chrono::seconds>(time);
 
-    m_Record.name = name ? name : "your mum";
-    m_Record.time = time.count() ? time : 3600s;
+    m_Record.name = name ? name : m_Initiator.name;
+    m_Record.time = time.count() ? time : m_FinishTime;
 
-    const int8* query = "UPDATE battlefield_info SET fastestName = '%s', fastestTime = '%u' WHERE battlefieldId = '%u' AND zoneId = '%u'";
-    if (Sql_Query(SqlHandle, query, name, time.count(), this->GetID(), GetZoneID()) == SQL_ERROR)
+    const int8* query = "UPDATE battlefield_info SET fastestName = '%s', fastestTime = '%u', fastestPartySize = '%u' WHERE battlefieldId = '%u' AND zoneId = '%u'";
+    if (Sql_Query(SqlHandle, query, name, std::chrono::duration_cast<std::chrono::seconds>(m_Record.time), m_PlayerList.size(), this->GetID(), GetZoneID()) == SQL_ERROR)
     {
         ShowError("Battlefield::SetRecord() unable to find battlefield %u \n", this->GetID());
     }
@@ -233,6 +241,7 @@ void CBattlefield::SetRecord(int8* name, duration time)
 void CBattlefield::SetStatus(uint8 status)
 {
     m_Status = status;
+    luautils::OnBattlefieldStatusChange(this);
 }
 
 void CBattlefield::SetRuleMask(uint16 rulemask)
@@ -250,9 +259,9 @@ void CBattlefield::SetLevelCap(uint8 cap)
     m_LevelCap = cap;
 }
 
-void CBattlefield::SetLootID(uint16 id)
+void CBattlefield::SetLocalVar(std::string name, int64_t value)
 {
-    m_LootID = id;
+    m_LocalVars[name] = value;
 }
 
 void CBattlefield::ApplyLevelCap(CCharEntity* PChar) const
@@ -267,40 +276,6 @@ void CBattlefield::ApplyLevelCap(CCharEntity* PChar) const
         PChar->StatusEffectContainer->DelStatusEffectsByFlag(EFFECTFLAG_DEATH);
         PChar->StatusEffectContainer->AddStatusEffect(new CStatusEffect(EFFECT_LEVEL_RESTRICTION, EFFECT_LEVEL_RESTRICTION, cap, 0, 0));
     }
-}
-
-void CBattlefield::PushMessageToAllInBcnm(uint16 msg, uint16 param)
-{
-    // todo: handle this properly
-    ForEachPlayer([msg, param](CCharEntity* PChar)
-    {
-        if (PChar->m_lastBcnmTimePrompt != param)
-        {
-            PChar->pushPacket(new CMessageBasicPacket(PChar, PChar, param, 0, msg));
-            PChar->m_lastBcnmTimePrompt = param;
-        }
-    });
-}
-
-bool CBattlefield::AllPlayersDead()
-{
-    ForEachPlayer([](CCharEntity* PChar)
-    {
-        if (!PChar->PAI->IsCurrentState<CDeathState>())
-            return false;
-    });
-    SetWipeTime(server_clock::now());
-    return true;
-}
-
-bool CBattlefield::AllEnemiesDefeated()
-{
-    ForEachRequiredEnemy([](CMobEntity* PMob)
-    {
-        if (PMob->PAI->IsCurrentState<CDeathState>())
-            return false;
-    });
-    return true;
 }
 
 bool CBattlefield::IsOccupied() const
@@ -351,7 +326,7 @@ bool CBattlefield::InsertEntity(CBaseEntity* PEntity, bool inBattlefield, BATTLE
                 else
                     m_AdditionalEnemyList.push_back(mob);
 
-                if ( mob.PMob->isAlive() )
+                if (mob.PMob->isAlive())
                     mob.PMob->Die();
                 mob.PMob->Spawn();
             }
@@ -409,9 +384,6 @@ bool CBattlefield::RemoveEntity(CBaseEntity* PEntity, uint8 leavecode)
 
         if (leavecode != 255)
         {
-            if (leavecode == 2)
-                OpenChest();
-
             luautils::OnBattlefieldLeave(static_cast<CCharEntity*>(PEntity), this, leavecode);
         }
     }
@@ -443,7 +415,7 @@ bool CBattlefield::RemoveEntity(CBaseEntity* PEntity, uint8 leavecode)
     // assume its either a player or ally and remove any enmity
     if (PEntity->objtype != TYPE_NPC)
     {
-        auto entity = static_cast<CBattleEntity*>( PEntity );
+        auto entity = static_cast<CBattleEntity*>(PEntity);
         entity->StatusEffectContainer->DelStatusEffectsByFlag(EFFECTFLAG_CONFRONTATION);
         entity->StatusEffectContainer->DelStatusEffect(EFFECT_LEVEL_RESTRICTION);
         ClearEnmityForEntity(entity);
@@ -452,13 +424,14 @@ bool CBattlefield::RemoveEntity(CBaseEntity* PEntity, uint8 leavecode)
     return found;
 }
 
-void CBattlefield::DoTick(time_point time)
+void CBattlefield::onTick(time_point time)
 {
     if (time > m_Tick + 1s)
     {
         //todo : bcnm - update tick, fight tick, end if time is up
         m_Tick = time;
         m_FightTick = m_Status == BATTLEFIELD_STATUS_LOCKED ? time : m_FightTick;
+        m_FinishTime = m_Status >= BATTLEFIELD_STATUS_WON ? m_FightTick - m_StartTime : m_FinishTime;
 
         // remove the char if they zone out
         for (auto charid = m_PlayerList.begin(); charid != m_PlayerList.end();)
@@ -525,9 +498,9 @@ void CBattlefield::Cleanup()
         RemoveEntity(PNpc);
     });
 
-    if (GetStatus() == BATTLEFIELD_STATUS_WON && GetRecord().time > m_FightTick - m_StartTime)
+    if (GetStatus() == BATTLEFIELD_STATUS_WON && GetRecord().time > m_FinishTime)
     {
-        SetRecord(const_cast<int8*>(m_Initiator.name.c_str()), m_FightTick - m_StartTime);
+        SetRecord(const_cast<int8*>(m_Initiator.name.c_str()), m_FinishTime);
     }
 }
 
@@ -566,65 +539,6 @@ bool CBattlefield::LoadMobs()
         }
     }
     return true;
-}
-
-bool CBattlefield::CanSpawnTreasure() const
-{
-    return !m_SeenBooty;
-}
-
-bool CBattlefield::SpawnTreasureChest()
-{
-    DSP_DEBUG_BREAK_IF(m_SeenBooty);
-
-    //get ids from DB
-    auto fmtQuery = "SELECT npcId \
-						    FROM battlefield_treasure_chests \
-							WHERE battlefieldId = %u AND area = %u";
-
-    auto ret = Sql_Query(SqlHandle, fmtQuery, this->GetID(), this->GetArea());
-
-    if (ret == SQL_ERROR || Sql_NumRows(SqlHandle) == 0)
-    {
-        ShowError("Battlefield::SpawnTreasureChest() Cannot find any npc IDs for battlefieldId %i area %i \n",
-            this->GetID(), this->GetArea());
-    }
-    else
-    {
-        while (Sql_NextRow(SqlHandle) == SQL_SUCCESS)
-        {
-            auto npcid = Sql_GetUIntData(SqlHandle, 0);
-            auto PNpc = static_cast<CBaseEntity*>(zoneutils::GetEntity(npcid, TYPE_NPC));
-            if (PNpc)
-            {
-                PNpc->Spawn();
-                this->InsertEntity(PNpc, true);
-            }
-            else
-            {
-                ShowDebug(CL_CYAN"Battlefield::SpawnTreasureChest: <%s> is already spawned\n" CL_RESET, PNpc->GetName());
-            }
-        }
-        m_SeenBooty = true;
-        return true;
-    }
-    return false;
-}
-
-void CBattlefield::OpenChest()
-{
-    DSP_DEBUG_BREAK_IF(m_GotBooty);
-
-    auto LootList = itemutils::GetLootList(GetLootID());
-
-    if (LootList)
-    {
-        for (auto i = 0; i < LootList->size(); ++i)
-        {
-            // todo: handle loot
-        }
-    }
-    m_GotBooty = true;
 }
 
 void CBattlefield::ClearEnmityForEntity(CBattleEntity* PEntity)

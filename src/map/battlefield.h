@@ -30,6 +30,7 @@
 
 #include "../common/cbasetypes.h"
 #include "../common/mmo.h"
+#include <unordered_map>
 
 enum BCRULES : uint8
 {
@@ -128,8 +129,9 @@ public:
     uint16                 GetLootID() const;
     duration               GetFinishTime() const;
     duration               GetRemainingTime() const;
+    duration               GetLastTimeUpdate() const;
+    int64_t                GetLocalVar(std::string name) const;
 
-    bool                   AllPlayersDead();
     bool                   InProgress();
     bool                   IsOccupied() const;
 
@@ -153,30 +155,17 @@ public:
     void                   SetWipeTime(time_point time);
     void                   SetMaxParticipants(uint8 max);
     void                   SetLevelCap(uint8 cap);
-    void                   SetLootID(uint16 id);
+    void                   SetLocalVar(std::string name, int64_t value);
 
     void                   ApplyLevelCap(CCharEntity* PChar) const;
     void                   ClearEnmityForEntity(CBattleEntity* PEntity);
     bool                   InsertEntity(CBaseEntity* PEntity, bool inBattlefield = false, BATTLEFIELDMOBCONDITION conditions = CONDITION_NONE, bool ally = false);
     CBaseEntity*           GetEntity(CBaseEntity* PEntity);
     bool                   RemoveEntity(CBaseEntity* PEntity, uint8 leavecode = 0);
-    void                   DoTick(time_point time);
+    void                   onTick(time_point time);
     bool                   CanCleanup(bool cleanup = false);
     void                   Cleanup();
     bool                   LoadMobs();
-    //player related functions
-
-    void                   PushMessageToAllInBcnm(uint16 msg, uint16 param);
-
-    bool                   CanSpawnTreasure() const;
-    bool                   SpawnTreasureChest();
-    void                   OpenChest();
-
-    bool                   AllEnemiesDefeated();
-
-    //handler functions (time/multiple rounds/etc)
-
-    bool                   LoseBcnm();
 
     std::vector<uint32>           m_PlayerList;
     std::vector<CNpcEntity*>      m_NpcList;
@@ -205,8 +194,7 @@ private:
     uint32                 m_LootID;
 
     bool                   m_Cleanup{ false };
-    bool                   m_SeenBooty{ false };
-    bool                   m_GotBooty{ false };
+    std::unordered_map<std::string, int64_t> m_LocalVars;
 };
 
 #endif

@@ -2589,7 +2589,7 @@ namespace luautils
             ShowError("luautils::onBattlefieldInitialise (%s): 0 returns expected, got %d\n", File, returns);
             lua_pop(LuaHandle, returns);
         }
-
+        return 0;
     }
 
     int32 OnBattlefieldTick(CBattlefield* PBattlefield)
@@ -2626,6 +2626,39 @@ namespace luautils
         return 0;
     }
 
+    int32 OnBattlefieldStatusChange(CBattlefield* PBattlefield)
+    {
+        DSP_DEBUG_BREAK_IF(PBattlefield == nullptr);
+
+        lua_prepscript("scripts/zones/%s/bcnms/%s.lua", PBattlefield->GetZone()->GetName(), PBattlefield->GetName().c_str());
+
+        if (prepFile(File, "onBattlefieldStatusChange"))
+        {
+            lua_prepscript("scripts/globals/battlefield.lua");
+            if (prepFile(File, "g_Battlefield.onBattlefieldStatusChange"))
+                return -1;
+        }
+
+        CLuaBattlefield LuaBattlefield(PBattlefield);
+        Lunar<CLuaBattlefield>::push(LuaHandle, &LuaBattlefield);
+        lua_pushinteger(LuaHandle, PBattlefield->GetStatus());
+
+        if (lua_pcall(LuaHandle, 2, LUA_MULTRET, 0))
+        {
+            ShowError("luautils::onBattlefieldStatusChange: %s\n", lua_tostring(LuaHandle, -1));
+            return -1;
+        }
+
+        int32 returns = lua_gettop(LuaHandle) - oldtop;
+
+        if (returns > 0)
+        {
+            ShowError("luautils::onBattlefieldStatusChange (%s): 0 returns expected, got %d\n", File, returns);
+            lua_pop(LuaHandle, returns);
+        }
+
+        return 0;
+    }
 
     /************************************************************************
     *                                                                       *

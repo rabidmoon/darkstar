@@ -62,7 +62,7 @@ void CBattlefieldHandler::HandleBattlefields(time_point tick)
     // dont want this to run again if we removed a battlefield
     for (auto& PBattlefield : m_Battlefields)
     {
-        PBattlefield.second->DoTick(server_clock::now());
+        PBattlefield.second->onTick(tick);
     }
 
     // can't std::remove_if in map so i'll ghetto it
@@ -116,6 +116,7 @@ uint8 CBattlefieldHandler::LoadBattlefield(CCharEntity* PChar, uint16 battlefiel
         else
         {
             auto name = Sql_GetData(SqlHandle, 0);
+
             auto recordholder = Sql_GetData(SqlHandle, 2);
             auto recordtime = std::chrono::seconds(Sql_GetUIntData(SqlHandle, 3));
             auto timelimit = std::chrono::seconds(Sql_GetUIntData(SqlHandle, 4));
@@ -124,13 +125,15 @@ uint8 CBattlefieldHandler::LoadBattlefield(CCharEntity* PChar, uint16 battlefiel
             auto maxplayers = Sql_GetUIntData(SqlHandle, 8);
             auto rulemask = Sql_GetUIntData(SqlHandle, 7);
 
+            // todo: add fastestPartySize field
+
             auto PBattlefield = std::make_shared<CBattlefield>(battlefieldID, m_PZone, area, PChar);
 
             PBattlefield->SetName(name);
             PBattlefield->SetRecord(recordholder, recordtime);
             PBattlefield->SetTimeLimit(timelimit);
             PBattlefield->SetLevelCap(levelcap);
-            PBattlefield->SetLootID(lootid);
+
             PBattlefield->SetMaxParticipants(maxplayers);
             PBattlefield->SetRuleMask(rulemask);
             PBattlefield->InsertEntity(PChar, true);
@@ -175,7 +178,8 @@ uint8 CBattlefieldHandler::RegisterBattlefield(CCharEntity* PChar, uint16 battle
         return BATTLEFIELD_RETURN_CODE_REQS_NOT_MET;
 
     // entity wasnt found in battlefield, assume they have the effect but not physically inside battlefield
-    if (PBattlefield && PBattlefield->GetID() == battlefield && PBattlefield->GetArea() == area && PBattlefield->GetInitiator().id == initiator)
+    if (PBattlefield && PBattlefield->GetID() == battlefield && PBattlefield->GetArea() == area && PBattlefield->GetInitiator().id == initiator &&
+        !PChar->PBattlefield)
     {
         if (!PBattlefield->InProgress())
         {
@@ -187,6 +191,12 @@ uint8 CBattlefieldHandler::RegisterBattlefield(CCharEntity* PChar, uint16 battle
             // can't enter, mobs been slapped
             return BATTLEFIELD_RETURN_CODE_LOCKED;
         }
+    }
+    else if (PChar->PBattlefield)
+    {
+        // todo: fuck you entering multiple battlefields
+        ShowDebug("%s tried to enter another fuckin battlefield", PChar->GetName());
+        return false;
     }
     return LoadBattlefield(PChar, battlefield, area);
 }

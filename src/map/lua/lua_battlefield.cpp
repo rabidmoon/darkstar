@@ -278,14 +278,6 @@ inline int32 CLuaBattlefield::getStatus(lua_State* L)
     return 1;
 }
 
-inline int32 CLuaBattlefield::canSpawnTreasure(lua_State* L)
-{
-    DSP_DEBUG_BREAK_IF(m_PLuaBattlefield == nullptr);
-
-    lua_pushboolean(L, m_PLuaBattlefield->CanSpawnTreasure());
-    return 1;
-}
-
 inline int32 CLuaBattlefield::setWipeTime(lua_State* L)
 {
     DSP_DEBUG_BREAK_IF(m_PLuaBattlefield == nullptr);
@@ -323,13 +315,6 @@ inline int32 CLuaBattlefield::loadMobs(lua_State* L)
 {
     DSP_DEBUG_BREAK_IF(m_PLuaBattlefield == nullptr);
     m_PLuaBattlefield->LoadMobs();
-    return 0;
-}
-
-inline int32 CLuaBattlefield::loadNPCs(lua_State* L)
-{
-    DSP_DEBUG_BREAK_IF(m_PLuaBattlefield == nullptr);
-    m_PLuaBattlefield->SpawnTreasureChest();
     return 0;
 }
 
@@ -400,7 +385,6 @@ Lunar<CLuaBattlefield>::Register_t CLuaBattlefield::methods[] =
     LUNAR_DECLARE_METHOD(CLuaBattlefield,getAllies),
     LUNAR_DECLARE_METHOD(CLuaBattlefield,getRecord),
     LUNAR_DECLARE_METHOD(CLuaBattlefield,getStatus),
-    LUNAR_DECLARE_METHOD(CLuaBattlefield,canSpawnTreasure),
     LUNAR_DECLARE_METHOD(CLuaBattlefield,setWipeTime),
     LUNAR_DECLARE_METHOD(CLuaBattlefield,setRecord),
     LUNAR_DECLARE_METHOD(CLuaBattlefield,setStatus),
