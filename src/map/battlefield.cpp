@@ -396,7 +396,7 @@ CBaseEntity* CBattlefield::GetEntity(CBaseEntity* PEntity)
 bool CBattlefield::RemoveEntity(CBaseEntity* PEntity, uint8 leavecode)
 {
     // player's already zoned, we dont need to do anything
-    if(!PEntity)
+    if (!PEntity)
         return false;
 
     auto found = false;

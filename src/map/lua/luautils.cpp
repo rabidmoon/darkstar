@@ -29,6 +29,7 @@
 #include "../../common/timer.h"
 #include "../../common/utils.h"
 
+#include <unordered_map>
 #include "../ability.h"
 
 #include "../ai/ai_container.h"
@@ -78,6 +79,7 @@
 #include "../vana_time.h"
 #include "../weapon_skill.h"
 #include "../weapon_skill.h"
+#include "../status_effect_container.h"
 
 #include "lua_action.h"
 #include "lua_battlefield.h"
@@ -1044,7 +1046,7 @@ namespace luautils
             {
                 lua_pushinteger(L, 16);
             }
-            else if (PMob->PAI->IsCurrentState<CDespawnState>())
+            else if (PMob->PAI->IsCurrentState<CRespawnState>())
             {
                 lua_pushinteger(L, 0);
             }
