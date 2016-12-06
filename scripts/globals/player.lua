@@ -29,8 +29,8 @@ local bonus = 0;
         if (firstlogin) then
             CharCreate(player);
         end
-		player:PrintToServer(string.format("%s has logged in...", player:getName()), 0x1C);
-		
+		-- player:PrintToServer(string.format("%s has logged in...", player:getName()), 0x1C);
+		-- Login Logout message handled in Core
 		
 		  if (player:hasStatusEffect(EFFECT_RESTING_BONUS) == false) then
 			if ((logintime - lastlogin) >= 39600) then  --39600 is 11 hours
@@ -61,6 +61,7 @@ local bonus = 0;
 	---------- Feretory Boons -------
 	
 	---- Mage Boons ----
+	if (player:getObjType() == TYPE_PC) then  -- prevent crashes due to getVar possibly flagging Trusts
 	
 	local boonpower = player:getVar("FerretoryMageBoonPower");
 	local plvl = player:getMainLvl();
@@ -159,6 +160,8 @@ local bonus = 0;
         player:setMP( 50000 );
     end
 	
+		end
+	
 	if (player:getMainJob() == 13) and (player:getMainLvl() == 75) and (player:getVar("NIN75") ~=1) and (player:getObjType() == TYPE_PC) then
 	player:setVar("NIN75",1);
 	end
@@ -166,6 +169,8 @@ local bonus = 0;
     if (player:getVar("GMHidden") == 1) then
         player:setGMHidden(true);
     end
+	
+
 
 end;
 
