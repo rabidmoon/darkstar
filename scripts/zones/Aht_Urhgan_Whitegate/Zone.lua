@@ -126,11 +126,21 @@ end;
 function onEventUpdate(player,csid,option)	
 printf("CSID: %u",csid);
 printf("RESULT: %u",option);
-if (csid == 0x0Bea and option == 1) then
-    player:updateEvent(2,0,0,0,0,0,0,0);
-elseif (csid == 0x0Bea and option == 2) then
-    player:updateEvent(3,0,0,0,0,0,0,0);
-end
+    if (csid == 3050 and option == 1) then
+        if (player:getLocalVar("A_MERCENARY_LIFE") == 0) then
+            player:setLocalVar("A_MERCENARY_LIFE", 1);
+            player:updateEvent(1,0,0,0,0,0,0,0);
+        else
+            player:updateEvent(3,0,0,0,0,0,0,0);
+        end
+    elseif (csid == 3050 and option == 2) then
+        if (player:getLocalVar("A_MERCENARY_LIFE") == 0) then
+            player:setLocalVar("A_MERCENARY_LIFE", 1);
+            player:updateEvent(2,0,0,0,0,0,0,0);
+        else
+            player:updateEvent(3,0,0,0,0,0,0,0);
+        end
+    end
 end;	
 
 -----------------------------------	
