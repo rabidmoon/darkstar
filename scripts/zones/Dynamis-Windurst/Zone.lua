@@ -35,20 +35,16 @@ end;
 
 function onZoneIn(player,prevZone)
     local cs = -1;
-	local d1 = 0;
-	local d2 = 0;
-	local d3 = 0;
-	local d4 = 0;
-	local d5 = 0;
-	local d6 = 0;
-	local reduction = 0;
-	local reentertime = 43200;
-	
-	
+
+	local reentertime = player:getVar("Dyna_Reduction");
+
+	player:addStatusEffect(EFFECT_LEVEL_RESTRICTION,75,3,5400);
+
 	 player:setVar("Dynamis_Time_Remaining",5400000);
 	 player:setVar("ScyldMultiplier",0);
 	 player:setVar("Dynamis_Reenter",os.time() + reentertime);
-	return cs;
+	 
+	 return cs;
 end;
 
 -----------------------------------

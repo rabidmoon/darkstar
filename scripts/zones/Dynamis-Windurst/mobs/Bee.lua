@@ -59,7 +59,7 @@ if (attacker:getObjType() == TYPE_PC) then
 	local bee = mob:getID()
 	
 	local wsweakness = math.random(1,1000);
-	attacker:PrintToPlayer(wsweakness);
+	-- attacker:PrintToPlayer(wsweakness);
 	if (wsweakness > 180) and (wsweakness < 401) and (isweak ~= 1) then
 		mob:weaknessTrigger(0); -- Yellow Stagger Increase Scyld 55% of Triggers
 		mob:addStatusEffect(EFFECT_TERROR,1,0,10);
