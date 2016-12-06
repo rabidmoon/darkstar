@@ -40,6 +40,13 @@ function onEffectTick(target,effect)
 				target:setTP(target:getTP()-10);
 			  end	
 				target:addHP(10+(0.50*math.floor(target:getMainLvl()+1))+(healtime-2)+(target:getMod(MOD_HPHEAL)));
+		        -- target:PrintToPlayer("HEALING HP");
+
+			    target:addMP(12+(0.5*math.floor(target:getMainLvl()+5))+((healtime-2) * (1+target:getMod(MOD_CLEAR_MIND)))+(target:getMod(MOD_MPHEAL)));
+			    -- target:PrintToPlayer("HEALING MP");
+			    if (pet ~= nil) then
+			    pet:addMP(12+(0.5*math.floor(target:getMainLvl()+5))+((healtime-2) * (1+(pet:getMod(MOD_MPHEAL)))));
+			    end
 				--master:PrintToPlayer("Trust is out!");
 				master:updateHealth();
 				target:updateHealth();
@@ -47,6 +54,7 @@ function onEffectTick(target,effect)
          -- Each rank of Clear Mind provides +3 hMP (via MOD_MPHEAL)
          -- Each tic of healing should be +1mp more than the last
          -- Clear Mind III increases this to +2, and Clear Mind V to +3 (via MOD_CLEAR_MIND)
+		    target:PrintToPlayer("HEALING");
 			target:addMP(12+(0.5*math.floor(target:getMainLvl()+5))+((healtime-2) * (1+target:getMod(MOD_CLEAR_MIND)))+(target:getMod(MOD_MPHEAL)));
 			if (pet ~= nil) then
 			pet:addMP(12+(0.5*math.floor(target:getMainLvl()+5))+((healtime-2) * (1+(pet:getMod(MOD_MPHEAL)))));
