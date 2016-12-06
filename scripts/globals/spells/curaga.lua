@@ -31,7 +31,11 @@ function onSpellCast(caster,target,spell)
 
 	local final = getCureFinal(caster,spell,getBaseCureOld(power,divisor,constant),minCure,false);
 
+		if (target:getAllegiance() == caster:getAllegiance() and (target:getObjType() == TYPE_PC or target:getObjType() == TYPE_MOB or ((target:getObjType() == TYPE_PET) and 
+	((target:getSystem() ~= 5) or target:getSystem() ~=18)))) then
+	
 	final = final + (final * (target:getMod(MOD_CURE_POTENCY_RCVD)/100));
+	end
 	
 	--Applying server mods....
 	final = final * CURE_POWER;
