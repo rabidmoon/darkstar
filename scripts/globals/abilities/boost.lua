@@ -29,12 +29,16 @@ function onUseAbility(player,target,ability)
         power = power + 1.5;
     end
 	
-	if (level >= 60) and (player:getActiveBoosts() == 3) and (player:getMainJob() == 2) then
-	player:removeOldestBoost();
-	elseif (level >= 40) and (player:getActiveBoosts() == 2) and (player:getMainJob() == 2) then
+
+	
+	if ((level < 40) and (player:getActiveBoosts() == 1) and (player:getMainJob() == 2)) then
 	player:removeOldestBoost();	
-	elseif (level >= 5) and (player:getActiveBoosts() == 1) then
-	player:removeOldestBoost();		
+	end
+	if ((level < 60) and (player:getActiveBoosts() == 2) and (player:getMainJob() == 2)) then
+	player:removeOldestBoost();	
+    end	
+	if ((level <= 75) and (player:getActiveBoosts() == 3) and (player:getMainJob() == 2)) then
+	player:removeOldestBoost();	
     end
 
 
