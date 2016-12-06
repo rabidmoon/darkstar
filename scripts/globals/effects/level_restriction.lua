@@ -78,7 +78,22 @@ if (target:getObjType() == TYPE_PC) and (zone == 86) then
    elseif (duration < 30000) and (duration > 27500) then
    target:PrintToPlayer("You have 30 seconds remaining until you are ejected", 0xD);
    end
-end   
+end  
+
+ 
+if (target:getObjType() == TYPE_PC) and (zone == 73) or (zone == 74) or (zone == 75) or (zone == 76) then	
+	if (seconds < 1800) and (seconds > 1796) then
+		target:PrintToPlayer("You have 30 minutes to complete your objective", 0xD);
+	end
+	if (seconds < 900) and (seconds > 896) then
+	    target:PrintToPlayer("You have 15 minutes remaining until you are ejected", 0xD);
+		-- target:PrintToPlayer(duration);
+	end	
+
+
+end
+
+
 
 
 
