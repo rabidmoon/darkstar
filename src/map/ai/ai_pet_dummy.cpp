@@ -349,7 +349,7 @@ void CAIPetDummy::ActionAbilityStart()
                     break;
                     }
                     else if (PMobSkill->getID() == 3770 && wsrandom < 2) { //Shining Strike
-					mobwsID = 162;
+					mobwsID = 160;
 					SetCurrentMobSkill(PMobSkill);
 			        SetCurrentWeaponSkill(mobwsID);
                     break;
@@ -361,7 +361,7 @@ void CAIPetDummy::ActionAbilityStart()
             for (int i = 0; i < m_PPet->PetSkills.size(); i++) {
                 auto PMobSkill = battleutils::GetMobSkill(m_PPet->PetSkills.at(i));
   					if (PMobSkill->getID() == 3770) { //Shinning Strike
-					mobwsID = 162;
+					mobwsID = 160;
 					SetCurrentMobSkill(PMobSkill);
 			        SetCurrentWeaponSkill(mobwsID);
                     break;
@@ -2882,7 +2882,7 @@ void CAIPetDummy::ActionAttack()
 				return;
 			    }
 		    }
-		 if (m_Tick >= m_LastChainTime + m_blueChainAffinityRecast && trustlevel >= 40 && m_PPet->health.tp > 850)  //Only use CA when above 85% TP
+		 if (m_Tick >= m_LastChainTime + m_blueChainAffinityRecast && trustlevel >= 40 && m_PPet->health.tp > 920)  //Only use CA when above 92% TP
 			{
 			m_PWeaponSkill = nullptr;
             int16 mobjaID = -1;			
@@ -3558,7 +3558,7 @@ void CAIPetDummy::ActionDeath()
 	
 	//if (m_PPet->getZone() == m_PPet->PMaster->getZone()){	
     //ShowWarning(CL_GREEN"Trust in Same Zone, Disappear in 3 seconds \n" CL_RESET);
-	if (m_Tick - m_LastActionTime > 2500) {
+	if (m_Tick - m_LastActionTime > 4500) {
         m_PPet->status = STATUS_DISAPPEAR;
         m_PPet->StatusEffectContainer->DelStatusEffectsByFlag(EFFECTFLAG_DEATH, true);
 
@@ -3796,7 +3796,7 @@ int16 CAIPetDummy::KupipiSpell()
 		else if (mostWounded != nullptr)
 		{
         m_PBattleSubTarget = mostWounded;
-		if (level > 54)
+		if (level > 40)
 			if (m_PPet->health.mp > 88)
 				{
 				 spellID = 4;
@@ -3817,7 +3817,7 @@ int16 CAIPetDummy::KupipiSpell()
 			    {
 				 spellID = -1;
 				} 
-		else if (level > 29)
+		else if (level > 20)
 			if (m_PPet->health.mp > 46)  	
 			    {
 				 spellID = 3;
@@ -3834,7 +3834,7 @@ int16 CAIPetDummy::KupipiSpell()
 			    {
 				 spellID = -1;
 				}
-		else if (level > 16)
+		else if (level > 10)
 			if (m_PPet->health.mp > 24)  	
 			    {
 				 spellID = 2;
