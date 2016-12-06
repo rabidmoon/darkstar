@@ -854,9 +854,6 @@ int32 map_cleanup(time_point tick, CTaskMgr::CTask* PTask)
                     const int8* Query = "DELETE FROM accounts_sessions WHERE client_addr = %u AND client_port = %u";
                     Sql_Query(SqlHandle, Query, map_session_data->client_addr, map_session_data->client_port);
 
-                    if (map_session_data->PChar->PBCNM)
-                        map_session_data->PChar->PBCNM->delPlayerFromBcnm(PChar);
-
                     aFree(map_session_data->server_packet_data);
                     map_session_list.erase(it++);
                     delete map_session_data;
