@@ -64,7 +64,8 @@ enum EFFECTFLAG
     EFFECTFLAG_SYNTH_SUPPORT    = 0x40000,  // Synthesis Image Support
     EFFECTFLAG_CONFRONTATION    = 0x80000,
     EFFECTFLAG_LOGOUT           = 0x100000,
-    EFFECTFLAG_BLOODPACT        = 0x200000
+    EFFECTFLAG_BLOODPACT        = 0x200000,
+    EFFECTFLAG_ON_JOBCHANGE     = 0x400000  // Removes effect when you change jobs
 };
 
 enum EFFECT
