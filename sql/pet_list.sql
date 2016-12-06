@@ -127,3 +127,7 @@ INSERT INTO `pet_list` VALUES (82, 'Adelheid', 7810, 1, 99, 0, 0); -- SCH
 INSERT INTO `pet_list` VALUES (83, 'Bahamut', 7999, 1, 99, 0, 0); 
 INSERT INTO `pet_list` VALUES (84, 'Dark Ixion', 7998, 1, 99, 0, 0); 
 INSERT INTO `pet_list` VALUES (85, 'Ixion', 7997, 1, 99, 0, 0); 
+INSERT INTO `pet_list` VALUES (86, 'Lion', 7811, 1, 99, 0, 0); 
+INSERT INTO `pet_list` VALUES (87, 'Prishe', 7812, 1, 99, 0, 0); 
+INSERT INTO `pet_list` VALUES (88, 'Ulmia', 7813, 1, 99, 0, 0); 
+INSERT INTO `pet_list` VALUES (89, 'Luzaf', 7814, 1, 99, 0, 0); 
