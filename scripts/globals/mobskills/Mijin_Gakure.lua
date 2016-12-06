@@ -23,11 +23,18 @@ function onMobWeaponSkill(target, mob, skill)
     local dmgmod = 1;
     local hpmod = skill:getHPP() / 100;
     local basePower = 6;
+	local mobid = mob:getID();
+    local MobID = mob:getID();
 
     -- Maat has a weaker Mijin
     if (mob:getFamily() == 335) then
         basePower = 4;
     end
+	
+	-- Dynamis Jeuno NM has weaker Mijin
+	if (MobID == 17547493) then
+		basePower = 3;
+	end	
 
     local power = hpmod * 10 + basePower;
 
@@ -41,6 +48,13 @@ function onMobWeaponSkill(target, mob, skill)
         -- other mobs might not
         mob:setHP(0);
     end
+	
+	
+	if (mobid == 17637701) then
+	       -- mob:setHP(0);
+
+    end
+
 
     target:delHP(dmg);
     return dmg;
