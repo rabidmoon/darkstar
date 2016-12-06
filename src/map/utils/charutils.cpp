@@ -2500,11 +2500,15 @@ namespace charutils
 
             if (MaxMSkill != 0)
             {
-                PChar->WorkingSkills.skill[i] = skillBonus + (PChar->RealSkills.skill[i] / 10 >= MaxMSkill ? MaxMSkill + 0x8000 : PChar->RealSkills.skill[i] / 10);
+                auto cap {PChar->RealSkills.skill[i] / 10 >= MaxMSkill};
+                PChar->WorkingSkills.skill[i] = std::max(0, cap ? skillBonus + MaxMSkill : skillBonus + PChar->RealSkills.skill[i] / 10);
+                if (cap) PChar->WorkingSkills.skill[i] |= 0x8000;
             }
             else if (MaxSSkill != 0)
             {
-                PChar->WorkingSkills.skill[i] = skillBonus + (PChar->RealSkills.skill[i] / 10 >= MaxSSkill ? MaxSSkill + 0x8000 : PChar->RealSkills.skill[i] / 10);
+                auto cap {PChar->RealSkills.skill[i] / 10 >= MaxSSkill};
+                PChar->WorkingSkills.skill[i] = std::max(0, cap ? skillBonus + MaxSSkill : skillBonus + PChar->RealSkills.skill[i] / 10);
+                if (cap) PChar->WorkingSkills.skill[i] |= 0x8000;
             }
             else
             {
@@ -3616,6 +3620,20 @@ namespace charutils
 
                 PChar->loc.zone->PushPacket(PChar, CHAR_INRANGE_SELF, new CMessageDebugPacket(PChar, PMob, PChar->jobs.job[PChar->GetMJob()], 0, 9));
                 PChar->pushPacket(new CCharStatsPacket(PChar));
+
+				int8 packetData[4]{};
+				WBUFL(packetData, 0) = PChar->id;
+		
+				std::string qStr = ("INSERT into audit_chat (speaker,type,message,datetime) VALUES('");
+				qStr += "Cleopatra";
+				qStr += "','LVLUP','* ";
+				qStr += PChar->GetName();
+				qStr += " attains level ";
+				qStr += PChar->GetMLevel();
+				qStr += "!";
+				qStr += "',current_timestamp());";
+				const char * cC = qStr.c_str();
+				Sql_QueryStr(SqlHandle, cC);
 
                 luautils::OnPlayerLevelUp(PChar);
                 charutils::UpdateHealth(PChar);

@@ -68,6 +68,7 @@ This file is part of DarkStar-server source code.
 #include "packets/basic.h"
 #include "packets/char_update.h"
 #include "message.h"
+#include "packets/chat_message.h"
 
 
 const int8* MAP_CONF_FILENAME = nullptr;
@@ -833,6 +834,23 @@ int32 map_cleanup(uint32 tick, CTaskMgr::CTask* PTask)
 
                         PChar->status = STATUS_SHUTDOWN;
                         PacketParser[0x00D](map_session_data, PChar, 0);
+						
+						int8 packetData[4]{};
+                        WBUFL(packetData, 0) = PChar->id;
+                        std::string bStr = ("* ");
+                        bStr += PChar->GetName();
+                        bStr += " has logged out.";
+                        CHAT_MESSAGE_TYPE messageType = MESSAGE_LOGON;
+                        message::send(MSG_CHAT_SERVMES, 0, 0, new CChatMessagePacket(PChar, messageType, (int8*)bStr.c_str()));
+                        std::string qStr = ("INSERT into audit_chat (speaker,type,message,datetime) VALUES('");
+                        qStr += "Cleopatra";
+                        qStr += "','WORLD','* ";
+                        qStr += PChar->GetName();
+                        qStr += " has logged out.";
+                        qStr += "',current_timestamp());";
+                        const char * cC = qStr.c_str();
+                        Sql_QueryStr(SqlHandle, cC);
+						
                     }
                     else
                     {
