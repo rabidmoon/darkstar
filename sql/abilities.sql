@@ -387,6 +387,7 @@ INSERT INTO `abilities` VALUES ('613', 'thunder_iv', '15', '60', '4', '60', '173
 INSERT INTO `abilities` VALUES ('614', 'chaotic_strike', '15', '70', '4', '60', '173', '0', '0', '164', '18.0', '0', '1', '60', '0', '0',null); -- ROTZ
 INSERT INTO `abilities` VALUES ('615', 'thunderstorm', '15', '75', '4', '60', '173', '0', '0', '182', '18.0', '0', '1', '60', '2952', '1','TOAU');
 INSERT INTO `abilities` VALUES ('616', 'judgment_bolt', '15', '1', '4', '60', '173', '0', '0', '0', '18.0', '0', '1', '60', '0', '2',null); -- ROTZ
+INSERT INTO `abilities` VALUES ('636', 'super_climb', '0', '50', '1', '0', '0', '0', '0', '140', '18.0', '0', '0', '0', '0', '0',null); -- ROTZ
 INSERT INTO `abilities` VALUES ('640', 'camisado', '15', '1', '4', '60', '173', '0', '0', '20', '18.0', '0', '1', '60', '0', '0',null); -- ROTZ
 INSERT INTO `abilities` VALUES ('641', 'somnolence', '15', '20', '4', '60', '174', '0', '0', '30', '18.0', '0', '1', '60', '0', '0',null); -- ROTZ
 INSERT INTO `abilities` VALUES ('642', 'nightmare', '15', '29', '4', '60', '174', '0', '0', '42', '18.0', '0', '1', '60', '0', '0',null); -- ROTZ
