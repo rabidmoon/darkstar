@@ -56,7 +56,18 @@ function onUseWeaponSkill(player, target, wsID)
 	else
 	unlock = 0.05;
 	end
-	
+
+	if (wsnm > 75) then
+	player:PrintToPlayer("Your form is off...", 0x1C);	
+	elseif (wsnm > 50) then
+	player:PrintToPlayer("Your form has improved slightly", 0x1C);	
+	elseif (wsnm > 25) then
+	player:PrintToPlayer("Your form is getting better", 0x1C);
+	elseif (wsnm >= 2) then
+	player:PrintToPlayer("Your form is has improved greatly!", 0x1C);	
+	elseif (wsnm == 1) then	
+	player:PrintToPlayer("Your form is excellent!", 0x1C);
+	end	
 	
 	damage = damage * WEAPON_SKILL_POWER * unlock
 	return tpHits, extraHits, criticalHit, damage;

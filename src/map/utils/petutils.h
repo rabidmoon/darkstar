@@ -70,7 +70,11 @@ enum PETID
 	PETID_ADELHIED           = 82,
 	PETID_BAHAMUT            = 83,
 	PETID_DARK_IXION         = 84,
-	PETID_LIGHT_IXION        = 85
+	PETID_LIGHT_IXION        = 85,
+	PETID_LION				 = 86,
+	PETID_PRISHE             = 87,
+	PETID_ULMIA              = 88,
+	PETID_LUZAF              = 89
 };
 
 
