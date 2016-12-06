@@ -35,15 +35,15 @@ local aura = player:getVar("FerretoryAura");
     elseif (page == 2) then -- Pharmacy
         local stock_2 =
         {
-            4148,   1000,     -- Antidote
-            4154,   1500,    -- Holy Water
-            4150,   1000,    -- Eye Drops
-            4151,   1000,    -- Echo Drops
-            4153,   2500,    -- Bottle of Antacid
+            4148,   400,     -- Antidote
+            4154,   4000,    -- Holy Water
+            4150,   600,    -- Eye Drops
+            4151,   1200,    -- Echo Drops
+            4153,   35000,    -- Bottle of Antacid
             5418,   1500,    -- Tincture
-            5328,   2500,    -- Hi-Potion Drop
-            5358,   2500,    -- Hi-Ether Drop
-            5356,   2500,    -- Remedy Ointment
+            5328,   3000,    -- Hi-Potion Drop
+            5358,   3000,    -- Hi-Ether Drop
+            5356,   3500,    -- Remedy Ointment
             4202,   25000   -- Daedalus Wing
 
         };
@@ -53,56 +53,56 @@ local aura = player:getVar("FerretoryAura");
         local stock_3 =
         {
 			-- attack foods
-			4381,	250,   -- Meat mithkabob 
-			5142,	3000,  -- bison Steak 
-			5146,	3000,  -- Hedgehog Pie 
-			5759,	250,   -- red curry bun 
+			4381,	650,   -- Meat mithkabob *
+			5142,	12000,  -- bison Steak 
+			5146,	4500,  -- Hedgehog Pie 
+			5759,	6500,   -- red curry bun 
 			5166,   2100,  -- Coeurl Sub Sandwich
 			-- acc food
-			5721,	250,   -- Crab Sushi  
-			5176,	250,   -- Bream Sushi 
-			5148,	250,   -- Squid Sushi 
-			5149,	250,   -- Sole Sushi 
+			5721,	600,   -- Crab Sushi  
+			5176,	1100,   -- Bream Sushi 
+			5148,	2500,   -- Squid Sushi 
+			5149,	5500,   -- Sole Sushi 
 			-- hybrid foods
-			5743,   6000,  -- Pizza
-			5685,   8000,  -- Rabbit Pie
+			5743,   11000,  -- Pizza
+			5685,   11000,  -- Rabbit Pie
 			-- tank foods
-			4488,	3000,  -- Jack-o'-Lantern
-			5178,	250,   -- Dorado Sushi
-			5191,	250,   -- Pescatora
-			5174,	250,   -- Tavnazian Taco 
+			4488,	3100,  -- Jack-o'-Lantern
+			5178,	6300,   -- Dorado Sushi
+			5191,	22050,   -- Pescatora
+			5174,	5500,   -- Tavnazian Taco 
 			-- mage food
-			4421,	250,   -- Melon Pie  
-			4414,	250,   -- Rolanberry Pie 
-			5718,	250,   -- Cream Puff
-			4502,	3000,  -- Marron Glace
+			4421,	1200,   -- Melon Pie  
+			4414,	4000,   -- Rolanberry Pie *
+			5718,	3000,   -- Cream Puff
+			4502,	4200,  -- Marron Glace
 			-- Juice
-			5932,   1600,   -- Kitron Juice
-			4424,   1100,   -- Melon Juice
-			4422,   700,    -- Orange Juice
-			4558,	1200    -- Yagudo Drink
+			5932,   800,   -- Kitron Juice
+			4424,   700,   -- Melon Juice
+			4422,   600,    -- Orange Juice
+			4558,	2200    -- Yagudo Drink
         };
         showShop(player, STATIC, stock_3);
         player:PrintToPlayer( "Merchant Moogle : Fresh food for your adventures, Kupo!", 0x1F);
     elseif (page == 4) then
         local stock_4 =
         {
-            605,    1000,     -- Pickaxe
-            1021,   1000,     -- Hatchet
-            1020,   1000,     -- Sickle
+            605,    1100,     -- Pickaxe
+            1021,   1100,     -- Hatchet
+            1020,   1100,     -- Sickle
             4165,   2300,    -- Silent Oil
             4164,   1300,    -- Prism Powder
             5362,   1300,    -- Rainbow Powder
-            5319,   9200,    -- Toolbag (Shinobi-Tabi)
-            5314,   11000,    -- Toolbag (Shihei)
+            5319,   11000,    -- Toolbag (Shinobi-Tabi)
+            5314,   12000,    -- Toolbag (Shihei)
             1022,   5200,     -- Thief's Tools
-			4219,   1100,     -- Stone Quiver 
-			4225,   2100,     -- Iron Quiver
-			4226,   3100,     -- Silver Quiver
-			5335,   1000,     -- Acid Bolt QUiver
-			5337,   11000,     -- Sleep Bolt Quiver
-			5339,   6100,     -- Bloody Bolt Quiver
-		   19229,   10,       -- Tin Bullet	
+			4219,   1100,     -- Stone Quiver *
+			4225,   1100,     -- Iron Quiver  *
+			4226,   3500,     -- Silver Quiver*
+			5335,   4000,     -- Acid Bolt QUiver
+			5337,   5000,     -- Sleep Bolt Quiver
+			5339,   5000,     -- Bloody Bolt Quiver
+		   19229,   110,       -- Tin Bullet	
 		    5363,   3200,     -- Bullet Pouch
         };
         showShop(player, STATIC, stock_4);
@@ -112,81 +112,81 @@ local aura = player:getVar("FerretoryAura");
 		elseif (page == 51) and (level < 50) then
         local stock_5a =
         {
-            16391,		3000,	 -- Brass Knuckles
+            16391,		3100,	 -- Brass Knuckles
 			16386,		5100,	  -- Lizard Cesti
 		    16409,		5100,	  -- Lynx Baghnakhs
-		    17514,	    10000,	  -- Hydro Claws
+		    17514,	    11000,	  -- Hydro Claws
 		    16393,		10000,	  -- Mythril Knuckles
-		    16466,		900,	  -- Knife
-		    16473,		5600,	  -- Kukri
-			16479,		7200,	  -- Acid Kukri
-			16572,		1500,	  -- Bee Spatha
+		    16466,		3200,	  -- Knife
+		    16473,		3500,	  -- Kukri
+			16479,		22350,	  -- Acid Kukri
+			16572,		5500,	  -- Bee Spatha
 			16517,		4700,	  -- Degen
-			16532,		7800,	  -- Gladius
-			16648,		2200,	  -- Legionnaires Axe
-			16649,		4200,	  -- Bone Pick
-			17940,		6000,	  -- Military Pick
-			16644,		7500,	  -- Mythril Axe
-			17780,		3000,	  -- Kyofu
-			16917,		2300,	  -- Suzume
-			17775,		5500,	  -- Fukuro
-			19276,		7000,	  -- Midare
-			17025,		1500,	  -- Chestnut Club
-			17441,		6800	  -- Eremite's Wand
+			16532,		22000,	  -- Gladius
+			16648,		5200,	  -- Legionnaires Axe
+			16649,		2200,	  -- Bone Pick
+			17940,		52000,	  -- Military Pick
+			16644,		15500,	  -- Mythril Axe
+			17780,		6000,	  -- Kyofu
+			16917,		5300,	  -- Suzume
+			17775,		12500,	  -- Fukuro
+			19276,		12000,	  -- Midare
+			17025,		2500,	  -- Chestnut Club
+			17441,		11800	  -- Eremite's Wand
         };
         showShop(player, STATIC, stock_5a);
         player:PrintToPlayer( "Merchant Moogle : One-Handed Weapons!", 0x1F);
         elseif (page == 51) and (level >= 50) then
         local stock_5m =
         {
-			16394,		8700,    -- Darksteel Knuckles
-			18743,		9500,    -- Darksteel Santi
-			18748,		11250,    -- Hades Sainti
-			16468,		8500,    -- Darksteel knife
-			16477,		9500,    -- Cement Kukuri
-			17628,		11000,    -- Behemoth Knife
-			18023,		11200,    -- Jambiya
-			16538,      8800,     -- Darksteel Sword
-			16560,	    9300,     -- Cutlass
-			17720,     10100,     -- Company Flurret
-			16547,     11600,     -- Anelace			
-			16645,      8500,     -- Darksteel Axe
-			16652,      9200,     -- Darksteel Pick
-			16659,     11000,     -- Tabarzin
-			16913,      8520,     -- Shinogi
-			16903,      9500,     -- Kabutowari
-			16904,     12000,     -- Fudo
-			17037,      8500,     -- Darksteel Mace
-			17046,      9600,     -- Darksteel Maul
-			18848,     11200     -- Brass Jadagna
+			16394,		21000,    -- Darksteel Knuckles
+			18743,		52000,    -- Darksteel Santi
+			18748,	   100000,    -- Hades Sainti
+			16468,		70000,    -- Darksteel knife
+			16477,		21000,    -- Cement Kukuri
+			17628,		28000,    -- Behemoth Knife
+			18023,	   310200,    -- Jambiya
+			16538,      16000,     -- Darksteel Sword
+			16560,	    53000,     -- Cutlass
+			17720,      11000,     -- Company Flurret
+			16547,     110600,     -- Anelace			
+			16645,      16000,     -- Darksteel Axe
+			16652,      52000,     -- Darksteel Pick
+			16659,     210000,     -- Tabarzin
+			16913,      22520,     -- Shinogi
+			16903,      42000,     -- Kabutowari
+			16904,      32000,     -- Fudo
+			17037,      53500,     -- Darksteel Mace
+			17046,      53600,     -- Darksteel Maul
+			18848,      11200     -- Brass Jadagna
         };
         showShop(player, STATIC, stock_5m);
         player:PrintToPlayer( "Merchant Moogle : One-Handed Weapons!", 0x1F);		
 		elseif (page == 52) and (level < 50) then
         local stock_5b =
         {
-            16705,		1200,	  -- Greataxe
-			18209,		3500,	  -- Platoon Cutter
-			16712,		7100,	  -- Centurion's Axe
-			16708,		8000,	  -- Horror Voulge
-			18956,		1300,	  -- Serpett
-			16770,		3500,	  -- Zaghnal
-			16776,		7800,	  -- Mrc Cpt Scythe
-			16834,		1200,	  -- Brass Speak
-			16852,		4000,	  -- Royal spr spear
-			16844,		8000,	  -- Ryal Halberd
-			16960,		1200,	  -- Ughigatana
-			17820,		3500,	  -- Gunromaru
-			16988,		6200,	  -- Kotetsu
-			16970,		8300,	  -- Hosodachi
-			17089,		1300,	  -- Holy Staff
+            16705,		11000,	  -- Greataxe
+			18209,		5500,	  -- Platoon Cutter
+			16712,		11100,	  -- Centurion's Axe
+			16708,		16000,	  -- Horror Voulge
+			18956,		12000,	  -- Serpett
+			16770,		4500,	  -- Zaghnal
+			16776,		22000,	  -- Mrc Cpt Scythe
+			16834,		5200,	  -- Brass Speak
+			16852,		4200,	  -- Royal spr spear
+			16844,		12000,	  -- Ryal Halberd
+			16960,		5200,	  -- Ughigatana
+			17820,		23500,	  -- Gunromaru
+			16988,		22200,	  -- Kotetsu
+			16970,		22300,	  -- Hosodachi
+			17089,		3300,	  -- Holly Staff
 			17096,		2600,	  -- Holly Pole
-			17090,		5900,	  -- Elm Staff
-			17580,		8100,	  -- Military Pole
-			16606,      1200,     -- Rusty GS
-			16583,      2900,     -- Claymore
-			16930,      4000,     -- Merc Captain GS
-			16584,      7800     -- Mythril GS
+			17090,		12900,	  -- Elm Staff
+			17580,		22100,	  -- Military Pole
+			16606,      22200,     -- Rusty GS
+			16583,      11400,     -- Claymore
+			16930,      22600,     -- Merc Captain GS
+			16584,      12800     -- Mythril GS
 			
         };
         showShop(player, STATIC, stock_5b);
@@ -196,24 +196,24 @@ local aura = player:getVar("FerretoryAura");
         {
 			17545,		12000,   -- Fire Staff
 			17547,		12000,   -- Ice Staff
-			17549,		12000,   -- Wind Staff
-			17551,		12000,   -- Earth Staff
+			17549,		22000,   -- Wind Staff
+			17551,		32000,   -- Earth Staff
 			17553,		12000,   -- Thunder Staff
-			17555,		12000,   -- Water Staff
+			17555,		17000,   -- Water Staff
 			17557,		12000,   -- Light Staff
-			17559,		12000,   -- Dark Staff
-			16585, 		8500,	-- Darksteel Claymore
-			16596,		9500,	-- Flamberge
-			16592,		12000,	-- Giant Sword
-			18226,		9000,	-- Darksteel Voulge
-			16730,		10500,	-- Colossal Axe
-			16707,		13000,	-- Bhuj
-			16848,		10000,	-- Darksteel Lance
-			16849,		15000,	-- Cement Lance
-			16885,		22000,	-- Colossal Lance
-			16984,		10000,	-- Jindachi
-			16972,		15500,	-- Kazaridachi
-			18439,		21000	-- Shirogotana
+			17559,		17000,   -- Dark Staff
+			16585, 		52300,	-- Darksteel Claymore
+			16596,		43000,	-- Flamberge
+			-- 16592,		12000,	-- Giant Sword
+			18226,		375000,	-- Darksteel Voulge
+			16730,		32500,	-- Colossal Axe
+			16707,		43000,	-- Bhuj
+			16848,		21000,	-- Darksteel Lance
+			16849,		12000,	-- Cement Lance
+			16855,		32000,	-- Colossal Lance
+			16984,		62000,	-- Jindachi
+			16972,		82500,	-- Kazaridachi
+			18439,		92000	-- Shirogotana
 		
 		
 		
@@ -224,25 +224,25 @@ local aura = player:getVar("FerretoryAura");
 		elseif (page == 53) and (level < 50) then
         local stock_5c =
         {
-            17153,		1200,	  -- Self Bow
-			17161,		3500,	  -- Power Bow
-			17155,		7100,	  -- Composite Bow
-			17257,		2900,	  -- Bandits Gun
-			17248,		6000,	  -- Arquebus
-			17272,		7300,	  -- Military Gun
-			17217,      1300,     -- Cross Bow
-			17230,      3600,     -- Power Crossbow
-			17247,      14000     -- Rikonodo
+            17153,		2200,	  -- Self Bow
+			17161,		27500,	  -- Power Bow
+			17155,		12100,	  -- Composite Bow
+			17257,		22900,	  -- Bandits Gun
+			17248,		52000,	  -- Arquebus
+			17272,		42300,	  -- Military Gun
+			17217,      2300,     -- Cross Bow
+			17230,      12600,     -- Power Crossbow
+			17247,      32000     -- Rikonodo
         };
         showShop(player, STATIC, stock_5c);
         player:PrintToPlayer( "Merchant Moogle : Ranged Weapons!", 0x1F);
 		elseif (page == 53) and (level >= 50) then
         local stock_5o =
         {
-			19226,		11000,	   -- Blunderbuss
-			17157,      12000,     -- Rapid Bow
-			17251,		18000,	   -- Hellfire
-			17200,      18500      -- Rosenbogen	
+			19226,		32000,	   -- Blunderbuss
+			17157,      22000,     -- Rapid Bow
+			17251,		62000,	   -- Hellfire
+			17200,      22500      -- Rosenbogen	
         };
         showShop(player, STATIC, stock_5o);
         player:PrintToPlayer("Merchant Moogle : Ranged Weapons!", 0x1F);		
@@ -251,67 +251,66 @@ local aura = player:getVar("FerretoryAura");
 	elseif (page == 61) and (level < 50) then
         local stock_6a =	
 		{	
-			12497,	250,	  -- Brass Hairpin		 
-			12530,	900,  -- Sage's Circlet		30F2	
-			12498,	400,	 -- Cotton Headband		30D2	
-			13833,	400,	  -- Noble's Ribbon		3609	
-			15208,	1200, -- Baron's Chap		3B68	
-			13827,	1900,  -- Beetle Mask +1		3603	
-			15166,	4200, -- Seer's Crown +1		3B3E	
-			13824,	1200,  -- Strong Bandana		3600			
-			12533,	2200,  -- Silver Mask +1		30F5	
-			15170,	8000,  -- Blink Band		    3B42	
-			13831,	3200, -- Sallet +1		    3607
-			15166,  4200,     -- Seer's Crown +1
-			12480,  2000,     -- Lizard Mask +1
-			12432,   450,     -- Facegard	
-			13840,  5100,     -- Electrum Hairpin
-			13829,  5000,    -- Caprice Mask +1
+			12497,	4250,	  -- Brass Hairpin		 
+			12530,	15300,  -- Sage's Circlet		30F2	
+			12498,	2400,	 -- Cotton Headband		30D2	
+			13833,	5200,	  -- Noble's Ribbon		3609	
+			15208,	22200, -- Baron's Chap		3B68	
+			13827,	12000,  -- Beetle Mask +1		3603	
+			15166,  42200,     -- Seer's Crown +1
+			13824,	8200,  -- Strong Bandana		3600			
+			12533,	22200,  -- Silver Mask +1		30F5	
+			15170,	102000,  -- Blink Band		    3B42	
+			13831,	13200, -- Sallet +1		    3607
+			12480,  12000,     -- Lizard Mask +1
+			12432,   1250,     -- Facegard	
+			13840,  12100,     -- Electrum Hairpin
+			13829,  11000    -- Caprice Mask +1
         };			
 		showShop(player, STATIC, stock_6a);
-        player:PrintToPlayer( "Armory Head: Welcome, Kupo!");
+        player:PrintToPlayer( "Armory Head: I have some HQ items, Kupo!");
 	elseif (page == 61) and (level >=50) then    -- Shop for Level 50 and Above Head Pieces
         local stock_6r =	
 		{	
-			13939,	11000,  -- Austers Hat
-			13698,	10000,  -- Beak Helm
-			16063,  11500,  -- Jeridah Hat
-			16061,	12000,  -- Sipahi Turban
+			13939,	52000,  -- Austers Hat
+			13698,	12000,  -- Beak Helm
+			16063,  41500,  -- Jeridah Hat
+			16061,	52000,  -- Sipahi Turban
 			13881,  11000,  -- Arhat Jinpachi
 			12477,  13000,  -- Nobles Crown
-			12428,  10000   -- Caleta
+			12428,  27000   -- Caleta
         };			
 		showShop(player, STATIC, stock_6r);
         player:PrintToPlayer("Merchant Moogle : Head Armor Kupo!", 0x1F);		
 		elseif (page == 62) and (level < 50) then
 	    local stock_6b =
         {
-            12608,  1000,     -- Tunic
-			13729,  2200,     -- Priest's Robe 
-		    12602,  5500,     -- Wool Robe
-			14424,  2600,     -- Seer's Tunic
-			12568,   300,     -- Leather Vest   
-			12616,   2500,    -- Tunic +1 
-			14490,   2500,    -- Mana Tunic
-			12661,   1000,    -- Solid Mail
-			12591,   1000,    -- Doublet +1
-			14495,   3500,    -- Healing Harness
-			13697,   1800,    -- Fine Jerkin
-			14447,   2500,    -- Baron 
+            12608,  1200,     -- Tunic
+			13729,  12200,     -- Priest's Robe 
+		    12602,  2500,     -- Wool Robe
+			14427,  52000,     -- Seer's Tunic +1
+			12568,   2300,     -- Leather Vest   
+			12616,   12500,    -- Tunic +1 
+			14490,   12500,    -- Mana Tunic
+			12661,   21000,    -- Solid Mail
+			12591,   22000,    -- Doublet +1
+			14495,   23500,    -- Healing Harness
+			13697,   12800,    -- Fine Jerkin
+			14447,   52500,    -- Baron 
 			13717,   3200,    -- Beetle Harness
-			12567,   5000,    -- Steam Scale Mail
-			13731,   4300,    -- Faerie Tunic
-			13707,   5500,    -- Strong Vest 
+			12567,   11000,    -- Steam Scale Mail
+			13731,   11300,    -- Faerie Tunic
+			13707,   12500,    -- Strong Vest 
 			11339,   6300,    -- Channeling Robe   
-			12663,   7000,    -- Strong Harness 
-			13709,   8000,    -- Cuir Bouilli +1
-			13724,   9000,    -- Breastplate +1 
-			11348,   10000,   -- Salutary Robe +1
-			13714,   11000,   -- Carapace Harness +1
-			13727,   12500,   -- Dino Jerkin
+			12663,   42000,    -- Strong Harness 
+			13709,   12000,    -- Cuir Bouilli +1
+			13724,   52000,    -- Breastplate +1 
+			11348,   86000,   -- Salutary Robe +1
+			13714,   16000,   -- Carapace Harness +1
+			13727,   32500,   -- Dino Jerkin
 			13737,   15000,   -- Mithril Breaste+1
-			12651,   35000,   -- White Cloak +1
-	        12554,   28000    -- Banded Mail 		
+			12651,   46000,   -- White Cloak +1
+	        12554,   6000    -- Banded Mail 		
 		
         };
         showShop(player, STATIC, stock_6b);
@@ -319,38 +318,38 @@ local aura = player:getVar("FerretoryAura");
 		elseif (page == 62) and (level >= 50) then
 	    local stock_6s =
         {
-			13814,  19500,  -- Austers
-			12579,  32000,  -- Scorpion Harness	
-			13748,	30000,  -- Vermillion Cloak
-			14526,	20000,  -- Jeridah Peti
-			14524,  25000,  -- Sipahi
-			13744,	25000,  -- Justaucorps
-			13740,  40000,  -- Byrnie
-			13754,	25000,  -- Black Cotehardie 
-			13795,	23000,  -- Arhat
-			12605,	32000,  -- Nobles Tunic
-			13779,	35000,  -- Black Cloak
-			14436,	20000   -- Blessed Briault		
+			13814,  51500,  -- Austers
+			12579,  42000,  -- Scorpion Harness	
+			13748,	310000,  -- Vermillion Cloak
+			14526,	52000,  -- Jeridah Peti
+			14524,  95000,  -- Sipahi
+			13744,	42000,  -- Justaucorps
+			13740,  51000,  -- Byrnie
+			13754,	42000,  -- Black Cotehardie 
+			13795,	52000,  -- Arhat
+			12605,	67000,  -- Nobles Tunic
+			13779,	22000,  -- Black Cloak
+			14436,	12000   -- Blessed Briault		
         };
         showShop(player, STATIC, stock_6s);
         player:PrintToPlayer("Merchant Moogle : Body Armor Kupo!", 0x1F);	
 		elseif (page == 63) and (level < 50) then
 	    local stock_6c =
         {
-			12696,	100,   -- Leather Gloves		
-			12736,	200,   -- Mitts			    
-			12778,	650,   -- Linen Cuffs +1		
-			12785,	350,   -- Fine Gloves		    
-			12789,	1550,  -- Beetle Mittens +1	
-			14863,	2000,  -- Kampfhentzes		
-			12726,	1800,  -- Merc Capt gloves		
-			12793,	3000,  -- Mage's Cuffs	
-			12791,	4050,  -- Gauntlets + 1		    
-			14052,	7750,  -- Luisant Moufles		
-			12795,	3600,  -- Dino Gloves		    
-			13958,	6000,  -- Mythril Gauntts +1	
-			12794,	4000,  -- Mage's Mitts	
-            12790,  4000   -- Caprice Mitts			
+			12696,	1200,   -- Leather Gloves		
+			12736,	1200,   -- Mitts			    
+			12778,	21650,   -- Linen Cuffs +1		
+			12785,	3350,   -- Fine Gloves		    
+			12789,	16550,  -- Beetle Mittens +1	
+			14863,	32000,  -- Kampfhentzes		
+			12726,	6800,  -- Merc Capt gloves		
+			12793,	12000,  -- Mage's Cuffs	
+			12791,	12050,  -- Gauntlets + 1		    
+			14052,	62750,  -- Luisant Moufles		
+			12795,	12600,  -- Dino Gloves		    
+			13958,	42000,  -- Mythril Gauntts +1	
+			12794,	12000,  -- Mage's Mitts	
+            12790,  8000   -- Caprice Mitts			
         };
         showShop(player, STATIC, stock_6c);
         showShop(player, STATIC, stock_6s);
@@ -358,13 +357,13 @@ local aura = player:getVar("FerretoryAura");
 		elseif (page == 63) and (level >=50) then
 	    local stock_6t =
         {
-			14826,	8000,   -- Austers Cuffs
-			14934,  10100,  -- Jeridah
-			14932,  11200,  -- Sipahi
-			14023,  10000,  -- Arhats Tekko
-			12724,  11000,  -- Battle Bracers	
-			12733,  11000,  -- Nobles Mitts
-			14875,  13000,  -- Blessed Mitts
+			14826,	52000,   -- Austers Cuffs
+			14934,  52100,  -- Jeridah
+			14932,  21200,  -- Sipahi
+			14023,  22000,  -- Arhats Tekko
+			12724,  19000,  -- Battle Bracers	
+			12733,  22000,  -- Nobles Mitts
+			14875,  32000,  -- Blessed Mitts
         };
         showShop(player, STATIC, stock_6t);
         showShop(player, STATIC, stock_6s);
@@ -372,93 +371,93 @@ local aura = player:getVar("FerretoryAura");
 		elseif (page == 64) and (level < 50) then
 	    local stock_6d =
         {
-			12824,		225,  -- Leather Trousers	
-			12898,		900,  -- Slacks +1		    
-			12912,		1250,  -- Bone Subligar +1	
-			15405,		900,  -- Baron's Slops		
-			12808,		3200, -- Chain Hose +1		
-			14328,		2250, -- Seer's Slacks +1	
-			14332,		2250, -- Kampfdiechlings		
-			12910,		3500, -- Strong Trousers		
-			12891,		4200, -- Iron Subligar +1	
-			12918,		3800, -- Mage's Slops		
-			12919,		4800, -- Dino Trousers		
-			14211,		6400, -- Mythril Cuisses +1	
-			12926,		7000,  -- White Slacks +1
-			12870,      5000,  -- Combat Cast Slacks
+			12824,		1225,  -- Leather Trousers	
+			12898,		16000,  -- Slacks +1		    
+			12912,		16050,  -- Bone Subligar +1	
+			15405,		52000,  -- Baron's Slops		
+			12808,		8200, -- Chain Hose +1		
+			14328,		42250, -- Seer's Slacks +1	
+			14332,		32250, -- Kampfdiechlings		
+			12910,		12500, -- Strong Trousers		
+			12891,		12200, -- Iron Subligar +1	
+			12918,		12800, -- Mage's Slops		
+			12919,		13800, -- Dino Trousers		
+			14211,		12400, -- Mythril Cuisses +1	
+			12926,		32000,  -- White Slacks +1
+			12870,      22000,  -- Combat Cast Slacks
         };
         showShop(player, STATIC, stock_6d);
         player:PrintToPlayer("Merchant Moogle : Leg Armor Kupo!", 0x1F);
 		elseif (page == 64) and (level >= 50) then
 	    local stock_6u =
         {
-			14310,		13000,  -- Austers Slops
-			15605,      13200,  -- Jeridah
-			15603,      14000,  -- Sipahi
+			14310,		52000,  -- Austers Slops
+			15605,      32200,  -- Jeridah
+			15603,      52000,  -- Sipahi
 			12829,		13500,  -- Beak Trousers
-			12852,      14000,  -- Battle Hose
-			14253,      14500,  -- Arhat
-			12861,      16000,  -- Nobles Slacks
-			15391,      16000  -- Blessed			
+			12852,      105000,  -- Battle Hose
+			14253,      32500,  -- Arhat
+			12861,      42000,  -- Nobles Slacks
+			15391,      22000  -- Blessed			
         };
         showShop(player, STATIC, stock_6u);
         player:PrintToPlayer("Merchant Moogle : Leg Armor Kupo!", 0x1F);		
 		elseif (page == 65) and (level < 50) then
 	    local stock_6e =
         {
-			12952,	100,  -- Leather Highboots	
-			13027,	1250,  -- Brass Leggins +1	
-			12991,	650, -- Holly Clogs +1		
-			13052,	900,  -- Light Soleas			
-			13042,	800,  -- Bone Leggings +1	
-			13048,	1000,  -- Mage's Sandles		
-			14133,	3200,  -- Winged Boots +1		
-			15321,	3600,  -- Kampfschuhs		    
-			13041,	2500,  -- Cuir Highboots +1	
-			13023,	2400,  -- Ebony Sabots +1		
-			13715,	3200,  -- Carapace Legs +1	
-			14086,	4800,  -- Mythril Legs +1		
-			12995,	4000  -- Mocassins +1	
+			12952,	1100,  -- Leather Highboots	
+			13027,	7250,  -- Brass Leggins +1	
+			12991,	6650, -- Holly Clogs +1		
+			13052,	12000,  -- Light Soleas			
+			13042,	21000,  -- Bone Leggings +1	
+			13048,	32000,  -- Mage's Sandles		
+			14133,	610000,  -- Winged Boots +1		
+			15321,	32600,  -- Kampfschuhs		    
+			13041,	12000,  -- Cuir Highboots +1	
+			13023,	7400,  -- Ebony Sabots +1		
+			13715,	9200,  -- Carapace Legs +1	
+			14086,	42800,  -- Mythril Legs +1		
+			12995,	62000  -- Mocassins +1	
         };
         showShop(player, STATIC, stock_6e);
         player:PrintToPlayer("Merchant Moogle : Feet Armor Kupo!", 0x1F);
 		elseif (page == 65) and (level >= 50) then
 	    local stock_6v =
         {
-			14189,	8000,  -- Austers
-			13702,  8500,  -- Beak
-			15689,  8950,  -- Jeridah
+			14189,	52000,  -- Austers
+			13702,  12500,  -- Beak
+			15689,  52950,  -- Jeridah
 			15687,  9000,  -- Sipahi
-			12980,  9100,  -- Battle Boots
-			14129,  10100, -- Arhat
-			12989,  11500, -- Nobles Pumps
-			15329,  12530  -- Blessed	
+			12980,  33000,  -- Battle Boots
+			14129,  12100, -- Arhat
+			12989,  32500, -- Nobles Pumps
+			15329,  22530  -- Blessed	
         };
         showShop(player, STATIC, stock_6v);
         player:PrintToPlayer("Merchant Moogle : Feet Armor Kupo!", 0x1F);			
 		elseif (page == 66) and (level < 50) then
         local stock_6f =
 		{
-			13457,  4500,   -- Beetle Ring
-			13476,  4500,    -- Peridot
-			13477,  4500,    -- Garnet
-			13478,  4500,    -- Goshenite
-			13479,  4500,    -- Ametrine Ring
+			13457,  5500,   -- Beetle Ring
+			13476,  5500,    -- Peridot
+			13477,  12000,    -- Garnet
+			13478,  12400,    -- Goshenite
+			13479,  5500,    -- Ametrine Ring
 			13480,  4500,    -- Turqoise
 			13481,  4500,    -- Sphene Ring
-			13482,  4500,    -- Black Ring
-			13483,  4500,    -- Pearl Ring
+			13482,  6500,    -- Black Ring
+			13483,  5500,    -- Pearl Ring
 			13076,  2300,    -- Fang Necklace
-			13073,  2100,    -- Holy Phial
+			13073,  12100,    -- Holy Phial
 			13584,  2450,    -- Cotton Cape
 			13588,  2300,    -- DHamel Mantle
-			13614,  2300,    -- Bronze Cape
-			13577,  2100,    -- Black Cape		
+			-- 13614,  2300,    -- Bronze Cape
+			13577,  6100,    -- Black Cape		
 			13323,  4700,    -- Beetle Earring
-			13366,  4700,    -- Dodge Earring
-			13320,  4700,    -- Black Earring
-			13211,  4100,    -- Friars Rope
-			13225,  4600     -- Brave Belt		
+			13366,  31000,    -- Dodge Earring
+			13320,  6700,    -- Black Earring
+			13211,  9100,    -- Friars Rope
+			13225,  22600     -- Brave Belt		
 		};
 		showShop(player, STATIC, stock_6f);
         player:PrintToPlayer("Merchant Moogle : Accessories and more Kupo!", 0x1F);
@@ -466,27 +465,27 @@ local aura = player:getVar("FerretoryAura");
         local stock_6w =
 		{
 			13134,	12000,   -- Ashura Necklace
-			16263,  12000,   -- Beak Necklace
-			13325,  10000,   -- Fang Earring
+			16263,  7000,    -- Beak Necklace
+			13325,  3000,   -- Fang Earring
 			13416,  11000,   -- Bat Earring
-			14761,  35000,   -- Elusive Earring
-			13312,  30000,   -- Coral Earring
-			14630,  35000,   -- Flame Ring
-			14640,  35000,   -- Snow Ring
-			14636,  35000,   -- Breeze Ring
-			14634,  35000,   -- Soil Ring
-			14638,  35000,   -- Thunder Ring
-			14632,  35000,   -- Aqua Ring
-			14642,  35000,   -- Light Ring
-			14644,  35000,   -- Dark Ring
-			15431,  15000,   -- Astral Rope
-			15292,  17000,   -- Penetints Rope
-			15884,  21000,   -- Potenet Belt
-			13597,  13000,   -- Beak Mantle
-			13591,  16400,   -- Behemoth Mantle
-			13687,  15000,   -- Sapient Cape
-			13645,  17000,   -- Amemet Mantle
-			16231,  14500   -- Smilidon Mantle		
+			14761,  105000,   -- Elusive Earring
+			13312,  22000,   -- Coral Earring
+			14630,  55000,   -- Flame Ring
+			14640,  52000,   -- Snow Ring
+			14636,  52000,   -- Breeze Ring
+			14634,  52000,   -- Soil Ring
+			14638,  52000,   -- Thunder Ring
+			14632,  52000,   -- Aqua Ring
+			14642,  42000,   -- Light Ring
+			14644,  52000,   -- Dark Ring
+			15431,  7000,   -- Astral Rope
+			15292,  32000,   -- Penetints Rope
+			15884,  52000,   -- Potenet Belt
+			13597,  9000,   -- Beak Mantle
+			13591,  12400,   -- Behemoth Mantle
+			13687,  83000,   -- Sapient Cape
+			13645,  12000,   -- Amemet Mantle
+			16231,  3500    -- Smilidon Mantle		
 		};
 		showShop(player, STATIC, stock_6w);
         player:PrintToPlayer("Merchant Moogle : Accessories and more Kupo!", 0x1F);		
@@ -569,35 +568,35 @@ local aura = player:getVar("FerretoryAura");
 		elseif (page == 9) then
 	    local stock_9 =
         {
-            8513,     5000,    -- Accelerator
-            8516,    15000,    -- Accelerator II
-			8546,     5000,    -- Armor Plate
-			8548,    17000,    -- Armor Plate II
-			8641,     7000,    -- Auto-Repair Kit 
-			8644,    15000,    -- Auto-Repair Kit II
-			8520,    15000,    -- Barrage Turbine
-			8583,    15000,    -- Coiler
-			8643,     8000,    -- Damage Gauge
-			8517,    10000,    -- Drum Magazine
-			8582,    10000,    -- Dynamo
+            8513,     12000,    -- Accelerator
+            8516,    32000,    -- Accelerator II
+			8546,     11000,    -- Armor Plate
+			8548,    22000,    -- Armor Plate II
+			8641,    11000,    -- Auto-Repair Kit 
+			8644,    35000,    -- Auto-Repair Kit II
+			8520,    12000,    -- Barrage Turbine
+			8583,    12000,    -- Coiler
+			8643,     12000,    -- Damage Gauge
+			8517,    3000,    -- Drum Magazine
+			8582,    11000,    -- Dynamo
 			1050,    12000,    -- Flashbulb
-			8642,    15000,    -- Hammermill
-			8451,    10000,    -- Inhibitor
-			8482,     5000,    -- Loudspeaker I
-			8484,    10000,    -- Loudspeaker II
-			8674,     5000,    -- Mana Converter
-			8609,    15000,    -- Mana Jammer
+			8642,    32000,    -- Hammermill
+			8451,    12000,    -- Inhibitor
+			8482,     12000,    -- Loudspeaker I
+			8484,    32000,    -- Loudspeaker II
+			8674,    12000,    -- Mana Converter
+			8609,    12000,    -- Mana Jammer
 			8612,     7000,    -- Mana Jammer II
-			8673,     8000,    -- Mana Tank
-			8676,    16000,    -- Mana Tank II
-			8483,     5000,    -- Scanner
-			8545,    10000,    -- Shock Absorber
-			8577,     5000,    -- Stabilizer I
-			8580,    10000,    -- Stabilizer II
-			8449,     7000,    -- Strobe
-			8450,     7000,    -- Tension Spring
-			8452,    15000,    -- Tension Spring II
-            8518,    20000     -- Tubro Charger
+			8673,     12000,    -- Mana Tank
+			8676,    32000,    -- Mana Tank II
+			8483,     12000,    -- Scanner
+			8545,    16000,    -- Shock Absorber
+			8577,     12000,    -- Stabilizer I
+			8580,    12000,    -- Stabilizer II
+			8449,     32000,    -- Strobe
+			8450,     12000,    -- Tension Spring
+			8452,    32000,    -- Tension Spring II
+            8518,    92000     -- Tubro Charger
 			
 			
         };
