@@ -49,15 +49,18 @@ function onTrigger(player,npc)
 	elseif (player:getNation() == 0) and (player:hasKeyItem(SAN_DORIA_TRUST_PERMIT)) and (player:hasSpell(902) == false) then  -- Sandy Nation
 	player:PrintToPlayer("Your Red Institute Card flashes brilliantly ", 0x1C);
     player:PrintToPlayer("Curilla : I humbly accept your request.  I will fight by your side", 0xD);
-    player:addSpell(902);	
+    player:addSpell(902);
+	player:PrintToPlayer("You are now able to summon the trust Curilla!", 0x15);	
 	elseif (player:getNation() == 1) and (player:hasKeyItem(BASTOK_TRUST_PERMIT)) and (player:hasSpell(902) == false) then  -- Bastok Nation
 	player:PrintToPlayer("Your Blue Institute Card flashes brilliantly ", 0x1C);
     player:PrintToPlayer("Curilla : I humbly accept your request.  I will fight by your side", 0xD);
     player:addSpell(902);
+	player:PrintToPlayer("You are now able to summon the trust Curilla!", 0x15);		
 	elseif (pNation == WINDURST) and (player:hasKeyItem(WINDURST_TRUST_PERMIT)) and (player:hasSpell(902) == false) then  -- Windurst Nation
 	player:PrintToPlayer("Your Green Institute Card flashes brilliantly ", 0x1C);
     player:PrintToPlayer("Curilla : I humbly accept your request.  I will fight by your side", 0xD);
     player:addSpell(902);
+	player:PrintToPlayer("You are now able to summon the trust Curilla!", 0x15);		
 	elseif (mainlvl >= 71 and skill >= 240 and player:getQuestStatus(SANDORIA,OLD_WOUNDS) ~= QUEST_ACCEPTED) then
 	   player:PrintToPlayer("Curilla : Savage Blade eh?  Use it 100 times and then come see me afterwards.",0x0D);
 	   player:setVar("SAVAGE_BLADE",100);

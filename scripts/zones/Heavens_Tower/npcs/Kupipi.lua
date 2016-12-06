@@ -47,26 +47,22 @@ function onTrigger(player,npc)
 	local MissionStatus = player:getVar("MissionStatus");
 	
 	
-	if (player:getNation() == 0) and (player:hasKeyItem(RED_INSTITUTE_CARD)) and (player:hasSpell(898) == false) and (currentMission == JOURNEY_TO_WINDURST) then  -- Sandy Nation and mission 2-3
+	
+    if (player:getNation() == 0) and (player:hasKeyItem(RED_INSTITUTE_CARD)) and (player:hasSpell(898) == false) and (player:hasCompletedMission(SANDORIA,SAVE_THE_CHILDREN) == true) then  -- Sandy Nation and mission 2-3 completed
 	player:PrintToPlayer("Your Red Institute Card flashes brilliantly!", 0x1C);
     player:PrintToPlayer("Kupipi : Ah a Red Institute Card.  From now on, you can summon me to help you with your battles", 0xD);
     player:addSpell(898);	
-    elseif (player:getNation() == 1) and (player:hasKeyItem(BLUE_INSTITUTE_CARD)) and (player:hasSpell(898) == false) and (currentMission == THE_EMISSARY) then  -- Bastok Nation and mission 2-3
+	player:PrintToPlayer("You are now able to summon the trust Kupipi!", 0x15);		
+    elseif (player:getNation() == 1) and (player:hasKeyItem(BLUE_INSTITUTE_CARD)) and (player:hasSpell(898) == false) and (player:hasCompletedMission(BASTOK,FETICHISM) == true) then  -- Bastok Nation and mission 2-3 completed
 	player:PrintToPlayer("Your Blue Institute Card flashes brilliantly!", 0x1C);
     player:PrintToPlayer("Kupipi : Ah a Red Institute Card.  From now on, you can summon me to help you with your battles", 0xD);
     player:addSpell(898);
-	elseif (player:getNation() == 0) and (player:hasKeyItem(RED_INSTITUTE_CARD)) and (player:hasSpell(898) == false) and (player:hasCompletedMission(SANDORIA,JOURNEY_TO_WINDURST) == true) then  -- Sandy Nation and mission 2-3 completed
-	player:PrintToPlayer("Your Red Institute Card flashes brilliantly!", 0x1C);
-    player:PrintToPlayer("Kupipi : Ah a Red Institute Card.  From now on, you can summon me to help you with your battles", 0xD);
-    player:addSpell(898);	
-    elseif (player:getNation() == 1) and (player:hasKeyItem(BLUE_INSTITUTE_CARD)) and (player:hasSpell(898) == false) and (player:hasCompletedMission(BASTOK,THE_EMISSARY) == true) then  -- Bastok Nation and mission 2-3 completed
-	player:PrintToPlayer("Your Blue Institute Card flashes brilliantly!", 0x1C);
-    player:PrintToPlayer("Kupipi : Ah a Red Institute Card.  From now on, you can summon me to help you with your battles", 0xD);
-    player:addSpell(898);
+	player:PrintToPlayer("You are now able to summon the trust Kupipi!", 0x15);		
     elseif (player:getNation() == 2) and (player:hasKeyItem(GREEN_INSTITUTE_CARD)) and (player:hasSpell(898) == false) then  -- Windy Nation can obtain without pre-requisites
-	player:PrintToPlayer("Your Blue Institute Card flashes brilliantly!", 0x1C);
+	player:PrintToPlayer("Your Green Institute Card flashes brilliantly!", 0x1C);
     player:PrintToPlayer("Kupipi : Ah a Green Institute Card.  From now on, you can summon me to help you with your battles", 0xD);
-    player:addSpell(898);	
+    player:addSpell(898);
+	player:PrintToPlayer("You are now able to summon the trust Kupipi!", 0x15);		
 	end
 	
 	
