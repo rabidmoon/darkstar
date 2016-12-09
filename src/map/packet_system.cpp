@@ -436,9 +436,6 @@ void SmallPacket0x00D(map_session_data_t* session, CCharEntity* PChar, CBasicPac
         PChar->loc.zone->DecreaseZoneCounter(PChar);
     }
 
-    if (PChar->PBCNM)
-        PChar->PBCNM->delPlayerFromBcnm(PChar);
-
     charutils::SaveCharStats(PChar);
     charutils::SaveCharExp(PChar, PChar->GetMJob());
     charutils::SaveCharPoints(PChar);

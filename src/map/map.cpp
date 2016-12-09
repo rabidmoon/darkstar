@@ -834,9 +834,6 @@ int32 map_cleanup(time_point tick, CTaskMgr::CTask* PTask)
                         map_session_data->PChar->StatusEffectContainer->SaveStatusEffects(true);
                         Sql_Query(SqlHandle, "DELETE FROM accounts_sessions WHERE charid = %u;", map_session_data->PChar->id);
 
-                        if (map_session_data->PChar->PBCNM)
-                            map_session_data->PChar->PBCNM->delPlayerFromBcnm(map_session_data->PChar);
-
                         aFree(map_session_data->server_packet_data);
                         delete map_session_data->PChar;
                         delete map_session_data;

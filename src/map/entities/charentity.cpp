@@ -210,6 +210,9 @@ CCharEntity::~CCharEntity()
         PTreasurePool->DelMember(this);
     }
 
+    if (PBCNM)
+        this->loc.zone->m_BattlefieldHandler->disconnectFromBcnm(this);
+
     delete TradeContainer;
     delete Container;
     delete UContainer;
