@@ -729,9 +729,11 @@ bool CBattlefieldHandler::disconnectFromDynamis(CCharEntity* PChar) { //includes
 
 void CBattlefieldHandler::insertMonsterInList(CMobEntity* PMob)
 {
+    // todo: this whole thing needs redoing
     CBattlefield* PBattlefield = m_Battlefields[0];
 
-    if (PBattlefield->isMonsterInList(PMob) == false)
+    // check dyna battlefield hasnt been cleaned up..
+    if (PBattlefield && PBattlefield->isMonsterInList(PMob) == false)
     {
         PBattlefield->addMonsterInList(PMob);
     }
@@ -741,8 +743,5 @@ bool CBattlefieldHandler::checkMonsterInList(CMobEntity* PMob)
 {
     CBattlefield* PBattlefield = m_Battlefields[0];
 
-    if (PBattlefield->isMonsterInList(PMob))
-        return true;
-    else
-        return false;
+    return PBattlefield && PBattlefield->isMonsterInList(PMob);
 }
