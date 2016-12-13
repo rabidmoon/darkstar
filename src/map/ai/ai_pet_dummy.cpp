@@ -2181,10 +2181,7 @@ void CAIPetDummy::ActionWeaponSkillFinish()
 					    //Set Magic Burst Pattern if trust closes WS (mostly for Ayame)
 						int32 value = 10;
 						if (effect == SUBEFFECT_LIGHT || effect == SUBEFFECT_FRAGMENTATION || effect == SUBEFFECT_IMPACTION){
-						int32 value = 6;
-					    std::string varname;
-						const int8* fmtQuery = "INSERT INTO char_vars SET charid = %u, varname = 'TrustMB', value = '6' ON DUPLICATE KEY UPDATE value = '6';";
-                        Sql_Query(SqlHandle, fmtQuery, m_PPet->PMaster->id, varname, value, value);
+						value = 6;
 					    //printf("Setting Magic Burst to: %d \n", value);
 						//ShowWarning(CL_GREEN"Thunder Based Magic Burst.  Start Casting \n" CL_RESET);						
 						}
@@ -2212,7 +2209,10 @@ void CAIPetDummy::ActionWeaponSkillFinish()
 						value = 1;  //Stone
 						//printf("Setting Magic Burst to: %d \n", value);
 						//ShowWarning(CL_GREEN"Stone Based Magic Burst.  Start Casting \n" CL_RESET);							
-						}	
+						}
+                        std::string varname;
+						const int8* fmtQuery = "INSERT INTO char_vars SET charid = %u, varname = 'TrustMB', value = '6' ON DUPLICATE KEY UPDATE value = '6';";
+                        Sql_Query(SqlHandle, fmtQuery, m_PPet->PMaster->id, varname, value, value);						
 
                         //Write Magic Burst Number to player Variable called TrustMB
                         
