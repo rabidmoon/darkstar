@@ -109,6 +109,7 @@ CAIPetDummy::CAIPetDummy(CPetEntity* PPet)
 	m_blueMagicHealRecast = 12000;
 	m_chainAffinityStatus = 0;  //CA off 0; CA closing 1; CA open with WS 2;
 	m_magicburst = 0;
+	m_luzafQuickRecast = 60000;
 	
 
 	
@@ -415,11 +416,11 @@ void CAIPetDummy::ActionAbilityStart()
 			        //ShowWarning("Tachi: Enpi \n");
                     break;
                     }
-                    else if (PMobSkill->getID() == 3779 && (masterscID == 4)) { //Tachi Enpi
-                    mobwsID = 144;
+                    else if (PMobSkill->getID() == 3783 && (masterscID == 0 || masterscID == 4)) { //Tachi Gekko
+                    mobwsID = 151;
 					SetCurrentMobSkill(PMobSkill);
 					SetCurrentWeaponSkill(mobwsID);
-			        //ShowWarning("No matching element Self SC Tachi: Enpi to Tachi: Enpi \n");
+			        //ShowWarning("No matching element Self SC Tachi: Geko to Tachi: Kasha \n");
                     break;					
                     } 
                 }
@@ -455,11 +456,11 @@ void CAIPetDummy::ActionAbilityStart()
 			        //ShowWarning("Tachi: Enpi \n");
                     break;
                     }
-                    else if (PMobSkill->getID() == 3779 && (masterscID == 4)) { //Tachi Enpi
-                    mobwsID = 144;
+                    else if (PMobSkill->getID() == 3779 && (masterscID == 0 || masterscID == 4)) { //Tachi Yuki
+                    mobwsID = 150;
 					SetCurrentMobSkill(PMobSkill);
 					SetCurrentWeaponSkill(mobwsID);
-			        //ShowWarning("No matching element Self SC Tachi: Enpi to Tachi: Enpi \n");
+			        //ShowWarning("No matching element Self SC Tachi: Yuki to Tachi: Gekko \n");
                     break;
                     }						
 
@@ -489,7 +490,7 @@ void CAIPetDummy::ActionAbilityStart()
 			        //ShowWarning("Starting Skillchain, Element 7, 8, or 9, Tachi: Enpi \n");
                     break;
                     }
-                    else if(PMobSkill->getID() == 3779 & (masterscID == 2 || masterscID == 4 || masterscID == 5 || masterscID == 12)) { //Tachi Enpi
+                    else if(PMobSkill->getID() == 3779 & (masterscID == 0 || masterscID == 2 || masterscID == 4 || masterscID == 5 || masterscID == 12)) { //Tachi Enpi
                     mobwsID = 144;
 					SetCurrentMobSkill(PMobSkill);
 					SetCurrentWeaponSkill(mobwsID);
@@ -516,7 +517,7 @@ void CAIPetDummy::ActionAbilityStart()
 			        //ShowWarning("Tachi: Enpi \n");
                     break;
                     }
-                    else if (PMobSkill->getID() == 3779 & (masterscID == 1 || masterscID == 2 || masterscID == 4 || masterscID == 5 || masterscID == 6 || masterscID == 11 || masterscID == 12)) { //Tachi Enpi
+                    else if (PMobSkill->getID() == 3779 & (masterscID == 0 || masterscID == 1 || masterscID == 2 || masterscID == 4 || masterscID == 5 || masterscID == 6 || masterscID == 11 || masterscID == 12)) { //Tachi Enpi
                     mobwsID = 144;
 					SetCurrentMobSkill(PMobSkill);
 					SetCurrentWeaponSkill(mobwsID);
@@ -536,7 +537,7 @@ void CAIPetDummy::ActionAbilityStart()
 			        //ShowWarning("Tachi: Enpi \n");
                     break;
                     }
-                    else if (PMobSkill->getID() == 3779 && (masterscID == 1 || masterscID == 2 || masterscID == 3 || masterscID == 4 || masterscID == 5 
+                    else if (PMobSkill->getID() == 3779 && (masterscID == 0 || masterscID == 1 || masterscID == 2 || masterscID == 3 || masterscID == 4 || masterscID == 5 
 					 || masterscID == 6 || masterscID == 10 || masterscID == 11 || masterscID == 12)) { //Tachi Enpi
                     mobwsID = 144;
 					SetCurrentMobSkill(PMobSkill);
@@ -584,7 +585,14 @@ void CAIPetDummy::ActionAbilityStart()
 					SetCurrentWeaponSkill(mobwsID);
 			        //ShowWarning("Tachi: Enpi \n");
                     break;
-                    }						
+                    }
+                    else if (PMobSkill->getID() == 3784 && (masterscID == 0)) { //Tachi Kasha
+                    mobwsID = 152;
+					SetCurrentMobSkill(PMobSkill);
+					SetCurrentWeaponSkill(mobwsID);
+			        //ShowWarning("Tachi: Enpi \n");
+                    break;
+                    }					
 
                 }
 			}
@@ -614,6 +622,13 @@ void CAIPetDummy::ActionAbilityStart()
                     }
                     else if (PMobSkill->getID() == 3779 && (masterscID == 1 || masterscID == 6 || masterscID == 10 || masterscID == 12)) { //Tachi Enpi
                     mobwsID = 144;
+					SetCurrentMobSkill(PMobSkill);
+					SetCurrentWeaponSkill(mobwsID);
+			        //ShowWarning("Tachi: Enpi \n");
+                    break;
+                    }
+                    else if (PMobSkill->getID() == 3783 && (masterscID == 0)) { //Tachi Gekko
+                    mobwsID = 151;
 					SetCurrentMobSkill(PMobSkill);
 					SetCurrentWeaponSkill(mobwsID);
 			        //ShowWarning("Tachi: Enpi \n");
@@ -838,7 +853,7 @@ void CAIPetDummy::ActionAbilityStart()
 			        //ShowWarning("Tachi: Yukki \n");
                     break;					
                     } 
-  					else if (PMobSkill->getID() == 3779 && (masterscID == 3)) { //Tachi Enpi
+  					else if (PMobSkill->getID() == 3779 && (masterscID == 3 )) { //Tachi Enpi
                     mobwsID = 144;
 					SetCurrentMobSkill(PMobSkill);
 					SetCurrentWeaponSkill(mobwsID);
@@ -1306,6 +1321,92 @@ void CAIPetDummy::ActionAbilityStart()
             return;
         }
 		
+        if (m_PPet->m_PetID == PETID_LUZAF && m_PPet->health.tp >= 1000 && m_PBattleTarget != nullptr){
+			int16 mobwsID = -1;	
+			if (lvl > 74 && m_PBattleTarget->getMod(MOD_PIERCERES) < 0) {      //Exclusively Use Slugshot if the mob is weak to piercing
+			m_PJobAbility = nullptr;
+            for (int i = 0; i < m_PPet->PetSkills.size(); i++) {
+                auto PMobSkill = battleutils::GetMobSkill(m_PPet->PetSkills.at(i));
+  					if (PMobSkill->getID() == 3732) { //Slugshot
+                    mobwsID = 212;
+					SetCurrentMobSkill(PMobSkill);
+					SetCurrentWeaponSkill(mobwsID);
+                    break;
+                    } 				
+                }
+			}
+			else if (lvl > 74) {
+			m_PJobAbility = nullptr;
+			uint8 wsrandom = dsprand::GetRandomNumber(1, 10); //Leaden Salute or Slugshot
+            for (int i = 0; i < m_PPet->PetSkills.size(); i++) {
+                auto PMobSkill = battleutils::GetMobSkill(m_PPet->PetSkills.at(i));
+  					if (PMobSkill->getID() == 3732 && wsrandom >= 6) { //Slugshot
+                    mobwsID = 212;
+					SetCurrentMobSkill(PMobSkill);
+					SetCurrentWeaponSkill(mobwsID);
+			        //ShowWarning("Swift Blade \n");
+                    break;
+                    } 
+  					else if (PMobSkill->getID() == 3733 && wsrandom < 6) { //Leaden Salute
+                    mobwsID = 218;
+					SetCurrentMobSkill(PMobSkill);
+					SetCurrentWeaponSkill(mobwsID);
+			        //ShowWarning("Vorpal Blade \n");
+                    break;
+                    } 					
+
+                }
+			}
+			else if (lvl > 59 && m_PBattleTarget->getMod(MOD_PIERCERES) < 0) {      //Exclusively Use Slugshot if the mob is weak to piercing
+			m_PJobAbility = nullptr;
+            for (int i = 0; i < m_PPet->PetSkills.size(); i++) {
+                auto PMobSkill = battleutils::GetMobSkill(m_PPet->PetSkills.at(i));
+  					if (PMobSkill->getID() == 3732) { //Slugshot
+                    mobwsID = 212;
+					SetCurrentMobSkill(PMobSkill);
+					SetCurrentWeaponSkill(mobwsID);
+                    break;
+                    } 				
+                }
+			}			
+			else if (lvl > 59) {
+			m_PJobAbility = nullptr;
+			uint8 wsrandom = dsprand::GetRandomNumber(1, 10); // If mob is not weak to Piercing, randomize Vorpal or Slugshot
+            for (int i = 0; i < m_PPet->PetSkills.size(); i++) {
+                auto PMobSkill = battleutils::GetMobSkill(m_PPet->PetSkills.at(i));
+  					if (PMobSkill->getID() == 3732 && wsrandom >= 6) { //Slugshot
+                    mobwsID = 212;
+					SetCurrentMobSkill(PMobSkill);
+					SetCurrentWeaponSkill(mobwsID);
+                    break;
+                    } 
+  					else if (PMobSkill->getID() == 3742 && wsrandom < 6) { //Vorpal Blade
+                    mobwsID = 40;
+					SetCurrentMobSkill(PMobSkill);
+					SetCurrentWeaponSkill(mobwsID);
+                    break;
+                    } 					
+
+                }
+			}
+			else if (lvl > 4) {
+			m_PJobAbility = nullptr;
+            for (int i = 0; i < m_PPet->PetSkills.size(); i++) {
+                auto PMobSkill = battleutils::GetMobSkill(m_PPet->PetSkills.at(i));
+  					if (PMobSkill->getID() == 3739) { //Fast Blade
+                    mobwsID = 32;
+					SetCurrentMobSkill(PMobSkill);
+					SetCurrentWeaponSkill(mobwsID);
+			        //ShowWarning("Red Lotus Blade \n");
+                    break;
+                    } 					
+
+                }
+			}			
+            preparePetAbility(m_PBattleSubTarget);
+            return;
+        }		
+		
 
 
 
@@ -1408,6 +1509,29 @@ void CAIPetDummy::ActionAbilityStart()
             }
 
         }
+		//Handle Super Jump
+		else if (m_MasterCommand == MASTERCOMMAND_SUPER_JUMP)
+	    {
+		    m_MasterCommand = MASTERCOMMAND_NONE;
+			ShowWarning(CL_RED"Super Climb Initiated\n" CL_RESET);
+			m_PWeaponSkill = nullptr;
+            int16 mobjaID = -1;			
+			for (int i = 0; i < m_PPet->PetSkills.size(); i++) {
+                auto PMobSkill = battleutils::GetMobSkill(m_PPet->PetSkills.at(i));
+                            
+                    if (PMobSkill->getID() == 3708) { //Super Climb
+			        mobjaID = 52;
+                    SetCurrentMobSkill(PMobSkill);
+				    SetCurrentJobAbility(mobjaID);
+					m_PBattleSubTarget = m_PPet;
+					break;
+                    }
+			    }			
+		    preparePetAbility(m_PBattleSubTarget);
+			m_LastLuzafQuickTime = m_Tick;
+			return;	
+		}
+		
         else if (m_MasterCommand == MASTERCOMMAND_HEALING_BREATH && (wyverntype == WYVERNTYPE_DEFENSIVE || wyverntype == WYVERNTYPE_MULTIPURPOSE))
         {
 
@@ -2219,8 +2343,11 @@ void CAIPetDummy::ActionJobAbilityFinish()
 	apAction_t Action;
 	Action.ActionTarget = m_PBattleSubTarget;
 	Action.param = m_PJobAbility->getID();
-	//Job abilities that do damage (Jump, Shield Bash, Weapon Bash, etc) need to be placed below so it sends the proper message
-        if (m_PJobAbility->getID() == 30 || m_PJobAbility->getID() == 50 || m_PJobAbility->getID() == 51) 
+	//Job abilities that do damage (Jump, Shield Bash, Weapon Bash, Card Shots, etc) need to be placed below so it sends the proper message
+        if (m_PJobAbility->getID() == 30 || m_PJobAbility->getID() == 50 || m_PJobAbility->getID() == 51 ||
+		m_PJobAbility->getID() == 109 || m_PJobAbility->getID() == 110 || m_PJobAbility->getID() == 111 ||
+		m_PJobAbility->getID() == 112 || m_PJobAbility->getID() == 113 || m_PJobAbility->getID() == 114 ||
+		m_PJobAbility->getID() == 115 || m_PJobAbility->getID() == 116) 
 	    {	
 		Action.reaction = REACTION_HIT; //   SPECEFFECT_NONE;
 		Action.speceffect = SPECEFFECT_HIT;
@@ -2508,6 +2635,188 @@ void CAIPetDummy::ActionAttack()
 	//****************************************************************//
 	//   TRUST ABILITIES BY TRUST NAME                               //
 	//**************************************************************//
+	if (m_PPet->m_PetID == PETID_LUZAF)
+		{
+         //ShowWarning(CL_GREEN"LUZAF!!!\n" CL_RESET);		
+		 if (trustlevel >= 40 && m_Tick >= m_LastLuzafQuickTime + m_luzafQuickRecast) // Decide which Quickdraw to Use
+			{
+			//ShowWarning(CL_RED"Authorized for Quick Draw!!!\n" CL_RESET);
+			if (m_PBattleTarget != nullptr && m_PBattleTarget->StatusEffectContainer->HasStatusEffect(EFFECT_BURN))	// Fire Shot
+			    {
+				ShowWarning(CL_RED"FIRE SHOT\n" CL_RESET);
+			    m_PWeaponSkill = nullptr;
+                int16 mobjaID = -1;			
+			    for (int i = 0; i < m_PPet->PetSkills.size(); i++) {
+                    auto PMobSkill = battleutils::GetMobSkill(m_PPet->PetSkills.at(i));
+                            
+                        if (PMobSkill->getID() == 3724) { //Fire Shot
+						    mobjaID = 109;
+                            SetCurrentMobSkill(PMobSkill);
+							SetCurrentJobAbility(mobjaID);
+							m_PBattleSubTarget = m_PBattleTarget;
+							break;
+                        }
+			        }			
+				preparePetAbility(m_PBattleSubTarget);
+				m_LastLuzafQuickTime = m_Tick;
+				return;	
+				}
+			else if (m_PBattleTarget != nullptr && m_PBattleTarget->StatusEffectContainer->HasStatusEffect(EFFECT_FROST) || 
+			m_PBattleTarget->StatusEffectContainer->HasStatusEffect(EFFECT_PARALYSIS))	// Ice Shot
+			    {
+				ShowWarning(CL_RED"ICE SHOT\n" CL_RESET);
+			    m_PWeaponSkill = nullptr;
+                int16 mobjaID = -1;			
+			    for (int i = 0; i < m_PPet->PetSkills.size(); i++) {
+                    auto PMobSkill = battleutils::GetMobSkill(m_PPet->PetSkills.at(i));
+                            
+                        if (PMobSkill->getID() == 3725) { //Ice Shot
+						    mobjaID = 110;
+                            SetCurrentMobSkill(PMobSkill);
+							SetCurrentJobAbility(mobjaID);
+							m_PBattleSubTarget = m_PBattleTarget;
+							break;
+                        }
+			        }			
+				preparePetAbility(m_PBattleSubTarget);
+				m_LastLuzafQuickTime = m_Tick;
+				return;	
+				}
+			else if (m_PBattleTarget != nullptr && m_PBattleTarget->StatusEffectContainer->HasStatusEffect(EFFECT_CHOKE) || 
+			m_PBattleTarget->StatusEffectContainer->HasStatusEffect(EFFECT_SILENCE))	// Wind Shot
+			    {
+				ShowWarning(CL_RED"WIND SHOT\n" CL_RESET);
+			    m_PWeaponSkill = nullptr;
+                int16 mobjaID = -1;			
+			    for (int i = 0; i < m_PPet->PetSkills.size(); i++) {
+                    auto PMobSkill = battleutils::GetMobSkill(m_PPet->PetSkills.at(i));
+                            
+                        if (PMobSkill->getID() == 3726) { //Wind Shot
+						    mobjaID = 111;
+                            SetCurrentMobSkill(PMobSkill);
+							SetCurrentJobAbility(mobjaID);
+							m_PBattleSubTarget = m_PBattleTarget;
+							break;
+                        }
+			        }			
+				preparePetAbility(m_PBattleSubTarget);
+				m_LastLuzafQuickTime = m_Tick;
+				return;	
+				}
+			else if (m_PBattleTarget != nullptr && m_PBattleTarget->StatusEffectContainer->HasStatusEffect(EFFECT_RASP) || 
+			m_PBattleTarget->StatusEffectContainer->HasStatusEffect(EFFECT_SLOW))	// Earth Shot
+			    {
+				ShowWarning(CL_RED"EARTH SHOT\n" CL_RESET);
+			    m_PWeaponSkill = nullptr;
+                int16 mobjaID = -1;			
+			    for (int i = 0; i < m_PPet->PetSkills.size(); i++) {
+                    auto PMobSkill = battleutils::GetMobSkill(m_PPet->PetSkills.at(i));
+                            
+                        if (PMobSkill->getID() == 3727) { //Earth Shot
+						    mobjaID = 112;
+                            SetCurrentMobSkill(PMobSkill);
+							SetCurrentJobAbility(mobjaID);
+							m_PBattleSubTarget = m_PBattleTarget;
+							break;
+                        }
+			        }			
+				preparePetAbility(m_PBattleSubTarget);
+				m_LastLuzafQuickTime = m_Tick;
+				return;	
+				}
+			else if (m_PBattleTarget != nullptr && m_PBattleTarget->StatusEffectContainer->HasStatusEffect(EFFECT_SHOCK))	// Thunder Shot
+			    {
+				ShowWarning(CL_RED"THUNDER SHOT\n" CL_RESET);
+			    m_PWeaponSkill = nullptr;
+                int16 mobjaID = -1;			
+			    for (int i = 0; i < m_PPet->PetSkills.size(); i++) {
+                    auto PMobSkill = battleutils::GetMobSkill(m_PPet->PetSkills.at(i));
+                            
+                        if (PMobSkill->getID() == 3728) { //Thunder Shot
+						    mobjaID = 113;
+                            SetCurrentMobSkill(PMobSkill);
+							SetCurrentJobAbility(mobjaID);
+							m_PBattleSubTarget = m_PBattleTarget;
+							break;
+                        }
+			        }			
+				preparePetAbility(m_PBattleSubTarget);
+				m_LastLuzafQuickTime = m_Tick;
+				return;	
+				}
+			else if (m_PBattleTarget != nullptr && m_PBattleTarget->StatusEffectContainer->HasStatusEffect(EFFECT_DROWN) || 
+			m_PBattleTarget->StatusEffectContainer->HasStatusEffect(EFFECT_POISON))	// Water Shot
+			    {
+				ShowWarning(CL_RED"WATER SHOT\n" CL_RESET);
+			    m_PWeaponSkill = nullptr;
+                int16 mobjaID = -1;			
+			    for (int i = 0; i < m_PPet->PetSkills.size(); i++) {
+                    auto PMobSkill = battleutils::GetMobSkill(m_PPet->PetSkills.at(i));
+                            
+                        if (PMobSkill->getID() == 3729) { //Water Shot
+						    mobjaID = 114;
+                            SetCurrentMobSkill(PMobSkill);
+							SetCurrentJobAbility(mobjaID);
+							m_PBattleSubTarget = m_PBattleTarget;
+							break;
+                        }
+			        }			
+				preparePetAbility(m_PBattleSubTarget);
+				m_LastLuzafQuickTime = m_Tick;
+				return;	
+				}
+			else if (m_PBattleTarget != nullptr && m_PBattleTarget->StatusEffectContainer->HasStatusEffect(EFFECT_DIA))	// Light Shot
+			    {
+			    ShowWarning(CL_RED"LIGHT SHOT\n" CL_RESET);
+			    m_PWeaponSkill = nullptr;
+                int16 mobjaID = -1;			
+			    for (int i = 0; i < m_PPet->PetSkills.size(); i++) {
+                    auto PMobSkill = battleutils::GetMobSkill(m_PPet->PetSkills.at(i));
+                            
+                        if (PMobSkill->getID() == 3730) { //Light Shot
+						    mobjaID = 115;
+                            SetCurrentMobSkill(PMobSkill);
+							SetCurrentJobAbility(mobjaID);
+							m_PBattleSubTarget = m_PBattleTarget;
+							break;
+                        }
+			        }			
+				preparePetAbility(m_PBattleSubTarget);
+				m_LastLuzafQuickTime = m_Tick;
+				return;	
+				}				
+			else if (m_PBattleTarget != nullptr && m_PBattleTarget->StatusEffectContainer->HasStatusEffect(EFFECT_BIO) || 
+			m_PBattleTarget->StatusEffectContainer->HasStatusEffect(EFFECT_BLINDNESS))	// Dark Shot
+			    {
+				ShowWarning(CL_RED"DARK SHOT\n" CL_RESET);
+			    m_PWeaponSkill = nullptr;
+                int16 mobjaID = -1;			
+			    for (int i = 0; i < m_PPet->PetSkills.size(); i++) {
+                    auto PMobSkill = battleutils::GetMobSkill(m_PPet->PetSkills.at(i));
+                            
+                        if (PMobSkill->getID() == 3731) { //Dark Shot
+						    mobjaID = 116;
+                            SetCurrentMobSkill(PMobSkill);
+							SetCurrentJobAbility(mobjaID);
+							m_PBattleSubTarget = m_PBattleTarget;
+							break;
+                        }
+			        }			
+				preparePetAbility(m_PBattleSubTarget);
+				m_LastLuzafQuickTime = m_Tick;
+				return;	
+				}							
+	        }
+		}			
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	  if (m_PPet->m_PetID == PETID_KUPIPI)
 		{
@@ -2961,6 +3270,10 @@ void CAIPetDummy::ActionAttack()
 				return;
 			    }
 		    }
+        
+		
+			
+			
 		/* if (m_Tick >= m_LastChainTime + m_blueChainAffinityRecast && trustlevel >= 40 && m_PPet->health.tp > 850)  //Only use CA when above 85% TP
 			{
 			m_PWeaponSkill = nullptr;
@@ -7725,7 +8038,7 @@ CBattleEntity* CAIPetDummy::getWoundedLow(uint8 threshold)
 
 CBattleEntity* CAIPetDummy::getWoundedAga(uint8 threshold)
 {
-    uint8 lowest = 35;
+    uint8 lowest = 100;
 	uint8 allies = 0;
     CBattleEntity* mostWoundedAga = nullptr;
     if (m_PPet->PMaster == nullptr)
@@ -7738,7 +8051,7 @@ CBattleEntity* CAIPetDummy::getWoundedAga(uint8 threshold)
             if ( member->GetHPP() < lowest)
             {
                 allies += 1;
-				if (allies == 3)
+				if (allies >= 2)
 				{
 				lowest = member->GetHPP();
                 mostWoundedAga = member;
@@ -7753,7 +8066,7 @@ CBattleEntity* CAIPetDummy::getWoundedAga(uint8 threshold)
             if ( ally->GetHPP() < lowest)
             {
                 allies += 1;
-				if (allies == 3)
+				if (allies >= 2)
 				{
 				lowest = ally->GetHPP();
                 mostWoundedAga = ally;

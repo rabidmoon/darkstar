@@ -38,7 +38,8 @@ enum MASTERCOMMAND //master as in pet's master
 	MASTERCOMMAND_NONE = 0,
 	MASTERCOMMAND_ELEMENTAL_BREATH = 1,
 	MASTERCOMMAND_HEALING_BREATH = 2,
-	MASTERCOMMAND_SIC = 3
+	MASTERCOMMAND_SIC = 3,
+	MASTERCOMMAND_SUPER_JUMP = 4
 };
 
 enum ACTIONTYPE : uint8
@@ -180,6 +181,7 @@ public:
 	void			SetLastSchEnh(uint32 time);
 	void			SetLastAdelhiedHeal(uint32 time);
 	void            SetLastAdelhiedSub(uint32 time);
+	void			SetLastLuzafQuickTime(uint32 time);
 	
 	
 	void			SetCurrentAction(ACTIONTYPE Action, uint16 TargetID = 0);
@@ -254,6 +256,7 @@ protected:
 	uint32			m_LastAdelhiedHeal;
 	uint32          m_LastAdelhiedSub;
 	uint32			m_LastSchEnh;
+	uint32          m_LastLuzafQuickTime;
 	
 	uint32			m_LastEngageStart;
 	uint32 			m_LastSkillchainStart;

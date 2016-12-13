@@ -2948,6 +2948,7 @@ namespace battleutils
                 switch (PAIR((*j), (*i)))
                 {
                     // Level 4 Pairs
+					// TODO -> Change it to LIGHT_II to LIGHT_II this way relics can't 3 step it for Radiance/Umbra
 					case PAIR(SC_LIGHT_II, SC_LIGHT): return SC_RADIANCE;     break; // -> Lv5
 					case PAIR(SC_DARKNESS_II, SC_DARKNESS): return SC_UMBRA;     break; // -> Lv5
 					

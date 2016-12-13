@@ -792,6 +792,7 @@ INSERT INTO `mob_skill_lists` VALUES ('Peiste',192,1897);
 INSERT INTO `mob_skill_lists` VALUES ('Peiste',192,1898);
 INSERT INTO `mob_skill_lists` VALUES ('Peiste',192,1899);
 INSERT INTO `mob_skill_lists` VALUES ('Peiste',192,1900);
+INSERT INTO `mob_skill_lists` VALUES ('PetWyvern',193,3708);
 INSERT INTO `mob_skill_lists` VALUES ('PetWyvern',193,638);
 INSERT INTO `mob_skill_lists` VALUES ('PetWyvern',193,639);
 INSERT INTO `mob_skill_lists` VALUES ('PetWyvern',193,640);
@@ -2519,4 +2520,14 @@ INSERT INTO `mob_skill_lists` VALUES ('Avatar-Light-Ixion',741,2080);
 INSERT INTO `mob_skill_lists` VALUES ('Avatar-Light-Ixion',741,2081);
 INSERT INTO `mob_skill_lists` VALUES ('Avatar-Light-Ixion',741,2082);
 
+INSERT INTO `mob_skill_lists` VALUES ('Luzaf',745,3724);
+INSERT INTO `mob_skill_lists` VALUES ('Luzaf',745,3725);
+INSERT INTO `mob_skill_lists` VALUES ('Luzaf',745,3726);
+INSERT INTO `mob_skill_lists` VALUES ('Luzaf',745,3727);
+INSERT INTO `mob_skill_lists` VALUES ('Luzaf',745,3728);
+INSERT INTO `mob_skill_lists` VALUES ('Luzaf',745,3729);
+INSERT INTO `mob_skill_lists` VALUES ('Luzaf',745,3730);
+INSERT INTO `mob_skill_lists` VALUES ('Luzaf',745,3731);
+INSERT INTO `mob_skill_lists` VALUES ('Luzaf',745,3732);
+INSERT INTO `mob_skill_lists` VALUES ('Luzaf',745,3733);
 

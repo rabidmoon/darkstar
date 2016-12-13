@@ -92,6 +92,7 @@ protected:
 	uint32 m_adelhiedHealRecast;
 	uint32 m_adelhiedSub;
 	uint32 m_schHealing;
+	uint32 m_luzafQuickRecast;
 	int8 m_magicburst;
 	int8 m_sekkaStatus;
 	int8 m_chainAffinityStatus;
