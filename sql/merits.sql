@@ -165,11 +165,11 @@ INSERT INTO `merits` VALUES ('1410', 'quick_draw_recast', '5', '2', '65536', '6'
 INSERT INTO `merits` VALUES ('1412', 'quick_draw_accuracy', '5', '2', '65536', '6', '21');
 INSERT INTO `merits` VALUES ('1414', 'random_deal_recast', '5', '40', '65536', '6', '21');
 INSERT INTO `merits` VALUES ('1416', 'bust_duration', '5', '10', '65536', '6', '21');
-INSERT INTO `merits` VALUES ('1472', 'automation_melee_skill', '5', '2', '131072', '6', '22');
-INSERT INTO `merits` VALUES ('1474', 'automation_ranged_skill', '5', '2', '131072', '6', '22');
-INSERT INTO `merits` VALUES ('1476', 'automation_magic_skill', '5', '2', '131072', '6', '22');
+INSERT INTO `merits` VALUES ('1472', 'automation_skills', '5', '2', '131072', '6', '22');
+INSERT INTO `merits` VALUES ('1474', 'maintenance_recast', '5', '3', '131072', '6', '22');
+INSERT INTO `merits` VALUES ('1476', 'repair_effect', '5', '2', '131072', '6', '22');
 INSERT INTO `merits` VALUES ('1478', 'activate_recast', '5', '40', '131072', '6', '22');
-INSERT INTO `merits` VALUES ('1480', 'repair_recast', '5', '6', '131072', '6', '22');
+INSERT INTO `merits` VALUES ('1480', 'repair_recast', '5', '3', '131072', '6', '22');
 INSERT INTO `merits` VALUES ('1536', 'step_accuracy', '5', '3', '262144', '6', '23');
 INSERT INTO `merits` VALUES ('1538', 'haste_samba_effect', '5', '10', '262144', '6', '23');
 INSERT INTO `merits` VALUES ('1540', 'reverse_flourish_effect', '5', '3', '262144', '6', '23');

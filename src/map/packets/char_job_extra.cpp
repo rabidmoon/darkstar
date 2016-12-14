@@ -90,11 +90,11 @@ CCharJobExtraPacket::CCharJobExtraPacket(CCharEntity* PChar, bool mjob)
 	    WBUFW(data,(0x6E)) = PChar->PAutomaton->GetMaxMP();
 
         WBUFW(data,(0x70)) = PChar->GetSkill(SKILL_AME) + PChar->getMod(MOD_AUTO_MELEE_SKILL);
-	    WBUFW(data,(0x72)) = puppetutils::getSkillCap(PChar, SKILL_AME) + PChar->getMod(MOD_AUTO_MELEE_SKILL);
+	    WBUFW(data,(0x72)) = puppetutils::getSkillCap(PChar, SKILL_AME) + PChar->getMod(MOD_AUTO_MELEE_SKILL) + PChar->PMeritPoints->GetMeritValue(MERIT_AUTOMATION_SKILLS, PChar);
 	    WBUFW(data,(0x74)) = PChar->GetSkill(SKILL_ARA) + PChar->getMod(MOD_AUTO_RANGED_SKILL);
-	    WBUFW(data,(0x76)) = puppetutils::getSkillCap(PChar, SKILL_ARA) + PChar->getMod(MOD_AUTO_RANGED_SKILL);
+	    WBUFW(data,(0x76)) = puppetutils::getSkillCap(PChar, SKILL_ARA) + PChar->getMod(MOD_AUTO_RANGED_SKILL) + PChar->PMeritPoints->GetMeritValue(MERIT_AUTOMATION_SKILLS, PChar);
 	    WBUFW(data,(0x78)) = PChar->GetSkill(SKILL_AMA) + PChar->getMod(MOD_AUTO_MAGIC_SKILL);
-	    WBUFW(data,(0x7A)) = puppetutils::getSkillCap(PChar, SKILL_AMA) + PChar->getMod(MOD_AUTO_MAGIC_SKILL);
+	    WBUFW(data,(0x7A)) = puppetutils::getSkillCap(PChar, SKILL_AMA) + PChar->getMod(MOD_AUTO_MAGIC_SKILL) + PChar->PMeritPoints->GetMeritValue(MERIT_AUTOMATION_SKILLS, PChar);
 
 	    WBUFW(data,(0x80)) = PChar->PAutomaton->stats.STR;
         WBUFW(data,(0x82)) = PChar->PAutomaton->getMod(MOD_STR);
