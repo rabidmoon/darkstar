@@ -411,7 +411,7 @@ local aura = player:getVar("FerretoryAura");
 			13052,	12000,  -- Light Soleas			
 			13042,	21000,  -- Bone Leggings +1	
 			13048,	32000,  -- Mage's Sandles		
-			14133,	610000,  -- Winged Boots +1		
+			14133,	210000,  -- Winged Boots +1		
 			15321,	32600,  -- Kampfschuhs		    
 			13041,	12000,  -- Cuir Highboots +1	
 			13023,	7400,  -- Ebony Sabots +1		
