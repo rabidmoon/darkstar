@@ -2215,6 +2215,14 @@ void CAICharNormal::ActionJobAbilityFinish()
                 battleutils::jumpAbility(m_PChar, m_PBattleSubTarget, 3);
                 Action.messageID = 0;
                 m_PChar->loc.zone->PushPacket(m_PChar, CHAR_INRANGE_SELF, new CMessageBasicPacket(m_PChar, m_PBattleSubTarget, m_PJobAbility->getID() + 16, 0, MSGBASIC_USES_JA));
+				// Super Climb Mechanics
+				
+				if (m_PChar->PPet != nullptr && ((CPetEntity*)m_PChar->PPet)->getPetType() == PETTYPE_WYVERN)
+				{
+				    ((CAIPetDummy*)m_PChar->PPet->PBattleAI)->m_MasterCommand = MASTERCOMMAND_SUPER_JUMP;
+					m_PChar->PPet->PBattleAI->SetCurrentAction(ACTION_MOBABILITY_START);
+					ShowWarning(CL_RED"SUPER JUMP TRIGGERED WITH WYVERN OUT!\n" CL_RESET);
+				}
             }
 
             // Handle Accomplice / Collabrator..
@@ -2378,7 +2386,7 @@ void CAICharNormal::ActionJobAbilityFinish()
                 PPetAI->m_queueSic = true;
             }
         }
-
+		
         m_PChar->loc.zone->PushPacket(m_PChar, CHAR_INRANGE_SELF, new CActionPacket(m_PChar));
 
     } // end paralysis if
@@ -2388,6 +2396,7 @@ void CAICharNormal::ActionJobAbilityFinish()
     Charge_t* charge = ability::GetCharge(m_PChar, m_PJobAbility->getRecastId());
     if (charge != nullptr)
     {
+		ShowWarning(CL_GREEN"CHARGE IS NOT NULL \n" CL_RESET);
         chargeTime = charge->chargeTime;
         maxCharges = charge->maxCharges;
     }
