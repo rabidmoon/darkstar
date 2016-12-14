@@ -22,6 +22,11 @@ function onSpellCast(caster,target,spell)
 	local power = 0;
 	local basecure = 0;
 	local final = 0;
+	
+	local player = caster:getMaster();
+	local automaton = player:getPetID();
+		
+
 
 	local minCure = 270;
 	if (USE_OLD_CURE_FORMULA == true) then

@@ -29,7 +29,8 @@ local bonus = 0;
         if (firstlogin) then
             CharCreate(player);
         end
-		-- player:PrintToServer(string.format("%s has logged in...", player:getName()), 0x1C);
+		if (player:getObjType() == TYPE_PC) then
+		player:PrintToServer(string.format("%s has logged in...", player:getName()), 0x1C);
 		-- Login Logout message handled in Core
 		
 		  if (player:hasStatusEffect(EFFECT_RESTING_BONUS) == false) then
@@ -43,7 +44,7 @@ local bonus = 0;
 			player:addStatusEffectEx(EFFECT_RESTING_BONUS,EFFECT_DEDICATION,bonus,0,86400,0,20000);
 			end
 			end
-			
+		end	
 		
 		
 		

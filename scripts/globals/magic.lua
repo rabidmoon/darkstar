@@ -220,14 +220,16 @@ end;
  function getCurePower(caster,isBlueMagic)
     local MND = caster:getStat(MOD_MND);
     local VIT = caster:getStat(MOD_VIT);
-    local skill = caster:getSkillLevel(HEALING_MAGIC_SKILL) + caster:getMod(MOD_HEALING);
+    local skill = caster:getSkillLevel(HEALING_MAGIC_SKILL) + caster:getMod(MOD_HEALING)
+
+
 	if (caster:isPet()) then
-	local player = caster:getMaster();
-	local automaton = player:getPetID();
-	if (automaton == 69) then
-	skill = caster:getSkillLevel(AUTOMATON_MAGIC_SKILL);
-	end
-	end
+    -- Trust can't have both Auto skill and healing and Auto can't have healing skill and auto skill so best to combine them so
+    -- whatever casts will use the correct skill	
+	skill = caster:getSkillLevel(AUTOMATON_MAGIC_SKILL) + caster:getMod(MOD_HEALING);  
+	end	
+	print(skill);
+
     local power = math.floor(MND/2) + math.floor(VIT/4) + skill;
     return power;
 end;
@@ -431,10 +433,10 @@ function getMagicHitRate(caster, target, skillType, element, percentBonus, bonus
 	
 	local player = caster:getMaster();
 	
-	if (caster:isPet() and player:getMainJob() == JOB_PUP) then
-	skillType = 24;
+	-- if (caster:isPet() and player:getMainJob() == JOB_PUP) then
+	-- skillType = 24;
 	-- printf("Setting skill to AUTOMATON MAGIC");
-	end
+	-- end
 
 
     if (bonusAcc == nil) then
@@ -445,10 +447,7 @@ function getMagicHitRate(caster, target, skillType, element, percentBonus, bonus
     local magicacc = caster:getMod(MOD_MACC) + caster:getILvlMacc();
 
     if (skillType ~= 0) then
-        magicacc = magicacc + caster:getSkillLevel(skillType) + caster:getMod(79 + skillType);
-    elseif (automaton == 69) then
-		-- for automaton skills
-		magicacc = magicacc + player:getSkillLevel(24);
+        magicacc = magicacc + caster:getSkillLevel(skillType) + caster:getSkillLevel(24) + caster:getMod(79 + skillType) + caster:getMod(79 + 24);
 	else
         -- for mob skills / additional effects which don't have a skill
         magicacc = magicacc + utils.getSkillLvl(1, caster:getMainLvl());
@@ -1189,7 +1188,7 @@ function doElementalNuke(caster, spell, target, spellParams)
     -- printf("Caster is a Pet");
 	local player = caster:getMaster();
 	local automaton = player:getPetID();
-	if (automaton == 69) then
+	if (caster:isUniqueAlly(69)) then
 	local resist = applyResistance(caster, spell, target, diff, AUTOMATON_MAGIC_SKILL, resistBonus);
 	end
 	-- printf("Using Automaton Numbers");

@@ -30,7 +30,9 @@ end;
 
 function onSpellCast(caster,target,spell)
 	caster:spawnAlly(76);
+   if (caster:getObjType() == TYPE_PC) then
    caster:PrintToPlayer("(Kupipi) Heaven's Tower has sent me to ensure the safety of this party.", 0xF); 
+   end
 
     
 	return 0;
