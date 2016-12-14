@@ -732,6 +732,7 @@ namespace petutils
             PPet->setModifier(MOD_DEF, battleutils::GetMaxSkill(12, PPet->GetMLevel()));
             break;
         }
+		
     }
 
     void LoadAvatarStats(CPetEntity* PPet)
@@ -1020,6 +1021,7 @@ namespace petutils
 		PAlly->setModifier(MOD_FOOD_MP_CAP, 1);
 		PAlly->setModifier(MOD_MPP, 1);
 		PAlly->setModifier(MOD_HPP, 1);
+		PAlly->setModifier(MOD_MOVE, 10);
 		PAlly->health.maxhp = (int16)(14 + (3.75f*(plvl * 3.75f)));
 		PAlly->UpdateHealth();
 		   if (plvl > 54){
@@ -1046,6 +1048,7 @@ namespace petutils
 		PAlly->setModifier(MOD_FOOD_MP_CAP, 1);
 		PAlly->setModifier(MOD_MPP, 1);
 		PAlly->setModifier(MOD_HPP, 1);	
+		PAlly->setModifier(MOD_MOVE, 10);
 		PAlly->health.maxhp = (int16)(14 + (3.0f*(plvl * 3.75f))); 		
 		PAlly->health.maxmp = (int16)(22 + (3.66f*(plvl * 3.66f))); 
 		PAlly->UpdateHealth();
@@ -1075,6 +1078,7 @@ namespace petutils
 		PAlly->setModifier(MOD_FOOD_MP_CAP, 1);	
 		PAlly->setModifier(MOD_MPP, 1);
 		PAlly->setModifier(MOD_HPP, 1);
+		PAlly->setModifier(MOD_MOVE, 10);
 		PAlly->health.maxhp = (int16)(14 + (3.30f*(plvl * 4.15f))); 		
 		PAlly->UpdateHealth();		
 		   if (plvl > 24){
@@ -1106,6 +1110,7 @@ namespace petutils
 		PAlly->setModifier(MOD_FOOD_MP_CAP, 1);	
 		PAlly->setModifier(MOD_MPP, 1);
 		PAlly->setModifier(MOD_HPP, 1);	
+		PAlly->setModifier(MOD_MOVE, 10);
 		PAlly->health.maxhp = (int16)(14 + (3.8f*(plvl * 4.0f)));
 		PAlly->UpdateHealth();
         PAlly->health.mp = PAlly->health.maxhp;		
@@ -1158,7 +1163,8 @@ namespace petutils
 		PAlly->setModifier(MOD_FOOD_MPP, 1);
 		PAlly->setModifier(MOD_FOOD_MP_CAP, 1);	
 		PAlly->setModifier(MOD_MPP, 1);
-		PAlly->setModifier(MOD_HPP, 1);		
+		PAlly->setModifier(MOD_HPP, 1);	
+        PAlly->setModifier(MOD_MOVE, 10);		
 		PAlly->m_Weapons[SLOT_SUB]->addModifier(new CModifier(MOD_DEF, shielddef));
 		PAlly->health.maxhp = (int16)(15 + hpstat + (3.66f*(plvl * 4.10f)));
 		PAlly->health.maxmp = (int16)(15 + (2.72f*(plvl * 2.72f))); 
@@ -1195,7 +1201,8 @@ namespace petutils
 		PAlly->setModifier(MOD_FOOD_MPP, 1);
 		PAlly->setModifier(MOD_FOOD_MP_CAP, 1);	
 		PAlly->setModifier(MOD_MPP, 1);
-		PAlly->setModifier(MOD_HPP, 1);		
+		PAlly->setModifier(MOD_HPP, 1);	
+        PAlly->setModifier(MOD_MOVE, 10);		
 		PAlly->health.maxhp = (int16)(11 + (3.5*(plvl * 4.5f))); 
 		PAlly->UpdateHealth();
         PAlly->health.hp = PAlly->health.maxhp;
@@ -1225,7 +1232,8 @@ namespace petutils
 		PAlly->setModifier(MOD_FOOD_MPP, 1);
 		PAlly->setModifier(MOD_FOOD_MP_CAP, 1);	
 		PAlly->setModifier(MOD_MPP, 1);
-		PAlly->setModifier(MOD_HPP, 1);		
+		PAlly->setModifier(MOD_HPP, 1);	
+		PAlly->setModifier(MOD_MOVE, 10);
 		PAlly->m_Weapons[SLOT_MAIN]->setDamage(floor(PAlly->GetMLevel()*0.54f));// D:40 @75
 		PAlly->m_Weapons[SLOT_MAIN]->setDelay(floor(1000.0f*(240.0f / 60.0f))); //240 delay
         PAlly->health.maxmp = (int16)(15 + (3.66f*(plvl * 2.95f))); 
@@ -1264,6 +1272,7 @@ namespace petutils
 		PAlly->setModifier(MOD_FOOD_MP_CAP, 1);
 		PAlly->setModifier(MOD_MPP, 1);
 		PAlly->setModifier(MOD_HPP, 1);
+		PAlly->setModifier(MOD_MOVE, 10);
 		PAlly->health.maxmp = (int16)(22 + (3.46f*(plvl * 3.46f))); 
 		PAlly->health.maxhp = (int16)(24 + (3.70f*(plvl * 3.70f))); 		
 		PAlly->UpdateHealth();
@@ -1272,10 +1281,12 @@ namespace petutils
 			PAlly->setModifier(MOD_MATT, 85);
 			PAlly->setModifier(MOD_SUBLIMATION_BONUS, 7);
 			PAlly->setModifier(MOD_REFRESH, 3);
+			PAlly->setModifier(MOD_FASTCAST, 20);
 		}
         else if (plvl > 50){
 			PAlly->setModifier(MOD_MATT, 75);
 			PAlly->setModifier(MOD_SUBLIMATION_BONUS, 5);
+			PAlly->setModifier(MOD_FASTCAST, 10);
 		}
 		else if (plvl > 25){
 			PAlly->setModifier(MOD_MATT, 35);
@@ -1284,7 +1295,66 @@ namespace petutils
 		else {
 			PAlly->setModifier(MOD_MATT, 15);
 		}	
-        }		
+        }
+
+		else if (PetID == PETID_LUZAF)
+		{
+		uint16 bmoddatt = (PAlly->GetMLevel() * 1.0);
+		uint16 bmoddacc = (PAlly->GetMLevel() * 0.5);
+		uint16 bmodratt = (PAlly->GetMLevel() * 1.0);
+		uint16 bmodracc = (PAlly->GetMLevel() * 1.0);		
+		uint16 bstr = (PAlly->GetMLevel() * 0.5);
+		uint16 bdex = (PAlly->GetMLevel() * 0.4);
+		uint16 bagi = (PAlly->GetMLevel() * 0.5);	
+		PAlly->setModifier(MOD_STR, bstr); //added str 
+		PAlly->setModifier(MOD_DEX, bdex); //added dex
+		PAlly->setModifier(MOD_AGI, bagi); //added dex		
+		PAlly->setModifier(MOD_ACC, battleutils::GetMaxSkill(SKILL_GAX, JOB_WAR, PAlly->GetMLevel()) + bmoddacc); //A+ Acc
+		PAlly->setModifier(MOD_RACC, battleutils::GetMaxSkill(SKILL_GAX, JOB_WAR, PAlly->GetMLevel()) + bmodracc); //A+ Acc		
+		PAlly->setModifier(MOD_EVA, battleutils::GetMaxSkill(SKILL_SYH, JOB_WAR, PAlly->GetMLevel())); //B+ Evasion
+		PAlly->setModifier(MOD_ATT, battleutils::GetMaxSkill(SKILL_GAX, JOB_WAR, PAlly->GetMLevel()) + bmoddatt);// A+ Attack
+		PAlly->setModifier(MOD_RATT, battleutils::GetMaxSkill(SKILL_GAX, JOB_WAR, PAlly->GetMLevel()) + bmodratt);// A+ R.Attack			
+		PAlly->setModifier(MOD_DEF, battleutils::GetMaxSkill(SKILL_POL, JOB_WAR, PAlly->GetMLevel()));// B- Defense
+
+	    PAlly->setModifier(MOD_CONVMPTOHP, 1);
+		PAlly->setModifier(MOD_CONVHPTOMP, 1);
+		PAlly->setModifier(MOD_FOOD_MPP, 1);
+		PAlly->setModifier(MOD_FOOD_MP_CAP, 1);	
+		PAlly->setModifier(MOD_MPP, 1);
+		PAlly->setModifier(MOD_HPP, 1);	
+        PAlly->setModifier(MOD_MOVE, 10);		
+		PAlly->m_Weapons[SLOT_MAIN]->setDamage(floor(PAlly->GetMLevel()*0.54f));// D:40 @75
+		PAlly->m_Weapons[SLOT_MAIN]->setDelay(floor(1000.0f*(240.0f / 60.0f))); //240 delay
+		PAlly->m_Weapons[SLOT_SUB]->setDamage(floor(PAlly->GetMLevel()*0.40f));// D:30 @75
+		PAlly->m_Weapons[SLOT_SUB]->setDelay(floor(1000.0f*(200.0f / 60.0f))); //200 delay
+		PAlly->m_Weapons[SLOT_RANGED]->setDamage(floor(PAlly->GetMLevel()*0.70f));// D:52 @75		
+		PAlly->m_Weapons[SLOT_RANGED]->setDelay(floor(1000.0f*(480.0f / 60.0f))); //480 delay		
+		PAlly->health.maxhp = (int16)(22 + (3.81f*(plvl * 3.62f))); 
+		PAlly->UpdateHealth();
+        PAlly->health.mp = PAlly->health.maxhp;		
+		   if (plvl > 74){
+		   		PAlly->setModifier(MOD_DUAL_WIELD, 35); // Dual Wield
+				PAlly->setModifier(MOD_MATT, 30); // Magic Attack Bonus	
+				PAlly->setModifier(MOD_DOUBLE_ATTACK, 20); // Double Attack (Joyeuse)		
+		   }
+		   else if (plvl > 59){
+		   		PAlly->setModifier(MOD_DUAL_WIELD, 30); // Dual Wield			
+		   }
+		   else if (plvl > 34){
+		   		PAlly->setModifier(MOD_DUAL_WIELD, 25); // Dual Wield
+				PAlly->setModifier(MOD_MATT, 15); // Magic Attack Bonus
+		   }		   
+		   else if (plvl > 14){
+		   		PAlly->setModifier(MOD_DUAL_WIELD, 20); // Dual Wield
+		   }
+		   else if (plvl > 4){
+		   		PAlly->setModifier(MOD_DUAL_WIELD, 10); // Dual Wield
+		   }		   
+		   
+		   
+		   
+
+		}		
 		
 		
         PAlly->PBattleAI = new CAIPetDummy(PAlly);
@@ -1962,8 +2032,31 @@ namespace petutils
                 PPet->SetMLevel(PMaster->GetSLevel());
 				PPet->SetSLevel(PMaster->GetSLevel() / 2);
             }
+			
+
             
             LoadAutomatonStats((CCharEntity*)PMaster, PPet, g_PPetList.at(PetID)); //temp
+			
+            /*
+                CCharEntity* PChar = (CCharEntity*)PMaster;
+				//Melee Skill
+				PChar->setModifier(MOD_AUTO_MELEE_SKILL, PChar->PMeritPoints->GetMeritValue(MERIT_AUTOMATION_SKILLS, PChar));
+				ShowWarning(CL_RED"LOADING NEW AUTOMATON  MELEE SKILL STATS\n" CL_RESET);
+				//Archery Skill
+				PChar->setModifier(MOD_AUTO_RANGED_SKILL, PChar->PMeritPoints->GetMeritValue(MERIT_AUTOMATION_SKILLS, PChar));
+				//Magic Skill
+				PChar->setModifier(MOD_AUTO_MAGIC_SKILL, PChar->PMeritPoints->GetMeritValue(MERIT_AUTOMATION_SKILLS, PChar));
+				//Fine Tuning Merits
+                PPet->setModifier(MOD_ACC, PChar->PMeritPoints->GetMeritValue(MERIT_FINE_TUNING, PChar));
+                PPet->setModifier(MOD_RACC, PChar->PMeritPoints->GetMeritValue(MERIT_FINE_TUNING, PChar));
+                PPet->setModifier(MOD_EVA, PChar->PMeritPoints->GetMeritValue(MERIT_FINE_TUNING, PChar));
+                PPet->setModifier(MOD_MDEF, PChar->PMeritPoints->GetMeritValue(MERIT_FINE_TUNING, PChar));
+				//Optimization
+				PPet->setModifier(MOD_ATTP, PChar->PMeritPoints->GetMeritValue(MERIT_OPTIMIZATION, PChar));
+                PPet->setModifier(MOD_DEFP, PChar->PMeritPoints->GetMeritValue(MERIT_OPTIMIZATION, PChar));
+                PPet->setModifier(MOD_MATT, PChar->PMeritPoints->GetMeritValue(MERIT_OPTIMIZATION, PChar));
+			*/	
+            
         }
        /* else if (PPet->getPetType() == PETTYPE_TRUST)
         {
