@@ -2484,8 +2484,10 @@ namespace charutils
                 if (PChar->PAutomaton)
                 {
                     MaxMSkill = puppetutils::getSkillCap(PChar, (SKILLTYPE)i);
-                }
+                    skillBonus += PChar->PMeritPoints->GetMeritValue(MERIT_AUTOMATION_SKILLS, PChar);
+				}
             }
+			
 
             //ignore these indexes when calculating merits
             if (i > 0 && (i < 13 || i > 24) && i < 46)
@@ -2500,15 +2502,11 @@ namespace charutils
 
             if (MaxMSkill != 0)
             {
-                auto cap {PChar->RealSkills.skill[i] / 10 >= MaxMSkill};
-                PChar->WorkingSkills.skill[i] = std::max(0, cap ? skillBonus + MaxMSkill : skillBonus + PChar->RealSkills.skill[i] / 10);
-                if (cap) PChar->WorkingSkills.skill[i] |= 0x8000;
+                PChar->WorkingSkills.skill[i] = skillBonus + (PChar->RealSkills.skill[i] / 10 >= MaxMSkill ? MaxMSkill + 0x8000 : PChar->RealSkills.skill[i] / 10);
             }
             else if (MaxSSkill != 0)
             {
-                auto cap {PChar->RealSkills.skill[i] / 10 >= MaxSSkill};
-                PChar->WorkingSkills.skill[i] = std::max(0, cap ? skillBonus + MaxSSkill : skillBonus + PChar->RealSkills.skill[i] / 10);
-                if (cap) PChar->WorkingSkills.skill[i] |= 0x8000;
+                PChar->WorkingSkills.skill[i] = skillBonus + (PChar->RealSkills.skill[i] / 10 >= MaxSSkill ? MaxSSkill + 0x8000 : PChar->RealSkills.skill[i] / 10);
             }
             else
             {
