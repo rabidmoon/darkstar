@@ -190,6 +190,7 @@ void CAIPetDummy::ActionAbilityStart()
 	//*****************************************************//
 	
 	uint32 masterscID = charutils::GetVar((CCharEntity*)m_PPet->PMaster,"AyameSCElement");
+	//printf("SC Obtained: %d \n", masterscID);
 	// ->getPrimarySkillchain()
 	
 
@@ -425,7 +426,7 @@ void CAIPetDummy::ActionAbilityStart()
                     } 
                 }
 			}
-			if (lvl >= 65) {
+			else if (lvl >= 65) {
             for (int i = 0; i < m_PPet->PetSkills.size(); i++) {
                 auto PMobSkill = battleutils::GetMobSkill(m_PPet->PetSkills.at(i));
   					if (PMobSkill->getID() == 3783 && (masterscID == 2 || masterscID == 5 || masterscID == 12)) { //Tachi Gekko
@@ -466,7 +467,7 @@ void CAIPetDummy::ActionAbilityStart()
 
                 }
 			}
-			if (lvl >= 60) {
+			else if (lvl >= 60) {
             for (int i = 0; i < m_PPet->PetSkills.size(); i++) {
                 auto PMobSkill = battleutils::GetMobSkill(m_PPet->PetSkills.at(i));
   					if (PMobSkill->getID() == 3782 && (masterscID == 1 || masterscID == 6 || masterscID == 11)) { //Tachi Yuki
@@ -500,7 +501,7 @@ void CAIPetDummy::ActionAbilityStart()
 
                 }
 			}	
-			if (lvl >= 55) {
+			else if (lvl >= 55) {
             for (int i = 0; i < m_PPet->PetSkills.size(); i++) {
                 auto PMobSkill = battleutils::GetMobSkill(m_PPet->PetSkills.at(i));
   					if (PMobSkill->getID() == 3781 && (masterscID == 3 || masterscID == 10)) { //Tachi Jinpu
@@ -527,7 +528,7 @@ void CAIPetDummy::ActionAbilityStart()
 
                 }
 			}
-			if (lvl >= 40) {
+			else if (lvl >= 40) {
             for (int i = 0; i < m_PPet->PetSkills.size(); i++) {
                 auto PMobSkill = battleutils::GetMobSkill(m_PPet->PetSkills.at(i));
   					if (PMobSkill->getID() == 3779 && (masterscID == 7 || masterscID == 8 || masterscID == 9)) { //Tachi Enpi
@@ -2180,39 +2181,74 @@ void CAIPetDummy::ActionWeaponSkillFinish()
                     {
 					    //Set Magic Burst Pattern if trust closes WS (mostly for Ayame)
 						int32 value = 10;
-						if (effect == SUBEFFECT_LIGHT || effect == SUBEFFECT_FRAGMENTATION || effect == SUBEFFECT_IMPACTION){
+						std::string varname;
+						const int8* fmtQuery = "INSERT INTO char_vars SET charid = %u, varname = 'TrustMB', value = '10' ON DUPLICATE KEY UPDATE value = '10';";
+                        Sql_Query(SqlHandle, fmtQuery, m_PPet->PMaster->id, varname, value, value);	
+						if (effect == SUBEFFECT_COMPRESSION){
+						value = 8;
+						std::string varname;
+						const int8* fmtQuery = "INSERT INTO char_vars SET charid = %u, varname = 'TrustMB', value = '8' ON DUPLICATE KEY UPDATE value = '8';";
+                        Sql_Query(SqlHandle, fmtQuery, m_PPet->PMaster->id, varname, value, value);	
+					    //printf("Setting Magic Burst to: %d \n", value);
+						//ShowWarning(CL_GREEN"Dark Based Magic Burst.  Start Casting \n" CL_RESET);						
+						}
+						else if (effect == SUBEFFECT_TRANSFIXION){
+						value = 7;
+						std::string varname;
+						const int8* fmtQuery = "INSERT INTO char_vars SET charid = %u, varname = 'TrustMB', value = '7' ON DUPLICATE KEY UPDATE value = '7';";
+                        Sql_Query(SqlHandle, fmtQuery, m_PPet->PMaster->id, varname, value, value);	
+					    //printf("Setting Magic Burst to: %d \n", value);
+						//ShowWarning(CL_GREEN"Light Based Magic Burst.  Start Casting \n" CL_RESET);						
+						}
+						else if (effect == SUBEFFECT_LIGHT || effect == SUBEFFECT_FRAGMENTATION || effect == SUBEFFECT_IMPACTION){
 						value = 6;
+						std::string varname;
+						const int8* fmtQuery = "INSERT INTO char_vars SET charid = %u, varname = 'TrustMB', value = '6' ON DUPLICATE KEY UPDATE value = '6';";
+                        Sql_Query(SqlHandle, fmtQuery, m_PPet->PMaster->id, varname, value, value);	
 					    //printf("Setting Magic Burst to: %d \n", value);
 						//ShowWarning(CL_GREEN"Thunder Based Magic Burst.  Start Casting \n" CL_RESET);						
 						}
 						else if (effect == SUBEFFECT_DARKNESS || effect == SUBEFFECT_DISTORTION || effect == SUBEFFECT_INDURATION){
 						value = 5;  //Blizzard
+						std::string varname;
+						const int8* fmtQuery = "INSERT INTO char_vars SET charid = %u, varname = 'TrustMB', value = '5' ON DUPLICATE KEY UPDATE value = '5';";
+                        Sql_Query(SqlHandle, fmtQuery, m_PPet->PMaster->id, varname, value, value);	
 						//printf("Setting Magic Burst to: %d \n", value);
 						//ShowWarning(CL_GREEN"Ice Based Magic Burst.  Start Casting \n" CL_RESET);
 						}
 						else if (effect == SUBEFFECT_LIGHT || effect == SUBEFFECT_FUSION || effect == SUBEFFECT_LIQUEFACATION){
 						value = 4;  //Fire
+						std::string varname;
+						const int8* fmtQuery = "INSERT INTO char_vars SET charid = %u, varname = 'TrustMB', value = '4' ON DUPLICATE KEY UPDATE value = '4';";
+                        Sql_Query(SqlHandle, fmtQuery, m_PPet->PMaster->id, varname, value, value);	
 						//printf("Setting Magic Burst to: %d \n", value);
 						//ShowWarning(CL_GREEN"Fire Based Magic Burst.  Start Casting \n" CL_RESET);						
 						}
 						else if (effect == SUBEFFECT_LIGHT || effect == SUBEFFECT_FRAGMENTATION || effect == SUBEFFECT_DETONATION){
 						value = 3;  //Aero
+						std::string varname;
+						const int8* fmtQuery = "INSERT INTO char_vars SET charid = %u, varname = 'TrustMB', value = '3' ON DUPLICATE KEY UPDATE value = '3';";
+                        Sql_Query(SqlHandle, fmtQuery, m_PPet->PMaster->id, varname, value, value);	
 						//printf("Setting Magic Burst to: %d \n", value);
 						//ShowWarning(CL_GREEN"Wind Based Magic Burst.  Start Casting \n" CL_RESET);							
 						}
 						else if (effect == SUBEFFECT_DARKNESS || effect == SUBEFFECT_DISTORTION || effect == SUBEFFECT_REVERBERATION){
 						value = 2;  //Water
+						std::string varname;
+						const int8* fmtQuery = "INSERT INTO char_vars SET charid = %u, varname = 'TrustMB', value = '2' ON DUPLICATE KEY UPDATE value = '2';";
+                        Sql_Query(SqlHandle, fmtQuery, m_PPet->PMaster->id, varname, value, value);	
 						//printf("Setting Magic Burst to: %d \n", value);
 						//ShowWarning(CL_GREEN"Water Based Magic Burst.  Start Casting \n" CL_RESET);							
 						}
 						else if (effect == SUBEFFECT_DARKNESS || effect == SUBEFFECT_GRAVITATION || effect == SUBEFFECT_SCISSION){
 						value = 1;  //Stone
+						std::string varname;
+						const int8* fmtQuery = "INSERT INTO char_vars SET charid = %u, varname = 'TrustMB', value = '1' ON DUPLICATE KEY UPDATE value = '1';";
+                        Sql_Query(SqlHandle, fmtQuery, m_PPet->PMaster->id, varname, value, value);	
 						//printf("Setting Magic Burst to: %d \n", value);
 						//ShowWarning(CL_GREEN"Stone Based Magic Burst.  Start Casting \n" CL_RESET);							
 						}
-                        std::string varname;
-						const int8* fmtQuery = "INSERT INTO char_vars SET charid = %u, varname = 'TrustMB', value = '6' ON DUPLICATE KEY UPDATE value = '6';";
-                        Sql_Query(SqlHandle, fmtQuery, m_PPet->PMaster->id, varname, value, value);						
+					
 
                         //Write Magic Burst Number to player Variable called TrustMB
                         
@@ -4018,8 +4054,8 @@ int16 CAIPetDummy::KupipiSpell()
 
 	uint8 trigger = 60; // HP Trigger Threshold
 	uint8 lowHPP = 31;
-	uint8 lowtrigger = 30;	
-	uint8 lowtriggercuraga = 35;
+	uint8 lowtrigger = 35;	
+	uint8 lowtriggercuraga = 32;
 	uint8 level = m_PPet->GetMLevel();
     int16 spellID = -1;
 	
@@ -5261,7 +5297,7 @@ int16 CAIPetDummy::AdelhiedSpell()
 	CBattleEntity* mostWounded = getWounded(trigger);
     //printf("Variable Obtained: %d \n", adelhiedMB);
 	m_PBattleSubTarget = m_PBattleTarget;
-	if (adelhiedMB < 7){
+	if (adelhiedMB < 9){
 		if (level >= 10 && m_PPet->StatusEffectContainer->HasStatusEffect(EFFECT_TRUST_DARK_ARTS) == false){
 	        m_PWeaponSkill = nullptr;
             int16 mobjaID = -1;			
@@ -5298,7 +5334,57 @@ int16 CAIPetDummy::AdelhiedSpell()
 			    //printf("Using Ebullience");
 				//return;	
 	}
-	if (adelhiedMB == 6){
+if (adelhiedMB == 8){
+    //Dark Arts then Ebullience if possible
+    m_PBattleSubTarget = m_PBattleTarget;	
+		if (level >= 32)
+			if (m_PPet->health.mp > 25)
+				{
+				 spellID = 284;
+				}
+            else
+				{
+				spellID = -1;
+				}	
+		else
+                {
+                 spellID = -1;
+                }			 
+		m_schEleRecast = 20000;
+		m_LastSchCheck = m_Tick;
+		//Resets Magic Burst Value to 10
+		int32 value = 10;
+        std::string varname;
+	    const int8* fmtQuery = "INSERT INTO char_vars SET charid = %u, varname = 'TrustMB', value = '10' ON DUPLICATE KEY UPDATE value = '10';";
+        Sql_Query(SqlHandle, fmtQuery, m_PPet->PMaster->id, varname, value, value);
+		//m_burstElement = 0;
+		}
+else if (adelhiedMB == 7){
+    //Dark Arts then Ebullience if possible
+    m_PBattleSubTarget = m_PBattleTarget;	
+		if (level >= 32)
+			if (m_PPet->health.mp > 25)
+				{
+				 spellID = 285;
+				}
+            else
+				{
+				spellID = -1;
+				}	
+		else
+                {
+                 spellID = -1;
+                }			 
+		m_schEleRecast = 20000;
+		m_LastSchCheck = m_Tick;
+		//Resets Magic Burst Value to 10
+		int32 value = 10;
+        std::string varname;
+	    const int8* fmtQuery = "INSERT INTO char_vars SET charid = %u, varname = 'TrustMB', value = '10' ON DUPLICATE KEY UPDATE value = '10';";
+        Sql_Query(SqlHandle, fmtQuery, m_PPet->PMaster->id, varname, value, value);
+		//m_burstElement = 0;
+		}		
+	else if (adelhiedMB == 6){
     //Dark Arts then Ebullience if possible
     m_PBattleSubTarget = m_PBattleTarget;	
 		if (level >= 75)
@@ -5375,7 +5461,8 @@ int16 CAIPetDummy::AdelhiedSpell()
         Sql_Query(SqlHandle, fmtQuery, m_PPet->PMaster->id, varname, value, value);
 		//m_burstElement = 0;
 		}
-       else if (adelhiedMB == 5){	
+       else if (adelhiedMB == 5){
+    m_PBattleSubTarget = m_PBattleTarget;	   
 		      if (level >= 74)
 			if (m_PPet->health.mp > 161)
 				{
@@ -5438,8 +5525,15 @@ int16 CAIPetDummy::AdelhiedSpell()
 				}
         m_schEleRecast = 10000;
 		m_LastSchCheck = m_Tick;
+		//Resets Magic Burst Value to 10
+		int32 value = 10;
+        std::string varname;
+	    const int8* fmtQuery = "INSERT INTO char_vars SET charid = %u, varname = 'TrustMB', value = '10' ON DUPLICATE KEY UPDATE value = '10';";
+        Sql_Query(SqlHandle, fmtQuery, m_PPet->PMaster->id, varname, value, value);
+		//m_burstElement = 0;		
         }		
-    else if (adelhiedMB == 4){	
+    else if (adelhiedMB == 4){
+    m_PBattleSubTarget = m_PBattleTarget;	
 		if (level >= 73)
 			if (m_PPet->health.mp > 134)
 				{
@@ -5500,10 +5594,17 @@ int16 CAIPetDummy::AdelhiedSpell()
 				{
 				 spellID = -1;
 				}	    
-    m_schEleRecast = 10000;
+    m_schEleRecast = 20000;
 	m_LastSchCheck = m_Tick;
+	//Resets Magic Burst Value to 10
+	int32 value = 10;
+    std::string varname;
+	const int8* fmtQuery = "INSERT INTO char_vars SET charid = %u, varname = 'TrustMB', value = '10' ON DUPLICATE KEY UPDATE value = '10';";
+    Sql_Query(SqlHandle, fmtQuery, m_PPet->PMaster->id, varname, value, value);
+	//m_burstElement = 0;	
     }
-    else if (adelhiedMB == 3){	
+    else if (adelhiedMB == 3){
+    m_PBattleSubTarget = m_PBattleTarget;	
 		if (level >= 72)
 			if (m_PPet->health.mp > 114)
 				{
@@ -5564,10 +5665,17 @@ int16 CAIPetDummy::AdelhiedSpell()
 				{
 				 spellID = -1;
 				}	
-    m_schEleRecast = 10000;
+    m_schEleRecast = 20000;
 	m_LastSchCheck = m_Tick;
+		//Resets Magic Burst Value to 10
+		int32 value = 10;
+        std::string varname;
+	    const int8* fmtQuery = "INSERT INTO char_vars SET charid = %u, varname = 'TrustMB', value = '10' ON DUPLICATE KEY UPDATE value = '10';";
+        Sql_Query(SqlHandle, fmtQuery, m_PPet->PMaster->id, varname, value, value);
+		//m_burstElement = 0;	
     }
-    else if (adelhiedMB == 2){	
+    else if (adelhiedMB == 2){
+    m_PBattleSubTarget = m_PBattleTarget;	
 		if (level >= 71)
 			if (m_PPet->health.mp > 98)
 				{
@@ -5628,10 +5736,17 @@ int16 CAIPetDummy::AdelhiedSpell()
 				{
 				 spellID = -1;
 				}	
-    m_schEleRecast = 10000;
+    m_schEleRecast = 20000;
 	m_LastSchCheck = m_Tick;
+		//Resets Magic Burst Value to 10
+		int32 value = 10;
+        std::string varname;
+	    const int8* fmtQuery = "INSERT INTO char_vars SET charid = %u, varname = 'TrustMB', value = '10' ON DUPLICATE KEY UPDATE value = '10';";
+        Sql_Query(SqlHandle, fmtQuery, m_PPet->PMaster->id, varname, value, value);
+		//m_burstElement = 0;	
     }
-    else if (adelhiedMB == 1){	
+    else if (adelhiedMB == 1){
+    m_PBattleSubTarget = m_PBattleTarget;	
 		if (level >= 70)
 			if (m_PPet->health.mp > 87)
 				{
@@ -5692,8 +5807,14 @@ int16 CAIPetDummy::AdelhiedSpell()
 				{
 				 spellID = -1;
 				}
-    m_schEleRecast = 10000;
+    m_schEleRecast = 20000;
 	m_LastSchCheck = m_Tick;
+		//Resets Magic Burst Value to 10
+		int32 value = 10;
+        std::string varname;
+	    const int8* fmtQuery = "INSERT INTO char_vars SET charid = %u, varname = 'TrustMB', value = '10' ON DUPLICATE KEY UPDATE value = '10';";
+        Sql_Query(SqlHandle, fmtQuery, m_PPet->PMaster->id, varname, value, value);
+		//m_burstElement = 0;	
     }
 	}
 //MB END Check for normal Spells
@@ -8038,7 +8159,7 @@ CBattleEntity* CAIPetDummy::getWoundedLow(uint8 threshold)
 
 CBattleEntity* CAIPetDummy::getWoundedAga(uint8 threshold)
 {
-    uint8 lowest = 100;
+    uint8 lowest = 31;
 	uint8 allies = 0;
     CBattleEntity* mostWoundedAga = nullptr;
     if (m_PPet->PMaster == nullptr)
@@ -8051,13 +8172,19 @@ CBattleEntity* CAIPetDummy::getWoundedAga(uint8 threshold)
             if ( member->GetHPP() < lowest)
             {
                 allies += 1;
-				if (allies >= 2)
-				{
-				lowest = member->GetHPP();
-                mostWoundedAga = member;
-				}
             }
         }
+		if (allies >= 2)
+		{
+		 for (auto member : m_PPet->PMaster->PParty->members)
+            {
+              if ( member->GetHPP() < lowest)
+               {
+                lowest = member->GetHPP();
+                mostWoundedLow = member;
+                }
+			}	
+        }	
     }
     if (m_PPet->PMaster->PAlly.size() > 0)  //For Trusts
     {
@@ -8065,14 +8192,23 @@ CBattleEntity* CAIPetDummy::getWoundedAga(uint8 threshold)
         {
             if ( ally->GetHPP() < lowest)
             {
-                allies += 1;
-				if (allies >= 2)
-				{
-				lowest = ally->GetHPP();
-                mostWoundedAga = ally;
-				}
+             allies += 1;
             }
         }
+	    if (allies >= 2)
+        {
+          for (auto ally : m_PPet->PMaster->PAlly)
+            {
+              if ( ally->GetHPP() < lowest)
+              {
+				lowest = ally->GetHPP();
+                mostWoundedAga = ally;
+			  }
+            }
+        }		
+		
+		
+		
     }
     
     if (lowest <= threshold)
