@@ -32,7 +32,5 @@ function onEffectLose(target,effect)
         pet:delMod(MOD_CHR, effect:getPower())
     end
 	local light = target:getEffectsCount(EFFECT_LIGHT_MANEUVER);
-	if (light == 0) then
-	pet:setMod(MOD_REGEN, 0);
-	end
+
 end;

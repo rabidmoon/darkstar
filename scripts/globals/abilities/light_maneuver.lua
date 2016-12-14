@@ -27,7 +27,7 @@ end;
 -----------------------------------
 
 function onUseAbility(player,target,ability)
-
+ 
     local burden = 15;
     if (target:getStat(MOD_CHR) < target:getPet():getStat(MOD_CHR)) then
         burden = 20;
