@@ -26,4 +26,5 @@ function onMobDeath(mob,killer)
 	killer:delKeyItem(MAP_TO_THE_ANNALS_OF_TRUTH);
 	killer:setVar("SAVAGE_BLADE_WIN",2);
 	killer:setVar("SAVAGE_BLADE",0);	
+	end
 end;	

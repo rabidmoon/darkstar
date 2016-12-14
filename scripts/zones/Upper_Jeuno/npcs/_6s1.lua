@@ -87,17 +87,17 @@ local ringtakeNbr=player:getVar("COP-RingTakeNbr");
 	    player:messageSpecial(ITEM_CANNOT_BE_OBTAINED,(option-5)+RajasRing);
 		
 	elseif ((csid == 0x0054 or csid == 0x00CC)and option == 5) then--5 rajas
-	  	player:addItem(RajasRing);
+	  	player:addItem(RajasRing, 1, 41, 2, 332, 4);  -- Crit Hit Rate +3%, Skillchain Damage +5
 		player:messageSpecial(ITEM_OBTAINED,RajasRing);
 		player:setVar("COP-RingTakeNbr",ringtakeNbr+1);
 		player:setVar("COP-lastRingday",currentday);
 	elseif ((csid == 0x0054 or csid == 0x00CC)and option == 6) then--6 Sattva
-		player:addItem(SattvaRing);
+		player:addItem(15544, 1, 71, 2, 356, 4); -- DMG Taken -3%, Potency of Cure Received +5
 		player:messageSpecial(ITEM_OBTAINED,SattvaRing);
 		player:setVar("COP-RingTakeNbr",ringtakeNbr+1);	
 		player:setVar("COP-lastRingday",currentday);
 	elseif ((csid == 0x0054 or csid == 0x00CC) and option == 7) then--7 Tamas
-	 	player:addItem(TamasRing);
+	 	player:addItem(15545, 1, 140, 2, 362, 4); -- Fast Cast +3%, Magic Damage +5
 		player:messageSpecial(ITEM_OBTAINED,TamasRing);
 		player:setVar("COP-RingTakeNbr",ringtakeNbr+1);
 		player:setVar("COP-lastRingday",currentday);
