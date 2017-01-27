@@ -52,6 +52,11 @@ function onTrigger(player,npc)
 	elseif (player:getQuestStatus(JEUNO,THE_UNFINISHED_WALTZ) == QUEST_ACCEPTED) then
 		player:startEvent(0x2796);
 
+	elseif (player:getQuestStatus(JEUNO,THE_UNFINISHED_WALTZ) == QUEST_COMPLETED and player:getVar("DNCAFknife") ~= 1) then
+		player:addItem(16467, 1, 45, 2, 518, 0);  -- Mythril Knife
+		player:messageSpecial(ITEM_OBTAINED,16467);	
+        player:setVar("DNCAFknife",1);		
+		
 	elseif (player:getQuestStatus(JEUNO,THE_UNFINISHED_WALTZ) == QUEST_COMPLETED and player:getQuestStatus(JEUNO,THE_ROAD_TO_DIVADOM) == QUEST_AVAILABLE and player:getMainJob()==JOB_DNC) then
 		player:startEvent(0x2798);
 
@@ -99,7 +104,9 @@ function onEventFinish(player,csid,option)
 	elseif (csid==0x2795) then
 		player:setVar("QuestStatus_DNC_AF1", 0);
 		player:addItem(19203); -- war hoop
+		player:addItem(16467, 1, 45, 2, 518, 0);  -- Mythril Knife
 		player:messageSpecial(ITEM_OBTAINED,19203);
+		player:messageSpecial(ITEM_OBTAINED,16467);		
 		player:completeQuest(JEUNO,THE_UNFINISHED_WALTZ);
 	end
 end;

@@ -1185,7 +1185,7 @@ PET_KUPIPI             = 76;
 PET_AYAME              = 77;
 PET_NANAA_MIHGO        = 78;
 PET_CURILLA            = 79;
-PET_LUOPAN             = 80;
+PET_LUOPAN             = 91;
 
 
 -----------------------------------

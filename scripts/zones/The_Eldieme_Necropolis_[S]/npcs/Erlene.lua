@@ -79,6 +79,10 @@ function onTrigger(player,npc)
         end
     elseif (onSabbatical == QUEST_COMPLETED and player:getVar("Erlene_Sabbatical_Timer")~=VanadielDayOfTheYear() and mJob == JOB_SCH and mLvl >= AF2_QUEST_LEVEL and downwardHelix == QUEST_AVAILABLE) then
         player:startEvent(0x0017);
+	elseif (onSabbatical == QUEST_COMPLETED and mJob == JOB_SCH and player:getVar("SCHAFstaff") ~= 1) then           
+			player:addItem(17098, 1, 296, 0);
+            player:messageSpecial(ITEM_OBTAINED, 17098);
+            player:setVar("SCHAFstaff",1);			
     elseif (downwardHelix == QUEST_ACCEPTED) then
         if (player:getVar("DownwardHelix") == 0) then
             player:startEvent(0x0018);
@@ -151,7 +155,9 @@ function onEventFinish(player,csid,option)
             player:delKeyItem(SCHULTS_SEALED_LETTER);
             player:completeQuest(CRYSTAL_WAR,ON_SABBATICAL);
             player:addItem(6058); --klimaform
+			player:addItem(17098, 1, 296, 0);
             player:messageSpecial(ITEM_OBTAINED, 6058);
+            player:messageSpecial(ITEM_OBTAINED, 17098);			
             player:setVar("onSabbatical",0);
             player:setVar("Erlene_Sabbatical_Timer",VanadielDayOfTheYear());
         end

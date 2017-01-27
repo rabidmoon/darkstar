@@ -24,7 +24,7 @@ function onSpellCast(caster,target,spell)
 	local final = 0;
 	
 	local player = caster:getMaster();
-	local automaton = player:getPetID();
+
 		
 
 

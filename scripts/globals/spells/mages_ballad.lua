@@ -10,6 +10,10 @@ require("scripts/globals/status");
 -----------------------------------------
 
 function onMagicCastingCheck(caster,target,spell)
+	if (caster:isUniqueAlly(88)) then
+	local player = caster:getMaster();
+	player:PrintToPlayer(string.format("(Ulmia) Mage's Ballad for the Mages!", caster:getName()),0xF); 
+	end
 	return 0;
 end;
 
