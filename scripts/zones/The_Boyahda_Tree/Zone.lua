@@ -16,11 +16,8 @@ require("scripts/zones/The_Boyahda_Tree/TextIDs");
 
 function onInitialize(zone)
 
-    local tomes = {17404406,17404407,17404408,17404409};
     
-    SetGroundsTome(tomes);
-    
-    UpdateTreasureSpawnPoint(17404390);
+    UpdateTreasureSpawnPoint(17404394);
 
 end;
 

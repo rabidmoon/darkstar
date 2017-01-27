@@ -16,13 +16,12 @@ require("scripts/zones/Crawlers_Nest/TextIDs");
 
 function onInitialize(zone)
 
-    local tomes = {17584492,17584493};
+    local tomes = {17584496,17584497};
     
     SetGroundsTome(tomes);
 
-    UpdateTreasureSpawnPoint(17584471);
-    
-    UpdateTreasureSpawnPoint(17584472);
+    UpdateTreasureSpawnPoint(17584475);
+    UpdateTreasureSpawnPoint(17584476);
 
     
 end;

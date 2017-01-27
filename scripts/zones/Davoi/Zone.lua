@@ -16,7 +16,7 @@ require("scripts/zones/Davoi/TextIDs");
 -----------------------------------
 
 function onInitialize(zone)
-    UpdateTreasureSpawnPoint(17388023);
+    UpdateTreasureSpawnPoint(17388027);
 end;		
 
 -----------------------------------		

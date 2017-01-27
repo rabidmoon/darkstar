@@ -16,13 +16,8 @@ require("scripts/zones/The_Eldieme_Necropolis/TextIDs");
 
 function onInitialize(zone)
 
-    local tomes = {17576425,17576426,17576427,17576428};
-    
-    SetGroundsTome(tomes);
-
-    UpdateTreasureSpawnPoint(17576352);
-    
-    UpdateTreasureSpawnPoint(17576353);
+    UpdateTreasureSpawnPoint(17576356);
+    UpdateTreasureSpawnPoint(17576357);
 
 end;
 

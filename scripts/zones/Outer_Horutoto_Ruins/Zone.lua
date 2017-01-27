@@ -15,11 +15,10 @@ require("scripts/zones/Outer_Horutoto_Ruins/TextIDs");
 -----------------------------------
 
 function onInitialize(zone)
-    local tomes = {17572305,17572306,17572307,17572308};
-
+    local tomes = {17572309,17572310,17572311,17572312};
     SetGroundsTome(tomes);
 
-    UpdateTreasureSpawnPoint(17572286);
+    UpdateTreasureSpawnPoint(17572290);
 end;
 
 -----------------------------------

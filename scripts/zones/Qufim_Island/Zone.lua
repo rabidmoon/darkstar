@@ -18,9 +18,6 @@ require("scripts/zones/Qufim_Island/TextIDs");
 -----------------------------------
 
 function onInitialize(zone)
-    local manuals = {17293777,17293778};
-    
-    SetFieldManual(manuals);
     
     SetRegionalConquestOverseers(zone:getRegionID())
 end;

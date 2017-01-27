@@ -56,9 +56,9 @@ end;
 -----------------------------------
 
 function onInitialize(zone)
-    local manuals = {17228375,17228376};
-    local book = GetNPCByID(17228375);
-    local rift = GetNPCByID(17228385)
+    local manuals = {17228379,17228380};
+    local book = GetNPCByID(17228379);
+    local rift = GetNPCByID(17228389)
 
     book:setPos(-98,-9,-655,216)
     rift:setPos(-90.707,-7.899,-663.99,216)

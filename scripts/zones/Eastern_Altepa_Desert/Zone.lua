@@ -62,9 +62,7 @@ end;
 -----------------------------------
 
 function onInitialize(zone)
-    local manuals = {17244653,17244654,17244655};
 
-    SetFieldManual(manuals);
 
     -- Cactrot Rapido
     SetRespawnTime(17244539, 900, 10800);

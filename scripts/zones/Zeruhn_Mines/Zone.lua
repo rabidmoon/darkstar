@@ -15,9 +15,7 @@ require("scripts/zones/Zeruhn_Mines/TextIDs");
 -----------------------------------
 
 function onInitialize(zone)
-    local tomes = {17481844};
-    
-    SetGroundsTome(tomes);
+
 end;
 
 -----------------------------------				

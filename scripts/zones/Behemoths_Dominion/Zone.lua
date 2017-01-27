@@ -15,9 +15,7 @@ require("scripts/zones/Behemoths_Dominion/TextIDs");
 -----------------------------------
 
 function onInitialize(zone)
-    local manuals = {17297490};
-    
-    SetFieldManual(manuals);
+
     
     -- Behemoth
     SetRespawnTime(17297440, 900, 10800);

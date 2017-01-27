@@ -16,10 +16,6 @@ require("scripts/zones/Gustav_Tunnel/TextIDs");
 
 function onInitialize(zone)
 
-    local tomes = {17645879,17645880,17645881,17645882};
-    
-    SetGroundsTome(tomes);
-
     -- Bune
     SetRespawnTime(17645578, 900, 10800);
     

@@ -17,9 +17,6 @@ require("scripts/globals/conquest");
 -----------------------------------
 
 function onInitialize(zone)
-    local manuals = {17232279,17232280,17232281,17232282};
-
-    SetFieldManual(manuals);
 
     SetRegionalConquestOverseers(zone:getRegionID())
 end;

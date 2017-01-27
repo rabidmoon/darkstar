@@ -15,9 +15,7 @@ require("scripts/zones/Korroloka_Tunnel/TextIDs");
 -----------------------------------
 
 function onInitialize(zone)
-    local tomes = {17486258,17486259,17486260,17486261};
 
-    SetGroundsTome(tomes);
     
     -- Waterfalls (RegionID, X, Radius, Z)
 	zone:registerRegion(1,   -87, 4, -105, 0,0,0); -- Left pool
