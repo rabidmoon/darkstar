@@ -295,12 +295,18 @@ void CTargetFind::addAllInAlliance(CBattleEntity* PTarget, bool withPet)
 
 void CTargetFind::addAllInParty(CBattleEntity* PTarget, bool withPet)
 {
-
+ 
     PTarget->ForParty([this, withPet](CBattleEntity* PMember)
     {
         addEntity(PMember, withPet);
+        if (!PMember->PAlly.empty()) {
+            for (CBattleEntity* PAlly : PMember->PAlly){
+			    ShowDebug("Adding ally\n");
+                addEntity(PAlly, withPet);
+			}	
+        }
     });
-
+ 
 }
 
 void CTargetFind::addAllInEnmityList()
@@ -430,9 +436,10 @@ bool CTargetFind::validEntity(CBattleEntity* PTarget)
             }
 
         }
-        else if (m_findType == FIND_MONSTER_MONSTER || m_findType == FIND_PLAYER_PLAYER){
+        else if ((m_findType == FIND_MONSTER_MONSTER || m_findType == FIND_PLAYER_PLAYER) &&
+                ((CPetEntity*)PTarget)->getPetType() != PETTYPE_TRUST){
             return false;
-        }
+		}	
     }
 
     // check placement

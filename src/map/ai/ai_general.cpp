@@ -115,6 +115,28 @@ void CAIGeneral::Reset()
 	m_LastAdelhiedSub = 0;
 	m_LastSchEnh = 0;
 	m_LastLuzafQuickTime = 0;
+	m_LastLuzafRollCheck = 0;
+	m_LastLuzafFirstRollRecast = 0;
+	m_LastLuzafSecondRollRecast = 0;
+	m_LastUlmiaSongTime = 0;
+	m_LastMinuetStrongTime = 0;
+	m_LastMinuetWeakTime = 0;
+	m_LastMadrigalStrongTime = 0;
+	m_LastMadrigalWeakTime = 0;
+	m_LastMarchStrongTime = 0;
+	m_LastMarchWeakTime	= 0;
+	m_LastBalladStrongTime = 0;
+	m_LastBalladWeakTime = 0;
+	m_LastSongEnfeebleTime = 0;
+	m_LastSongFrontTime = 0;
+	m_LastGesshoMagicTime = 0;
+	m_LastGesshoUtsuCheck = 0;
+	m_LastGesshoVokeTime = 0;
+	m_LastGesshoUtsuNiTime = 0;
+	m_LastGesshoUtsuIchiTime = 0;
+	m_LastGesshoEnfeeblingTime = 0;
+	m_LastPrisheSCTime = 0;
+	m_LastPrisheMagicTime = 0;
 	
 	m_LastAyameMeditateTime = 0;
 	m_LastAyameThirdEyeTime = 0;
@@ -511,7 +533,117 @@ void CAIGeneral::SetLastAdelhiedSub(uint32 time)
 void CAIGeneral::SetLastLuzafQuickTime(uint32 time)
 {
     m_LastLuzafQuickTime = time;
+}
+
+void CAIGeneral::SetLastLuzafRollCheck(uint32 time)
+{
+    m_LastLuzafRollCheck = time;
+}
+
+void CAIGeneral::SetLastLuzafFirstRollRecast(uint32 time)
+{
+    m_LastLuzafFirstRollRecast = time;
+}
+
+void CAIGeneral::SetLastLuzafSecondRollRecast(uint32 time)
+{
+    m_LastLuzafSecondRollRecast = time;
+}
+
+void CAIGeneral::SetLastUlmiaSongTime(uint32 time)
+{
+	m_LastUlmiaSongTime = time;
+}
+
+void CAIGeneral::SetLastMinuetStrongTime(uint32 time)
+{
+	m_LastMinuetStrongTime = time;
+}
+
+void CAIGeneral::SetLastMinuetWeakTime(uint32 time)
+{
+	m_LastMinuetWeakTime = time;
+}
+
+void CAIGeneral::SetLastMadrigalStrongTime(uint32 time)
+{
+	m_LastMadrigalStrongTime = time;
+}
+
+void CAIGeneral::SetLastMadrigalWeakTime(uint32 time)
+{
+	m_LastMadrigalWeakTime = time;
 }	
+
+void CAIGeneral::SetLastMarchStrongTime(uint32 time)
+{
+	m_LastMarchStrongTime = time;
+}
+
+void CAIGeneral::SetLastMarchWeakTime(uint32 time)
+{
+	m_LastMarchWeakTime = time;
+}
+
+void CAIGeneral::SetLastBalladStrongTime(uint32 time)
+{
+	m_LastBalladStrongTime = time;
+}
+
+void CAIGeneral::SetLastBalladWeakTime(uint32 time)
+{
+	m_LastBalladWeakTime = time;
+}
+
+void CAIGeneral::SetLastSongEnfeebleTime(uint32 time)
+{
+	m_LastSongEnfeebleTime = time;
+}
+
+void CAIGeneral::SetLastSongFrontTime(uint32 time)
+{
+	m_LastSongFrontTime = time;
+}
+
+void CAIGeneral::SetLastGesshoMagicTime(uint32 time)
+{
+	m_LastGesshoMagicTime = time;
+}
+
+void CAIGeneral::SetLastGesshoUtsuCheck(uint32 time)
+{
+	m_LastGesshoUtsuCheck = time;
+}
+
+void CAIGeneral::SetLastGesshoVokeTime(uint32 time)
+{
+	m_LastGesshoVokeTime = time;
+}
+
+void CAIGeneral::SetLastGesshoUtsuNiTime(uint32 time)
+{
+	m_LastGesshoUtsuNiTime = time;
+}
+
+void CAIGeneral::SetLastGesshoUtsuIchiTime(uint32 time)
+{
+	m_LastGesshoUtsuIchiTime = time;
+}
+
+void CAIGeneral::SetLastGesshoEnfeeblingTime(uint32 time)
+{
+	m_LastGesshoEnfeeblingTime = time;
+}
+
+void CAIGeneral::SetLastPrisheSCTime(uint32 time)
+{
+	m_LastPrisheSCTime = time;
+}
+
+void CAIGeneral::SetLastPrisheMagicTime(uint32 time)
+{
+	m_LastPrisheMagicTime = time;
+}
 
 void CAIGeneral::SetBattleTarget(CBattleEntity* PEntity)
 {

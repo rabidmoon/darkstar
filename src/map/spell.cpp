@@ -685,14 +685,14 @@ namespace spell
             if(entity->objtype == TYPE_MOB || (entity->GetMJob() == JOB_BRD &&
                 entity->objtype == TYPE_PC && ((CCharEntity*)entity)->getEquip(SLOT_RANGED) && 
                 ((CItemWeapon*)((CCharEntity*)entity)->getEquip(SLOT_RANGED))->getSkillType() == SKILL_STR)){
-                total += ((float)entity->GetSkill(SKILL_STR) / 276) * 10;
+                total += ((float)entity->GetSkill(SKILL_STR) / 276) * 10;	
             }
 
             if (total > 20){
                 total = 20;
             }
         }
-
+        //ShowWarning(CL_RED"AoE Song Radius is: %f \n" CL_RESET);
         return total;
     }
 };

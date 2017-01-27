@@ -93,6 +93,32 @@ protected:
 	uint32 m_adelhiedSub;
 	uint32 m_schHealing;
 	uint32 m_luzafQuickRecast;
+	uint32 m_luzafRollCheck;
+	uint32 m_luzafFirstRollRecast;
+	uint32 m_luzafSecondRollRecast;
+	uint32 m_magicUlmiaRecast;
+	uint32 m_minuetStrongRecast;
+	uint32 m_minuetWeakRecast;
+	uint32 m_madrigalStrongRecast;
+	uint32 m_madrigalWeakRecast;
+	uint32 m_marchStrongRecast;
+	uint32 m_marchWeakRecast;
+	uint32 m_balladStrongRecast;
+	uint32 m_balladWeakRecast;
+	uint32 m_songEnfeeble;
+	uint32 m_songFront;
+	uint32 m_gesshoMagicRecast;
+	uint32 m_gesshoUtsuCheck;
+	uint32 m_gesshoVokeRecast;
+	uint32 m_gesshoUtsuNiRecast;
+	uint32 m_gesshoUtsuIchiRecast;
+	uint32 m_gesshoEnfeeblingRecast;
+	uint32 m_skillchainTrust;
+	uint32 m_magicPrisheRecast;
+	uint32 m_prisheHealRecast;
+	
+	
+	
 	int8 m_magicburst;
 	int8 m_sekkaStatus;
 	int8 m_chainAffinityStatus;
@@ -128,6 +154,9 @@ protected:
 	int16 KupipiSpell();
 	int16 BlueSpell();
 	int16 AdelhiedSpell();
+	int16 UlmiaSpell();
+	int16 PrisheSpell();
+	int16 GesshoSpell();
 	CBattleEntity* getWounded(uint8 threshold);
 	CBattleEntity* getWoundedLow(uint8 threshold);	
 	CBattleEntity* getWoundedAga(uint8 threshold);

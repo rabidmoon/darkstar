@@ -427,8 +427,8 @@ void CAIAutomatonDummy::ActionAttack()
         {
 			if (m_Tick >= m_LastRangedTime + m_rangedRecast)
 			   {
-			    m_queueSic = false;
-                m_PBattleSubTarget = m_PBattleTarget;
+			    //m_queueSic = false;
+                //m_PBattleSubTarget = m_PBattleTarget;
 			  
 			 for (int i = 0; i < m_PPet->PetSkills.size(); i++) {
                     auto PMobSkill = battleutils::GetMobSkill(m_PPet->PetSkills.at(i));
@@ -974,7 +974,8 @@ void CAIAutomatonDummy::ActionAbilityStart()
 	uint16 hskill = m_PPet->PMaster->GetSkill(SKILL_AME);
 
 	
-				
+	//Needs Distance Checks for non Range
+	
 	
 	if (m_PPet->health.tp >= 1000 && m_PBattleTarget != nullptr) { //Choose TP Move if Inhibitor is not present
 	
@@ -983,17 +984,17 @@ void CAIAutomatonDummy::ActionAbilityStart()
                     auto PMobSkill = battleutils::GetMobSkill(m_PPet->PetSkills.at(i));
                     
 					    if (PMobSkill->getID() == 1687 &&
-                            hskill < 145) { //Slapstick
+                            hskill < 145 && distance(m_PBattleTarget->loc.p,m_PPet->loc.p) < PMobSkill->getDistance()) { //Slapstick
                             SetCurrentMobSkill(PMobSkill);
                             break;
                         } 
 						else if (PMobSkill->getID() == 1811 &&
-                            hskill < 225) { //Knockout
+                            hskill < 225 && distance(m_PBattleTarget->loc.p,m_PPet->loc.p) < PMobSkill->getDistance()) {  //Knockout
                             SetCurrentMobSkill(PMobSkill);
                             break;
                         }
                         else if (PMobSkill->getID() == 2045 &&
-                            hskill >= 224) { //Magic Mortar
+                            hskill >= 224 && distance(m_PBattleTarget->loc.p,m_PPet->loc.p) < PMobSkill->getDistance()) {  //Magic Mortar
                             SetCurrentMobSkill(PMobSkill);
                             break;
                         }

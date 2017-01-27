@@ -619,6 +619,7 @@ void CMagicState::FinishSpell()
     {
         flags |= FINDFLAGS_DEAD;
     }
+
 	if (m_PSpell->getFlag() & SPELLFLAG_HIT_ALL)
 	{
 		flags |= FINDFLAGS_HIT_ALL;
@@ -627,7 +628,7 @@ void CMagicState::FinishSpell()
 
 	if (aoeType == SPELLAOE_RADIAL) {
 		float distance = spell::GetSpellRadius(m_PSpell, m_PEntity);
-
+		//ShowWarning(CL_GREEN"Radial Distance is is: %f \n" CL_RESET, distance);
         m_PTargetFind->findWithinArea(m_PTarget, AOERADIUS_TARGET, distance, flags);
 
     }

@@ -110,8 +110,32 @@ CAIPetDummy::CAIPetDummy(CPetEntity* PPet)
 	m_chainAffinityStatus = 0;  //CA off 0; CA closing 1; CA open with WS 2;
 	m_magicburst = 0;
 	m_luzafQuickRecast = 60000;
+	m_luzafRollCheck = 20000;
+	m_luzafFirstRollRecast = 300000;
+	m_luzafSecondRollRecast = 300000;
 	
-
+	m_magicUlmiaRecast = 4000; //Song and Spell Check for Ulmia
+	m_minuetStrongRecast = 130000;
+    m_minuetWeakRecast = 130000; 
+    m_madrigalStrongRecast = 130000; 
+    m_madrigalWeakRecast = 130000; 
+    m_marchStrongRecast = 130000; 
+    m_marchWeakRecast = 130000; 
+	m_balladStrongRecast = 130000; 
+	m_balladWeakRecast = 130000; 
+	m_songEnfeeble = 15000;
+	m_songFront = 95000; // 1 min 35 seconds after ballad is cast move to front
+	
+	m_gesshoMagicRecast = 5000;
+	m_gesshoVokeRecast = 30000;
+	m_gesshoUtsuCheck = 15000;
+	m_gesshoUtsuNiRecast = 45000;
+	m_gesshoUtsuIchiRecast = 30000;
+    m_gesshoEnfeeblingRecast = 25000;
+	m_skillchainTrust = 10000;
+	m_magicPrisheRecast = 4000;
+	m_prisheHealRecast = 15000;
+	
 	
 
 	
@@ -190,8 +214,18 @@ void CAIPetDummy::ActionAbilityStart()
 	//*****************************************************//
 	
 	uint32 masterscID = charutils::GetVar((CCharEntity*)m_PPet->PMaster,"AyameSCElement");
-	//printf("SC Obtained: %d \n", masterscID);
-	// ->getPrimarySkillchain()
+	uint32 lion = charutils::GetVar((CCharEntity*)m_PPet->PMaster,"LionPT");
+	uint32 prishe = charutils::GetVar((CCharEntity*)m_PPet->PMaster,"PrishePT");
+
+
+    //For Trusts to SC with each other
+	// 1 = TP Is ready
+	// 2 = SC just performed
+    uint32 prishesc = charutils::GetVar((CCharEntity*)m_PPet->PMaster,"PrisheSC");
+    uint32 lionsc = charutils::GetVar((CCharEntity*)m_PPet->PMaster,"LionSC");
+
+   	
+
 	
 
     
@@ -1322,6 +1356,192 @@ void CAIPetDummy::ActionAbilityStart()
             return;
         }
 		
+		
+        if (m_Tick >= m_LastPrisheSCTime && m_PPet->m_PetID == PETID_LION && m_PPet->health.tp >= 1000 && m_PBattleTarget != nullptr && prishe == 1)
+		{   
+		    printf("Pre Check time is: %u \n", m_LastPrisheSCTime);
+		    //uint32 finaltime = (m_LastPrisheSCTime + 8000);
+		    ShowWarning(CL_GREEN"LION HAS TP, Check Time: %u \n" CL_RESET, m_LastPrisheSCTime);
+		    if (prishesc == 5) //If Prishe is in pt and Prishe just used a sc
+			{
+                if (lvl >= 71) {
+			        for (int i = 0; i < m_PPet->PetSkills.size(); i++) {
+                    auto PMobSkill = battleutils::GetMobSkill(m_PPet->PetSkills.at(i));
+  				        if (PMobSkill->getID() == 2638) { //Walk the Plank
+                        SetCurrentMobSkill(PMobSkill);
+						lionsc = 0;
+						prishesc = 0;
+                        break;
+                        }				
+                    }
+                }
+                else if (lvl >= 5) {
+			        for (int i = 0; i < m_PPet->PetSkills.size(); i++) {
+                    auto PMobSkill = battleutils::GetMobSkill(m_PPet->PetSkills.at(i));
+  				        if (PMobSkill->getID() == 2635) { //Grape Shot
+                        SetCurrentMobSkill(PMobSkill);
+						lionsc = 0;
+						prishesc = 0;
+                        break;
+                        }				
+                    }
+                }				
+            }
+            else
+            {
+			    //Lion has TP and is now ready to SC.  Set Variable as such.
+			    int32 value = 1;
+			    std::string varname;
+			    const int8* fmtQuery = "INSERT INTO char_vars SET charid = %u, varname = 'LionSC', value = '1' ON DUPLICATE KEY UPDATE value = '1';";
+                Sql_Query(SqlHandle, fmtQuery, m_PPet->PMaster->id, varname, value, value);	
+            }
+            preparePetAbility(m_PBattleSubTarget);
+            return;		
+		}     		
+		
+		
+		if (m_PPet->m_PetID == PETID_LION && m_PPet->health.tp >= 1000 && m_PBattleTarget != nullptr && prishe != 1){
+		    ShowWarning(CL_GREEN"PRISHE IS NOT IN PT AT THE MOMENT!! \n" CL_RESET);
+            if (lvl >= 71) {      
+			uint8 wsrandom = dsprand::GetRandomNumber(1, 5); 
+            for (int i = 0; i < m_PPet->PetSkills.size(); i++) {
+                auto PMobSkill = battleutils::GetMobSkill(m_PPet->PetSkills.at(i));
+  					if (PMobSkill->getID() == 2638 && wsrandom == 4) { //Walk the Plank
+                    SetCurrentMobSkill(PMobSkill);
+                    break;
+                    }
+  					else if (PMobSkill->getID() == 2636 && wsrandom == 3) { //Pirate Pummel
+                    SetCurrentMobSkill(PMobSkill);
+                    break;
+                    }
+  					else if (PMobSkill->getID() == 2635 && wsrandom == 2) { //Grape Shot
+                    SetCurrentMobSkill(PMobSkill);
+                    break;
+                    }
+  					else if (PMobSkill->getID() == 2637 && wsrandom == 1) { //Powder Keg
+                    SetCurrentMobSkill(PMobSkill);
+                    break;
+                    } 					
+                }
+			}
+           else if (lvl >= 60) {      
+			uint8 wsrandom = dsprand::GetRandomNumber(1, 4); 
+            for (int i = 0; i < m_PPet->PetSkills.size(); i++) {
+                auto PMobSkill = battleutils::GetMobSkill(m_PPet->PetSkills.at(i));
+  					if (PMobSkill->getID() == 2636 && wsrandom == 3) { //Pirate Pummel
+                    SetCurrentMobSkill(PMobSkill);
+                    break;
+                    }
+  					else if (PMobSkill->getID() == 2635 && wsrandom == 2) { //Grape Shot
+                    SetCurrentMobSkill(PMobSkill);
+                    break;
+                    }
+  					else if (PMobSkill->getID() == 2637 && wsrandom == 1) { //Powder Keg
+                    SetCurrentMobSkill(PMobSkill);
+                    break;
+                    } 					
+                }
+			}
+           else if (lvl >= 5) {      
+			uint8 wsrandom = dsprand::GetRandomNumber(1, 3); 
+            for (int i = 0; i < m_PPet->PetSkills.size(); i++) {
+                auto PMobSkill = battleutils::GetMobSkill(m_PPet->PetSkills.at(i));
+  					if (PMobSkill->getID() == 2635 && wsrandom == 2) { //Grape Shot
+                    SetCurrentMobSkill(PMobSkill);
+                    break;
+                    }
+  					else if (PMobSkill->getID() == 2637 && wsrandom == 1) { //Powder Keg
+                    SetCurrentMobSkill(PMobSkill);
+                    break;
+                    } 					
+                }
+			}			
+            preparePetAbility(m_PBattleSubTarget);
+            return;		
+		}
+		
+	
+		if (m_PPet->m_PetID == PETID_PRISHE && m_PPet->health.tp >= 1000 && m_PBattleTarget != nullptr && lion == 1) 
+		{
+            m_LastPrisheSCTime = m_Tick + 8000; 
+			ShowWarning(CL_GREEN"PRISHE SKILLCHAIN INITIATE m_Tick is: %u \n" CL_RESET, m_Tick);			
+			ShowWarning(CL_GREEN"Skillchain timer set to: %u \n" CL_RESET, m_LastPrisheSCTime);
+            if (lionsc == 1) //Lion has TP and is ready for a sc    
+			{	
+			    if (lvl >= 71) 
+			    {
+				    //Forcibly Open with a specific WS when Lion is at 1000% TP
+			        for (int i = 0; i < m_PPet->PetSkills.size(); i++) {
+                    auto PMobSkill = battleutils::GetMobSkill(m_PPet->PetSkills.at(i));
+  					    if (PMobSkill->getID() == 2639) { //Knuckle Sandwhich
+                        SetCurrentMobSkill(PMobSkill);
+						//m_LastPrisheSCTime = m_Tick;
+                        break;
+                        }					
+                    }
+			    }
+			    else if (lvl >= 5) 
+			    {
+				    //Forcibly Open with a specific WS when Lion is at 1000% TP
+			        for (int i = 0; i < m_PPet->PetSkills.size(); i++) {
+                    auto PMobSkill = battleutils::GetMobSkill(m_PPet->PetSkills.at(i));
+  					    if (PMobSkill->getID() == 1233) { //Nullyfying Dropkick
+                        SetCurrentMobSkill(PMobSkill);
+						//m_LastPrisheSCTime = m_Tick;
+                        break;
+                        }					
+                    }
+			    }	
+            }				
+            preparePetAbility(m_PBattleSubTarget); 
+			return;                
+		}			
+        
+		
+		
+		if (m_PPet->m_PetID == PETID_PRISHE && m_PPet->health.tp >= 1000 && m_PBattleTarget != nullptr && lion != 1){
+			if (lvl >= 71) 
+			{		
+				uint8 wsrandom = dsprand::GetRandomNumber(1, 4); 
+                for (int i = 0; i < m_PPet->PetSkills.size(); i++) {
+                auto PMobSkill = battleutils::GetMobSkill(m_PPet->PetSkills.at(i));
+  				    if (PMobSkill->getID() == 2639 && wsrandom == 3) { //Knuckle Sandwhich
+                    SetCurrentMobSkill(PMobSkill);
+                    break;
+                    }
+  				    else if (PMobSkill->getID() == 1234 && wsrandom == 2) { //Auruoral Uppercut
+                    SetCurrentMobSkill(PMobSkill);
+                    break;
+                    }
+  				    else if (PMobSkill->getID() == 1233 && wsrandom == 1) { //Nullyfying Dropkick
+                    SetCurrentMobSkill(PMobSkill);
+                    break;
+                    } 					
+                }
+			}
+            else if (lvl >= 5) {      
+			uint8 wsrandom = dsprand::GetRandomNumber(1, 3); 
+            for (int i = 0; i < m_PPet->PetSkills.size(); i++) {
+                auto PMobSkill = battleutils::GetMobSkill(m_PPet->PetSkills.at(i));
+  					if (PMobSkill->getID() == 1234 && wsrandom == 2) { //Knuckle Sandwhich
+                    SetCurrentMobSkill(PMobSkill);
+                    break;
+                    }
+  					else if (PMobSkill->getID() == 1233 && wsrandom == 1) { //Nullyfying Dropkick
+                    SetCurrentMobSkill(PMobSkill);
+                    break;
+                    } 					
+                }
+			}			
+            preparePetAbility(m_PBattleSubTarget);
+            return;		
+		}		
+		
+		
+		
+		
+		
+		
         if (m_PPet->m_PetID == PETID_LUZAF && m_PPet->health.tp >= 1000 && m_PBattleTarget != nullptr){
 			int16 mobwsID = -1;	
 			if (lvl > 74 && m_PBattleTarget->getMod(MOD_PIERCERES) < 0) {      //Exclusively Use Slugshot if the mob is weak to piercing
@@ -1406,7 +1626,58 @@ void CAIPetDummy::ActionAbilityStart()
 			}			
             preparePetAbility(m_PBattleSubTarget);
             return;
-        }		
+        }
+
+        if (m_PPet->m_PetID == PETID_GESSHO && m_PPet->health.tp >= 1000 && m_PBattleTarget != nullptr){
+			if (lvl > 71) {      
+			uint8 wsrandom = dsprand::GetRandomNumber(1, 10); 
+            for (int i = 0; i < m_PPet->PetSkills.size(); i++) {
+                auto PMobSkill = battleutils::GetMobSkill(m_PPet->PetSkills.at(i));
+  					if (PMobSkill->getID() == 3001 && wsrandom > 7) { //Shibaraku Spin Attack Stronger than Sweep
+                    SetCurrentMobSkill(PMobSkill);
+                    break;
+                    }
+  					else if (PMobSkill->getID() == 1742 && wsrandom > 4) { //Hane Fubuki
+                    SetCurrentMobSkill(PMobSkill);
+                    break;
+                    }
+  					else if (PMobSkill->getID() == 3003 && wsrandom > 0) { //Happobarai
+                    SetCurrentMobSkill(PMobSkill);
+                    break;
+                    } 					
+                }
+			}
+			else if (lvl > 49) {      
+			uint8 wsrandom = dsprand::GetRandomNumber(1, 10); 
+            for (int i = 0; i < m_PPet->PetSkills.size(); i++) {
+                auto PMobSkill = battleutils::GetMobSkill(m_PPet->PetSkills.at(i));
+                    if (PMobSkill->getID() == 1742 && wsrandom > 6) { //Hane Fubuki
+                    SetCurrentMobSkill(PMobSkill);
+                    break;
+                    }
+  					else if (PMobSkill->getID() == 3003 && wsrandom > 0) { //Happobarai
+                    SetCurrentMobSkill(PMobSkill);
+                    break;
+                    } 					
+                }
+			}
+			else if (lvl > 4) {      
+			uint8 wsrandom = dsprand::GetRandomNumber(1, 10); 
+            for (int i = 0; i < m_PPet->PetSkills.size(); i++) {
+                auto PMobSkill = battleutils::GetMobSkill(m_PPet->PetSkills.at(i));
+                    if (PMobSkill->getID() == 362 && wsrandom > 6) { //Double Kick
+                    SetCurrentMobSkill(PMobSkill);
+                    break;
+                    }
+  					else if (PMobSkill->getID() == 361 && wsrandom > 0) { //Feather STorm
+                    SetCurrentMobSkill(PMobSkill);
+                    break;
+                    } 					
+                }
+			}
+            preparePetAbility(m_PBattleSubTarget);
+            return;
+        }			
 		
 
 
@@ -2343,7 +2614,78 @@ void CAIPetDummy::ActionJobAbilityFinish()
 
 	m_PTargetFind->reset();
     m_PPet->m_ActionList.clear();
+	
+	
 
+
+	uint16 animationId = m_PJobAbility->getAnimationID();
+
+	//printf("Mob Job Ability Animation ID Should be: %d \n", animationId);
+	apAction_t Action;
+	Action.ActionTarget = m_PBattleSubTarget;
+	Action.param = m_PJobAbility->getID();
+	
+	
+	//Corsair Rolls Start
+	
+        if (m_PJobAbility->getID() >= ABILITY_FIGHTERS_ROLL && m_PJobAbility->getID() <= ABILITY_SCHOLARS_ROLL)
+        {
+            m_PPet->StatusEffectContainer->DelStatusEffectSilent(EFFECT_DOUBLE_UP_CHANCE);
+            uint8 roll = dsprand::GetRandomNumber(1,7);
+            m_PPet->StatusEffectContainer->AddStatusEffect(new CStatusEffect(
+                EFFECT_DOUBLE_UP_CHANCE,
+                EFFECT_DOUBLE_UP_CHANCE,
+                roll,
+                0,
+                45,
+                m_PJobAbility->getID(),
+                m_PJobAbility->getAnimationID(),
+                battleutils::getCorsairRollEffect(m_PJobAbility->getID())
+                ), true);
+
+            m_CorsairDoubleUp = m_PJobAbility->getID();
+
+            Action.reaction = REACTION_NONE;
+            Action.speceffect = (SPECEFFECT)roll;
+            Action.animation = m_PJobAbility->getAnimationID();
+            Action.param = roll;
+            Action.knockback = 0;
+
+			if (m_PPet->PMaster->PAlly.size() != 0)
+            {
+                 for (auto ally : m_PPet->PMaster->PAlly)
+                 {
+                    CCharEntity* PTarget = (CCharEntity*)ally;
+ 
+                    if (!PTarget->isDead() &&
+                        PTarget->getZone() == m_PPet->PMaster->getZone() &&
+                        distance(m_PPet->loc.p, PTarget->loc.p) <= m_PJobAbility->getRange())
+                    {
+                        Action.ActionTarget = PTarget;
+                        luautils::OnUseAbilityRoll(PTarget, Action.ActionTarget, GetCurrentJobAbility(), roll);
+                        if (PTarget->id == m_PPet->id){
+                            if (m_PJobAbility->getMessage() == MSGBASIC_ROLL_SUB_FAIL){
+                                Action.messageID = MSGBASIC_ROLL_MAIN_FAIL;
+                            }
+                            else {
+                                Action.messageID = m_PJobAbility->getMessage();
+                            }
+                        }
+                        else if (m_PJobAbility->getMessage() == MSGBASIC_ROLL_SUB_FAIL){
+                            Action.messageID = MSGBASIC_ROLL_SUB_FAIL;
+                        }
+                        else {
+                            Action.messageID = MSGBASIC_ROLL_SUB;
+                        }
+                        m_PPet->m_ActionList.push_back(Action);
+                    }
+                }
+            }
+		}	
+	
+	
+	//Corsair Roll end	
+	
     float distance = m_PMobSkill->getDistance();
 
     if (m_PTargetFind->isWithinRange(&m_PBattleSubTarget->loc.p, distance))
@@ -2367,18 +2709,13 @@ void CAIPetDummy::ActionJobAbilityFinish()
 
     uint16 totalTargets = m_PTargetFind->m_targets.size();
     //call the script for each monster hit
-    m_PMobSkill->setTotalTargets(totalTargets);
-
-
-
+    m_PMobSkill->setTotalTargets(totalTargets);	
 	
-
-	uint16 animationId = m_PJobAbility->getAnimationID();
-
-	//printf("Mob Job Ability Animation ID Should be: %d \n", animationId);
-	apAction_t Action;
-	Action.ActionTarget = m_PBattleSubTarget;
-	Action.param = m_PJobAbility->getID();
+	
+	
+	
+	
+	
 	//Job abilities that do damage (Jump, Shield Bash, Weapon Bash, Card Shots, etc) need to be placed below so it sends the proper message
         if (m_PJobAbility->getID() == 30 || m_PJobAbility->getID() == 50 || m_PJobAbility->getID() == 51 ||
 		m_PJobAbility->getID() == 109 || m_PJobAbility->getID() == 110 || m_PJobAbility->getID() == 111 ||
@@ -2526,6 +2863,20 @@ void CAIPetDummy::ActionRoaming()
     uint32 trustassist = charutils::GetVar((CCharEntity*)m_PPet->PMaster,"TrustAssist");
     if (m_PPet->PMaster == nullptr || m_PPet->PMaster->isDead()) { // || m_PPet->PMaster->getZone() != m_PPet->getZone()) {
         m_ActionType = ACTION_FALL;
+        if (m_PPet->m_PetID == PETID_LION && m_PPet->isDead())
+		{
+		    int32 value = 0;
+			std::string varname;
+			const int8* fmtQuery = "INSERT INTO char_vars SET charid = %u, varname = 'LionPT', value = '0' ON DUPLICATE KEY UPDATE value = '0';";
+            Sql_Query(SqlHandle, fmtQuery, m_PPet->PMaster->id, varname, value, value);
+		}
+        if (m_PPet->m_PetID == PETID_PRISHE && m_PPet->isDead())
+		{
+		    int32 value = 0;
+			std::string varname;
+			const int8* fmtQuery = "INSERT INTO char_vars SET charid = %u, varname = 'PrisePT', value = '0' ON DUPLICATE KEY UPDATE value = '0';";
+            Sql_Query(SqlHandle, fmtQuery, m_PPet->PMaster->id, varname, value, value);
+		}			
         ActionFall();
         return;
     }
@@ -2657,15 +3008,46 @@ void CAIPetDummy::ActionAttack()
 {
     if (m_PPet->PMaster == nullptr || m_PPet->PMaster->isDead() || m_PPet->isDead()) {
         m_ActionType = ACTION_FALL;
-        ActionFall();
+        if (m_PPet->m_PetID == PETID_LION && m_PPet->isDead())
+		{
+		    int32 value = 0;
+			std::string varname;
+			const int8* fmtQuery = "INSERT INTO char_vars SET charid = %u, varname = 'LionPT', value = '0' ON DUPLICATE KEY UPDATE value = '0';";
+            Sql_Query(SqlHandle, fmtQuery, m_PPet->PMaster->id, varname, value, value);
+		}
+        if (m_PPet->m_PetID == PETID_PRISHE && m_PPet->isDead())
+		{
+		    int32 value = 0;
+			std::string varname;
+			const int8* fmtQuery = "INSERT INTO char_vars SET charid = %u, varname = 'PrisePT', value = '0' ON DUPLICATE KEY UPDATE value = '0';";
+            Sql_Query(SqlHandle, fmtQuery, m_PPet->PMaster->id, varname, value, value);
+		}		
+		ActionFall();
+		
+		
+		
+		
         return;
     }
 	
 	uint8 trustlevel = m_PPet->GetMLevel();
+	uint8 moblevel = m_PBattleTarget->GetMLevel();
 	if (m_PPet->getZone() == m_PPet->PMaster->getZone()){
 	m_PPet->updatemask |= UPDATE_HP;
     //charutils::UpdateHealth((CCharEntity*)m_PPet->PMaster); // To update pet health at all time if pet and master are in the same zone; this is for zoning purposes
 	}
+	
+	
+	
+    uint32 lion = charutils::GetVar((CCharEntity*)m_PPet->PMaster,"LionPT");
+	uint32 prishe = charutils::GetVar((CCharEntity*)m_PPet->PMaster,"PrishePT");
+    //For Trusts to SC with each other
+	// 1 = TP Is ready
+	// 2 = SC just performed
+    uint32 prishesc = charutils::GetVar((CCharEntity*)m_PPet->PMaster,"PrisheSC");
+    uint32 lionsc = charutils::GetVar((CCharEntity*)m_PPet->PMaster,"LionSC");
+
+	
 	
 	
 	//****************************************************************//
@@ -2673,8 +3055,56 @@ void CAIPetDummy::ActionAttack()
 	//**************************************************************//
 	if (m_PPet->m_PetID == PETID_LUZAF)
 		{
+		if (m_Tick >= m_LastLuzafRollCheck + m_luzafRollCheck) //Check for roll timer
+		{
+		    if (trustlevel >= 11 && m_Tick >= m_LastLuzafFirstRollRecast + m_luzafFirstRollRecast)
+		    {
+				ShowWarning(CL_RED"Hunters Roll\n" CL_RESET);
+			    m_PWeaponSkill = nullptr;
+                int16 mobjaID = -1;			
+			    for (int i = 0; i < m_PPet->PetSkills.size(); i++) {
+                    auto PMobSkill = battleutils::GetMobSkill(m_PPet->PetSkills.at(i));
+                            
+                        if (PMobSkill->getID() == 3734) { //Hunters Roll
+						    mobjaID = 92;
+                            SetCurrentMobSkill(PMobSkill);
+							SetCurrentJobAbility(mobjaID);
+							m_PBattleSubTarget = m_PPet;
+							break;
+                        }
+			        }			
+				preparePetAbility(m_PBattleSubTarget);
+				m_LastLuzafFirstRollRecast = m_Tick;
+				return;	
+			}
+		    else if (trustlevel >= 14 && m_Tick >= m_LastLuzafSecondRollRecast + m_luzafSecondRollRecast)
+		    {
+				ShowWarning(CL_RED"Chaos Roll\n" CL_RESET);
+			    m_PWeaponSkill = nullptr;
+                int16 mobjaID = -1;			
+			    for (int i = 0; i < m_PPet->PetSkills.size(); i++) {
+                    auto PMobSkill = battleutils::GetMobSkill(m_PPet->PetSkills.at(i));
+                            
+                        if (PMobSkill->getID() == 3735) { //Chaos Roll
+						    mobjaID = 89;
+                            SetCurrentMobSkill(PMobSkill);
+							SetCurrentJobAbility(mobjaID);
+							m_PBattleSubTarget = m_PPet;
+							break;
+                        }
+			        }			
+				preparePetAbility(m_PBattleSubTarget);
+				m_LastLuzafSecondRollRecast = m_Tick;
+				return;	
+			}			
+		
+		
+		
+		
+		
+		}
          //ShowWarning(CL_GREEN"LUZAF!!!\n" CL_RESET);		
-		 if (trustlevel >= 40 && m_Tick >= m_LastLuzafQuickTime + m_luzafQuickRecast) // Decide which Quickdraw to Use
+		else if (trustlevel >= 40 && m_Tick >= m_LastLuzafQuickTime + m_luzafQuickRecast) // Decide which Quickdraw to Use
 			{
 			//ShowWarning(CL_RED"Authorized for Quick Draw!!!\n" CL_RESET);
 			if (m_PBattleTarget != nullptr && m_PBattleTarget->StatusEffectContainer->HasStatusEffect(EFFECT_BURN))	// Fire Shot
@@ -2936,7 +3366,7 @@ void CAIPetDummy::ActionAttack()
 				preparePetAbility(m_PBattleSubTarget);
 				m_LastCurillaVokeTime = m_Tick;
 				return;	
-				}				
+			}				
 				
 		}
 
@@ -3330,9 +3760,98 @@ void CAIPetDummy::ActionAttack()
 				m_LastChainTime = m_Tick;
 				return;	
 				}	*/					
+		}
+
+	  // uint8 fighttime = ((CBattleEntity*)m_PPet)->PBattleAI->GetBattleTime();
+	  
+      // this is to only start the loop if pet is in battle for more than 8 seconds
+	  // This lets the player make the decision on front or backline
+	 // ShowWarning(CL_RED"Current Fight Time: %u \n" CL_RESET, fighttime);
+	  if (m_PPet->m_PetID == PETID_ULMIA) 
+		{
+		 //ShowDebug("Ulmia Check \n");
+		 if (m_Tick >= m_LastUlmiaSongTime + m_magicUlmiaRecast) // Check Every 4 Seconds as universal check
+			{
+			    int16 spellID = -1;
+				uint16 family = m_PPet->m_Family;
+				uint16 petID = m_PPet->m_PetID;
+        
+		
+				spellID = UlmiaSpell();
+		        //printf("Ulmia Spell is: %d \n", spellID);
+				if (spellID != -1)
+				{
+				SetCurrentSpell(spellID);
+				m_ActionType = ACTION_MAGIC_START;
+				ActionMagicStart();
+				return;
+			    }
+		    }
+        }
+
+	 if (m_PPet->m_PetID == PETID_GESSHO)
+		{
+		 if (m_Tick >= m_LastGesshoVokeTime + m_gesshoVokeRecast)  // Provoke is Priority over Spell Check
+			{
+			m_PWeaponSkill = nullptr;
+            int16 mobjaID = -1;			
+			for (int i = 0; i < m_PPet->PetSkills.size(); i++) {
+                    auto PMobSkill = battleutils::GetMobSkill(m_PPet->PetSkills.at(i));
+                            
+                        if (PMobSkill->getID() == 3711) { //Provoke
+						    mobjaID = 19;
+                            SetCurrentMobSkill(PMobSkill);
+							SetCurrentJobAbility(mobjaID);
+							m_PBattleSubTarget = m_PBattleTarget;
+							break;
+                        }
+			        }
+				preparePetAbility(m_PBattleSubTarget);
+				m_LastGesshoVokeTime = m_Tick;
+				return;	
+			}		
+		 if (m_Tick >= m_LastGesshoMagicTime + m_gesshoMagicRecast) // Check Every 4 Seconds as universal check
+			{
+			    int16 spellID = -1;
+				uint16 family = m_PPet->m_Family;
+				uint16 petID = m_PPet->m_PetID;
+        
+		
+				spellID = GesshoSpell();
+		
+				if (spellID != -1)
+				{
+				SetCurrentSpell(spellID);
+				m_ActionType = ACTION_MAGIC_START;
+				ActionMagicStart();
+				return;
+			    }
+		    }				
 		}		
 
 
+	  if (m_PPet->m_PetID == PETID_PRISHE)
+		{
+		 //ShowDebug("KUPIPI Check \n");
+		 if (m_Tick >= m_LastPrisheMagicTime + m_magicPrisheRecast) // Check Every 4 Seconds as universal check
+			{
+			    int16 spellID = -1;
+				uint16 family = m_PPet->m_Family;
+				uint16 petID = m_PPet->m_PetID;
+        
+		
+				spellID = PrisheSpell();
+		        //printf("Kupipi Spell is: %d \n", spellID);
+				if (spellID != -1)
+				{
+				SetCurrentSpell(spellID);
+				m_ActionType = ACTION_MAGIC_START;
+				ActionMagicStart();
+				return;
+			    }
+		    }
+        }			
+		
 	
 
     //if 2 bsts are in party, make sure their pets cannot fight eachother
@@ -3384,8 +3903,12 @@ void CAIPetDummy::ActionAttack()
 	//Nanaa will use WS based on if SA is active, or won't be available for a certain period of time
 	//Ayame will use WS if the players TP is less than 80%.  If the player's TP is 80% she will hold TP until the player get 100%.
 	
-		if (m_PPet->getPetType() == PETTYPE_TRUST && m_PPet->m_PetID != PETID_NAJI && m_PPet->m_PetID != PETID_NANAA_MIHGO && m_PPet->m_PetID != PETID_AYAME && m_PPet->health.tp >= 1000 && m_PPet->PetSkills.size() > 0)
+	int8 petleveldiff = (moblevel - trustlevel);  // Find level difference
+	
+		if (m_PPet->getPetType() == PETTYPE_TRUST && m_PPet->m_PetID != PETID_NAJI && m_PPet->m_PetID != PETID_NANAA_MIHGO && m_PPet->m_PetID != PETID_AYAME && m_PPet->m_PetID != PETID_LION 
+		&& m_PPet->m_PetID != PETID_PRISHE && m_PPet->health.tp >= 1000 && m_PPet->PetSkills.size() > 0)
     {
+	    ShowWarning(CL_RED"Other Trust Triggered WS \n" CL_RESET);
 		m_PBattleSubTarget = m_PBattleTarget;
         m_ActionType = ACTION_MOBABILITY_START;
         ActionAbilityStart();
@@ -3484,11 +4007,85 @@ void CAIPetDummy::ActionAttack()
         m_ActionType = ACTION_MOBABILITY_START;
         ActionAbilityStart();
         return;
+	}
+	    //Prishe is in the Party with Lion and Lion has enough TP to signal the start of the SC.
+		if (m_PPet->getPetType() == PETTYPE_TRUST && m_Tick >= m_LastEngageStart + 7000 && m_PPet->m_PetID == PETID_LION && m_PPet->health.tp >= 1000 && m_PPet->PetSkills.size() > 0 
+		&& prishe == 1 && lionsc != 1)
+    {
+		int32 value = 1;
+		std::string varname;
+		const int8* fmtQuery = "INSERT INTO char_vars SET charid = %u, varname = 'LionSC', value = '1' ON DUPLICATE KEY UPDATE value = '1';";
+        Sql_Query(SqlHandle, fmtQuery, m_PPet->PMaster->id, varname, value, value);	 	
 	} 	
+
+	    //Prishe is in the Party with Lion and Just Skillchained.  Set the M-Tick Properly
+		if (m_PPet->getPetType() == PETTYPE_TRUST && m_Tick >= m_LastEngageStart + 7000 && m_Tick >= m_LastPrisheSCTime && m_PPet->m_PetID == PETID_LION && m_PPet->health.tp >= 1000 && m_PPet->PetSkills.size() > 0 
+		&& prishe == 1 && prishesc == 2)
+    {
+		int32 value = 5;
+		std::string varname;
+		const int8* fmtQuery = "INSERT INTO char_vars SET charid = %u, varname = 'PrisheSC', value = '5' ON DUPLICATE KEY UPDATE value = '5';";
+        Sql_Query(SqlHandle, fmtQuery, m_PPet->PMaster->id, varname, value, value);	 
+        m_LastPrisheSCTime = m_Tick + 6000;
+	} 
+	    //Prishe is in the Party with Lion and Just Skillchained.  With the M-Tick set try to WS	
+		if (m_PPet->getPetType() == PETTYPE_TRUST && m_Tick >= m_LastEngageStart + 7000 && m_Tick >= m_LastPrisheSCTime && m_PPet->m_PetID == PETID_LION && m_PPet->health.tp >= 1000 && m_PPet->PetSkills.size() > 0 
+		&& prishe == 1 && prishesc == 5)
+    {
+	    ShowWarning(CL_CYAN"LION WS TRIGGERED with time of %u \n" CL_RESET, m_LastPrisheSCTime);	
+		m_PBattleSubTarget = m_PBattleTarget;
+        m_ActionType = ACTION_MOBABILITY_START;
+        ActionAbilityStart();
+        return;
+	} 	
+	    //Prishe is NOT in the party so just SC when at 1000% TP
+		if (m_PPet->getPetType() == PETTYPE_TRUST && m_Tick >= m_LastEngageStart + 7000 && m_PPet->m_PetID == PETID_LION && m_PPet->health.tp >= 1000 && m_PPet->PetSkills.size() > 0 
+		&& prishe != 1)
+    {
+		m_PBattleSubTarget = m_PBattleTarget;
+        m_ActionType = ACTION_MOBABILITY_START;
+        ActionAbilityStart();
+        return;
+	}
+	    // Lion is in the Party with Prishe and Lion has TP to close the SC and you are 7 levels or lower than the mobs level and HP is < 90 but greater than 35%
+		if (m_PPet->getPetType() == PETTYPE_TRUST && m_Tick >= m_LastEngageStart + 7000 && m_PPet->m_PetID == PETID_PRISHE && m_PPet->health.tp >= 1000 && m_PPet->PetSkills.size() > 0 
+		&& lion == 1 && lionsc == 1 && (m_PBattleTarget->GetHPP() > 35 && m_PBattleTarget->GetHPP() < 90) && petleveldiff <= 7)
+    {
+	    //m_LastPrisheSCTime = m_Tick;	
+	    ShowWarning(CL_RED"PRISHE WS TRIGGERED LEVEL DIFF LESS THAN 7 \n" CL_RESET);
+		m_PBattleSubTarget = m_PBattleTarget;
+        m_ActionType = ACTION_MOBABILITY_START;
+        ActionAbilityStart();
+        return;
+	}   
+	    //Lion is in the Party with Prishe and Lion has TP to close the SC and the mob is greater than 7 levels higher than you
+		if (m_PPet->getPetType() == PETTYPE_TRUST && m_Tick >= m_LastEngageStart + 7000 && m_PPet->m_PetID == PETID_PRISHE && m_PPet->health.tp >= 1000 && m_PPet->PetSkills.size() > 0 
+		&& lion == 1 && lionsc == 1 && petleveldiff > 7)
+    {
+	    //m_LastPrisheSCTime = m_Tick;
+		ShowWarning(CL_RED"PRISHE WS TRIGGERED LEVEL DIFF GREATER THAN 7 \n" CL_RESET);
+		m_PBattleSubTarget = m_PBattleTarget;
+        m_ActionType = ACTION_MOBABILITY_START;
+        ActionAbilityStart();
+        return;
+	} 
+	
+	    //Lion is NOT in the party so just SC when at 1000% TP
+		if (m_PPet->getPetType() == PETTYPE_TRUST && m_Tick >= m_LastEngageStart + 7000 && m_PPet->m_PetID == PETID_PRISHE && m_PPet->health.tp >= 1000 && m_PPet->PetSkills.size() > 0 
+		&& lion != 1)
+    {
+	    ShowWarning(CL_RED"PRISHE WS TRIGGERED LION NOT IN PT \n" CL_RESET);
+		m_PBattleSubTarget = m_PBattleTarget;
+        m_ActionType = ACTION_MOBABILITY_START;
+        ActionAbilityStart();
+        return;
+	}  	
 
     m_PPathFind->LookAt(m_PBattleTarget->loc.p);
 
     float currentDistance = distance(m_PPet->loc.p, m_PBattleTarget->loc.p);
+	
+	float currentPlayerDistance = distance(m_PPet->PMaster->loc.p, m_PBattleTarget->loc.p);
 
     //go to target if its too far away
 	/*
@@ -3536,6 +4133,71 @@ void CAIPetDummy::ActionAttack()
     	
 	
 	//if (currentDistance < 8 && m_PPet->m_PetID == PETID_ADELHIED && m_PPet->speed != 0)
+	
+	//**************************************************//
+	// Distance Determinator for Ulmia                 //
+	// She changes distance based on the song she will //
+	//cast                                             //
+	//*************************************************//
+	
+    uint32 songcombo = charutils::GetVar((CCharEntity*)m_PPet->PMaster,"UlmiaSong");   
+	
+	//------------- Ulmia Move to the back if master has Correct Songs ------------//
+	//TODO Certain Levels this will work but not all due to song availablity
+	if ((songcombo == 10 && m_PPet->m_PetID == PETID_ULMIA && (currentDistance < 12 || currentDistance > 13) && m_PPet->speed !=0) || 
+	((currentDistance < 12 || currentDistance > 13) && m_PPet->m_PetID == PETID_ULMIA && m_PPet->speed != 0
+    && (m_PPet->PMaster->StatusEffectContainer->HasStatusEffectByFlag(EFFECTFLAG_SONG))) && 
+	((m_PPet->PMaster->StatusEffectContainer->GetEffectsCount(EFFECT_MINUET) > 1) ||
+	 (m_PPet->PMaster->StatusEffectContainer->GetEffectsCount(EFFECT_MARCH) > 1) ||
+	 (m_PPet->PMaster->StatusEffectContainer->GetEffectsCount(EFFECT_MADRIGAL) > 1) ||
+	 (m_PPet->PMaster->StatusEffectContainer->GetEffectsCount(EFFECT_MINUET) == 1 && (m_PPet->PMaster->StatusEffectContainer->GetEffectsCount(EFFECT_MADRIGAL) == 1)) ||
+	 (m_PPet->PMaster->StatusEffectContainer->GetEffectsCount(EFFECT_MINUET) == 1 && (m_PPet->PMaster->StatusEffectContainer->GetEffectsCount(EFFECT_MARCH) == 1))))
+    {
+	    ShowWarning(CL_RED"Ulma Move to Back Line triggered \n" CL_RESET);
+	    position_t* pos = &m_PBattleTarget->loc.p;
+		position_t nearEntity = nearPosition(*pos, 13.0f, M_PI); // add decimal to pi maybe 
+        if (m_PPathFind->PathAround(nearEntity, PATHFLAG_RUN | PATHFLAG_WALLHACK))
+        {
+            m_PPathFind->FollowPath();		
+        }
+    }
+	//------------- Ulmia Move to the Front Line to cast songs at the start of a fight ------------//
+	else if (((currentDistance > m_PBattleTarget->m_ModelSize) && (m_PPet->m_PetID == PETID_ULMIA) && (m_PPet->speed != 0)) &&
+	(m_Tick >= m_LastSongFrontTime + m_songFront))
+    {
+	    ShowWarning(CL_RED"Ulma Move to Front Line triggered \n" CL_RESET);
+        if (m_PPathFind->PathAround(m_PBattleTarget->loc.p, 2.0f, PATHFLAG_RUN | PATHFLAG_WALLHACK))
+        {
+            m_PPathFind->FollowPath();
+
+            // recalculate
+            currentDistance = distance(m_PPet->loc.p, m_PBattleTarget->loc.p);
+			
+        }
+    }	
+
+	//------------- Ulmia Move to the Front Line if Ballad Is on Self ------------//
+	//TODO Certain Levels this will work but not all due to song availablity
+    // MOVE TO FRONT IF NO SONGS PRESENT ON MASTER OR ONE SONG PRESENT ON PETS
+
+    /* else if (((m_PPet->m_PetID != PETID_ULMIA) && (m_PPet->StatusEffectContainer->HasStatusEffectByFlag(EFFECTFLAG_SONG) == false)))  //TEST IF TRUSTS HAVE NO SONGS
+	{
+	    ShowWarning(CL_GREEN"Only One Song on other Trusts is Active \n" CL_RESET);
+		if ((currentDistance > m_PBattleTarget->m_ModelSize) && (m_PPet->m_PetID == PETID_ULMIA) && (m_PPet->speed != 0))
+		{
+	        ShowWarning(CL_GREEN"Ulma Move to Front Line triggered because other trusts have 1 song \n" CL_RESET);
+            if (m_PPathFind->PathAround(m_PBattleTarget->loc.p, 2.0f, PATHFLAG_RUN | PATHFLAG_WALLHACK))
+            {
+                m_PPathFind->FollowPath();
+                currentDistance = distance(m_PPet->loc.p, m_PBattleTarget->loc.p);
+			}
+        }		
+	} 	*/	
+ 	
+	
+	
+	
+	
     if ((currentDistance < 12 || currentDistance > 13) && m_PPet->m_PetID == PETID_ADELHIED && m_PPet->speed != 0)
     {
 	    position_t* pos = &m_PBattleTarget->loc.p;
@@ -3548,7 +4210,24 @@ void CAIPetDummy::ActionAttack()
             //currentDistance = distance(m_PPet->loc.p, m_PBattleTarget->loc.p);
 			
         }
-    }	
+    }
+	
+	int8 checklevel = moblevel - trustlevel;
+    //Move Kupipi to the backline if the mob is 5 levels higher than you
+ /*   if ((currentDistance < 12 || currentDistance > 13) && checklevel >= 5 && m_PPet->m_PetID == PETID_KUPIPI && m_PPet->speed != 0)
+    {
+	    position_t* pos = &m_PBattleTarget->loc.p;
+		position_t nearEntity = nearPosition(*pos, 13.0f, M_PI);
+        if (m_PPathFind->PathAround(nearEntity, PATHFLAG_RUN | PATHFLAG_WALLHACK))
+        {
+            m_PPathFind->FollowPath();
+
+            // recalculate
+            //currentDistance = distance(m_PPet->loc.p, m_PBattleTarget->loc.p);
+			
+        }
+    } */
+	
 	
 	 /*  if (currentDistance < 9 && m_PPet->m_PetID == PETID_ADELHIED && m_PPet->speed != 0)
     {
@@ -3585,7 +4264,7 @@ void CAIPetDummy::ActionAttack()
 		
 		
 		
-    if (currentDistance > m_PBattleTarget->m_ModelSize && (m_PPet->m_PetID != PETID_KUPIPI && m_PPet->m_PetID != PETID_NANAA_MIHGO && m_PPet->m_PetID != PETID_ADELHIED) && m_PPet->speed != 0)
+    if (currentDistance > m_PBattleTarget->m_ModelSize && (m_PPet->m_PetID != PETID_ULMIA && m_PPet->m_PetID != PETID_KUPIPI && m_PPet->m_PetID != PETID_NANAA_MIHGO && m_PPet->m_PetID != PETID_ADELHIED) && m_PPet->speed != 0)
     {
 	    //ShowWarning(CL_RED"Wrong Distance triggered\n" CL_RESET);
         if (m_PPathFind->PathAround(m_PBattleTarget->loc.p, 2.0f, PATHFLAG_RUN | PATHFLAG_WALLHACK))
@@ -3647,7 +4326,7 @@ void CAIPetDummy::ActionAttack()
 	}
 	
 	
-		if (m_PPet->m_PetID == PETID_KUPIPI){
+	if (m_PPet->m_PetID == PETID_KUPIPI){
 	if (m_Tick >= m_LastNanaaCheckTime + m_nanaacheck) // Every 5 seconds to see if nanaa or kupipi is not facing target
 	{
 	    //Check to see if facing target
@@ -3695,17 +4374,62 @@ void CAIPetDummy::ActionAttack()
 	}
 	}
 	
+	// Below is for Kupipi 3.0
+	
+	/*
+	if (m_PPet->m_PetID == PETID_KUPIPI && checklevel >= 5)
+	{
+	    if (m_Tick >= m_LastNanaaCheckTime + m_nanaacheck) // Every 5 seconds to see if nanaa or kupipi is not facing target
+	    {
+	        //Check to see if facing target
+		    //ShowDebug("NANAA FACING CHECK  \n");
+	        if ((abs(m_PBattleTarget->loc.p.rotation - m_PPet->loc.p.rotation) > 5) &&
+		    (abs(m_PBattleTarget->loc.p.rotation - m_PPet->loc.p.rotation) < 118)) 
+		    //Not facing target have Nanaa Mihgo Behind the Target
+	    	{	
+		        //ShowWarning(CL_GREEN"Nanaa is moving behind the target\n" CL_RESET);
+			    //ShowDebug("Greater than 10 and less than 118  \n");
+			    position_t* pos = &m_PBattleTarget->loc.p;
+			    position_t nearEntity = nearPosition(*pos, 13.0f, M_PI);
+			    m_PPathFind->PathTo(nearEntity, PATHFLAG_WALLHACK | PATHFLAG_RUN);
+			    {
+				    m_PPathFind->FollowPath();
+		    	}
+			    m_nanaacheck = 0;
+            }
+	    	else if (((abs(m_PBattleTarget->loc.p.rotation - m_PPet->loc.p.rotation) > 135) &&
+		    (abs(m_PBattleTarget->loc.p.rotation - m_PPet->loc.p.rotation) < 250)) &&  m_PPet->m_PetID == PETID_KUPIPI) 
+		    //Not facing target have Nanaa Mihgo Behind the Target
+		    {	
+		        //ShowWarning(CL_GREEN"Nanaa is moving behind the target\n" CL_RESET);
+			    //ShowDebug("Greater than 135 and less than 245  \n");
+			    position_t* pos = &m_PBattleTarget->loc.p;
+			    position_t nearEntity = nearPosition(*pos, 13.0f, M_PI);
+		    	m_PPathFind->PathTo(nearEntity, PATHFLAG_WALLHACK | PATHFLAG_RUN);
+			    {
+			        m_PPathFind->FollowPath();
+			    }
+		        m_nanaacheck = 0;    
+            }
+	    	else
+			{	
+             //ShowWarning(CL_RED"NANAA IS IN FRONT OR BEHIND THE MOB.  DONT MOVE!!\n" CL_RESET);
+		 	    m_nanaacheck = 5000;
+                m_LastNanaaCheckTime = m_Tick;
+			}	
+	    }
+	}  */
 
-
 	
 	
 	
 
 	
-    if (currentDistance <= m_PBattleTarget->m_ModelSize)
+    if (currentDistance <= m_PBattleTarget->m_ModelSize && m_PPet->m_PetID != PETID_ULMIA)
     {
         int32 WeaponDelay = m_PPet->m_Weapons[SLOT_MAIN]->getDelay();
         //try to attack
+		CAttackRound attackRound(m_PPet);
         if (m_Tick > m_LastActionTime + WeaponDelay) {
             if (battleutils::IsParalyzed(m_PPet))
             {
@@ -3723,11 +4447,14 @@ void CAIPetDummy::ActionAttack()
                 Action.ActionTarget = m_PBattleTarget;
 
                 uint8 numAttacks = battleutils::CheckMultiHits(m_PPet, m_PPet->m_Weapons[SLOT_MAIN]);
+				uint8 offAttacks = m_PPet->getMod(MOD_DUAL_WIELD) > 0 ? battleutils::CheckMultiHits(m_PPet, m_PPet->m_Weapons[SLOT_SUB]) : 0;
 
-                for (uint8 i = 0; i < numAttacks; i++) {
+				
+
+                for (uint8 i = 0; i < (numAttacks + offAttacks); i++) {
                     Action.reaction = REACTION_EVADE;
                     Action.speceffect = SPECEFFECT_NONE;
-                    Action.animation = 0;
+					Action.animation = i >= numAttacks ? 1 : 0;
                     Action.param = 0;
                     Action.messageID = 15;
                     Action.knockback = 0;
@@ -3762,13 +4489,18 @@ void CAIPetDummy::ActionAttack()
                                 Action.speceffect = SPECEFFECT_CRITICAL_HIT;
                                 Action.messageID = 67;
                             }
+                            int16 naturalh2hDMG = 0;
+                            if (m_PPet->m_Weapons[SLOT_MAIN]->getSkillType() == SKILL_H2H)
+                            {
+                                naturalh2hDMG = (float)(m_PPet->getMod(MOD_HTH) * 0.11f) + 3;
+                            }							
 						    if (m_PPet->StatusEffectContainer->HasStatusEffect(EFFECT_TRUST_SNEAK_ATTACK))
 			                {					
                                 damage = (int32)((m_PPet->GetMainWeaponDmg() + m_PPet->DEX() + battleutils::GetFSTR(m_PPet, m_PBattleTarget, SLOT_MAIN)) * DamageRatio);
                             }
 							else
 							{
-							    damage = (int32)((m_PPet->GetMainWeaponDmg() + battleutils::GetFSTR(m_PPet, m_PBattleTarget, SLOT_MAIN)) * DamageRatio);
+							    damage = (int32)((m_PPet->GetMainWeaponDmg() + + naturalh2hDMG + battleutils::GetFSTR(m_PPet, m_PBattleTarget, SLOT_MAIN)) * DamageRatio);
 						    }
 							if (m_PPet->StatusEffectContainer->HasStatusEffect(EFFECT_TRUST_SNEAK_ATTACK))
 			                {
@@ -4068,7 +4800,7 @@ int16 CAIPetDummy::KupipiSpell()
 	    // Curaga
  		if (mostWoundedAga != nullptr)
 		{
-        m_PBattleSubTarget = mostWounded;
+        m_PBattleSubTarget = mostWoundedAga;
 		if (level > 50)
 			if (m_PPet->health.mp > 179)  // Curaga III
 				{
@@ -4111,7 +4843,9 @@ int16 CAIPetDummy::KupipiSpell()
         else
 		        {
 				 spellID = -1;
-				} 							
+				} 
+        m_LastKupipiMagicTime = m_Tick; // reset mtick no eligible healing spell to cast
+		m_kupipiHealRecast = 12000;					
 	    }	
  		else if (mostWoundedLow != nullptr)
 		{
@@ -8055,7 +8789,1248 @@ else if (adelhiedMB == 7){
 
 	m_LastSchCheck = m_Tick;
 	return spellID;
+}
+
+
+int16 CAIPetDummy::UlmiaSpell()
+{	
+    int16 spellID = -1;
+	uint8 lvl = m_PPet->PMaster->GetMLevel();
+	//bool crit = battleutils::GetCritHitRate(m_PPet->PMaster, m_PBattleTarget, true) > dsprand::GetRandomNumber(100);
+	float currentDistance = distance(m_PPet->loc.p, m_PBattleTarget->loc.p);
+	float currentPlayerDistance = distance(m_PPet->PMaster->loc.p, m_PBattleTarget->loc.p);
+	uint8 hitrate;
+	float charAtt;
+	float mobDef;
+	float pdif;
+	
+	//Decide who the pdif and acc is based off of due to distances
+	if (currentPlayerDistance < 10)
+	{
+	    ShowWarning(CL_GREEN"Melee Distance, using Player Stats \n" CL_RESET);
+	    hitrate = battleutils::GetHitRate(m_PPet->PMaster, m_PBattleTarget, 0);
+	    charAtt = m_PPet->PMaster->ATT();
+	    mobDef = m_PBattleTarget->DEF();
+	    pdif = (charAtt / mobDef);
+	}
+    else
+    {
+	    if (m_PPet->m_PetID == PETID_ULMIA)
+        {		
+	        ShowWarning(CL_GREEN"Mage Distance, using Pet Stats \n" CL_RESET);
+	        hitrate = battleutils::GetHitRate(m_PPet, m_PBattleTarget, 0);
+	        charAtt = m_PPet->ATT();
+	        mobDef = m_PBattleTarget->DEF();
+	        pdif = (charAtt / mobDef);
+		}	
+    }
+
+	
+	
+	
+	//float pdif = battleutils::GetDamageRatio(m_PPet->PMaster, m_PBattleTarget, 0, 0);
+
+	printf("Player Hitrate is: %u \n", hitrate);
+	printf("Player PDIF: %f \n", pdif);	
+    uint32 songcombo = charutils::GetVar((CCharEntity*)m_PPet->PMaster,"UlmiaSong");	
+	printf("Song Combo Received: %u \n", songcombo);
+	// Frontline Spell Casting Based on Distance needing to be < 2 yalms from the battle target.
+    if (currentDistance <= m_PBattleTarget->m_ModelSize && m_PPet->speed != 0)
+    {
+        //Decide which spell combo to cast.  Always prioritieze accuracy
+		// Song Combo List
+		// #1 [DONE!] Madrigal x2       if hitrate is < 60 
+		// #2 [DONE!] Minuet + Madrigal if hitrate is < 80 and Pdif < 1.25 Neutral Eva or higher and Neutral Defense or Higher
+		// #3 [DONE!] Minuet x 2        if hitrate is > 79 and pdif < 1 Neutral Defense or higher, and low evasion		
+		// #4 [DONE!] March + Madrigal  if hitrate is < 79 and pdif > 1.25 Neutral Evasion, Low Defense
+        // #5 March + Minuet    if hitrate is > 79 and pdif < 1.26 Low evasion, Neutral Defense
+		// #6 March x2          if hitrate is > 79 and pdif > 1.25  Low Defense, Low Evasion
+        // Second Song to Cast
+        m_LastSongFrontTime = m_Tick;		
+        if (songcombo == 1) // Madrigal x2 
+		{
+		    ShowWarning(CL_RED"Casting Second Song Madrigal - Madrigal x2 \n" CL_RESET);
+            m_PBattleSubTarget = m_PPet;
+		    if (lvl >= 51)
+			{    
+				if (m_Tick >= m_LastMadrigalWeakTime + m_madrigalWeakRecast && m_ActionType != ACTION_MAGIC_CASTING)
+				{
+				    spellID = 399; // Sword Madrigal
+				    m_LastMadrigalWeakTime = m_Tick;
+                    m_LastMarchStrongTime = m_Tick;
+                    m_LastMadrigalStrongTime = m_Tick;
+                    m_LastMinuetStrongTime = m_Tick;					
+		            if (m_PPet->StatusEffectContainer->HasStatusEffect(EFFECT_SILENCE) == true)
+		            {
+	                    spellID = -1;
+	            	} 
+				}
+            	int32 value = 10;
+			    std::string varname;
+			    const int8* fmtQuery = "INSERT INTO char_vars SET charid = %u, varname = 'UlmiaSong', value = '10' ON DUPLICATE KEY UPDATE value = '10';";
+                Sql_Query(SqlHandle, fmtQuery, m_PPet->PMaster->id, varname, value, value);				
+			}
+		    else if (lvl >= 11)
+			{    
+				if (m_Tick >= m_LastMadrigalWeakTime + m_madrigalWeakRecast && m_ActionType != ACTION_MAGIC_CASTING)
+				{
+				    spellID = 394; // Valor Minuet
+				    m_LastMadrigalWeakTime = m_Tick;
+                    m_LastMarchStrongTime = m_Tick;
+                    m_LastMadrigalStrongTime = m_Tick;
+                    m_LastMinuetStrongTime = m_Tick;					
+		            if (m_PPet->StatusEffectContainer->HasStatusEffect(EFFECT_SILENCE) == true)
+		            {
+	                    spellID = -1;
+	            	} 
+				}
+            	int32 value = 10;
+			    std::string varname;
+			    const int8* fmtQuery = "INSERT INTO char_vars SET charid = %u, varname = 'UlmiaSong', value = '10' ON DUPLICATE KEY UPDATE value = '10';";
+                Sql_Query(SqlHandle, fmtQuery, m_PPet->PMaster->id, varname, value, value);				
+			}			
+			else   // Minuet since low level
+			{
+				if (m_Tick >= m_LastMadrigalWeakTime + m_madrigalWeakRecast && m_ActionType != ACTION_MAGIC_CASTING)
+			    {
+				    spellID = 394; // Valor Minuet I
+				    m_LastMadrigalWeakTime = m_Tick;
+                    m_LastMarchStrongTime = m_Tick;
+                    m_LastMadrigalStrongTime = m_Tick;
+                    m_LastMinuetStrongTime = m_Tick;					
+		            if (m_PPet->StatusEffectContainer->HasStatusEffect(EFFECT_SILENCE) == true)
+		            {
+	                    spellID = -1;
+	            	} 
+				}
+            	int32 value = 10;
+			    std::string varname;
+			    const int8* fmtQuery = "INSERT INTO char_vars SET charid = %u, varname = 'UlmiaSong', value = '10' ON DUPLICATE KEY UPDATE value = '10';";
+                Sql_Query(SqlHandle, fmtQuery, m_PPet->PMaster->id, varname, value, value);				
+			}			
+		}
+        else if ((songcombo == 2) || (songcombo == 4)) // Minuet + Madrigal or March + Madrigal
+		{
+		    ShowWarning(CL_RED"Casting Second Song Madrigal - March + Madrigal or Minuet + Madrigal \n" CL_RESET);
+            m_PBattleSubTarget = m_PPet;
+		    if (lvl >= 51)
+			{    
+				if (m_Tick >= m_LastMadrigalWeakTime + m_madrigalWeakRecast && m_ActionType != ACTION_MAGIC_CASTING)
+				{
+				    spellID = 400; // Blade Madrigal
+				    m_LastMadrigalWeakTime = m_Tick;
+                    m_LastMarchStrongTime = m_Tick;
+                    m_LastMadrigalStrongTime = m_Tick;
+                    m_LastMinuetStrongTime = m_Tick;					
+		            if (m_PPet->StatusEffectContainer->HasStatusEffect(EFFECT_SILENCE) == true)
+		            {
+	                    spellID = -1;
+	            	} 
+				}
+            	int32 value = 10;
+			    std::string varname;
+			    const int8* fmtQuery = "INSERT INTO char_vars SET charid = %u, varname = 'UlmiaSong', value = '10' ON DUPLICATE KEY UPDATE value = '10';";
+                Sql_Query(SqlHandle, fmtQuery, m_PPet->PMaster->id, varname, value, value);				
+			}
+		    else if (lvl >= 11)
+			{    
+				if (m_Tick >= m_LastMadrigalWeakTime + m_madrigalWeakRecast && m_ActionType != ACTION_MAGIC_CASTING)
+				{
+				    spellID = 399; // Sword Madrigal
+				    m_LastMadrigalWeakTime = m_Tick;
+                    m_LastMarchStrongTime = m_Tick;
+                    m_LastMadrigalStrongTime = m_Tick;
+                    m_LastMinuetStrongTime = m_Tick;					
+		            if (m_PPet->StatusEffectContainer->HasStatusEffect(EFFECT_SILENCE) == true)
+		            {
+	                    spellID = -1;
+	            	} 
+				}
+            	int32 value = 10;
+			    std::string varname;
+			    const int8* fmtQuery = "INSERT INTO char_vars SET charid = %u, varname = 'UlmiaSong', value = '10' ON DUPLICATE KEY UPDATE value = '10';";
+                Sql_Query(SqlHandle, fmtQuery, m_PPet->PMaster->id, varname, value, value);				
+			}			
+			else   // Minuet since low level
+			{
+				if (m_Tick >= m_LastMadrigalWeakTime + m_madrigalWeakRecast && m_ActionType != ACTION_MAGIC_CASTING)
+			    {
+				    spellID = 394; // Valor Minuet I
+				    m_LastMadrigalWeakTime = m_Tick;
+                    m_LastMarchStrongTime = m_Tick;
+                    m_LastMadrigalStrongTime = m_Tick;
+                    m_LastMinuetStrongTime = m_Tick;					
+		            if (m_PPet->StatusEffectContainer->HasStatusEffect(EFFECT_SILENCE) == true)
+		            {
+	                    spellID = -1;
+	            	} 
+				}
+            	int32 value = 10;
+			    std::string varname;
+			    const int8* fmtQuery = "INSERT INTO char_vars SET charid = %u, varname = 'UlmiaSong', value = '10' ON DUPLICATE KEY UPDATE value = '10';";
+                Sql_Query(SqlHandle, fmtQuery, m_PPet->PMaster->id, varname, value, value);				
+			}			
+		}
+		else if (songcombo == 3) // Minuet x2
+		{
+		    ShowWarning(CL_RED"Casting Second Song as Minuet! \n" CL_RESET);
+            m_PBattleSubTarget = m_PPet;
+		    if (lvl >= 63)
+			{    
+				if (m_Tick >= m_LastMinuetWeakTime + m_minuetWeakRecast && m_ActionType != ACTION_MAGIC_CASTING)
+				{
+				    spellID = 396; // Valor Minuet III
+				    m_LastMinuetWeakTime = m_Tick;
+                    m_LastMarchStrongTime = m_Tick;
+                    m_LastMadrigalStrongTime = m_Tick;
+                    m_LastMinuetStrongTime = m_Tick;					
+		            if (m_PPet->StatusEffectContainer->HasStatusEffect(EFFECT_SILENCE) == true)
+		            {
+	                    spellID = -1;
+	            	} 
+				}
+            	int32 value = 10;
+			    std::string varname;
+			    const int8* fmtQuery = "INSERT INTO char_vars SET charid = %u, varname = 'UlmiaSong', value = '10' ON DUPLICATE KEY UPDATE value = '10';";
+                Sql_Query(SqlHandle, fmtQuery, m_PPet->PMaster->id, varname, value, value);				
+			}
+		    else if (lvl >= 43)
+			{    
+				if (m_Tick >= m_LastMinuetWeakTime + m_minuetWeakRecast && m_ActionType != ACTION_MAGIC_CASTING)
+				{
+				    spellID = 395; // Valor Minuet II
+				    m_LastMinuetWeakTime = m_Tick;	
+                    m_LastMarchStrongTime = m_Tick;
+                    m_LastMadrigalStrongTime = m_Tick;
+                    m_LastMinuetStrongTime = m_Tick;					
+		            if (m_PPet->StatusEffectContainer->HasStatusEffect(EFFECT_SILENCE) == true)
+		            {
+	                    spellID = -1;
+	            	} 
+				}
+            	int32 value = 10;
+			    std::string varname;
+			    const int8* fmtQuery = "INSERT INTO char_vars SET charid = %u, varname = 'UlmiaSong', value = '10' ON DUPLICATE KEY UPDATE value = '10';";
+                Sql_Query(SqlHandle, fmtQuery, m_PPet->PMaster->id, varname, value, value);				
+			}
+		    else if (lvl >= 23)
+			{    
+				if (m_Tick >= m_LastMinuetWeakTime + m_minuetWeakRecast && m_ActionType != ACTION_MAGIC_CASTING)
+				{
+				    spellID = 394; // Valor Minuet I
+				    m_LastMinuetWeakTime = m_Tick;	
+                    m_LastMarchStrongTime = m_Tick;
+                    m_LastMadrigalStrongTime = m_Tick;
+                    m_LastMinuetStrongTime = m_Tick;					
+		            if (m_PPet->StatusEffectContainer->HasStatusEffect(EFFECT_SILENCE) == true)
+		            {
+	                    spellID = -1;
+	            	} 
+				}
+            	int32 value = 10;
+			    std::string varname;
+			    const int8* fmtQuery = "INSERT INTO char_vars SET charid = %u, varname = 'UlmiaSong', value = '10' ON DUPLICATE KEY UPDATE value = '10';";
+                Sql_Query(SqlHandle, fmtQuery, m_PPet->PMaster->id, varname, value, value);				
+			}			
+			else   // Paeon low level
+			{
+				if (m_Tick >= m_LastMinuetWeakTime + m_minuetWeakRecast && m_ActionType != ACTION_MAGIC_CASTING)
+			    {
+				    spellID = 378; // Paeon
+				    m_LastMinuetWeakTime = m_Tick;	
+                    m_LastMarchStrongTime = m_Tick;
+                    m_LastMadrigalStrongTime = m_Tick;
+                    m_LastMinuetStrongTime = m_Tick;					
+		            if (m_PPet->StatusEffectContainer->HasStatusEffect(EFFECT_SILENCE) == true)
+		            {
+	                    spellID = -1;
+	            	} 
+				}
+			int32 value = 10;
+			std::string varname;
+			const int8* fmtQuery = "INSERT INTO char_vars SET charid = %u, varname = 'UlmiaSong', value = '10' ON DUPLICATE KEY UPDATE value = '10';";
+            Sql_Query(SqlHandle, fmtQuery, m_PPet->PMaster->id, varname, value, value);					
+			}		
+		}
+		else if (songcombo == 5) // March + Minuet
+		{
+		    ShowWarning(CL_RED"Casting Second Song as Minuet! \n" CL_RESET);
+            m_PBattleSubTarget = m_PPet;
+		    if (lvl >= 63)
+			{    
+				if (m_Tick >= m_LastMinuetWeakTime + m_minuetWeakRecast && m_ActionType != ACTION_MAGIC_CASTING)
+				{
+				    spellID = 397; // Valor Minuet IV
+				    m_LastMinuetWeakTime = m_Tick;
+                    m_LastMarchStrongTime = m_Tick;
+                    m_LastMadrigalStrongTime = m_Tick;
+                    m_LastMinuetStrongTime = m_Tick;					
+		            if (m_PPet->StatusEffectContainer->HasStatusEffect(EFFECT_SILENCE) == true)
+		            {
+	                    spellID = -1;
+	            	} 
+				}
+            	int32 value = 10;
+			    std::string varname;
+			    const int8* fmtQuery = "INSERT INTO char_vars SET charid = %u, varname = 'UlmiaSong', value = '10' ON DUPLICATE KEY UPDATE value = '10';";
+                Sql_Query(SqlHandle, fmtQuery, m_PPet->PMaster->id, varname, value, value);				
+			}
+		    else if (lvl >= 43)
+			{    
+				if (m_Tick >= m_LastMinuetWeakTime + m_minuetWeakRecast && m_ActionType != ACTION_MAGIC_CASTING)
+				{
+				    spellID = 396; // Valor Minuet III
+				    m_LastMinuetWeakTime = m_Tick;	
+                    m_LastMarchStrongTime = m_Tick;
+                    m_LastMadrigalStrongTime = m_Tick;
+                    m_LastMinuetStrongTime = m_Tick;					
+		            if (m_PPet->StatusEffectContainer->HasStatusEffect(EFFECT_SILENCE) == true)
+		            {
+	                    spellID = -1;
+	            	} 
+				}
+            	int32 value = 10;
+			    std::string varname;
+			    const int8* fmtQuery = "INSERT INTO char_vars SET charid = %u, varname = 'UlmiaSong', value = '10' ON DUPLICATE KEY UPDATE value = '10';";
+                Sql_Query(SqlHandle, fmtQuery, m_PPet->PMaster->id, varname, value, value);				
+			}
+		    else if (lvl >= 23)
+			{    
+				if (m_Tick >= m_LastMinuetWeakTime + m_minuetWeakRecast && m_ActionType != ACTION_MAGIC_CASTING)
+				{
+				    spellID = 395; // Valor Minuet II
+				    m_LastMinuetWeakTime = m_Tick;	
+                    m_LastMarchStrongTime = m_Tick;
+                    m_LastMadrigalStrongTime = m_Tick;
+                    m_LastMinuetStrongTime = m_Tick;					
+		            if (m_PPet->StatusEffectContainer->HasStatusEffect(EFFECT_SILENCE) == true)
+		            {
+	                    spellID = -1;
+	            	} 
+				}
+            	int32 value = 10;
+			    std::string varname;
+			    const int8* fmtQuery = "INSERT INTO char_vars SET charid = %u, varname = 'UlmiaSong', value = '10' ON DUPLICATE KEY UPDATE value = '10';";
+                Sql_Query(SqlHandle, fmtQuery, m_PPet->PMaster->id, varname, value, value);				
+			}			
+			else   // Valor Minuet I
+			{
+				if (m_Tick >= m_LastMinuetWeakTime + m_minuetWeakRecast && m_ActionType != ACTION_MAGIC_CASTING)
+			    {
+				    spellID = 394; // Valor Minuet I
+				    m_LastMinuetWeakTime = m_Tick;	
+                    m_LastMarchStrongTime = m_Tick;
+                    m_LastMadrigalStrongTime = m_Tick;
+                    m_LastMinuetStrongTime = m_Tick;					
+		            if (m_PPet->StatusEffectContainer->HasStatusEffect(EFFECT_SILENCE) == true)
+		            {
+	                    spellID = -1;
+	            	} 
+				}
+			int32 value = 10;
+			std::string varname;
+			const int8* fmtQuery = "INSERT INTO char_vars SET charid = %u, varname = 'UlmiaSong', value = '10' ON DUPLICATE KEY UPDATE value = '10';";
+            Sql_Query(SqlHandle, fmtQuery, m_PPet->PMaster->id, varname, value, value);					
+			}		
+		}		
+		else if (songcombo == 6) // March x 2
+		{
+		    ShowWarning(CL_RED"Casting Second Song March for Haste! \n" CL_RESET);
+            m_PBattleSubTarget = m_PPet;
+		    if (lvl >= 60)
+			{    
+				if (m_Tick >= m_LastMarchWeakTime + m_marchWeakRecast && m_ActionType != ACTION_MAGIC_CASTING)
+				{
+				    spellID = 419; // Advancing March
+				    m_LastMarchWeakTime = m_Tick;
+                    m_LastMarchStrongTime = m_Tick;
+                    m_LastMadrigalStrongTime = m_Tick;
+                    m_LastMinuetStrongTime = m_Tick;					
+		            if (m_PPet->StatusEffectContainer->HasStatusEffect(EFFECT_SILENCE) == true)
+		            {
+	                    spellID = -1;
+	            	} 
+				}
+			    int32 value = 10;
+			    std::string varname;
+			    const int8* fmtQuery = "INSERT INTO char_vars SET charid = %u, varname = 'UlmiaSong', value = '10' ON DUPLICATE KEY UPDATE value = '10';";
+                Sql_Query(SqlHandle, fmtQuery, m_PPet->PMaster->id, varname, value, value);					
+			}
+		    else if (lvl >= 29)
+			{    
+				if (m_Tick >= m_LastMarchWeakTime + m_marchWeakRecast && m_ActionType != ACTION_MAGIC_CASTING)
+				{
+				    spellID = 395; // Valor Minuet II
+				    m_LastMarchWeakTime = m_Tick;
+                    m_LastMarchStrongTime = m_Tick;
+                    m_LastMadrigalStrongTime = m_Tick;
+                    m_LastMinuetStrongTime = m_Tick;					
+		            if (m_PPet->StatusEffectContainer->HasStatusEffect(EFFECT_SILENCE) == true)
+		            {
+	                    spellID = -1;
+	            	} 
+				}
+			    int32 value = 10;
+			    std::string varname;
+			    const int8* fmtQuery = "INSERT INTO char_vars SET charid = %u, varname = 'UlmiaSong', value = '10' ON DUPLICATE KEY UPDATE value = '10';";
+                Sql_Query(SqlHandle, fmtQuery, m_PPet->PMaster->id, varname, value, value);					
+			}
+		    else if (lvl >= 23)
+			{    
+				if (m_Tick >= m_LastMarchWeakTime + m_marchWeakRecast && m_ActionType != ACTION_MAGIC_CASTING)
+				{
+				    spellID = 395; // Valor Minuet II
+				    m_LastMarchWeakTime = m_Tick;
+                    m_LastMarchStrongTime = m_Tick;
+                    m_LastMadrigalStrongTime = m_Tick;
+                    m_LastMinuetStrongTime = m_Tick;					
+		            if (m_PPet->StatusEffectContainer->HasStatusEffect(EFFECT_SILENCE) == true)
+		            {
+	                    spellID = -1;
+	            	} 
+				}
+			    int32 value = 10;
+			    std::string varname;
+			    const int8* fmtQuery = "INSERT INTO char_vars SET charid = %u, varname = 'UlmiaSong', value = '10' ON DUPLICATE KEY UPDATE value = '10';";
+                Sql_Query(SqlHandle, fmtQuery, m_PPet->PMaster->id, varname, value, value);					
+			}			
+			else   
+			{
+				if (m_Tick >= m_LastMarchWeakTime + m_marchWeakRecast && m_ActionType != ACTION_MAGIC_CASTING)
+			    {
+				    spellID = 394; // Valor Minuet I
+				    m_LastMarchWeakTime = m_Tick;
+                    m_LastMarchStrongTime = m_Tick;
+                    m_LastMadrigalStrongTime = m_Tick;
+                    m_LastMinuetStrongTime = m_Tick;					
+		            if (m_PPet->StatusEffectContainer->HasStatusEffect(EFFECT_SILENCE) == true)
+		            {
+	                    spellID = -1;
+	            	} 
+				}
+			    int32 value = 10;
+			    std::string varname;
+			    const int8* fmtQuery = "INSERT INTO char_vars SET charid = %u, varname = 'UlmiaSong', value = '10' ON DUPLICATE KEY UPDATE value = '10';";
+                Sql_Query(SqlHandle, fmtQuery, m_PPet->PMaster->id, varname, value, value);					
+			}		
+		}
+		
+		// First Songs to Cast
+        if (hitrate < 60)
+		{
+		    //Madrigal x2
+		    ShowWarning(CL_GREEN"Madrigal x2 - Casting First Song \n" CL_RESET);			
+		    m_PBattleSubTarget = m_PPet;
+		    if (lvl >= 51) //Double Madrigal Level
+			{
+			    if (m_Tick >= m_LastMadrigalStrongTime + m_madrigalStrongRecast && m_ActionType != ACTION_MAGIC_CASTING)
+				{
+				    spellID = 400; // Blade Madrigal
+					m_LastMadrigalStrongTime = m_Tick;			
+		            if (m_PPet->StatusEffectContainer->HasStatusEffect(EFFECT_SILENCE) == true)
+		            {
+	                    spellID = -1;
+	            	} 
+				}
+				ShowWarning(CL_GREEN"Casting Spell should be 400.  It is: %u \n" CL_RESET, spellID);
+			    int32 value = 1;
+		        std::string varname;
+			    const int8* fmtQuery = "INSERT INTO char_vars SET charid = %u, varname = 'UlmiaSong', value = '1' ON DUPLICATE KEY UPDATE value = '1';";
+                Sql_Query(SqlHandle, fmtQuery, m_PPet->PMaster->id, varname, value, value);					
+		    }
+		    else if (lvl >= 11) //Madrigal + Highest Minuet
+			{
+			    if (m_Tick >= m_LastMadrigalStrongTime + m_madrigalStrongRecast && m_ActionType != ACTION_MAGIC_CASTING)
+				{
+				    spellID = 399; // Sword Madrigal
+					m_LastMadrigalStrongTime = m_Tick;			
+		            if (m_PPet->StatusEffectContainer->HasStatusEffect(EFFECT_SILENCE) == true)
+		            {
+	                    spellID = -1;
+	            	} 
+				}
+			    int32 value = 1;
+		        std::string varname;
+			    const int8* fmtQuery = "INSERT INTO char_vars SET charid = %u, varname = 'UlmiaSong', value = '1' ON DUPLICATE KEY UPDATE value = '1';";
+                Sql_Query(SqlHandle, fmtQuery, m_PPet->PMaster->id, varname, value, value);							
+		    }
+		    else //Paeon
+			{
+			    if (m_Tick >= m_LastMadrigalStrongTime + m_madrigalStrongRecast && m_ActionType != ACTION_MAGIC_CASTING)
+				{
+				    spellID = 378; // Paeon
+					m_LastMadrigalStrongTime = m_Tick;			
+		            if (m_PPet->StatusEffectContainer->HasStatusEffect(EFFECT_SILENCE) == true)
+		            {
+	                    spellID = -1;
+	            	} 
+				}
+			    int32 value = 1;
+		        std::string varname;
+			    const int8* fmtQuery = "INSERT INTO char_vars SET charid = %u, varname = 'UlmiaSong', value = '1' ON DUPLICATE KEY UPDATE value = '1';";
+                Sql_Query(SqlHandle, fmtQuery, m_PPet->PMaster->id, varname, value, value);					
+					
+		    }
+		}
+		else if (hitrate < 80 && hitrate > 59 && pdif < 1.25)
+		{
+		    //Minuet + Madrigal
+		    ShowWarning(CL_GREEN"Minuet + Madrigal - Casting First Song \n" CL_RESET);
+		    m_PBattleSubTarget = m_PPet;
+			if (m_Tick >= m_LastMinuetStrongTime + m_minuetStrongRecast && m_ActionType != ACTION_MAGIC_CASTING)
+		    {
+		        if (lvl >= 63)
+				{
+				    spellID = 397; // Minuet IV
+				    m_LastMinuetStrongTime = m_Tick;			
+		            if (m_PPet->StatusEffectContainer->HasStatusEffect(EFFECT_SILENCE) == true)
+		            {
+	                    spellID = -1;
+	                }
+			        int32 value = 2;
+		            std::string varname;
+			        const int8* fmtQuery = "INSERT INTO char_vars SET charid = %u, varname = 'UlmiaSong', value = '2' ON DUPLICATE KEY UPDATE value = '2';";
+                    Sql_Query(SqlHandle, fmtQuery, m_PPet->PMaster->id, varname, value, value);	 					
+				}
+				else if (lvl >= 43)
+				{
+				    spellID = 396; // Minuet III
+					m_LastMinuetStrongTime = m_Tick;			
+		            if (m_PPet->StatusEffectContainer->HasStatusEffect(EFFECT_SILENCE) == true)
+		            {
+	                    spellID = -1;
+	                } 
+			        int32 value = 2;
+		            std::string varname;
+			        const int8* fmtQuery = "INSERT INTO char_vars SET charid = %u, varname = 'UlmiaSong', value = '2' ON DUPLICATE KEY UPDATE value = '2';";
+                    Sql_Query(SqlHandle, fmtQuery, m_PPet->PMaster->id, varname, value, value);							
+				}
+				else if (lvl >= 23)
+				{
+				    spellID = 395; // Minuet II
+					m_LastMinuetStrongTime = m_Tick;			
+		            if (m_PPet->StatusEffectContainer->HasStatusEffect(EFFECT_SILENCE) == true)
+		            {
+	                    spellID = -1;
+	                } 
+			        int32 value = 2;
+		            std::string varname;
+			        const int8* fmtQuery = "INSERT INTO char_vars SET charid = %u, varname = 'UlmiaSong', value = '2' ON DUPLICATE KEY UPDATE value = '2';";
+                    Sql_Query(SqlHandle, fmtQuery, m_PPet->PMaster->id, varname, value, value);							
+				}				
+				else
+				{
+				    spellID = 394; // Minuet I
+				    m_LastMinuetStrongTime = m_Tick;			
+		            if (m_PPet->StatusEffectContainer->HasStatusEffect(EFFECT_SILENCE) == true)
+		            {
+	                    spellID = -1;
+	                } 
+			        int32 value = 2;
+		            std::string varname;
+			        const int8* fmtQuery = "INSERT INTO char_vars SET charid = %u, varname = 'UlmiaSong', value = '2' ON DUPLICATE KEY UPDATE value = '2';";
+                    Sql_Query(SqlHandle, fmtQuery, m_PPet->PMaster->id, varname, value, value);						
+				}
+			}				
+		}
+		else if (hitrate > 79 && pdif < 1)
+		{
+		    //Minuet x2
+		    ShowWarning(CL_GREEN"Minuet x2 - Casting First Song \n" CL_RESET);			
+		    m_PBattleSubTarget = m_PPet;
+			if (m_Tick >= m_LastMinuetStrongTime + m_minuetStrongRecast && m_ActionType != ACTION_MAGIC_CASTING)
+			{
+		        if (lvl >= 63)
+			    {
+				    spellID = 397; // Valor Minuet IV
+				    m_LastMinuetStrongTime = m_Tick;			
+		            if (m_PPet->StatusEffectContainer->HasStatusEffect(EFFECT_SILENCE) == true)
+		            {
+	                    spellID = -1;
+	                } 
+			        int32 value = 3;
+		            std::string varname;
+			        const int8* fmtQuery = "INSERT INTO char_vars SET charid = %u, varname = 'UlmiaSong', value = '3' ON DUPLICATE KEY UPDATE value = '3';";
+                    Sql_Query(SqlHandle, fmtQuery, m_PPet->PMaster->id, varname, value, value);						
+				}
+				else if (lvl >= 43)
+				{
+				    spellID = 396; // Valor Minuet III
+				    m_LastMinuetStrongTime = m_Tick;			
+		            if (m_PPet->StatusEffectContainer->HasStatusEffect(EFFECT_SILENCE) == true)
+		            {
+	                    spellID = -1;
+	                } 
+			        int32 value = 3;
+		            std::string varname;
+			        const int8* fmtQuery = "INSERT INTO char_vars SET charid = %u, varname = 'UlmiaSong', value = '3' ON DUPLICATE KEY UPDATE value = '3';";
+                    Sql_Query(SqlHandle, fmtQuery, m_PPet->PMaster->id, varname, value, value);						
+				}
+				else if (lvl >= 23)
+				{
+				    spellID = 395; // Valor Minuet II
+					m_LastMinuetStrongTime = m_Tick;			
+		            if (m_PPet->StatusEffectContainer->HasStatusEffect(EFFECT_SILENCE) == true)
+		            {
+	                    spellID = -1;
+	            	}
+			        int32 value = 3;
+		            std::string varname;
+			        const int8* fmtQuery = "INSERT INTO char_vars SET charid = %u, varname = 'UlmiaSong', value = '3' ON DUPLICATE KEY UPDATE value = '3';";
+                    Sql_Query(SqlHandle, fmtQuery, m_PPet->PMaster->id, varname, value, value);	 					
+				}					
+				else
+				{
+				    spellID = 394; // Valor Minuet I
+				    m_LastMinuetStrongTime = m_Tick;			
+		            if (m_PPet->StatusEffectContainer->HasStatusEffect(EFFECT_SILENCE) == true)
+		            {
+	                    spellID = -1;
+	                } 
+			        int32 value = 3;
+		            std::string varname;
+			        const int8* fmtQuery = "INSERT INTO char_vars SET charid = %u, varname = 'UlmiaSong', value = '3' ON DUPLICATE KEY UPDATE value = '3';";
+                    Sql_Query(SqlHandle, fmtQuery, m_PPet->PMaster->id, varname, value, value);					
+				}
+			}								
+		}	
+		else if (hitrate < 80 && pdif > 1.25) // Neutral Evasion Low Defese
+		{
+		    //March + Madrigal
+		    ShowWarning(CL_GREEN"March + Madrigal - Casting First Song \n" CL_RESET);
+			m_PBattleSubTarget = m_PPet;		
+			if (m_Tick >= m_LastMarchStrongTime + m_marchStrongRecast && m_ActionType != ACTION_MAGIC_CASTING)
+			{
+		        if (lvl >= 60)
+			    {
+				    spellID = 420; // Victory March
+				    m_LastMarchStrongTime = m_Tick;			
+		            if (m_PPet->StatusEffectContainer->HasStatusEffect(EFFECT_SILENCE) == true)
+		            {
+	                    spellID = -1;
+	                } 
+			        int32 value = 4;
+		            std::string varname;
+			        const int8* fmtQuery = "INSERT INTO char_vars SET charid = %u, varname = 'UlmiaSong', value = '4' ON DUPLICATE KEY UPDATE value = '4';";
+                    Sql_Query(SqlHandle, fmtQuery, m_PPet->PMaster->id, varname, value, value);					
+				}
+				else if (lvl >= 29)
+				{
+				    spellID = 419; // Advancing March
+				    m_LastMarchStrongTime = m_Tick;			
+		            if (m_PPet->StatusEffectContainer->HasStatusEffect(EFFECT_SILENCE) == true)
+		            {
+	                    spellID = -1;
+	                } 
+			        int32 value = 4;
+		            std::string varname;
+			        const int8* fmtQuery = "INSERT INTO char_vars SET charid = %u, varname = 'UlmiaSong', value = '4' ON DUPLICATE KEY UPDATE value = '4';";
+                    Sql_Query(SqlHandle, fmtQuery, m_PPet->PMaster->id, varname, value, value);					
+				}					
+				else
+				{
+				    spellID = 394; // Valor Minuet I
+				    m_LastMarchStrongTime = m_Tick;			
+		            if (m_PPet->StatusEffectContainer->HasStatusEffect(EFFECT_SILENCE) == true)
+		            {
+	                    spellID = -1;
+	                } 
+			        int32 value = 4;
+		            std::string varname;
+			        const int8* fmtQuery = "INSERT INTO char_vars SET charid = %u, varname = 'UlmiaSong', value = '4' ON DUPLICATE KEY UPDATE value = '4';";
+                    Sql_Query(SqlHandle, fmtQuery, m_PPet->PMaster->id, varname, value, value);							
+				}
+			}				
+		}
+        else if (hitrate > 79 && pdif < 1.26) // Low Evasion Neutral to high def
+		{
+		    //March + Minuet
+		    ShowWarning(CL_GREEN"March + Minuet - Casting First Song \n" CL_RESET);			
+			m_PBattleSubTarget = m_PPet;		
+			if (m_Tick >= m_LastMarchStrongTime + m_marchStrongRecast && m_ActionType != ACTION_MAGIC_CASTING)
+			{
+		        if (lvl >= 60)
+			    {
+				    spellID = 420; // Victory March
+				    m_LastMarchStrongTime = m_Tick;			
+		            if (m_PPet->StatusEffectContainer->HasStatusEffect(EFFECT_SILENCE) == true)
+		            {
+	                    spellID = -1;
+	                } 	
+			        int32 value = 5;
+			        std::string varname;
+			        const int8* fmtQuery = "INSERT INTO char_vars SET charid = %u, varname = 'UlmiaSong', value = '5' ON DUPLICATE KEY UPDATE value = '5';";
+                    Sql_Query(SqlHandle, fmtQuery, m_PPet->PMaster->id, varname, value, value);					
+				}
+				else if (lvl >= 29)
+				{
+				    spellID = 419; // Advancing March
+				    m_LastMarchStrongTime = m_Tick;			
+		            if (m_PPet->StatusEffectContainer->HasStatusEffect(EFFECT_SILENCE) == true)
+		            {
+	                    spellID = -1;
+	                } 
+			        int32 value = 5;
+			        std::string varname;
+			        const int8* fmtQuery = "INSERT INTO char_vars SET charid = %u, varname = 'UlmiaSong', value = '5' ON DUPLICATE KEY UPDATE value = '5';";
+                    Sql_Query(SqlHandle, fmtQuery, m_PPet->PMaster->id, varname, value, value);					
+				}					
+				else
+				{
+				    spellID = 394; // Valor Minuet I
+				    m_LastMarchStrongTime = m_Tick;			
+		            if (m_PPet->StatusEffectContainer->HasStatusEffect(EFFECT_SILENCE) == true)
+		            {
+	                    spellID = -1;
+	                } 
+			        int32 value = 5;
+			        std::string varname;
+			        const int8* fmtQuery = "INSERT INTO char_vars SET charid = %u, varname = 'UlmiaSong', value = '5' ON DUPLICATE KEY UPDATE value = '5';";
+                    Sql_Query(SqlHandle, fmtQuery, m_PPet->PMaster->id, varname, value, value);						
+				}
+			}				
+		}	
+		else if (hitrate > 79 && pdif > 1.25) // Low Evasion Low Defese
+		{
+		    //March x2
+		    ShowWarning(CL_GREEN"March x2 - Casting First Song \n" CL_RESET);			
+			m_PBattleSubTarget = m_PPet;		
+			if (m_Tick >= m_LastMarchStrongTime + m_marchStrongRecast && m_ActionType != ACTION_MAGIC_CASTING)
+			{
+		        if (lvl >= 60)
+			    {
+				    spellID = 420; // Victory March
+				    m_LastMarchStrongTime = m_Tick;			
+		            if (m_PPet->StatusEffectContainer->HasStatusEffect(EFFECT_SILENCE) == true)
+		            {
+	                    spellID = -1;
+	                }
+			        int32 value = 6;
+			        std::string varname;
+			        const int8* fmtQuery = "INSERT INTO char_vars SET charid = %u, varname = 'UlmiaSong', value = '6' ON DUPLICATE KEY UPDATE value = '6';";
+                    Sql_Query(SqlHandle, fmtQuery, m_PPet->PMaster->id, varname, value, value);	 					
+				}
+				else if (lvl >= 29)
+				{
+				    spellID = 419; // Advancing March
+				    m_LastMarchStrongTime = m_Tick;			
+		            if (m_PPet->StatusEffectContainer->HasStatusEffect(EFFECT_SILENCE) == true)
+		            {
+	                    spellID = -1;
+	                }
+			        int32 value = 6;
+			        std::string varname;
+			        const int8* fmtQuery = "INSERT INTO char_vars SET charid = %u, varname = 'UlmiaSong', value = '6' ON DUPLICATE KEY UPDATE value = '6';";
+                    Sql_Query(SqlHandle, fmtQuery, m_PPet->PMaster->id, varname, value, value);	 					
+				}					
+				else
+				{
+				    spellID = 394; // Valor Minuet I
+				    m_LastMarchStrongTime = m_Tick;			
+		            if (m_PPet->StatusEffectContainer->HasStatusEffect(EFFECT_SILENCE) == true)
+		            {
+	                    spellID = -1;
+	                } 
+			        int32 value = 6;
+			        std::string varname;
+			        const int8* fmtQuery = "INSERT INTO char_vars SET charid = %u, varname = 'UlmiaSong', value = '6' ON DUPLICATE KEY UPDATE value = '6';";
+                    Sql_Query(SqlHandle, fmtQuery, m_PPet->PMaster->id, varname, value, value);						
+				}
+			}				
+		}	
+	
+	}		
+		
+
+    // Backline Spells
+    else if (currentDistance >= 11 && m_PPet->speed != 0)
+    {
+	    //printf("Ulmia is Far Away and will start Backline Spells \n");
+        //Decide which spell combo to cast.  Always Double Ballad
+        m_PBattleSubTarget = m_PPet;
+		if (m_Tick >= m_LastBalladStrongTime + m_balladStrongRecast && m_ActionType != ACTION_MAGIC_CASTING)
+		{
+			if (lvl >= 55) //Double Ballad
+			{
+			    ShowWarning(CL_GREEN"Double Ballad First Song \n" CL_RESET);	
+		        spellID = 387; // Mages Ballad II
+			    m_LastBalladStrongTime = m_Tick;			
+		        if (m_PPet->StatusEffectContainer->HasStatusEffect(EFFECT_SILENCE) == true)
+		        {
+	                spellID = -1;
+	       	    } 
+		    }
+			else if (lvl >= 25) // Single Ballad
+		    {
+		        spellID = 386; // Mages Ballad I
+			    m_LastBalladStrongTime = m_Tick;
+				m_LastSongFrontTime = m_Tick;
+		        if (m_PPet->StatusEffectContainer->HasStatusEffect(EFFECT_SILENCE) == true)
+		        {
+	                spellID = -1;
+	          	} 
+			    int32 value = 11;
+			    std::string varname;
+			    const int8* fmtQuery = "INSERT INTO char_vars SET charid = %u, varname = 'UlmiaSong', value = '11' ON DUPLICATE KEY UPDATE value = '11';";
+                Sql_Query(SqlHandle, fmtQuery, m_PPet->PMaster->id, varname, value, value);					
+			}
+		}	
+       	else if (m_Tick >= m_LastBalladWeakTime + m_balladWeakRecast && m_ActionType != ACTION_MAGIC_CASTING)
+		{
+		    ShowWarning(CL_GREEN"Single Ballad Song \n" CL_RESET);
+		    spellID = 386; // Mages Ballad I
+			m_LastBalladWeakTime = m_Tick;			
+		    if (m_PPet->StatusEffectContainer->HasStatusEffect(EFFECT_SILENCE) == true)
+		    {
+	            spellID = -1;
+	        }
+			    int32 value = 11;
+			    std::string varname;
+			    const int8* fmtQuery = "INSERT INTO char_vars SET charid = %u, varname = 'UlmiaSong', value = '11' ON DUPLICATE KEY UPDATE value = '11';";
+                Sql_Query(SqlHandle, fmtQuery, m_PPet->PMaster->id, varname, value, value);				
+	    }
+       	else if (m_Tick >= m_LastSongEnfeebleTime + m_songEnfeeble && m_ActionType != ACTION_MAGIC_CASTING)
+		{
+		    m_PBattleSubTarget = m_PBattleTarget;
+		    if (m_PBattleTarget != nullptr && ((m_PBattleTarget->StatusEffectContainer->HasStatusEffect(EFFECT_ATTACK_BOOST)) || 
+                (m_PBattleTarget->StatusEffectContainer->HasStatusEffect(EFFECT_ACCURACY_BOOST)) || 
+                (m_PBattleTarget->StatusEffectContainer->HasStatusEffect(EFFECT_ATTACK_BOOST)) || 
+				(m_PBattleTarget->StatusEffectContainer->HasStatusEffect(EFFECT_EVASION_BOOST)) || 
+				(m_PBattleTarget->StatusEffectContainer->HasStatusEffect(EFFECT_DEFENSE_BOOST)) || 
+				(m_PBattleTarget->StatusEffectContainer->HasStatusEffect(EFFECT_ENFIRE)) || 
+				(m_PBattleTarget->StatusEffectContainer->HasStatusEffect(EFFECT_ENBLIZZARD)) || 
+				(m_PBattleTarget->StatusEffectContainer->HasStatusEffect(EFFECT_ENAERO)) ||
+				(m_PBattleTarget->StatusEffectContainer->HasStatusEffect(EFFECT_ENSTONE)) ||
+				(m_PBattleTarget->StatusEffectContainer->HasStatusEffect(EFFECT_ENTHUNDER)) ||
+				(m_PBattleTarget->StatusEffectContainer->HasStatusEffect(EFFECT_ENWATER)) || 
+				(m_PBattleTarget->StatusEffectContainer->HasStatusEffect(EFFECT_SHOCK_SPIKES)) ||
+				(m_PBattleTarget->StatusEffectContainer->HasStatusEffect(EFFECT_ICE_SPIKES)) ||
+				(m_PBattleTarget->StatusEffectContainer->HasStatusEffect(EFFECT_BLAZE_SPIKES)) ||
+				(m_PBattleTarget->StatusEffectContainer->HasStatusEffect(EFFECT_REGEN)) ||
+				(m_PBattleTarget->StatusEffectContainer->HasStatusEffect(EFFECT_STONESKIN)) ||
+				(m_PBattleTarget->StatusEffectContainer->HasStatusEffect(EFFECT_BLINK))))
+            {
+		        if (lvl >= 33)
+			    {
+				    ShowWarning(CL_RED"Casting Finale \n" CL_RESET);
+		            spellID = 462; // Magic Finale
+			        m_LastSongEnfeebleTime = m_Tick;			
+		            if (m_PPet->StatusEffectContainer->HasStatusEffect(EFFECT_SILENCE) == true)
+		            {
+	                    spellID = -1;
+	              	} 
+		     	}
+                else
+	    		{
+    		        spellID = -1;
+    			    m_LastSongEnfeebleTime = m_Tick;			
+    		        if (m_PPet->StatusEffectContainer->HasStatusEffect(EFFECT_SILENCE) == true)
+    		        {
+    	                spellID = -1;
+    	          	} 
+    			}
+    		}				
+			else if (m_PBattleTarget != nullptr && m_PBattleTarget->StatusEffectContainer->HasStatusEffect(EFFECT_ELEGY) == false)
+            {
+			    ShowWarning(CL_RED"Casting Elegy \n" CL_RESET);
+			    if (lvl >= 59)
+			    {
+		            spellID = 422; // Carnage Elegy
+			        m_LastSongEnfeebleTime = m_Tick;			
+		            if (m_PPet->StatusEffectContainer->HasStatusEffect(EFFECT_SILENCE) == true)
+		            {
+	                    spellID = -1;
+	                } 
+                }
+			    else if (lvl >= 39)
+			    {
+		            spellID = 421; // Battlefield Elegy
+			        m_LastSongEnfeebleTime = m_Tick;			
+		            if (m_PPet->StatusEffectContainer->HasStatusEffect(EFFECT_SILENCE) == true)
+		            {
+	                    spellID = -1;
+	                } 
+                }
+            }				
+		    //Foe Requiem Before Finale
+		    else if (m_PBattleTarget != nullptr && m_PBattleTarget->StatusEffectContainer->HasStatusEffect(EFFECT_REQUIEM) == false)
+            {
+				ShowWarning(CL_RED"Casting Require \n" CL_RESET);
+			    if (lvl >= 67)
+		        {
+		            spellID = 373; // Requiem VI
+			        m_LastSongEnfeebleTime = m_Tick;			
+		            if (m_PPet->StatusEffectContainer->HasStatusEffect(EFFECT_SILENCE) == true)
+		            {
+	                    spellID = -1;
+	                } 
+                }
+		        else if (lvl >= 57)
+	            {
+		            spellID = 372; // Requiem V
+		            m_LastSongEnfeebleTime = m_Tick;			
+		            if (m_PPet->StatusEffectContainer->HasStatusEffect(EFFECT_SILENCE) == true)
+		            {
+	                    spellID = -1;
+	                } 
+                }
+	    		else if (lvl >= 47)
+	    		{
+		            spellID = 371; // Requiem IV
+		    	    m_LastSongEnfeebleTime = m_Tick;			
+		            if (m_PPet->StatusEffectContainer->HasStatusEffect(EFFECT_SILENCE) == true)
+		            {
+	                    spellID = -1;
+	                } 
+                }				
+		    	else if (lvl >= 37)
+		    	{
+		            spellID = 370; // Requiem III
+			        m_LastSongEnfeebleTime = m_Tick;			
+		            if (m_PPet->StatusEffectContainer->HasStatusEffect(EFFECT_SILENCE) == true)
+		            {
+	                    spellID = -1;
+	                } 
+                }
+			    else if (lvl >= 17)
+		    	{
+		            spellID = 369; // Requiem II
+			        m_LastSongEnfeebleTime = m_Tick;			
+		            if (m_PPet->StatusEffectContainer->HasStatusEffect(EFFECT_SILENCE) == true)
+		            {
+	                    spellID = -1;
+	                } 
+                }	
+			    else if (lvl >= 7)
+	    		{
+	    	        spellID = 368; // Requiem I
+	    		    m_LastSongEnfeebleTime = m_Tick;			
+	    	        if (m_PPet->StatusEffectContainer->HasStatusEffect(EFFECT_SILENCE) == true)
+	    	        {
+	                    spellID = -1;
+	                } 
+                }	
+			    else
+			    {
+		            spellID = -1;
+			        m_LastSongEnfeebleTime = m_Tick;			
+		            if (m_PPet->StatusEffectContainer->HasStatusEffect(EFFECT_SILENCE) == true)
+		            {
+	                    spellID = -1;
+	                } 
+                }				
+	        }	
+        }		
+		
+	}	
+    m_LastUlmiaSongTime = m_Tick;
+	return spellID;
+}
+
+
+int16 CAIPetDummy::GesshoSpell()
+{
+    //Gessho Checks to cast magic ever 5 seconds, checks utsu timers every 15 seconds.
+    int16 spellID = -1;
+	uint8 lvl = m_PPet->GetMLevel();
+	uint32 gesshoMB = charutils::GetVar((CCharEntity*)m_PPet->PMaster,"TrustMB");
+    //Check for all Utsusemi Shadows
+	if (m_Tick >= m_LastGesshoUtsuCheck + m_gesshoUtsuCheck && m_PPet->StatusEffectContainer->HasStatusEffect(EFFECT_COPY_IMAGE) == false)
+	{
+		m_PBattleSubTarget = m_PPet;
+		if (lvl >= 37)
+		{
+	        if (m_Tick >= m_LastGesshoUtsuNiTime + m_gesshoUtsuNiRecast && m_PPet->StatusEffectContainer->HasStatusEffect(EFFECT_SILENCE) == false)		
+		    {
+			    spellID = 339;
+				m_LastGesshoUtsuNiTime = m_Tick;
+		    }
+	        else if (m_Tick >= m_LastGesshoUtsuIchiTime + m_gesshoUtsuIchiRecast && m_PPet->StatusEffectContainer->HasStatusEffect(EFFECT_SILENCE) == false)		
+		    {
+			    spellID = 338;
+				m_LastGesshoUtsuIchiTime = m_Tick;
+		    }
+            else
+			{
+				spellID = -1;
+			}		
+        }			
+		else
+		{
+	        if (m_Tick >= m_LastGesshoUtsuIchiTime + m_gesshoUtsuIchiRecast && m_PPet->StatusEffectContainer->HasStatusEffect(EFFECT_SILENCE) == false)		
+		    {
+			    spellID = 338;
+				m_LastGesshoUtsuIchiTime = m_Tick;
+		    }
+            else
+			{
+				spellID = -1;
+			}				
+		}
+        m_LastGesshoUtsuCheck = m_Tick;		
+	}
+	// Handle Enfeebling Magic
+	else if (m_Tick >= m_LastGesshoEnfeeblingTime + m_gesshoEnfeeblingRecast && m_PPet->StatusEffectContainer->HasStatusEffect(EFFECT_SILENCE) == false)
+	{
+		m_PBattleSubTarget = m_PBattleTarget;
+		if (m_PBattleTarget != nullptr && m_PBattleTarget->StatusEffectContainer->HasStatusEffect(EFFECT_SLOW) == false)
+		{
+			if (lvl >= 48)
+			{
+				spellID = 345;  //Hojo Ni
+				m_LastGesshoEnfeeblingTime = m_Tick;		
+			}	
+			else if (lvl >= 23)
+			{
+				spellID = 344;  //Hojo Ni
+				m_LastGesshoEnfeeblingTime = m_Tick;		
+			}
+            else
+			{
+				spellID = -1;
+			}				
+		}
+		else if (m_PBattleTarget != nullptr && m_PBattleTarget->StatusEffectContainer->HasStatusEffect(EFFECT_PARALYSIS) == false)
+		{
+			if (lvl >= 30)
+			{
+				spellID = 341;  //Jubaku Ichi
+				m_LastGesshoEnfeeblingTime = m_Tick;		
+			}	
+            else
+			{
+				spellID = -1;
+			}				
+		}
+		else if (m_PBattleTarget != nullptr && m_PBattleTarget->StatusEffectContainer->HasStatusEffect(EFFECT_BLINDNESS) == false)
+		{
+			if (lvl >= 44)
+			{
+				spellID = 348;  //Kurayami: Ni
+				m_LastGesshoEnfeeblingTime = m_Tick;		
+			}	
+			else if (lvl >= 19)
+			{
+				spellID = 347;  //Kurayami: Ichi
+				m_LastGesshoEnfeeblingTime = m_Tick;		
+			}			
+            else
+			{
+				spellID = -1;
+			}				
+		}
+		else if (m_PBattleTarget != nullptr && m_PBattleTarget->StatusEffectContainer->HasStatusEffect(EFFECT_POISON) == false)
+		{
+			if (lvl >= 27)
+			{
+				spellID = 350;  //Dokumori: Ichi
+				m_LastGesshoEnfeeblingTime = m_Tick;		
+			}				
+            else
+			{
+				spellID = -1;
+			}				
+		}		
+	}	
+	// Handle Magic Bursts with Elemental Jutsu
+	/*
+	if (gesshoMB == 6)
+	{
+		if (lvl >= 40)
+		{
+			spellID = 333;	// Raiton Ni		
+		}
+		else if (lvl >= 15)
+		{
+			spellID = 332;	// Raiton Ichi		
+		}
+        else
+		{
+			spellID = -1;
+		}				
+	}	
+	else if (gesshoMB == 5)
+	{
+		if (lvl >= 40)
+		{
+			spellID = 324;	// Hyoton Ni		
+		}
+		else if (lvl >= 15)
+		{
+			spellID = 323;	// Hyoton Ichi		
+		}
+        else
+		{
+			spellID = -1;
+		}				
+	}	
+	else if (gesshoMB == 4)
+	{
+		if (lvl >= 40)
+		{
+			spellID = 321;	// Katon Ni		
+		}
+		else if (lvl >= 15)
+		{
+			spellID = 320;	// Katon Ichi		
+		}
+        else
+		{
+			spellID = -1;
+		}				
+	}	
+	else if (gesshoMB == 3)
+	{
+		if (lvl >= 40)
+		{
+			spellID = 327;	// Huton Ni		
+		}
+		else if (lvl >= 15)
+		{
+			spellID = 326;	// Huton Ichi		
+		}
+        else
+		{
+			spellID = -1;
+		}				
+	}
+	else if (gesshoMB == 2)
+	{
+		if (lvl >= 40)
+		{
+			spellID = 336;	// Suiton Ni		
+		}
+		else if (lvl >= 15)
+		{
+			spellID = 335;	// Suiton Ichi		
+		}
+        else
+		{
+			spellID = -1;
+		}				
+	}
+	else if (gesshoMB == 1)
+	{
+		if (lvl >= 40)
+		{
+			spellID = 330;	// Doton Ni		
+		}
+		else if (lvl >= 15)
+		{
+			spellID = 329;	// Doton Ichi		
+		}
+        else
+		{
+			spellID = -1;
+		}				
+	}
+	else
+	{
+		spellID = -1;
+	}*/
+    m_LastGesshoMagicTime = m_Tick;
+	return spellID;	
+}
+
+
+int16 CAIPetDummy::PrisheSpell()
+{
+
+	uint8 trigger = 25; // HP Trigger Threshold
+	uint8 lowHPP = 31;
+	uint8 level = m_PPet->GetMLevel();
+    int16 spellID = -1;
+	
+ CBattleEntity* master = m_PPet->PMaster;  
+ CBattleEntity* mostWounded = getWounded(trigger);
+ if (m_Tick >= m_LastPrisheMagicTime + m_prisheHealRecast)  // Look for last magic healing spell time 
+	{
+        if (mostWounded != nullptr)
+		{
+        m_PBattleSubTarget = mostWounded;
+		if (level > 40)
+			if (m_PPet->health.mp > 88)
+				{
+				 spellID = 4;
+				}
+			else if (m_PPet->health.mp > 46)  	
+			    {
+				 spellID = 3;
+				}
+			else if (m_PPet->health.mp > 24)  	
+			    {
+				 spellID = 2;
+				}				
+			else if (m_PPet->health.mp > 7)  	
+			    {
+				 spellID = 1;
+				}
+			else 
+			    {
+				 spellID = -1;
+				} 
+		else if (level > 20)
+			if (m_PPet->health.mp > 46)  	
+			    {
+				 spellID = 3;
+				}
+			else if (m_PPet->health.mp > 24)  	
+			    {
+				 spellID = 2;
+				}				
+			else if (m_PPet->health.mp > 7)  	
+			    {
+				 spellID = 1;
+				}
+			else
+			    {
+				 spellID = -1;
+				}
+		else if (level > 10)
+			if (m_PPet->health.mp > 24)  	
+			    {
+				 spellID = 2;
+				}				
+			else if (m_PPet->health.mp > 7)  	
+			    {
+				 spellID = 1;
+				}
+			else
+			    {
+				 spellID = -1;
+				}
+		else if (level > 4)
+			if (m_PPet->health.mp > 7)  	
+			    {
+				 spellID = 1;
+				}
+			else
+			    {
+				 spellID = -1;
+				} 
+		else
+		        {
+				 spellID = -1;
+				} 
+		m_LastPrisheMagicTime = m_Tick;	
+        m_prisheHealRecast = 15000; 		
+		if (m_PPet->StatusEffectContainer->HasStatusEffect(EFFECT_SILENCE) == true)
+		{
+	    spellID = -1;
+		} 
+        m_prisheHealRecast = 12000; 
+		//m_prisheHealCast = 1; // 1 means casting a spell
+		}
+		else
+		{
+		m_LastPrisheMagicTime = m_Tick; // reset mtick no eligible healing spell to cast
+		m_prisheHealRecast = 8000;		
+       }
+	}
+    return spellID;
 }	
+
+
 
 
 CBattleEntity* CAIPetDummy::getWounded(uint8 threshold)
@@ -8169,7 +10144,7 @@ CBattleEntity* CAIPetDummy::getWoundedAga(uint8 threshold)
     {
         for (auto member : m_PPet->PMaster->PParty->members)
         {
-            if ( member->GetHPP() < lowest)
+            if (member->GetHPP() < lowest)
             {
                 allies += 1;
             }
@@ -8181,7 +10156,7 @@ CBattleEntity* CAIPetDummy::getWoundedAga(uint8 threshold)
               if ( member->GetHPP() < lowest)
                {
                 lowest = member->GetHPP();
-                mostWoundedLow = member;
+                mostWoundedAga = member;
                 }
 			}	
         }	

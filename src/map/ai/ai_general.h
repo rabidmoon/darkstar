@@ -182,6 +182,28 @@ public:
 	void			SetLastAdelhiedHeal(uint32 time);
 	void            SetLastAdelhiedSub(uint32 time);
 	void			SetLastLuzafQuickTime(uint32 time);
+	void			SetLastLuzafRollCheck(uint32 time);
+	void			SetLastLuzafFirstRollRecast(uint32 time);
+	void			SetLastLuzafSecondRollRecast(uint32 time);
+	void			SetLastUlmiaSongTime(uint32 time);
+	void			SetLastMinuetStrongTime(uint32 time);
+	void			SetLastMinuetWeakTime(uint32 time);
+	void			SetLastMadrigalStrongTime(uint32 time);
+	void			SetLastMadrigalWeakTime(uint32 time);
+	void			SetLastMarchStrongTime(uint32 time);
+	void			SetLastMarchWeakTime(uint32 time);
+	void			SetLastBalladStrongTime(uint32 time);
+	void			SetLastBalladWeakTime(uint32 time);
+	void			SetLastSongEnfeebleTime(uint32 time);
+	void			SetLastSongFrontTime(uint32 time);
+	void			SetLastGesshoMagicTime(uint32 time);
+	void			SetLastGesshoUtsuCheck(uint32 time);
+	void			SetLastGesshoVokeTime(uint32 time);
+	void			SetLastGesshoUtsuNiTime(uint32 time);
+	void			SetLastGesshoUtsuIchiTime(uint32 time);
+	void			SetLastGesshoEnfeeblingTime(uint32 time);
+	void			SetLastPrisheSCTime(uint32 time);
+	void			SetLastPrisheMagicTime(uint32 time);
 	
 	
 	void			SetCurrentAction(ACTIONTYPE Action, uint16 TargetID = 0);
@@ -257,6 +279,28 @@ protected:
 	uint32          m_LastAdelhiedSub;
 	uint32			m_LastSchEnh;
 	uint32          m_LastLuzafQuickTime;
+	uint32			m_LastLuzafRollCheck;
+	uint32			m_LastLuzafFirstRollRecast;
+	uint32			m_LastLuzafSecondRollRecast;
+	uint32			m_LastUlmiaSongTime;
+	uint32			m_LastMinuetStrongTime;
+	uint32			m_LastMinuetWeakTime;
+	uint32			m_LastMadrigalStrongTime;
+	uint32			m_LastMadrigalWeakTime;
+	uint32			m_LastMarchStrongTime;
+	uint32			m_LastMarchWeakTime;
+	uint32          m_LastBalladStrongTime;
+	uint32			m_LastBalladWeakTime;
+	uint32			m_LastSongEnfeebleTime;
+	uint32			m_LastSongFrontTime;
+	uint32          m_LastGesshoMagicTime;
+	uint32			m_LastGesshoUtsuCheck;
+	uint32			m_LastGesshoVokeTime;
+	uint32			m_LastGesshoUtsuNiTime;
+	uint32			m_LastGesshoUtsuIchiTime;
+	uint32			m_LastGesshoEnfeeblingTime;
+	uint32			m_LastPrisheSCTime;
+	uint32          m_LastPrisheMagicTime;
 	
 	uint32			m_LastEngageStart;
 	uint32 			m_LastSkillchainStart;

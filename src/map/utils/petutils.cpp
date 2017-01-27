@@ -564,6 +564,8 @@ namespace petutils
         PMob->stats.INT = (fINT + mINT) * 0.9;
         PMob->stats.MND = (fMND + mMND) * 0.9;
         PMob->stats.CHR = (fCHR + mCHR) * 0.9;
+		
+		
 
     }
 
@@ -1088,7 +1090,7 @@ namespace petutils
 		else if (PetID == PETID_AYAME)
 		{
 		uint16 haste = 0;
-		uint16 modatt = (PAlly->GetMLevel() * 1.3);
+		uint16 modatt = (PAlly->GetMLevel() * 0.3);
 		uint16 modacc = (PAlly->GetMLevel() * 0.66);
 		uint16 maxhaste = PAlly->GetMLevel();
 		haste = (floor(maxhaste * 2.7));
@@ -1113,7 +1115,7 @@ namespace petutils
 		PAlly->setModifier(MOD_MOVE, 10);
 		PAlly->health.maxhp = (int16)(14 + (3.8f*(plvl * 4.0f)));
 		PAlly->UpdateHealth();
-        PAlly->health.mp = PAlly->health.maxhp;		
+        PAlly->health.hp = PAlly->health.maxhp;		
 		   if (plvl > 9){
 		        PAlly->setModifier(MOD_STORETP, 15);
 		   }
@@ -1138,7 +1140,7 @@ namespace petutils
 		}
 		else if (PetID == PETID_CURILLA)
 		{
-		uint16 defrate = (floor(PAlly->GetMLevel() * 2.8));
+		uint16 defrate = (floor(PAlly->GetMLevel() * 1.5));
 		uint16 modstat = (floor(PAlly->GetMLevel() * 1.0));
 		uint16 hpstat = (floor(PAlly->GetMLevel() * 3.2));
 		uint16 accstat = (floor(PAlly->GetMLevel() * 0.5));
@@ -1296,7 +1298,155 @@ namespace petutils
 			PAlly->setModifier(MOD_MATT, 15);
 		}	
         }
+		
+		else if (PetID == PETID_LION)
+		{
+	    uint16 haste = 0;
+		uint16 bmoddatt = (PAlly->GetMLevel() * 1.0);
+		uint16 bmoddacc = (PAlly->GetMLevel() * 0.5);		
+		uint16 bstr = (PAlly->GetMLevel() * 0.5);
+		uint16 bdex = (PAlly->GetMLevel() * 0.4);
+		uint16 bagi = (PAlly->GetMLevel() * 0.5);
+		uint16 maxhaste = PAlly->GetMLevel();
+		haste = (floor(maxhaste * 2.7));
+		if (haste > 200){
+		haste = 200;
+		}		
+		PAlly->setModifier(MOD_STR, bstr); //added str 
+		PAlly->setModifier(MOD_DEX, bdex); //added dex
+		PAlly->setModifier(MOD_AGI, bagi); //added agi		
+		PAlly->setModifier(MOD_ACC, battleutils::GetMaxSkill(SKILL_GAX, JOB_WAR, PAlly->GetMLevel()) + bmoddacc); //A+ Acc
+		PAlly->setModifier(MOD_EVA, battleutils::GetMaxSkill(SKILL_GAX, JOB_WAR, PAlly->GetMLevel())); //A+ Evasion
+		PAlly->setModifier(MOD_ATT, battleutils::GetMaxSkill(SKILL_GAX, JOB_WAR, PAlly->GetMLevel()) + bmoddatt);// A+ Attack		
+		PAlly->setModifier(MOD_DEF, battleutils::GetMaxSkill(SKILL_POL, JOB_WAR, PAlly->GetMLevel()));// B- Defense
+	    PAlly->setModifier(MOD_CONVMPTOHP, 1);
+		PAlly->setModifier(MOD_CONVHPTOMP, 1);
+		PAlly->setModifier(MOD_FOOD_MPP, 1);
+		PAlly->setModifier(MOD_FOOD_MP_CAP, 1);	
+		PAlly->setModifier(MOD_MPP, 1);
+		PAlly->setModifier(MOD_HPP, 1);	
+        PAlly->setModifier(MOD_MOVE, 10);
+		PAlly->setModifier(MOD_HASTE_GEAR, haste);	
+		PAlly->m_Weapons[SLOT_MAIN]->setDamage(floor(PAlly->GetMLevel()*0.43f));// D:32 @75
+		PAlly->m_Weapons[SLOT_MAIN]->setDelay(floor(1000.0f*(250.0f / 60.0f))); //180 delay			
+		PAlly->health.maxhp = (int16)(24 + (3.83f*(plvl * 3.63f))); 
+		PAlly->UpdateHealth();
+        PAlly->health.mp = PAlly->health.maxhp;		
+		   if (plvl > 54){
+		   		PAlly->setModifier(MOD_TRIPLE_ATTACK, 8); // Double Attack	
+       		   	PAlly->setModifier(MOD_TREASURE_HUNTER, 1); // Treasure Hunter 1						
+		   }		   
+		   else if (plvl >= 15){
+		   		PAlly->setModifier(MOD_TREASURE_HUNTER, 1); // Treasure Hunter 1
+		   }		   
+		}
 
+		else if (PetID == PETID_PRISHE)
+		{
+	    uint16 haste = 0;
+		uint16 bmoddatt = (PAlly->GetMLevel() * 1.0);
+		uint16 bmoddacc = (PAlly->GetMLevel() * 0.5);		
+		uint16 bstr = (PAlly->GetMLevel() * 0.5);
+		uint16 bdex = (PAlly->GetMLevel() * 0.4);
+		uint16 bagi = (PAlly->GetMLevel() * 0.5);
+		uint16 maxhaste = PAlly->GetMLevel();
+		haste = (floor(maxhaste * 2.7));
+		if (haste > 200){
+		haste = 200;
+		}		
+		PAlly->setModifier(MOD_STR, bstr); //added str 
+		PAlly->setModifier(MOD_DEX, bdex); //added dex
+		PAlly->setModifier(MOD_AGI, bagi); //added agi		
+		PAlly->setModifier(MOD_ACC, battleutils::GetMaxSkill(SKILL_GAX, JOB_WAR, PAlly->GetMLevel()) + bmoddacc); //A+ Acc
+		PAlly->setModifier(MOD_EVA, battleutils::GetMaxSkill(SKILL_POL, JOB_WAR, PAlly->GetMLevel())); //B- Evasion
+		PAlly->setModifier(MOD_ATT, battleutils::GetMaxSkill(SKILL_GAX, JOB_WAR, PAlly->GetMLevel()) + bmoddatt);// A+ Attack		
+		PAlly->setModifier(MOD_DEF, battleutils::GetMaxSkill(SKILL_POL, JOB_WAR, PAlly->GetMLevel()));// B- Defense
+		PAlly->setModifier(MOD_HTH, battleutils::GetMaxSkill(SKILL_GAX, JOB_WAR, PAlly->GetMLevel()));// A+ H2H Skill	
+	    PAlly->setModifier(MOD_CONVMPTOHP, 1);
+		PAlly->setModifier(MOD_CONVHPTOMP, 1);
+		PAlly->setModifier(MOD_FOOD_MPP, 1);
+		PAlly->setModifier(MOD_FOOD_MP_CAP, 1);	
+		PAlly->setModifier(MOD_MPP, 1);
+		PAlly->setModifier(MOD_HPP, 1);	
+        PAlly->setModifier(MOD_MOVE, 10);
+		PAlly->setModifier(MOD_HASTE_GEAR, haste);
+        PAlly->m_Weapons[SLOT_MAIN]->setSkillType(SKILL_H2H);		
+		//PAlly->m_Weapons[SLOT_MAIN]->setDamage((floor(PAlly->GetMLevel()*0.2)) + 3.0f);// D:32 @75
+		PAlly->m_Weapons[SLOT_MAIN]->setDelay(floor(1000.0f*(400.0f / 60.0f))); //+48 Delay.  Default H2H delay is 480	
+        PAlly->m_Weapons[SLOT_SUB]->setSkillType(SKILL_H2H);
+		PAlly->m_Weapons[SLOT_SUB]->setDamage((floor(PAlly->GetMLevel()*0.2)) + 3.0f);// D:32 @75		
+        PAlly->SetMJob(JOB_MNK);	
+		PAlly->health.maxhp = (int16)(29 + (4.2*(plvl * 3.7f))); 
+		PAlly->health.maxmp = (int16)(12 + (3.45f*(plvl * 2.66f))); 
+		PAlly->UpdateHealth();
+        PAlly->health.mp = PAlly->health.maxmp;
+        PAlly->health.mp = PAlly->health.maxhp;		
+		   if (plvl >= 75){
+		   		PAlly->setModifier(MOD_MARTIAL_ARTS, 100); // 300 
+				PAlly->setModifier(MOD_KICK_ATTACK, 13);
+                PAlly->setModifier(MOD_DUAL_WIELD, 1);				
+		   }
+		   else if (plvl >= 71){
+		   		PAlly->setModifier(MOD_MARTIAL_ARTS, 80); // 320
+				PAlly->setModifier(MOD_KICK_ATTACK, 13);
+                PAlly->setModifier(MOD_DUAL_WIELD, 1);				
+		   }		   
+		   else if (plvl >= 61){
+		   		PAlly->setModifier(MOD_MARTIAL_ARTS, 80); // 320
+				PAlly->setModifier(MOD_KICK_ATTACK, 10);
+                PAlly->setModifier(MOD_DUAL_WIELD, 1);				
+		   }
+		   else if (plvl >= 51){
+		   		PAlly->setModifier(MOD_MARTIAL_ARTS, 60); // 340
+				PAlly->setModifier(MOD_KICK_ATTACK, 10);
+                PAlly->setModifier(MOD_DUAL_WIELD, 1);				
+		   }		   
+		   else if (plvl >= 46){
+		   		PAlly->setModifier(MOD_MARTIAL_ARTS, 60); // 340
+				PAlly->setModifier(MOD_DUAL_WIELD, 1);
+		   }
+		   else if (plvl >= 31){
+		   		PAlly->setModifier(MOD_MARTIAL_ARTS, 40); // 360
+                PAlly->setModifier(MOD_DUAL_WIELD, 1);				
+		   }		   
+		   else if (plvl >= 16){
+		   		PAlly->setModifier(MOD_MARTIAL_ARTS, 20); // 380
+                PAlly->setModifier(MOD_DUAL_WIELD, 1);				
+		   }		   
+		}		
+		
+		
+		
+		
+		else if (PetID == PETID_ULMIA)
+		{
+		uint16 moddatt = (PAlly->GetMLevel() * 1.0);
+		uint16 moddacc = (PAlly->GetMLevel() * 0.5);
+		uint16 bchr = (PAlly->GetMLevel() * 1.3);
+		PAlly->setModifier(MOD_CHR, bchr); //added chr for spells		
+		//ShowWarning(CL_GREEN"NAJI TRIGGERED SPAWN ALLY!!! \n" CL_RESET);
+		PAlly->setModifier(MOD_ACC, battleutils::GetMaxSkill(SKILL_SYH, JOB_WAR, PAlly->GetMLevel()) + moddacc); //B+ Acc
+		PAlly->setModifier(MOD_EVA, battleutils::GetMaxSkill(SKILL_SYH, JOB_WAR, PAlly->GetMLevel())); //B+ Evasion
+		PAlly->setModifier(MOD_ATT, battleutils::GetMaxSkill(SKILL_SYH, JOB_WAR, PAlly->GetMLevel()) + moddatt);// B+ Attack
+		PAlly->setModifier(MOD_DEF, battleutils::GetMaxSkill(SKILL_POL, JOB_WAR, PAlly->GetMLevel()));// B- Defense
+		PAlly->setModifier(MOD_SINGING, battleutils::GetMaxSkill(SKILL_EVA, JOB_WAR, PAlly->GetMLevel()));// C Singing
+		PAlly->setModifier(MOD_STRING, battleutils::GetMaxSkill(SKILL_EVA, JOB_WAR, PAlly->GetMLevel()));// C String		
+		//PAlly->m_Weapons[SLOT_MAIN]->setDamage(floor(PAlly->GetMLevel()*0.56f));// D:42 @75
+		//PAlly->m_Weapons[SLOT_MAIN]->setDelay(floor(1000.0f*(240.0f / 60.0f))); //240 delay
+		PAlly->m_Weapons[SLOT_RANGED]->setSkillType(SKILL_STR);
+		PAlly->setModifier(MOD_CONVMPTOHP, 1);
+		PAlly->setModifier(MOD_CONVHPTOMP, 1);	
+		PAlly->setModifier(MOD_FOOD_MPP, 1);
+		PAlly->setModifier(MOD_FOOD_MP_CAP, 1);	
+		PAlly->setModifier(MOD_MPP, 1);
+		PAlly->setModifier(MOD_HPP, 1);
+		PAlly->setModifier(MOD_MOVE, 10);
+		PAlly->health.maxhp = (int16)(14 + (3.30f*(plvl * 4.15f))); 
+		PAlly->health.maxmp = (int16)(10 + (1.52*(plvl * 3.46f))); 		
+		PAlly->UpdateHealth();	
+        PAlly->health.mp = PAlly->health.maxmp;
+        PAlly->health.mp = PAlly->health.maxhp;			
+		}
 		else if (PetID == PETID_LUZAF)
 		{
 		uint16 bmoddatt = (PAlly->GetMLevel() * 1.0);
@@ -1333,27 +1483,66 @@ namespace petutils
 		PAlly->UpdateHealth();
         PAlly->health.mp = PAlly->health.maxhp;		
 		   if (plvl > 74){
-		   		PAlly->setModifier(MOD_DUAL_WIELD, 35); // Dual Wield
 				PAlly->setModifier(MOD_MATT, 30); // Magic Attack Bonus	
-				PAlly->setModifier(MOD_DOUBLE_ATTACK, 20); // Double Attack (Joyeuse)		
+		   		PAlly->setModifier(MOD_DUAL_WIELD, 20); // Dual Wield					
 		   }
-		   else if (plvl > 59){
-		   		PAlly->setModifier(MOD_DUAL_WIELD, 30); // Dual Wield			
+		   else if (plvl > 49){
+		   		PAlly->setModifier(MOD_DUAL_WIELD, 20); // Dual Wield			
 		   }
 		   else if (plvl > 34){
-		   		PAlly->setModifier(MOD_DUAL_WIELD, 25); // Dual Wield
 				PAlly->setModifier(MOD_MATT, 15); // Magic Attack Bonus
 		   }		   
-		   else if (plvl > 14){
-		   		PAlly->setModifier(MOD_DUAL_WIELD, 20); // Dual Wield
-		   }
-		   else if (plvl > 4){
+		   else if (plvl >= 10){
 		   		PAlly->setModifier(MOD_DUAL_WIELD, 10); // Dual Wield
 		   }		   
-		   
-		   
-		   
-
+		}
+		else if (PetID == PETID_GESSHO)
+		{
+	    uint16 haste = 0;
+		uint16 bmoddatt = (PAlly->GetMLevel() * 1.0);
+		uint16 bmoddacc = (PAlly->GetMLevel() * 0.5);		
+		uint16 bstr = (PAlly->GetMLevel() * 0.5);
+		uint16 bdex = (PAlly->GetMLevel() * 0.4);
+		uint16 bagi = (PAlly->GetMLevel() * 0.5);
+		uint16 maxhaste = PAlly->GetMLevel();
+		haste = (floor(maxhaste * 2.7));
+		if (haste > 200){
+		haste = 200;
+		}		
+		PAlly->setModifier(MOD_STR, bstr); //added str 
+		PAlly->setModifier(MOD_DEX, bdex); //added dex
+		PAlly->setModifier(MOD_AGI, bagi); //added agi		
+		PAlly->setModifier(MOD_ACC, battleutils::GetMaxSkill(SKILL_GAX, JOB_WAR, PAlly->GetMLevel()) + bmoddacc); //A+ Acc
+		PAlly->setModifier(MOD_EVA, battleutils::GetMaxSkill(SKILL_GAX, JOB_WAR, PAlly->GetMLevel())); //A+ Evasion
+		PAlly->setModifier(MOD_ATT, battleutils::GetMaxSkill(SKILL_GAX, JOB_WAR, PAlly->GetMLevel()) + bmoddatt);// A+ Attack		
+		PAlly->setModifier(MOD_DEF, battleutils::GetMaxSkill(SKILL_POL, JOB_WAR, PAlly->GetMLevel()));// B- Defense
+		PAlly->setModifier(MOD_NINJUTSU, battleutils::GetMaxSkill(SKILL_GAX, JOB_WAR, PAlly->GetMLevel()));// A+ Ninjutsu	
+	    PAlly->setModifier(MOD_CONVMPTOHP, 1);
+		PAlly->setModifier(MOD_CONVHPTOMP, 1);
+		PAlly->setModifier(MOD_FOOD_MPP, 1);
+		PAlly->setModifier(MOD_FOOD_MP_CAP, 1);	
+		PAlly->setModifier(MOD_MPP, 1);
+		PAlly->setModifier(MOD_HPP, 1);	
+        PAlly->setModifier(MOD_MOVE, 10);
+		PAlly->setModifier(MOD_HASTE_GEAR, haste);
+		PAlly->setModifier(MOD_ENMITY, 30);		
+		PAlly->m_Weapons[SLOT_MAIN]->setDamage(floor(PAlly->GetMLevel()*0.43f));// D:40 @75
+		PAlly->m_Weapons[SLOT_MAIN]->setDelay(floor(1000.0f*(165.0f / 60.0f))); //227 delay		
+		PAlly->health.maxhp = (int16)(22 + (3.81f*(plvl * 3.62f))); 
+		PAlly->UpdateHealth();
+        PAlly->health.mp = PAlly->health.maxhp;		
+		   if (plvl > 74){
+				PAlly->setModifier(MOD_MATT, 25); // Magic Attack Bonus	
+				PAlly->setModifier(MOD_DOUBLE_ATTACK, 25); // Double Attack
+		   }
+		   else if (plvl > 49){
+		   		PAlly->setModifier(MOD_DOUBLE_ATTACK, 20); // Double Attack
+				PAlly->setModifier(MOD_MATT, 25); // Magic Attack Bonus				
+		   }		   
+		   else if (plvl >= 25){
+		   		PAlly->setModifier(MOD_DOUBLE_ATTACK, 10); // Double Attack
+				PAlly->setModifier(MOD_MATT, 15); // Magic Attack Bonus
+		   }		   
 		}		
 		
 		
@@ -1714,6 +1903,12 @@ namespace petutils
         CPetEntity* PPet = new CPetEntity(petType);
 				
         PPet->m_Weapons[SLOT_MAIN]->setDelay(floor(1000.0f*(240.0f / 60.0f)));
+
+        if (PPet->m_PetID == PETID_PRISHE)
+		{
+		    PPet->SetMJob(JOB_MNK);
+			PPet->m_Weapons[SLOT_MAIN]->resetDelay();
+		}
 		
 
         PPet->SetMLevel(PMaster->GetMLevel());
@@ -1726,7 +1921,7 @@ namespace petutils
         PPet->name = g_PPetList.at(PetID)->name;
         PPet->m_name_prefix = g_PPetList.at(PetID)->name_prefix;
         PPet->m_MobSkillList = g_PPetList.at(PetID)->m_MobSkillList;
-        PPet->SetMJob(g_PPetList.at(PetID)->mJob);
+        //PPet->SetMJob(g_PPetList.at(PetID)->mJob);
         PPet->m_Element = g_PPetList.at(PetID)->m_Element;
         PPet->m_PetID = PetID;
         

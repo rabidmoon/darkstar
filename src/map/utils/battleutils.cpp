@@ -2071,9 +2071,13 @@ namespace battleutils
                 if (PAttacker->objtype == TYPE_PC)
                     charutils::UpdateHealth((CCharEntity*)PAttacker);
 				if (PAttacker->objtype == TYPE_PET){
-				PAttacker = PAttacker->PMaster;
-				
-				charutils::UpdateHealth((CCharEntity*)PAttacker);
+					if (PAttacker->PMaster->PAlly.size() > 0)
+					{
+						
+						PAttacker->PMaster->PParty->PushPacket(PAttacker->id, PAttacker->getZone(), new CCharHealthPacket(PAttacker));
+		
+
+					}
                 				
                 }				
             }
@@ -2088,9 +2092,14 @@ namespace battleutils
 				{
 				PDefender->addTP(tpMultiplier * ((baseTp / 3) * sBlowMult * (1.0f + 0.01f * (float)((PDefender->getMod(MOD_STORETP) + getStoreTPbonusFromMerit(PAttacker)))))); //yup store tp counts on hits taken too!
 				CCharEntity* PChar = (CCharEntity*)PDefender;
-			
-				PDefender = PDefender->PMaster;
-				charutils::UpdateHealth((CCharEntity*)PDefender);
+				if (PDefender->PMaster->PAlly.size() > 0)
+				{
+
+					PDefender->PMaster->PParty->PushPacket(PDefender->id, PDefender->getZone(), new CCharHealthPacket(PDefender));
+
+
+				}
+
 				}
                 if (PDefender->objtype == TYPE_PC)
                 {
