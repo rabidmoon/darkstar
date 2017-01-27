@@ -34,6 +34,20 @@ function onUseWeaponSkill(player, target, wsID)
 	end
 
 	local damage, criticalHit, tpHits, extraHits = doPhysicalWeaponskill(player, target, params);
+	
+	if ((player:getEquipID(SLOT_MAIN) == 17422) and (player:getVar("HA_WHM_FIGHT") == 3)) then
+		if (damage > 0) then
+            if (player:getTP() >= 100 and player:getTP() <200) then
+                player:addStatusEffect(EFFECT_AFTERMATH, 28, 0, 30, 0, 15);
+            elseif (player:getTP() >= 200 and player:getTP() <300) then
+                player:addStatusEffect(EFFECT_AFTERMATH, 28, 0, 45, 0, 15);
+            elseif (player:getTP() == 300) then
+                player:addStatusEffect(EFFECT_AFTERMATH, 28, 0, 60, 0, 15);
+            end
+        end
+    end
+	
+	
 	damage = damage * WEAPON_SKILL_POWER
 	return tpHits, extraHits, criticalHit, damage;
 

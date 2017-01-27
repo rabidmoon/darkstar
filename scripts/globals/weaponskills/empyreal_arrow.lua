@@ -41,13 +41,13 @@ function onUseWeaponSkill(player, target, wsID)
 	local unlock = 0;
     if (player:hasCompleteQuest(WINDURST,FROM_SAPLINGS_GROW) == true) then -- Empyreal Arrow Quest is done
 	unlock = 1;
-	elseif (player:getQuestStatus(WINDURST,FROM_SAPLINGS_GROW) == true and wsnm > 1) then -- Empyreal Arrow Quest Active
+	elseif (player:getQuestStatus(WINDURST,FROM_SAPLINGS_GROW) == QUEST_ACCEPTED and wsnm > 1) then -- Empyreal Arrow Quest Active
 	wsnm = wsnm - 1;
 	if (wsnm < 1) then
 	wsnm = 1;
 	end
 	player:setVar("EMPYREAL_ARROW",wsnm);
-	elseif (player:getQuestStatus(WINDURST,FROM_SAPLINGS_GROW) == true and wsnm <= 1) then -- Empyreal Arrow powered up
+	elseif (player:getQuestStatus(WINDURST,FROM_SAPLINGS_GROW) == QUEST_ACCEPTED and wsnm <= 1) then -- Empyreal Arrow powered up
 	unlock = 0.30;
 	else
 	unlock = 0.05;
@@ -66,7 +66,11 @@ function onUseWeaponSkill(player, target, wsID)
 	end	
 	
 	
-	damage = damage * WEAPON_SKILL_POWER * unlock
+	if (player:getEquipID(SLOT_MAIN) == 18763 and player:getVar("RNGHAFight") == 2) then
+	damage = damage * WEAPON_SKILL_POWER * unlock * 1.10;
+	else
+	damage = damage * WEAPON_SKILL_POWER * unlock;
+	end
 	return tpHits, extraHits, criticalHit, damage;
 
 end

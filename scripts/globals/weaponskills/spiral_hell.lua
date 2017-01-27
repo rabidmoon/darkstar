@@ -17,7 +17,7 @@ function onUseWeaponSkill(player, target, wsID)
 	local params = {};
 	params.numHits = 1;
 	--ftp damage mods (for Damage Varies with TP; lines are calculated in the function
-	params.ftp100 = 2.0; params.ftp200 = 1.875; params.ftp300 = 3.625;
+	params.ftp100 = 2.0; params.ftp200 = 2.875; params.ftp300 = 3.625;
 	--wscs are in % so 0.2=20%
 	params.str_wsc = 0.5; params.dex_wsc = 0.0; params.vit_wsc = 0.0; params.agi_wsc = 0.0; params.int_wsc = 0.5; params.mnd_wsc = 0.0; params.chr_wsc = 0.0;
 	--critical mods, again in % (ONLY USE FOR critICAL HIT VARIES WITH TP)
@@ -63,6 +63,10 @@ function onUseWeaponSkill(player, target, wsID)
 	player:PrintToPlayer("Your form is excellent!", 0x1C);
 	end	
 	
-	damage = damage * WEAPON_SKILL_POWER * unlock
+	if (player:getEquipID(SLOT_MAIN) == 18995 and player:getVar("DRKHAFight") == 2) then
+	damage = damage * WEAPON_SKILL_POWER * unlock * 1.10;
+	else
+	damage = damage * WEAPON_SKILL_POWER * unlock;
+	end
 	return tpHits, extraHits, criticalHit, damage;
 end

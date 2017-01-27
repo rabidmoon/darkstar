@@ -64,7 +64,12 @@ function onUseWeaponSkill(player, target, wsID)
 	elseif (wsnm == 1) then	
 	player:PrintToPlayer("Your form is excellent!", 0x1C);
 	end	
-	damage = damage * WEAPON_SKILL_POWER * unlock
+	if ((player:getEquipID(SLOT_MAIN) == 17761 and player:getVar("RDMHAFight") == 2) or (player:getEquipID(SLOT_MAIN) == 17762 and player:getVar("PLDHAFight") == 2) 
+	or (player:getEquipID(SLOT_MAIN) == 17763 and player:getVar("BLUHAFight") == 2)) then
+	damage = damage * WEAPON_SKILL_POWER * 1.10
+	else
+	damage = damage * WEAPON_SKILL_POWER
+	end
 	return tpHits, extraHits, criticalHit, damage;
 
 end

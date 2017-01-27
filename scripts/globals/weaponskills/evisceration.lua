@@ -88,7 +88,12 @@ function onUseWeaponSkill(player, target, wsID)
 	end	
 	
 	
-	damage = damage * WEAPON_SKILL_POWER * unlock;
+    if ((player:getEquipID(SLOT_MAIN) == 19115 and player:getVar("THFHAFight") == 2) or (player:getEquipID(SLOT_MAIN) == 19116 and player:getVar("BRDHAFight") == 2) 
+	or (player:getEquipID(SLOT_MAIN) == 19117 and player:getVar("DNCHAFight") == 2)) then
+	damage = damage * WEAPON_SKILL_POWER * 1.10
+	else
+	damage = damage * WEAPON_SKILL_POWER
+	end
 	return tpHits, extraHits, criticalHit, damage;
 
 end

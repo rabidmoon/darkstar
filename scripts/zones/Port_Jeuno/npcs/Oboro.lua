@@ -283,7 +283,7 @@ end
              -- Complete the trade..
             player:tradeComplete();
 			player:PrintToPlayer("Oboro : Thank you for the requested items. Come see me again when you are stronger.", 0xD);
-			player:addItem(12307, 1, 33, 14, 286, 4);  -- +15 DEF and +5 Shield Skill
+			player:addItem(12307, 1, 33, 4, 286, 4);  -- +5 DEF and +5 Shield Skill
 			player:setVar("PLDAFshield", 3);
 			player:messageSpecial(ITEM_OBTAINED, 12307);
 			
@@ -980,6 +980,74 @@ end
 			player:setVar("PUPAFweapon", 3);
 			player:messageSpecial(ITEM_OBTAINED, 18353);
 			
+end	
+
+
+
+--------------------------------------------------------
+--      DNC TRADE Mythril Knife 16467                    --
+--------------------------------------------------------
+
+if (job == 19) and (trade:hasItemQty(16467, 1)) and trade:hasItemQty( 1126, 15 ) and level >= 51 then
+             -- Complete the trade..
+            player:tradeComplete();
+			player:PrintToPlayer("Oboro : Thank you for the requested items. Come see me again when you are stronger.", 0xD);
+			player:addItem(16467, 1, 45, 4, 518, 1);
+			player:setVar("DNCAFweapon", 1);
+			player:messageSpecial(ITEM_OBTAINED, 16467);
+			
+end
+	if (job == 19) and (trade:hasItemQty(16467, 1)) and trade:hasItemQty( 1126, 30 ) and level >= 61 and (player:getVar("DNCAFweapon") == 1)  then
+             -- Complete the trade..
+            player:tradeComplete();
+			player:PrintToPlayer("Oboro : Thank you for the requested items. Come see me again when you are stronger.", 0xD);
+			player:addItem(16467, 1, 45, 7, 518, 2);
+			player:setVar("DNCAFweapon", 2);
+			player:messageSpecial(ITEM_OBTAINED, 16467);
+			
+end
+	if (job == 19) and (trade:hasItemQty(16467, 1)) and trade:hasItemQty( 1127, 15 ) and level >= 71 and (player:getVar("DNCAFweapon") == 2) then
+             -- Complete the trade..
+            player:tradeComplete();
+			player:PrintToPlayer("Oboro : Thank you for the requested items. Come see me again when you are stronger.", 0xD);
+			player:addItem(16467, 1, 45, 10, 518, 2);
+			player:setVar("DNCAFweapon", 3);
+			player:messageSpecial(ITEM_OBTAINED, 16467);
+end	
+
+
+
+
+
+--------------------------------------------------------
+--      SCH TRADE OAK POLE 17098                     --
+--------------------------------------------------------
+
+if (job == 20) and (trade:hasItemQty(17098, 1)) and trade:hasItemQty( 1126, 15 ) and level >= 51 then
+             -- Complete the trade..
+            player:tradeComplete();
+			player:PrintToPlayer("Oboro : Thank you for the requested items. Come see me again when you are stronger.", 0xD);
+			player:addItem(17098, 1, 45, 11, 296, 2);
+			player:setVar("SCHAFweapon", 1);
+			player:messageSpecial(ITEM_OBTAINED, 17098);
+			
+end
+	if (job == 20) and (trade:hasItemQty(17098, 1)) and trade:hasItemQty( 1126, 30 ) and level >= 61 and (player:getVar("SCHAFweapon") == 1)  then
+             -- Complete the trade..
+            player:tradeComplete();
+			player:PrintToPlayer("Oboro : Thank you for the requested items. Come see me again when you are stronger.", 0xD);
+			player:addItem(17098, 1, 45, 23, 296, 4);
+			player:setVar("SCHAFweapon", 2);
+			player:messageSpecial(ITEM_OBTAINED, 17098);
+			
+end
+	if (job == 20) and (trade:hasItemQty(17098, 1)) and trade:hasItemQty( 1127, 15 ) and level >= 71 and (player:getVar("SCHAFweapon") == 2) then
+             -- Complete the trade..
+            player:tradeComplete();
+			player:PrintToPlayer("Oboro : Thank you for the requested items. Come see me again when you are stronger.", 0xD);
+			player:addItem(17098, 1, 45, 30, 296, 6);
+			player:setVar("SCHAFweapon", 3);
+			player:messageSpecial(ITEM_OBTAINED, 17098);
 end	
 	
 	

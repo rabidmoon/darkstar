@@ -64,7 +64,11 @@ function onUseWeaponSkill(player, target, wsID)
 	end
 	
 	local damage, criticalHit, tpHits, extraHits = doPhysicalWeaponskill(player, target, params);
+		if (player:getEquipID(SLOT_MAIN) == 18870 and player:getVar("WHMHAFight") == 2) then
+	damage = damage * WEAPON_SKILL_POWER * unlock * 1.10;
+	else
 	damage = damage * WEAPON_SKILL_POWER * unlock;
+	end
 	return tpHits, extraHits, criticalHit, damage;
     
 end

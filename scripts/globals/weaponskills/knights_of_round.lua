@@ -27,53 +27,26 @@ function onUseWeaponSkill(player, target, wsID)
 	params.crit100 = 0.0; params.crit200 = 0.0; params.crit300 = 0.0;
 	params.canCrit = false;
 	params.acc100 = 0.0; params.acc200= 0.0; params.acc300= 0.0;
-	params.atkmulti = 1;
+	params.atkmulti = 1.05;
 
 	if (USE_ADOULIN_WEAPON_SKILL_CHANGES == true) then
-		params.ftp100 = 7; params.ftp200 = 7; params.ftp300 = 7;
-		if((player:getEquipID(SLOT_MAIN) == 60646) and (player:getMainJob() == JOB_RDM or JOB_PLD)) then
-		params.ftp100 = 10; params.ftp200 = 10; params.ftp300 = 10;
-		end
+		params.ftp100 = 5; params.ftp200 = 5; params.ftp300 = 5;
 	end
 
 	local damage, criticalHit, tpHits, extraHits = doPhysicalWeaponskill(player, target, params);
-	if((player:getEquipID(SLOT_MAIN) == 19748) and (player:getMainJob() == JOB_RDM or JOB_PLD)) then
+	if((player:getEquipID(SLOT_MAIN) == 18276) and (player:getMainJob() == JOB_RDM or JOB_PLD)) then
 		if(damage > 0) then
 			if(player:getTP() >= 100 and player:getTP() < 200) then
-				player:addStatusEffect(EFFECT_AFTERMATH, 2, 0, 20, 0, 10);
+				player:addStatusEffect(EFFECT_AFTERMATH, 10, 0, 20, 0, 3);
 			elseif(player:getTP() >= 200 and player:getTP() < 300) then
-				player:addStatusEffect(EFFECT_AFTERMATH, 2, 0, 40, 0, 10);
+				player:addStatusEffect(EFFECT_AFTERMATH, 10, 0, 40, 0, 3);
 			elseif(player:getTP() == 300) then
-				player:addStatusEffect(EFFECT_AFTERMATH, 2, 0, 60, 0, 10);
+				player:addStatusEffect(EFFECT_AFTERMATH, 10, 0, 60, 0, 3);
 			end
 		end
 	end
 	
-	if((player:getEquipID(SLOT_MAIN) == 20645) and (player:getMainJob() == JOB_RDM or JOB_PLD)) then
-		--params.ftp100 = 9; params.ftp200 = 9; params.ftp300 = 9;
-		if(damage > 0) then
-			if(player:getTP() >= 100 and player:getTP() < 200) then
-				player:addStatusEffect(EFFECT_AFTERMATH, -30, 0, 20, 0, 13);
-			elseif(player:getTP() >= 200 and player:getTP() < 300) then
-				player:addStatusEffect(EFFECT_AFTERMATH, -30, 0, 40, 0, 13);
-			elseif(player:getTP() == 300) then
-				player:addStatusEffect(EFFECT_AFTERMATH, -30, 0, 60, 0, 13);
-			end
-		end
-	end
 
-	if((player:getEquipID(SLOT_MAIN) == 20646) and (player:getMainJob() == JOB_RDM or JOB_PLD)) then
-		--params.ftp100 = 19; params.ftp200 = 19; params.ftp300 = 19;
-		if(damage > 0) then
-			if(player:getTP() >= 100 and player:getTP() < 200) then
-				player:addStatusEffect(EFFECT_AFTERMATH, -30, 0, 20, 0, 13);
-			elseif(player:getTP() >= 200 and player:getTP() < 300) then
-				player:addStatusEffect(EFFECT_AFTERMATH, -30, 0, 40, 0, 13);
-			elseif(player:getTP() == 300) then
-				player:addStatusEffect(EFFECT_AFTERMATH, -30, 0, 60, 0, 13);
-			end
-		end
-	end	
 	
 	
 	

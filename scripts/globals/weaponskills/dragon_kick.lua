@@ -35,7 +35,11 @@ function onUseWeaponSkill(player, target, wsID)
 	end
 
 	local damage, criticalHit, tpHits, extraHits = doPhysicalWeaponskill(player, target, params);
+	if ((player:getEquipID(SLOT_MAIN) == 18764 and player:getVar("MNKHAFight") == 2) or (player:getEquipID(SLOT_MAIN) == 18765 and player:getVar("PUPHAFight") == 2)) then
+	damage = damage * WEAPON_SKILL_POWER * 1.10
+	else
 	damage = damage * WEAPON_SKILL_POWER
+	end
 	return tpHits, extraHits, criticalHit, damage;
 
 end
