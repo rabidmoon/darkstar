@@ -30,12 +30,19 @@ end;
 
 function onUseAbility(player,target,ability)
     local level = player:getMainLvl();
-	local hp = ((level * 85) / 256);
-	local mp = ((level * 85) / 256);
+	local hp = (((level * 85) / 256) / 100);
+	local mp = (((level * 85) / 256) / 100);
 	
     player:spawnPet(PET_AUTOMATON);
+
+    local oldhp = player:getPet():getHP();
+    local oldmp = player:getPet():getMP();
+
+    local newhp = oldhp * hp;
+    local newmp = oldmp * mp;
 	
-	player:getPet():setHPP(hp);
-	player:getPet():setMPP(mp);
+	player:getPet():setHP(newhp);
+	player:getPet():setMP(newmp);
+
 	
 end;

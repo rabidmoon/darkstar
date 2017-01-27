@@ -14,6 +14,7 @@ function onTrigger(player,page)
 local level = player:getMainLvl();
 local aura = player:getVar("FerretoryAura");
 
+-- printf("%s just triggered Mogshop", player:getName());
 
     if (page == 0 or page == nil) then
         player:PrintToPlayer( "Merchant Moogle : 1: Crystals, 2: Meds, 3: Food, 4: Tools/Ammo, 5: Weapons, 6: Armor, 7: Beyond Infinity, 8: Misc, 9: Attachments", 0x1F);
@@ -77,7 +78,7 @@ local aura = player:getVar("FerretoryAura");
 			5718,	3000,   -- Cream Puff
 			4502,	4200,  -- Marron Glace
 			-- Juice
-			5932,   800,   -- Kitron Juice
+			5932,   1200,   -- Kitron Juice
 			4424,   700,   -- Melon Juice
 			4422,   600,    -- Orange Juice
 			4558,	2200    -- Yagudo Drink
@@ -310,7 +311,7 @@ local aura = player:getVar("FerretoryAura");
 			13727,   32500,   -- Dino Jerkin
 			13737,   15000,   -- Mithril Breaste+1
 			12651,   46000,   -- White Cloak +1
-	        12554,   6000    -- Banded Mail 		
+	        12554,   9000    -- Banded Mail 		
 		
         };
         showShop(player, STATIC, stock_6b);
