@@ -2520,6 +2520,15 @@ INSERT INTO `mob_skill_lists` VALUES ('Avatar-Light-Ixion',741,2080);
 INSERT INTO `mob_skill_lists` VALUES ('Avatar-Light-Ixion',741,2081);
 INSERT INTO `mob_skill_lists` VALUES ('Avatar-Light-Ixion',741,2082);
 
+INSERT INTO `mob_skill_lists` VALUES ('Lion',742,2635);  -- Grape Shot
+INSERT INTO `mob_skill_lists` VALUES ('Lion',742,2636);  -- Pirate Pummel
+INSERT INTO `mob_skill_lists` VALUES ('Lion',742,2637);  -- Powder Keg
+INSERT INTO `mob_skill_lists` VALUES ('Lion',742,2638);  -- Walk the Plank
+
+INSERT INTO `mob_skill_lists` VALUES ('Prishe',743,1233);  -- Nullyfying Dropkick
+INSERT INTO `mob_skill_lists` VALUES ('Prishe',743,1234);  -- Auroral Uppercut
+INSERT INTO `mob_skill_lists` VALUES ('Prishe',743,2639);  -- Knuckle Sandwhich
+
 INSERT INTO `mob_skill_lists` VALUES ('Luzaf',745,3724);
 INSERT INTO `mob_skill_lists` VALUES ('Luzaf',745,3725);
 INSERT INTO `mob_skill_lists` VALUES ('Luzaf',745,3726);
@@ -2530,4 +2539,14 @@ INSERT INTO `mob_skill_lists` VALUES ('Luzaf',745,3730);
 INSERT INTO `mob_skill_lists` VALUES ('Luzaf',745,3731);
 INSERT INTO `mob_skill_lists` VALUES ('Luzaf',745,3732);
 INSERT INTO `mob_skill_lists` VALUES ('Luzaf',745,3733);
+INSERT INTO `mob_skill_lists` VALUES ('Luzaf',745,3734);
+INSERT INTO `mob_skill_lists` VALUES ('Luzaf',745,3735);
+INSERT INTO `mob_skill_lists` VALUES ('Luzaf',745,3742);
+
+INSERT INTO `mob_skill_lists` VALUES ('Gessho',746,361);
+INSERT INTO `mob_skill_lists` VALUES ('Gessho',746,362);
+INSERT INTO `mob_skill_lists` VALUES ('Gessho',746,1742);
+INSERT INTO `mob_skill_lists` VALUES ('Gessho',746,3001);
+INSERT INTO `mob_skill_lists` VALUES ('Gessho',746,3003);
+INSERT INTO `mob_skill_lists` VALUES ('Gessho',746,3711); -- Provoke
 

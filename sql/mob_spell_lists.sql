@@ -1597,6 +1597,27 @@ INSERT INTO `mob_spell_lists` VALUES ('Light_Ixion', 271, 41, 1, 255); -- Banish
 INSERT INTO `mob_spell_lists` VALUES ('Light_Ixion', 271, 36, 1, 255); -- Diaga IV
 INSERT INTO `mob_spell_lists` VALUES ('Light_Ixion', 271, 112, 1, 255); -- Flash
 
+INSERT INTO `mob_spell_lists` VALUES ('Ulmia', 272, 368, 1, 255); -- Requiem
+INSERT INTO `mob_spell_lists` VALUES ('Ulmia', 272, 369, 1, 255); -- Requiem II
+INSERT INTO `mob_spell_lists` VALUES ('Ulmia', 272, 370, 1, 255); -- Requiem III
+INSERT INTO `mob_spell_lists` VALUES ('Ulmia', 272, 371, 1, 255); -- Requiem VI
+INSERT INTO `mob_spell_lists` VALUES ('Ulmia', 272, 372, 1, 255); -- Requiem V
+INSERT INTO `mob_spell_lists` VALUES ('Ulmia', 272, 373, 1, 255); -- Requiem VI
+INSERT INTO `mob_spell_lists` VALUES ('Ulmia', 272, 386, 1, 255); -- Ballad I
+INSERT INTO `mob_spell_lists` VALUES ('Ulmia', 272, 387, 1, 255); -- Ballad II
+INSERT INTO `mob_spell_lists` VALUES ('Ulmia', 272, 394, 1, 255); -- Valor Minuet I
+INSERT INTO `mob_spell_lists` VALUES ('Ulmia', 272, 395, 1, 255); -- Valor Minuet II
+INSERT INTO `mob_spell_lists` VALUES ('Ulmia', 272, 396, 1, 255); -- Valor Minuet III
+INSERT INTO `mob_spell_lists` VALUES ('Ulmia', 272, 397, 1, 255); -- Valor Minuet IV
+INSERT INTO `mob_spell_lists` VALUES ('Ulmia', 272, 398, 1, 255); -- Valor Minuet V
+INSERT INTO `mob_spell_lists` VALUES ('Ulmia', 272, 399, 1, 255); -- Flash
+INSERT INTO `mob_spell_lists` VALUES ('Ulmia', 272, 400, 1, 255); -- Flash
+INSERT INTO `mob_spell_lists` VALUES ('Ulmia', 272, 419, 1, 255); -- Advancing March
+INSERT INTO `mob_spell_lists` VALUES ('Ulmia', 272, 420, 1, 255); -- Victory March
+INSERT INTO `mob_spell_lists` VALUES ('Ulmia', 272, 421, 1, 255); -- Battlefield Elegy
+INSERT INTO `mob_spell_lists` VALUES ('Ulmia', 272, 422, 1, 255); -- Carnage Elegy
+
+
 /*!40000 ALTER TABLE `mob_spell_lists` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;

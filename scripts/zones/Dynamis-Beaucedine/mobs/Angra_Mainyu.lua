@@ -21,10 +21,7 @@ end;
 
 function onMobEngaged(mob,target)
 	
-	SpawnMob(17326082):updateEnmity(target); -- Fire_Pukis
-	SpawnMob(17326083):updateEnmity(target); -- Poison_Pukis
-	SpawnMob(17326084):updateEnmity(target); -- Wind_Pukis
-	SpawnMob(17326085):updateEnmity(target); -- Petro_Pukis
+
 	
 end;
 
@@ -34,18 +31,7 @@ end;
 
 function onMobFight(mob,target)
 	
-	if (GetMobAction(17326082) == 0 and GetMobAction(17326279) ~= 0) then
-		SpawnMob(17326082):updateEnmity(target);
-	end
-	if (GetMobAction(17326083) == 0 and GetMobAction(17326468) ~= 0) then
-		SpawnMob(17326083):updateEnmity(target);
-	end
-	if (GetMobAction(17326084) == 0 and GetMobAction(17326353) ~= 0) then
-		SpawnMob(17326084):updateEnmity(target);
-	end
-	if (GetMobAction(17326085) == 0 and GetMobAction(17326207) ~= 0) then
-		SpawnMob(17326085):updateEnmity(target);
-	end
+
 	
 end;
 
@@ -81,6 +67,8 @@ end;
 -----------------------------------
 
 function onMobDeath(mob,killer)
+
+    local qm0 = GetNPCByID(17326800);
 	
 	killer:addTitle(DYNAMISBEAUCEDINE_INTERLOPER); -- Add title
 	killer:setVar("DynaBeaucedine_Win",1);
@@ -89,5 +77,16 @@ function onMobDeath(mob,killer)
 		killer:addKeyItem(HYDRA_CORPS_INSIGNIA);
 		killer:messageSpecial(KEYITEM_OBTAINED,HYDRA_CORPS_INSIGNIA);
 	end
+	 qm0:setStatus(STATUS_NORMAL);
 	
+	
+end;
+
+function onMobDespawn(mob)
+
+    local qm0 = GetNPCByID(17326800);
+	
+
+	qm0:setStatus(STATUS_NORMAL);
+
 end;

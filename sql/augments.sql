@@ -169,9 +169,9 @@ INSERT INTO `augments` VALUES ('120', '0', '0', '0', '1'); -- Avatar: Mag.Atk.Bn
 INSERT INTO `augments` VALUES ('121', '0', '0', '0', '1'); -- Pet: Breath +1
 INSERT INTO `augments` VALUES ('122', '0', '345', '20', '1'); -- Pet: TP Bonus +20
 INSERT INTO `augments` VALUES ('123', '0', '288', '1', '1'); -- Pet: Dbl.Att.+1
-INSERT INTO `augments` VALUES ('124', '0', '0', '0', '0'); -- 124 currently unused. Leave at zero.
-INSERT INTO `augments` VALUES ('125', '0', '0', '0', '0'); -- 125 currently unused. Leave at zero.
-INSERT INTO `augments` VALUES ('126', '0', '0', '0', '0'); -- 126 currently unused. Leave at zero.
+INSERT INTO `augments` VALUES ('124', '0', '0', '0', '0'); -- Pet: Acc+1/R.Acc+1/Att+1/R/Atk+1
+INSERT INTO `augments` VALUES ('125', '0', '0', '0', '0'); -- Pet: Ma. Acc+1/Mag. Dmg+1
+INSERT INTO `augments` VALUES ('126', '0', '0', '0', '0'); -- Pet: Mag. Dmg+1
 INSERT INTO `augments` VALUES ('127', '0', '0', '0', '0'); -- 127 currently unused. Leave at zero.
 INSERT INTO `augments` VALUES ('128', '0', '0', '0', '0'); -- 128 doesn't seem to be a valid Augment, incomplete or garbled text displays
 INSERT INTO `augments` VALUES ('129', '0', '25', '1', '0'); -- Accuracy+1 Rng.Acc.+1
@@ -1032,30 +1032,30 @@ INSERT INTO `augments` VALUES ('829', '0', '0', '0', '0');
 INSERT INTO `augments` VALUES ('830', '0', '0', '0', '0');
 INSERT INTO `augments` VALUES ('831', '0', '0', '0', '0');
 INSERT INTO `augments` VALUES ('832', '0', '0', '0', '0');
-INSERT INTO `augments` VALUES ('833', '0', '0', '0', '0');
-INSERT INTO `augments` VALUES ('834', '0', '0', '0', '0');
-INSERT INTO `augments` VALUES ('835', '0', '0', '0', '0');
-INSERT INTO `augments` VALUES ('836', '0', '0', '0', '0');
-INSERT INTO `augments` VALUES ('837', '0', '0', '0', '0');
-INSERT INTO `augments` VALUES ('838', '0', '0', '0', '0');
-INSERT INTO `augments` VALUES ('839', '0', '0', '0', '0');
-INSERT INTO `augments` VALUES ('840', '0', '0', '0', '0');
-INSERT INTO `augments` VALUES ('841', '0', '0', '0', '0');
-INSERT INTO `augments` VALUES ('842', '0', '0', '0', '0');
-INSERT INTO `augments` VALUES ('843', '0', '0', '0', '0');
-INSERT INTO `augments` VALUES ('844', '0', '0', '0', '0');
-INSERT INTO `augments` VALUES ('845', '0', '0', '0', '0');
-INSERT INTO `augments` VALUES ('846', '0', '0', '0', '0');
-INSERT INTO `augments` VALUES ('847', '0', '0', '0', '0');
-INSERT INTO `augments` VALUES ('848', '0', '0', '0', '0');
-INSERT INTO `augments` VALUES ('849', '0', '0', '0', '0');
-INSERT INTO `augments` VALUES ('850', '0', '0', '0', '0');
-INSERT INTO `augments` VALUES ('851', '0', '0', '0', '0');
-INSERT INTO `augments` VALUES ('852', '0', '0', '0', '0');
-INSERT INTO `augments` VALUES ('853', '0', '0', '0', '0');
-INSERT INTO `augments` VALUES ('854', '0', '0', '0', '0');
-INSERT INTO `augments` VALUES ('855', '0', '0', '0', '0');
-INSERT INTO `augments` VALUES ('856', '0', '0', '0', '0');
+INSERT INTO `augments` VALUES ('833', '0', '0', '0', '0');  -- Add Effect: Fire Damage +
+INSERT INTO `augments` VALUES ('834', '0', '0', '0', '0');  -- Add Effect: Ice Damage +
+INSERT INTO `augments` VALUES ('835', '0', '0', '0', '0');  -- Add Effect: Wind Damage +
+INSERT INTO `augments` VALUES ('836', '0', '0', '0', '0');  -- Add Effect: Earth Damage +
+INSERT INTO `augments` VALUES ('837', '0', '0', '0', '0');  -- Add Effect: Lightning Damage +
+INSERT INTO `augments` VALUES ('838', '0', '0', '0', '0');  -- Add Effect: Water Damage +
+INSERT INTO `augments` VALUES ('839', '0', '0', '0', '0');  -- Add Effect: Light Dmg +
+INSERT INTO `augments` VALUES ('840', '0', '0', '0', '0');  -- Add Effect: Dark Damage +
+INSERT INTO `augments` VALUES ('841', '0', '0', '0', '0');  -- Add Effect: Disease
+INSERT INTO `augments` VALUES ('842', '0', '0', '0', '0');  -- Add Effect: Paralysis
+INSERT INTO `augments` VALUES ('843', '0', '0', '0', '0');  -- Add Effect: Silence
+INSERT INTO `augments` VALUES ('844', '0', '0', '0', '0');  -- Add Effect: Slow
+INSERT INTO `augments` VALUES ('845', '0', '0', '0', '0');  -- Add Effect: Stun
+INSERT INTO `augments` VALUES ('846', '0', '0', '0', '0');  -- Add Effect: Poison
+INSERT INTO `augments` VALUES ('847', '0', '0', '0', '0');  -- Add Effect: Flash
+INSERT INTO `augments` VALUES ('848', '0', '0', '0', '0');  -- Add Effect: Blindness
+INSERT INTO `augments` VALUES ('849', '0', '0', '0', '0');  -- Add Effect: Weakens Def
+INSERT INTO `augments` VALUES ('850', '0', '0', '0', '0');  -- Add Effect: Sleep
+INSERT INTO `augments` VALUES ('851', '0', '0', '0', '0');  -- Add Effect: Weakens Attack
+INSERT INTO `augments` VALUES ('852', '0', '0', '0', '0');  -- Add Effect: Impairs Evasion
+INSERT INTO `augments` VALUES ('853', '0', '0', '0', '0');  -- Add Effect: Lowers Acc
+INSERT INTO `augments` VALUES ('854', '0', '0', '0', '0');  -- Add Effect: Lowers Magic Attack
+INSERT INTO `augments` VALUES ('855', '0', '0', '0', '0');  -- Add Effect: Lowers Magic Def
+INSERT INTO `augments` VALUES ('856', '0', '0', '0', '0');  -- Add Effect: Lowers Magic Acc+1
 INSERT INTO `augments` VALUES ('857', '0', '0', '0', '0');
 INSERT INTO `augments` VALUES ('858', '0', '0', '0', '0');
 INSERT INTO `augments` VALUES ('859', '0', '0', '0', '0');
@@ -1095,8 +1095,8 @@ INSERT INTO `augments` VALUES ('892', '0', '0', '0', '0');
 INSERT INTO `augments` VALUES ('893', '0', '0', '0', '0');
 INSERT INTO `augments` VALUES ('894', '0', '0', '0', '0');
 INSERT INTO `augments` VALUES ('895', '0', '0', '0', '0');
-INSERT INTO `augments` VALUES ('896', '0', '0', '0', '0');
-INSERT INTO `augments` VALUES ('897', '0', '0', '0', '0');
+INSERT INTO `augments` VALUES ('896', '0', '432', '1', '0');  -- Sword Enhancement Dmg +1
+INSERT INTO `augments` VALUES ('897', '0', '0', '0', '0');  -- Enhances "Souleater" effect +1%
 INSERT INTO `augments` VALUES ('898', '0', '0', '0', '0');
 INSERT INTO `augments` VALUES ('899', '0', '0', '0', '0');
 INSERT INTO `augments` VALUES ('900', '0', '0', '0', '0');
@@ -1889,7 +1889,7 @@ INSERT INTO `augments` VALUES ('1588', '0', '0', '0', '0');
 INSERT INTO `augments` VALUES ('1589', '0', '0', '0', '0');
 INSERT INTO `augments` VALUES ('1590', '0', '0', '0', '0');
 INSERT INTO `augments` VALUES ('1591', '0', '0', '0', '0');
-INSERT INTO `augments` VALUES ('1592', '0', '0', '0', '0');
+INSERT INTO `augments` VALUES ('1592', '0', '0', '0', '0');  -- Weaponskill Damage +5%
 INSERT INTO `augments` VALUES ('1593', '0', '0', '0', '0');
 INSERT INTO `augments` VALUES ('1594', '0', '0', '0', '0');
 INSERT INTO `augments` VALUES ('1595', '0', '0', '0', '0');
@@ -2129,7 +2129,8 @@ INSERT INTO `augments` VALUES ('1806', '0', '8', '1', '1'); -- Pet: STR+1 DEX+1 
 INSERT INTO `augments` VALUES ('1806', '0', '9', '1', '1'); -- Cont.
 INSERT INTO `augments` VALUES ('1806', '0', '10', '1', '1'); -- Cont.
 
--- 1807 to 2046 currently unused. Leave at zero.
+-- 1807 to 2046 currently unused. Leave at zero.  1807 to 1823 just says Pet: and then nothing
+
 INSERT INTO `augments` VALUES ('1807', '0', '0', '0', '0');
 INSERT INTO `augments` VALUES ('1808', '0', '0', '0', '0');
 INSERT INTO `augments` VALUES ('1809', '0', '0', '0', '0');
