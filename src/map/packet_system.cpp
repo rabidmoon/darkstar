@@ -2393,7 +2393,7 @@ void SmallPacket0x050(map_session_data_t* session, CCharEntity* PChar, CBasicPac
     uint8 equipSlotID = RBUFB(data, (0x05));        // charequip slot
     uint8 containerID = RBUFB(data, (0x06));     // container id
 
-    if (containerID != 0 && containerID != 8)
+    if (containerID != LOC_INVENTORY && containerID != LOC_WARDROBE && containerID != LOC_WARDROBE2 && containerID != LOC_WARDROBE3 && containerID != LOC_WARDROBE4)
     {
         return;
     }
@@ -2421,7 +2421,7 @@ void SmallPacket0x051(map_session_data_t* session, CCharEntity* PChar, CBasicPac
         uint8 slotID = RBUFB(data, (0x08 + (0x04 * i)));        // inventory slot
         uint8 equipSlotID = RBUFB(data, (0x09 + (0x04 * i)));        // charequip slot
         uint8 containerID = RBUFB(data, (0x0A + (0x04 * i)));     // container id
-        if (containerID == 0 || containerID == 8)
+        if (containerID == LOC_INVENTORY || containerID == LOC_WARDROBE || containerID == LOC_WARDROBE2 || containerID == LOC_WARDROBE3 || containerID == LOC_WARDROBE4)
         {
             charutils::EquipItem(PChar, slotID, equipSlotID, containerID);
         }
@@ -3524,12 +3524,19 @@ void SmallPacket0x085(map_session_data_t* session, CCharEntity* PChar, CBasicPac
 
     if ((PItem != nullptr) && ((gil != nullptr) && gil->isType(ITEM_CURRENCY)))
     {
+	    
         charutils::UpdateItem(PChar, LOC_INVENTORY, 0, quantity * PItem->getBasePrice());
         charutils::UpdateItem(PChar, LOC_INVENTORY, slotID, -(int32)quantity);
 
         PChar->pushPacket(new CMessageStandardPacket(0, itemID, quantity, 232));
         PChar->pushPacket(new CInventoryFinishPacket());
+
     }
+	    ShowWarning(CL_RED"Player tried to sell back to an NPC!! \n", CL_RESET); 
+        printf("Player: %s \n", PChar->GetName());
+		printf("Item ID: %u \n", itemID);
+		printf("Quantity ID: %u \n", quantity);
+
 
     PChar->Container->setItem(PChar->Container->getSize() - 1, 0, -1, 0);
     return;
@@ -3738,7 +3745,6 @@ void SmallPacket0x0B5(map_session_data_t* session, CCharEntity* PChar, CBasicPac
     {
         message::send(MSG_CHAT_SERVMES, 0, 0, new CChatMessagePacket(PChar, MESSAGE_SYSTEM_1, data[7]));
     }
-	
     else
     {
         if (jailutils::InPrison(PChar))
@@ -3756,7 +3762,7 @@ void SmallPacket0x0B5(map_session_data_t* session, CCharEntity* PChar, CBasicPac
         {
             switch (RBUFB(data, (0x04)))
             {
-			case MESSAGE_SAY:
+            case MESSAGE_SAY:
             {
                 if (map_config.audit_chat == 1 && map_config.audit_say == 1)
                 {
@@ -3768,7 +3774,13 @@ void SmallPacket0x0B5(map_session_data_t* session, CCharEntity* PChar, CBasicPac
                     const char * cC = qStr.c_str();
                     Sql_QueryStr(SqlHandle, cC);
                 }
-                PChar->loc.zone->PushPacket(PChar, CHAR_INRANGE, new CChatMessagePacket(PChar, MESSAGE_SAY, data[6]));
+                for (uint16 zone = 0; zone < MAX_ZONEID; ++zone)
+                {
+                    zoneutils::GetZone(zone)->PushPacket(
+                    PChar,
+                    CHAR_INZONE,
+                    new CChatMessagePacket(PChar, MESSAGE_SAY, data[6]));
+                }
             }
             break;
             case MESSAGE_EMOTION:    PChar->loc.zone->PushPacket(PChar, CHAR_INRANGE, new CChatMessagePacket(PChar, MESSAGE_EMOTION, data[6])); break;
@@ -3787,11 +3799,6 @@ void SmallPacket0x0B5(map_session_data_t* session, CCharEntity* PChar, CBasicPac
                 PChar->loc.zone->PushPacket(PChar, CHAR_INSHOUT, new CChatMessagePacket(PChar, MESSAGE_SHOUT, data[6]));
             }
             break;
-			case MESSAGE_SYSTEM_1:
-			{
-		    	ShowWarning(CL_RED"SENDING CHAT THROUGH PACKET SYSTEM!! \n" CL_RESET);
-			}
-			break;
             case MESSAGE_LINKSHELL:
             {
                 if (PChar->PLinkshell1 != nullptr)
@@ -3858,28 +3865,41 @@ void SmallPacket0x0B5(map_session_data_t* session, CCharEntity* PChar, CBasicPac
                 }
             }
             break;
-                case MESSAGE_YELL:
-               {
-                  if (map_config.audit_chat == 1 && map_config.audit_yell == 1)
-                  {
-                     std::string qStr = ("INSERT into audit_chat (speaker,type,message,datetime) VALUES('");
-                     qStr +=PChar->GetName();
-                     qStr +="','WORLD','";
-                     qStr += escape(data[6]);
-                     qStr +="',current_timestamp());";
-                     const char * cC = qStr.c_str();
-                     Sql_QueryStr(SqlHandle, cC);
-                  }
-                  for (uint16 zone = 0; zone < 284; ++zone)
-                   {
-                     zoneutils::GetZone(zone)->PushPacket(
-                        PChar, 
-                        CHAR_INZONE, 
-                        new CChatMessagePacket(PChar, MESSAGE_SHOUT, data[6]));
-                   }
-               
+            case MESSAGE_YELL:
+            {
+                if (PChar->loc.zone->CanUseMisc(MISC_YELL))
+                {
+                    if (gettick() >= PChar->m_LastYell)
+                    {
+                        PChar->m_LastYell = gettick() + (map_config.yell_cooldown * 1000);
+                        // ShowDebug(CL_CYAN" LastYell: %u \n" CL_RESET, PChar->m_LastYell);
+                        int8 packetData[4] {};
+                        WBUFL(packetData, 0) = PChar->id;
+
+                        message::send(MSG_CHAT_YELL, packetData, sizeof packetData, new CChatMessagePacket(PChar, MESSAGE_YELL, data[6]));
+                    }
+                    else // You must wait longer to perform that action.
+                    {
+                        PChar->pushPacket(new CMessageStandardPacket(PChar, 0, 38));
+                    }
+
+                    if (map_config.audit_chat == 1 && map_config.audit_yell == 1)
+                    {
+                        std::string qStr = ("INSERT into audit_chat (speaker,type,message,datetime) VALUES('");
+                        qStr += PChar->GetName();
+                        qStr += "','WORLD','";
+                        qStr += escape(data[6]);
+                        qStr += "',current_timestamp());";
+                        const char * cC = qStr.c_str();
+                        Sql_QueryStr(SqlHandle, cC);
+                    }
+                }
+                else // You cannot use that command in this area.
+                {
+                    PChar->pushPacket(new CMessageStandardPacket(PChar, 0, 256));
+                }
             }
-			break;
+            break;
             }
         }
     }
@@ -4611,15 +4631,18 @@ void SmallPacket0x0E7(map_session_data_t* session, CCharEntity* PChar, CBasicPac
     message::send(MSG_CHAT_SERVMES, 0, 0, new CChatMessagePacket(PChar, messageType, (int8*)bStr.c_str()));
     std::string qStr = ("INSERT into audit_chat (speaker,type,message,datetime) VALUES('");
     qStr += "Cleopatra";
-    qStr += "','WORLD','* ";
+    qStr += "','SAY','* ";
     qStr += PChar->GetName();
     qStr += " has logged out.";
     qStr += "',current_timestamp());";
     const char * cC = qStr.c_str();
     Sql_QueryStr(SqlHandle, cC);
 	
-	
-	
+	std::string varname;
+	uint32 value = time(nullptr); // this does nothing just a PH
+	const int8* fmtQuery = "INSERT INTO char_vars SET charid = %u, varname = 'LogoutRestStart', value = unix_timestamp() ON DUPLICATE KEY UPDATE value = unix_timestamp();";
+    Sql_Query(SqlHandle, fmtQuery, PChar->id, varname, value, value);
+	ShowDebug(CL_CYAN"%s has logged out. \n" CL_RESET, PChar->GetName());	
 	
     return;
 }
@@ -5122,7 +5145,7 @@ void SmallPacket0x100(map_session_data_t* session, CCharEntity* PChar, CBasicPac
         charutils::BuildingCharAbilityTable(PChar);
         charutils::BuildingCharWeaponSkills(PChar);
 
-        PChar->StatusEffectContainer->DelStatusEffectsByFlag(EFFECTFLAG_DISPELABLE | EFFECTFLAG_ON_JOBCHANGE);
+        PChar->StatusEffectContainer->DelStatusEffectsByFlag(EFFECTFLAG_DISPELABLE);
 
         PChar->ForParty([](CBattleEntity* PMember)
         {

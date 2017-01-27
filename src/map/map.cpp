@@ -776,6 +776,7 @@ int32 map_close_session(uint32 tick, map_session_data_t* map_session_data)
 
 int32 map_cleanup(uint32 tick, CTaskMgr::CTask* PTask)
 {
+
     map_session_list_t::iterator it = map_session_list.begin();
 
     while (it != map_session_list.end())
@@ -844,12 +845,22 @@ int32 map_cleanup(uint32 tick, CTaskMgr::CTask* PTask)
                         message::send(MSG_CHAT_SERVMES, 0, 0, new CChatMessagePacket(PChar, messageType, (int8*)bStr.c_str()));
                         std::string qStr = ("INSERT into audit_chat (speaker,type,message,datetime) VALUES('");
                         qStr += "Cleopatra";
-                        qStr += "','WORLD','* ";
+                        qStr += "','SAY','* ";
                         qStr += PChar->GetName();
                         qStr += " has logged out.";
                         qStr += "',current_timestamp());";
                         const char * cC = qStr.c_str();
                         Sql_QueryStr(SqlHandle, cC);
+						
+					
+                        //Handle Disconnects
+						std::string varname;				
+						uint32 value = time(nullptr);
+						const int8* fmtQuery = "INSERT INTO char_vars SET charid = %u, varname = 'LogoutRestStart', value = unix_timestamp() ON DUPLICATE KEY UPDATE value = unix_timestamp();";
+						Sql_Query(SqlHandle, fmtQuery, PChar->id, varname, value, value);
+
+						
+						
 						
                     }
                     else

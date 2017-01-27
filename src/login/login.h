@@ -49,6 +49,7 @@ struct login_config_t
     uint32 uiLobbyViewIp;
 
     uint16 expansions;
+    uint16 features;	
 
     const char* servername;
 
