@@ -527,3 +527,6 @@ INSERT INTO `traits` VALUES ('24','clear mind','21','60','3','295','1','SOA');
 -- Max MP Boost Tiers I ~ II
 INSERT INTO `traits` VALUES ('8','max mp boost','21','30','1','5','10','SOA');
 INSERT INTO `traits` VALUES ('8','max mp boost','21','60','2','5','20','SOA');
+
+-- Song Duration Bonus BRD Blank
+INSERT INTO `traits` VALUES ('128','song duration','10','30','1','454','45','SOA');

@@ -20,10 +20,15 @@ require("scripts/globals/gear_sets");
 function onGameIn(player, firstlogin, zoning)
 
 player:setVar("restingLogin", os.time());
+local playsession = player:getVar("RestPlaySession");
 local logintime = player:getVar("restingLogin");
 local lastlogin = player:getVar("logoutRestStart");
+local loginok = player:getVar("logoutOK");
 local bonus = 0;
 
+    if (player:getObjType() == TYPE_PC) then
+	player:addMod(MOD_RERAISE_III,1);
+	end
 
     if (not zoning) then -- Things checked ONLY during logon go here.
         if (firstlogin) then
@@ -33,9 +38,9 @@ local bonus = 0;
 		player:PrintToServer(string.format("%s has logged in...", player:getName()), 0x1C);
 		-- Login Logout message handled in Core
 		
-		  if (player:hasStatusEffect(EFFECT_RESTING_BONUS) == false) then
+		  if ((player:hasStatusEffect(EFFECT_RESTING_BONUS) == false) and loginok == 1) then
 			if ((logintime - lastlogin) >= 39600) then  --39600 is 11 hours
-			bonus = (((logintime - lastlogin) - 39600)) * 1.66; -- 1 hour is 1.66% exp
+			bonus = (((logintime - lastlogin) - 39600)) * 0.001388; -- 1 hour is 1.66% exp
 			math.floor(bonus);
 				if (bonus >= 120) then
 				bonus = 120; -- cap bonus at 120%
@@ -57,6 +62,18 @@ local bonus = 0;
 
     -- Things checked BOTH during logon AND zone in below this line.
     checkForGearSet(player);
+	
+	
+	
+	-------- Trust Cleanup -------
+	
+	if (player:getObjType() == TYPE_PC) then
+		player:setVar("PrisheSC",0);
+	    player:setVar("LionSC",0);
+		player:setVar("PrishePT",0);
+	    player:setVar("LionPT",0);
+    end		
+	
 	
 	
 	---------- Feretory Boons -------

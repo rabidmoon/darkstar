@@ -8500,6 +8500,20 @@ inline int32 CLuaBaseEntity::useMobAbility(lua_State* L)
     return 0;
 }
 
+inline int32 CLuaBaseEntity::useJobAbility(lua_State* L)
+{
+	DSP_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
+	DSP_DEBUG_BREAK_IF(m_PBaseEntity->objtype != TYPE_PET);
+
+	quAction_t action;
+	action.action = ACTION_JOBABILITY_START;
+	action.param = (lua_isnumber(L, 1) ? lua_tointeger(L, 1) : 0);
+	action.target = nullptr;
+	((CMobEntity*)m_PBaseEntity)->PBattleAI->m_actionQueue.push(action);
+
+	return 0;
+}
+
 inline int32 CLuaBaseEntity::actionQueueEmpty(lua_State* L)
 {
     DSP_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
@@ -9744,7 +9758,6 @@ inline int32 CLuaBaseEntity::setAllegiance(lua_State* L)
 inline int32 CLuaBaseEntity::stun(lua_State* L)
 {
     DSP_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
-    DSP_DEBUG_BREAK_IF(m_PBaseEntity->objtype != TYPE_MOB);
     DSP_DEBUG_BREAK_IF(lua_isnil(L, 1) || !lua_isnumber(L, 1));
 
     ((CAIMobDummy*)m_PBaseEntity->PBattleAI)->Stun(lua_tointeger(L, 1));
@@ -10647,6 +10660,7 @@ Lunar<CLuaBaseEntity>::Register_t CLuaBaseEntity::methods[] =
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,setDamage),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,castSpell),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,useMobAbility),
+	LUNAR_DECLARE_METHOD(CLuaBaseEntity,useJobAbility),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,actionQueueEmpty),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,actionQueueAbility),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,SetAutoAttackEnabled),
