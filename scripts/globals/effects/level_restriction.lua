@@ -28,7 +28,7 @@ function onEffectTick(target,effect)
   
  
 	local seconds = math.floor(duration / 1000);
-if (target:getObjType() == TYPE_PC) and (zone == 185) or (zone == 186) or (zone == 187) or (zone == 188) then	
+if (target:getObjType() == TYPE_PC) and (zone == 185) or (zone == 186) or (zone == 187) or (zone == 188) or (zone == 134) then	
     if (target:getVar("Dynamis_Time_Remaining") < 5400000 and (target:getVar("Dynamis_Time_Remaining") > 5396000)) then
 		local reduction = target:getVar("Dyna_KI_Counter");
 		target:PrintToPlayer("You have 90 minutes remaining in Dynamis", 0xD);
@@ -136,7 +136,14 @@ function onEffectLose(target,effect)
     target:delKeyItem(CRIMSON_GRANULES_OF_TIME);
     target:delKeyItem(AZURE_GRANULES_OF_TIME);
     target:delKeyItem(AMBER_GRANULES_OF_TIME);	
-	target:setPos(34.945,9.000,-49.667,111,0xF3);  -- Warp Back to Ru Lude Gardens	
+	target:setPos(34.945,9.000,-49.667,111,0xF3);  -- Warp Back to Ru Lude Gardens
+	elseif (zone == 134) then
+	target:setVar("ScyldMultiplier",0);
+	target:delKeyItem(ALABASTER_GRANULES_OF_TIME);
+    target:delKeyItem(CRIMSON_GRANULES_OF_TIME);
+    target:delKeyItem(AZURE_GRANULES_OF_TIME);
+    target:delKeyItem(AMBER_GRANULES_OF_TIME);	
+	target:setPos(-284.751,-39.923,-422.948,235,0x6F);  -- Warp Back to Glacier	
 	elseif (zone == 86) and (chest == 1) then
 	target:setVar("IxionChest",0);	
 	target:setPos(-319,0,523,94,0x62); -- S Campaign [S]

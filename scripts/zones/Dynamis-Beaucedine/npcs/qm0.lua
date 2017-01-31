@@ -79,12 +79,12 @@ elseif (totalkeys == 2) then -- Spawn with 2 puks
 	SpawnMob(17326082):updateClaim(player);	
 	SpawnMob(17326083):updateClaim(player);	
     player:PrintToPlayer("Your Key Items have prevented 2 of the minions from spawning!", 0xD);	
-elseif (totalkeys == 1) then -- Spawn with 1 puks
+elseif (totalkeys == 3) then -- Spawn with 1 puks
     qm0:setStatus(STATUS_DISAPPEAR);
 	SpawnMob(17326081):updateClaim(player);	
 	SpawnMob(17326082):updateClaim(player);
     player:PrintToPlayer("Your Key Items have prevented 3 of the minions from spawning!", 0xD);		
-elseif (totalkeys == 1) then -- Spawn with 0 puks
+elseif (totalkeys == 4) then -- Spawn with 0 puks
     qm0:setStatus(STATUS_DISAPPEAR);
 	SpawnMob(17326081):updateClaim(player);	
     player:PrintToPlayer("Your Key Items have prevented 4 of the minions from spawning!", 0xD);		

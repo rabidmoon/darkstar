@@ -4635,19 +4635,33 @@ void CAIPetDummy::ActionFall()
 
 void CAIPetDummy::ActionDeath()
 {
-    
-	
-	//if (m_PPet->getZone() == m_PPet->PMaster->getZone()){	
-    //ShowWarning(CL_GREEN"Trust in Same Zone, Disappear in 3 seconds \n" CL_RESET);
-	if (m_Tick - m_LastActionTime > 4500) {
+    if (m_PPet->getPetType() == PETTYPE_WYVERN || m_PPet->getPetType() == PETTYPE_AUTOMATON)
+	{
+	    if (m_Tick - m_LastActionTime > 3000) {
         m_PPet->status = STATUS_DISAPPEAR;
         m_PPet->StatusEffectContainer->DelStatusEffectsByFlag(EFFECTFLAG_DEATH, true);
 
         m_PPet->loc.zone->PushPacket(m_PPet, CHAR_INRANGE, new CEntityUpdatePacket(m_PPet, ENTITY_DESPAWN, UPDATE_NONE));
 
         m_ActionType = ACTION_NONE;
-    }
-  // }
+        }
+	}
+    else
+    {
+	    //if (m_PPet->getZone() == m_PPet->PMaster->getZone()){	
+        //ShowWarning(CL_GREEN"Trust in Same Zone, Disappear in 3 seconds \n" CL_RESET);
+	    if (m_Tick - m_LastActionTime > 4500) {
+            m_PPet->status = STATUS_DISAPPEAR;
+            m_PPet->StatusEffectContainer->DelStatusEffectsByFlag(EFFECTFLAG_DEATH, true);
+
+            m_PPet->loc.zone->PushPacket(m_PPet, CHAR_INRANGE, new CEntityUpdatePacket(m_PPet, ENTITY_DESPAWN, UPDATE_NONE));
+
+            m_ActionType = ACTION_NONE;
+        }
+    }	
+	
+
+
   
 
 }

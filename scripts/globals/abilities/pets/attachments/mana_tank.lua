@@ -20,22 +20,22 @@ power = 4;
 end
 
 
-
 local pet = player:getPet();
-pet:setMod(MOD_REFRESH, power);
+pet:addMod(MOD_REFRESH, power);
 end
 
 function onManeuverLose(player,maneuvers)
 local power = 0;
-if (maneuvers == 3) then 
+local dark = player:getEffectsCount(EFFECT_DARK_MANEUVER);
+if (dark == 3) then 
 power = 2;
-elseif (maneuvers == 2) then
+elseif (dark == 2) then
 power = 1;
-elseif (maneuvers == 1) then
+elseif (dark == 1) then
 power = 1;
 end
 local pet = player:getPet();
-pet:setMod(MOD_REFRESH, power);
+pet:delMod(MOD_REFRESH, power);
 
 end;
 

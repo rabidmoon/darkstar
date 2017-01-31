@@ -26,6 +26,7 @@ function onEffectTick(target,effect)
 
 	if (effect:getTickCount() > 5) then
 	    target:setVar("logoutRestStart", os.time());  -- sets variable for resting bonus
+		target:setVar("logoutOK", 1); -- sets variable saying the user logged out properly
 		target:leavegame();
 	else
 		target:messageSystem(effect:getPower(),30-effect:getTickCount()*5);

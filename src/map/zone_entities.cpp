@@ -341,6 +341,12 @@ void CZoneEntities::DecreaseZoneCounter(CCharEntity* PChar)
 	m_charList.erase(PChar->targid);
 
 	ShowDebug(CL_CYAN"CZone:: %s DecreaseZoneCounter <%u> %s\n" CL_RESET, m_zone->GetName(), m_charList.size(), PChar->GetName());
+	
+	// Update Logout Resting timer on each zone in case of server Crash
+	std::string varname;				
+	uint32 value = time(nullptr);
+	const int8* fmtQuery = "INSERT INTO char_vars SET charid = %u, varname = 'LogoutRestStart', value = unix_timestamp() ON DUPLICATE KEY UPDATE value = unix_timestamp();";
+	Sql_Query(SqlHandle, fmtQuery, PChar->id, varname, value, value);
 }
 
 uint16 CZoneEntities::GetNewTargID()

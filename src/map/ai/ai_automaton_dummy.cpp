@@ -2854,7 +2854,7 @@ int16 CAIAutomatonDummy::StormFrameStormAttack()
 
 	if (m_Tick >= m_LastMagicTimeHeal + m_magicHealRecast)  // Look for last magic healing spell time 
 	{
-		if (mostWounded != nullptr)
+		if (mostWounded != nullptr && m_PBattleTarget->objtype != TYPE_MOB)
 		{
         m_PBattleSubTarget = mostWounded;
 		if (mskill > 146)
@@ -3086,7 +3086,7 @@ int16 CAIAutomatonDummy::StormFrameStormAttack()
 	//--------------------------------------------//
 	if (m_Tick >= m_LastMagicTimeEle + m_magicElementalRecast)  // Look for last ele spell time and force magic casting if ice maneuver is up
 	{
-	 if (m_PBattleTarget != nullptr && m_PBattleTarget->getMod(MOD_THUNDERRES) < 0 && m_PBattleTarget->GetHPP() <= nukeHPP)  // Weak to Thunder
+	 if (m_PBattleTarget != nullptr && m_PBattleTarget->getMod(MOD_THUNDERRES) < 0 && m_PBattleTarget->GetHPP() <= nukeHPP && m_PBattleTarget->objtype == TYPE_MOB)  // Weak to Thunder
 	 {
 	 ShowDebug("Monster is Weak to Thunder");
 	 m_PBattleSubTarget = m_PBattleTarget;
@@ -3157,7 +3157,7 @@ int16 CAIAutomatonDummy::StormFrameStormAttack()
 		m_magicElementCast = 1;
 		m_magicElementalRecast = 18000;
     }
-	 else if (m_PBattleTarget != nullptr && m_PBattleTarget->getMod(MOD_ICERES) < 0 && m_PBattleTarget->GetHPP() <= nukeHPP)  // Weak to Ice
+	 else if (m_PBattleTarget != nullptr && m_PBattleTarget->getMod(MOD_ICERES) < 0 && m_PBattleTarget->GetHPP() <= nukeHPP && m_PBattleTarget->objtype == TYPE_MOB)  // Weak to Ice
 	{
 	    ShowDebug("Monster is Weak to Ice");
 		m_PBattleSubTarget = m_PBattleTarget;
@@ -3224,7 +3224,7 @@ int16 CAIAutomatonDummy::StormFrameStormAttack()
     m_magicElementCast = 1;
 	m_magicElementalRecast = 18000;	
     }
-	 else if (m_PBattleTarget != nullptr && m_PBattleTarget->getMod(MOD_FIRERES) < 0 && m_PBattleTarget->GetHPP() <= nukeHPP)  // Weak to Fire
+	 else if (m_PBattleTarget != nullptr && m_PBattleTarget->getMod(MOD_FIRERES) < 0 && m_PBattleTarget->GetHPP() <= nukeHPP && m_PBattleTarget->objtype == TYPE_MOB)  // Weak to Fire
 	{
 	    ShowDebug("Monster is Weak to Fire");
 		m_PBattleSubTarget = m_PBattleTarget;
@@ -3291,7 +3291,7 @@ int16 CAIAutomatonDummy::StormFrameStormAttack()
     m_magicElementCast = 1;
 	m_magicElementalRecast = 18000;	
     }
-	 else if (m_PBattleTarget != nullptr && m_PBattleTarget->getMod(MOD_WINDRES) < 0 && m_PBattleTarget->GetHPP() <= nukeHPP)  // Weak to Wind
+	 else if (m_PBattleTarget != nullptr && m_PBattleTarget->getMod(MOD_WINDRES) < 0 && m_PBattleTarget->GetHPP() <= nukeHPP && m_PBattleTarget->objtype == TYPE_MOB)  // Weak to Wind
 	{
 	    ShowDebug("Monster is Weak to Wind");
 		m_PBattleSubTarget = m_PBattleTarget;
@@ -3358,7 +3358,7 @@ int16 CAIAutomatonDummy::StormFrameStormAttack()
     m_magicElementCast = 1;
 	m_magicElementalRecast = 18000;	
     }
-	 else if (m_PBattleTarget != nullptr && m_PBattleTarget->getMod(MOD_WATERRES) < 0 && m_PBattleTarget->GetHPP() <= nukeHPP)  // Weak to Water
+	 else if (m_PBattleTarget != nullptr && m_PBattleTarget->getMod(MOD_WATERRES) < 0 && m_PBattleTarget->GetHPP() <= nukeHPP && m_PBattleTarget->objtype == TYPE_MOB)  // Weak to Water
 	{
 	    ShowDebug("Monster is Weak to Water");
 		m_PBattleSubTarget = m_PBattleTarget;
@@ -3425,7 +3425,7 @@ int16 CAIAutomatonDummy::StormFrameStormAttack()
     m_magicElementCast = 1;
 	m_magicElementalRecast = 18000;	
     }
-    else if (m_PBattleTarget != nullptr && m_PBattleTarget->getMod(MOD_EARTHRES) < 0 && m_PBattleTarget->GetHPP() <= nukeHPP)  // Weak to Earth
+    else if (m_PBattleTarget != nullptr && m_PBattleTarget->getMod(MOD_EARTHRES) < 0 && m_PBattleTarget->GetHPP() <= nukeHPP && m_PBattleTarget->objtype == TYPE_MOB)  // Weak to Earth
 	{
 	    ShowDebug("Monster is Weak to Earth");
 		m_PBattleSubTarget = m_PBattleTarget;
@@ -3494,7 +3494,7 @@ int16 CAIAutomatonDummy::StormFrameStormAttack()
     }
 	// No elemental magic weakness found - Cast highest Nuke learned
 	// TODO: Add check for Ice maneuver to force casting at any time.
-	else if (m_PBattleTarget != nullptr && m_PBattleTarget->GetHPP() <= nukeHPP)
+	else if (m_PBattleTarget != nullptr && m_PBattleTarget->GetHPP() <= nukeHPP && m_PBattleTarget->objtype == TYPE_MOB)
 	{
 	    ShowDebug("No Weakness Casting Highest Spell \n");
         m_PBattleSubTarget = m_PBattleTarget;

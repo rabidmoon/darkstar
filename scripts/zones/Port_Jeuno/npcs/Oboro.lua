@@ -1027,7 +1027,7 @@ if (job == 20) and (trade:hasItemQty(17098, 1)) and trade:hasItemQty( 1126, 15 )
              -- Complete the trade..
             player:tradeComplete();
 			player:PrintToPlayer("Oboro : Thank you for the requested items. Come see me again when you are stronger.", 0xD);
-			player:addItem(17098, 1, 45, 11, 296, 2);
+			player:addItem(17098, 1, 45, 11, 141, 2);
 			player:setVar("SCHAFweapon", 1);
 			player:messageSpecial(ITEM_OBTAINED, 17098);
 			
@@ -1036,7 +1036,7 @@ end
              -- Complete the trade..
             player:tradeComplete();
 			player:PrintToPlayer("Oboro : Thank you for the requested items. Come see me again when you are stronger.", 0xD);
-			player:addItem(17098, 1, 45, 23, 296, 4);
+			player:addItem(17098, 1, 45, 23, 141, 4);
 			player:setVar("SCHAFweapon", 2);
 			player:messageSpecial(ITEM_OBTAINED, 17098);
 			
@@ -1045,7 +1045,7 @@ end
              -- Complete the trade..
             player:tradeComplete();
 			player:PrintToPlayer("Oboro : Thank you for the requested items. Come see me again when you are stronger.", 0xD);
-			player:addItem(17098, 1, 45, 30, 296, 6);
+			player:addItem(17098, 1, 45, 30, 141, 6);
 			player:setVar("SCHAFweapon", 3);
 			player:messageSpecial(ITEM_OBTAINED, 17098);
 end	
@@ -1082,9 +1082,16 @@ local level = player:getMainLvl();
 	((job == 13) and (player:getVar("NINAFweapon") == 3)) or
 	((job == 14) and (player:getVar("DRGAFweapon") == 3)) or
 	((job == 15) and (player:getVar("SAMAFweapon") == 3)) then
-	player:PrintToPlayer("Oboro : Relic? Never heard of it, talk to the goblin over there.", 0xD);
-	player:PrintToPlayer("Oboro : I am busy trying to invent a new type of Artifact Weapon.", 0xD);
+	player:PrintToPlayer("Oboro : I can't do anything else at the moment but you have two choices...Either talk", 0xD);
+	player:PrintToPlayer("Oboro : to that Goblin over there or go to my friend Chasalvige in Nothern San d'Oria.", 0xD);
 	
+   elseif ((job == 16) and (player:getVar("BLUAFweapon") == 3)) or
+   ((job == 17) and (player:getVar("CORAFweapon") == 3)) or
+   ((job == 18) and (player:getVar("PUPAFweapon") == 3)) or
+   ((job == 19) and (player:getVar("SCHAFweapon") == 3)) or
+   ((job == 20) and (player:getVar("PUPAFweapon") == 3)) then
+   	player:PrintToPlayer("Oboro : You might want to go talk to my friend Chasalvige in Northern San d'Oria.  He might", 0xD);
+    player:PrintToPlayer("Oboro : be able to do something else with that weapon.", 0xD);  
    elseif ((job == 18) and (level >=47)) and (player:hasItem(18353) == false) then
    player:PrintToPlayer("Oboro : You are becoming a strong Puppetmaster.  I've made these new weapons, try them out.", 0xD);
    player:setVar("PUPAFweapon",1);
