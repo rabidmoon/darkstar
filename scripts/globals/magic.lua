@@ -447,6 +447,7 @@ function getMagicHitRate(caster, target, skillType, element, percentBonus, bonus
     local magicacc = caster:getMod(MOD_MACC) + caster:getILvlMacc();
 
     if (skillType ~= 0) then
+	    -- printf("MAX SKILL TYPE TRIGGERED");
         magicacc = magicacc + caster:getSkillLevel(skillType) + caster:getSkillLevel(24) + caster:getMod(79 + skillType) + caster:getMod(79 + 24);
 	else
         -- for mob skills / additional effects which don't have a skill

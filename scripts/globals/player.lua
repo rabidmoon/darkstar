@@ -50,7 +50,12 @@ local bonus = 0;
 			end
 			end
 		end	
-		
+	if (player:hasKeyItem(MAGICKED_ASTROLABE) == false) then
+	    player:addKeyItem(MAGICKED_ASTROLABE);
+	end
+	if (player:hasKeyItem(PORTAL_CHARM) == false) then
+	    player:addKeyItem(PORTAL_CHARM);
+	end	
 		
 		
 		

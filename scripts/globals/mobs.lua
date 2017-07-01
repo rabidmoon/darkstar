@@ -38,7 +38,9 @@ function onMobDeathEx(mob, killer, isKillShot, isWeaponSkillKill)
 	local infamycap = killer:getVar("infamycap");
 	local infamymult = killer:getVar("infamymult");
 	local newinfamymult = (infamymult / 2);
- 
+	local cardmob = mob:getID();
+    local carddrop = math.random(1,10);
+	local aura = killer:getVar("FerretoryAura");
 	
 
 
@@ -192,7 +194,7 @@ end
 end	
 
     -------------------- Ferretory Quest #8 (Undead and Arcana) -----------------------
-    if (mobfamily == 19) and (killer:getVar("FerretoryQuest75") == 8) and (mob:checkBaseExp())then
+    if (mobfamily == 19) and (killer:getVar("FerretoryQuest75Exp") == 8) and (mob:checkBaseExp())then
 	    if (killer:getVar("FerretoryUndead")) > 0 then -- if the kills needed are greater than 0
         killer:setVar("FerretoryUndead",killa - 1); -- subtract kill
 		killa = killer:getVar("FerretoryUndead");
@@ -206,7 +208,7 @@ end
 		end
 		end	
     end
-	if (mobfamily == 3) and (killer:getVar("FerretoryQuest75") == 8) and (mob:checkBaseExp())then
+	if (mobfamily == 3) and (killer:getVar("FerretoryQuest75Exp") == 8) and (mob:checkBaseExp())then
 	    if (killer:getVar("FerretoryArcana")) > 0 then -- if the kills needed are greater than 0
         killer:setVar("FerretoryArcana",killb - 1); -- subtract kill
 		killa = killer:getVar("FerretoryUndead");
@@ -223,7 +225,7 @@ end
 
 	-------------------- Ferretory Quest #9 (Demon/Dragon) -----------------------
 	
-	if ((mobfamily == 9) or (mobfamily == 10)) and (killer:getVar("FerretoryQuest75") == 9) and (mob:checkBaseExp())then  -- check for Birds, check if quest is active, and check if the level difference is less than 10
+	if ((mobfamily == 9) or (mobfamily == 10)) and (killer:getVar("FerretoryQuest75Exp") == 9) and (mob:checkBaseExp())then  -- check for Birds, check if quest is active, and check if the level difference is less than 10
 		if  (killer:getVar("FerretoryDragonDemon")) > 0 then  -- if the kills needed are greater than 0
 		killer:setVar("FerretoryDragonDemon",killc - 1);  -- Subtract kill
 		killc = killer:getVar("FerretoryDragonDemon");
@@ -239,7 +241,7 @@ end
 
 	-------------------- Ferretory Quest #10 (Beastmen) -----------------------
 	
-	if ((mobfamily == 7) and (killer:getVar("FerretoryQuest75") == 10) and (mob:checkBaseExp())) then 
+	if ((mobfamily == 7) and (killer:getVar("FerretoryQuest75Exp") == 10) and (mob:checkBaseExp())) then 
 		if (killer:getVar("FerretoryBeastmen")) > 0 then  -- if the kills needed are greater than 0
 		killer:setVar("FerretoryBeastmen",killd - 1);  -- Subtract kill
 		killd = killer:getVar("FerretoryBeastmen");
@@ -325,13 +327,11 @@ end
 end
 end
 
+-- 62, 61, 58,59
 
 
+ 
 
--- if (mob:checkBaseExp()) then
-  --   newbonus = restexp - reduction;
-	-- killer:setVar("RestExp",newbonus);
-	-- end
 	
 
 

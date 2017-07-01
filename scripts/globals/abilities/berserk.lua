@@ -22,7 +22,13 @@ end;
 -----------------------------------
 
 function onUseAbility(player,target,ability)
-    player:addStatusEffect(EFFECT_BERSERK,1,0,180);
+
+    local dexboost = target:getMainLvl()/7;
+
+    if (target:getMainJob()~=1) then --sjob war, use sub level
+        dexboost = target:getSubLvl()/7;
+    end
+    player:addStatusEffect(EFFECT_BERSERK,dexboost,0,180);
 
     return EFFECT_BERSERK;
 end;
