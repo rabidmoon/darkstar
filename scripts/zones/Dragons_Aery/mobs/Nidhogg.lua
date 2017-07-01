@@ -6,6 +6,7 @@
 require("scripts/globals/settings");
 require("scripts/globals/titles");
 require("scripts/globals/status");
+require("scripts/globals/mobscaler");
 
 -----------------------------------
 -- onMobInitialize Action
@@ -14,11 +15,16 @@ require("scripts/globals/status");
 function onMobInitialize(mob)
 end;
 
+function onMobSpawn(mob)
+	mob:setLocalVar("PartySize",5); 
+end	
+
 -----------------------------------
 -- onMobFight Action
 -----------------------------------
 
 function onMobFight(mob, target)
+    mobScaler(mob,target);
     local battletime = mob:getBattleTime();
     local twohourTime = mob:getLocalVar("twohourTime");
 
@@ -41,6 +47,12 @@ end;
 function onMobDeath(mob, killer)
 
     killer:addTitle(NIDHOGG_SLAYER);
+	
+    if (killer:getObjType() == TYPE_PC) then
+	killer:setVar("Nidhogg_Win",1);
+	killer:addCurrency('prestiege', 250);
+	killer:PrintToPlayer("You obtain 250 Prestiege Points!", 0xD);
+	end
 
     -- Set Nidhogg's Window Open Time
     if (LandKingSystem_HQ ~= 1) then

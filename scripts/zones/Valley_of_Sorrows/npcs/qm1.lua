@@ -17,17 +17,18 @@ require("scripts/globals/status");
 function onTrade(player,npc,trade)
     local Adamantoise = GetMobAction(17301537);
     local Aspidochelone = GetMobAction(17301538);
+		local paragon = player:getVar("Kupo_Paragon");
 
     if ((Aspidochelone == ACTION_NONE or Aspidochelone == ACTION_SPAWN)
     and (Adamantoise == ACTION_NONE or Adamantoise == ACTION_SPAWN)) then
         -- Trade Clump of Blue Pondweed
-        if (trade:hasItemQty(3343,1) and trade:getItemCount() == 1) then
+        if (trade:hasItemQty(3343,1) and trade:getItemCount() == 1 and (paragon == 1)) then
             if (LandKingSystem_NQ ~= 0) then
                 player:tradeComplete();
                 SpawnMob(17301537):updateClaim(player);
             end
         -- Trade Clump of Red Pondweed
-        elseif (trade:hasItemQty(3344,1) and trade:getItemCount() == 1) then
+        elseif (trade:hasItemQty(3344,1) and trade:getItemCount() == 1 and (paragon == 1)) then
             if (LandKingSystem_HQ ~= 0) then
                 player:tradeComplete();
                 SpawnMob(17301538):updateClaim(player);

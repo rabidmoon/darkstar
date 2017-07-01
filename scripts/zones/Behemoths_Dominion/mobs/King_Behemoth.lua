@@ -6,6 +6,7 @@
 require("scripts/globals/settings");
 require("scripts/globals/titles");
 require("scripts/globals/status");
+require("scripts/globals/mobscaler");
 
 -----------------------------------
 -- onMobInitialize Action
@@ -13,6 +14,14 @@ require("scripts/globals/status");
 
 function onMobInitialize(mob)
     mob:setMobMod(MOBMOD_MAGIC_COOL, 60);
+end;
+
+function onMobSpawn(mob)
+	mob:setLocalVar("PartySize",8); 
+end	
+
+function onMobFight(mob, target)
+    mobScaler(mob,target);
 end;
 
 -----------------------------------
@@ -29,6 +38,15 @@ function onSpellPrecast(mob, spell)
     end
 end;
 
+function onMobRoam(mob)
+    local spawnTime = mob:getLocalVar("popTime");
+
+    if (os.time() - spawnTime > 180) then
+        DespawnMob(mob:getID());
+    end
+
+end;
+
 -----------------------------------
 -- onMobDeath
 -----------------------------------
@@ -36,6 +54,11 @@ end;
 function onMobDeath(mob, killer)
 
     killer:addTitle(BEHEMOTH_DETHRONER);
+	if (killer:getObjType() == TYPE_PC) then
+	killer:setVar("King_Behemoth_Win",1);
+	killer:addCurrency('prestiege', 250);
+	killer:PrintToPlayer("You obtain 250 Prestiege Points!", 0xD);
+	end
 
     -- Todo: move this to SQL after drop slots are a thing
     if (math.random(1,100) <= 5) then -- Hardcoded "this or this item" drop rate until implemented.

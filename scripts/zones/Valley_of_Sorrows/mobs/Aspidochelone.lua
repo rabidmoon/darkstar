@@ -6,6 +6,7 @@
 require("scripts/globals/settings");
 require("scripts/globals/titles");
 require("scripts/globals/status");
+require("scripts/globals/mobscaler");
 
 -----------------------------------
 -- onMobInitialize Action
@@ -14,6 +15,13 @@ require("scripts/globals/status");
 function onMobInitialize(mob)
 end;
 
+function onMobSpawn(mob)
+	mob:setLocalVar("PartySize",5); 
+end	
+
+function onMobFight(mob, target)
+    mobScaler(mob,target);
+end;
 -----------------------------------
 -- onMobDeath
 -----------------------------------
@@ -21,6 +29,11 @@ end;
 function onMobDeath(mob, killer)
 
     killer:addTitle(ASPIDOCHELONE_SINKER);
+	if (killer:getObjType() == TYPE_PC) then
+	killer:setVar("Aspi_Win",1);
+	killer:addCurrency('prestiege', 250);
+	killer:PrintToPlayer("You obtain 250 Prestiege Points!", 0xD);
+	end
 
     -- Set Aspidochelone's Window Open Time
     if (LandKingSystem_HQ ~= 1) then

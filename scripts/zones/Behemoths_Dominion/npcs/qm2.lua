@@ -17,18 +17,19 @@ require("scripts/globals/status");
 function onTrade(player,npc,trade)
     local Behemoth = GetMobAction(17297440);
     local KingBehemoth = GetMobAction(17297441);
+	local paragon = player:getVar("Kupo_Paragon");
 
     if ((KingBehemoth == ACTION_NONE or KingBehemoth == ACTION_SPAWN)
     and (Behemoth == ACTION_NONE or Behemoth == ACTION_SPAWN)) then
         -- Trade Beastly Shank
-        if (trade:hasItemQty(3341,1) and trade:getItemCount() == 1) then
-            if (LandKingSystem_NQ ~= 0) then
+        if (trade:hasItemQty(3341,1) and trade:getItemCount() == 1 and (paragon == 1)) then
+            if (LandKingSystem_NQ ~= 1) then
                 player:tradeComplete();
                 SpawnMob(17297440):updateClaim(player);
             end
         -- Trade Savory Shank
-        elseif (trade:hasItemQty(3342,1) and trade:getItemCount() == 1) then
-            if (LandKingSystem_HQ ~= 0) then
+        elseif (trade:hasItemQty(3342,1) and trade:getItemCount() == 1 and (paragon == 1)) then
+            if (LandKingSystem_HQ ~= 1) then
                 player:tradeComplete();
                 SpawnMob(17297441):updateClaim(player);
             end

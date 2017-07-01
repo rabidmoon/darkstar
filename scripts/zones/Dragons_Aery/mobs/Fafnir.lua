@@ -6,6 +6,7 @@
 require("scripts/globals/settings");
 require("scripts/globals/titles");
 require("scripts/globals/status");
+require("scripts/globals/mobscaler");
 
 -----------------------------------
 -- onMobInitialize
@@ -14,12 +15,26 @@ require("scripts/globals/status");
 function onMobInitialize(mob)
 end;
 
+function onMobSpawn(mob)
+	mob:setLocalVar("PartySize",3); 
+end	
+
+function onMobFight(mob, target)
+    mobScaler(mob,target);
+end;
+
 -----------------------------------
 -- onMobDeath
 -----------------------------------
 
 function onMobDeath(mob, killer)
     killer:addTitle(FAFNIR_SLAYER);
+	if (killer:getObjType() == TYPE_PC) then
+	killer:setVar("Fafnir_Win",1);
+	killer:addCurrency('prestiege', 100);
+	killer:PrintToPlayer("You obtain 100 Prestiege Points!", 0xD);
+	end
+	
 end;
 
 -----------------------------------
