@@ -19,6 +19,11 @@ end;
 -----------------------------------
 
 function onMobSpawn(mob)
+mob:setLocalVar("PartySize",6); 
+end;
+
+function onMobFight( mob, target )
+    mobScaler(mob,target);
 end;
 
 -----------------------------------

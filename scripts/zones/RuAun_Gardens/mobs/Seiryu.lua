@@ -5,6 +5,7 @@
 
 require("scripts/zones/RuAun_Gardens/TextIDs");
 require("scripts/globals/status");
+require("scripts/globals/mobscaler");
 
 -----------------------------------
 -- onMobInitialize
@@ -19,6 +20,11 @@ end;
 -----------------------------------
 
 function onMobSpawn(mob)
+ 	mob:setLocalVar("PartySize",6);  -- Large Party of 75's can defeat Byakko
+end;
+
+function onMobFight( mob, target )
+    mobScaler(mob,target);
 end;
 
 -----------------------------------

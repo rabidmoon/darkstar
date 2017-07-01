@@ -7,6 +7,7 @@ package.loaded["scripts/zones/The_Shrine_of_RuAvitau/TextIDs"] = nil;
 
 require("scripts/globals/status");
 require( "scripts/zones/The_Shrine_of_RuAvitau/TextIDs" );
+require("scripts/globals/mobscaler");
 
 -- TODO: Looked like pets had an additional effect: stun with an unknown proc rate
 -- TODO: "Links with Slave Globes, and Slave Globes link with Defenders. Defenders do not link with Slave Globes or Mother Globe."
@@ -22,6 +23,7 @@ end;
 -----------------------------------
 
 function onMobSpawn(mob)
+    mob:setLocalVar("PartySize",5);
 	mob:addStatusEffectEx(EFFECT_SHOCK_SPIKES,0,60,0,0); -- ~60 damage
 	-- TODO: Effect can be stolen, giving a THF (Aura Steal) or BLU (Voracious Trunk) a 60 minute shock spikes effect (unknown potency).
 	-- If effect is stolen, he will recast it instantly. 
@@ -35,7 +37,7 @@ end;
 -----------------------------------
 function onMobFight(mob, target)
    -- Keep pets linked
-   
+    mobScaler(mob,target);
 	local MotherGlobe = mob:getID();
    
 	for i = MotherGlobe+1, MotherGlobe+6 do

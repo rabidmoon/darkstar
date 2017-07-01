@@ -10,6 +10,7 @@ require( "scripts/globals/titles" );
 require( "scripts/globals/ability" );
 require( "scripts/globals/pets" );
 require( "scripts/globals/status" );
+require("scripts/globals/mobscaler");
 
 -----------------------------------
 -- onMobInitialize Action
@@ -21,6 +22,7 @@ end
 -- onMobSpawn Action
 -----------------------------------
 function onMobSpawn(mob)
+    mob:setLocalVar("PartySize",9);  -- Large Party of 75's can defeat Kirin
     mob:setMod(MOD_WINDRES, -64);
 end
 
@@ -28,6 +30,36 @@ end
 -- onMobFight Action
 -----------------------------------
 function onMobFight( mob, target )
+
+    local size = target:getPartySize();
+    -- printf("Total Size: %s",size);	
+    mobScaler(mob,target);
+	
+	local att = mob:getStat(MOD_ATT);
+	local def = mob:getStat(MOD_DEF);
+	local eva = mob:getStat(MOD_EVA);
+	local acc = mob:getStat(MOD_ACC);
+	local patt = target:getStat(MOD_ATT);
+	local pdef = target:getStat(MOD_DEF);
+	local pdif = patt / def;
+	local mobpdif = att / pdef;
+	local plvl = target:getMainLvl();
+	local mlvl = mob:getMainLvl();
+	local lvlcor = (mlvl - plvl);
+	local cpdif = (patt / def) - (0.05 * lvlcor);
+   -- printf("Attack is: %s",att);
+	-- printf("Defense is: %s",def);
+	printf("Player PDIF is: %s",pdif);
+	printf("Player Corrected PDIF is: %s",cpdif);	
+	-- printf("MOB PDIF is: %s",mobpdif);	
+	-- printf("Evasion is: %s",eva);
+	-- printf("Accuray is: %s",acc);
+
+
+
+
+
+
     if (mob:getHPP() < math.random(50,60) and mob:getLocalVar("astralFlow") == 0) then
         mob:useMobAbility(478);
         -- Spawn Avatar

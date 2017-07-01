@@ -19,6 +19,7 @@ end;
 -----------------------------------
 
 function onMobSpawn(mob)
+  mob:setLocalVar("PartySize",6);  -- Large Party of 75's can defeat Byakko
 end;
 
 -----------------------------------
@@ -26,7 +27,12 @@ end;
 -----------------------------------
 
 function onAdditionalEffect(mob, target, damage)
-    local dmg = math.random(140,160)
+
+    local size = mob:getLocalVar("PartySize");
+	
+	local dmg = math.random(size*5,size*9);
+
+    -- local dmg = math.random(140,160)
     local params = {};
     params.bonusmab = 0;
     params.includemab = false;
@@ -38,6 +44,20 @@ function onAdditionalEffect(mob, target, damage)
 
     return SUBEFFECT_WATER_DAMAGE, MSGBASIC_ADD_EFFECT_DMG, dmg;
 end;
+
+
+function onMobFight(mob,target)
+   -- local size = target:getPartySize();
+    -- printf("Total Size: %s",size);	
+	mobScaler(mob,target);
+	
+
+	
+	-- printf("Attack is: %s",att);
+	-- printf("Defense is: %s",def);
+	-- printf("Evasion is: %s",eva);
+	-- printf("Accuray is: %s",acc);
+end
 
 -----------------------------------
 -- onMobDeath

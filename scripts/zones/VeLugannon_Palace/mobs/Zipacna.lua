@@ -2,6 +2,9 @@
 -- Area: VeLugannon Palace
 -- NPC:  Zipacna
 -----------------------------------
+
+require("scripts/globals/mobscaler");
+
 local path = {
 -202, 0, 391,
 -209, 0, 387,
@@ -89,10 +92,15 @@ local path = {
 -----------------------------------
 
 function onMobSpawn(mob)
+ 	mob:setLocalVar("PartySize",4);
 end;
 
 function onMobSpawn(mob)
 	onMobRoam(mob);
+end;
+
+function onMobFight( mob, target )
+    mobScaler(mob,target);
 end;
 
 function onPath(mob)

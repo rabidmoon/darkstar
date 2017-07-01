@@ -5,6 +5,7 @@
 
 require("scripts/zones/RuAun_Gardens/TextIDs");
 require("scripts/globals/status");
+require("scripts/globals/mobscaler");
 
 -----------------------------------
 -- onMobInitialize
@@ -12,6 +13,7 @@ require("scripts/globals/status");
 
 function onMobInitialize(mob)
     mob:setMobMod(MOBMOD_ADD_EFFECT,mob:getShortID());
+
 end;
 
 -----------------------------------
@@ -19,6 +21,7 @@ end;
 -----------------------------------
 
 function onMobSpawn(mob)
+ 	mob:setLocalVar("PartySize",6);  -- Large Party of 75's can defeat Byakko
 end;
 
 -----------------------------------
@@ -26,7 +29,11 @@ end;
 -----------------------------------
 
 function onAdditionalEffect(mob, target, damage)
-    local dmg = math.random(35,50);
+    local size = mob:getLocalVar("PartySize");
+	
+	local dmg = math.random(size*5,size*9);
+	
+		-- local dmg = math.random(35,50);
     local params = {};
     params.bonusmab = 0;
     params.includemab = false;
@@ -38,6 +45,28 @@ function onAdditionalEffect(mob, target, damage)
 
     return SUBEFFECT_LIGHT_DAMAGE, MSGBASIC_ADD_EFFECT_DMG, dmg;
 end;
+
+
+function onMobFight(mob,target)
+    local size = target:getPartySize();
+    -- printf("Total Size: %s",size);	
+    mobScaler(mob,target);
+	
+	local att = mob:getStat(MOD_ATT);
+	local def = mob:getStat(MOD_DEF);
+	local eva = mob:getStat(MOD_EVA);
+	local acc = mob:getStat(MOD_ACC);
+	local patt = target:getStat(MOD_ATT);
+	local pdef = target:getStat(MOD_DEF);
+	local pdif = patt / def;
+	local mobpdif = att / pdef;
+    printf("Attack is: %s",att);
+	printf("Defense is: %s",def);
+	printf("Player PDIF is: %s",pdif);
+	printf("MOB PDIF is: %s",mobpdif);	
+	-- printf("Evasion is: %s",eva);
+	-- printf("Accuray is: %s",acc);
+end
 
 -----------------------------------
 -- onMobDeath

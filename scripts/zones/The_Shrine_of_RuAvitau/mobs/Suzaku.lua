@@ -8,12 +8,19 @@
 -----------------------------------
 
 function onMobSpawn(mob)
+mob:setLocalVar("PartySize",4);
 end;
 -----------------------------------
 -- onMobDeath
 -----------------------------------
 
 function onMobDeath(mob, killer)
+end;
+
+function onMobFight( mob, target )
+
+ 	
+    mobScaler(mob,target);
 end;
 -----------------------------------
 -- onMonsterMagicPrepare

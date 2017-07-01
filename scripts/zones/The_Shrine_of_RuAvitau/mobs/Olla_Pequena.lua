@@ -3,11 +3,17 @@
 -- NPC:  Olla Pequena
 -----------------------------------
 
+require("scripts/globals/mobscaler");
 -----------------------------------
 -- onMobSpawn Action
 -----------------------------------
 
 function onMobSpawn(mob)
+    mob:setLocalVar("PartySize",4); 
+end;
+
+function onMobFight( mob, target )
+    mobScaler(mob,target);
 end;
 
 -----------------------------------

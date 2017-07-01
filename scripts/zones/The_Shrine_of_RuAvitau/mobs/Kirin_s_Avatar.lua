@@ -7,6 +7,7 @@ package.loaded[ "scripts/zones/The_Shrine_of_RuAvitau/TextIDs" ] = nil;
 
 require( "scripts/zones/The_Shrine_of_RuAvitau/TextIDs" );
 require( "scripts/globals/status" );
+require("scripts/globals/mobscaler");
 
 -----------------------------------
 -- onMobInitialize Action
@@ -19,6 +20,8 @@ end
 -- onMobSpawn Action
 -----------------------------------
 function onMobSpawn( mob )
+    mob:setLocalVar("PartySize",9);  -- Large Party of 75's can defeat Kirin
+	
     mob:setModelId(math.random(791, 798));
     mob:hideName(false);
     mob:untargetable(true);
@@ -26,6 +29,7 @@ function onMobSpawn( mob )
 end
 
 function onMobEngaged(mob, target)
+    mobScaler(mob,target);
     local id = mob:getID();
     local kirin = GetMobByID(mob:getID()-5); -- Kirin's Avatar is offset by 5
     local action = GetMobAction(id);

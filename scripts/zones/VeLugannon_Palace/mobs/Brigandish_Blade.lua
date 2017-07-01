@@ -4,13 +4,14 @@
 -----------------------------------
 
 require("scripts/globals/status");
-
+require("scripts/globals/mobscaler");
 -----------------------------------
 -- onMobInitialize
 -----------------------------------
 
 function onMobInitialize(mob)
     mob:setMobMod(MOBMOD_ADD_EFFECT,mob:getShortID());
+ 
 end;
 
 -----------------------------------
@@ -18,6 +19,11 @@ end;
 -----------------------------------
 
 function onMobSpawn(mob)
+	mob:setLocalVar("PartySize",4);
+end;
+
+function onMobFight( mob, target )
+    mobScaler(mob,target);
 end;
 
 -----------------------------------
