@@ -42,21 +42,21 @@ player:PrintToPlayer("Moogle : Discounts for you Kupo, for defeating that ugly G
 showShop(player, STATIC, stock);  
 else
 stock = {0x0F0D,3500,  -- Displacers
-         0x07FA,100000,  -- MNK
-		 0x0803,100000,  -- BLM
-         0x0807,100000,  -- RDM
-		 0x080B,100000,  -- THF
-		 0x080F,100000,  -- PLD
-		 0x0818,100000,  -- DRK
-		 0x081A,100000,  -- BST
-		 0x0820,100000,  -- BRD
-		 0x0839,100000,  -- SMN
-		 0x0835,100000,  -- DRG
-		 0x082A,100000,  -- SAM
-		 0x0A69,100000,  -- BLU
-		 0x0A6F,100000,  -- COR
-		 0x0A9E,100000,  -- DNC
-		 0x0AA6,100000   -- SCH
+         0x07FA,1000000,  -- MNK
+		 0x0803,1000000,  -- BLM
+         0x0807,1000000,  -- RDM
+		 0x080B,1000000,  -- THF
+		 0x080F,1000000,  -- PLD
+		 0x0818,1000000,  -- DRK
+		 0x081A,1000000,  -- BST
+		 0x0820,1000000,  -- BRD
+		 0x0839,1000000,  -- SMN
+		 0x0835,1000000,  -- DRG
+		 0x082A,1000000,  -- SAM
+		 0x0A69,1000000,  -- BLU
+		 0x0A6F,1000000,  -- COR
+		 0x0A9E,1000000,  -- DNC
+		 0x0AA6,1000000   -- SCH
 }  
 player:PrintToPlayer("Moogle : Kupo, I'll give you a discount if you defeat the Gu Dha Effigy that's been distrubing the Moogles.", 0xD);
 showShop(player, STATIC, stock);  

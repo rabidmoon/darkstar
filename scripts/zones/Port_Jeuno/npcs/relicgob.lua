@@ -87,8 +87,9 @@ local job = player:getMainJob();
 			player:PrintToPlayer("Netblyx : I can make this into a Bravura...eventually with 60 L.Jadeshells", 0xD);
     elseif (job == 1) and (trade:hasItemQty(18292, 1)) and (player:getVar("WARRelicweapon") == 6) then
 			player:PrintToPlayer("Netblyx : Bring me 70 Montiont Silverpieces and an Attestation of Force", 0xD);	
---    elseif (job == 1) and (trade:hasItemQty(18293, 1)) and (player:getVar("WARRelicweapon") == 7) then
---			player:PrintToPlayer("Netblyx : Now bring me a Serephic Fragment, Necropsyche, and 10,000 Byne Bill", 0xD);		
+    elseif (job == 1) and (trade:hasItemQty(18293, 1)) and (player:getVar("WARRelicweapon") == 7) then
+			player:PrintToPlayer("Netblyx : Get a Serephic Fragment, Necropsyche, and 10,000 Byne Bill and go to Ru'Lude Gardens...", 0xD);	
+            player:setVar("RELIC_IN_PROGRESS",4);			
     end
 	
 			
@@ -165,8 +166,9 @@ local job = player:getMainJob();
 			player:PrintToPlayer("Netblyx : I can make this into a Spharai...eventually with 60 Montiont Silverpieces", 0xD);
 	elseif (job == 2) and (trade:hasItemQty(18262, 1)) and (player:getVar("MNKRelicweapon") == 6) then
 			player:PrintToPlayer("Netblyx : Bring me 70 100 Byne Bills and an Attestation of Might", 0xD);
-	-- elseif (job == 2) and (trade:hasItemQty(18263, 1)) and (player:getVar("MNKRelicweapon") == 7) then
-		-- 	player:PrintToPlayer("Netblyx : Now bring me a Mystic Fragment, Necropysche and a 10,000 Byne Bill", 0xD);				
+	elseif (job == 2) and (trade:hasItemQty(18263, 1)) and (player:getVar("MNKRelicweapon") == 7) then
+			player:PrintToPlayer("Netblyx : Get a Mystic Fragment, Necropysche and a 10,000 Byne Bill ad go to Castle O", 0xD);	
+            player:setVar("RELIC_IN_PROGRESS",4);				
     end   
 
 
@@ -245,8 +247,9 @@ if (job == 3) and (trade:hasItemQty(17422, 1)) and trade:hasItemQty( 1453, 10 ) 
 			player:PrintToPlayer("Netblyx : I can make this into a Mjolnir...eventually with 60 Montiont Silverpieces", 0xD);
 	elseif (job == 3) and (trade:hasItemQty(18322, 1)) and (player:getVar("WHMRelicweapon") == 6) then
 			player:PrintToPlayer("Netblyx : Bring me 70 100 Byne Bills and an Attestation of Sacrifice", 0xD);	
-	-- elseif (job == 3) and (trade:hasItemQty(18323, 1)) and (player:getVar("WHMRelicweapon") == 7) then
-		--	player:PrintToPlayer("Netblyx : Now bring me a Heavenly Fragment, Necropsyche, and R. Goldpiece", 0xD);			
+	 elseif (job == 3) and (trade:hasItemQty(18323, 1)) and (player:getVar("WHMRelicweapon") == 7) then
+		player:PrintToPlayer("Netblyx : Get a Heavenly Fragment, Necropsyche, and R. Goldpiece and go to Zi'Tah", 0xD);	
+            player:setVar("RELIC_IN_PROGRESS",4);			
     end
 
 
@@ -324,8 +327,9 @@ if (job == 4) and (trade:hasItemQty(17572, 1)) and trade:hasItemQty( 1450, 10 ) 
 			player:PrintToPlayer("Netblyx : I can make this into an Claustrum...eventually with 60 L.Jadeshells", 0xD);	
 	elseif (job == 4) and (trade:hasItemQty(18328, 1)) and (player:getVar("BLMRelicweapon") == 6) then
 			player:PrintToPlayer("Netblyx : Bring me 70 Montiont Silver Pieces and an Attestation of Virtue", 0xD);	
-	-- elseif (job == 4) and (trade:hasItemQty(18329, 1)) and (player:getVar("BLMRelicweapon") == 7) then
-		--	player:PrintToPlayer("Netblyx : Now bring me a Celestial Fragment, Necropysche and R.Stripeshell", 0xD);				
+	elseif (job == 4) and (trade:hasItemQty(18329, 1)) and (player:getVar("BLMRelicweapon") == 7) then
+		   player:PrintToPlayer("Netblyx :Get a Celestial Fragment, Necropysche and R.Stripeshell and go to the Cauldron", 0xD);
+            player:setVar("RELIC_IN_PROGRESS",4);			   
     end	
 
 --------------------------------------------------------
@@ -401,8 +405,9 @@ if (job == 5) and (trade:hasItemQty(16829, 1)) and trade:hasItemQty( 1456, 10 ) 
 			player:PrintToPlayer("Netblyx : I can make this into an Excalibur...eventually with 60 Montiont Silverpices", 0xD);	
 	elseif (job == 5) and (trade:hasItemQty(18274, 1)) and (player:getVar("RDMRelicweapon") == 6) then
 			player:PrintToPlayer("Netblyx : Bring me 70 100 Byne Bills and an Attestation of Glory", 0xD);	
-	-- elseif (job == 5) and (trade:hasItemQty(18275, 1)) and (player:getVar("RDMRelicweapon") == 7) then
-		--	player:PrintToPlayer("Netblyx : Now bring me a Holy Fragment, Necropsyche and an R. Goldpiece", 0xD);				
+	elseif (job == 5) and (trade:hasItemQty(18275, 1)) and (player:getVar("RDMRelicweapon") == 7) then
+			player:PrintToPlayer("Netblyx : Get a Holy Fragment, Necropsyche and an R. Goldpiece and go to the Aery", 0xD);	
+            player:setVar("RELIC_IN_PROGRESS",4);				
     end
 
 
@@ -480,7 +485,8 @@ if (job == 6) and (trade:hasItemQty(16764, 1)) and trade:hasItemQty( 1453, 10 ) 
 	elseif (job == 6) and (trade:hasItemQty(18268, 1)) and (player:getVar("THFRelicweapon") == 6) then
 			player:PrintToPlayer("Netblyx : Bring me 70 L.Jadeshells and an Attestation of Celerity", 0xD);	
 	elseif (job == 6) and (trade:hasItemQty(18269, 1)) and (player:getVar("THFRelicweapon") == 7) then
-			player:PrintToPlayer("Netblyx : Now bring me an Ornate Fragment, Necropsyche, and 10,000 Byne Bill", 0xD);				
+			player:PrintToPlayer("Netblyx : Get n Ornate Fragment, Necropsyche, and 10,000 Byne Bill and go to Zi'Tah", 0xD);	
+            player:setVar("RELIC_IN_PROGRESS",4);				
     end
 
 
@@ -558,7 +564,8 @@ if (job == 7) and (trade:hasItemQty(17643, 1)) and trade:hasItemQty( 1453, 10 ) 
 	elseif (job == 7) and (trade:hasItemQty(18274, 1)) and (player:getVar("PLDRelicweapon") == 6) then
 			player:PrintToPlayer("Netblyx : Bring me 70 100 Byne Bills and an Attestation of Glory", 0xD);
 	elseif (job == 7) and (trade:hasItemQty(18275, 1)) and (player:getVar("PLDRelicweapon") == 7) then
-			player:PrintToPlayer("Netblyx : Now bring me a Holy Fragment, Necropsyche and an R. Goldpiece", 0xD);			
+			player:PrintToPlayer("Netblyx : Get a Holy Fragment, Necropsyche and an R. Goldpiece and go to the Aery", 0xD);
+            player:setVar("RELIC_IN_PROGRESS",4);				
     end
 
 
@@ -637,8 +644,9 @@ if (job == 7) and (trade:hasItemQty(12307, 1)) and trade:hasItemQty( 1450, 10 ) 
 			player:PrintToPlayer("Netblyx : I can make this into an Aegis...eventually with 60 L.Jadeshells", 0xD);	
 	elseif (job == 7) and (trade:hasItemQty(15068, 1)) and (player:getVar("PLDRelicshield") == 6) then
 			player:PrintToPlayer("Netblyx : Bring me 70 100 Hundred Byne Bills and an Attestation of Invulnerability", 0xD);	
-	-- elseif (job == 7) and (trade:hasItemQty(15069, 1)) and (player:getVar("PLDRelicshield") == 7) then
-		--	player:PrintToPlayer("Netblyx : Now bring me an Supernal Fragment, Necropsyche, and R. Goldpiece", 0xD);				
+	elseif (job == 7) and (trade:hasItemQty(15069, 1)) and (player:getVar("PLDRelicshield") == 7) then
+			player:PrintToPlayer("Netblyx : Get a Supernal Fragment, Necropsyche, and R. Goldpiece and go to Carp Landing", 0xD);	
+            player:setVar("RELIC_IN_PROGRESS",4);				
     end
 	
 
@@ -715,8 +723,9 @@ if (job == 8) and (trade:hasItemQty(16798, 1)) and trade:hasItemQty( 1450, 10 ) 
 			player:PrintToPlayer("Netblyx : I can make this into an Apocalypse...eventually with 60 L.Jadeshells.", 0xD);
 	elseif (job == 8) and (trade:hasItemQty(18304, 1)) and (player:getVar("DRKRelicweapon") == 6) then
 			player:PrintToPlayer("Netblyx : Bring me 70 Montiont Silverpieces and an Attestation of Vigor", 0xD);
-	-- elseif (job == 8) and (trade:hasItemQty(18304, 1)) and (player:getVar("DRKRelicweapon") == 6) then
-		--	player:PrintToPlayer("Netblyx : Now bring me a Tenebrous Fragment, Necropsyche and R. Stripeshell.", 0xD);			
+	elseif (job == 8) and (trade:hasItemQty(18304, 1)) and (player:getVar("DRKRelicweapon") == 6) then
+			player:PrintToPlayer("Netblyx : Get a Tenebrous Fragment, Necropsyche and R. Stripeshell and go to N. Gustaberg.", 0xD);
+            player:setVar("RELIC_IN_PROGRESS",4);				
 			
     end
 
@@ -796,8 +805,9 @@ if (job == 8) and (trade:hasItemQty(16590, 1)) and trade:hasItemQty( 1450, 10 ) 
 			player:PrintToPlayer("Netblyx : I can make this into an Ragnarok...eventually with 60 L.Jadeshells", 0xD);	
 	elseif (job == 8) and (trade:hasItemQty(18280, 1)) and (player:getVar("DRKRelicweapongs") == 6) then
 			player:PrintToPlayer("Netblyx : Bring me 70 100 Hundred Byne Bills and an Attestation of Rightousness", 0xD);	
-	-- elseif (job == 8) and (trade:hasItemQty(18281, 1)) and (player:getVar("DRKRelicweapongs") == 7) then
-	--		player:PrintToPlayer("Netblyx : Now bring me an Intricate Fragment, Necropsyche and R. Goldpiece.", 0xD);				
+	elseif (job == 8) and (trade:hasItemQty(18281, 1)) and (player:getVar("DRKRelicweapongs") == 7) then
+			player:PrintToPlayer("Netblyx : Get an Intricate Fragment, Necropsyche and R. Goldpiece and go to the Glacier.", 0xD);
+            player:setVar("RELIC_IN_PROGRESS",4);				
     end
 
 
@@ -874,8 +884,9 @@ if (job == 9) and (trade:hasItemQty(16680, 1)) and trade:hasItemQty( 1450, 10 ) 
 			player:PrintToPlayer("Netblyx : I can make this into a Guttler...eventually with 60 L.Jadeshells", 0xD);
 	elseif (job == 9) and (trade:hasItemQty(18286, 1)) and (player:getVar("BSTRelicweapon") == 6) then
 			player:PrintToPlayer("Netblyx : Bring me 70 Montiont Silverpieces and an Attestation of Bravery", 0xD);	
-	-- elseif (job == 9) and (trade:hasItemQty(18287, 1)) and (player:getVar("BSTRelicweapon") == 7) then
-	--		player:PrintToPlayer("Netblyx : Now bring me a Runaeic Fragment, Necropsyche and R. Stripeshell.", 0xD);				
+	elseif (job == 9) and (trade:hasItemQty(18287, 1)) and (player:getVar("BSTRelicweapon") == 7) then
+			player:PrintToPlayer("Netblyx : Get a Runaeic Fragment, Necropsyche and R. Stripeshell and go to W. Altepa.", 0xD);		
+            player:setVar("RELIC_IN_PROGRESS",4);				
     end
 
 
@@ -954,8 +965,9 @@ if (job == 10) and (trade:hasItemQty(16766, 1)) and trade:hasItemQty( 1453, 10 )
 			player:PrintToPlayer("Netblyx : I can make this into a Mandau...eventually with 60 Montiont Silverpieces", 0xD);
 	elseif (job == 10) and (trade:hasItemQty(18268, 1)) and (player:getVar("BRDRelicweapon") == 6) then
 			player:PrintToPlayer("Netblyx : Bring me 70 L.Jadeshells and an Attestation of Celerity.", 0xD);
-	-- elseif (job == 10) and (trade:hasItemQty(18269, 1)) and (player:getVar("BRDRelicweapon") == 7) then
-	--		player:PrintToPlayer("Netblyx : Now bring me an Ornate Fragment, Necropsyche, and 10,000 Byne Bill", 0xD);				
+	elseif (job == 10) and (trade:hasItemQty(18269, 1)) and (player:getVar("BRDRelicweapon") == 7) then
+		player:PrintToPlayer("Netblyx : Get an Ornate Fragment, Necropsyche, and 10,000 Byne Bill and go to Zi'Tah", 0xD);	
+            player:setVar("RELIC_IN_PROGRESS",4);			
     end
 
 --------------------------------------------------------
@@ -1027,7 +1039,10 @@ if (job == 10) and (trade:hasItemQty(17352, 1)) and trade:hasItemQty( 1450, 10 )
 			player:PrintToPlayer("Netblyx : I can make this into a Gjallahorn...eventually with 60 L.Jadeshells", 0xD);	
 	elseif (job == 10) and (trade:hasItemQty(18340, 1)) and (player:getVar("BRDRelicweapon") == 6) then
 			player:PrintToPlayer("Netblyx : Bring me 70 One-Hundred Byne Bills and an Attestation of Harmony.", 0xD);				
-    end
+ 	elseif (job == 10) and (trade:hasItemQty(18340, 1)) and (player:getVar("BRDRelicweapon") == 7) then
+			player:PrintToPlayer("Netblyx : Get a Mysternal Fragment, Necropsyche, 10,000 Shells, and go to the Valley of Sorrows.", 0xD);  
+            player:setVar("RELIC_IN_PROGRESS",4);				
+	end
 
 
 --------------------------------------------------------
@@ -1103,8 +1118,9 @@ if (job == 11) and (trade:hasItemQty(17188, 1)) and trade:hasItemQty( 1450, 10 )
 			player:PrintToPlayer("Netblyx : I can make this into a Yoichinoyumi...eventually with 60 Montiont Silverpieces", 0xD);	
 	elseif (job == 11) and (trade:hasItemQty(18346, 1)) and (player:getVar("RNGRelicbowweapon") == 6) then
 			player:PrintToPlayer("Netblyx : Bring me 70 100 Hundred Byne Bills and an Attestation of Transcendence", 0xD);	
-	-- elseif (job == 11) and (trade:hasItemQty(18346, 1)) and (player:getVar("RNGRelicbowweapon") == 7) then
-		--	player:PrintToPlayer("Netblyx : Now bring me a Snarled Fragment, Necropsyche, and an R.Goldpiece ", 0xD);				
+	elseif (job == 11) and (trade:hasItemQty(18346, 1)) and (player:getVar("RNGRelicbowweapon") == 7) then
+		player:PrintToPlayer("Netblyx : Get a Snarled Fragment, Necropsyche, and an R.Goldpiece and go to Cape Teriggan.", 0xD);
+            player:setVar("RELIC_IN_PROGRESS",4);			
     end
 
 
@@ -1171,8 +1187,9 @@ if (job == 11) and (trade:hasItemQty(17256, 1)) and trade:hasItemQty( 1456, 10 )
 			player:PrintToPlayer("Netblyx : I can make this into an Annihilator...eventually with 60 One-Hundred Byne Bills", 0xD);	
 	elseif (job == 11) and (trade:hasItemQty(18334, 1)) and (player:getVar("RNGRelicgunweapon") == 6) then
 			player:PrintToPlayer("Netblyx : Bring me 70 L.Jadeshells and an Attestation of Accuracy", 0xD);	
-	-- elseif (job == 11) and (trade:hasItemQty(18334, 1)) and (player:getVar("RNGRelicgunweapon") == 7) then
-	--		player:PrintToPlayer("Netblyx : Now bring me an Ethereal Fragment, Necropsyche, and a 10,0000 Byne Bill", 0xD);				
+	elseif (job == 11) and (trade:hasItemQty(18334, 1)) and (player:getVar("RNGRelicgunweapon") == 7) then
+		player:PrintToPlayer("Netblyx : Get an Ethereal Fragment, Necropsyche, and a 10,0000 Byne Bill and go to Metalworks", 0xD);	
+            player:setVar("RELIC_IN_PROGRESS",4);			
     end
 
 	
@@ -1247,8 +1264,9 @@ if (job == 12) and (trade:hasItemQty(17597, 1)) and trade:hasItemQty( 1450, 10 )
 		player:PrintToPlayer("Netblyx : I can make this into an Claustrum...eventually with 60 L.Jadeshells", 0xD);	
     elseif (job == 12) and (trade:hasItemQty(18328, 1)) and (player:getVar("SMNRelicweapon") == 6) then
 		player:PrintToPlayer("Netblyx : Bring me 70 100 Byne bills and an Attestation of Virtue", 0xD);	
-	-- elseif (job == 12) and (trade:hasItemQty(18329, 1)) and (player:getVar("SMNRelicweapon") == 7) then
-	--		player:PrintToPlayer("Netblyx : Now bring me a Celestial Fragment, Necropysche and R.Stripeshell", 0xD);			
+	elseif (job == 12) and (trade:hasItemQty(18329, 1)) and (player:getVar("SMNRelicweapon") == 7) then
+		player:PrintToPlayer("Netblyx : Get a Celestial Fragment, Necropysche and R.Stripeshell and go to the Cauldron", 0xD);	
+            player:setVar("RELIC_IN_PROGRESS",4);			
     end
 
 	
@@ -1327,8 +1345,9 @@ elseif (job == 13) and (trade:hasItemQty(18310, 1)) and (player:getVar("NINRelic
 			player:PrintToPlayer("Netblyx : I'll make it a Kikoku eventually with 60 One-Hundred Byne Bills", 0xD);	
 elseif (job == 13) and (trade:hasItemQty(18310, 1)) and (player:getVar("NINRelicweapon") == 6) then
 			player:PrintToPlayer("Netblyx : Bring me 70 L.Jadeshells and an Attestation of Legerity", 0xD);	
--- elseif (job == 13) and (trade:hasItemQty(18311, 1)) and (player:getVar("NINRelicweapon") == 7) then
-	--		player:PrintToPlayer("Netblyx : Now bring me a Demoniac Fragment, Necropsyche and 10,000 Byne Bill", 0xD);				
+elseif (job == 13) and (trade:hasItemQty(18311, 1)) and (player:getVar("NINRelicweapon") == 7) then
+			player:PrintToPlayer("Netblyx : Get a Demoniac Fragment, Necropsyche and 10,000 Byne Bill and go to Sea Serpent Grotto.", 0xD);	
+            player:setVar("RELIC_IN_PROGRESS",4);				
     end	
 
 
@@ -1405,8 +1424,9 @@ if (job == 14) and (trade:hasItemQty(17478, 1)) and trade:hasItemQty( 1450, 10 )
 			player:PrintToPlayer("Netblyx : I can make this into a Gungnir...eventually with 60 L.Jadeshells", 0xD);
 	elseif (job == 14) and (trade:hasItemQty(18298, 1)) and (player:getVar("DRGAFweapon") == 6) then
 			player:PrintToPlayer("Netblyx : Bring me 70 100 Byne Bills and an Attestation of Fortitude", 0xD);	
-	-- elseif (job == 14) and (trade:hasItemQty(18299, 1)) and (player:getVar("DRGAFweapon") == 7) then
-		--	player:PrintToPlayer("Netblyx : Now bring me a Stellar Fragment, Necropsyche and an R. Stripeshell", 0xD);				
+	elseif (job == 14) and (trade:hasItemQty(18299, 1)) and (player:getVar("DRGAFweapon") == 7) then
+			player:PrintToPlayer("Netblyx : Get a Stellar Fragment, Necropsyche and an R. Stripeshell and go to Ru'Aun Gardens", 0xD);	
+            player:setVar("RELIC_IN_PROGRESS",4);				
     end
 
 
@@ -1484,8 +1504,9 @@ if (job == 15) and (trade:hasItemQty(17812, 1)) and trade:hasItemQty( 1453, 10 )
 			player:PrintToPlayer("Netblyx : I can make this into a Amanomurakumo...eventually with 60 Montiont Silverpices", 0xD);	
 	elseif (job == 15) and (trade:hasItemQty(18316, 1)) and (player:getVar("SAMRelicweapon") == 6) then
 			player:PrintToPlayer("Netblyx : Bring me 70 L.Jadeshells and an Attestation of Decisiveness", 0xD);
-	-- elseif (job == 15) and (trade:hasItemQty(18316, 1)) and (player:getVar("SAMRelicweapon") == 7) then
-	--		player:PrintToPlayer("Netblyx : Now bring me a Divine Fragment, Necropsyche, and an R. Goldpiece", 0xD);				
+	 elseif (job == 15) and (trade:hasItemQty(18316, 1)) and (player:getVar("SAMRelicweapon") == 7) then
+			player:PrintToPlayer("Netblyx : Get a Divine Fragment, Necropsyche, and an R. Goldpiece and go to Horlais Peak.", 0xD);	
+            player:setVar("RELIC_IN_PROGRESS",4);				
     end
 
 
