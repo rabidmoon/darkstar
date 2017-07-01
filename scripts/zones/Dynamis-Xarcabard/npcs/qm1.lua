@@ -14,6 +14,7 @@ require("scripts/zones/Dynamis-Xarcabard/TextIDs");
 -----------------------------------
 
 function onTrade(player,npc,trade)
+
 end;
 
 -----------------------------------
@@ -21,14 +22,12 @@ end;
 -----------------------------------
 
 function onTrigger(player,npc)
-	
-	player:addTitle(DYNAMISXARCABARD_INTERLOPER); -- Add title
-	
-	if (player:hasKeyItem(HYDRA_CORPS_BATTLE_STANDARD) == false) then
-		player:setVar("DynaXarcabard_Win",1);
-		player:addKeyItem(HYDRA_CORPS_BATTLE_STANDARD);
-		player:messageSpecial(KEYITEM_OBTAINED,HYDRA_CORPS_BATTLE_STANDARD);
-	end
+if ((player:hasKeyItem(ALABASTER_GRANULES_OF_TIME)) and (player:hasKeyItem(AMBER_GRANULES_OF_TIME)) and (player:hasKeyItem(AZURE_GRANULES_OF_TIME))
+and (player:hasKeyItem(CRIMSON_GRANULES_OF_TIME))) then
+SpawnMob(17330177):updateEnmity(player); 
+end
+
+
 	
 end;
 

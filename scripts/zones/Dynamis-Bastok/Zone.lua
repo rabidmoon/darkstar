@@ -34,6 +34,7 @@ end;
 -----------------------------------
 
 function onZoneIn(player,prevZone)
+
     local cs = -1;
 	local d1 = 0;
 	local d2 = 0;
@@ -81,7 +82,8 @@ function onZoneIn(player,prevZone)
 	end
 	
 	
-	player:addStatusEffect(EFFECT_LEVEL_RESTRICTION,75,3,5400);
+	if (player:hasStatusEffect(EFFECT_DYNA_RESTRICTION) == false) then
+	player:addStatusEffectEx(EFFECT_DYNA_RESTRICTION,EFFECT_LEVEL_RESTRICTION,75,3,5400);
     player:PrintToPlayer("You have 90 minutes remaining in Dynamis", 0xD);
 	if (reduction == 0) then
     player:PrintToPlayer("You may re-enter Dynamis in 12 Hours", 0xD);	
@@ -101,6 +103,7 @@ function onZoneIn(player,prevZone)
 	 player:setVar("Dynamis_Time_Remaining",5400000);
 	 player:setVar("ScyldMultiplier",0);
 	 player:setVar("Dynamis_Reenter",os.time() + reentertime);
+	 end
 	return cs;
 end;
 

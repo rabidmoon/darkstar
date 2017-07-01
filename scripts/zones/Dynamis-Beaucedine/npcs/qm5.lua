@@ -17,7 +17,7 @@ require("scripts/globals/weather");
 -----------------------------------
 
 function onTrade(player,npc,trade)
-if (GetMobAction(17543466) == 0 and trade:hasItemQty(3359,1)) then
+if (GetMobAction(17326086) == 0 and trade:hasItemQty(3359,1)) then
 	player:tradeComplete();
 	SpawnMob(17326086):updateClaim(player);
 end	

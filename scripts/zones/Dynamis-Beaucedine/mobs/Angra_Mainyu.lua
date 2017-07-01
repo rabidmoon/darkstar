@@ -8,6 +8,14 @@ require("scripts/globals/titles");
 require("scripts/globals/keyitems");
 require("scripts/globals/status");
 
+
+
+function onMobSpawn(mob)
+    local qm0 = GetNPCByID(17326800);
+	qm0:setStatus(STATUS_DISAPPEAR);
+
+end;
+
 -----------------------------------
 -- onMobInitialize Action
 -----------------------------------

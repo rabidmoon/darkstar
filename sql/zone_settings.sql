@@ -118,10 +118,10 @@ INSERT INTO `zone_settings` VALUES (69,6,'127.0.0.1',54230,'Leujaoam_Sanctum',0,
 INSERT INTO `zone_settings` VALUES (70,1,'127.0.0.1',54230,'Chocobo_Circuit',176,176,176,176,0,0.00,1028);
 INSERT INTO `zone_settings` VALUES (71,1,'127.0.0.1',54230,'The_Colosseum',0,0,139,139,0,0.00,152);
 INSERT INTO `zone_settings` VALUES (72,3,'127.0.0.1',54230,'Alzadaal_Undersea_Ruins',0,0,115,139,0,0.00,145);
-INSERT INTO `zone_settings` VALUES (73,6,'127.0.0.1',54230,'Zhayolm_Remnants',148,148,115,139,0,0.00,145);
-INSERT INTO `zone_settings` VALUES (74,6,'127.0.0.1',54230,'Arrapago_Remnants',148,148,115,139,0,0.00,145);
-INSERT INTO `zone_settings` VALUES (75,6,'127.0.0.1',54230,'Bhaflau_Remnants',148,148,115,139,0,0.00,145);
-INSERT INTO `zone_settings` VALUES (76,6,'127.0.0.1',54230,'Silver_Sea_Remnants',148,148,115,139,0,0.00,145);
+INSERT INTO `zone_settings` VALUES (73,2,'127.0.0.1',54230,'Zhayolm_Remnants',148,148,115,139,0,0.00,145);
+INSERT INTO `zone_settings` VALUES (74,2,'127.0.0.1',54230,'Arrapago_Remnants',148,148,115,139,0,0.00,145);
+INSERT INTO `zone_settings` VALUES (75,2,'127.0.0.1',54230,'Bhaflau_Remnants',148,148,115,139,0,0.00,145);
+INSERT INTO `zone_settings` VALUES (76,2,'127.0.0.1',54230,'Silver_Sea_Remnants',148,148,115,139,0,0.00,145);
 INSERT INTO `zone_settings` VALUES (77,6,'127.0.0.1',54230,'Nyzul_Isle',148,148,144,144,0,0.00,145);
 INSERT INTO `zone_settings` VALUES (78,4,'127.0.0.1',54230,'Hazhalm_Testing_Grounds',0,0,0,0,0,0.00,144);
 INSERT INTO `zone_settings` VALUES (79,2,'127.0.0.1',54230,'Caedarva_Mire',173,173,101,138,0,0.00,152);

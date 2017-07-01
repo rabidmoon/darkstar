@@ -69,6 +69,11 @@ end;
 function onMobDeath(mob,killer)
     local npc = GetNPCByID(17330778); -- ID of the '???' target.
     killer:addTitle(LIFTER_OF_SHADOWS);
-    npc:setPos(mob:getXPos(),mob:getYPos(),mob:getZPos());
-    npc:setStatus(0); -- Spawn the '???'
+	killer:addTitle(DYNAMISXARCABARD_INTERLOPER); -- Add title
+	
+	if (killer:hasKeyItem(HYDRA_CORPS_BATTLE_STANDARD) == false) then
+		killer:setVar("DynaXarcabard_Win",1);
+		killer:addKeyItem(HYDRA_CORPS_BATTLE_STANDARD);
+		killer:messageSpecial(KEYITEM_OBTAINED,HYDRA_CORPS_BATTLE_STANDARD);
+	end
 end;

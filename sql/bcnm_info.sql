@@ -269,7 +269,7 @@ INSERT INTO `bcnm_info` VALUES ('1184', '78', 'rider_cometh', null, null, '900',
 -- INSERT INTO `bcnm_info` VALUES ('1282', '187', 'dynamis_windurst', null, null, '3600', '0', '64', '0', '7');
 -- INSERT INTO `bcnm_info` VALUES ('1283', '188', 'dynamis_jeuno', null, null, '3600', '0', '64', '0', '7');
 -- INSERT INTO `bcnm_info` VALUES ('1284', '134', 'dynamis_beaucedine', null, null, '3600', '0', '64', '0', '7');
-INSERT INTO `bcnm_info` VALUES ('1285', '135', 'dynamis_xarcabard', null, null, '3600', '0', '64', '0', '7');
+-- INSERT INTO `bcnm_info` VALUES ('1285', '135', 'dynamis_xarcabard', null, null, '3600', '0', '64', '0', '7');
 INSERT INTO `bcnm_info` VALUES ('1286', '39', 'dynamis_Valkurm', null, null, '3600', '0', '36', '0', '7');
 INSERT INTO `bcnm_info` VALUES ('1287', '40', 'dynamis_Buburimu', null, null, '3600', '0', '36', '0', '7');
 INSERT INTO `bcnm_info` VALUES ('1288', '41', 'dynamis_Qufim', null, null, '3600', '0', '36', '0', '7');
