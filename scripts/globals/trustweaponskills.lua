@@ -347,7 +347,7 @@ end;
 -- if TP_ATK_VARIES -> three values are attack multiplier (1.5x 0.5x etc)
 -- if TP_DMG_VARIES -> three values are
 
-function AutoPhysicalMove(mob,target,skill,basemod,numhits,attmod,accmod,str_wsc,dex_wsc,agi_wsc,vit_wsc,mnd_wsc,tpeffect,mtp000,mtp150,mtp300,offcratiomod)
+function AutoPhysicalMove(mob,target,skill,basemod,numhits,attmod,accmod,str_wsc,dex_wsc,agi_wsc,vit_wsc,mnd_wsc,tpeffect,mtp100,mtp200,mtp300,offcratiomod)
     local returninfo = {};
 
     --get dstr (bias to monsters, so no fSTR)
@@ -448,7 +448,7 @@ function AutoPhysicalMove(mob,target,skill,basemod,numhits,attmod,accmod,str_wsc
 	local hitrate = acc + accmod;
 	
 	if (tpeffect==TP_ACC_VARIES) then
-		hitrate = hitrate + AutoAccBonus(tp, mtp000, mtp150, mtp300);  
+		hitrate = hitrate + AutoAccBonus(tp, mtp100, mtp200, mtp300);  
 	end   
 
     hitrate = ((hitrate - eva) / 2 ) + 75;	
@@ -472,15 +472,13 @@ function AutoPhysicalMove(mob,target,skill,basemod,numhits,attmod,accmod,str_wsc
 
 
     --apply ftp (assumes 1~3 scalar linear mod)
-    if (tpeffect==TP_DMG_BONUS) then
-        hitdamage = hitdamage * fTP(tp, mtp000, mtp150, mtp300);
-    end
-	
-	if (tpeffect==TP_ATK_VARIES) then
-        hitdamage = hitdamage * AutoIgnoredDef(skill:getTP(), mtp000, mtp150, mtp300);
-    end
-
-    if (tpeffect==TP_NO_EFFECT) then
+    if (tpeffect==TP_DMG_VARIES) then
+        hitdamage = hitdamage * fTP(tp, mtp100, mtp200, mtp300);
+    elseif (tpeffect==TP_DMG_BONUS) then
+        hitdamage = hitdamage * fTP(tp, mtp100, mtp200, mtp300);
+    elseif (tpeffect==TP_ATK_VARIES) then
+        hitdamage = hitdamage * AutoIgnoredDef(skill:getTP(), mtp100, mtp200, mtp300);
+    elseif (tpeffect==TP_NO_EFFECT) then
         hitdamage = hitdamage * 1;
     end	
 
@@ -992,7 +990,7 @@ end
 
 function fTP(tp,ftp1,ftp2,ftp3)
 	if (tp>=100 and tp<200) then
-		return ftp1 + ( ((ftp2-ftp1)/100) * (tp-100));
+		return ftp1 + (((ftp2-ftp1)/100) * (tp-100));
 	elseif (tp>=200 and tp<=300) then
 		--generate a straight line between ftp2 and ftp3 and find point @ tp
 		return ftp2 + ( ((ftp3-ftp2)/100) * (tp-200));
