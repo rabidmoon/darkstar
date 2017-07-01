@@ -1137,7 +1137,7 @@ namespace luautils
         {
             std::string qStr = ("INSERT into audit_chat (speaker,type,message,datetime) VALUES('");
             qStr += "Cleopatra";
-            qStr += "','WORLD','* ";
+            qStr += "','SAY','* ";
             qStr += PChar->GetName();
             qStr += " has logged on.";
             qStr += "',current_timestamp());";

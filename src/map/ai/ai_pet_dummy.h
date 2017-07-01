@@ -107,6 +107,12 @@ protected:
 	uint32 m_balladWeakRecast;
 	uint32 m_songEnfeeble;
 	uint32 m_songFront;
+	
+	uint32 m_firstMeleeSongRecast;
+	uint32 m_secondMeleeSongRecast;
+	uint32 m_firstMageSongRecast;
+	uint32 m_secondMageSongRecast;
+	
 	uint32 m_gesshoMagicRecast;
 	uint32 m_gesshoUtsuCheck;
 	uint32 m_gesshoVokeRecast;

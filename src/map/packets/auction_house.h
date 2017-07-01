@@ -29,8 +29,7 @@
 #include "basic.h"
 
 
-#define AUCTION_ID   4                          // глобальный аукцион AH-Jeuno 
-#define AUCTION_FEE(price) (1 + price / 100)    // расчет налога 
+#define AUCTION_ID   4                          // Global Auction or AH-Jeuno
 
 /************************************************************************
 *																		*
@@ -49,7 +48,7 @@ public:
     CAuctionHousePacket(uint8 action, uint8 slot, CCharEntity* PChar);                      // отправляем список продаваемых персонажем предметов
     CAuctionHousePacket(uint8 action, uint8 message, uint16 itemid, uint32 price);
 	CAuctionHousePacket(uint8 action, uint8 message, CCharEntity* PChar, uint8 slot, bool keepItem);
-    CAuctionHousePacket(uint8 action, CItem* PItem, uint8 quantity);
+    CAuctionHousePacket(uint8 action, CItem* PItem, uint8 quantity, uint32 price, CCharEntity* PChar);
 };
 
 #endif

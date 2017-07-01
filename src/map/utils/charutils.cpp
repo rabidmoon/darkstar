@@ -3635,13 +3635,13 @@ namespace charutils
 
 				int8 packetData[4]{};
 				WBUFL(packetData, 0) = PChar->id;
-		
+		        int16 plvl = PChar->GetMLevel();
 				std::string qStr = ("INSERT into audit_chat (speaker,type,message,datetime) VALUES('");
 				qStr += "Cleopatra";
 				qStr += "','LVLUP','* ";
 				qStr += PChar->GetName();
 				qStr += " attains level ";
-				qStr += PChar->GetMLevel();
+				qStr += std::to_string(plvl);
 				qStr += "!";
 				qStr += "',current_timestamp());";
 				const char * cC = qStr.c_str();
@@ -3813,7 +3813,7 @@ namespace charutils
             "locker = %u,"
             "satchel = %u,"
             "sack = %u, "
-            "`case` = %u "
+            "`case` = %u, "
             "wardrobe = %u, "
             "wardrobe2 = %u, "
             "wardrobe3 = %u, "

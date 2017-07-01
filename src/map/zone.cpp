@@ -535,13 +535,13 @@ void CZone::UpdateWeather()
 
     uint8 Weather = 0;
 
-    // 15% chance for rare weather, 35% chance for common weather, 50% chance for normal weather
+    // 25% chance for rare weather, 35% chance for common weather, 40% chance for normal weather
     // * Percentages were generated from a 6 hour sample and rounded down to closest multiple of 5*
-    if (WeatherChance <= 15) //15% chance to have the weather_rare
+    if (WeatherChance <= 25) //25% chance to have the weather_rare
     {
         Weather = weatherType.rare;
     }
-    else if (WeatherChance <= 50) // 35% chance to have weather_common
+    else if (WeatherChance <= 60) // 35% chance to have weather_common
     {
         Weather = weatherType.common;
     }

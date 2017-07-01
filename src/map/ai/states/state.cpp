@@ -80,9 +80,9 @@ bool CState::CheckValidTarget(CBattleEntity* PTarget)
 		return false;
 	}
 
-	if (PTarget->getZone() != m_PEntity->getZone())
+	if (PTarget->status == STATUS_DISAPPEAR)
 	{
-		ShowWarning(CL_RED"CheckValidTarget is Not in Same Zone\n" CL_RESET);
+		ShowWarning(CL_RED"Target has disappeared!!!\n" CL_RESET);
 		return false;
 	}
 

@@ -49,20 +49,52 @@ CAuctionHousePacket::CAuctionHousePacket(uint8 action)
     }
 }
 
-CAuctionHousePacket::CAuctionHousePacket(uint8 action, CItem* PItem, uint8 quantity)
+CAuctionHousePacket::CAuctionHousePacket(uint8 action, CItem* PItem, uint8 quantity, uint32 price, CCharEntity* PChar)
 {
     this->type = 0x4C;
     this->size = 0x1E;
+	
+    uint32 auctionFee = 0;
+    if (quantity == 0) // This is a stack..Yes, zero for stacks.. Why is this being called quantity?
+    {
+		if ((PChar->getZone() == 26) || (PChar->getZone() == 48) || (PChar->getZone() == 50) || ((PChar->getZone() > 229) && (PChar->getZone() < 233)) ||
+	    ((PChar->getZone() > 233) && (PChar->getZone() < 236)) || ((PChar->getZone() > 237) && (PChar->getZone() < 242)) ||
+		((PChar->getZone() > 242) && (PChar->getZone() < 248)) || PChar->getZone() == 250)
+		{
+            auctionFee = map_config.ah_base_fee_stacks+(price*map_config.ah_tax_rate_stacks/100);
+		}
+		else
+		{
+		   auctionFee = map_config.ah_base_fee_stacks+(price*(3 + map_config.ah_tax_rate_stacks)/100);	
+		}
+    }
+    else // This is a single item.
+    {
+		if ((PChar->getZone() == 26) || (PChar->getZone() == 48) || (PChar->getZone() == 50) || ((PChar->getZone() > 229) && (PChar->getZone() < 233)) ||
+	    ((PChar->getZone() > 233) && (PChar->getZone() < 236)) || ((PChar->getZone() > 237) && (PChar->getZone() < 242)) ||
+		((PChar->getZone() > 242) && (PChar->getZone() < 248)) || PChar->getZone() == 250)
+		{		
+            auctionFee = map_config.ah_base_fee_single+(price*map_config.ah_tax_rate_single/100);
+		}
+        else
+        {
+			auctionFee = map_config.ah_base_fee_single+(price*(3 + map_config.ah_tax_rate_single)/100);
+		}			
+    }
+
+    auctionFee = dsp_cap(auctionFee, 1, map_config.ah_max_fee);
+	
 
     WBUFB(data,(0x04)) = action;
     WBUFB(data,(0x05)) = 0xFF;
     WBUFB(data,(0x06)) = IsAuctionOpen;
     WBUFB(data,(0x07)) = 0x02;
-    WBUFL(data,(0x08)) = 0x00; // AUCTION_FEE(PItem->getCharPrice());
+    WBUFL(data,(0x08)) = auctionFee;
 
     WBUFL(data,(0x0E)) = PItem->getID();
     WBUFB(data,(0x0C)) = PItem->getSlotID();
 	
+	WBUFB(data,(0x10)) = quantity;
     WBUFB(data,(0x10)) = quantity;
 	WBUFB(data,(0x30)) = AUCTION_ID;                                      
 }
@@ -73,20 +105,20 @@ CAuctionHousePacket::CAuctionHousePacket(uint8 action, uint8 slot, CCharEntity* 
     this->type = 0x4C;
     this->size = 0x1E;
 
-    WBUFB(data,(0x04)) = action;       
-    WBUFB(data,(0x05)) = slot;                // порядковый номер предмета
+    WBUFB(data,(0x04)) = action;
+    WBUFB(data,(0x05)) = slot;          // Serial number of the subject
     WBUFB(data,(0x06)) = IsAuctionOpen;
     
 
 	if (slot < 7 && slot < PChar->m_ah_history.size())
     {
         WBUFB(data,(0x14)) = 0x03;
-        WBUFB(data,(0x16)) = 0x01;	            // значение меняется, назначение неизвестно UNKNOWN
+        WBUFB(data,(0x16)) = 0x01;                                   // Value is changed, the purpose is unknown UNKNOWN
 
-		WBUFW(data,(0x28)) = PChar->m_ah_history.at(slot).itemid;             // id продаваемого предмета  item id
-		WBUFB(data,(0x2A)) = 1 - PChar->m_ah_history.at(slot).stack;          // количество предметов stack size
-		WBUFB(data,(0x2B)) = 0x02;											// количество предметов stack size?            
-		WBUFL(data,(0x2C)) = PChar->m_ah_history.at(slot).price;				// цена продажи price
+        WBUFW(data,(0x28)) = PChar->m_ah_history.at(slot).itemid;    // Item ID of item in slot
+        WBUFB(data,(0x2A)) = 1 - PChar->m_ah_history.at(slot).stack; // Number of items stack size
+        WBUFB(data,(0x2B)) = 0x02;                                   // Number of items stack size?
+        WBUFL(data,(0x2C)) = PChar->m_ah_history.at(slot).price;     // Selling price
 
 		WBUFB(data,(0x30)) = AUCTION_ID;
     }
@@ -115,17 +147,17 @@ CAuctionHousePacket::CAuctionHousePacket(uint8 action, uint8 message, CCharEntit
 	// we need all this guff so the item stays in the history.
 	if (keepItem && slot < 7 && slot < PChar->m_ah_history.size())
     {
-		WBUFB(data,(0x14)) = 0x03;
-        WBUFB(data,(0x16)) = 0x01;	            // значение меняется, назначение неизвестно UNKNOWN
+        WBUFB(data,(0x14)) = 0x03;
+        WBUFB(data,(0x16)) = 0x01; // Value is changed, the purpose is unknown UNKNOWN
 
-		memcpy(data+(0x18), PChar->GetName(), dsp_cap(strlen(PChar->GetName()), 0, 16));
+        memcpy(data+(0x18), PChar->GetName(), dsp_cap(strlen(PChar->GetName()), 0, 16));
 
-		WBUFW(data,(0x28)) = PChar->m_ah_history.at(slot).itemid;             // id продаваемого предмета  item id
-		WBUFB(data,(0x2A)) = 1 - PChar->m_ah_history.at(slot).stack;          // количество предметов stack size
-		WBUFB(data,(0x2B)) = 0x02;											// количество предметов stack size?            
-		WBUFL(data,(0x2C)) = PChar->m_ah_history.at(slot).price;				// цена продажи price
+        WBUFW(data,(0x28)) = PChar->m_ah_history.at(slot).itemid;    // Id sell items item id
+        WBUFB(data,(0x2A)) = 1 - PChar->m_ah_history.at(slot).stack; // Number of items stack size
+        WBUFB(data,(0x2B)) = 0x02;                                   // Number of items stack size?
+        WBUFL(data,(0x2C)) = PChar->m_ah_history.at(slot).price;     // Price selling price
 
-		WBUFB(data,(0x30)) = AUCTION_ID;
+        WBUFB(data,(0x30)) = AUCTION_ID;
 	}
 
 }

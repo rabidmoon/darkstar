@@ -37,8 +37,10 @@ This file is part of DarkStar-server source code.
 #include "zoneutils.h"
 #include "../entities/mobentity.h"
 #include "../entities/charentity.h"
+#include "../entities/automatonentity.h"
 #include "../ability.h"
 #include "../modifier.h"
+#include "../lua/luautils.h"
 
 #include "../ai/ai_automaton_dummy.h"
 #include "../ai/ai_pet_dummy.h"
@@ -49,6 +51,7 @@ This file is part of DarkStar-server source code.
 #include "../packets/char_update.h"
 #include "../packets/entity_update.h"
 #include "../packets/pet_sync.h"
+
 
 struct Pet_t
 {
@@ -712,11 +715,26 @@ namespace petutils
         PPet->m_Weapons[SLOT_RANGED]->setDamage((PPet->GetSkill(SKILL_ARA) / 9) * 2 + 3);
 
         CAutomatonEntity* PAutomaton = (CAutomatonEntity*)PPet;
+		uint8 arki = 0;
+		uint8 arkii = 0;
+		uint8 arktotal = 0;
+		if (PAutomaton->hasAttachment(8641))
+		{
+			arki = 4;
+		}
+		if (PAutomaton->hasAttachment(8641))
+		{
+			arki = 8;
+		}
+
+		arktotal = arki + arkii;
+
         switch (PAutomaton->getFrame())
         {
         case FRAME_HARLEQUIN:
             PPet->WorkingSkills.evasion = battleutils::GetMaxSkill(2, PPet->GetMLevel());
             PPet->setModifier(MOD_DEF, battleutils::GetMaxSkill(10, PPet->GetMLevel()));
+			PPet->setModifier(MOD_HPP, arktotal);
 			PPet->health.maxmp = ((int16)(raceStat + jobStat + sJobStat) * petStats->MPscale) /2;
 		    PPet->health.mp = PPet->health.maxmp;
             break;
@@ -724,14 +742,17 @@ namespace petutils
             PPet->WorkingSkills.evasion = battleutils::GetMaxSkill(5, PPet->GetMLevel());
             PPet->setModifier(MOD_DEF, battleutils::GetMaxSkill(5, PPet->GetMLevel()));
 			PPet->setModifier(MOD_MP, 0);
+			PPet->setModifier(MOD_HPP, arktotal);
             break;
         case FRAME_SHARPSHOT:
             PPet->WorkingSkills.evasion = battleutils::GetMaxSkill(1, PPet->GetMLevel());
             PPet->setModifier(MOD_DEF, battleutils::GetMaxSkill(11, PPet->GetMLevel()));
+			PPet->setModifier(MOD_HPP, arktotal);
             break;
         case FRAME_STORMWAKER:
             PPet->WorkingSkills.evasion = battleutils::GetMaxSkill(10, PPet->GetMLevel());
             PPet->setModifier(MOD_DEF, battleutils::GetMaxSkill(12, PPet->GetMLevel()));
+			PPet->setModifier(MOD_HPP, arktotal);
             break;
         }
 		
@@ -1097,12 +1118,14 @@ namespace petutils
 		if (haste > 200){
 		haste = 200;
 		}
+		uint16 bstr = (PAlly->GetMLevel() * 0.5);
+		PAlly->setModifier(MOD_STR, bstr); //added str for WS		
 		//ShowWarning(CL_GREEN"AYAME TRIGGERED SPAWN ALLY!!! \n" CL_RESET);
 		PAlly->setModifier(MOD_ACC, battleutils::GetMaxSkill(SKILL_GAX, JOB_WAR, PAlly->GetMLevel()) + modacc); //A+ Acc
 		PAlly->setModifier(MOD_EVA, battleutils::GetMaxSkill(SKILL_SYH, JOB_WAR, PAlly->GetMLevel())); //B+ Evasion
 		PAlly->setModifier(MOD_ATT, battleutils::GetMaxSkill(SKILL_GAX, JOB_WAR, PAlly->GetMLevel()) + modatt);// A+ Attack
 		PAlly->setModifier(MOD_DEF, battleutils::GetMaxSkill(SKILL_SYH, JOB_WAR, PAlly->GetMLevel()));// B+ Defense
-		PAlly->m_Weapons[SLOT_MAIN]->setDamage(floor(PAlly->GetMLevel()*0.90f) + 12);// D:12 @1 / D:80 @ 75
+		PAlly->m_Weapons[SLOT_MAIN]->setDamage(floor(PAlly->GetMLevel()*0.83f) + 12);// D:12 @1 / D:80 @ 75
 		PAlly->m_Weapons[SLOT_MAIN]->setDelay(floor(1000.0f*(450.0f / 60.0f))); //420 delay
 		PAlly->setModifier(MOD_HASTE_ABILITY, 102); //Constant Hasso
 		PAlly->setModifier(MOD_HASTE_GEAR, haste);
@@ -1115,28 +1138,26 @@ namespace petutils
 		PAlly->setModifier(MOD_MOVE, 10);
 		PAlly->health.maxhp = (int16)(14 + (3.8f*(plvl * 4.0f)));
 		PAlly->UpdateHealth();
-        PAlly->health.hp = PAlly->health.maxhp;		
-		   if (plvl > 9){
-		        PAlly->setModifier(MOD_STORETP, 15);
-		   }
-		   if (plvl > 29){
-		        PAlly->setModifier(MOD_STORETP, 25);
-				PAlly->setModifier(MOD_ZANSHIN, 25);
-		   }	   
-		   if (plvl > 49){
-		        PAlly->setModifier(MOD_STORETP, 35);
-				PAlly->setModifier(MOD_DOUBLE_ATTACK, 15);
-				PAlly->setModifier(MOD_ZANSHIN, 35);
-				PAlly->setModifier(MOD_TP_BONUS, (floor((PAlly->GetMLevel() / 2) + 1)));
-		   }
+        PAlly->health.hp = PAlly->health.maxhp;	
 		   if (plvl > 74){
-		        PAlly->setModifier(MOD_STORETP, 50);
+		        PAlly->setModifier(MOD_STORETP, 25);
 				PAlly->setModifier(MOD_DOUBLE_ATTACK, 15);
-				PAlly->setModifier(MOD_ZANSHIN, 45);
-				PAlly->setModifier(MOD_TP_BONUS, (floor(PAlly->GetMLevel() + 1)));
+				PAlly->setModifier(MOD_ZANSHIN, 15);
+				PAlly->setModifier(MOD_TP_BONUS, (floor(PAlly->GetMLevel() + 26)));
 		   }
-		   
-		   
+		   else if (plvl > 49){
+		        PAlly->setModifier(MOD_STORETP, 20);
+				PAlly->setModifier(MOD_DOUBLE_ATTACK, 15);
+				PAlly->setModifier(MOD_ZANSHIN, 10);
+				PAlly->setModifier(MOD_TP_BONUS, (floor((PAlly->GetMLevel() / 2) + 1)));
+		   }		   
+		   else if (plvl > 29){
+		        PAlly->setModifier(MOD_STORETP, 15);
+				PAlly->setModifier(MOD_ZANSHIN, 25);
+		   }
+		   else if (plvl > 9){
+		        PAlly->setModifier(MOD_STORETP, 10);
+		   }
 		}
 		else if (PetID == PETID_CURILLA)
 		{
@@ -1255,7 +1276,7 @@ namespace petutils
 		uint16 moddatt = (PAlly->GetMLevel() * 1.0);
 		uint16 moddacc = (PAlly->GetMLevel() * 0.5);
 		uint16 modmab = (PAlly->GetMLevel() / 2);
-		uint16 modmacc = (PAlly->GetMLevel() / 2);
+		uint16 modmacc = (PAlly->GetMLevel());
 		PAlly->setModifier(MOD_ACC, battleutils::GetMaxSkill(SKILL_POL, JOB_WAR, PAlly->GetMLevel()) + moddacc); //B+ Acc
 		PAlly->setModifier(MOD_EVA, battleutils::GetMaxSkill(SKILL_POL, JOB_WAR, PAlly->GetMLevel())); //B+ Evasion
 		PAlly->setModifier(MOD_ATT, battleutils::GetMaxSkill(SKILL_POL, JOB_WAR, PAlly->GetMLevel()) + moddatt);// B+ Attack
@@ -1264,7 +1285,7 @@ namespace petutils
 		PAlly->setModifier(MOD_DIVINE, battleutils::GetMaxSkill(SKILL_H2H, JOB_WAR, PAlly->GetMLevel()));// D Divine
 		PAlly->setModifier(MOD_ELEM, battleutils::GetMaxSkill(SKILL_H2H, JOB_WAR, PAlly->GetMLevel()));// D Elemental
 		PAlly->setModifier(MOD_ENFEEBLE, battleutils::GetMaxSkill(SKILL_H2H, JOB_WAR, PAlly->GetMLevel()));// D Enfeebling		
-		PAlly->setModifier(MOD_MATT, modmab); //Magic Attack Bonus	
+		// PAlly->setModifier(MOD_MATT, modmab); //Magic Attack Bonus	
 		PAlly->setModifier(MOD_MACC, modmacc); //Magic Accuracy Bonus
 		PAlly->m_Weapons[SLOT_MAIN]->setDamage(floor(PAlly->GetMLevel()*0.49f));// D:37 @75
 		PAlly->m_Weapons[SLOT_MAIN]->setDelay(floor(1000.0f*(340.0f / 60.0f))); //340 delay	
@@ -1280,22 +1301,22 @@ namespace petutils
 		PAlly->UpdateHealth();
         PAlly->health.mp = PAlly->health.maxmp;
 		if (plvl > 74){
-			PAlly->setModifier(MOD_MATT, 85);
+			PAlly->setModifier(MOD_MATT, 28);
 			PAlly->setModifier(MOD_SUBLIMATION_BONUS, 7);
 			PAlly->setModifier(MOD_REFRESH, 3);
 			PAlly->setModifier(MOD_FASTCAST, 20);
 		}
         else if (plvl > 50){
-			PAlly->setModifier(MOD_MATT, 75);
+			PAlly->setModifier(MOD_MATT, 24);
 			PAlly->setModifier(MOD_SUBLIMATION_BONUS, 5);
 			PAlly->setModifier(MOD_FASTCAST, 10);
 		}
 		else if (plvl > 25){
-			PAlly->setModifier(MOD_MATT, 35);
+			PAlly->setModifier(MOD_MATT, 15);
 			PAlly->setModifier(MOD_REFRESH, 1);
 		}
 		else {
-			PAlly->setModifier(MOD_MATT, 15);
+			PAlly->setModifier(MOD_MATT, 10);
 		}	
         }
 		
@@ -1727,6 +1748,7 @@ namespace petutils
             PMaster->charmTime = 0;
 
             delete PPet->PBattleAI;
+			//luautils::OnMobDeath(this, nullptr);
             PPet->PBattleAI = new CAIMobDummy((CMobEntity*)PMaster);
             PPet->PBattleAI->SetLastActionTime(gettick());
             PPet->PBattleAI->SetCurrentAction(ACTION_FALL);
@@ -1737,6 +1759,21 @@ namespace petutils
 
 
         petutils::DetachPet(PMaster);
+        // when Ally dies
+        uint8 counter = 0;
+        if (PMaster != nullptr && PMaster->PAlly.size() != 0){
+            for (auto ally : PMaster->PAlly)
+            {
+                //if (ally == this)
+                //{
+                    PMaster->PAlly.erase(PMaster->PAlly.begin() + counter);
+                    break;
+                //}
+                counter++;
+            }
+            PMaster->PParty->ReloadParty();
+        }
+		
     }
 
     void MakePetStay(CBattleEntity* PMaster)
@@ -2082,6 +2119,7 @@ namespace petutils
         PPet->m_Element = g_PPetList.at(PetID)->m_Element;
         PPet->m_PetID = PetID;
 
+
         if (PPet->getPetType() == PETTYPE_AVATAR){
             if (PMaster->GetMJob() == JOB_SMN){
                 PPet->SetMLevel(PMaster->GetMLevel());
@@ -2181,14 +2219,16 @@ namespace petutils
         else if (PPet->getPetType() == PETTYPE_AUTOMATON && PMaster->objtype == TYPE_PC)
         {
             CAutomatonEntity* PAutomaton = (CAutomatonEntity*)PPet;
+			AUTOHEADTYPE head = PAutomaton->getHead();
             switch (PAutomaton->getFrame())
             {
             case FRAME_HARLEQUIN:
                 PPet->SetMJob(JOB_RDM);
                 PPet->SetSJob(JOB_WAR);
+				PPet->setModifier(MOD_ATTP, 5);
                 break;
             case FRAME_VALOREDGE:
-                PPet->SetMJob(JOB_PLD);
+                PPet->SetMJob(JOB_WAR);
                 PPet->SetSJob(JOB_WAR);
                 break;
             case FRAME_SHARPSHOT:

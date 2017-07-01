@@ -365,7 +365,7 @@ void CAIAutomatonDummy::ActionSpawn()
 	   // Add attachment Bonuses together to provide the total before setting modifier
        accelorator = acceloratori + acceloratorii;
        armorplate = armorplatei + armorplateii;
-	   ark = arki + arkii;
+	   //ark = arki + arkii;
 	   dynamo = dynamoi;
 	   lspeaker = lspeakeri + lspeakerii + 15; // Default MAB 15 on Automaton
 	   manajam = manajami + manajamii;
@@ -381,7 +381,7 @@ void CAIAutomatonDummy::ActionSpawn()
 	   // Sets Modifier on Activate.  If Attachment is not present, modifier is 0
 	   m_PPet->setModifier(MOD_EVA, accelorator);
 	   m_PPet->setModifier(MOD_DEFP, armorplate);
-	   m_PPet->setModifier(MOD_HPP, ark);
+	   //m_PPet->setModifier(MOD_HPP, ark);
 	   m_PPet->setModifier(MOD_DOUBLE_ATTACK, coiler);
 	   m_PPet->setModifier(MOD_CRITHITRATE, dynamo);
 	   m_PPet->setModifier(MOD_MATT, lspeaker);
@@ -1933,6 +1933,7 @@ int16 CAIAutomatonDummy::StormFrameSoulAttack()
 			}
 		else if (m_PPet->StatusEffectContainer->HasStatusEffect(EFFECT_PROTECT) == false) //cast pro on self
 			{
+			ShowWarning(CL_RED"AUTO: PET doesn't have protect!!! \n", CL_RESET);
 			m_PBattleSubTarget = m_PPet;
 			if (mskill > 280)
 				if (m_PPet->health.mp > 83)
@@ -2207,8 +2208,73 @@ int16 CAIAutomatonDummy::StormFrameSoulAttack()
 			else 
 			    {
 				 spellID = -1;
+				}
+        else if (mskill > 146)
+			if (m_PPet->health.mp > 88)
+				{
+				 spellID = 4;
+				}
+			else if (m_PPet->health.mp > 46)  	
+			    {
+				 spellID = 3;
+				}
+			else if (m_PPet->health.mp > 24)  	
+			    {
+				 spellID = 2;
+				}				
+			else if (m_PPet->health.mp > 7)  	
+			    {
+				 spellID = 1;
+				}
+			else 
+			    {
+				 spellID = -1;
 				} 
-		}		
+		else if (mskill > 80)
+			if (m_PPet->health.mp > 46)  	
+			    {
+				 spellID = 3;
+				}
+			else if (m_PPet->health.mp > 24)  	
+			    {
+				 spellID = 2;
+				}				
+			else if (m_PPet->health.mp > 7)  	
+			    {
+				 spellID = 1;
+				}
+			else
+			    {
+				 spellID = -1;
+				}
+		else if (mskill > 44)
+			if (m_PPet->health.mp > 24)  	
+			    {
+				 spellID = 2;
+				}				
+			else if (m_PPet->health.mp > 7)  	
+			    {
+				 spellID = 1;
+				}
+			else
+			    {
+				 spellID = -1;
+				}
+		else if (mskill > 11)
+			if (m_PPet->health.mp > 7)  	
+			    {
+				 spellID = 1;
+				}
+			else
+			    {
+				 spellID = -1;
+				} 
+		else
+		        {
+				 spellID = -1;
+				} 				
+		}
+		
 		else if (mostWounded != nullptr)
 		{
         m_PBattleSubTarget = mostWounded;
@@ -2496,11 +2562,98 @@ int16 CAIAutomatonDummy::StormFrameStormAttack()
 	
 	
     CBattleEntity* mostWounded = getWounded(trigger);
+
+	// Healing AI
+	// TODO Add calculation that looks at most wounded HP percentage vs their full HP amount to determine level of cure
+	// TODO Add a way to calculate proper regen
+
+	if (m_Tick >= m_LastMagicTimeHeal + m_magicHealRecast)  // Look for last magic healing spell time 
+	{
+		if (mostWounded != nullptr)
+		{
+        m_PBattleSubTarget = mostWounded;
+		if (mskill > 146)
+			if (m_PPet->health.mp > 88)
+				{
+				 spellID = 4;
+				}
+			else if (m_PPet->health.mp > 46)  	
+			    {
+				 spellID = 3;
+				}
+			else if (m_PPet->health.mp > 24)  	
+			    {
+				 spellID = 2;
+				}				
+			else if (m_PPet->health.mp > 7)  	
+			    {
+				 spellID = 1;
+				}
+			else 
+			    {
+				 spellID = -1;
+				} 
+		else if (mskill > 80)
+			if (m_PPet->health.mp > 46)  	
+			    {
+				 spellID = 3;
+				}
+			else if (m_PPet->health.mp > 24)  	
+			    {
+				 spellID = 2;
+				}				
+			else if (m_PPet->health.mp > 7)  	
+			    {
+				 spellID = 1;
+				}
+			else
+			    {
+				 spellID = -1;
+				}
+		else if (mskill > 44)
+			if (m_PPet->health.mp > 24)  	
+			    {
+				 spellID = 2;
+				}				
+			else if (m_PPet->health.mp > 7)  	
+			    {
+				 spellID = 1;
+				}
+			else
+			    {
+				 spellID = -1;
+				}
+		else if (mskill > 11)
+			if (m_PPet->health.mp > 7)  	
+			    {
+				 spellID = 1;
+				}
+			else
+			    {
+				 spellID = -1;
+				} 
+		else
+		        {
+				 spellID = -1;
+				} 
+		
+        m_magicHealRecast = 25000 - m_damageGauge;
+		m_magicHealCast = 1; // 1 means casting a spell
+		}
+		else
+		{
+		m_LastMagicTimeHeal = m_Tick; // reset mtick no eligible healing spell to cast
+		m_magicHealRecast = 15000;		
+       }
+	}	
+	
+	
+	
     //CBattleEntity* mostWounded = m_PPet;
 	// Enhancing Spells
 	// Order is Protect > Shell > Haste (if Wind Maneuver is up) > Stoneskin (if Earth Maneuver is up) > Phalanx 
 	
-	if (m_Tick >= m_LastMagicTimeEnhance + m_magicEnhanceRecast) 
+	else if (m_Tick >= m_LastMagicTimeEnhance + m_magicEnhanceRecast) 
 		{
 		if (m_PPet->PMaster->StatusEffectContainer->HasStatusEffect(EFFECT_PROTECT) == false) 
 			{
@@ -2844,97 +2997,10 @@ int16 CAIAutomatonDummy::StormFrameStormAttack()
 			m_LastMagicTimeEnhance = m_Tick; // reset mtick
 			m_magicEnhanceRecast = 15000; // No eligible Enhance Spell to Cast
 			}
-        }
+        }	
 	
 	
-	
-	// Healing AI
-	// TODO Add calculation that looks at most wounded HP percentage vs their full HP amount to determine level of cure
-	// TODO Add a way to calculate proper regen
-
-	if (m_Tick >= m_LastMagicTimeHeal + m_magicHealRecast)  // Look for last magic healing spell time 
-	{
-		if (mostWounded != nullptr && m_PBattleTarget->objtype != TYPE_MOB)
-		{
-        m_PBattleSubTarget = mostWounded;
-		if (mskill > 146)
-			if (m_PPet->health.mp > 88)
-				{
-				 spellID = 4;
-				}
-			else if (m_PPet->health.mp > 46)  	
-			    {
-				 spellID = 3;
-				}
-			else if (m_PPet->health.mp > 24)  	
-			    {
-				 spellID = 2;
-				}				
-			else if (m_PPet->health.mp > 7)  	
-			    {
-				 spellID = 1;
-				}
-			else 
-			    {
-				 spellID = -1;
-				} 
-		else if (mskill > 80)
-			if (m_PPet->health.mp > 46)  	
-			    {
-				 spellID = 3;
-				}
-			else if (m_PPet->health.mp > 24)  	
-			    {
-				 spellID = 2;
-				}				
-			else if (m_PPet->health.mp > 7)  	
-			    {
-				 spellID = 1;
-				}
-			else
-			    {
-				 spellID = -1;
-				}
-		else if (mskill > 44)
-			if (m_PPet->health.mp > 24)  	
-			    {
-				 spellID = 2;
-				}				
-			else if (m_PPet->health.mp > 7)  	
-			    {
-				 spellID = 1;
-				}
-			else
-			    {
-				 spellID = -1;
-				}
-		else if (mskill > 11)
-			if (m_PPet->health.mp > 7)  	
-			    {
-				 spellID = 1;
-				}
-			else
-			    {
-				 spellID = -1;
-				} 
-		else
-		        {
-				 spellID = -1;
-				} 
-		
-        m_magicHealRecast = 15000 - m_damageGauge;
-		m_magicHealCast = 1; // 1 means casting a spell
-		}
-		else
-		{
-		m_LastMagicTimeHeal = m_Tick; // reset mtick no eligible healing spell to cast
-		m_magicHealRecast = 15000;		
-       }
-	}
-	
-	
-	
-	if (m_Tick >= m_LastMagicTimeEnf + m_magicEnfeebleRecast)  // Look for last enfeeble spell time 
+	else if (m_Tick >= m_LastMagicTimeEnf + m_magicEnfeebleRecast)  // Look for last enfeeble spell time 
 	{
 	    //Dispel List
 	    if (m_PBattleTarget != nullptr && m_PBattleTarget->StatusEffectContainer->HasStatusEffect(EFFECT_BLAZE_SPIKES) ||
@@ -3084,9 +3150,9 @@ int16 CAIAutomatonDummy::StormFrameStormAttack()
 	//   Elemental Magic Weakness Targeting       //
 	//   TODO Ice element forcing Ele Magic       //
 	//--------------------------------------------//
-	if (m_Tick >= m_LastMagicTimeEle + m_magicElementalRecast)  // Look for last ele spell time and force magic casting if ice maneuver is up
+	else if (m_Tick >= m_LastMagicTimeEle + m_magicElementalRecast)  // Look for last ele spell time and force magic casting if ice maneuver is up
 	{
-	 if (m_PBattleTarget != nullptr && m_PBattleTarget->getMod(MOD_THUNDERRES) < 0 && m_PBattleTarget->GetHPP() <= nukeHPP && m_PBattleTarget->objtype == TYPE_MOB)  // Weak to Thunder
+	 if (m_PBattleTarget != nullptr && m_PBattleTarget->getMod(MOD_THUNDERRES) < 0 && m_PBattleTarget->GetHPP() <= nukeHPP && m_PBattleTarget->objtype == TYPE_MOB && m_PPet->hasAttachment(8483) && mskill >= 90)  // Weak to Thunder
 	 {
 	 ShowDebug("Monster is Weak to Thunder");
 	 m_PBattleSubTarget = m_PBattleTarget;
@@ -3157,7 +3223,7 @@ int16 CAIAutomatonDummy::StormFrameStormAttack()
 		m_magicElementCast = 1;
 		m_magicElementalRecast = 18000;
     }
-	 else if (m_PBattleTarget != nullptr && m_PBattleTarget->getMod(MOD_ICERES) < 0 && m_PBattleTarget->GetHPP() <= nukeHPP && m_PBattleTarget->objtype == TYPE_MOB)  // Weak to Ice
+	 else if (m_PBattleTarget != nullptr && m_PBattleTarget->getMod(MOD_ICERES) < 0 && m_PBattleTarget->GetHPP() <= nukeHPP && m_PBattleTarget->objtype == TYPE_MOB && m_PPet->hasAttachment(8483) && mskill >= 90)  // Weak to Ice
 	{
 	    ShowDebug("Monster is Weak to Ice");
 		m_PBattleSubTarget = m_PBattleTarget;
@@ -3224,7 +3290,7 @@ int16 CAIAutomatonDummy::StormFrameStormAttack()
     m_magicElementCast = 1;
 	m_magicElementalRecast = 18000;	
     }
-	 else if (m_PBattleTarget != nullptr && m_PBattleTarget->getMod(MOD_FIRERES) < 0 && m_PBattleTarget->GetHPP() <= nukeHPP && m_PBattleTarget->objtype == TYPE_MOB)  // Weak to Fire
+	 else if (m_PBattleTarget != nullptr && m_PBattleTarget->getMod(MOD_FIRERES) < 0 && m_PBattleTarget->GetHPP() <= nukeHPP && m_PBattleTarget->objtype == TYPE_MOB && m_PPet->hasAttachment(8483) && mskill >= 90)  // Weak to Fire
 	{
 	    ShowDebug("Monster is Weak to Fire");
 		m_PBattleSubTarget = m_PBattleTarget;
@@ -3291,7 +3357,7 @@ int16 CAIAutomatonDummy::StormFrameStormAttack()
     m_magicElementCast = 1;
 	m_magicElementalRecast = 18000;	
     }
-	 else if (m_PBattleTarget != nullptr && m_PBattleTarget->getMod(MOD_WINDRES) < 0 && m_PBattleTarget->GetHPP() <= nukeHPP && m_PBattleTarget->objtype == TYPE_MOB)  // Weak to Wind
+	 else if (m_PBattleTarget != nullptr && m_PBattleTarget->getMod(MOD_WINDRES) < 0 && m_PBattleTarget->GetHPP() <= nukeHPP && m_PBattleTarget->objtype == TYPE_MOB && m_PPet->hasAttachment(8483) && mskill >= 90)  // Weak to Wind
 	{
 	    ShowDebug("Monster is Weak to Wind");
 		m_PBattleSubTarget = m_PBattleTarget;
@@ -3358,7 +3424,7 @@ int16 CAIAutomatonDummy::StormFrameStormAttack()
     m_magicElementCast = 1;
 	m_magicElementalRecast = 18000;	
     }
-	 else if (m_PBattleTarget != nullptr && m_PBattleTarget->getMod(MOD_WATERRES) < 0 && m_PBattleTarget->GetHPP() <= nukeHPP && m_PBattleTarget->objtype == TYPE_MOB)  // Weak to Water
+	 else if (m_PBattleTarget != nullptr && m_PBattleTarget->getMod(MOD_WATERRES) < 0 && m_PBattleTarget->GetHPP() <= nukeHPP && m_PBattleTarget->objtype == TYPE_MOB && m_PPet->hasAttachment(8483) && mskill >= 90)  // Weak to Water
 	{
 	    ShowDebug("Monster is Weak to Water");
 		m_PBattleSubTarget = m_PBattleTarget;
@@ -3425,7 +3491,7 @@ int16 CAIAutomatonDummy::StormFrameStormAttack()
     m_magicElementCast = 1;
 	m_magicElementalRecast = 18000;	
     }
-    else if (m_PBattleTarget != nullptr && m_PBattleTarget->getMod(MOD_EARTHRES) < 0 && m_PBattleTarget->GetHPP() <= nukeHPP && m_PBattleTarget->objtype == TYPE_MOB)  // Weak to Earth
+    else if (m_PBattleTarget != nullptr && m_PBattleTarget->getMod(MOD_EARTHRES) < 0 && m_PBattleTarget->GetHPP() <= nukeHPP && m_PBattleTarget->objtype == TYPE_MOB && m_PPet->hasAttachment(8483) && mskill >= 90)  // Weak to Earth
 	{
 	    ShowDebug("Monster is Weak to Earth");
 		m_PBattleSubTarget = m_PBattleTarget;
@@ -5062,7 +5128,7 @@ int16 CAIAutomatonDummy::StormFrameSpiritAttack()
 	//   Elemental Magic Weakness Targeting       //
 	//   TODO Ice element forcing Ele Magic       //
 	//--------------------------------------------//
-	if (m_Tick >= m_LastMagicTimeEle + m_magicElementalRecast)  // Look for last ele spell time and force magic casting if ice maneuver is up
+	else if (m_Tick >= m_LastMagicTimeEle + m_magicElementalRecast)  // Look for last ele spell time and force magic casting if ice maneuver is up
 	{
 	 if (m_PBattleTarget != nullptr && m_PBattleTarget->getMod(MOD_THUNDERRES) < 0 && m_PBattleTarget->GetHPP() <= nukeHPP)  // Weak to Thunder
 	 {
@@ -6817,13 +6883,14 @@ CBattleEntity* CAIAutomatonDummy::getWounded(uint8 threshold)
     if (m_PPet->PMaster->GetHPP() < lowest){
         lowest = m_PPet->PMaster->GetHPP();
         mostWounded = m_PPet->PMaster;
+		ShowWarning(CL_GREEN"AUTO: Most wounded is Master \n", CL_RESET);
     }
     if (m_PPet->PMaster->PPet != nullptr && m_PPet->PMaster->PPet->GetHPP() < lowest)
     {
         lowest = m_PPet->PMaster->PPet->GetHPP();
         mostWounded = m_PPet->PMaster->PPet;
     }
-    if (m_PPet->PMaster->PParty != nullptr)  //Only Soulsoother Head can cure other Party Members
+    if (m_PPet->PMaster->PParty != nullptr && m_PPet->getHead() == HEAD_SOULSOOTHER)  //Only Soulsoother Head can cure other Party Members
     {
         for (auto member : m_PPet->PMaster->PParty->members)
         {
@@ -6831,10 +6898,11 @@ CBattleEntity* CAIAutomatonDummy::getWounded(uint8 threshold)
             {
                 lowest = member->GetHPP();
                 mostWounded = member;
+				ShowWarning(CL_GREEN"AUTO: Most wounded is Party \n", CL_RESET);
             }
         }
     }
-    if (m_PPet->PMaster->PAlly.size() > 0)  //Only Soulsoother Head can cure other Allies add Soulsoother Head
+    if (m_PPet->PMaster->PAlly.size() > 0 && m_PPet->getHead() == HEAD_SOULSOOTHER)  //Only Soulsoother Head can cure other Allies add Soulsoother Head
     {
         for (auto ally : m_PPet->PMaster->PAlly)
         {
@@ -6842,10 +6910,10 @@ CBattleEntity* CAIAutomatonDummy::getWounded(uint8 threshold)
             {
                 lowest = ally->GetHPP();
                 mostWounded = ally;
+				ShowWarning(CL_GREEN"AUTO: Most wounded is Trust \n", CL_RESET);
             }
         }
     }
-    
     if (lowest <= threshold)
     {
         return mostWounded;

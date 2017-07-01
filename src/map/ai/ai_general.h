@@ -196,6 +196,13 @@ public:
 	void			SetLastBalladWeakTime(uint32 time);
 	void			SetLastSongEnfeebleTime(uint32 time);
 	void			SetLastSongFrontTime(uint32 time);
+	
+	void			SetLastFirstMeleeSongTime(uint32 time);
+	void			SetLastSecondMeleeSongTime(uint32 time);
+	void			SetLastFirstMageSongTime(uint32 time);
+	void			SetLastSecondMageSongTime(uint32 time);
+	
+	
 	void			SetLastGesshoMagicTime(uint32 time);
 	void			SetLastGesshoUtsuCheck(uint32 time);
 	void			SetLastGesshoVokeTime(uint32 time);
@@ -293,6 +300,14 @@ protected:
 	uint32			m_LastBalladWeakTime;
 	uint32			m_LastSongEnfeebleTime;
 	uint32			m_LastSongFrontTime;
+	
+	uint32			m_LastFirstMeleeSongTime;
+	uint32			m_LastSecondMeleeSongTime;
+	uint32			m_LastFirstMageSongTime;
+	uint32			m_LastSecondMageSongTime;
+	
+	
+	
 	uint32          m_LastGesshoMagicTime;
 	uint32			m_LastGesshoUtsuCheck;
 	uint32			m_LastGesshoVokeTime;

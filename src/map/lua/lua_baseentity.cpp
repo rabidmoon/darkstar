@@ -4569,12 +4569,16 @@ inline int32 CLuaBaseEntity::getPartySize(lua_State* L)
     DSP_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
     DSP_DEBUG_BREAK_IF(m_PBaseEntity->objtype == TYPE_NPC);
 
-    DSP_DEBUG_BREAK_IF(lua_isnil(L, 1) || !lua_isnumber(L, 1));
+    //DSP_DEBUG_BREAK_IF(lua_isnil(L, 1) || !lua_isnumber(L, 1));
 
     uint8 allianceparty = (uint8)lua_tonumber(L, 1);
     uint8 partysize = 1;
 
-    if (((CBattleEntity*)m_PBaseEntity)->PParty != nullptr)
+	if (((CBattleEntity*)m_PBaseEntity)->PAlly.size() > 0)
+	{
+		partysize = ((CBattleEntity*)m_PBaseEntity)->PAlly.size();
+	}
+    else if (((CBattleEntity*)m_PBaseEntity)->PParty != nullptr)
     {
         if (allianceparty == 0)
             partysize = ((CBattleEntity*)m_PBaseEntity)->PParty->members.size();

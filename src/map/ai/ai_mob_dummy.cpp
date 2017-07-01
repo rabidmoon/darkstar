@@ -2130,7 +2130,7 @@ bool CAIMobDummy::CanDetectTarget(CBattleEntity* PTarget, bool forceSight)
         return CanSeePoint(PTarget->loc.p);
     }
 
-	if ((aggro & AGGRO_DETECT_MAGIC) && PTarget->PBattleAI->GetCurrentAction() == ACTION_MAGIC_CASTING && PTarget->PBattleAI->GetCurrentSpell()->hasMPCost())
+	if ((aggro & AGGRO_DETECT_MAGIC) && PTarget->PBattleAI->GetCurrentAction() == ACTION_MAGIC_CASTING && PTarget->PBattleAI->GetCurrentSpell()->hasMPCost() && PTarget->PBattleAI->GetCurrentSpell()->getSpellGroup() != SPELLGROUP_TRUST)
     {
         return CanSeePoint(PTarget->loc.p);
     }

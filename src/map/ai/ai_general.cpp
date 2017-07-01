@@ -129,6 +129,13 @@ void CAIGeneral::Reset()
 	m_LastBalladWeakTime = 0;
 	m_LastSongEnfeebleTime = 0;
 	m_LastSongFrontTime = 0;
+	
+	m_LastFirstMeleeSongTime = 0;
+	m_LastSecondMeleeSongTime = 0;
+	m_LastFirstMageSongTime = 0;
+	m_LastSecondMageSongTime = 0;
+	
+	
 	m_LastGesshoMagicTime = 0;
 	m_LastGesshoUtsuCheck = 0;
 	m_LastGesshoVokeTime = 0;
@@ -604,6 +611,27 @@ void CAIGeneral::SetLastSongFrontTime(uint32 time)
 {
 	m_LastSongFrontTime = time;
 }
+
+void CAIGeneral::SetLastFirstMeleeSongTime(uint32 time)
+{
+	m_LastFirstMeleeSongTime = time;
+}
+
+void CAIGeneral::SetLastSecondMeleeSongTime(uint32 time)
+{
+	m_LastSecondMeleeSongTime = time;
+}
+
+void CAIGeneral::SetLastFirstMageSongTime(uint32 time)
+{
+	m_LastFirstMageSongTime = time;
+}
+
+void CAIGeneral::SetLastSecondMageSongTime(uint32 time)
+{
+	m_LastSecondMageSongTime = time;
+}
+
 
 void CAIGeneral::SetLastGesshoMagicTime(uint32 time)
 {

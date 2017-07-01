@@ -3030,8 +3030,11 @@ void CAIPetDummy::ActionAttack()
         return;
     }
 	
+	uint8 moblevel = 0;
 	uint8 trustlevel = m_PPet->GetMLevel();
-	uint8 moblevel = m_PBattleTarget->GetMLevel();
+	if (m_PPet->getPetType() == PETTYPE_TRUST){
+	moblevel = m_PBattleTarget->GetMLevel();
+	}
 	if (m_PPet->getZone() == m_PPet->PMaster->getZone()){
 	m_PPet->updatemask |= UPDATE_HP;
     //charutils::UpdateHealth((CCharEntity*)m_PPet->PMaster); // To update pet health at all time if pet and master are in the same zone; this is for zoning purposes
@@ -3903,7 +3906,10 @@ void CAIPetDummy::ActionAttack()
 	//Nanaa will use WS based on if SA is active, or won't be available for a certain period of time
 	//Ayame will use WS if the players TP is less than 80%.  If the player's TP is 80% she will hold TP until the player get 100%.
 	
-	int8 petleveldiff = (moblevel - trustlevel);  // Find level difference
+	int8 petleveldiff = 0;
+	if (m_PPet->getPetType() == PETTYPE_TRUST){
+	petleveldiff = (moblevel - trustlevel);  // Find level difference
+	}
 	
 		if (m_PPet->getPetType() == PETTYPE_TRUST && m_PPet->m_PetID != PETID_NAJI && m_PPet->m_PetID != PETID_NANAA_MIHGO && m_PPet->m_PetID != PETID_AYAME && m_PPet->m_PetID != PETID_LION 
 		&& m_PPet->m_PetID != PETID_PRISHE && m_PPet->health.tp >= 1000 && m_PPet->PetSkills.size() > 0)
@@ -4658,12 +4664,7 @@ void CAIPetDummy::ActionDeath()
 
             m_ActionType = ACTION_NONE;
         }
-    }	
-	
-
-
-  
-
+    }
 }
 
 void CAIPetDummy::ActionMagicStart()
@@ -4801,7 +4802,7 @@ int16 CAIPetDummy::KupipiSpell()
 	uint8 trigger = 60; // HP Trigger Threshold
 	uint8 lowHPP = 31;
 	uint8 lowtrigger = 35;	
-	uint8 lowtriggercuraga = 32;
+	uint8 lowtriggercuraga = 25;
 	uint8 level = m_PPet->GetMLevel();
     int16 spellID = -1;
 	
@@ -4854,7 +4855,29 @@ int16 CAIPetDummy::KupipiSpell()
 			    {
 				 spellID = -1;
 				}
-        else
+		else if (level > 10)
+			if (m_PPet->health.mp > 24)  	
+			    {
+				 spellID = 2;
+				}				
+			else if (m_PPet->health.mp > 7)  	
+			    {
+				 spellID = 1;
+				}
+			else
+			    {
+				 spellID = -1;
+				}
+		else if (level > 4)
+			if (m_PPet->health.mp > 7)  	
+			    {
+				 spellID = 1;
+				}
+			else
+			    {
+				 spellID = -1;
+				} 
+		else
 		        {
 				 spellID = -1;
 				} 
@@ -8805,7 +8828,6 @@ else if (adelhiedMB == 7){
 	return spellID;
 }
 
-
 int16 CAIPetDummy::UlmiaSpell()
 {	
     int16 spellID = -1;
@@ -8817,48 +8839,615 @@ int16 CAIPetDummy::UlmiaSpell()
 	float charAtt;
 	float mobDef;
 	float pdif;
+	int32 value;
 	
-	//Decide who the pdif and acc is based off of due to distances
-	if (currentPlayerDistance < 10)
+
+	//Decide which spell combo to cast.  Always prioritieze accuracy!
+    // Song Combo List
+	// #1 [DONE!] Madrigal x2                if hitrate is < 60 
+	// #2 [DONE!] Minuet + Madrigal          if hitrate is < 80 and Pdif < 1.25 Neutral Eva or higher and Neutral Defense or Higher
+	// #3 [DONE!] Minuet x 2                 if hitrate is > 79 and pdif < 1 Neutral Defense or higher, and low evasion		
+	// #4 [DONE!] March + Madrigal           if hitrate is < 79 and pdif > 1.25 Neutral Evasion, Low Defense
+    // #5 March + Minuet                     if hitrate is > 79 and pdif < 1.26 Low evasion, Neutral Defense
+	// #6 March x2                           if hitrate is > 79 and pdif > 1.25  Low Defense, Low Evasion
+	
+	
+	//First Check to see if the recast of the first melee song is up
+	//This will determine when to do the calculations for Hitrate and pdif
+	//so that Ulmia doesn't calculate when songs are up
+	
+	
+	if (m_Tick >= m_LastFirstMeleeSongTime + m_firstMeleeSongRecast)  //Ten Seconds added to allow time for both songs to be down before making decision
 	{
-	    ShowWarning(CL_GREEN"Melee Distance, using Player Stats \n" CL_RESET);
-	    hitrate = battleutils::GetHitRate(m_PPet->PMaster, m_PBattleTarget, 0);
-	    charAtt = m_PPet->PMaster->ATT();
-	    mobDef = m_PBattleTarget->DEF();
-	    pdif = (charAtt / mobDef);
-	}
-    else
-    {
-	    if (m_PPet->m_PetID == PETID_ULMIA)
-        {		
-	        ShowWarning(CL_GREEN"Mage Distance, using Pet Stats \n" CL_RESET);
-	        hitrate = battleutils::GetHitRate(m_PPet, m_PBattleTarget, 0);
-	        charAtt = m_PPet->ATT();
+	    //Decide who the pdif and acc is based off of due to distances and then determine song combo
+	    if (currentPlayerDistance < 10)
+	    {
+	        ShowWarning(CL_GREEN"Melee Distance, using Player Stats \n" CL_RESET);
+	        hitrate = battleutils::GetHitRate(m_PPet->PMaster, m_PBattleTarget, 0);
+	        charAtt = m_PPet->PMaster->ATT();
 	        mobDef = m_PBattleTarget->DEF();
 	        pdif = (charAtt / mobDef);
-		}	
+			
+			//Determine Song Combo and write to PlayerVar in SQL
+			if (hitrate < 60)
+			{
+			    int32 value = 1;
+		        std::string varname;
+			    const int8* fmtQuery = "INSERT INTO char_vars SET charid = %u, varname = 'UlmiaSong', value = '1' ON DUPLICATE KEY UPDATE value = '1';";
+                Sql_Query(SqlHandle, fmtQuery, m_PPet->PMaster->id, varname, value, value);	
+			}
+			else if (hitrate < 80 && hitrate > 59 && pdif < 1.25)
+			{
+			    int32 value = 2;
+		        std::string varname;
+			    const int8* fmtQuery = "INSERT INTO char_vars SET charid = %u, varname = 'UlmiaSong', value = '2' ON DUPLICATE KEY UPDATE value = '2';";
+                Sql_Query(SqlHandle, fmtQuery, m_PPet->PMaster->id, varname, value, value);	
+			}	
+            else if (hitrate > 79 && pdif < 1)
+			{
+			    int32 value = 3;
+		        std::string varname;
+			    const int8* fmtQuery = "INSERT INTO char_vars SET charid = %u, varname = 'UlmiaSong', value = '3' ON DUPLICATE KEY UPDATE value = '3';";
+                Sql_Query(SqlHandle, fmtQuery, m_PPet->PMaster->id, varname, value, value);	
+			}	
+			else if (hitrate < 80 && pdif > 1.25) // Neutral Evasion Low Defense
+			{
+			    int32 value = 4;
+		        std::string varname;
+			    const int8* fmtQuery = "INSERT INTO char_vars SET charid = %u, varname = 'UlmiaSong', value = '4' ON DUPLICATE KEY UPDATE value = '4';";
+                Sql_Query(SqlHandle, fmtQuery, m_PPet->PMaster->id, varname, value, value);	
+			}
+			else if (hitrate > 79 && pdif < 1.26) // Low Evasion Neutral to high def
+			{
+			    int32 value = 5;
+		        std::string varname;
+			    const int8* fmtQuery = "INSERT INTO char_vars SET charid = %u, varname = 'UlmiaSong', value = '5' ON DUPLICATE KEY UPDATE value = '5';";
+                Sql_Query(SqlHandle, fmtQuery, m_PPet->PMaster->id, varname, value, value);	
+			}
+			else if (hitrate > 79 && pdif > 1.25) // Low Evasion Low Defense
+			{
+			    int32 value = 6;
+		        std::string varname;
+			    const int8* fmtQuery = "INSERT INTO char_vars SET charid = %u, varname = 'UlmiaSong', value = '6' ON DUPLICATE KEY UPDATE value = '6';";
+                Sql_Query(SqlHandle, fmtQuery, m_PPet->PMaster->id, varname, value, value);	
+			}					
+	    }
+        else
+        {
+	        if (m_PPet->m_PetID == PETID_ULMIA)
+            {		
+	            ShowWarning(CL_GREEN"Mage Distance, using Pet Stats \n" CL_RESET);
+	            hitrate = battleutils::GetHitRate(m_PPet, m_PBattleTarget, 0);
+	            charAtt = m_PPet->ATT();
+	            mobDef = m_PBattleTarget->DEF();
+	            pdif = (charAtt / mobDef);
+				
+			//Determine Song Combo and write to PlayerVar in SQL
+			if (hitrate < 60)
+			{
+			    int32 value = 1;
+		        std::string varname;
+			    const int8* fmtQuery = "INSERT INTO char_vars SET charid = %u, varname = 'UlmiaSong', value = '1' ON DUPLICATE KEY UPDATE value = '1';";
+                Sql_Query(SqlHandle, fmtQuery, m_PPet->PMaster->id, varname, value, value);	
+			}
+			else if (hitrate < 80 && hitrate > 59 && pdif < 1.25)
+			{
+			    int32 value = 2;
+		        std::string varname;
+			    const int8* fmtQuery = "INSERT INTO char_vars SET charid = %u, varname = 'UlmiaSong', value = '2' ON DUPLICATE KEY UPDATE value = '2';";
+                Sql_Query(SqlHandle, fmtQuery, m_PPet->PMaster->id, varname, value, value);	
+			}	
+            else if (hitrate > 79 && pdif < 1)
+			{
+			    int32 value = 3;
+		        std::string varname;
+			    const int8* fmtQuery = "INSERT INTO char_vars SET charid = %u, varname = 'UlmiaSong', value = '3' ON DUPLICATE KEY UPDATE value = '3';";
+                Sql_Query(SqlHandle, fmtQuery, m_PPet->PMaster->id, varname, value, value);	
+			}	
+			else if (hitrate < 80 && pdif > 1.25) // Neutral Evasion Low Defense
+			{
+			    int32 value = 4;
+		        std::string varname;
+			    const int8* fmtQuery = "INSERT INTO char_vars SET charid = %u, varname = 'UlmiaSong', value = '4' ON DUPLICATE KEY UPDATE value = '4';";
+                Sql_Query(SqlHandle, fmtQuery, m_PPet->PMaster->id, varname, value, value);	
+			}
+			else if (hitrate > 79 && pdif < 1.26) // Low Evasion Neutral to high def
+			{
+			    int32 value = 5;
+		        std::string varname;
+			    const int8* fmtQuery = "INSERT INTO char_vars SET charid = %u, varname = 'UlmiaSong', value = '5' ON DUPLICATE KEY UPDATE value = '5';";
+                Sql_Query(SqlHandle, fmtQuery, m_PPet->PMaster->id, varname, value, value);	
+			}
+			else if (hitrate > 79 && pdif > 1.25) // Low Evasion Low Defense
+			{
+			    int32 value = 6;
+		        std::string varname;
+			    const int8* fmtQuery = "INSERT INTO char_vars SET charid = %u, varname = 'UlmiaSong', value = '6' ON DUPLICATE KEY UPDATE value = '6';";
+                Sql_Query(SqlHandle, fmtQuery, m_PPet->PMaster->id, varname, value, value);	
+			}				
+		    }	
+        }
+		//printf("Player Hitrate is: %u \n", hitrate);
+	    //printf("Player PDIF: %f \n", pdif);		
+	    //printf("Song Combo Received: %u \n", songcombo);
     }
+	
+	
+	
+	//float pdif = battleutils::GetDamageRatio(m_PPet->PMaster, m_PBattleTarget, 0, 0); NOT NEEDED
+
+	uint32 songcombo = charutils::GetVar((CCharEntity*)m_PPet->PMaster,"UlmiaSong");
+	
+	
 
 	
 	
-	
-	//float pdif = battleutils::GetDamageRatio(m_PPet->PMaster, m_PBattleTarget, 0, 0);
 
-	printf("Player Hitrate is: %u \n", hitrate);
-	printf("Player PDIF: %f \n", pdif);	
-    uint32 songcombo = charutils::GetVar((CCharEntity*)m_PPet->PMaster,"UlmiaSong");	
-	printf("Song Combo Received: %u \n", songcombo);
-	// Frontline Spell Casting Based on Distance needing to be < 2 yalms from the battle target.
+	
+	
+	//Frontline Spells.  Cast the first song based on Song Combo if Ulmia's Distance is less than 2 yalms from the battle target
+	
+	
     if (currentDistance <= m_PBattleTarget->m_ModelSize && m_PPet->speed != 0)
     {
-        //Decide which spell combo to cast.  Always prioritieze accuracy
-		// Song Combo List
-		// #1 [DONE!] Madrigal x2       if hitrate is < 60 
-		// #2 [DONE!] Minuet + Madrigal if hitrate is < 80 and Pdif < 1.25 Neutral Eva or higher and Neutral Defense or Higher
-		// #3 [DONE!] Minuet x 2        if hitrate is > 79 and pdif < 1 Neutral Defense or higher, and low evasion		
-		// #4 [DONE!] March + Madrigal  if hitrate is < 79 and pdif > 1.25 Neutral Evasion, Low Defense
-        // #5 March + Minuet    if hitrate is > 79 and pdif < 1.26 Low evasion, Neutral Defense
-		// #6 March x2          if hitrate is > 79 and pdif > 1.25  Low Defense, Low Evasion
+	    if (m_Tick >= m_LastFirstMeleeSongTime + m_firstMeleeSongRecast && m_ActionType != ACTION_MAGIC_CASTING)
+	    {
+	        if (songcombo == 1) // Madrigal x2 (> 51)-> Madrigal + Minuet ( > 11) -> Minuet + Minne (< 11)
+			{
+		        ShowWarning(CL_RED"Casting First Song Madrigal x2 / Madrigal + Minuet / Minuet + Minne \n" CL_RESET);
+                m_PBattleSubTarget = m_PPet;
+		        if (lvl >= 51)
+			    {    
+                    spellID = 400; // Blade Madrigal
+				    m_LastFirstMeleeSongTime = m_Tick;					
+		            if (m_PPet->StatusEffectContainer->HasStatusEffect(EFFECT_SILENCE) == true)
+		            {
+	                    spellID = -1;
+	                } 			
+			    }
+		        else if (lvl >= 11)
+			    {    
+                    spellID = 399; // Sword Madrigal
+				    m_LastFirstMeleeSongTime = m_Tick;					
+		            if (m_PPet->StatusEffectContainer->HasStatusEffect(EFFECT_SILENCE) == true)
+		            {
+	                    spellID = -1;
+	                } 				
+			    }			
+			    else   // Minuet since low level
+			    {
+                    spellID = 394; // Valor Minuet
+				    m_LastFirstMeleeSongTime = m_Tick;					
+		            if (m_PPet->StatusEffectContainer->HasStatusEffect(EFFECT_SILENCE) == true)
+		            {
+	                    spellID = -1;
+	                } 				
+			    }			
+		    }			
+			else if (songcombo == 2) // Minuet + Madrigal
+			{
+		        ShowWarning(CL_GREEN"Minuet + Madrigal - Casting First Song \n" CL_RESET);			
+		        m_PBattleSubTarget = m_PPet;
+		        if (lvl >= 63)
+			    {
+				    spellID = 397; // Valor Minuet IV
+				    m_LastFirstMeleeSongTime = m_Tick;				
+		            if (m_PPet->StatusEffectContainer->HasStatusEffect(EFFECT_SILENCE) == true)
+		            {
+	                    spellID = -1;
+	                } 	
+				}
+				else if (lvl >= 43)
+				{
+				    spellID = 396; // Valor Minuet III
+				    m_LastFirstMeleeSongTime = m_Tick;				
+		            if (m_PPet->StatusEffectContainer->HasStatusEffect(EFFECT_SILENCE) == true)
+		            {
+	                    spellID = -1;
+	                } 					
+				}
+				else if (lvl >= 23)
+				{
+				    spellID = 395; // Valor Minuet II
+				    m_LastFirstMeleeSongTime = m_Tick;				
+		            if (m_PPet->StatusEffectContainer->HasStatusEffect(EFFECT_SILENCE) == true)
+		            {
+	                    spellID = -1;
+	                }  					
+				}					
+				else
+				{
+				    spellID = 394; // Valor Minuet I
+				    m_LastFirstMeleeSongTime = m_Tick;				
+		            if (m_PPet->StatusEffectContainer->HasStatusEffect(EFFECT_SILENCE) == true)
+		            {
+	                    spellID = -1;
+	                } 				
+				}					
+			}
+			else if (songcombo == 3) // Minuet x2
+			{
+		        ShowWarning(CL_GREEN"Minuet x2 - Casting First Song \n" CL_RESET);			
+		        m_PBattleSubTarget = m_PPet;
+		        if (lvl >= 63)
+			    {
+				    spellID = 397; // Valor Minuet IV
+				    m_LastFirstMeleeSongTime = m_Tick;				
+		            if (m_PPet->StatusEffectContainer->HasStatusEffect(EFFECT_SILENCE) == true)
+		            {
+	                    spellID = -1;
+	                } 	
+				}
+				else if (lvl >= 43)
+				{
+				    spellID = 396; // Valor Minuet III
+				    m_LastFirstMeleeSongTime = m_Tick;				
+		            if (m_PPet->StatusEffectContainer->HasStatusEffect(EFFECT_SILENCE) == true)
+		            {
+	                    spellID = -1;
+	                } 					
+				}
+				else if (lvl >= 23)
+				{
+				    spellID = 395; // Valor Minuet II
+				    m_LastFirstMeleeSongTime = m_Tick;				
+		            if (m_PPet->StatusEffectContainer->HasStatusEffect(EFFECT_SILENCE) == true)
+		            {
+	                    spellID = -1;
+	                }  					
+				}					
+				else
+				{
+				    spellID = 394; // Valor Minuet I
+				    m_LastFirstMeleeSongTime = m_Tick;				
+		            if (m_PPet->StatusEffectContainer->HasStatusEffect(EFFECT_SILENCE) == true)
+		            {
+	                    spellID = -1;
+	                } 				
+				}		
+			}
+			else if (songcombo == 4) // March + Madrigal
+			{
+		        ShowWarning(CL_GREEN"March +  Madrigal - Casting First Song \n" CL_RESET);			
+			    m_PBattleSubTarget = m_PPet;		
+		        if (lvl >= 60)
+			    {
+				    spellID = 420; // Victory March
+				    m_LastFirstMeleeSongTime = m_Tick;			
+		            if (m_PPet->StatusEffectContainer->HasStatusEffect(EFFECT_SILENCE) == true)
+		            {
+	                    spellID = -1;
+	                } 					
+				}
+				else if (lvl >= 29)
+				{
+				    spellID = 419; // Advancing March
+				    m_LastFirstMeleeSongTime = m_Tick;			
+		            if (m_PPet->StatusEffectContainer->HasStatusEffect(EFFECT_SILENCE) == true)
+		            {
+	                    spellID = -1;
+	                } 	 					
+				}					
+				else
+				{
+				    spellID = 394; // Valor Minuet
+				    m_LastFirstMeleeSongTime = m_Tick;			
+		            if (m_PPet->StatusEffectContainer->HasStatusEffect(EFFECT_SILENCE) == true)
+		            {
+	                    spellID = -1;
+	                } 						
+				}				
+			}
+			else if (songcombo == 5) // March + Minuet
+			{
+		        ShowWarning(CL_GREEN"March + Minuet - Casting First Song \n" CL_RESET);			
+			    m_PBattleSubTarget = m_PPet;		
+		        if (lvl >= 60)
+			    {
+				    spellID = 420; // Victory March
+				    m_LastFirstMeleeSongTime = m_Tick;			
+		            if (m_PPet->StatusEffectContainer->HasStatusEffect(EFFECT_SILENCE) == true)
+		            {
+	                    spellID = -1;
+	                } 					
+				}
+				else if (lvl >= 29)
+				{
+				    spellID = 419; // Advancing March
+				    m_LastFirstMeleeSongTime = m_Tick;			
+		            if (m_PPet->StatusEffectContainer->HasStatusEffect(EFFECT_SILENCE) == true)
+		            {
+	                    spellID = -1;
+	                } 	 					
+				}					
+				else
+				{
+				    spellID = 394; // Valor Minuet
+				    m_LastFirstMeleeSongTime = m_Tick;			
+		            if (m_PPet->StatusEffectContainer->HasStatusEffect(EFFECT_SILENCE) == true)
+		            {
+	                    spellID = -1;
+	                } 						
+				}				
+			}
+			else if (songcombo == 6) // March x2
+			{
+		        ShowWarning(CL_GREEN"March x2 - Casting First Song \n" CL_RESET);			
+			    m_PBattleSubTarget = m_PPet;		
+		        if (lvl >= 60)
+			    {
+				    spellID = 420; // Victory March
+				    m_LastFirstMeleeSongTime = m_Tick;			
+		            if (m_PPet->StatusEffectContainer->HasStatusEffect(EFFECT_SILENCE) == true)
+		            {
+	                    spellID = -1;
+	                } 					
+				}
+				else if (lvl >= 29)
+				{
+				    spellID = 419; // Advancing March
+				    m_LastFirstMeleeSongTime = m_Tick;			
+		            if (m_PPet->StatusEffectContainer->HasStatusEffect(EFFECT_SILENCE) == true)
+		            {
+	                    spellID = -1;
+	                } 	 					
+				}					
+				else
+				{
+				    spellID = 394; // Valor Minuet
+				    m_LastFirstMeleeSongTime = m_Tick;			
+		            if (m_PPet->StatusEffectContainer->HasStatusEffect(EFFECT_SILENCE) == true)
+		            {
+	                    spellID = -1;
+	                } 						
+				}							
+			}
+	    }
+	    else if (m_Tick >= m_LastSecondMeleeSongTime + m_secondMeleeSongRecast)
+	    {
+	        if (songcombo == 1) // Madrigal x2 (> 51)-> Madrigal + Minuet ( > 11) -> Minuet + Minne (< 11)
+			{
+		        ShowWarning(CL_RED"Casting First Song Madrigal x2 / Madrigal + Minuet / Minuet + Minne \n" CL_RESET);
+                m_PBattleSubTarget = m_PPet;
+		        if (lvl >= 51)
+			    {    
+                    spellID = 399; // Sword Madrigal
+				    m_LastSecondMeleeSongTime = m_Tick;					
+		            if (m_PPet->StatusEffectContainer->HasStatusEffect(EFFECT_SILENCE) == true)
+		            {
+	                    spellID = -1;
+	                } 			
+			    }
+		        else if (lvl >= 43)
+			    {    
+                    spellID = 396; // Valor Minuet III
+				    m_LastSecondMeleeSongTime = m_Tick;					
+		            if (m_PPet->StatusEffectContainer->HasStatusEffect(EFFECT_SILENCE) == true)
+		            {
+	                    spellID = -1;
+	                } 				
+			    }	
+		        else if (lvl >= 23)
+			    {    
+                    spellID = 395; // Valor Minuet II
+				    m_LastSecondMeleeSongTime = m_Tick;					
+		            if (m_PPet->StatusEffectContainer->HasStatusEffect(EFFECT_SILENCE) == true)
+		            {
+	                    spellID = -1;
+	                } 				
+			    }				
+			    else if (lvl >= 11)   
+			    {
+                    spellID = 394; // Valor Minuet I
+				    m_LastSecondMeleeSongTime = m_Tick;					
+		            if (m_PPet->StatusEffectContainer->HasStatusEffect(EFFECT_SILENCE) == true)
+		            {
+	                    spellID = -1;
+	                } 				
+			    }
+			    else    // Minne
+			    {
+                    spellID = 389; // Knights Minne
+				    m_LastSecondMeleeSongTime = m_Tick;					
+		            if (m_PPet->StatusEffectContainer->HasStatusEffect(EFFECT_SILENCE) == true)
+		            {
+	                    spellID = -1;
+	                } 				
+			    }				
+		    }
+			else if (songcombo == 2) // Minuet + Madrigal
+			{
+			    ShowWarning(CL_GREEN"Minuet + Madrigal - Casting Second Song \n" CL_RESET);		
+                m_PBattleSubTarget = m_PPet;
+		        if (lvl >= 51)
+			    {    
+                    spellID = 400; // Blade Madrigal
+				    m_LastSecondMeleeSongTime = m_Tick;					
+		            if (m_PPet->StatusEffectContainer->HasStatusEffect(EFFECT_SILENCE) == true)
+		            {
+	                    spellID = -1;
+	                } 			
+			    }
+		        else if (lvl >= 11)
+			    {    
+                    spellID = 399; // Sword Madrigal
+				    m_LastSecondMeleeSongTime = m_Tick;					
+		            if (m_PPet->StatusEffectContainer->HasStatusEffect(EFFECT_SILENCE) == true)
+		            {
+	                    spellID = -1;
+	                } 				
+			    }			
+			    else   // Minuet since low level
+			    {
+                    spellID = 394; // Valor Minuet
+				    m_LastSecondMeleeSongTime = m_Tick;					
+		            if (m_PPet->StatusEffectContainer->HasStatusEffect(EFFECT_SILENCE) == true)
+		            {
+	                    spellID = -1;
+	                } 				
+			    }			
+			}
+			else if (songcombo == 3) // Minuet x2
+			{
+		        ShowWarning(CL_GREEN"Minuet x2 - Casting Second Song \n" CL_RESET);			
+		        m_PBattleSubTarget = m_PPet;
+		        if (lvl >= 63)
+			    {
+				    spellID = 396; // Valor Minuet III
+				    m_LastSecondMeleeSongTime = m_Tick;				
+		            if (m_PPet->StatusEffectContainer->HasStatusEffect(EFFECT_SILENCE) == true)
+		            {
+	                    spellID = -1;
+	                } 	
+				}
+				else if (lvl >= 43)
+				{
+				    spellID = 395; // Valor Minuet II
+				    m_LastSecondMeleeSongTime = m_Tick;				
+		            if (m_PPet->StatusEffectContainer->HasStatusEffect(EFFECT_SILENCE) == true)
+		            {
+	                    spellID = -1;
+	                } 					
+				}
+				else if (lvl >= 23)
+				{
+				    spellID = 394; // Valor Minuet I
+				    m_LastSecondMeleeSongTime = m_Tick;				
+		            if (m_PPet->StatusEffectContainer->HasStatusEffect(EFFECT_SILENCE) == true)
+		            {
+	                    spellID = -1;
+	                }  					
+				}					
+				else
+				{
+				    spellID = 389; // Knights Minne
+				    m_LastSecondMeleeSongTime = m_Tick;				
+		            if (m_PPet->StatusEffectContainer->HasStatusEffect(EFFECT_SILENCE) == true)
+		            {
+	                    spellID = -1;
+	                } 				
+				}			
+			}
+			else if (songcombo == 4) // March + Madrigal
+			{
+		        ShowWarning(CL_RED"Casting Second Song March + Madrigal \n" CL_RESET);
+                m_PBattleSubTarget = m_PPet;
+		        if (lvl >= 51)
+			    {    
+                    spellID = 400; // Blade Madrigal
+				    m_LastSecondMeleeSongTime = m_Tick;					
+		            if (m_PPet->StatusEffectContainer->HasStatusEffect(EFFECT_SILENCE) == true)
+		            {
+	                    spellID = -1;
+	                } 			
+			    }
+		        else if (lvl >= 11)
+			    {    
+                    spellID = 399; // Sword Madrigal
+				    m_LastSecondMeleeSongTime = m_Tick;					
+		            if (m_PPet->StatusEffectContainer->HasStatusEffect(EFFECT_SILENCE) == true)
+		            {
+	                    spellID = -1;
+	                } 				
+			    }			
+			    else   // Minuet since low level
+			    {
+                    spellID = 394; // Valor Minuet
+				    m_LastSecondMeleeSongTime = m_Tick;					
+		            if (m_PPet->StatusEffectContainer->HasStatusEffect(EFFECT_SILENCE) == true)
+		            {
+	                    spellID = -1;
+	                } 				
+			    }			
+			}
+			else if (songcombo == 5) // March + Minuet
+			{
+		        ShowWarning(CL_GREEN"March + Minuet - Casting Second Song \n" CL_RESET);			
+		        m_PBattleSubTarget = m_PPet;
+		        if (lvl >= 63)
+			    {
+				    spellID = 397; // Valor Minuet IV
+				    m_LastSecondMeleeSongTime = m_Tick;				
+		            if (m_PPet->StatusEffectContainer->HasStatusEffect(EFFECT_SILENCE) == true)
+		            {
+	                    spellID = -1;
+	                } 	
+				}
+				else if (lvl >= 43)
+				{
+				    spellID = 396; // Valor Minuet III
+				    m_LastSecondMeleeSongTime = m_Tick;				
+		            if (m_PPet->StatusEffectContainer->HasStatusEffect(EFFECT_SILENCE) == true)
+		            {
+	                    spellID = -1;
+	                } 					
+				}
+				else if (lvl >= 23)
+				{
+				    spellID = 395; // Valor Minuet II
+				    m_LastSecondMeleeSongTime = m_Tick;				
+		            if (m_PPet->StatusEffectContainer->HasStatusEffect(EFFECT_SILENCE) == true)
+		            {
+	                    spellID = -1;
+	                }  					
+				}					
+				else
+				{
+				    spellID = 394; // Valor Minuet I
+				    m_LastSecondMeleeSongTime = m_Tick;				
+		            if (m_PPet->StatusEffectContainer->HasStatusEffect(EFFECT_SILENCE) == true)
+		            {
+	                    spellID = -1;
+	                } 				
+				}								
+			}
+			else if (songcombo == 6) // March x2
+			{
+		        ShowWarning(CL_GREEN"March x2 - Casting Second Song \n" CL_RESET);			
+			    m_PBattleSubTarget = m_PPet;		
+		        if (lvl >= 60)
+			    {
+				    spellID = 419; // Advancing March
+				    m_LastSecondMeleeSongTime = m_Tick;			
+		            if (m_PPet->StatusEffectContainer->HasStatusEffect(EFFECT_SILENCE) == true)
+		            {
+	                    spellID = -1;
+	                } 					
+				}
+				else if (lvl >= 23)
+				{
+				    spellID = 395; // Valor Minuet II
+				    m_LastSecondMeleeSongTime = m_Tick;			
+		            if (m_PPet->StatusEffectContainer->HasStatusEffect(EFFECT_SILENCE) == true)
+		            {
+	                    spellID = -1;
+	                } 	 					
+				}					
+				else
+				{
+				    spellID = 389; // Knights Minne
+				    m_LastSecondMeleeSongTime = m_Tick;			
+		            if (m_PPet->StatusEffectContainer->HasStatusEffect(EFFECT_SILENCE) == true)
+		            {
+	                    spellID = -1;
+	                } 						
+				}			
+			}	
+	    }		
+	}	
+	
+	
+	
+	
+	
+	// Frontline Spell Casting Based on Distance needing to be < 2 yalms from the battle target.
+	
+	
+	//OLD IMPLEMENTATION BELOW!
+	/*  
+    if (currentDistance <= m_PBattleTarget->m_ModelSize && m_PPet->speed != 0)
+    {
+
         // Second Song to Cast
         m_LastSongFrontTime = m_Tick;		
         if (songcombo == 1) // Madrigal x2 
@@ -9553,7 +10142,9 @@ int16 CAIPetDummy::UlmiaSpell()
 			}				
 		}	
 	
-	}		
+	}	
+
+    */	
 		
 
     // Backline Spells
@@ -9562,13 +10153,13 @@ int16 CAIPetDummy::UlmiaSpell()
 	    //printf("Ulmia is Far Away and will start Backline Spells \n");
         //Decide which spell combo to cast.  Always Double Ballad
         m_PBattleSubTarget = m_PPet;
-		if (m_Tick >= m_LastBalladStrongTime + m_balladStrongRecast && m_ActionType != ACTION_MAGIC_CASTING)
+		if (m_Tick >= m_LastFirstMageSongTime + m_firstMageSongRecast && m_ActionType != ACTION_MAGIC_CASTING)
 		{
 			if (lvl >= 55) //Double Ballad
 			{
 			    ShowWarning(CL_GREEN"Double Ballad First Song \n" CL_RESET);	
 		        spellID = 387; // Mages Ballad II
-			    m_LastBalladStrongTime = m_Tick;			
+			    m_LastFirstMageSongTime = m_Tick;			
 		        if (m_PPet->StatusEffectContainer->HasStatusEffect(EFFECT_SILENCE) == true)
 		        {
 	                spellID = -1;
@@ -9577,8 +10168,7 @@ int16 CAIPetDummy::UlmiaSpell()
 			else if (lvl >= 25) // Single Ballad
 		    {
 		        spellID = 386; // Mages Ballad I
-			    m_LastBalladStrongTime = m_Tick;
-				m_LastSongFrontTime = m_Tick;
+			    m_LastFirstMageSongTime = m_Tick;
 		        if (m_PPet->StatusEffectContainer->HasStatusEffect(EFFECT_SILENCE) == true)
 		        {
 	                spellID = -1;
@@ -9589,19 +10179,26 @@ int16 CAIPetDummy::UlmiaSpell()
                 Sql_Query(SqlHandle, fmtQuery, m_PPet->PMaster->id, varname, value, value);					
 			}
 		}	
-       	else if (m_Tick >= m_LastBalladWeakTime + m_balladWeakRecast && m_ActionType != ACTION_MAGIC_CASTING)
+       	else if (m_Tick >= m_LastSecondMageSongTime + m_secondMageSongRecast && m_ActionType != ACTION_MAGIC_CASTING)
 		{
 		    ShowWarning(CL_GREEN"Single Ballad Song \n" CL_RESET);
-		    spellID = 386; // Mages Ballad I
-			m_LastBalladWeakTime = m_Tick;			
-		    if (m_PPet->StatusEffectContainer->HasStatusEffect(EFFECT_SILENCE) == true)
-		    {
-	            spellID = -1;
-	        }
-			    int32 value = 11;
-			    std::string varname;
-			    const int8* fmtQuery = "INSERT INTO char_vars SET charid = %u, varname = 'UlmiaSong', value = '11' ON DUPLICATE KEY UPDATE value = '11';";
-                Sql_Query(SqlHandle, fmtQuery, m_PPet->PMaster->id, varname, value, value);				
+			if (lvl >= 55) //Double Ballad
+			{
+			    ShowWarning(CL_GREEN"Double Ballad First Song \n" CL_RESET);	
+		        spellID = 386; // Mages Ballad I
+			    m_LastSecondMageSongTime = m_Tick;			
+		        if (m_PPet->StatusEffectContainer->HasStatusEffect(EFFECT_SILENCE) == true)
+		        {
+	                spellID = -1;
+	       	    } 
+		    }
+			else //don't cast a second song if not above 54
+			{
+			    ShowWarning(CL_GREEN"No song to cast \n" CL_RESET);	
+		        spellID = -1; 
+			    m_LastSecondMageSongTime = m_Tick;			 
+		    }			
+        			
 	    }
        	else if (m_Tick >= m_LastSongEnfeebleTime + m_songEnfeeble && m_ActionType != ACTION_MAGIC_CASTING)
 		{

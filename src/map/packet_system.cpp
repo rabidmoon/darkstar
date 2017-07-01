@@ -2163,7 +2163,7 @@ void SmallPacket0x04E(map_session_data_t* session, CCharEntity* PChar, CBasicPac
             !(PItem->getFlag() & ITEM_FLAG_NOAUCTION))
         {
             PItem->setCharPrice(price);
-            PChar->pushPacket(new CAuctionHousePacket(action, PItem, quantity));
+            PChar->pushPacket(new CAuctionHousePacket(action, PItem, quantity, price, PChar));
         }
     }
     break;
@@ -2220,12 +2220,44 @@ void SmallPacket0x04E(map_session_data_t* session, CCharEntity* PChar, CBasicPac
             !(PItem->isSubType(ITEM_LOCKED)) &&
             !(PItem->getFlag() & ITEM_FLAG_NOAUCTION))
         {
-            if (quantity == 0 &&
-                (PItem->getStackSize() == 1 ||
-                PItem->getStackSize() != PItem->getQuantity()))
+            uint32 auctionFee = 0;
+            if (quantity == 0)
             {
-                ShowError(CL_RED"SmallPacket0x04E::AuctionHouse: Incorrect quantity of item %s\n" CL_RESET, PItem->getName());
-                PChar->pushPacket(new CAuctionHousePacket(action, 197, 0, 0)); //failed to place up
+                if (PItem->getStackSize() == 1 || PItem->getStackSize() != PItem->getQuantity())
+                {
+                    ShowError(CL_RED"SmallPacket0x04E::AuctionHouse: Incorrect quantity of item %s\n" CL_RESET, PItem->getName());
+                    PChar->pushPacket(new CAuctionHousePacket(action, 197, 0, 0)); // Failed to place up
+                    return;
+                }
+				if ((PChar->getZone() == 26) || (PChar->getZone() == 48) || (PChar->getZone() == 50) || ((PChar->getZone() > 229) && (PChar->getZone() < 233)) ||
+				((PChar->getZone() > 233) && (PChar->getZone() < 236)) || ((PChar->getZone() > 237) && (PChar->getZone() < 242)) ||
+				((PChar->getZone() > 242) && (PChar->getZone() < 248)) || PChar->getZone() == 250)
+				{
+                    auctionFee = map_config.ah_base_fee_stacks+(price*map_config.ah_tax_rate_stacks/100);
+				}
+          		else
+                {
+					auctionFee = map_config.ah_base_fee_stacks+(price*(3 + map_config.ah_tax_rate_stacks)/100);
+				}					
+            }
+            else
+            {
+				if ((PChar->getZone() == 26) || (PChar->getZone() == 48) || (PChar->getZone() == 50) || ((PChar->getZone() > 229) && (PChar->getZone() < 233)) ||
+				((PChar->getZone() > 233) && (PChar->getZone() < 236)) || ((PChar->getZone() > 237) && (PChar->getZone() < 242)) ||
+				((PChar->getZone() > 242) && (PChar->getZone() < 248)) || PChar->getZone() == 250)
+				{
+                    auctionFee = map_config.ah_base_fee_single+(price*map_config.ah_tax_rate_single/100);
+				}
+                else
+                {
+					auctionFee = map_config.ah_base_fee_single+(price*(3 + map_config.ah_tax_rate_single)/100);
+				}					
+            }
+
+            if (PChar->getStorage(LOC_INVENTORY)->GetItem(0)->getQuantity() < auctionFee)
+            {
+                // ShowDebug(CL_CYAN"%s Can't afford the AH fee\n" CL_RESET,PChar->GetName());
+                PChar->pushPacket(new CAuctionHousePacket(action, 197, 0, 0)); // Not enough gil to pay fee		
                 return;
             }
             if (PChar->m_ah_history.size() >= 7)
@@ -2251,9 +2283,25 @@ void SmallPacket0x04E(map_session_data_t* session, CCharEntity* PChar, CBasicPac
                 return;
             }
             charutils::UpdateItem(PChar, LOC_INVENTORY, slot, -(int32)(quantity != 0 ? 1 : PItem->getStackSize()));
+			charutils::UpdateItem(PChar, LOC_INVENTORY, 0, -auctionFee); // Deduct AH fee
 
             PChar->pushPacket(new CAuctionHousePacket(action, 1, 0, 0)); //merchandise put up on auction msg
             PChar->pushPacket(new CAuctionHousePacket(0x0C, PChar->m_ah_history.size(), PChar)); //inform history of slot
+			
+			//Track AH Fees
+
+			uint32 allahfees = 0;
+			const char* query = "SELECT value FROM server_variables WHERE name = 'All_AH_Fees';";
+			int ret = Sql_Query(SqlHandle, query);
+            if (ret != SQL_ERROR && Sql_NumRows(SqlHandle) == 1 && Sql_NextRow(SqlHandle) == SQL_SUCCESS)
+            {
+                allahfees = Sql_GetUIntData(SqlHandle, 0);
+            }
+			uint32 totalah = allahfees + auctionFee;
+			ShowWarning(CL_RED"New Auctionhouse is %u \n" CL_RESET, totalah);
+			Sql_Query(SqlHandle, "REPLACE INTO server_variables (name,value) VALUES('All_AH_Fees', %u);",
+            totalah);
+            	
         }
     }
     break;
@@ -3773,14 +3821,13 @@ void SmallPacket0x0B5(map_session_data_t* session, CCharEntity* PChar, CBasicPac
                     qStr += "',current_timestamp());";
                     const char * cC = qStr.c_str();
                     Sql_QueryStr(SqlHandle, cC);
-                }
-                for (uint16 zone = 0; zone < MAX_ZONEID; ++zone)
-                {
-                    zoneutils::GetZone(zone)->PushPacket(
-                    PChar,
-                    CHAR_INZONE,
-                    new CChatMessagePacket(PChar, MESSAGE_SAY, data[6]));
-                }
+				}
+				//int8 packetData[6]{};
+                //WBUFL(packetData, 0) = PChar->id;
+				int8 packetData[4] {};
+                WBUFL(packetData, 0) = PChar->id;
+                message::send(MSG_CHAT_UNITY, packetData, sizeof packetData, new CChatMessagePacket(PChar, MESSAGE_SAY, data[6]));
+				
             }
             break;
             case MESSAGE_EMOTION:    PChar->loc.zone->PushPacket(PChar, CHAR_INRANGE, new CChatMessagePacket(PChar, MESSAGE_EMOTION, data[6])); break;
@@ -3887,7 +3934,7 @@ void SmallPacket0x0B5(map_session_data_t* session, CCharEntity* PChar, CBasicPac
                     {
                         std::string qStr = ("INSERT into audit_chat (speaker,type,message,datetime) VALUES('");
                         qStr += PChar->GetName();
-                        qStr += "','SAY','";
+                        qStr += "','WORLD','";
                         qStr += escape(data[6]);
                         qStr += "',current_timestamp());";
                         const char * cC = qStr.c_str();
