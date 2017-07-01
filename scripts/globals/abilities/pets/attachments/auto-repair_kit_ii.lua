@@ -10,7 +10,6 @@ require("scripts/globals/status");
 
 function onManeuverGain(player,maneuvers)
 local power = 0;
-local player = pet:getMaster();
 local light = player:getEffectsCount(EFFECT_LIGHT_MANEUVER);
 if (light == 1) then
 power = 4;

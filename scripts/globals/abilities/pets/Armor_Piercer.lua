@@ -19,7 +19,7 @@ function onMobSkillCheck(target,mob,skill)
 end;
 
 function onPetAbility(target, pet, skill)
-    local basemod = 3;
+    local basemod = 1.2;
     local numhits = 1;
 	local attmod = 1.5; -- Temporary Ignore defense by adding 50% attack
     local accmod = 100;
@@ -35,7 +35,7 @@ function onPetAbility(target, pet, skill)
 
 
 	
-    local info = AutoRangedMove(pet,target,skill,basemod,numhits,attmod,accmod,defignore,str_wsc,dex_wsc,agi_wsc,vit_wsc,mnd_wsc,TP_DMG_BONUS,1,1.5,3);
+    local info = AutoRangedMove(pet,target,skill,basemod,numhits,attmod,accmod,defignore,str_wsc,dex_wsc,agi_wsc,vit_wsc,mnd_wsc,TP_DMG_BONUS,4,5.5,7);
  
     local dmg = MobFinalAdjustments(info.dmg,pet,skill,target,MOBSKILL_RANGED,MOBPARAM_PIERCE,info.hitslanded);
 	
