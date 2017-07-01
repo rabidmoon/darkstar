@@ -20,6 +20,9 @@ function onEffectGain(target,effect)
 		target:addMod(MOD_RATT,power)
 	elseif (effect:getSubPower() == 5) then
 		target:addMod(MOD_MACC,power)
+	elseif (effect:getSubPower() == 13) then -- High Artifacts
+		target:addMod(MOD_ALL_WSDMG_ALL_HITS,power)
+		target:addMod(MOD_REGAIN,15)		
 	end
 end;
 
@@ -46,5 +49,8 @@ function onEffectLose(target,effect)
 		target:delMod(MOD_RATT,power)
 	elseif (effect:getSubPower() == 5) then
 		target:delMod(MOD_MACC,power)
+	elseif (effect:getSubPower() == 13) then  -- High Artifact 
+		target:delMod(MOD_ALL_WSDMG_ALL_HITS,power)
+        target:delMod(MOD_REGAIN, 15)		
 	end
 end;

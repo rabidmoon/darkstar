@@ -241,6 +241,9 @@ function doPhysicalWeaponskill(attacker, target, params)
         finaldmg = finaldmg * target:getMod(MOD_SLASHRES) / 1000;
     end
     
+	 -- DMG Bonus for any WS
+    local bonusdmg = attacker:getMod(MOD_ALL_WSDMG_ALL_HITS);
+	finaldmg = finaldmg * ((100 + bonusdmg)/100);
 
 	attacker:delStatusEffectSilent(EFFECT_BUILDING_FLOURISH);
 	return finaldmg, criticalHit, tpHitsLanded, extraHitsLanded;
@@ -300,6 +303,9 @@ function doMagicWeaponskill(attacker, target, params)
 	dmg = dmg * applyResistanceAbility(attacker,target,params.ele,params.skill, 0);
 	dmg = target:magicDmgTaken(dmg);
 	dmg = adjustForTarget(target,dmg,params.ele);
+	
+	local bonusdmg = attacker:getMod(MOD_ALL_WSDMG_ALL_HITS);
+	dmg = dmg * ((100 + bonusdmg)/100);
     
     return dmg, false, 1, 0;
 end
@@ -817,6 +823,10 @@ end;
 	finaldmg = target:rangedDmgTaken(finaldmg);
     finaldmg = finaldmg * target:getMod(MOD_PIERCERES) / 1000;
 
+	-- DMG Bonus for any WS
+    local bonusdmg = attacker:getMod(MOD_ALL_WSDMG_ALL_HITS);
+	finaldmg = finaldmg * ((100 + bonusdmg)/100);
+	
 	return finaldmg, tpHitsLanded, extraHitsLanded;
 end;
 
