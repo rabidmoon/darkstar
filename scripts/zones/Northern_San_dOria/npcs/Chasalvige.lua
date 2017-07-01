@@ -17,7 +17,7 @@ require("scripts/zones/Northern_San_dOria/TextIDs");
 function onTrade(player,npc,trade)
 
 local balance = 0;
-local amount = 20000;
+local amount = 200000;
 local job = player:getMainJob();
 local pinfamy = player:getCurrency("infamy");
 local mainlvl = player:getMainLvl();

@@ -1101,7 +1101,6 @@ local level = player:getMainLvl();
    player:PrintToPlayer("Oboro : You've lost those magnificent weapons already? Cough up 5,000 and I'll get you another!", 0xD);
    else
    player:addItem(18353, 1);
-   player:setVar("PUPAFweapon", 0);
    player:setVar("PUPWeaponObtained",1);
    player:messageSpecial(ITEM_OBTAINED, 18353);
    end

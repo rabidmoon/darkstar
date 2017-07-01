@@ -118,7 +118,7 @@ if (trade:hasItemQty( 902, 12 )) and (mageboon == 6) and (aura > 5) then
 	end	
 
 	
-if (trade:hasItemQty( 1428, 3 )) and (mageboon == 7) and (aura > 6) then
+if (trade:hasItemQty( 1428, 1 )) and (mageboon == 7) and (aura > 6) then
 	if (infamy >= testimony) then
     player:delCurrency("infamy", 75000);
 	player:tradeComplete();

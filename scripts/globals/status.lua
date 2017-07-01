@@ -748,6 +748,7 @@ EFFECT_TRUST_SUBLIMATION_ACTIVATED = 807
 EFFECT_TRUST_SUBLIMATION_COMPLETE = 808
 EFFECT_REFRESH_DOWN               = 809
 EFFECT_TRUST_SNEAK_ATTACK         = 810
+EFFECT_DYNA_RESTRICTION           = 811
 -- EFFECT_PLACEHOLDER              = 802 -- Description
 -- 802-1022
 -- EFFECT_PLACEHOLDER             = 1023 -- The client dat file seems to have only this many "slots", results of exceeding that are untested.
@@ -1298,6 +1299,7 @@ MOD_JUG_LEVEL_RANGE    = 564 -- Decreases the level range of spawned jug pets. M
 
 MOD_ELEMENTAL_CELERITY = 840
 MOD_OCCULT_ACUMEN = 841
+MOD_ALL_WSDMG_ALL_HITS = 842
 
 -- The entire mod list is in desperate need of kind of some organizing.
 -- The spares take care of finding the next ID to use so long as we don't forget to list IDs that have been freed up by refactoring.

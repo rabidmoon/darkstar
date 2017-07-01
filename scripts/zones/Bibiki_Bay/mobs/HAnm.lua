@@ -111,53 +111,19 @@ end;
 
 
 -----------------------------------
--- onWeaponskillHit
------------------------------------
-function onWeaponskillHit(mob, attacker, weaponskill)
 
-local rnd = math.random(1,5);
--- printf(rnd);
-
-if (rnd == 1) then -- strong against slashing
-    mob:setMod(MOD_SLASHRES,100);
-    mob:setMod(MOD_PIERCERES,1000);
-    mob:setMod(MOD_HTHRES,1000);
-	mob:setMod(MOD_DMGMAGIC, 0);
-	-- printf("Slashing \n");
-elseif (rnd == 2) then -- strong against piercing
-    mob:setMod(MOD_SLASHRES,1000);
-    mob:setMod(MOD_PIERCERES,100);
-    mob:setMod(MOD_HTHRES,1000);
-	mob:setMod(MOD_DMGMAGIC, 0);
-	-- printf("Pierce \n");	
-elseif (rnd == 3) then -- strong against blunt
-    mob:setMod(MOD_SLASHRES,1000);
-    mob:setMod(MOD_PIERCERES,1000);
-    mob:setMod(MOD_HTHRES,100);
-	mob:setMod(MOD_DMGMAGIC, 0);
-	-- printf("Blunt \n");	
-elseif (rnd == 4) then -- strong against magic
-    mob:setMod(MOD_SLASHRES,100);
-    mob:setMod(MOD_PIERCERES,1000);
-    mob:setMod(MOD_HTHRES,1000);
-	mob:setMod(MOD_DMGMAGIC, -80);
-	-- printf("Magic \n");	
-end	
-return 0;
-	
-
-
-
-end;
 
 -----------------------------------
 -- onMobDeath
 -----------------------------------
 
 function onMobDeath(mob, killer, ally)
+printf("done");
 
 
-if (killer:getObjType() == TYPE_PC) then
+
+
+
 
     if (killer:getVar("WARHAFight") == 1) then
 	    killer:setVar("WARHAFight",2);
@@ -239,7 +205,6 @@ if (killer:getObjType() == TYPE_PC) then
 	    killer:setVar("SCHHAFight",2);
 	end	
 	killer:PrintToPlayer("There is something sparkling in the sand!", 0xD); 
-end	
 
 end;
 
