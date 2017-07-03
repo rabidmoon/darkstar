@@ -21,13 +21,13 @@ function onEffectGain(target,effect)
     if (target:getObjType() == TYPE_PC) then
     local level = target:getMainLvl();
 	if (level < 49) then
-	target:setVar("SignetBoost",1);
-	else if (level < 99) then
 	target:setVar("SignetBoost",2);
+	else if (level < 99) then
+	target:setVar("SignetBoost",5);
 	end
 	end
 	local modboost = target:getVar("SignetBoost");
-	local regain = modboost * 5;
+	local regain = modboost * 1;
 	target:addMod(MOD_DEF,15);
 	target:addMod(MOD_EVA,15);
 	target:addMod(MOD_REFRESH,modboost);
@@ -50,7 +50,7 @@ end;
 function onEffectLose(target,effect)
     if (target:getObjType() == TYPE_PC) then
     local modboost = target:getVar("SignetBoost");
-	local regain = modboost * 5;
+	local regain = modboost * 1;
 	target:delMod(MOD_DEF,15);
 	target:delMod(MOD_EVA,15);
 	target:addMod(MOD_REFRESH,modboost);
