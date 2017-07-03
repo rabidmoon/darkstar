@@ -6,6 +6,7 @@ package.loaded["scripts/zones/The_Shrine_of_RuAvitau/TextIDs"] = nil;
 -----------------------------------
 
 require("scripts/zones/The_Shrine_of_RuAvitau/TextIDs");
+require("scripts/globals/skydoors");
 
 -----------------------------------
 -- onTrade Action
@@ -19,9 +20,8 @@ end;
 -----------------------------------
 
 function onTrigger(player,npc)
-	return 0;
+    skyDoors(player,npc)
 end;
-
 -----------------------------------
 -- onEventUpdate
 -----------------------------------
