@@ -1674,7 +1674,7 @@ INSERT INTO `mob_droplist` VALUES (270,0,860,480);
 INSERT INTO `mob_droplist` VALUES (270,0,3342,100);
 INSERT INTO `mob_droplist` VALUES (270,0,16869,220);
 INSERT INTO `mob_droplist` VALUES (270,0,17294,140);
-INSERT INTO `mob_droplist` VALUES (270,0,3341,300);  -- Shank
+INSERT INTO `mob_droplist` VALUES (270,0,3342,300);  -- Shank
 INSERT INTO `mob_droplist` VALUES (271,0,914,20);
 INSERT INTO `mob_droplist` VALUES (271,0,2917,100);
 INSERT INTO `mob_droplist` VALUES (272,0,18246,1000);
@@ -33309,210 +33309,281 @@ INSERT INTO `mob_droplist` VALUES (6300,0,1456,10);
 INSERT INTO `mob_droplist` VALUES (6300,0,1469,80);
 INSERT INTO `mob_droplist` VALUES (6300,0,1470,80);
 INSERT INTO `mob_droplist` VALUES (6300,0,1521,80);
-INSERT INTO `mob_droplist` VALUES (6300,0,11292,80);
-INSERT INTO `mob_droplist` VALUES (6300,0,11295,80);
-INSERT INTO `mob_droplist` VALUES (6300,0,11298,80);
-INSERT INTO `mob_droplist` VALUES (6300,0,11307,80);
-INSERT INTO `mob_droplist` VALUES (6300,0,15252,10);
-INSERT INTO `mob_droplist` VALUES (6300,0,14914,10);
-INSERT INTO `mob_droplist` VALUES (6300,0,14911,10);
-INSERT INTO `mob_droplist` VALUES (6300,0,15249,10);
+INSERT INTO `mob_droplist` VALUES (6300,0,15079,80);  -- DRK Head
+INSERT INTO `mob_droplist` VALUES (6300,0,15107,80);  -- THF Hands
+INSERT INTO `mob_droplist` VALUES (6300,0,15104,80);  -- WHM Hands
+INSERT INTO `mob_droplist` VALUES (6300,0,15076,80);  -- RDM Head
+INSERT INTO `mob_droplist` VALUES (6300,0,15252,10);  -- DRK Head +1
+INSERT INTO `mob_droplist` VALUES (6300,0,14914,10);  -- THF Hands +1
+INSERT INTO `mob_droplist` VALUES (6300,0,14911,10);  -- WHM Hands +1
+INSERT INTO `mob_droplist` VALUES (6300,0,15249,10);  -- RDM Head +1
 
 INSERT INTO `mob_droplist` VALUES (6301,0,1455,90);
 INSERT INTO `mob_droplist` VALUES (6301,0,1456,10);
 INSERT INTO `mob_droplist` VALUES (6301,0,1469,80);
 INSERT INTO `mob_droplist` VALUES (6301,0,1470,80);
 INSERT INTO `mob_droplist` VALUES (6301,0,1521,80);
-INSERT INTO `mob_droplist` VALUES (6301,0,15088,80);
-INSERT INTO `mob_droplist` VALUES (6301,0,15089,80);
-INSERT INTO `mob_droplist` VALUES (6301,0,15090,80);
-INSERT INTO `mob_droplist` VALUES (6301,0,15091,80);
-INSERT INTO `mob_droplist` VALUES (6301,0,14921,10);
-INSERT INTO `mob_droplist` VALUES (6301,0,15246,10);
-INSERT INTO `mob_droplist` VALUES (6301,0,11472,10);
-INSERT INTO `mob_droplist` VALUES (6301,0,14510,10);
+INSERT INTO `mob_droplist` VALUES (6301,0,15114,60);  -- NIN Hands
+INSERT INTO `mob_droplist` VALUES (6301,0,15073,60);  -- MNK Head
+INSERT INTO `mob_droplist` VALUES (6301,0,11471,60);  -- PUP Head
+INSERT INTO `mob_droplist` VALUES (6301,0,15097,60);  -- RNG Body
+INSERT INTO `mob_droplist` VALUES (6301,0,14921,10);  -- NIN Hands +1
+INSERT INTO `mob_droplist` VALUES (6301,0,15246,10);  -- MNK Head +1
+INSERT INTO `mob_droplist` VALUES (6301,0,11472,10);  -- PUP Head +1
+INSERT INTO `mob_droplist` VALUES (6301,0,14510,10);  -- RNG Body +1
 
 INSERT INTO `mob_droplist` VALUES (6302,0,1455,90);
 INSERT INTO `mob_droplist` VALUES (6302,0,1456,10);
-INSERT INTO `mob_droplist` VALUES (6302,0,1469,80);
-INSERT INTO `mob_droplist` VALUES (6302,0,1470,80);
-INSERT INTO `mob_droplist` VALUES (6302,0,1521,80);
-INSERT INTO `mob_droplist` VALUES (6302,0,15094,80);
-INSERT INTO `mob_droplist` VALUES (6302,0,15096,80);
-INSERT INTO `mob_droplist` VALUES (6302,0,15098,80);
-INSERT INTO `mob_droplist` VALUES (6302,0,15099,80);
-INSERT INTO `mob_droplist` VALUES (6302,0,15259,10);
-INSERT INTO `mob_droplist` VALUES (6302,0,14500,10);
-INSERT INTO `mob_droplist` VALUES (6302,0,11481,10);
-INSERT INTO `mob_droplist` VALUES (6302,0,15589,10);
+INSERT INTO `mob_droplist` VALUES (6302,0,1469,60);
+INSERT INTO `mob_droplist` VALUES (6302,0,1470,60);
+INSERT INTO `mob_droplist` VALUES (6302,0,1521,60);
+INSERT INTO `mob_droplist` VALUES (6302,0,15083,60);  -- SAM Head
+INSERT INTO `mob_droplist` VALUES (6302,0,15087,60);  -- WAR Body
+INSERT INTO `mob_droplist` VALUES (6302,0,11460,60);  -- SCH Head
+INSERT INTO `mob_droplist` VALUES (6302,0,15126,60);  -- BRD Legs
+INSERT INTO `mob_droplist` VALUES (6302,0,15259,10);  -- SMN Head +1
+INSERT INTO `mob_droplist` VALUES (6302,0,14500,10);  -- WAR Body +1
+INSERT INTO `mob_droplist` VALUES (6302,0,11481,10);  -- SCH Head +1
+INSERT INTO `mob_droplist` VALUES (6302,0,15589,10);  -- BRD Legs +1
 
 INSERT INTO `mob_droplist` VALUES (6303,0,1455,90);
 INSERT INTO `mob_droplist` VALUES (6303,0,1456,10);
-INSERT INTO `mob_droplist` VALUES (6303,0,1469,80);
-INSERT INTO `mob_droplist` VALUES (6303,0,1470,80);
-INSERT INTO `mob_droplist` VALUES (6303,0,1521,80);
-INSERT INTO `mob_droplist` VALUES (6303,0,15100,80);
-INSERT INTO `mob_droplist` VALUES (6303,0,15101,80);
-INSERT INTO `mob_droplist` VALUES (6303,0,15117,80);
-INSERT INTO `mob_droplist` VALUES (6303,0,15122,80);
-INSERT INTO `mob_droplist` VALUES (6303,0,11469,10);
-INSERT INTO `mob_droplist` VALUES (6303,0,11306,10);
-INSERT INTO `mob_droplist` VALUES (6303,0,11466,10);
-INSERT INTO `mob_droplist` VALUES (6303,0,16917,10);
+INSERT INTO `mob_droplist` VALUES (6303,0,1469,60);
+INSERT INTO `mob_droplist` VALUES (6303,0,1470,60);
+INSERT INTO `mob_droplist` VALUES (6303,0,1521,60);
+INSERT INTO `mob_droplist` VALUES (6303,0,11486,60);  -- COR Head
+INSERT INTO `mob_droplist` VALUES (6303,0,11305,60);  -- DNC Body
+INSERT INTO `mob_droplist` VALUES (6303,0,11465,60);  -- BLU Head
+INSERT INTO `mob_droplist` VALUES (6303,0,15110,60);  -- BST Hands
+INSERT INTO `mob_droplist` VALUES (6303,0,11469,10);  -- COR Head +1
+INSERT INTO `mob_droplist` VALUES (6303,0,11306,10);  -- DNC Body +1
+INSERT INTO `mob_droplist` VALUES (6303,0,11466,10);  -- BLU Head +1
+INSERT INTO `mob_droplist` VALUES (6303,0,14917,10);  -- BST Hands +1
 
 INSERT INTO `mob_droplist` VALUES (6304,0,1455,90);
 INSERT INTO `mob_droplist` VALUES (6304,0,1456,10);
-INSERT INTO `mob_droplist` VALUES (6304,0,1469,80);
-INSERT INTO `mob_droplist` VALUES (6304,0,1470,80);
-INSERT INTO `mob_droplist` VALUES (6304,0,1521,80);
-INSERT INTO `mob_droplist` VALUES (6304,0,15123,80);
-INSERT INTO `mob_droplist` VALUES (6304,0,15140,80);
-INSERT INTO `mob_droplist` VALUES (6304,0,15142,80);
-INSERT INTO `mob_droplist` VALUES (6304,0,16360,80);
-INSERT INTO `mob_droplist` VALUES (6304,0,15256,10);
-INSERT INTO `mob_droplist` VALUES (6304,0,15248,10);
-INSERT INTO `mob_droplist` VALUES (6304,0,14506,10);
-INSERT INTO `mob_droplist` VALUES (6304,0,15258,10);
+INSERT INTO `mob_droplist` VALUES (6304,0,1469,60);
+INSERT INTO `mob_droplist` VALUES (6304,0,1470,60);
+INSERT INTO `mob_droplist` VALUES (6304,0,1521,60);
+INSERT INTO `mob_droplist` VALUES (6304,0,15083,60);  -- SAM Head
+INSERT INTO `mob_droplist` VALUES (6304,0,15075,60);  -- BLM Head
+INSERT INTO `mob_droplist` VALUES (6304,0,15093,60);  -- PLD Body
+INSERT INTO `mob_droplist` VALUES (6304,0,15085,60);  -- DRG Head
+INSERT INTO `mob_droplist` VALUES (6304,0,15256,10);  -- SAM Head +1
+INSERT INTO `mob_droplist` VALUES (6304,0,15248,10);  -- BLM Head +1
+INSERT INTO `mob_droplist` VALUES (6304,0,14506,10);  -- PLD Body +1
+INSERT INTO `mob_droplist` VALUES (6304,0,15258,10);  -- DRG Head +1
 
 INSERT INTO `mob_droplist` VALUES (6305,0,1455,90);
 INSERT INTO `mob_droplist` VALUES (6305,0,1456,10);
 INSERT INTO `mob_droplist` VALUES (6305,0,1469,80);
 INSERT INTO `mob_droplist` VALUES (6305,0,1470,80);
 INSERT INTO `mob_droplist` VALUES (6305,0,1521,80);
-INSERT INTO `mob_droplist` VALUES (6305,0,11292,80);
-INSERT INTO `mob_droplist` VALUES (6305,0,11295,80);
-INSERT INTO `mob_droplist` VALUES (6305,0,11298,80);
-INSERT INTO `mob_droplist` VALUES (6305,0,11307,80);
-INSERT INTO `mob_droplist` VALUES (6305,0,15252,10);
-INSERT INTO `mob_droplist` VALUES (6305,0,14914,10);
-INSERT INTO `mob_droplist` VALUES (6305,0,14911,10);
-INSERT INTO `mob_droplist` VALUES (6305,0,15249,10);
+INSERT INTO `mob_droplist` VALUES (6305,0,15079,80);  -- DRK Head
+INSERT INTO `mob_droplist` VALUES (6305,0,15107,80);  -- THF Hands
+INSERT INTO `mob_droplist` VALUES (6305,0,15104,80);  -- WHM Hands
+INSERT INTO `mob_droplist` VALUES (6305,0,15076,80);  -- RDM Head
+INSERT INTO `mob_droplist` VALUES (6305,0,15252,10);  -- DRK Head +1
+INSERT INTO `mob_droplist` VALUES (6305,0,14914,10);  -- THF Hands +1
+INSERT INTO `mob_droplist` VALUES (6305,0,14911,10);  -- WHM Hands +1
+INSERT INTO `mob_droplist` VALUES (6305,0,15249,10);  -- RDM Head +1
 
 INSERT INTO `mob_droplist` VALUES (6306,0,1455,90);
 INSERT INTO `mob_droplist` VALUES (6306,0,1456,10);
 INSERT INTO `mob_droplist` VALUES (6306,0,1469,80);
 INSERT INTO `mob_droplist` VALUES (6306,0,1470,80);
 INSERT INTO `mob_droplist` VALUES (6306,0,1521,80);
-INSERT INTO `mob_droplist` VALUES (6306,0,15088,80);
-INSERT INTO `mob_droplist` VALUES (6306,0,15089,80);
-INSERT INTO `mob_droplist` VALUES (6306,0,15090,80);
-INSERT INTO `mob_droplist` VALUES (6306,0,15091,80);
-INSERT INTO `mob_droplist` VALUES (6306,0,14921,10);
-INSERT INTO `mob_droplist` VALUES (6306,0,15246,10);
-INSERT INTO `mob_droplist` VALUES (6306,0,11472,10);
-INSERT INTO `mob_droplist` VALUES (6306,0,14510,10);
+INSERT INTO `mob_droplist` VALUES (6306,0,15114,60);  -- NIN Hands
+INSERT INTO `mob_droplist` VALUES (6306,0,15073,60);  -- MNK Head
+INSERT INTO `mob_droplist` VALUES (6306,0,11471,60);  -- PUP Head
+INSERT INTO `mob_droplist` VALUES (6306,0,15097,60);  -- RNG Body
+INSERT INTO `mob_droplist` VALUES (6306,0,14921,10);  -- NIN Hands +1
+INSERT INTO `mob_droplist` VALUES (6306,0,15246,10);  -- MNK Head +1
+INSERT INTO `mob_droplist` VALUES (6306,0,11472,10);  -- PUP Head +1
+INSERT INTO `mob_droplist` VALUES (6306,0,14510,10);  -- RNG Body +1
 
 INSERT INTO `mob_droplist` VALUES (6307,0,1455,90);
 INSERT INTO `mob_droplist` VALUES (6307,0,1456,10);
-INSERT INTO `mob_droplist` VALUES (6307,0,1469,80);
-INSERT INTO `mob_droplist` VALUES (6307,0,1470,80);
-INSERT INTO `mob_droplist` VALUES (6307,0,1521,80);
-INSERT INTO `mob_droplist` VALUES (6307,0,15094,80);
-INSERT INTO `mob_droplist` VALUES (6307,0,15096,80);
-INSERT INTO `mob_droplist` VALUES (6307,0,15098,80);
-INSERT INTO `mob_droplist` VALUES (6307,0,15099,80);
-INSERT INTO `mob_droplist` VALUES (6307,0,15259,10);
-INSERT INTO `mob_droplist` VALUES (6307,0,14500,10);
-INSERT INTO `mob_droplist` VALUES (6307,0,11481,10);
-INSERT INTO `mob_droplist` VALUES (6307,0,15589,10);
+INSERT INTO `mob_droplist` VALUES (6307,0,1469,60);
+INSERT INTO `mob_droplist` VALUES (6307,0,1470,60);
+INSERT INTO `mob_droplist` VALUES (6307,0,1521,60);
+INSERT INTO `mob_droplist` VALUES (6307,0,15083,60);  -- SAM Head
+INSERT INTO `mob_droplist` VALUES (6307,0,15087,60);  -- WAR Body
+INSERT INTO `mob_droplist` VALUES (6307,0,11460,60);  -- SCH Head
+INSERT INTO `mob_droplist` VALUES (6307,0,15126,60);  -- BRD Legs
+INSERT INTO `mob_droplist` VALUES (6307,0,15259,10);  -- SMN Head +1
+INSERT INTO `mob_droplist` VALUES (6307,0,14500,10);  -- WAR Body +1
+INSERT INTO `mob_droplist` VALUES (6307,0,11481,10);  -- SCH Head +1
+INSERT INTO `mob_droplist` VALUES (6307,0,15589,10);  -- BRD Legs +1
 
 INSERT INTO `mob_droplist` VALUES (6308,0,1455,90);
 INSERT INTO `mob_droplist` VALUES (6308,0,1456,10);
-INSERT INTO `mob_droplist` VALUES (6308,0,1469,80);
-INSERT INTO `mob_droplist` VALUES (6308,0,1470,80);
-INSERT INTO `mob_droplist` VALUES (6308,0,1521,80);
-INSERT INTO `mob_droplist` VALUES (6308,0,15100,80);
-INSERT INTO `mob_droplist` VALUES (6308,0,15101,80);
-INSERT INTO `mob_droplist` VALUES (6308,0,15117,80);
-INSERT INTO `mob_droplist` VALUES (6308,0,15122,80);
-INSERT INTO `mob_droplist` VALUES (6308,0,11469,10);
-INSERT INTO `mob_droplist` VALUES (6308,0,11306,10);
-INSERT INTO `mob_droplist` VALUES (6308,0,11466,10);
-INSERT INTO `mob_droplist` VALUES (6308,0,16917,10);
+INSERT INTO `mob_droplist` VALUES (6308,0,1469,60);
+INSERT INTO `mob_droplist` VALUES (6308,0,1470,60);
+INSERT INTO `mob_droplist` VALUES (6308,0,1521,60);
+INSERT INTO `mob_droplist` VALUES (6308,0,11486,60);  -- COR Head
+INSERT INTO `mob_droplist` VALUES (6308,0,11305,60);  -- DNC Body
+INSERT INTO `mob_droplist` VALUES (6308,0,11465,60);  -- BLU Head
+INSERT INTO `mob_droplist` VALUES (6308,0,15110,60);  -- BST Hands
+INSERT INTO `mob_droplist` VALUES (6308,0,11469,10);  -- COR Head +1
+INSERT INTO `mob_droplist` VALUES (6308,0,11306,10);  -- DNC Body +1
+INSERT INTO `mob_droplist` VALUES (6308,0,11466,10);  -- BLU Head +1
+INSERT INTO `mob_droplist` VALUES (6308,0,14917,10);  -- BST Hands +1
 
 INSERT INTO `mob_droplist` VALUES (6309,0,1455,90);
 INSERT INTO `mob_droplist` VALUES (6309,0,1456,10);
-INSERT INTO `mob_droplist` VALUES (6309,0,1469,80);
-INSERT INTO `mob_droplist` VALUES (6309,0,1470,80);
-INSERT INTO `mob_droplist` VALUES (6309,0,1521,80);
-INSERT INTO `mob_droplist` VALUES (6309,0,15123,80);
-INSERT INTO `mob_droplist` VALUES (6309,0,15140,80);
-INSERT INTO `mob_droplist` VALUES (6309,0,15142,80);
-INSERT INTO `mob_droplist` VALUES (6309,0,16360,80);
-INSERT INTO `mob_droplist` VALUES (6309,0,15256,10);
-INSERT INTO `mob_droplist` VALUES (6309,0,15248,10);
-INSERT INTO `mob_droplist` VALUES (6309,0,14506,10);
-INSERT INTO `mob_droplist` VALUES (6309,0,15258,10);
+INSERT INTO `mob_droplist` VALUES (6309,0,1469,60);
+INSERT INTO `mob_droplist` VALUES (6309,0,1470,60);
+INSERT INTO `mob_droplist` VALUES (6309,0,1521,60);
+INSERT INTO `mob_droplist` VALUES (6309,0,15083,60);  -- SAM Head
+INSERT INTO `mob_droplist` VALUES (6309,0,15075,60);  -- BLM Head
+INSERT INTO `mob_droplist` VALUES (6309,0,15093,60);  -- PLD Body
+INSERT INTO `mob_droplist` VALUES (6309,0,15085,60);  -- DRG Head
+INSERT INTO `mob_droplist` VALUES (6309,0,15256,10);  -- SAM Head +1
+INSERT INTO `mob_droplist` VALUES (6309,0,15248,10);  -- BLM Head +1
+INSERT INTO `mob_droplist` VALUES (6309,0,14506,10);  -- PLD Body +1
+INSERT INTO `mob_droplist` VALUES (6309,0,15258,10);  -- DRG Head +1
 
 INSERT INTO `mob_droplist` VALUES (6310,0,1455,90);
 INSERT INTO `mob_droplist` VALUES (6310,0,1456,10);
 INSERT INTO `mob_droplist` VALUES (6310,0,1469,80);
 INSERT INTO `mob_droplist` VALUES (6310,0,1470,80);
 INSERT INTO `mob_droplist` VALUES (6310,0,1521,80);
-INSERT INTO `mob_droplist` VALUES (6310,0,11292,80);
-INSERT INTO `mob_droplist` VALUES (6310,0,11295,80);
-INSERT INTO `mob_droplist` VALUES (6310,0,11298,80);
-INSERT INTO `mob_droplist` VALUES (6310,0,11307,80);
-INSERT INTO `mob_droplist` VALUES (6310,0,15252,10);
-INSERT INTO `mob_droplist` VALUES (6310,0,14914,10);
-INSERT INTO `mob_droplist` VALUES (6310,0,14911,10);
-INSERT INTO `mob_droplist` VALUES (6310,0,15249,10);
+INSERT INTO `mob_droplist` VALUES (6310,0,15079,80);  -- DRK Head
+INSERT INTO `mob_droplist` VALUES (6310,0,15107,80);  -- THF Hands
+INSERT INTO `mob_droplist` VALUES (6310,0,15104,80);  -- WHM Hands
+INSERT INTO `mob_droplist` VALUES (6310,0,15076,80);  -- RDM Head
+INSERT INTO `mob_droplist` VALUES (6310,0,15252,10);  -- DRK Head +1
+INSERT INTO `mob_droplist` VALUES (6310,0,14914,10);  -- THF Hands +1
+INSERT INTO `mob_droplist` VALUES (6310,0,14911,10);  -- WHM Hands +1
+INSERT INTO `mob_droplist` VALUES (6310,0,15249,10);  -- RDM Head +1
 
 INSERT INTO `mob_droplist` VALUES (6311,0,1455,90);
 INSERT INTO `mob_droplist` VALUES (6311,0,1456,10);
 INSERT INTO `mob_droplist` VALUES (6311,0,1469,80);
 INSERT INTO `mob_droplist` VALUES (6311,0,1470,80);
 INSERT INTO `mob_droplist` VALUES (6311,0,1521,80);
-INSERT INTO `mob_droplist` VALUES (6311,0,15088,80);
-INSERT INTO `mob_droplist` VALUES (6311,0,15089,80);
-INSERT INTO `mob_droplist` VALUES (6311,0,15090,80);
-INSERT INTO `mob_droplist` VALUES (6311,0,15091,80);
-INSERT INTO `mob_droplist` VALUES (6311,0,14921,10);
-INSERT INTO `mob_droplist` VALUES (6311,0,15246,10);
-INSERT INTO `mob_droplist` VALUES (6311,0,11472,10);
-INSERT INTO `mob_droplist` VALUES (6311,0,14510,10);
+INSERT INTO `mob_droplist` VALUES (6311,0,15114,60);  -- NIN Hands
+INSERT INTO `mob_droplist` VALUES (6311,0,15073,60);  -- MNK Head
+INSERT INTO `mob_droplist` VALUES (6311,0,11471,60);  -- PUP Head
+INSERT INTO `mob_droplist` VALUES (6311,0,15097,60);  -- RNG Body
+INSERT INTO `mob_droplist` VALUES (6311,0,14921,10);  -- NIN Hands +1
+INSERT INTO `mob_droplist` VALUES (6311,0,15246,10);  -- MNK Head +1
+INSERT INTO `mob_droplist` VALUES (6311,0,11472,10);  -- PUP Head +1
+INSERT INTO `mob_droplist` VALUES (6311,0,14510,10);  -- RNG Body +1
 
 INSERT INTO `mob_droplist` VALUES (6312,0,1455,90);
 INSERT INTO `mob_droplist` VALUES (6312,0,1456,10);
-INSERT INTO `mob_droplist` VALUES (6312,0,1469,80);
-INSERT INTO `mob_droplist` VALUES (6312,0,1470,80);
-INSERT INTO `mob_droplist` VALUES (6312,0,1521,80);
-INSERT INTO `mob_droplist` VALUES (6312,0,15094,80);
-INSERT INTO `mob_droplist` VALUES (6312,0,15096,80);
-INSERT INTO `mob_droplist` VALUES (6312,0,15098,80);
-INSERT INTO `mob_droplist` VALUES (6312,0,15099,80);
-INSERT INTO `mob_droplist` VALUES (6312,0,15259,10);
-INSERT INTO `mob_droplist` VALUES (6312,0,14500,10);
-INSERT INTO `mob_droplist` VALUES (6312,0,11481,10);
-INSERT INTO `mob_droplist` VALUES (6312,0,15589,10);
+INSERT INTO `mob_droplist` VALUES (6312,0,1469,60);
+INSERT INTO `mob_droplist` VALUES (6312,0,1470,60);
+INSERT INTO `mob_droplist` VALUES (6312,0,1521,60);
+INSERT INTO `mob_droplist` VALUES (6312,0,15083,60);  -- SAM Head
+INSERT INTO `mob_droplist` VALUES (6312,0,15087,60);  -- WAR Body
+INSERT INTO `mob_droplist` VALUES (6312,0,11460,60);  -- SCH Head
+INSERT INTO `mob_droplist` VALUES (6312,0,15126,60);  -- BRD Legs
+INSERT INTO `mob_droplist` VALUES (6312,0,15259,10);  -- SMN Head +1
+INSERT INTO `mob_droplist` VALUES (6312,0,14500,10);  -- WAR Body +1
+INSERT INTO `mob_droplist` VALUES (6312,0,11481,10);  -- SCH Head +1
+INSERT INTO `mob_droplist` VALUES (6312,0,15589,10);  -- BRD Legs +1
 
 INSERT INTO `mob_droplist` VALUES (6313,0,1455,90);
 INSERT INTO `mob_droplist` VALUES (6313,0,1456,10);
-INSERT INTO `mob_droplist` VALUES (6313,0,1469,80);
-INSERT INTO `mob_droplist` VALUES (6313,0,1470,80);
-INSERT INTO `mob_droplist` VALUES (6313,0,1521,80);
-INSERT INTO `mob_droplist` VALUES (6313,0,15100,80);
-INSERT INTO `mob_droplist` VALUES (6313,0,15101,80);
-INSERT INTO `mob_droplist` VALUES (6313,0,15117,80);
-INSERT INTO `mob_droplist` VALUES (6313,0,15122,80);
-INSERT INTO `mob_droplist` VALUES (6313,0,11469,10);
-INSERT INTO `mob_droplist` VALUES (6313,0,11306,10);
-INSERT INTO `mob_droplist` VALUES (6313,0,11466,10);
-INSERT INTO `mob_droplist` VALUES (6313,0,16917,10);
+INSERT INTO `mob_droplist` VALUES (6313,0,1469,60);
+INSERT INTO `mob_droplist` VALUES (6313,0,1470,60);
+INSERT INTO `mob_droplist` VALUES (6313,0,1521,60);
+INSERT INTO `mob_droplist` VALUES (6313,0,11486,60);  -- COR Head
+INSERT INTO `mob_droplist` VALUES (6313,0,11305,60);  -- DNC Body
+INSERT INTO `mob_droplist` VALUES (6313,0,11465,60);  -- BLU Head
+INSERT INTO `mob_droplist` VALUES (6313,0,15110,60);  -- BST Hands
+INSERT INTO `mob_droplist` VALUES (6313,0,11469,10);  -- COR Head +1
+INSERT INTO `mob_droplist` VALUES (6313,0,11306,10);  -- DNC Body +1
+INSERT INTO `mob_droplist` VALUES (6313,0,11466,10);  -- BLU Head +1
+INSERT INTO `mob_droplist` VALUES (6313,0,14917,10);  -- BST Hands +1
 
 INSERT INTO `mob_droplist` VALUES (6314,0,1455,90);
 INSERT INTO `mob_droplist` VALUES (6314,0,1456,10);
-INSERT INTO `mob_droplist` VALUES (6314,0,1469,80);
-INSERT INTO `mob_droplist` VALUES (6314,0,1470,80);
-INSERT INTO `mob_droplist` VALUES (6314,0,1521,80);
-INSERT INTO `mob_droplist` VALUES (6314,0,15123,80);
-INSERT INTO `mob_droplist` VALUES (6314,0,15140,80);
-INSERT INTO `mob_droplist` VALUES (6314,0,15142,80);
-INSERT INTO `mob_droplist` VALUES (6314,0,16360,80);
-INSERT INTO `mob_droplist` VALUES (6314,0,15256,10);
-INSERT INTO `mob_droplist` VALUES (6314,0,15248,10);
-INSERT INTO `mob_droplist` VALUES (6314,0,14506,10);
-INSERT INTO `mob_droplist` VALUES (6314,0,15258,10);
+INSERT INTO `mob_droplist` VALUES (6314,0,1469,60);
+INSERT INTO `mob_droplist` VALUES (6314,0,1470,60);
+INSERT INTO `mob_droplist` VALUES (6314,0,1521,60);
+INSERT INTO `mob_droplist` VALUES (6314,0,15083,60);  -- SAM Head
+INSERT INTO `mob_droplist` VALUES (6314,0,15075,60);  -- BLM Head
+INSERT INTO `mob_droplist` VALUES (6314,0,15093,60);  -- PLD Body
+INSERT INTO `mob_droplist` VALUES (6314,0,15085,60);  -- DRG Head
+INSERT INTO `mob_droplist` VALUES (6314,0,15256,10);  -- SAM Head +1
+INSERT INTO `mob_droplist` VALUES (6314,0,15248,10);  -- BLM Head +1
+INSERT INTO `mob_droplist` VALUES (6314,0,14506,10);  -- PLD Body +1
+INSERT INTO `mob_droplist` VALUES (6314,0,15258,10);  -- DRG Head +1
+
+INSERT INTO `mob_droplist` VALUES (6315,0,1455,90);
+INSERT INTO `mob_droplist` VALUES (6315,0,1456,10);
+INSERT INTO `mob_droplist` VALUES (6315,0,1469,80);
+INSERT INTO `mob_droplist` VALUES (6315,0,1470,80);
+INSERT INTO `mob_droplist` VALUES (6315,0,1521,80);
+INSERT INTO `mob_droplist` VALUES (6315,0,15079,80);  -- DRK Head
+INSERT INTO `mob_droplist` VALUES (6315,0,15107,80);  -- THF Hands
+INSERT INTO `mob_droplist` VALUES (6315,0,15104,80);  -- WHM Hands
+INSERT INTO `mob_droplist` VALUES (6315,0,15076,80);  -- RDM Head
+INSERT INTO `mob_droplist` VALUES (6315,0,15252,10);  -- DRK Head +1
+INSERT INTO `mob_droplist` VALUES (6315,0,14914,10);  -- THF Hands +1
+INSERT INTO `mob_droplist` VALUES (6315,0,14911,10);  -- WHM Hands +1
+INSERT INTO `mob_droplist` VALUES (6315,0,15249,10);  -- RDM Head +1
+
+INSERT INTO `mob_droplist` VALUES (6316,0,1455,90);
+INSERT INTO `mob_droplist` VALUES (6316,0,1456,10);
+INSERT INTO `mob_droplist` VALUES (6316,0,1469,80);
+INSERT INTO `mob_droplist` VALUES (6316,0,1470,80);
+INSERT INTO `mob_droplist` VALUES (6316,0,1521,80);
+INSERT INTO `mob_droplist` VALUES (6316,0,15114,60);  -- NIN Hands
+INSERT INTO `mob_droplist` VALUES (6316,0,15073,60);  -- MNK Head
+INSERT INTO `mob_droplist` VALUES (6316,0,11471,60);  -- PUP Head
+INSERT INTO `mob_droplist` VALUES (6316,0,15097,60);  -- RNG Body
+INSERT INTO `mob_droplist` VALUES (6316,0,14921,10);  -- NIN Hands +1
+INSERT INTO `mob_droplist` VALUES (6316,0,15246,10);  -- MNK Head +1
+INSERT INTO `mob_droplist` VALUES (6316,0,11472,10);  -- PUP Head +1
+INSERT INTO `mob_droplist` VALUES (6316,0,14510,10);  -- RNG Body +1
+
+INSERT INTO `mob_droplist` VALUES (6317,0,1455,90);
+INSERT INTO `mob_droplist` VALUES (6317,0,1456,10);
+INSERT INTO `mob_droplist` VALUES (6317,0,1469,60);
+INSERT INTO `mob_droplist` VALUES (6317,0,1470,60);
+INSERT INTO `mob_droplist` VALUES (6317,0,1521,60);
+INSERT INTO `mob_droplist` VALUES (6317,0,15083,60);  -- SAM Head
+INSERT INTO `mob_droplist` VALUES (6317,0,15087,60);  -- WAR Body
+INSERT INTO `mob_droplist` VALUES (6317,0,11460,60);  -- SCH Head
+INSERT INTO `mob_droplist` VALUES (6317,0,15126,60);  -- BRD Legs
+INSERT INTO `mob_droplist` VALUES (6317,0,15259,10);  -- SMN Head +1
+INSERT INTO `mob_droplist` VALUES (6317,0,14500,10);  -- WAR Body +1
+INSERT INTO `mob_droplist` VALUES (6317,0,11481,10);  -- SCH Head +1
+INSERT INTO `mob_droplist` VALUES (6317,0,15589,10);  -- BRD Legs +1
+
+INSERT INTO `mob_droplist` VALUES (6318,0,1455,90);
+INSERT INTO `mob_droplist` VALUES (6318,0,1456,10);
+INSERT INTO `mob_droplist` VALUES (6318,0,1469,60);
+INSERT INTO `mob_droplist` VALUES (6318,0,1470,60);
+INSERT INTO `mob_droplist` VALUES (6318,0,1521,60);
+INSERT INTO `mob_droplist` VALUES (6318,0,11486,60);  -- COR Head
+INSERT INTO `mob_droplist` VALUES (6318,0,11305,60);  -- DNC Body
+INSERT INTO `mob_droplist` VALUES (6318,0,11465,60);  -- BLU Head
+INSERT INTO `mob_droplist` VALUES (6318,0,15110,60);  -- BST Hands
+INSERT INTO `mob_droplist` VALUES (6318,0,11469,10);  -- COR Head +1
+INSERT INTO `mob_droplist` VALUES (6318,0,11306,10);  -- DNC Body +1
+INSERT INTO `mob_droplist` VALUES (6318,0,11466,10);  -- BLU Head +1
+INSERT INTO `mob_droplist` VALUES (6318,0,14917,10);  -- BST Hands +1
+
+INSERT INTO `mob_droplist` VALUES (6319,0,1455,90);
+INSERT INTO `mob_droplist` VALUES (6319,0,1456,10);
+INSERT INTO `mob_droplist` VALUES (6319,0,1469,60);
+INSERT INTO `mob_droplist` VALUES (6319,0,1470,60);
+INSERT INTO `mob_droplist` VALUES (6319,0,1521,60);
+INSERT INTO `mob_droplist` VALUES (6319,0,15083,60);  -- SAM Head
+INSERT INTO `mob_droplist` VALUES (6319,0,15075,60);  -- BLM Head
+INSERT INTO `mob_droplist` VALUES (6319,0,15093,60);  -- PLD Body
+INSERT INTO `mob_droplist` VALUES (6319,0,15085,60);  -- DRG Head
+INSERT INTO `mob_droplist` VALUES (6319,0,15256,10);  -- SAM Head +1
+INSERT INTO `mob_droplist` VALUES (6319,0,15248,10);  -- BLM Head +1
+INSERT INTO `mob_droplist` VALUES (6319,0,14506,10);  -- PLD Body +1
+INSERT INTO `mob_droplist` VALUES (6319,0,15258,10);  -- DRG Head +1
+
 
 
 -- ----------------------------
@@ -33525,7 +33596,7 @@ INSERT INTO `mob_droplist` VALUES (6350,0,853,140);
 INSERT INTO `mob_droplist` VALUES (6350,0,3343,150);
 
 -- Coeurl
-INSERT INTO `mob_droplist` VALUES (6351,0,853,200);
+INSERT INTO `mob_droplist` VALUES (6351,0,863,200);
 INSERT INTO `mob_droplist` VALUES (6351,0,3341,150);
 
 -- Darters
