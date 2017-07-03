@@ -144,8 +144,8 @@ struct skills_t
 
 struct keyitems_t 
 {
-	 uint8 keysList[320];	// таблица ключевых предметов
-	 uint8 seenList[320];	// таблица ключевых предметов, отмеченных как "увиденные" 
+	 uint8 keysList[512];	// таблица ключевых предметов
+	 uint8 seenList[512];	// таблица ключевых предметов, отмеченных как "увиденные" 
 };
 
 struct position_t 
