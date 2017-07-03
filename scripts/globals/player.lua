@@ -26,9 +26,9 @@ local lastlogin = player:getVar("logoutRestStart");
 local loginok = player:getVar("logoutOK");
 local bonus = 0;
 
-    if (player:getObjType() == TYPE_PC) then
-	player:addMod(MOD_RERAISE_III,1);
-	end
+   --  if (player:getObjType() == TYPE_PC) then
+  --	player:addMod(MOD_RERAISE_III,1);
+	--  end
 
     if (not zoning) then -- Things checked ONLY during logon go here.
         if (firstlogin) then
@@ -50,9 +50,7 @@ local bonus = 0;
 			end
 			end
 		end	
-	if (player:hasKeyItem(MAGICKED_ASTROLABE) == false) then
-	    player:addKeyItem(MAGICKED_ASTROLABE);
-	end
+
 	if (player:hasKeyItem(PORTAL_CHARM) == false) then
 	    player:addKeyItem(PORTAL_CHARM);
 	end	
