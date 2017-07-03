@@ -49,17 +49,17 @@ end;
 -----------------------------------
 
 function onMobFight(mob,target)
-    local YingID = 17330183;
-    local YangID = 17330184;
+   -- local YingID = 17330183;
+   -- local YangID = 17330184;
 
-    if (mob:getBattleTime() % 90 == 0) then
-        if (GetMobAction(YingID) == ACTION_NONE) then
-            SpawnMob(YingID):updateEnmity(target); -- Respawn Ying after 90sec
-        end
-        if (GetMobAction(YangID) == ACTION_NONE) then
-            SpawnMob(YangID):updateEnmity(target); -- Respawn Yang after 90sec
-        end
-    end
+   -- if (mob:getBattleTime() % 90 == 0) then
+     --   if (GetMobAction(YingID) == ACTION_NONE) then
+       --     SpawnMob(YingID):updateEnmity(target); -- Respawn Ying after 90sec
+       -- end
+        -- if (GetMobAction(YangID) == ACTION_NONE) then
+           -- SpawnMob(YangID):updateEnmity(target); -- Respawn Yang after 90sec
+       -- end
+    -- end
 end;
 
 -----------------------------------
@@ -67,7 +67,7 @@ end;
 -----------------------------------
 
 function onMobDeath(mob,killer)
-    local npc = GetNPCByID(17330778); -- ID of the '???' target.
+    -- local npc = GetNPCByID(17330778); -- ID of the '???' target.
     killer:addTitle(LIFTER_OF_SHADOWS);
 	killer:addTitle(DYNAMISXARCABARD_INTERLOPER); -- Add title
 	

@@ -25,6 +25,11 @@ function onTrigger(player,npc)
 if ((player:hasKeyItem(ALABASTER_GRANULES_OF_TIME)) and (player:hasKeyItem(AMBER_GRANULES_OF_TIME)) and (player:hasKeyItem(AZURE_GRANULES_OF_TIME))
 and (player:hasKeyItem(CRIMSON_GRANULES_OF_TIME))) then
 SpawnMob(17330177):updateEnmity(player); 
+player:delKeyItem(ALABASTER_GRANULES_OF_TIME);
+player:delKeyItem(AMBER_GRANULES_OF_TIME);
+player:delKeyItem(AZURE_GRANULES_OF_TIME);
+player:delKeyItem(CRIMSON_GRANULES_OF_TIME);
+
 end
 
 
