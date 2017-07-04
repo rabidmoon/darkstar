@@ -29,7 +29,10 @@ end;
 -----------------------------------
 -- onMobDeath
 -----------------------------------
-function onMobDeath(mob, killer)
+function onMobDeath(mob, killer) 
+	killer:setVar("Brig_Win",1);
+	killer:addCurrency('jettons',50);
+	killer:PrintToPlayer("Your obtain 50 Jettons.", 0x15);	
 end;
 
 -----------------------------------

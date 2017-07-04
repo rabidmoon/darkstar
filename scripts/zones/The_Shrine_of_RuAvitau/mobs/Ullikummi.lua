@@ -21,6 +21,9 @@ end;
 -----------------------------------
 
 function onMobDeath(mob, killer)
+	killer:setVar("Ulli_Win",1);
+	killer:addCurrency('jettons',50);
+	killer:PrintToPlayer("Your obtain 50 Jettons.", 0x15);	
 end;
 
 -----------------------------------

@@ -23,12 +23,12 @@ end;
 function onEffectTick(target,effect)
  local duration = target:getStatusEffect(EFFECT_LEVEL_RESTRICTION):getTimeRemaining();
  local zone = target:getZoneID();
- 
+ target:PrintToPlayer("Tick");
  
   
  
 	local seconds = math.floor(duration / 1000);
-if (target:getObjType() == TYPE_PC) and (zone == 185) or (zone == 186) or (zone == 187) or (zone == 188) or (zone == 134) then	
+if (target:getObjType() == TYPE_PC) and (zone == 185) or (zone == 186) or (zone == 187) or (zone == 188) or (zone == 134) or (zone == 135) then	
     if (target:getVar("Dynamis_Time_Remaining") < 5400000 and (target:getVar("Dynamis_Time_Remaining") > 5396000)) then
 		local reduction = target:getVar("Dyna_KI_Counter");
 		target:PrintToPlayer("You have 90 minutes remaining in Dynamis", 0xD);

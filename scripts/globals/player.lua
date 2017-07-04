@@ -25,6 +25,7 @@ local logintime = player:getVar("restingLogin");
 local lastlogin = player:getVar("logoutRestStart");
 local loginok = player:getVar("logoutOK");
 local bonus = 0;
+local zone = player:getZoneID();
 
    --  if (player:getObjType() == TYPE_PC) then
   --	player:addMod(MOD_RERAISE_III,1);
@@ -61,6 +62,9 @@ local bonus = 0;
 
     if (zoning) then -- Things checked ONLY during zone in go here.
         -- Nothing here yet :P
+		if ((player:getObjType() == TYPE_PC) and (player:hasStatusEffect(EFFECT_DYNA_RESTRICTION)) and (zone ~= 135) and (zone ~= 134) and (zone ~= 185) and (zone ~= 186) and (zone ~= 187) and (zone ~= 188)) then
+		player:delStatusEffect(EFFECT_DYNA_RESTRICTION);
+	   end	
     end
 
     -- Things checked BOTH during logon AND zone in below this line.
