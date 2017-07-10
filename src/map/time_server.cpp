@@ -42,12 +42,25 @@ int32 time_server(uint32 tick,CTaskMgr::CTask* PTask)
     // weekly update for conquest (sunday at midnight)
     if (CVanaTime::getInstance()->getSysWeekDay() == 0  && CVanaTime::getInstance()->getSysHour() == 0 && CVanaTime::getInstance()->getSysMinute() == 0)
     {
+		int32 ahfees = 100;
+		const int8* Query = "SELECT SUM(quantity), bazaar, itemID  FROM `char_inventory` WHERE itemID = '65535'";
+		int32 ret = Sql_Query(SqlHandle, Query);
+		if (ret != SQL_ERROR && Sql_NumRows(SqlHandle) != 0 && Sql_NextRow(SqlHandle) == SQL_SUCCESS)
+		{
+			ahfees = (int32)Sql_GetIntData(SqlHandle, 0);
+			//ahfees = ahfees / 1000000;
+			ShowWarning(CL_CYAN"Running daily Gil analytics.  Total Gil is: %i \n" CL_RESET, ahfees);
+			uint32 calltime = time(nullptr);
+			Sql_Query(SqlHandle, "INSERT INTO server_gil (call_date, gil_value) VALUES (%u, %u);",calltime, ahfees);
+		}	
         if (tick > (CVanaTime::getInstance()->lastConquestTally + 60000))
         {
             conquest::UpdateWeekConquest();
             CVanaTime::getInstance()->lastConquestTally = tick;
         }
     }
+
+   	
     // hourly conquest update
     else if (CVanaTime::getInstance()->getSysMinute() == 0)
     {
@@ -57,6 +70,8 @@ int32 time_server(uint32 tick,CTaskMgr::CTask* PTask)
             CVanaTime::getInstance()->lastConquestUpdate = tick;
         }
     }
+	
+
 
     if (CVanaTime::getInstance()->getMinute() == 0)
     {
@@ -80,12 +95,194 @@ int32 time_server(uint32 tick,CTaskMgr::CTask* PTask)
     //Midnight
     if (CVanaTime::getInstance()->getSysHour() == 0 && CVanaTime::getInstance()->getSysMinute() == 0)
     {
+		int32 ahfees = 100;
+		const int8* Query = "SELECT SUM(quantity), bazaar, itemID  FROM `char_inventory` WHERE itemID = '65535'";
+		int32 ret = Sql_Query(SqlHandle, Query);
+		if (ret != SQL_ERROR && Sql_NumRows(SqlHandle) != 0 && Sql_NextRow(SqlHandle) == SQL_SUCCESS)
+		{
+			ahfees = (int32)Sql_GetIntData(SqlHandle, 0);
+			//ahfees = ahfees / 1000000;
+			ShowWarning(CL_CYAN"Running daily Gil analytics.  Total Gil is: %i \n" CL_RESET, ahfees);
+			uint32 calltime = time(nullptr);
+			Sql_Query(SqlHandle, "INSERT INTO server_gil (call_date, gil_value) VALUES (%u, %u);",calltime, ahfees);
+		}	
         if (tick > (CVanaTime::getInstance()->lastMidnight + 60000))
         {
             guildutils::UpdateGuildPointsPattern();
             CVanaTime::getInstance()->lastMidnight = tick;
         }
     }
+	
+	//Midnight Online
+    if (CVanaTime::getInstance()->getSysHour() == 0 && CVanaTime::getInstance()->getSysMinute() == 0)
+	//if (CVanaTime::getInstance()->getSysSecond() == 30)
+    {
+		int32 online = 100;
+		const int8* Query = "SELECT COUNT(accid), charid FROM `accounts_sessions`";
+		int32 ret = Sql_Query(SqlHandle, Query);
+		if (ret != SQL_ERROR && Sql_NumRows(SqlHandle) != 0 && Sql_NextRow(SqlHandle) == SQL_SUCCESS)
+		{
+			online = (int32)Sql_GetIntData(SqlHandle, 0);
+			//ahfees = ahfees / 1000000;
+			ShowWarning(CL_CYAN"Running 3 Hour player analytics.  Total Online is: %i \n" CL_RESET, online);
+			uint32 calltime = time(nullptr);
+			Sql_Query(SqlHandle, "INSERT INTO total_online (call_date, players_online) VALUES (%u, %u);",calltime, online);
+		}	
+        if (tick > (CVanaTime::getInstance()->lastMidnight + 60000))
+        {
+            guildutils::UpdateGuildPointsPattern();
+            CVanaTime::getInstance()->lastMidnight = tick;
+        }
+    }	
+	
+	
+    if (CVanaTime::getInstance()->getSysHour() == 3 && CVanaTime::getInstance()->getSysMinute() == 0)
+	//if (CVanaTime::getInstance()->getSysSecond() == 30)
+    {
+		int32 online = 100;
+		const int8* Query = "SELECT COUNT(accid), charid FROM `accounts_sessions`";
+		int32 ret = Sql_Query(SqlHandle, Query);
+		if (ret != SQL_ERROR && Sql_NumRows(SqlHandle) != 0 && Sql_NextRow(SqlHandle) == SQL_SUCCESS)
+		{
+			online = (int32)Sql_GetIntData(SqlHandle, 0);
+			//ahfees = ahfees / 1000000;
+			ShowWarning(CL_CYAN"Running 3 Hour player analytics.  Total Online is: %i \n" CL_RESET, online);
+			uint32 calltime = time(nullptr);
+			Sql_Query(SqlHandle, "INSERT INTO total_online (call_date, players_online) VALUES (%u, %u);",calltime, online);
+		}	
+        if (tick > (CVanaTime::getInstance()->lastMidnight + 60000))
+        {
+            guildutils::UpdateGuildPointsPattern();
+            CVanaTime::getInstance()->lastMidnight = tick;
+        }
+    }
+	
+    if (CVanaTime::getInstance()->getSysHour() == 6 && CVanaTime::getInstance()->getSysMinute() == 0)
+	//if (CVanaTime::getInstance()->getSysSecond() == 30)
+    {
+		int32 online = 100;
+		const int8* Query = "SELECT COUNT(accid), charid FROM `accounts_sessions`";
+		int32 ret = Sql_Query(SqlHandle, Query);
+		if (ret != SQL_ERROR && Sql_NumRows(SqlHandle) != 0 && Sql_NextRow(SqlHandle) == SQL_SUCCESS)
+		{
+			online = (int32)Sql_GetIntData(SqlHandle, 0);
+			//ahfees = ahfees / 1000000;
+			ShowWarning(CL_CYAN"Running 3 Hour player analytics.  Total Online is: %i \n" CL_RESET, online);
+			uint32 calltime = time(nullptr);
+			Sql_Query(SqlHandle, "INSERT INTO total_online (call_date, players_online) VALUES (%u, %u);",calltime, online);
+		}	
+        if (tick > (CVanaTime::getInstance()->lastMidnight + 60000))
+        {
+            guildutils::UpdateGuildPointsPattern();
+            CVanaTime::getInstance()->lastMidnight = tick;
+        }
+    }
+
+    if (CVanaTime::getInstance()->getSysHour() == 9 && CVanaTime::getInstance()->getSysMinute() == 0)
+	//if (CVanaTime::getInstance()->getSysSecond() == 30)
+    {
+		int32 online = 100;
+		const int8* Query = "SELECT COUNT(accid), charid FROM `accounts_sessions`";
+		int32 ret = Sql_Query(SqlHandle, Query);
+		if (ret != SQL_ERROR && Sql_NumRows(SqlHandle) != 0 && Sql_NextRow(SqlHandle) == SQL_SUCCESS)
+		{
+			online = (int32)Sql_GetIntData(SqlHandle, 0);
+			//ahfees = ahfees / 1000000;
+			ShowWarning(CL_CYAN"Running 3 Hour player analytics.  Total Online is: %i \n" CL_RESET, online);
+			uint32 calltime = time(nullptr);
+			Sql_Query(SqlHandle, "INSERT INTO total_online (call_date, players_online) VALUES (%u, %u);",calltime, online);
+		}	
+        if (tick > (CVanaTime::getInstance()->lastMidnight + 60000))
+        {
+            guildutils::UpdateGuildPointsPattern();
+            CVanaTime::getInstance()->lastMidnight = tick;
+        }
+    }
+
+    if (CVanaTime::getInstance()->getSysHour() == 12 && CVanaTime::getInstance()->getSysMinute() == 0)
+	//if (CVanaTime::getInstance()->getSysSecond() == 30)
+    {
+		int32 online = 100;
+		const int8* Query = "SELECT COUNT(accid), charid FROM `accounts_sessions`";
+		int32 ret = Sql_Query(SqlHandle, Query);
+		if (ret != SQL_ERROR && Sql_NumRows(SqlHandle) != 0 && Sql_NextRow(SqlHandle) == SQL_SUCCESS)
+		{
+			online = (int32)Sql_GetIntData(SqlHandle, 0);
+			//ahfees = ahfees / 1000000;
+			ShowWarning(CL_CYAN"Running 3 Hour player analytics.  Total Online is: %i \n" CL_RESET, online);
+			uint32 calltime = time(nullptr);
+			Sql_Query(SqlHandle, "INSERT INTO total_online (call_date, players_online) VALUES (%u, %u);",calltime, online);
+		}	
+        if (tick > (CVanaTime::getInstance()->lastMidnight + 60000))
+        {
+            guildutils::UpdateGuildPointsPattern();
+            CVanaTime::getInstance()->lastMidnight = tick;
+        }
+    }
+
+    if (CVanaTime::getInstance()->getSysHour() == 15 && CVanaTime::getInstance()->getSysMinute() == 0)
+	//if (CVanaTime::getInstance()->getSysSecond() == 30)
+    {
+		int32 online = 100;
+		const int8* Query = "SELECT COUNT(accid), charid FROM `accounts_sessions`";
+		int32 ret = Sql_Query(SqlHandle, Query);
+		if (ret != SQL_ERROR && Sql_NumRows(SqlHandle) != 0 && Sql_NextRow(SqlHandle) == SQL_SUCCESS)
+		{
+			online = (int32)Sql_GetIntData(SqlHandle, 0);
+			//ahfees = ahfees / 1000000;
+			ShowWarning(CL_CYAN"Running 3 Hour player analytics.  Total Online is: %i \n" CL_RESET, online);
+			uint32 calltime = time(nullptr);
+			Sql_Query(SqlHandle, "INSERT INTO total_online (call_date, players_online) VALUES (%u, %u);",calltime, online);
+		}	
+        if (tick > (CVanaTime::getInstance()->lastMidnight + 60000))
+        {
+            guildutils::UpdateGuildPointsPattern();
+            CVanaTime::getInstance()->lastMidnight = tick;
+        }
+    }
+
+    if (CVanaTime::getInstance()->getSysHour() == 18 && CVanaTime::getInstance()->getSysMinute() == 0)
+	//if (CVanaTime::getInstance()->getSysSecond() == 30)
+    {
+		int32 online = 100;
+		const int8* Query = "SELECT COUNT(accid), charid FROM `accounts_sessions`";
+		int32 ret = Sql_Query(SqlHandle, Query);
+		if (ret != SQL_ERROR && Sql_NumRows(SqlHandle) != 0 && Sql_NextRow(SqlHandle) == SQL_SUCCESS)
+		{
+			online = (int32)Sql_GetIntData(SqlHandle, 0);
+			//ahfees = ahfees / 1000000;
+			ShowWarning(CL_CYAN"Running 3 Hour player analytics.  Total Online is: %i \n" CL_RESET, online);
+			uint32 calltime = time(nullptr);
+			Sql_Query(SqlHandle, "INSERT INTO total_online (call_date, players_online) VALUES (%u, %u);",calltime, online);
+		}	
+        if (tick > (CVanaTime::getInstance()->lastMidnight + 60000))
+        {
+            guildutils::UpdateGuildPointsPattern();
+            CVanaTime::getInstance()->lastMidnight = tick;
+        }
+    }
+
+    if (CVanaTime::getInstance()->getSysHour() == 21 && CVanaTime::getInstance()->getSysMinute() == 0)
+	//if (CVanaTime::getInstance()->getSysSecond() == 30)
+    {
+		int32 online = 100;
+		const int8* Query = "SELECT COUNT(accid), charid FROM `accounts_sessions`";
+		int32 ret = Sql_Query(SqlHandle, Query);
+		if (ret != SQL_ERROR && Sql_NumRows(SqlHandle) != 0 && Sql_NextRow(SqlHandle) == SQL_SUCCESS)
+		{
+			online = (int32)Sql_GetIntData(SqlHandle, 0);
+			//ahfees = ahfees / 1000000;
+			ShowWarning(CL_CYAN"Running 3 Hour player analytics.  Total Online is: %i \n" CL_RESET, online);
+			uint32 calltime = time(nullptr);
+			Sql_Query(SqlHandle, "INSERT INTO total_online (call_date, players_online) VALUES (%u, %u);",calltime, online);
+		}	
+        if (tick > (CVanaTime::getInstance()->lastMidnight + 60000))
+        {
+            guildutils::UpdateGuildPointsPattern();
+            CVanaTime::getInstance()->lastMidnight = tick;
+        }
+    }	
+	
 
     if (CVanaTime::getInstance()->getHour() == 0 && CVanaTime::getInstance()->getMinute() == 0)
     {
