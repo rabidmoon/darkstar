@@ -132,7 +132,7 @@ end
 	else
 
     end
-	end
+
 
 if (trade:hasItemQty(1404, 1 )) and (trade:hasItemQty(1405, 1)) and (trade:hasItemQty(1406, 1)) and (trade:hasItemQty(1407, 1)) then
     -- Obtain High Artifact
