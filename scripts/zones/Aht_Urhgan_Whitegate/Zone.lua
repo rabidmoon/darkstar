@@ -20,8 +20,8 @@ function onInitialize(zone)
 	zone:registerRegion(1,57,-1,-70,62,1,-65); -- Sets Mark for "Got It All" Quest cutscene.
 	zone:registerRegion(2,-96,-7,121,-64,-5,137); -- Sets Mark for "Vanishing Act" Quest cutscene.
 	zone:registerRegion(3,14,-7,-65,37,-2,-41); -- TOAU Mission 1 CS area
-	zone:registerRegion(4,75,-3,25,90,1,59);
-        zone:registerRegion(5,73,-7,-137,95,-3,-115);
+	zone:registerRegion(4,75,-3,25,90,1,59);  -- Sentinels
+        zone:registerRegion(5,73,-7,-137,95,-3,-115);  -- Entering Shaharat Teahouse
 end;
 
 -----------------------------------		
@@ -79,11 +79,20 @@ function onRegionEnter(player,region)
 	    player:completeMission(TOAU,LAND_OF_SACRED_SERPENTS,player);
 	    player:addMission(TOAU,IMMORTAL_SENTRIES,player);
 	    player:setVar("TOAUM",1);
-	    
+    elseif (player:getCurrentMission(TOAU) == FINDERS_KEEPERS) then
+        player:startEvent(3093);		
+    elseif (player:getCurrentMission(TOAU) == SOCIAL_GRACES) then
+        player:startEvent(3095)	 
+    elseif (player:getCurrentMission(TOAU) == FOILED_AMBITION and player:getVar("TOAUM23_STARTDAY") ~= VanadielDayOfTheYear() and player:needToZone() == false) then
+        player:startEvent(3097,0,0,0,0,0,0,0,0,0)		
 	elseif (player:getCurrentMission(TOAU) == A_MERCENARY_LIFE) then
             if (prevZone ~= 50) then
                 player:startEvent(0x0Bea,3,3,3,3,3,3,3,3,0);
 	    end
+	
+	
+	
+	
 	end
 	end,
         [4] = function (x) -- AH mission 
@@ -94,6 +103,8 @@ function onRegionEnter(player,region)
         if (player:getCurrentMission(TOAU)== KNIGHT_OF_GOLD and player:getVar("TOAUM4") == 3)	then	player:startEvent(0x0Bd2,0,0,0,0,0,0,0,0,0);
 	elseif (player:getCurrentMission(TOAU) == WESTERLY_WINDS and player:getVar("TOAUM7") == 0) then
             player:startEvent(0x0BD3,0,0,0,0,0,0,0,0,0);
+	elseif (player:getCurrentMission(TOAU) == SWEETS_FOR_THE_SOUL) then
+            player:startEvent(3092);		
         end
         end,
         }
@@ -189,5 +200,25 @@ printf("RESULT: %u",option);
         elseif (csid == 0x0bea) then
             player:completeMission(TOAU,A_MERCENARY_LIFE);
             player:addMission(TOAU,UNDERSEA_SCOUTING);
+	    elseif (csid == 3092) then
+        player:completeMission(TOAU,SWEETS_FOR_THE_SOUL);
+        player:addMission(TOAU,TEAHOUSE_TUMULT);
+    elseif (csid == 3093) then
+        player:completeMission(TOAU,FINDERS_KEEPERS);
+        player:setTitle(KARABABAS_BODYGUARD);
+        player:addMission(TOAU,SHIELD_OF_DIPLOMACY);   		
+    elseif (csid == 3095) then
+        player:completeMission(TOAU,SOCIAL_GRACES);
+        player:needToZone(true);
+        player:setVar("TOAUM23_STARTDAY", VanadielDayOfTheYear());
+        player:addMission(TOAU,FOILED_AMBITION);	
+    elseif (csid == 3097) then
+        player:completeMission(TOAU,FOILED_AMBITION);
+        player:setTitle(KARABABAS_SECRET_AGENT);
+        player:addItem(2187,5);
+        player:setVar("TOAUM23_STARTDAY", 0);
+        player:needToZone(true);
+        player:setVar("TOAUM24_STARTDAY", VanadielDayOfTheYear());
+        player:addMission(TOAU,PLAYING_THE_PART);	
 	end
 end;

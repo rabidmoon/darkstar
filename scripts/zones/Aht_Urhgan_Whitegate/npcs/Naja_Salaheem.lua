@@ -52,8 +52,36 @@ function onTrigger(player,npc)
             player:startEvent(0x0c00,0,0,0,0,0,0,0,0,0);
         elseif (player:getCurrentMission(TOAU) == THE_BLACK_COFFIN) then
             player:startEvent(0x0c01,0,0,0,0,0,0,0,0,0);
-        elseif (player:getCurrentMission(TOAU) == GHOSTS_OF_THE_PAST) then
-            player:startEvent(0x0c02,0,0,0,0,0,0,0,0,0);
+        elseif (player:getCurrentMission(TOAU) == GHOSTS_OF_THE_PAST_TOAU) then
+            if (doRoyalPalaceArmorCheck(player) == true) then
+                player:startEvent(3074,1,0,0,0,0,0,0,1,0);
+            else
+                player:startEvent(3074,0,0,0,0,0,0,0,0,0);
+            end
+        elseif (player:getCurrentMission(TOAU) == GUESTS_OF_THE_EMPIRE) then
+            if (doRoyalPalaceArmorCheck(player) == true) then
+                if (player:getVar("AhtUrganStatus") == 0) then
+                    player:startEvent(3076,1,0,0,0,0,0,0,1,0);
+                else
+                    player:startEvent(3077,1,0,0,0,0,0,0,1,0);
+                end
+            else
+                if (player:getVar("AhtUrganStatus") == 0) then
+                    player:startEvent(3076,0,0,0,0,0,0,0,0,0);
+                else
+                    player:startEvent(3077,0,0,0,0,0,0,0,0,0);
+                end
+            end
+        elseif (player:getCurrentMission(TOAU) == PASSING_GLORY and player:getVar("TOAUM18_STARTDAY") ~= VanadielDayOfTheYear() and needToZone == false) then
+            player:startEvent(3090,0,0,0,0,0,0,0,0,0);	
+	
+	
+	
+	
+	
+	
+	
+	
 	else
 		player:startEvent(0x0bbb,1,0,0,0,0,0,0,1,0) -- go back to work
 		-- player:messageSpecial(0);--  need to find correct normal chat CS..
@@ -113,8 +141,20 @@ function onEventFinish(player,csid,option)
         elseif (csid == 0x0c00) then
             player:completeMission(TOAU,THE_DOLPHIN_CREST);
             player:addMission(TOAU,THE_BLACK_COFFIN);
-        elseif (csid == 0x0c02) then
-            player:completeMission(TOAU,GHOSTS_OF_THE_PAST);
+------------------- New
+        elseif (csid == 3074) then
+            player:completeMission(TOAU,GHOSTS_OF_THE_PAST_TOAU);
             player:addMission(TOAU,GUESTS_OF_THE_EMPIRE);
+
+        if(option == 2) then
+            player:setVar("AhtUrganStatus", 1);
+        end
+    elseif (csid == 3090) then
+        player:completeMission(TOAU,PASSING_GLORY);
+        player:setVar("TOAUM18_STARTDAY", 0);
+        player:addMission(TOAU,SWEETS_FOR_THE_SOUL);		
+		
+		
+		
 	end
 end;
