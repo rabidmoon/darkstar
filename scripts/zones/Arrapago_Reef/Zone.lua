@@ -24,8 +24,19 @@ end;
 function onZoneIn(player,prevZone)
     local cs = -1;
     if (player:getXPos() == 0 and player:getYPos() == 0 and player:getZPos() == 0) then
-        player:setPos(-180.028,-10.335,-559.987,182);
+       if (prevZone == 60) then
+            if (player:getCurrentMission(TOAU) == THE_BLACK_COFFIN and player:getVar("AhtUrganStatus") == 2) then
+                cs = 9;
+            else
+                player:setPos(-456, -3, -405, 64);
+            end
+	elseif (prevZone == 79 and player:getCurrentMission(TOAU) == PREVALENCE_OF_PIRATES and player:getVar("AhtUrganStatus") == 0) then
+	    cs = 13;
+        else
+            player:setPos(-180.028,-10.335,-559.987,182);
+        end
     end
+
     return cs;
 end;
 
@@ -68,6 +79,9 @@ if (csid == 0x0008) then
 player:setVar("TOAUM15",1);
 player:delKeyItem(EPHRAMADIAN_GOLD_COIN);
 player:startEvent(0x0022,1,1,1,1,1,1,1,1);
+    elseif (csid == 9) then  -- Finish Black Coffin and then warp to Nashmau to finish
+        player:setVar("AhtUrganStatus",3);
+        player:setPos(0,0,0,0,53);
 elseif (csid == 0x0022 and player:getVar("TOAUM15") == 1) then
 player:startEvent(0x0023);
 end    

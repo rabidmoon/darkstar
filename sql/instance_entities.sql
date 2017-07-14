@@ -142,6 +142,22 @@ INSERT INTO `instance_entities` VALUES (41,17002514);
 INSERT INTO `instance_entities` VALUES (41,17002515);
 INSERT INTO `instance_entities` VALUES (41,17002516);
 
+-- Ashu Talif
+-- npc
+INSERT INTO `instance_entities` VALUES (53,17022979);
+-- mobs
+INSERT INTO `instance_entities` VALUES (53,17022980);
+INSERT INTO `instance_entities` VALUES (53,17022981);
+INSERT INTO `instance_entities` VALUES (53,17022982);
+INSERT INTO `instance_entities` VALUES (53,17022983);
+INSERT INTO `instance_entities` VALUES (53,17022984);
+
+INSERT INTO `instance_entities` VALUES (53,17022985);
+INSERT INTO `instance_entities` VALUES (53,17022986);
+INSERT INTO `instance_entities` VALUES (53,17022987);
+INSERT INTO `instance_entities` VALUES (53,17022988);
+INSERT INTO `instance_entities` VALUES (53,17022989);
+
 /*!40000 ALTER TABLE `instance_entities` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;

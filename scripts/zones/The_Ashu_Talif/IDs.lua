@@ -8,12 +8,12 @@ TheAshuTalif = {
         KEYITEM_OBTAINED = 6387; -- Obtained key item: <keyitem>
 
         -- Assault Texts
-        TIME_TO_COMPLETE = 7399, -- to complete this mission
-        MISSION_FAILED = 7400, -- The mission has failed. Leaving area
-        TIME_REMAINING_MINUTES = 7404, -- minute/minutes
-        TIME_REMAINING_SECONDS = 7405, -- second/seconds
-        FADES_INTO_NOTHINGNESS = 7406, -- fades into nothingness
-        PARTY_FALLEN = 7407, -- party members have fallen in battle. Mission failure in
+        TIME_TO_COMPLETE = 7400, -- to complete this mission
+        MISSION_FAILED = 7401, -- The mission has failed. Leaving area
+        TIME_REMAINING_MINUTES = 7405, -- minute/minutes
+        TIME_REMAINING_SECONDS = 7406, -- second/seconds
+        FADES_INTO_NOTHINGNESS = 7407, -- fades into nothingness
+        PARTY_FALLEN = 7408, -- party members have fallen in battle. Mission failure in
 
         -- The Black Coffin
         BATTLE_HIGH_SEAS = 7562,

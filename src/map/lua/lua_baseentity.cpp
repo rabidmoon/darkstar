@@ -8410,6 +8410,14 @@ inline int32 CLuaBaseEntity::isPet(lua_State *L)
     return 1;
 }
 
+inline int32 CLuaBaseEntity::isAlly(lua_State *L)
+{
+    DSP_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
+
+    lua_pushboolean(L, m_PBaseEntity->objtype == TYPE_MOB && m_PBaseEntity->allegiance == ALLEGIANCE_PLAYER);
+    return 1;
+}
+
 inline int32 CLuaBaseEntity::hasTrait(lua_State *L)
 {
     DSP_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
@@ -10296,6 +10304,8 @@ inline int32 CLuaBaseEntity::copyConfrontationEffect(lua_State* L)
 }
 
 
+
+
 int32 CLuaBaseEntity::getDropID(lua_State* L)
 {
     DSP_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
@@ -10656,6 +10666,7 @@ Lunar<CLuaBaseEntity>::Register_t CLuaBaseEntity::methods[] =
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,isNPC),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,isMob),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,isPet),
+    LUNAR_DECLARE_METHOD(CLuaBaseEntity,isAlly),	
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,injectActionPacket),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,setMobFlags),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,hasTrait),
