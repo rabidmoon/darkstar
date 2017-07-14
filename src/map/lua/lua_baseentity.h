@@ -451,7 +451,6 @@ public:
     int32 isNPC(lua_State*);
     int32 isMob(lua_State*);
     int32 isPet(lua_State*);
-	int32 isAlly(lua_State*);
 
     int32 injectActionPacket(lua_State*);   // ONLY FOR DEBUGGING. Injects an action packet with the specified params.
     int32 setMobFlags(lua_State*);          // Used to manipulate the mob's flags for testing.
@@ -561,6 +560,7 @@ public:
 	int32 getActiveBoosts(lua_State*);
 	int32 removeOldestBoost(lua_State*);
 	int32 getEffectsCount(lua_State* L);
+	int32 getAlly(lua_State*);
 	int32 getRecentAlly(lua_State*);
     int32 isUniqueAlly(lua_State* L);	
 	
@@ -582,7 +582,6 @@ public:
     int32 setPendingMessage(lua_State* L);
     int32 getConfrontationEffect(lua_State* L);
     int32 copyConfrontationEffect(lua_State* L);    // copy confrontation effect, param = targetEntity:getShortID()
-	int32 timer(lua_State* L); //execute lua closure after some time
 	
 };
 

@@ -8410,14 +8410,6 @@ inline int32 CLuaBaseEntity::isPet(lua_State *L)
     return 1;
 }
 
-inline int32 CLuaBaseEntity::isAlly(lua_State *L)
-{
-    DSP_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
-
-    lua_pushboolean(L, m_PBaseEntity->objtype == TYPE_MOB && m_PBaseEntity->allegiance == ALLEGIANCE_PLAYER);
-    return 1;
-}
-
 inline int32 CLuaBaseEntity::hasTrait(lua_State *L)
 {
     DSP_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
@@ -10010,6 +10002,34 @@ inline int32 CLuaBaseEntity::removeAllBoosts(lua_State* L)
 }
 
 
+
+
+
+
+inline int32 CLuaBaseEntity::getAlly(lua_State* L)
+{
+    CBattleEntity* PEntity = (CBattleEntity*)m_PBaseEntity;
+    uint16 allySize = PEntity->PAlly.size();
+    if(allySize > 0)
+    {
+        //uint32 petid = (uint32);
+		int32 value = lua_tointeger(L, 1);
+
+        CBattleEntity* ally = PEntity->PAlly[allySize - value];
+
+        lua_getglobal(L,CLuaBaseEntity::className);
+        lua_pushstring(L,"new");
+        lua_gettable(L,-2);
+        lua_insert(L,-2);
+        lua_pushlightuserdata(L,(void*)ally);
+        lua_pcall(L,2,1,0);
+        return 1;
+    }
+    lua_pushnil(L);
+    return 1;
+}
+
+
 inline int32 CLuaBaseEntity::getRecentAlly(lua_State* L)
 {
     CBattleEntity* PEntity = (CBattleEntity*)m_PBaseEntity;
@@ -10302,8 +10322,6 @@ inline int32 CLuaBaseEntity::copyConfrontationEffect(lua_State* L)
     lua_pushinteger(L, power);
     return 1;
 }
-
-
 
 
 int32 CLuaBaseEntity::getDropID(lua_State* L)
@@ -10666,7 +10684,6 @@ Lunar<CLuaBaseEntity>::Register_t CLuaBaseEntity::methods[] =
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,isNPC),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,isMob),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,isPet),
-    LUNAR_DECLARE_METHOD(CLuaBaseEntity,isAlly),	
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,injectActionPacket),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,setMobFlags),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,hasTrait),
@@ -10764,7 +10781,8 @@ Lunar<CLuaBaseEntity>::Register_t CLuaBaseEntity::methods[] =
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,removeOldestManeuver),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,removeOldestBoost),	
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,removeAllManeuvers),
-    LUNAR_DECLARE_METHOD(CLuaBaseEntity,removeAllBoosts),	
+    LUNAR_DECLARE_METHOD(CLuaBaseEntity,removeAllBoosts),
+	LUNAR_DECLARE_METHOD(CLuaBaseEntity,getAlly),	
 	LUNAR_DECLARE_METHOD(CLuaBaseEntity,getRecentAlly),
 	LUNAR_DECLARE_METHOD(CLuaBaseEntity,spawnAlly),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,isUniqueAlly),	
