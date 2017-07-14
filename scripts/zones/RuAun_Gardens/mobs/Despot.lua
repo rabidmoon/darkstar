@@ -37,8 +37,8 @@ function onMobDeath(mob,player,killer)
     DeterMob(PH, false);
     GetMobByID(PH):setRespawnTime(GetMobRespawnTime(PH));
 	
-	killer:setVar("Despot_Win",1);
-	killer:addCurrency('jettons',50);
-	killer:PrintToPlayer("Your obtain 50 Jettons.", 0x15);	
+	player:setVar("Despot_Win",1);
+    player:addCurrency('jetton',50);
+	player:PrintToPlayer("Your obtain 50 Jettons.", 0x15);	
 
 end;

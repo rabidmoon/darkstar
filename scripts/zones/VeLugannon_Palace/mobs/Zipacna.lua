@@ -118,9 +118,9 @@ end;
 -- onMobDeath
 -----------------------------------
 
-function onMobDeath(mob, killer)
-     killer:setVar("Zip_Win",1);
-	killer:addCurrency('jettons',50);
-	killer:PrintToPlayer("Your obtain 50 Jettons.", 0x15);		
+function onMobDeath(mob, killer, player)
+     player:setVar("Zip_Win",1);
+	player:addCurrency('jetton',50);
+	player:PrintToPlayer("Your obtain 50 Jettons.", 0x15);		
 	mob:setRespawnTime(math.random((1800),(2700))); -- respawn 3-4 hrs
 end;

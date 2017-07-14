@@ -21,6 +21,19 @@ end
 
 function onMobFight(mob, target)
     mobScaler(mob,target);
+   local mobId = mob:getID();
+    if (GetMobAction(mobId) ~= ACTION_ATTACK) then
+	mob:setLocalVar("depopTime", os.time());
+    end
+	
+end;
+
+function onMobRoam(mob)
+    local despawnTime = mob:getLocalVar("depopTime");
+
+    if (os.time() - despawnTime > 180) then
+        DespawnMob(mob:getID());
+    end
 end;
 -----------------------------------
 -- onMobDeath
@@ -31,8 +44,8 @@ function onMobDeath(mob, killer)
     killer:addTitle(ASPIDOCHELONE_SINKER);
 	if (killer:getObjType() == TYPE_PC) then
 	killer:setVar("Aspi_Win",1);
-	killer:addCurrency('prestiege', 250);
-	killer:PrintToPlayer("You obtain 250 Prestiege Points!", 0xD);
+	killer:addCurrency('prestige', 250);
+	killer:PrintToPlayer("You obtain 250 Prestige Points!", 0xD);
 	end
 
     -- Set Aspidochelone's Window Open Time

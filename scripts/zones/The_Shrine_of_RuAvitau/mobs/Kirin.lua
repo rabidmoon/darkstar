@@ -115,12 +115,12 @@ end
 -----------------------------------
 -- onMobDeath
 -----------------------------------
-function onMobDeath( mob, killer )
+function onMobDeath( mob, killer, player)
     -- Award title and cleanup..
-    killer:addTitle( KIRIN_CAPTIVATOR );
-    killer:showText( mob, KIRIN_OFFSET + 1 );
-	killer:setVar("Kirin_Win",1);
-	killer:addCurrency('jettons',500);
+    player:addTitle( KIRIN_CAPTIVATOR );
+    player:showText( mob, KIRIN_OFFSET + 1 );
+	player:setVar("Kirin_Win",1);
+	player:addCurrency('jetton',500);
     
     -- Despawn pets..
     DespawnMob( 17506671 );

@@ -62,12 +62,12 @@ end;
 -----------------------------------
 -- onMobDeath
 -----------------------------------
-function onMobDeath( mob, killer )
+function onMobDeath( mob, killer, player)
 
 	local MotherGlobe = mob:getID();
-	killer:setVar("Globe_Win",1);
-	killer:addCurrency('jettons',50);
-	killer:PrintToPlayer("Your obtain 50 Jettons.", 0x15);		
+	player:setVar("Globe_Win",1);
+	player:addCurrency('jetton',50);
+	player:PrintToPlayer("Your obtain 50 Jettons.", 0x15);		
 	mob:setRespawnTime(math.random((1800),(2700))); -- respawn 3-6 hrs
 
 	for i = MotherGlobe+1, MotherGlobe+6 do

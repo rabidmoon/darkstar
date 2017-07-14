@@ -16,7 +16,7 @@ function onMobInitialize(mob)
 end;
 
 function onMobSpawn(mob)
-	mob:setLocalVar("PartySize",5); 
+	mob:setLocalVar("PartySize",11); 
 end	
 
 -----------------------------------
@@ -38,6 +38,18 @@ function onMobFight(mob, target)
         --(since I have no inclination to spend millions on a PI to cap one name you never see)
         mob:setLocalVar("twohourTime",battletime + math.random(60,120));
     end
+	
+	    if (GetMobAction(mobId) ~= ACTION_ATTACK) then
+	mob:setLocalVar("depopTime", os.time());
+    end
+end;
+	
+function onMobRoam(mob)
+    local despawnTime = mob:getLocalVar("depopTime");
+
+    if (os.time() - despawnTime > 180) then
+        DespawnMob(mob:getID());
+    end
 end;
 
 -----------------------------------
@@ -50,8 +62,8 @@ function onMobDeath(mob, killer)
 	
     if (killer:getObjType() == TYPE_PC) then
 	killer:setVar("Nidhogg_Win",1);
-	killer:addCurrency('prestiege', 250);
-	killer:PrintToPlayer("You obtain 250 Prestiege Points!", 0xD);
+	killer:addCurrency('prestige', 250);
+	killer:PrintToPlayer("You obtain 250 Prestige Points!", 0xD);
 	end
 
     -- Set Nidhogg's Window Open Time

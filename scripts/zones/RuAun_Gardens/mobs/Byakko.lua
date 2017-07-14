@@ -72,11 +72,11 @@ end
 -- onMobDeath
 -----------------------------------
 
-function onMobDeath(mob, killer)
-    killer:showText(mob,SKY_GOD_OFFSET + 12);
-	killer:setVar("Byakko_Win",1);
-	killer:addCurrency('jettons',225);
-	killer:PrintToPlayer("Your obtain 50 Jettons.", 0x15);		
+function onMobDeath(mob, killer, player)
+    player:showText(mob,SKY_GOD_OFFSET + 12);
+    player:setVar("Byakko_Win",1);
+	player:addCurrency('jetton',225);
+	player:PrintToPlayer("Your obtain 50 Jettons.", 0x15);		
 end;
 
 -----------------------------------
