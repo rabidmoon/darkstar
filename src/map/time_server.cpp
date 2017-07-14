@@ -93,7 +93,7 @@ int32 time_server(uint32 tick,CTaskMgr::CTask* PTask)
     }
 
     //Midnight
-    if (CVanaTime::getInstance()->getSysHour() == 0 && CVanaTime::getInstance()->getSysMinute() == 0)
+    if (CVanaTime::getInstance()->getSysHour() == 0 && CVanaTime::getInstance()->getSysMinute() == 0 && CVanaTime::getInstance()->getSysSecond() == 0)
     {
 		int32 ahfees = 100;
 		const int8* Query = "SELECT SUM(quantity), bazaar, itemID  FROM `char_inventory` WHERE itemID = '65535'";
@@ -102,7 +102,7 @@ int32 time_server(uint32 tick,CTaskMgr::CTask* PTask)
 		{
 			ahfees = (int32)Sql_GetIntData(SqlHandle, 0);
 			//ahfees = ahfees / 1000000;
-			ShowWarning(CL_CYAN"Running daily Gil analytics.  Total Gil is: %i \n" CL_RESET, ahfees);
+			ShowWarning(CL_GREEN"Running daily Gil analytics.  Total Gil is: %i \n" CL_RESET, ahfees);
 			uint32 calltime = time(nullptr);
 			Sql_Query(SqlHandle, "INSERT INTO server_gil (call_date, gil_value) VALUES (%u, %u);",calltime, ahfees);
 		}	
@@ -114,7 +114,7 @@ int32 time_server(uint32 tick,CTaskMgr::CTask* PTask)
     }
 	
 	//Midnight Online
-    if (CVanaTime::getInstance()->getSysHour() == 0 && CVanaTime::getInstance()->getSysMinute() == 0)
+    if (CVanaTime::getInstance()->getSysHour() == 0 && CVanaTime::getInstance()->getSysMinute() == 0 && CVanaTime::getInstance()->getSysSecond() == 0)
 	//if (CVanaTime::getInstance()->getSysSecond() == 30)
     {
 		int32 online = 100;
@@ -136,7 +136,7 @@ int32 time_server(uint32 tick,CTaskMgr::CTask* PTask)
     }	
 	
 	
-    if (CVanaTime::getInstance()->getSysHour() == 3 && CVanaTime::getInstance()->getSysMinute() == 0)
+    if (CVanaTime::getInstance()->getSysHour() == 3 && CVanaTime::getInstance()->getSysMinute() == 0 && CVanaTime::getInstance()->getSysSecond() == 0)
 	//if (CVanaTime::getInstance()->getSysSecond() == 30)
     {
 		int32 online = 100;
@@ -157,7 +157,7 @@ int32 time_server(uint32 tick,CTaskMgr::CTask* PTask)
         }
     }
 	
-    if (CVanaTime::getInstance()->getSysHour() == 6 && CVanaTime::getInstance()->getSysMinute() == 0)
+    if (CVanaTime::getInstance()->getSysHour() == 6 && CVanaTime::getInstance()->getSysMinute() == 0 && CVanaTime::getInstance()->getSysSecond() == 0)
 	//if (CVanaTime::getInstance()->getSysSecond() == 30)
     {
 		int32 online = 100;
@@ -178,7 +178,7 @@ int32 time_server(uint32 tick,CTaskMgr::CTask* PTask)
         }
     }
 
-    if (CVanaTime::getInstance()->getSysHour() == 9 && CVanaTime::getInstance()->getSysMinute() == 0)
+    if (CVanaTime::getInstance()->getSysHour() == 9 && CVanaTime::getInstance()->getSysMinute() == 0 && CVanaTime::getInstance()->getSysSecond() == 0)
 	//if (CVanaTime::getInstance()->getSysSecond() == 30)
     {
 		int32 online = 100;
@@ -199,7 +199,7 @@ int32 time_server(uint32 tick,CTaskMgr::CTask* PTask)
         }
     }
 
-    if (CVanaTime::getInstance()->getSysHour() == 12 && CVanaTime::getInstance()->getSysMinute() == 0)
+    if (CVanaTime::getInstance()->getSysHour() == 12 && CVanaTime::getInstance()->getSysMinute() == 0 && CVanaTime::getInstance()->getSysSecond() == 0)
 	//if (CVanaTime::getInstance()->getSysSecond() == 30)
     {
 		int32 online = 100;
@@ -220,7 +220,7 @@ int32 time_server(uint32 tick,CTaskMgr::CTask* PTask)
         }
     }
 
-    if (CVanaTime::getInstance()->getSysHour() == 15 && CVanaTime::getInstance()->getSysMinute() == 0)
+    if (CVanaTime::getInstance()->getSysHour() == 15 && CVanaTime::getInstance()->getSysMinute() == 0 && CVanaTime::getInstance()->getSysSecond() == 0)
 	//if (CVanaTime::getInstance()->getSysSecond() == 30)
     {
 		int32 online = 100;
@@ -241,7 +241,7 @@ int32 time_server(uint32 tick,CTaskMgr::CTask* PTask)
         }
     }
 
-    if (CVanaTime::getInstance()->getSysHour() == 18 && CVanaTime::getInstance()->getSysMinute() == 0)
+    if (CVanaTime::getInstance()->getSysHour() == 18 && CVanaTime::getInstance()->getSysMinute() == 0 && CVanaTime::getInstance()->getSysSecond() == 0)
 	//if (CVanaTime::getInstance()->getSysSecond() == 30)
     {
 		int32 online = 100;
@@ -262,7 +262,7 @@ int32 time_server(uint32 tick,CTaskMgr::CTask* PTask)
         }
     }
 
-    if (CVanaTime::getInstance()->getSysHour() == 21 && CVanaTime::getInstance()->getSysMinute() == 0)
+    if (CVanaTime::getInstance()->getSysHour() == 21 && CVanaTime::getInstance()->getSysMinute() == 0 && CVanaTime::getInstance()->getSysSecond() == 0)
 	//if (CVanaTime::getInstance()->getSysSecond() == 30)
     {
 		int32 online = 100;
