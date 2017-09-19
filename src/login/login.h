@@ -67,7 +67,8 @@ struct login_config_t
 
 struct version_info_t
 {
-    const char* CLIENT_VER; // Expected Client Version.
+    std::string client_ver;         // Expected Client version
+    bool enable_ver_lock;
 };
 
 extern login_config_t login_config;
