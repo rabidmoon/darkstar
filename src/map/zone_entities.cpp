@@ -262,7 +262,7 @@ void CZoneEntities::WeatherChange(WEATHER weather)
     {
         CCharEntity* PChar = (CCharEntity*)it->second;
 
-        PChar->PLatentEffectContainer->CheckLatentsZone();
+        PChar->PLatentEffectContainer->CheckLatentsWeather(weather);
         PChar->PAI->EventHandler.triggerListener("WEATHER_CHANGE", PChar, static_cast<int>(weather), element);
     }
 }
@@ -982,7 +982,7 @@ void CZoneEntities::ZoneServer(time_point tick)
                 CMobEntity* PCurrentMob = (CMobEntity*)PMobIt.second;
                 PCurrentMob->PEnmityContainer->Clear(PPet->id);
             }
-            if (PPet->getPetType() != PETTYPE_AUTOMATON)
+            if (PPet->getPetType() != PETTYPE_AUTOMATON || !PPet->PMaster)
             {
                 delete pit->second;
             }
