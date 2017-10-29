@@ -55,11 +55,27 @@ enum PETID
 	PETID_CAIT_SITH          = 20,
 	PETID_WYVERN             = 48,
 	PETID_HARLEQUINFRAME     = 69,
-    PETID_VALOREDGEFRAME     = 70,
-    PETID_SHARPSHOTFRAME     = 71,
-    PETID_STORMWAKERFRAME    = 72,
+  PETID_VALOREDGEFRAME     = 70,
+  PETID_SHARPSHOTFRAME     = 71,
+  PETID_STORMWAKERFRAME    = 72,
 	PETID_ADVENTURING_FELLOW = 73,
-	PETID_CHOCOBO            = 74
+	PETID_CHOCOBO            = 74,
+	PETID_NAJI               = 75,
+	PETID_KUPIPI             = 76,
+	PETID_AYAME              = 77,
+	PETID_NANAA_MIHGO        = 78,
+	PETID_CURILLA            = 79,
+	PETID_EXCENMILLE         = 80,
+	PETID_BLUE               = 81,
+	PETID_ADELHIED           = 82,
+	PETID_BAHAMUT            = 83,
+	PETID_DARK_IXION         = 84,
+	PETID_LIGHT_IXION        = 85,
+	PETID_LION				 			 = 86,
+	PETID_PRISHE             = 87,
+	PETID_ULMIA              = 88,
+	PETID_LUZAF              = 89,
+	PETID_GESSHO             = 90
 };
 
 
@@ -71,17 +87,17 @@ namespace petutils
 	void FreePetList();
 
 	void SpawnPet(CBattleEntity* PMaster, uint32 PetID, bool spawningFromZone);
-    void SpawnMobPet(CBattleEntity* PMaster, uint32 PetID);
-    void DetachPet(CBattleEntity* PMaster);
-    void DespawnPet(CBattleEntity* PMaster);
-    void AttackTarget(CBattleEntity* PMaster, CBattleEntity* PTarget);
-    void RetreatToMaster(CBattleEntity* PMaster);
-    int16 PerpetuationCost(uint32 id, uint8 level);
-    void Familiar(CBattleEntity* PPet);
-    void LoadPet(CBattleEntity* PMaster, uint32 PetID, bool spawningFromZone);
-    void LoadWyvernStatistics(CBattleEntity* PMaster, CPetEntity* PPet, bool finalize);
-    void FinalizePetStatistics(CBattleEntity* PMaster, CPetEntity* PPet);
-    bool CheckPetModType(CBattleEntity* PPet, PetModType petmod);
+  void SpawnMobPet(CBattleEntity* PMaster, uint32 PetID);
+  void DetachPet(CBattleEntity* PMaster);
+  void DespawnPet(CBattleEntity* PMaster);
+  void AttackTarget(CBattleEntity* PMaster, CBattleEntity* PTarget);
+  void RetreatToMaster(CBattleEntity* PMaster);
+  int16 PerpetuationCost(uint32 id, uint8 level);
+  void Familiar(CBattleEntity* PPet);
+  void LoadPet(CBattleEntity* PMaster, uint32 PetID, bool spawningFromZone);
+  void LoadWyvernStatistics(CBattleEntity* PMaster, CPetEntity* PPet, bool finalize);
+  void FinalizePetStatistics(CBattleEntity* PMaster, CPetEntity* PPet);
+  bool CheckPetModType(CBattleEntity* PPet, PetModType petmod);
 };
 
 #endif

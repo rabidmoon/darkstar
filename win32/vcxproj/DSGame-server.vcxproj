@@ -252,6 +252,7 @@
     <ClInclude Include="..\..\src\map\ai\controllers\pet_controller.h" />
     <ClInclude Include="..\..\src\map\ai\controllers\player_charm_controller.h" />
     <ClInclude Include="..\..\src\map\ai\controllers\player_controller.h" />
+    <ClInclude Include="..\..\src\map\ai\controllers\trust_controller.h" />
     <ClInclude Include="..\..\src\map\ai\helpers\action_queue.h" />
     <ClInclude Include="..\..\src\map\ai\helpers\event_handler.h" />
     <ClInclude Include="..\..\src\map\ai\helpers\pathfind.h" />
@@ -495,6 +496,7 @@
     <ClCompile Include="..\..\src\map\ai\controllers\pet_controller.cpp" />
     <ClCompile Include="..\..\src\map\ai\controllers\player_charm_controller.cpp" />
     <ClCompile Include="..\..\src\map\ai\controllers\player_controller.cpp" />
+    <ClCompile Include="..\..\src\map\ai\controllers\trust_controller.cpp" />
     <ClCompile Include="..\..\src\map\ai\helpers\action_queue.cpp" />
     <ClCompile Include="..\..\src\map\ai\helpers\event_handler.cpp" />
     <ClCompile Include="..\..\src\map\ai\helpers\pathfind.cpp" />
