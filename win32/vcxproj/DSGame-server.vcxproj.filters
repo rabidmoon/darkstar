@@ -861,7 +861,7 @@
       <Filter>Header Files\packets</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\map\ai\controllers\trust_controller.h">
-      <Filter>Source Files\ai\controllers</Filter>
+      <Filter>Header Files\ai\controllers</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

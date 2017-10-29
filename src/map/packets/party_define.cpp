@@ -31,7 +31,7 @@
 #include "../utils/zoneutils.h"
 
 
-CPartyDefinePacket::CPartyDefinePacket(CParty* PParty) 
+CPartyDefinePacket::CPartyDefinePacket(CParty* PParty)
 {
 	this->type = 0xC8;
 	this->size = 0x7C;
@@ -46,15 +46,26 @@ CPartyDefinePacket::CPartyDefinePacket(CParty* PParty)
 
 		int ret = Sql_Query(SqlHandle, "SELECT chars.charid, partyflag, pos_zone, pos_prevzone FROM accounts_parties \
 									   	LEFT JOIN chars ON accounts_parties.charid = chars.charid WHERE \
-										IF (allianceid <> 0, allianceid = %d, partyid = %d) ORDER BY partyflag & %u, timestamp;", 
+										IF (allianceid <> 0, allianceid = %d, partyid = %d) ORDER BY partyflag & %u, timestamp;",
 										allianceid, PParty->GetPartyID(), PARTY_SECOND | PARTY_THIRD);
 		if (ret != SQL_ERROR && Sql_NumRows(SqlHandle) > 0)
 		{
 			uint8 i = 0;
+			std::vector<CBattleEntity*> allies;
 			while (Sql_NextRow(SqlHandle) == SQL_SUCCESS)
 			{
 				uint16 targid = 0;
 				CCharEntity* PChar = zoneutils::GetChar(Sql_GetUIntData(SqlHandle, 0));
+				if (PChar != nullptr)
+                {
+                    if (PChar->PAlly.size() > 0)
+                    {
+                        for (auto ally : PChar->PAlly)
+                        {
+                            allies.push_back(ally);
+                        }
+                    }
+                }
 				if (PChar) targid = PChar->targid;
 				WBUFL(data, 12 * i + (0x08) ) = Sql_GetUIntData(SqlHandle, 0);
 				WBUFW(data, 12 * i + (0x0C) ) = targid;
@@ -62,6 +73,17 @@ CPartyDefinePacket::CPartyDefinePacket(CParty* PParty)
                 WBUFW(data, 12 * i + (0x10) ) = Sql_GetUIntData(SqlHandle, 2) ? Sql_GetUIntData(SqlHandle, 2) : Sql_GetUIntData(SqlHandle, 3);
 				i++;
 			}
+			if (allies.size() > 0)
+            {
+               for (auto ally : allies)
+               {
+                WBUFL(data, 12 * i + (0x08) ) = ally->id;
+				WBUFW(data, 12 * i + (0x0C) ) = ally->targid;
+				WBUFW(data, 12 * i + (0x0E) ) = 0;
+                WBUFW(data, 12 * i + (0x10) ) = ally->getZone();
+				i++;
+               }
+           }
 		}
 	}
 }

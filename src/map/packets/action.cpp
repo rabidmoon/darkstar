@@ -218,6 +218,20 @@ CActionPacket::CActionPacket(action_t& action)
             ref<uint8>(0x0E) = 0x1B;
         }
         break;
+        case SPELLGROUP_GEOMANCY:
+        {
+            ref<uint8>(0x0C) = 0xD8;
+            ref<uint8>(0x0D) = 0x59;
+            ref<uint8>(0x0E) = 0x19;
+        }
+		break;
+		case SPELLGROUP_TRUST:
+		{
+			ref<uint8>(0x0C) = 0x98;
+			ref<uint8>(0x0D) = 0x59;
+			ref<uint8>(0x0E) = 0x18;
+		}
+		break;
         }
     }
     break;
@@ -277,6 +291,20 @@ CActionPacket::CActionPacket(action_t& action)
             ref<uint8>(0x0E) = 0x1B;
         }
         break;
+        case SPELLGROUP_GEOMANCY:
+        {
+            ref<uint8>(0x0C) = 0xD8;
+            ref<uint8>(0x0D) = 0x59;
+            ref<uint8>(0x0E) = 0x19;
+        }
+		break;
+		case SPELLGROUP_TRUST:
+		{
+			ref<uint8>(0x0C) = 0x98;
+			ref<uint8>(0x0D) = 0x59;
+			ref<uint8>(0x0E) = 0x18;
+		}
+		break;
         }
         ActionType = ACTION_MAGIC_START;
     }

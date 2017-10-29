@@ -54,13 +54,19 @@ CPetEntity::~CPetEntity()
 {
 }
 
-PETTYPE CPetEntity::getPetType(){
+PETTYPE CPetEntity::getPetType()
+{
   return m_PetType;
+}
+
+void CPetEntity::setPetType(PETTYPE pType)
+{
+	m_PetType = pType;
 }
 
 bool CPetEntity::isBstPet()
 {
-  return getPetType()==PETTYPE_JUG_PET || objtype == TYPE_MOB;
+    return getPetType()==PETTYPE_JUG_PET || objtype == TYPE_MOB;
 }
 
 std::string CPetEntity::GetScriptName()
@@ -137,12 +143,12 @@ void CPetEntity::PostTick()
     if (loc.zone && updatemask && status != STATUS_DISAPPEAR)
     {
         loc.zone->PushPacket(this, CHAR_INRANGE, new CEntityUpdatePacket(this, ENTITY_UPDATE, updatemask));
-        
+
         if (PMaster && PMaster->PPet == this)
         {
             ((CCharEntity*)PMaster)->pushPacket(new CPetSyncPacket((CCharEntity*)PMaster));
         }
-        
+
         updatemask = 0;
     }
 }

@@ -540,6 +540,10 @@ public:
     void            applyPetModifiers(CPetEntity* PPet);
     void            removePetModifiers(CPetEntity* PPet);
 
+    void            clearAllies();
+    CBattleEntity*  getRecentAlly();
+    bool            isUniqueAlly(uint32 petID);
+
     template        <typename F, typename... Args>
     void            ForParty(F func, Args&&... args)
     {
@@ -638,6 +642,8 @@ public:
     CParty*			PParty;					    // описание группы, в которой состоит сущность
     CBattleEntity*	PPet;					    // питомец сущности
     CBattleEntity*	PMaster;				    // владелец/хозяин сущности (распространяется на все боевые сущности)
+
+    std::vector<CBattleEntity*>	PAlly;
 
     std::unique_ptr<CStatusEffectContainer> StatusEffectContainer;
     std::unique_ptr<CRecastContainer> PRecastContainer;         //

@@ -32,8 +32,6 @@ class CTrustController : public CPetController
 public:
     CTrustController(CPetEntity* PTrust);
 
-    static constexpr float PetRoamDistance {3.1f} override;
-
 protected:
 
 private:

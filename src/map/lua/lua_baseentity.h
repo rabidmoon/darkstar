@@ -234,6 +234,7 @@ public:
 
     int32 isSpawned(lua_State*);
     int32 setSpawn(lua_State*);                // Sets spawn point
+    int32 spawnAlly(lua_State*);
     int32 setRespawnTime(lua_State*);          // set respawn time
     int32 getRespawnTime(lua_State*);
     int32 getDynamisUniqueID(lua_State*);      //Get unique Dynamis ID
@@ -582,6 +583,9 @@ public:
     int32 removeAllManeuvers(lua_State*);
     int32 addBurden(lua_State* L);
 
+    int32 getRecentAlly(lua_State*);
+    int32 isUniqueAlly(lua_State* L);
+
     int32 setElevator(lua_State* L);
 
     int32 storeWithPorterMoogle(lua_State* L);
@@ -589,6 +593,8 @@ public:
     int32 retrieveItemFromSlip(lua_State *L);
 
     int32 getILvlMacc(lua_State *L);
+
+    int32 setPendingMessage(lua_State* L);
 
     int32 getConfrontationEffect(lua_State* L);
     int32 copyConfrontationEffect(lua_State* L);    // copy confrontation effect, param = targetEntity:getShortID()

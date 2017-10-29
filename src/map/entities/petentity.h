@@ -49,9 +49,10 @@ enum WYVERNTYPE
 class CPetEntity : public CMobEntity
 {
 public:
-	 CPetEntity(PETTYPE petType);						// конструктор
+	CPetEntity(PETTYPE petType);						// конструктор
 	~CPetEntity();						// деструктор
 	PETTYPE getPetType();
+	void setPetType(PETTYPE pType);
     bool isBstPet();
 	uint8 m_Element;
 	uint32 m_PetID;
