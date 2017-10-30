@@ -753,6 +753,40 @@ namespace petutils
         }
     }
 
+    void SpawnAlly(CBattleEntity* PMaster, uint32 PetID, bool spawningFromZone)
+    {
+        //Check to see if in full party
+        size_t partySize = PMaster->PAlly.size();
+
+        if (PMaster->PParty != nullptr)
+        {
+            for (uint8 i = 0; i < PMaster->PParty->members.size(); i++)
+            {
+                CBattleEntity* PPartyMember = PMaster->PParty->members[i];
+                partySize = partySize + 1 + PPartyMember->PAlly.size();
+            }
+        }
+		else
+        {
+			partySize += 1;
+        }
+        if (partySize > 6)
+            return;
+
+
+        if (PMaster->PAlly.size() > 2)
+        {
+            //PMaster->PAlly[2]->PBattleAI->SetCurrentAction(ACTION_FALL);
+            PMaster->PAlly.pop_back();
+        }
+
+        if (PMaster->PParty == nullptr)
+		{
+            PMaster->PParty = new CParty(PMaster);
+		}
+
+    }
+
     /************************************************************************
     *																		*
     *																		*
