@@ -785,8 +785,6 @@ namespace petutils
             PMaster->PParty = new CParty(PMaster);
 		}
 
-        c8679e053e7c2f599c3e7b26d1e7aa21fd15aa20
-
     }
 
     /************************************************************************
