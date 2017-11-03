@@ -362,7 +362,8 @@ public:
     int32 uncharm(lua_State*);               // removes charm on target
     int32 spawnPet(lua_State*);              // Calls Pet
     int32 despawnPet(lua_State*);            // Despawns Pet
-    int32 petAttack(lua_State*);             // Despawns Pet
+    int32 petAttack(lua_State*);
+    int32 allyAttack(lua_State*);            // Forces Ally To Attack
     int32 petRetreat(lua_State*);
     int32 petStay(lua_State*);
     int32 petAbility(lua_State*);
@@ -439,6 +440,7 @@ public:
     int32 getNationTeleport(lua_State*);     // Get teleport you can use by nation: getNationTeleport(nation)
 
     int32 checkDistance(lua_State*);           // Check Distacnce and returns distance number
+	int32 getBaseExp(lua_State*);
     int32 checkBaseExp(lua_State*);            // Check if Monster gives base expirence
     int32 checkSoloPartyAlliance(lua_State*);  // Check if Player is in Party or Alliance 0=Solo 1=Party 2=Alliance
     int32 checkExpPoints(lua_State*);          // Exp points penalty for Player vs Max High Player Gap in party
@@ -451,6 +453,7 @@ public:
     int32 isNPC(lua_State*);
     int32 isMob(lua_State*);
     int32 isPet(lua_State*);
+	int32 isAlly(lua_State*);
 
     int32 injectActionPacket(lua_State*);   // ONLY FOR DEBUGGING. Injects an action packet with the specified params.
     int32 setMobFlags(lua_State*);          // Used to manipulate the mob's flags for testing.
@@ -492,6 +495,7 @@ public:
     int32 setGMHidden(lua_State* L);
     int32 PrintToPlayer(lua_State* L);    // for sending debugging messages/command confirmations to the player's client
 	int32 PrintToServer(lua_State* L);    // Print to SERVER (Prints to every zone on the server) -- Defaults to System Message, but can be altered with HEX or Integer of type of text
+	int32 PrintToParty(lua_State* L);     // Print to the current party (Prints to zone where player is) 	
     // == Pathfind Methods ==
     int32 pathThrough(lua_State* L);      // walk at normal speed through the given points
     // int32 WarpTo(lua_State* L);        // warp to the given point
@@ -524,6 +528,7 @@ public:
     int32 hideName(lua_State* L);
     int32 untargetable(lua_State* L);
     int32 hideHP(lua_State* L);
+    int32 hideModel(lua_State* L);	
     int32 breathDmgTaken(lua_State* L);
     int32 magicDmgTaken(lua_State* L);
     int32 physicalDmgTaken(lua_State* L);
@@ -582,6 +587,8 @@ public:
     int32 setPendingMessage(lua_State* L);
     int32 getConfrontationEffect(lua_State* L);
     int32 copyConfrontationEffect(lua_State* L);    // copy confrontation effect, param = targetEntity:getShortID()
+	int32 isAlive(lua_State* L);
+	int32 engage(lua_State* L);
 	
 };
 

@@ -6002,6 +6002,24 @@ inline int32 CLuaBaseEntity::petAttack(lua_State *L)
     return 0;
 }
 
+int32 CLuaBaseEntity::engage(lua_State* L)
+{
+	DSP_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
+	DSP_DEBUG_BREAK_IF(lua_isnil(L, 1) || !lua_isnumber(L, 1));
+
+	CBattleEntity* battleEntity = static_cast<CBattleEntity*>(m_PBaseEntity);
+	uint16 requestedTarget = lua_tointeger(L, 1);
+
+	if (requestedTarget > 0)
+	{
+		//battleEntity->targid = requestedTarget;
+		ShowWarning("Trying to target mob (%u) \n", requestedTarget);
+		battleEntity->PBattleAI->SetCurrentAction(ACTION_ENGAGE, requestedTarget);
+	}
+
+	return 0;
+}
+
 //==========================================================//
 
 inline int32 CLuaBaseEntity::petRetreat(lua_State *L)
@@ -8209,6 +8227,19 @@ inline int32 CLuaBaseEntity::checkDistance(lua_State *L)
     return 1;
 }
 
+inline int32 CLuaBaseEntity::getBaseExp(lua_State *L)
+{
+    DSP_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
+    DSP_DEBUG_BREAK_IF(m_PBaseEntity->objtype != TYPE_MOB);
+
+    CMobEntity* PMob = (CMobEntity*)m_PBaseEntity;
+
+    uint32 baseexp = charutils::GetRealExp(PMob->m_HiPCLvl, PMob->GetMLevel());
+
+    lua_pushinteger(L, baseexp);
+    return 1;
+}
+
 inline int32 CLuaBaseEntity::checkBaseExp(lua_State *L)
 {
     DSP_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
@@ -8407,6 +8438,14 @@ inline int32 CLuaBaseEntity::isPet(lua_State *L)
     DSP_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
 
     lua_pushboolean(L, m_PBaseEntity->objtype == TYPE_PET);
+    return 1;
+}
+
+inline int32 CLuaBaseEntity::isAlly(lua_State *L)
+{
+    DSP_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
+
+    lua_pushboolean(L, m_PBaseEntity->objtype == TYPE_MOB && m_PBaseEntity->allegiance == ALLEGIANCE_PLAYER);
     return 1;
 }
 
@@ -8777,6 +8816,13 @@ inline int32 CLuaBaseEntity::recalculateSkillsTable(lua_State* L)
     return 0;
 }
 
+int32 CLuaBaseEntity::isAlive(lua_State* L)
+{
+    DSP_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
+    lua_pushboolean(L, static_cast<CBattleEntity*>(m_PBaseEntity)->isAlive());
+    return 1;
+}
+
 inline int32 CLuaBaseEntity::isSpellAoE(lua_State* L)
 {
     DSP_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
@@ -8902,6 +8948,16 @@ inline int32 CLuaBaseEntity::PrintToServer(lua_State* L)
    DSP_DEBUG_BREAK_IF(lua_isnil(L, 1) || !lua_isstring(L, 1));
    CHAT_MESSAGE_TYPE messageType = (!lua_isnil(L, 2) && lua_isnumber(L, 2) ? (CHAT_MESSAGE_TYPE)lua_tointeger(L, 2) : MESSAGE_SYSTEM_1);
    message::send(MSG_CHAT_SERVMES, 0, 0, new CChatMessagePacket((CCharEntity*)m_PBaseEntity, messageType, (char*)lua_tostring(L, 1)));
+   return 0;
+}
+
+inline int32 CLuaBaseEntity::PrintToParty(lua_State* L)
+{
+   DSP_DEBUG_BREAK_IF(m_PBaseEntity == NULL);
+   DSP_DEBUG_BREAK_IF(m_PBaseEntity->objtype != TYPE_PC);
+   DSP_DEBUG_BREAK_IF(lua_isnil(L, 1) || !lua_isstring(L, 1));
+   CHAT_MESSAGE_TYPE messageType = (!lua_isnil(L, 2) && lua_isnumber(L, 2) ? (CHAT_MESSAGE_TYPE)lua_tointeger(L, 2) : MESSAGE_SYSTEM_1);
+   message::send(MSG_CHAT_PARTY, 0, 0, new CChatMessagePacket((CCharEntity*)m_PBaseEntity, messageType, (char*)lua_tostring(L, 1)));
    return 0;
 }
 /*
@@ -9354,6 +9410,24 @@ inline int32 CLuaBaseEntity::hideHP(lua_State* L)
     {
         ((CNpcEntity*)m_PBaseEntity)->HideHP(lua_toboolean(L, 1));
     }
+    m_PBaseEntity->updatemask |= UPDATE_HP;
+    return 0;
+}
+
+inline int32 CLuaBaseEntity::hideModel(lua_State* L)
+{
+    DSP_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
+    DSP_DEBUG_BREAK_IF(lua_isnil(L, 1) || !lua_isboolean(L, 1));
+    DSP_DEBUG_BREAK_IF(m_PBaseEntity->objtype != TYPE_MOB && m_PBaseEntity->objtype != TYPE_NPC);
+
+    if (m_PBaseEntity->objtype == TYPE_MOB)
+    {
+        ((CMobEntity*)m_PBaseEntity)->HideModel(lua_toboolean(L, 1));
+    }
+  //  else if (m_PBaseEntity->objtype == TYPE_NPC)
+  //  {
+  //      ((CNpcEntity*)m_PBaseEntity)->HideModel(lua_toboolean(L, 1));
+  //  }
     m_PBaseEntity->updatemask |= UPDATE_HP;
     return 0;
 }
@@ -10664,6 +10738,7 @@ Lunar<CLuaBaseEntity>::Register_t CLuaBaseEntity::methods[] =
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,addPlayerToSpecialBattlefield),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,addTimeToSpecialBattlefield),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,checkDistance),
+    LUNAR_DECLARE_METHOD(CLuaBaseEntity,getBaseExp),	
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,checkBaseExp),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,checkSoloPartyAlliance),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,checkExpPoints),
@@ -10684,6 +10759,7 @@ Lunar<CLuaBaseEntity>::Register_t CLuaBaseEntity::methods[] =
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,isNPC),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,isMob),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,isPet),
+    LUNAR_DECLARE_METHOD(CLuaBaseEntity,isAlly),	
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,injectActionPacket),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,setMobFlags),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,hasTrait),
@@ -10721,6 +10797,7 @@ Lunar<CLuaBaseEntity>::Register_t CLuaBaseEntity::methods[] =
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,setGMHidden),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,PrintToPlayer),
 	LUNAR_DECLARE_METHOD(CLuaBaseEntity,PrintToServer),
+	LUNAR_DECLARE_METHOD(CLuaBaseEntity,PrintToParty),	
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,getBaseMP),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,pathThrough),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,atPoint),
@@ -10746,6 +10823,7 @@ Lunar<CLuaBaseEntity>::Register_t CLuaBaseEntity::methods[] =
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,hideName),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,untargetable),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,hideHP),
+    LUNAR_DECLARE_METHOD(CLuaBaseEntity,hideModel),	
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,breathDmgTaken),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,magicDmgTaken),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,physicalDmgTaken),
@@ -10800,5 +10878,6 @@ Lunar<CLuaBaseEntity>::Register_t CLuaBaseEntity::methods[] =
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,setPetMod),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,getDropID),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,setDropID),	
+    LUNAR_DECLARE_METHOD(CLuaBaseEntity,engage),	
     {nullptr,nullptr}
 };

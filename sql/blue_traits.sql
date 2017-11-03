@@ -25,7 +25,7 @@ CREATE TABLE `blue_traits` (
 -- Records 
 -- ----------------------------
 INSERT INTO `blue_traits` VALUES (1, 2, 32, 230, 8);
-INSERT INTO `blue_traits` VALUES (2, 2, 9, 370, 1);
+INSERT INTO `blue_traits` VALUES (2, 2, 9, 370, 1);  -- Auto Regen
 INSERT INTO `blue_traits` VALUES (3, 2, 35, 227, 8);
 INSERT INTO `blue_traits` VALUES (4, 2, 24, 295, 1);
 INSERT INTO `blue_traits` VALUES (4, 4, 24, 295, 2);
@@ -42,7 +42,8 @@ INSERT INTO `blue_traits` VALUES (10, 4, 8, 5, 30);
 INSERT INTO `blue_traits` VALUES (11, 2, 4, 1, 10);
 INSERT INTO `blue_traits` VALUES (12, 2, 33, 229, 8);
 INSERT INTO `blue_traits` VALUES (13, 2, 6, 29, 10);
-INSERT INTO `blue_traits` VALUES (14, 8, 10, 369, 1);
+INSERT INTO `blue_traits` VALUES (14, 4, 10, 369, 1);  -- Auto Refresh I
+INSERT INTO `blue_traits` VALUES (14, 20, 10, 369, 2);  -- Auto Refresh II
 INSERT INTO `blue_traits` VALUES (15, 2, 7, 2, 30);
 INSERT INTO `blue_traits` VALUES (15, 4, 7, 2, 90);
 INSERT INTO `blue_traits` VALUES (16, 2, 1, 25, 10);

@@ -72,6 +72,7 @@ public:
     bool isActionQueueAttack();
 	void Stun(uint32 stunTime);
     void Despawn();
+	void Engage(uint32 targid);
 
     // time of day change, update mobs
     // TODO:
@@ -91,6 +92,7 @@ protected:
 	uint32 m_LastMobSkillTime;
 	uint32 m_LastStunTime;
 	uint32 m_StunTime;
+	uint32 m_TargID;
 	uint32 m_DeaggroTime;
 	uint32 m_NeutralTime;
 	int16 m_skillTP;

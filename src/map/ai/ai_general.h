@@ -128,6 +128,7 @@ public:
     bool            GetMobAbilityEnabled();
     bool            MoveTo(position_t* pos); // move entity to position. Doesn't pathfind
     void			Wait(int32 waitTime);
+	void            Engage(uint32 targid);	
 
     bool            CanSeePoint(position_t point);
     uint32          GetBattleTime();
@@ -156,6 +157,7 @@ public:
 	void			SetLastCurillaVokeTime(uint32 time);
     void            SetLastCurillaFlash(uint32 time);
     void            SetLastCurillaBashTime(uint32 time);
+    void            SetLastCurillaChivalryTime(uint32 time);	
     void            SetLastCurillaReprisalTime(uint32 time);	
 	void            SetLastKupipiMagicTime(uint32 time);
 	void            SetLastKupipiEnhanceTime(uint32 time);
@@ -170,6 +172,7 @@ public:
 	void			SetLastExeJumpTime(uint32 time);	
 	void			SetLastExeHjumpTime(uint32 time);	
 	void			SetLastExeSjumpTime(uint32 time);
+	void			SetLastExeAngonTime(uint32 time);	
     void			SetLastEngageStart(uint32 time);
     void			SetLastSkillchainStart(uint32 time);
 	void 			SetLastChainTime(uint32 time);
@@ -211,7 +214,20 @@ public:
 	void			SetLastGesshoEnfeeblingTime(uint32 time);
 	void			SetLastPrisheSCTime(uint32 time);
 	void			SetLastPrisheMagicTime(uint32 time);
-	
+	void 	        SetLastZeidArcaneCircleTime(uint32 time);
+	void 			SetLastZeidWeaponBashTime(uint32 time);
+	void			SetLastZeidLastResortTime(uint32 time);
+	void			SetLastZeidMagicTime(uint32 time);
+	void 			SetLastZeidAbsorbTime(uint32 time);
+	void 			SetLastZeidAbsTPTime(uint32 time);
+	void			SetLastZeidAbsACCRecast(uint32 time);
+	void			SetLastZeidAbsSTRRecast(uint32 time);
+	void			SetLastZeidEnfeebRecast(uint32 time);
+	void			SetLastZeidDrainRecast(uint32 time);
+	void			SetLastLionTrickAttackRecast(uint32 time);
+	void			SetLastLionCheckRecast(uint32 time);
+	void			SetLastZeidSCTime(uint32 time);
+	void			SetLastUniversalSCTime(uint32 time);
 	
 	void			SetCurrentAction(ACTIONTYPE Action, uint16 TargetID = 0);
 	void			SetLastCorsairRoll(uint16 ability);
@@ -262,6 +278,7 @@ protected:
 	uint32          m_LastCurillaVokeTime;
 	uint32          m_LastCurillaFlash;
 	uint32          m_LastCurillaBashTime;
+	uint32          m_LastCurillaChivalryTime;
 	uint32          m_LastCurillaReprisalTime;	
 	uint32          m_LastKupipiMagicTime;
 	uint32			m_LastKupipiEnhanceTime;
@@ -276,6 +293,7 @@ protected:
 	uint32          m_LastExeJumpTime;
 	uint32			m_LastExeHjumpTime;
 	uint32			m_LastExeSjumpTime;
+	uint32  		m_LastExeAngonTime;
 	uint32			m_LastChainTime;
     uint32          m_LastBlueCheck;
     uint32          m_LastBlueMagicCast;
@@ -316,6 +334,22 @@ protected:
 	uint32			m_LastGesshoEnfeeblingTime;
 	uint32			m_LastPrisheSCTime;
 	uint32          m_LastPrisheMagicTime;
+    
+    uint32          m_LastZeidArcaneCircleTime;
+	uint32 			m_LastZeidWeaponBashTime;
+	uint32			m_LastZeidLastResortTime;
+    uint32          m_LastZeidMagicTime;
+    uint32			m_LastZeidAbsorbTime;
+	uint32			m_LastZeidDrainTime;
+	uint32			m_LastZeidAbsTPTime;
+	uint32			m_LastZeidAbsACCTime;
+	uint32			m_LastZeidAbsSTRTime;
+	uint32			m_LastZeidEnfeebTime;
+	uint32          m_LastLionTrickAttackTime;
+	uint32			m_LastLionCheckTime;
+	uint32			m_LastZeidSCTime;
+	uint32			m_LastZeidTrigger;
+	uint32 			m_LastUniversalSCTime;
 	
 	uint32			m_LastEngageStart;
 	uint32 			m_LastSkillchainStart;

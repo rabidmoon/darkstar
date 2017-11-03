@@ -10,10 +10,11 @@ require("scripts/globals/status");
 -----------------------------------------
 
 function onMagicCastingCheck(caster,target,spell)
-	if (caster:isUniqueAlly(88)) then
-	local player = caster:getMaster();
-	player:PrintToPlayer(string.format("(Ulmia) Advancing March - Attack Speed Up!", caster:getName()),0xF); 
-	end
+    --local player;
+	--if (caster:isUniqueAlly(88)) then
+    --player = caster:getMaster();
+	--player:PrintToPlayer(string.format("(Ulmia) Advancing March - Attack Speed Up!", caster:getName()),0xF); 
+	--end
 	return 0;
 end;
 

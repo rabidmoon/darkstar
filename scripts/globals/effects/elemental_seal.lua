@@ -13,8 +13,8 @@ require("scripts/globals/status");
 
 function onEffectGain(target,effect)
    target:addMod(MOD_MACC,256);
-   target:addMod(MOD_MAGIC_DAMAGE,20);
-   target:addMod(MOD_CONSERVE_MP,40);
+   target:addMod(MOD_MAGIC_DAMAGE,30);
+   target:addMod(MOD_CONSERVE_MP,30);
 
 
 -----------------------------------
@@ -22,6 +22,8 @@ function onEffectGain(target,effect)
 -----------------------------------
 
 function onEffectTick(target,effect)
+   target:addMod(MOD_MAGIC_DAMAGE,-3);
+   target:addMod(MOD_CONSERVE_MP,-3);
 end;
 
 -----------------------------------
@@ -30,8 +32,6 @@ end;
 
 function onEffectLose(target,effect)
 	target:delMod(MOD_MACC,256);
-	target:delMod(MOD_MAGIC_DAMAGE,20);
-	target:delMod(MOD_CONSERVE_MP,40);
 end;
 
 

@@ -21,7 +21,9 @@ require("scripts/zones/Windurst_Woods/TextIDs");
 -----------------------------------
 
 function onTrade(player,npc,trade)
-   
+
+    local currentTokens = player:getVar("CurrentTokens_Nanaa");  
+  
 	if (trade:hasItemQty(498,4) and trade:getItemCount() == 4) then -- Trade Yagudo Necklace x4
 		
 		local MihgosAmigo = player:getQuestStatus(WINDURST,MIHGO_S_AMIGO);
@@ -32,6 +34,80 @@ function onTrade(player,npc,trade)
 			player:startEvent(0x01ee,GIL_RATE*200);
 		end
 	end
+	
+    if ((player:getVar("NANAA_TRIB_FIGHT") == 3) and (player:getVar("TributeRank_Nanaa") == 0) and (trade:hasItemQty(65535, 1000)) and (currentTokens >= 1)) then
+      player:PrintToPlayer("Nanaa Mihgo : Thank you for your Tribute.",0x0D);
+      player:PrintToPlayer("Nanaa Mihgo's Attack is raised by 5 points! (Total: 5)", 0x15);
+	  player:setVar("TrustAtt_Nanaa",5);
+	  player:setVar("TributeRank_Nanaa",1);
+	  currentTokens = currentTokens - 1;
+	  player:setVar("CurrentTokens_Nanaa",currentTokens);
+    elseif ((player:getVar("NANAA_TRIB_FIGHT") == 3) and (player:getVar("TributeRank_Nanaa") == 1) and (trade:hasItemQty(65535, 2000)) and (currentTokens >= 2)) then
+	  player:PrintToPlayer("Nanaa Mihgo : Thank you for your Tribute.",0x0D);
+      player:PrintToPlayer("Nanaa Mihgo's Accuracy is raised by 5 points! (Total: 5)", 0x15);
+	  player:setVar("TrustAcc_Nanaa",5);	
+	  player:setVar("TributeRank_Nanaa",2);
+	  currentTokens = currentTokens - 2;
+	  player:setVar("CurrentTokens_Nanaa",currentTokens);	  
+    elseif ((player:getVar("NANAA_TRIB_FIGHT") == 3) and (player:getVar("TributeRank_Nanaa") == 2) and (trade:hasItemQty(65535, 3000)) and (currentTokens >= 3)) then
+      player:PrintToPlayer("Nanaa Mihgo : Thank you for your Tribute.",0x0D);
+      player:PrintToPlayer("Nanaa Mihgo's DEX has been raised by 5! (Total: 5)", 0x15);
+	  player:setVar("TrustDEX_Nanaa",5);	
+	  player:setVar("TributeRank_Nanaa",3);
+	  currentTokens = currentTokens - 3;
+	  player:setVar("CurrentTokens_Nanaa",currentTokens);	  
+    elseif ((player:getVar("NANAA_TRIB_FIGHT") == 3) and (player:getVar("TributeRank_Nanaa") == 3) and (trade:hasItemQty(65535, 4000)) and (currentTokens >= 4)) then
+      player:PrintToPlayer("Nanaa Mihgo : Thank you for your Tribute.",0x0D);
+      player:PrintToPlayer("Nanaa Mihgo's Attack is raised by 5 points! (Total: 10)", 0x15);
+	  player:setVar("TrustAtt_Nanaa",10);	
+	  player:setVar("TributeRank_Nanaa",4);
+	  currentTokens = currentTokens - 4;
+	  player:setVar("CurrentTokens_Nanaa",currentTokens);	  
+    elseif ((player:getVar("NANAA_TRIB_FIGHT") == 3) and (player:getVar("TributeRank_Nanaa") == 4) and (trade:hasItemQty(65535, 5000)) and (currentTokens >= 5)) then
+      player:PrintToPlayer("Nanaa Mihgo : Thank you for your Tribute.",0x0D);
+      player:PrintToPlayer("Nanaa Mihgo's Accuracy is raised by 5 points! (Total: 10)", 0x15);
+	  player:setVar("TrustAcc_Nanaa",10);	
+	  player:setVar("TributeRank_Nanaa",5);
+	  currentTokens = currentTokens - 5;
+	  player:setVar("CurrentTokens_Nanaa",currentTokens);	  
+    elseif ((player:getVar("NANAA_TRIB_FIGHT") == 3) and (player:getVar("TributeRank_Nanaa") == 5) and (trade:hasItemQty(65535, 10000)) and (currentTokens >= 10)) then
+      player:PrintToPlayer("Nanaa Mihgo : Thank you for your Tribute.",0x0D);
+      player:PrintToPlayer("Nanaa Mihgo's DEX has been raised by 5! (Total: 10)", 0x15);
+	  player:setVar("TrustDEX_Nanaa",10);	
+	  player:setVar("TributeRank_Nanaa",6);
+	  currentTokens = currentTokens - 10;
+	  player:setVar("CurrentTokens_Nanaa",currentTokens);	  
+    elseif ((player:getVar("NANAA_TRIB_FIGHT") == 3) and (player:getVar("TributeRank_Nanaa") == 6) and (trade:hasItemQty(65535, 15000)) and (currentTokens >= 15)) then
+      player:PrintToPlayer("Nanaa Mihgo : Thank you for your Tribute.",0x0D);
+      player:PrintToPlayer("Nanaa Mihgo's Attack is raised by 5 points! (Total: 15)", 0x15);
+	  player:setVar("TrustAtt_Nanaa",15);	
+	  player:setVar("TributeRank_Nanaa",7);
+	  currentTokens = currentTokens - 15;
+	  player:setVar("CurrentTokens_Nanaa",currentTokens);	  
+    elseif ((player:getVar("NANAA_TRIB_FIGHT") == 3) and (player:getVar("TributeRank_Nanaa") == 7) and (trade:hasItemQty(65535, 30000)) and (currentTokens >= 20)) then
+      player:PrintToPlayer("Nanaa Mihgo : Thank you for your Tribute.",0x0D);
+      player:PrintToPlayer("Nanaa Mihgo's Accuracy is raised by 5 points! (Total: 15)", 0x15);
+	  player:setVar("TrustAcc_Nanaa",15);	
+	  player:setVar("TributeRank_Nanaa",8);
+	  currentTokens = currentTokens - 20;
+	  player:setVar("CurrentTokens_Nanaa",currentTokens);	  
+    elseif ((player:getVar("NANAA_TRIB_FIGHT") == 3) and (player:getVar("TributeRank_Nanaa") == 8) and (trade:hasItemQty(65535, 75000)) and (currentTokens >= 30)) then
+      player:PrintToPlayer("Nanaa Mihgo : Thank you for your Tribute.",0x0D);
+      player:PrintToPlayer("Nanaa Mihgo's Triple Attack has been increased by 3 (Total: 3)", 0x15);
+	  player:setVar("TrustTA_Nanaa",3);	
+	  player:setVar("TributeRank_Nanaa",9);	
+	  currentTokens = currentTokens - 30;
+	  player:setVar("CurrentTokens_Nanaa",currentTokens);	  
+    elseif ((player:getVar("NANAA_TRIB_FIGHT") == 3) and (player:getVar("TributeRank_Nanaa") == 9) and (trade:hasItemQty(65535, 150000)) and (currentTokens >= 35)) then
+      player:PrintToPlayer("Nanaa Mihgo : Thank you for your Tribute.",0x0D);
+      player:PrintToPlayer("Nanaa Mihgo's obtains the trait 'Treasure Hunter II'!", 0x15);
+	  player:setVar("TrustTH_Nanaa",1);	
+	  player:setVar("TributeRank_Nanaa",10);
+	  currentTokens = currentTokens - 35;
+	  player:setVar("CurrentTokens_Nanaa",currentTokens);	
+    else
+      player:PrintToPlayer("Nanaa Mihgo : Please trade the correct amount of Tokens and Gil.",0x0D);	
+	end		
    
 end; 
 
@@ -43,22 +119,31 @@ function onTrigger(player,npc)
     local srank = player:getRank();
 	local wrank = player:getRank();
 	local brank = player:getRank();
+	local tribfight = player:getVar("NANAA_TRIB_FIGHT");	
 	
 	if (srank >= 4) and (player:hasKeyItem(RED_INSTITUTE_CARD)) and (player:hasSpell(901) == false) then  -- Sandy Rnak 4 or higher
 	player:PrintToPlayer("Your Red Institute Card flashes brilliantly!", 0x1C);
     player:PrintToPlayer("Nanaa Mihgo : Ah a Red Institute Card.  From now on, you can summon me to help you with your battles", 0xD);
     player:addSpell(901);	
-	end
-	if (wrank >= 4) and (player:hasKeyItem(GREEN_INSTITUTE_CARD)) and (player:hasSpell(901) == false) then  -- Sandy Rnak 4 or higher
+	elseif (wrank >= 4) and (player:hasKeyItem(GREEN_INSTITUTE_CARD)) and (player:hasSpell(901) == false) then  -- Sandy Rnak 4 or higher
 	player:PrintToPlayer("Your Green Institute Card flashes brilliantly!", 0x1C);
     player:PrintToPlayer("Nanaa Mihgo : Ah a Green Institute Card.  From now on, you can summon me to help you with your battles", 0xD);
     player:addSpell(901);
-	end
-	if (brank >= 4) and (player:hasKeyItem(BLUE_INSTITUTE_CARD)) and (player:hasSpell(901) == false) then  -- Sandy Rnak 4 or higher
+	elseif (brank >= 4) and (player:hasKeyItem(BLUE_INSTITUTE_CARD)) and (player:hasSpell(901) == false) then  -- Sandy Rnak 4 or higher
 	player:PrintToPlayer("Your Green Institute Card flashes brilliantly!", 0x1C);
     player:PrintToPlayer("Nanaa Mihgo : Ah a Blue Institute Card.  From now on, you can summon me to help you with your battles", 0xD);
     player:addSpell(901);
-	end
+	elseif ((mainlvl >= 71 and tribfight == 0 and (player:hasSpell(901)) and (player:getVar("FerretoryAura") >= 7) and (player:getVar("TRIB_FIGHT") ~= 1))) then
+	player:PrintToPlayer("Nanaa Mihgo : There is someone running around claming to be me at Balgas Dias.  Please head there and I'll join you.", 0xD);
+    player:PrintToPlayer("Nanaa Mihgo : When you are ready, examine the Burning Circle in Balgas Dias and call me to your side.", 0xD);
+	player:setVar("NANAA_TRIB_FIGHT",1);
+    player:setVar("TRIB_FIGHT",1);		
+	elseif (mainlvl >= 75 and tribfight == 2 and (player:hasSpell(901))) then
+	player:PrintToPlayer("Nanaa Mihgo : You have done well to help with the imposter investigation.  I am in your debt.", 0xD);
+	player:PrintToPlayer("You are now able to collect Trust Tokens for Nanaa Mihgo!", 0x15);
+	player:setVar("NANAA_TRIB_FIGHT",3);
+    player:setVar("TRIB_FIGHT",0);		
+    end
 	
 	
 	-- Check for Missions first (priority?)
@@ -176,6 +261,29 @@ function onTrigger(player,npc)
 		
 		
 	end
+	
+	-- Handle Token Quest
+    if ((player:getVar("NANAA_TRIB_FIGHT") == 3) and (player:getVar("TributeRank_Cur") == 0)) then
+      player:PrintToPlayer("Nanaa Mihgo : Bring me 1 of my Trust Tokens and 1,000 gil to raise my Attack by 5",0x0D);
+    elseif ((player:getVar("NANAA_TRIB_FIGHT") == 3) and (player:getVar("TributeRank_Cur") == 1)) then
+      player:PrintToPlayer("Nanaa Mihgo : Bring me 2 of my Trust Tokens and 2,000 gil to raise my Accuracy by 5",0x0D);
+    elseif ((player:getVar("NANAA_TRIB_FIGHT") == 3) and (player:getVar("TributeRank_Cur") == 2)) then
+      player:PrintToPlayer("Nanaa Mihgo : Bring me 3 of my Trust Tokens and 3,000 gil to raise my DEX by 5",0x0D);
+    elseif ((player:getVar("NANAA_TRIB_FIGHT") == 3) and (player:getVar("TributeRank_Cur") == 3)) then
+      player:PrintToPlayer("Nanaa Mihgo : Bring me 4 of my Trust Tokens and 4,000 gil to raise my Attack by 5",0x0D);
+    elseif ((player:getVar("NANAA_TRIB_FIGHT") == 3) and (player:getVar("TributeRank_Cur") == 4)) then
+      player:PrintToPlayer("Nanaa Mihgo : Bring me 5 of my Trust Tokens and 5,000 gil to raise my Accuracy by 5",0x0D);
+    elseif ((player:getVar("NANAA_TRIB_FIGHT") == 3) and (player:getVar("TributeRank_Cur") == 5)) then
+      player:PrintToPlayer("Nanaa Mihgo : Bring me 10 of my Trust Tokens and 10,000 gil to raise my DEX by 5",0x0D);
+    elseif ((player:getVar("NANAA_TRIB_FIGHT") == 3) and (player:getVar("TributeRank_Cur") == 6)) then
+      player:PrintToPlayer("Nanaa Mihgo : Bring me 15 of my Trust Tokens and 15,000 gil to raise my Attack by 5",0x0D);
+    elseif ((player:getVar("NANAA_TRIB_FIGHT") == 3) and (player:getVar("TributeRank_Cur") == 7)) then
+      player:PrintToPlayer("Nanaa Mihgo : Bring me 20 of my Trust Tokens and 30,000 gil to raise my Accuracy by 5",0x0D);
+    elseif ((player:getVar("NANAA_TRIB_FIGHT") == 3) and (player:getVar("TributeRank_Cur") == 8)) then
+      player:PrintToPlayer("Nanaa Mihgo : Bring me 30 of my Trust Tokens and 75,000 gil to increase my Triple Attack by 3%",0x0D);
+    elseif ((player:getVar("NANAA_TRIB_FIGHT") == 3) and (player:getVar("TributeRank_Cur") == 9)) then
+      player:PrintToPlayer("Nanaa Mihgo : Bring me 35 of my Trust Tokens and 150,000 gil so I learn 'Treasure Hunter II'",0x0D);
+    end	
 	
 end;
 

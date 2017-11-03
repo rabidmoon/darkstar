@@ -89,11 +89,11 @@ function onMobDeath(mob,killer)
 
 killer:setVar("DynaWeakener",0);
 
-	if (killer:hasKeyItem(HYDRA_CORPS_TACTICAL_MAP) == false) then
+	if ((killer:hasKeyItem(HYDRA_CORPS_TACTICAL_MAP) == false) and killer:getObjType() == TYPE_PC) then
 		killer:setVar("DynaJeuno_Win",1);
 		killer:addKeyItem(HYDRA_CORPS_TACTICAL_MAP);
 		killer:messageSpecial(KEYITEM_OBTAINED,HYDRA_CORPS_TACTICAL_MAP);
-	killer:addTitle(DYNAMISJEUNO_INTERLOPER); -- Add title
+	    killer:addTitle(DYNAMISJEUNO_INTERLOPER); -- Add title
 	end
 
 

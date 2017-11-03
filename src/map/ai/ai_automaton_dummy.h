@@ -62,6 +62,8 @@ private:
 	uint32 m_magicEnhanceCast;
     uint32 m_magicStatusRecast;
 	uint32 m_rangedRecast;
+	uint32 m_magicAspir;
+	uint32 m_magicDrain;
 	
 	
 	uint32 m_magicStatusCast;

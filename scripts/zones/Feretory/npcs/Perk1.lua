@@ -163,30 +163,24 @@ local mageboon = player:getVar("FerretoryMageBoon");
 
 if (aura == 0) then
 player:PrintToPlayer("Dolan-Nolan : Don'taru bother me with your presence until you have an aura", 0xD);
-else if (aura > 0) and (mageboon == 1) then
+elseif (aura > 0) and (mageboon == 1) then
 player:PrintToPlayer("Dolan-Nolan : Hey, bring me a crawler calculus and 20,000 Infamy Points for a Mage Boon.", 0xD);
-else if (aura > 1) and (mageboon == 2) then
+elseif (aura > 1) and (mageboon == 2) then
 player:PrintToPlayer("Dolan-Nolan : Looking to upgrade your Mage Boon? Bring me a 2-Leaf Mandragora Bud and 25,000 Infamy Points.", 0xD);
-else if (aura > 2) and (mageboon == 3) then
+elseif (aura > 2) and (mageboon == 3) then
 player:PrintToPlayer("Dolan-Nolan : Looking to upgrade your Mage Boon? Bring me a 3-Leaf Mandragora Bud and 30,000 Infamy Points.", 0xD);
-else if (aura > 3) and (mageboon == 4) then
+elseif (aura > 3) and (mageboon == 4) then
 player:PrintToPlayer("Dolan-Nolan : Looking to upgrade your Mage Boon? Bring me a 4-Leaf Mandragora Bud and 35,000 Infamy Points.", 0xD);
-else if (aura > 4) and (mageboon == 5) then
+elseif (aura > 4) and (mageboon == 5) then
 player:PrintToPlayer("Dolan-Nolan : Looking to upgrade your Mage Boon? Bring me 3 Magic Pot Shards and 40,000 Infamy Points.", 0xD);
-else if (aura > 5) and (mageeboon == 6) then
+elseif (aura > 5) and (mageboon == 6) then
 player:PrintToPlayer("Dolan-Nolan : Looking to upgrade your Mage Boon? Bring me 12 Demon Horns and 50,000 Infamy Points.", 0xD);
-else if (aura > 6) and (mageboon == 7) then
+elseif (aura > 6) and (mageboon == 7) then
 player:PrintToPlayer("Dolan-Nolan : Looking to upgrade your Mage Boon? Bring me a White Mage Testimony and 75,000 Infamy Points.", 0xD);
 else
 player:PrintToPlayer("Dolan-Nolan : Your Aura isn't high enough.", 0xD);
 end
-end
-end
-end
-end
-end
-end
-end
+
 
 
 

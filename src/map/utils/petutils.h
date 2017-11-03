@@ -75,7 +75,8 @@ enum PETID
 	PETID_PRISHE             = 87,
 	PETID_ULMIA              = 88,
 	PETID_LUZAF              = 89,
-	PETID_GESSHO             = 90
+	PETID_GESSHO             = 90,
+	PETID_ZEID               = 91	
 };
 
 

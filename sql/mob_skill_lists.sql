@@ -118,7 +118,7 @@ INSERT INTO `mob_skill_lists` VALUES ('Avatar-Fenrir',36,578);
 INSERT INTO `mob_skill_lists` VALUES ('Avatar-Fenrir',36,579);
 INSERT INTO `mob_skill_lists` VALUES ('Avatar-Fenrir',36,580);
 INSERT INTO `mob_skill_lists` VALUES ('Avatar-Fenrir',36,581);
-INSERT INTO `mob_skill_lists` VALUES ('Avatar-Fenrir',36,582);
+-- INSERT INTO `mob_skill_lists` VALUES ('Avatar-Fenrir',36,582);
 INSERT INTO `mob_skill_lists` VALUES ('Avatar-Garuda',37,611);
 INSERT INTO `mob_skill_lists` VALUES ('Avatar-Garuda',37,612);
 INSERT INTO `mob_skill_lists` VALUES ('Avatar-Garuda',37,613);
@@ -1618,6 +1618,8 @@ INSERT INTO `mob_skill_lists` VALUES ('YagudoNM',360,377);
 INSERT INTO `mob_skill_lists` VALUES ('YagudoNM',360,362);
 INSERT INTO `mob_skill_lists` VALUES ('YagudoNM',360,363);
 INSERT INTO `mob_skill_lists` VALUES ('YagudoNM',360,364);
+INSERT INTO `mob_skill_lists` VALUES ('YagudoNM',360,1742);
+INSERT INTO `mob_skill_lists` VALUES ('YagudoNM',360,3003);
 INSERT INTO `mob_skill_lists` VALUES ('DynamisLord',361,871);
 INSERT INTO `mob_skill_lists` VALUES ('DynamisLord',361,872);
 INSERT INTO `mob_skill_lists` VALUES ('DynamisLord',361,873);
@@ -2489,6 +2491,7 @@ INSERT INTO `mob_skill_lists` VALUES ('Curilla',734,3743); -- Swift Blade
 INSERT INTO `mob_skill_lists` VALUES ('Curilla',734,3711); -- Provoke
 INSERT INTO `mob_skill_lists` VALUES ('Curilla',734,3709); -- Shield Bash
 INSERT INTO `mob_skill_lists` VALUES ('Curilla',734,3710); -- Reprisal
+INSERT INTO `mob_skill_lists` VALUES ('Curilla',734,3736); -- Chivalry
 
 INSERT INTO `mob_skill_lists` VALUES ('Excenmille',735,3712); -- Jump
 INSERT INTO `mob_skill_lists` VALUES ('Excenmille',735,3713); -- High Jump
@@ -2524,6 +2527,7 @@ INSERT INTO `mob_skill_lists` VALUES ('Lion',742,2635);  -- Grape Shot
 INSERT INTO `mob_skill_lists` VALUES ('Lion',742,2636);  -- Pirate Pummel
 INSERT INTO `mob_skill_lists` VALUES ('Lion',742,2637);  -- Powder Keg
 INSERT INTO `mob_skill_lists` VALUES ('Lion',742,2638);  -- Walk the Plank
+INSERT INTO `mob_skill_lists` VALUES ('Lion',742,3802);  -- Trick Attack
 
 INSERT INTO `mob_skill_lists` VALUES ('Prishe',743,1233);  -- Nullyfying Dropkick
 INSERT INTO `mob_skill_lists` VALUES ('Prishe',743,1234);  -- Auroral Uppercut
@@ -2549,4 +2553,20 @@ INSERT INTO `mob_skill_lists` VALUES ('Gessho',746,1742);
 INSERT INTO `mob_skill_lists` VALUES ('Gessho',746,3001);
 INSERT INTO `mob_skill_lists` VALUES ('Gessho',746,3003);
 INSERT INTO `mob_skill_lists` VALUES ('Gessho',746,3711); -- Provoke
+
+INSERT INTO `mob_skill_lists` VALUES ('Zeid',747,3749);  -- Slice
+INSERT INTO `mob_skill_lists` VALUES ('Zeid',747,3750);  -- Nightmare Scythe
+INSERT INTO `mob_skill_lists` VALUES ('Zeid',747,3751);  -- Vorpal Scythe
+INSERT INTO `mob_skill_lists` VALUES ('Zeid',747,3752);  -- Guillotine
+INSERT INTO `mob_skill_lists` VALUES ('Zeid',747,3753);  -- Cross Reaper
+INSERT INTO `mob_skill_lists` VALUES ('Zeid',747,3754);  -- Spiral Hell
+INSERT INTO `mob_skill_lists` VALUES ('Zeid',747,3755);  -- Arcane Circle
+INSERT INTO `mob_skill_lists` VALUES ('Zeid',747,3756);  -- Weapon Bash
+INSERT INTO `mob_skill_lists` VALUES ('Zeid',747,3757);  -- Last Resort
+
+INSERT INTO `mob_skill_lists` VALUES ('Curilla',748,3197);  -- Vorpal
+INSERT INTO `mob_skill_lists` VALUES ('Curilla',748,3262);  -- Glory
+INSERT INTO `mob_skill_lists` VALUES ('Mammett_Sword',749,91);  -- Glory
+INSERT INTO `mob_skill_lists` VALUES ('Mammett_Sword',749,163);  -- Glory
+INSERT INTO `mob_skill_lists` VALUES ('Mammett_Sword',749,166);  -- Glory
 

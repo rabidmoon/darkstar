@@ -1166,7 +1166,7 @@ void CAICharNormal::ActionRangedFinish()
             // Only remove unlimited shot on hit
             if (hitOccured && m_PChar->StatusEffectContainer->HasStatusEffect(EFFECT_UNLIMITED_SHOT))
             {
-                m_PChar->StatusEffectContainer->DelStatusEffect(EFFECT_UNLIMITED_SHOT);
+                // m_PChar->StatusEffectContainer->DelStatusEffect(EFFECT_UNLIMITED_SHOT);
                 recycleChance = 100;
             }
 
@@ -2081,7 +2081,7 @@ void CAICharNormal::ActionJobAbilityFinish()
 
             if (m_PChar->StatusEffectContainer->HasStatusEffect(EFFECT_UNLIMITED_SHOT))
             {
-                m_PChar->StatusEffectContainer->DelStatusEffect(EFFECT_UNLIMITED_SHOT);
+                // m_PChar->StatusEffectContainer->DelStatusEffect(EFFECT_UNLIMITED_SHOT);
                 recycleChance = 100;
             }
 
@@ -2748,7 +2748,7 @@ void CAICharNormal::ActionWeaponSkillFinish()
 
         if (m_PChar->StatusEffectContainer->HasStatusEffect(EFFECT_UNLIMITED_SHOT))
         {
-            m_PChar->StatusEffectContainer->DelStatusEffect(EFFECT_UNLIMITED_SHOT);
+            // m_PChar->StatusEffectContainer->DelStatusEffect(EFFECT_UNLIMITED_SHOT);
             recycleChance = 100;
         }
         // ranged WS will apply ammo additional effects silently

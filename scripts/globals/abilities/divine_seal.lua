@@ -22,5 +22,5 @@ end;
 -----------------------------------
 
 function onUseAbility(player,target,ability)
-    player:addStatusEffect(EFFECT_DIVINE_SEAL,1,0,60);
+    player:addStatusEffect(EFFECT_DIVINE_SEAL,1,3,30);
 end;

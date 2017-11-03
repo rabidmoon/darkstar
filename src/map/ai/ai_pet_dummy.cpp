@@ -86,6 +86,7 @@ CAIPetDummy::CAIPetDummy(CPetEntity* PPet)
 	m_curillaFlashRecast = 50000;
 	m_curillaBashRecast = 180000;
 	m_curillaReprisalRecast = 180000;
+	m_curillaChivalryRecast = 300000; 
 	m_magicKupipiRecast = 4000;
 	m_nanaacheck = 5000;  //For Nanaa Mihgo to check every 5 seconds if she is facing target or not
 	m_nanaaSneakAttackRecast = 50000;
@@ -96,6 +97,7 @@ CAIPetDummy::CAIPetDummy(CPetEntity* PPet)
 	m_exeJumpRecast = 60000;
 	m_exeHjumpRecast = 120000;
 	m_exeSjumpRecast = 180000;
+	m_exeAngonRecast = 120000;  // Angon 2 min
 	m_ayameThirdEyeRecast = 45000;
 	m_ayameSekkaRecast = 300000;  //300000;
 	m_blueMagicRecast = 20000; //20 seconds Blue Magic Casting
@@ -115,6 +117,10 @@ CAIPetDummy::CAIPetDummy(CPetEntity* PPet)
 	m_luzafSecondRollRecast = 300000;
 	
 	m_magicUlmiaRecast = 4000; //Song and Spell Check for Ulmia
+	m_firstMeleeSongRecast = 140000;
+    m_secondMeleeSongRecast = 140000;
+    m_firstMageSongRecast = 130000;
+    m_secondMageSongRecast = 130000;
 	m_minuetStrongRecast = 130000;
     m_minuetWeakRecast = 130000; 
     m_madrigalStrongRecast = 130000; 
@@ -136,6 +142,20 @@ CAIPetDummy::CAIPetDummy(CPetEntity* PPet)
 	m_magicPrisheRecast = 4000;
 	m_prisheHealRecast = 15000;
 	
+	m_zeidArcaneCircleRecast = 300000;
+	m_zeidWeaponBashRecast = 180000;
+	m_zeidLastResortRecast = 300000;
+    m_zeidMagicRecast = 4000;
+	m_zeidAbsorbRecast = 35000;
+	m_zeidAbsTPRecast = 60000;
+	m_zeidAbsACCRecast = 60000;
+	m_zeidAbsSTRRecast = 60000;
+	m_zeidEnfeebRecast = 45000;	
+	m_zeidDrainRecast = 180000;
+	m_lionTrickAttackRecast = 30000;  //change back to 60
+	m_skillchainTimer = 10000;
+	m_lionCheck = 10000;
+	m_zeidSCReady = 0;
 	
 
 	
@@ -212,18 +232,24 @@ void CAIPetDummy::ActionAbilityStart()
 	//   For Ayame to SC with.  Looks for your SC used       //
 	//   element and decides on which SC to use             //
 	//*****************************************************//
-	
-	uint32 masterscID = charutils::GetVar((CCharEntity*)m_PPet->PMaster,"AyameSCElement");
-	uint32 lion = charutils::GetVar((CCharEntity*)m_PPet->PMaster,"LionPT");
-	uint32 prishe = charutils::GetVar((CCharEntity*)m_PPet->PMaster,"PrishePT");
+    
+	uint32 masterscID = 0;
+    if (m_PPet->m_PetID == PETID_AYAME)
+    {
+    	masterscID = charutils::GetVar((CCharEntity*)m_PPet->PMaster,"AyameSCElement");
+		ShowWarning(CL_RED"AYAME SC NUMBER IS %u! \n" CL_RESET, masterscID);
+	}	
+		
+	//uint32 lion = charutils::GetVar((CCharEntity*)m_PPet->PMaster,"LionPT");
+	//uint32 prishe = charutils::GetVar((CCharEntity*)m_PPet->PMaster,"PrishePT");
 
 
     //For Trusts to SC with each other
 	// 1 = TP Is ready
 	// 2 = SC just performed
-    uint32 prishesc = charutils::GetVar((CCharEntity*)m_PPet->PMaster,"PrisheSC");
-    uint32 lionsc = charutils::GetVar((CCharEntity*)m_PPet->PMaster,"LionSC");
-
+    //uint32 prishesc = charutils::GetVar((CCharEntity*)m_PPet->PMaster,"PrisheSC");
+    //uint32 lionsc = charutils::GetVar((CCharEntity*)m_PPet->PMaster,"LionSC");
+    //m_LastZeidSCTime = m_Tick;
    	
 
 	
@@ -1357,7 +1383,130 @@ void CAIPetDummy::ActionAbilityStart()
         }
 		
 		
-        if (m_Tick >= m_LastPrisheSCTime && m_PPet->m_PetID == PETID_LION && m_PPet->health.tp >= 1000 && m_PBattleTarget != nullptr && prishe == 1)
+		CBattleEntity* lionSCPartner = getLionSCPartnerZeid();
+		CBattleEntity* zeidSCPartner = getZeidSCPartner();
+		
+		if (m_PPet->m_PetID == PETID_LION && m_PPet->health.tp >= 1000 && lionSCPartner != nullptr) //KITTY
+		{
+		    if (lionSCPartner->health.tp >= 1000)
+			{
+			    if (lvl >= 71 && m_PPet->m_PetID == PETID_LION) 
+				{  
+                    //ShowWarning(CL_RED"LION ATTEMPTING WS\n" CL_RESET);			
+			        uint8 wsrandom = dsprand::GetRandomNumber(1, 3); 
+                    for (int i = 0; i < m_PPet->PetSkills.size(); i++) 
+					{
+                        auto PMobSkill = battleutils::GetMobSkill(m_PPet->PetSkills.at(i));
+  			            if (PMobSkill->getID() == 2636 && wsrandom < 2) //Pirate Pummel
+						{ 
+                         	//Write the SC to a variable for the player
+			                int32 value = 1;  //Dark SC
+			                std::string varname;
+			                const int8* fmtQuery = "INSERT INTO char_vars SET charid = %u, varname = 'ZeidSCReady', value = '1' ON DUPLICATE KEY UPDATE value = '1';";
+                            Sql_Query(SqlHandle, fmtQuery, m_PPet->PMaster->id, varname, value, value);	
+				            //End Write of SC to variable for player   
+							SetCurrentMobSkill(PMobSkill);
+                            break;
+                        }
+  			            else if (PMobSkill->getID() == 2638 && wsrandom >= 2) //Walk the Plank
+						{ 
+                         	//Write the SC to a variable for the player
+			                int32 value = 2;  //Light SC
+			                std::string varname;
+			                const int8* fmtQuery = "INSERT INTO char_vars SET charid = %u, varname = 'ZeidSCReady', value = '2' ON DUPLICATE KEY UPDATE value = '2';";
+                            Sql_Query(SqlHandle, fmtQuery, m_PPet->PMaster->id, varname, value, value);	
+				            //End Write of SC to variable for player   
+							SetCurrentMobSkill(PMobSkill);
+                            break;
+                        }						
+                    }
+			    }
+			    else if (lvl >= 65 && m_PPet->m_PetID == PETID_LION) 
+				{      
+                    for (int i = 0; i < m_PPet->PetSkills.size(); i++) 
+					{
+                        auto PMobSkill = battleutils::GetMobSkill(m_PPet->PetSkills.at(i));
+  			            if (PMobSkill->getID() == 2636) //Pirate Pummel
+						{ 
+                         	//Write the SC to a variable for the player
+			                int32 value = 2;  //Fragmentation Skillchain With Zeid Close with SS
+			                std::string varname;
+			                const int8* fmtQuery = "INSERT INTO char_vars SET charid = %u, varname = 'ZeidSCReady', value = '2' ON DUPLICATE KEY UPDATE value = '2';";
+                            Sql_Query(SqlHandle, fmtQuery, m_PPet->PMaster->id, varname, value, value);	
+				            //End Write of SC to variable for player   
+							SetCurrentMobSkill(PMobSkill);
+                            break;
+                        }						
+                    }
+			    }
+			    else if (lvl >= 60 && m_PPet->m_PetID == PETID_LION) 
+				{      
+                    for (int i = 0; i < m_PPet->PetSkills.size(); i++) 
+					{
+                        auto PMobSkill = battleutils::GetMobSkill(m_PPet->PetSkills.at(i));
+  			            if (PMobSkill->getID() == 2637) //Powder Keg
+						{ 
+                         	//Write the SC to a variable for the player
+			                int32 value = 3;  //Fusion Skillchain With Zeid Close with Siclkle Moon
+			                std::string varname;
+			                const int8* fmtQuery = "INSERT INTO char_vars SET charid = %u, varname = 'ZeidSCReady', value = '3' ON DUPLICATE KEY UPDATE value = '3';";
+                            Sql_Query(SqlHandle, fmtQuery, m_PPet->PMaster->id, varname, value, value);	
+				            //End Write of SC to variable for player   
+							SetCurrentMobSkill(PMobSkill);
+                            break;
+                        }						
+                    }
+			    }
+			    else if (lvl >= 33 && m_PPet->m_PetID == PETID_LION) 
+				{      
+                    for (int i = 0; i < m_PPet->PetSkills.size(); i++) 
+					{
+                        auto PMobSkill = battleutils::GetMobSkill(m_PPet->PetSkills.at(i));
+  			            if (PMobSkill->getID() == 2635) //Grape Shot
+						{ 
+                         	//Write the SC to a variable for the player
+			                int32 value = 4;  //Induration Skillchain With Zeid Close with Freezebite
+			                std::string varname;
+			                const int8* fmtQuery = "INSERT INTO char_vars SET charid = %u, varname = 'ZeidSCReady', value = '4' ON DUPLICATE KEY UPDATE value = '4';";
+                            Sql_Query(SqlHandle, fmtQuery, m_PPet->PMaster->id, varname, value, value);	
+				            //End Write of SC to variable for player   
+							SetCurrentMobSkill(PMobSkill);
+                            break;
+                        }						
+                    }
+			    }
+			    else if (lvl >= 5 && m_PPet->m_PetID == PETID_LION) 
+				{      
+                    for (int i = 0; i < m_PPet->PetSkills.size(); i++) 
+					{
+                        auto PMobSkill = battleutils::GetMobSkill(m_PPet->PetSkills.at(i));
+  			            if (PMobSkill->getID() == 2637) //Powder Keg
+						{ 
+                         	//Write the SC to a variable for the player
+			                int32 value = 5;  //Scission Skillchain With Zeid Close with Hard Slash
+			                std::string varname;
+			                const int8* fmtQuery = "INSERT INTO char_vars SET charid = %u, varname = 'ZeidSCReady', value = '5' ON DUPLICATE KEY UPDATE value = '5';";
+                            Sql_Query(SqlHandle, fmtQuery, m_PPet->PMaster->id, varname, value, value);	
+				            //End Write of SC to variable for player   
+							SetCurrentMobSkill(PMobSkill);
+                            break;
+                        }						
+                    }
+			    }				
+			}
+            preparePetAbility(m_PBattleSubTarget);
+            return;				
+		}
+		else if (m_PPet->m_PetID == PETID_LION && m_PPet->health.tp >= 1000 && lionSCPartner == nullptr)
+		{
+		
+		
+		
+		
+		
+		/*
+        if (m_Tick >= m_LastPrisheSCTime && m_PPet->m_PetID == PETID_LION && m_PPet->health.tp >= 1000 && m_PBattleTarget != nullptr && prishe == 1 &&
+		lionSCPartner == nullptr)
 		{   
 		    printf("Pre Check time is: %u \n", m_LastPrisheSCTime);
 		    //uint32 finaltime = (m_LastPrisheSCTime + 8000);
@@ -1397,11 +1546,11 @@ void CAIPetDummy::ActionAbilityStart()
             }
             preparePetAbility(m_PBattleSubTarget);
             return;		
-		}     		
+		} */    		
 		
 		
-		if (m_PPet->m_PetID == PETID_LION && m_PPet->health.tp >= 1000 && m_PBattleTarget != nullptr && prishe != 1){
-		    ShowWarning(CL_GREEN"PRISHE IS NOT IN PT AT THE MOMENT!! \n" CL_RESET);
+		if ((m_PPet->m_PetID == PETID_LION && m_PPet->health.tp >= 1000 && m_PBattleTarget != nullptr)){
+		    ShowWarning(CL_GREEN"PRISHE OR ZEID IS NOT IN PT AT THE MOMENT!! \n" CL_RESET);
             if (lvl >= 71) {      
 			uint8 wsrandom = dsprand::GetRandomNumber(1, 5); 
             for (int i = 0; i < m_PPet->PetSkills.size(); i++) {
@@ -1458,9 +1607,13 @@ void CAIPetDummy::ActionAbilityStart()
 			}			
             preparePetAbility(m_PBattleSubTarget);
             return;		
+		    }
 		}
 		
-	
+		// TODO REDO PRISHE SC STUFF BASED on SC PARTNER
+		
+		
+	    /*
 		if (m_PPet->m_PetID == PETID_PRISHE && m_PPet->health.tp >= 1000 && m_PBattleTarget != nullptr && lion == 1) 
 		{
             m_LastPrisheSCTime = m_Tick + 8000; 
@@ -1495,7 +1648,7 @@ void CAIPetDummy::ActionAbilityStart()
             }				
             preparePetAbility(m_PBattleSubTarget); 
 			return;                
-		}			
+		}		
         
 		
 		
@@ -1535,7 +1688,8 @@ void CAIPetDummy::ActionAbilityStart()
 			}			
             preparePetAbility(m_PBattleSubTarget);
             return;		
-		}		
+		}	
+        */			
 		
 		
 		
@@ -1677,8 +1831,221 @@ void CAIPetDummy::ActionAbilityStart()
 			}
             preparePetAbility(m_PBattleSubTarget);
             return;
-        }			
+        }
 		
+	 	
+
+	 if (m_PPet->m_PetID == PETID_ZEID && m_PPet->health.tp >= 1000 && m_PBattleTarget != nullptr){  
+			int16 mobwsID = -1;
+			uint32 zeidSCReady = charutils::GetVar((CCharEntity*)m_PPet->PMaster,"ZeidSCReady");
+			if (zeidSCPartner != nullptr)
+			{	
+		        if (zeidSCPartner->health.tp < 500)
+			    {
+					if (m_PPet->m_PetID == PETID_ZEID)
+				    {										        
+						if (lvl > 71 && m_PPet->m_PetID == PETID_ZEID)
+					    {							
+							for (int i = 0; i < m_PPet->PetSkills.size(); i++) 
+							{
+                                auto PMobSkill = battleutils::GetMobSkill(m_PPet->PetSkills.at(i));
+								if (PMobSkill->getID() == 3754 && zeidSCReady == 1) //Ground Strike
+							    {
+								    ShowWarning(CL_GREEN"GROUND STRIKE SCREADY is: %u \n" CL_RESET, zeidSCReady);
+									mobwsID = 56;
+                                    SetCurrentMobSkill(PMobSkill);
+							    	SetCurrentWeaponSkill(mobwsID);
+                                    break;
+								}
+								else if (PMobSkill->getID() == 3753 && zeidSCReady == 2) //Spinning Slash
+							    {
+								    ShowWarning(CL_GREEN"SPINNING SLASH SCREADY is: %u \n" CL_RESET, zeidSCReady);
+									mobwsID = 55;
+                                    SetCurrentMobSkill(PMobSkill);
+							    	SetCurrentWeaponSkill(mobwsID);
+                                    break;
+								}								
+                            }					
+                        }
+						else if (lvl >= 65 && m_PPet->m_PetID == PETID_ZEID)
+					    {							
+							for (int i = 0; i < m_PPet->PetSkills.size(); i++) 
+							{
+                                auto PMobSkill = battleutils::GetMobSkill(m_PPet->PetSkills.at(i));
+                                if (PMobSkill->getID() == 3753 && zeidSCReady == 2) //Spinning Slash
+							    {
+								    ShowWarning(CL_GREEN"SPINNING SLASH SCREADY is: %u \n" CL_RESET, zeidSCReady);
+									mobwsID = 55;
+                                    SetCurrentMobSkill(PMobSkill);
+							    	SetCurrentWeaponSkill(mobwsID);
+                                    break;
+								}								
+                            }					
+                        }
+						else if (lvl >= 60 && m_PPet->m_PetID == PETID_ZEID)
+					    {							
+							for (int i = 0; i < m_PPet->PetSkills.size(); i++) 
+							{
+                                auto PMobSkill = battleutils::GetMobSkill(m_PPet->PetSkills.at(i));
+                                if (PMobSkill->getID() == 3752 && zeidSCReady == 3) //Sickle Moon
+							    {
+								    ShowWarning(CL_GREEN"Sickle Moon SCREADY is: %u \n" CL_RESET, zeidSCReady);
+									mobwsID = 54;
+                                    SetCurrentMobSkill(PMobSkill);
+							    	SetCurrentWeaponSkill(mobwsID);
+                                    break;
+								}								
+                            }					
+                        }
+						else if (lvl >= 32 && m_PPet->m_PetID == PETID_ZEID)
+					    {							
+							for (int i = 0; i < m_PPet->PetSkills.size(); i++) 
+							{
+                                auto PMobSkill = battleutils::GetMobSkill(m_PPet->PetSkills.at(i));
+                                if (PMobSkill->getID() == 3750 && zeidSCReady == 4) //Freeze Bite
+							    {
+								    ShowWarning(CL_GREEN"Sickle Moon SCREADY is: %u \n" CL_RESET, zeidSCReady);
+									mobwsID = 51;
+                                    SetCurrentMobSkill(PMobSkill);
+							    	SetCurrentWeaponSkill(mobwsID);
+                                    break;
+								}								
+                            }					
+                        }
+						else if (lvl >= 5 && m_PPet->m_PetID == PETID_ZEID)
+					    {							
+							for (int i = 0; i < m_PPet->PetSkills.size(); i++) 
+							{
+                                auto PMobSkill = battleutils::GetMobSkill(m_PPet->PetSkills.at(i));
+                                if (PMobSkill->getID() == 3752 && zeidSCReady == 5) //Hard Slash
+							    {
+								    ShowWarning(CL_GREEN"Hard Slash SCREADY is: %u \n" CL_RESET, zeidSCReady);
+									mobwsID = 48;
+                                    SetCurrentMobSkill(PMobSkill);
+							    	SetCurrentWeaponSkill(mobwsID);
+                                    break;
+								}								
+                            }					
+                        }						
+			        }
+			    }
+				//Write the SC to a variable for the player
+			    int32 value = 0;
+			    std::string varname;
+			    const int8* fmtQuery = "INSERT INTO char_vars SET charid = %u, varname = 'ZeidSCReady', value = '0' ON DUPLICATE KEY UPDATE value = '0';";
+                Sql_Query(SqlHandle, fmtQuery, m_PPet->PMaster->id, varname, value, value);	
+				//End Write of SC to variable for player							
+				preparePetAbility(m_PBattleSubTarget);
+			    return;
+			}
+			else if (zeidSCPartner == nullptr)
+			{
+			    //ShowWarning("ZEID HAS NO SC PARTNER USE RANDOMIZED WS \n");
+			    if (lvl > 71) {
+			    uint8 wsrandom = dsprand::GetRandomNumber(1, 3); // Spiral Hell, Cross Reeper or Guillotine
+                for (int i = 0; i < m_PPet->PetSkills.size(); i++) {
+                auto PMobSkill = battleutils::GetMobSkill(m_PPet->PetSkills.at(i));
+  					if (PMobSkill->getID() == 3754 && wsrandom >= 2) { //Ground Strike
+					mobwsID = 56;
+					SetCurrentMobSkill(PMobSkill);
+			        SetCurrentWeaponSkill(mobwsID);
+                    break;
+                    }
+                    else if (PMobSkill->getID() == 3753 && wsrandom < 2) { //Spinning Slash
+					mobwsID = 55;
+					SetCurrentMobSkill(PMobSkill);
+			        SetCurrentWeaponSkill(mobwsID);
+					break;
+                        }
+                    }
+                }
+                else if (lvl > 64) {
+			    uint8 wsrandom = dsprand::GetRandomNumber(1, 3); //Spinning Slash or Sickle Moon
+                for (int i = 0; i < m_PPet->PetSkills.size(); i++) {
+                    auto PMobSkill = battleutils::GetMobSkill(m_PPet->PetSkills.at(i));
+  					    if (PMobSkill->getID() == 3753 && wsrandom >= 2) { //Spinning Slash
+					    mobwsID = 55;
+					    SetCurrentMobSkill(PMobSkill);
+			            SetCurrentWeaponSkill(mobwsID);
+                        break;
+                        }
+                        else if (PMobSkill->getID() == 3752 && wsrandom < 2) { //Sickle Moon
+					    mobwsID = 54;
+					    SetCurrentMobSkill(PMobSkill);
+			            SetCurrentWeaponSkill(mobwsID);
+                        break;
+                        } 						
+                    }
+                }
+                else if (lvl > 59) {
+			    uint8 wsrandom = dsprand::GetRandomNumber(1, 3); //Guillotine or Vorpal Scythe
+                for (int i = 0; i < m_PPet->PetSkills.size(); i++) {
+                    auto PMobSkill = battleutils::GetMobSkill(m_PPet->PetSkills.at(i));
+  					    if (PMobSkill->getID() == 3752 && wsrandom >= 2) { //Sickle Moon
+					    mobwsID = 54;
+					    SetCurrentMobSkill(PMobSkill);
+			            SetCurrentWeaponSkill(mobwsID);
+                        break;
+                        }
+                        else if (PMobSkill->getID() == 3751 && wsrandom < 2) { //Crescent Moon
+					    mobwsID = 53;
+					    SetCurrentMobSkill(PMobSkill);
+			            SetCurrentWeaponSkill(mobwsID);
+                        break;
+                        } 						
+                    }
+                }
+                else if (lvl > 54) {
+			    uint8 wsrandom = dsprand::GetRandomNumber(1, 3); //Vorpal Scythe or Nightmare Scythe
+                for (int i = 0; i < m_PPet->PetSkills.size(); i++) {
+                    auto PMobSkill = battleutils::GetMobSkill(m_PPet->PetSkills.at(i));
+  					    if (PMobSkill->getID() == 3751 && wsrandom >= 2) { //Crescent Moon
+					    mobwsID = 53;
+					    SetCurrentMobSkill(PMobSkill);
+			            SetCurrentWeaponSkill(mobwsID);
+                        break;
+                        }
+                        else if (PMobSkill->getID() == 3750 && wsrandom < 2) { //Freezebite
+					    mobwsID = 51;
+					    SetCurrentMobSkill(PMobSkill);
+			            SetCurrentWeaponSkill(mobwsID);
+                        break;
+                        } 						
+                    }
+                }
+                else if (lvl > 32) {
+			    uint8 wsrandom = dsprand::GetRandomNumber(1, 3); //Nightmare Scythe or Slice
+                for (int i = 0; i < m_PPet->PetSkills.size(); i++) {
+                auto PMobSkill = battleutils::GetMobSkill(m_PPet->PetSkills.at(i));
+  					    if (PMobSkill->getID() == 3750 && wsrandom >= 2) { //Freezebite
+					    mobwsID = 51;
+					    SetCurrentMobSkill(PMobSkill);
+			            SetCurrentWeaponSkill(mobwsID);
+                        break;
+                        }
+                        else if (PMobSkill->getID() == 3749 && wsrandom < 2) { //Hard Slash
+					    mobwsID = 48;
+					    SetCurrentMobSkill(PMobSkill);
+			            SetCurrentWeaponSkill(mobwsID);
+                        break;
+                        } 						
+                    }
+                }	
+                else if (lvl > 4) {
+                for (int i = 0; i < m_PPet->PetSkills.size(); i++) {
+                    auto PMobSkill = battleutils::GetMobSkill(m_PPet->PetSkills.at(i));
+  					    if (PMobSkill->getID() == 3749) { //Slice
+					    mobwsID = 96;
+					    SetCurrentMobSkill(PMobSkill);
+			            SetCurrentWeaponSkill(mobwsID);
+                        break;
+					    }
+                    }
+                }			
+                preparePetAbility(m_PBattleSubTarget);
+			    return;	
+            }		
+		}
 
 
 
@@ -2720,7 +3087,7 @@ void CAIPetDummy::ActionJobAbilityFinish()
         if (m_PJobAbility->getID() == 30 || m_PJobAbility->getID() == 50 || m_PJobAbility->getID() == 51 ||
 		m_PJobAbility->getID() == 109 || m_PJobAbility->getID() == 110 || m_PJobAbility->getID() == 111 ||
 		m_PJobAbility->getID() == 112 || m_PJobAbility->getID() == 113 || m_PJobAbility->getID() == 114 ||
-		m_PJobAbility->getID() == 115 || m_PJobAbility->getID() == 116) 
+		m_PJobAbility->getID() == 115 || m_PJobAbility->getID() == 116 || m_PJobAbility->getID() == 61) 
 	    {	
 		Action.reaction = REACTION_HIT; //   SPECEFFECT_NONE;
 		Action.speceffect = SPECEFFECT_HIT;
@@ -2863,7 +3230,8 @@ void CAIPetDummy::ActionRoaming()
     uint32 trustassist = charutils::GetVar((CCharEntity*)m_PPet->PMaster,"TrustAssist");
     if (m_PPet->PMaster == nullptr || m_PPet->PMaster->isDead()) { // || m_PPet->PMaster->getZone() != m_PPet->getZone()) {
         m_ActionType = ACTION_FALL;
-        if (m_PPet->m_PetID == PETID_LION && m_PPet->isDead())
+        /*
+		if (m_PPet->m_PetID == PETID_LION && m_PPet->isDead())
 		{
 		    int32 value = 0;
 			std::string varname;
@@ -2876,7 +3244,7 @@ void CAIPetDummy::ActionRoaming()
 			std::string varname;
 			const int8* fmtQuery = "INSERT INTO char_vars SET charid = %u, varname = 'PrisePT', value = '0' ON DUPLICATE KEY UPDATE value = '0';";
             Sql_Query(SqlHandle, fmtQuery, m_PPet->PMaster->id, varname, value, value);
-		}			
+		}	*/		
         ActionFall();
         return;
     }
@@ -3008,6 +3376,8 @@ void CAIPetDummy::ActionAttack()
 {
     if (m_PPet->PMaster == nullptr || m_PPet->PMaster->isDead() || m_PPet->isDead()) {
         m_ActionType = ACTION_FALL;
+		
+		/*
         if (m_PPet->m_PetID == PETID_LION && m_PPet->isDead())
 		{
 		    int32 value = 0;
@@ -3021,7 +3391,7 @@ void CAIPetDummy::ActionAttack()
 			std::string varname;
 			const int8* fmtQuery = "INSERT INTO char_vars SET charid = %u, varname = 'PrisePT', value = '0' ON DUPLICATE KEY UPDATE value = '0';";
             Sql_Query(SqlHandle, fmtQuery, m_PPet->PMaster->id, varname, value, value);
-		}		
+		}*/		
 		ActionFall();
 		
 		
@@ -3041,16 +3411,24 @@ void CAIPetDummy::ActionAttack()
 	}
 	
 	
-	
-    uint32 lion = charutils::GetVar((CCharEntity*)m_PPet->PMaster,"LionPT");
-	uint32 prishe = charutils::GetVar((CCharEntity*)m_PPet->PMaster,"PrishePT");
+
+    //uint32 lion = charutils::GetVar((CCharEntity*)m_PPet->PMaster,"LionPT");
+	//uint32 prishe = charutils::GetVar((CCharEntity*)m_PPet->PMaster,"PrishePT");
     //For Trusts to SC with each other
 	// 1 = TP Is ready
 	// 2 = SC just performed
-    uint32 prishesc = charutils::GetVar((CCharEntity*)m_PPet->PMaster,"PrisheSC");
-    uint32 lionsc = charutils::GetVar((CCharEntity*)m_PPet->PMaster,"LionSC");
-
+    //uint32 prishesc = charutils::GetVar((CCharEntity*)m_PPet->PMaster,"PrisheSC");
+    //uint32 lionsc = charutils::GetVar((CCharEntity*)m_PPet->PMaster,"LionSC");
 	
+	//Trust Tokens
+	uint32 curillaChivalry = 0;
+    uint32 excenAngon = charutils::GetVar((CCharEntity*)m_PPet->PMaster,"TrustJA_Excen")
+
+	CMobEntity* PMob = (CMobEntity*)m_PBattleTarget;
+	apAction_t Action;
+	m_PPet->m_ActionList.clear();
+
+	Action.ActionTarget = m_PBattleTarget;
 	
 	
 	//****************************************************************//
@@ -3372,7 +3750,7 @@ void CAIPetDummy::ActionAttack()
 			}				
 				
 		}
-
+uint32 adelhiedMB = charutils::GetVar((CCharEntity*)m_PPet->PMaster,"TrustMB");
 		 if (m_PPet->m_PetID == PETID_CURILLA && trustlevel >=15)
 		{		
 		 if ((m_Tick >= m_LastCurillaBashTime + m_curillaBashRecast) && (m_Tick >= m_LastEngageStart + 7000)) // Only use shield bash if mob is casting??  actionTarget.messageID = 327
@@ -3395,8 +3773,59 @@ void CAIPetDummy::ActionAttack()
 				return;	
 				}		
 	     }
+
+		 if (m_PPet->m_PetID == PETID_CURILLA && trustlevel >= 75 && m_PPet->GetMPP() < 20)  //Chivalry
+		{
+         uint32 curillaChivalry = charutils::GetVar((CCharEntity*)m_PPet->PMaster,"CurillaChivalry");		
+		 if (m_Tick >= m_LastCurillaChivalryTime + m_curillaChivalryRecast && curillaChivalry > 0)
+			{
+			m_PWeaponSkill = nullptr;
+            int16 mobjaID = -1;			
+			for (int i = 0; i < m_PPet->PetSkills.size(); i++) {
+                    auto PMobSkill = battleutils::GetMobSkill(m_PPet->PetSkills.at(i));
+                            
+                        if (PMobSkill->getID() == 3736) { //Chivalry
+						    mobjaID = 142;
+                            SetCurrentMobSkill(PMobSkill);
+							SetCurrentJobAbility(mobjaID);
+							m_PBattleSubTarget = m_PPet;  
+							break;
+                        }
+			        }
+				preparePetAbility(m_PBattleSubTarget);
+				m_LastCurillaChivalryTime = m_Tick;
+				return;	
+				}		
+	     }		 
 		 
-		
+		/*
+		if (m_PPet->m_PetID == PETID_LION && trustlevel >= 60 && (m_Tick >= m_LastEngageStart + 7000))
+		{
+		    CBattleEntity* trickAttackPartner = getTrickAttackPartner();
+		    if ((m_Tick >= m_LastLionTrickAttackTime + m_lionTrickAttackRecast) && trickAttackPartner != nullptr)
+			{
+			    if (((abs(trickAttackPartner->loc.p.rotation - m_PPet->loc.p.rotation))) < 23)// Only use Trick Attack if behind partner
+				{
+			    ShowWarning(CL_YELLOW"LION TA Posittion Requiremnts have been met!! \n" CL_RESET);
+			    m_PWeaponSkill = nullptr;
+                int16 mobjaID = -1;				    
+			    for (int i = 0; i < m_PPet->PetSkills.size(); i++) {
+                    auto PMobSkill = battleutils::GetMobSkill(m_PPet->PetSkills.at(i));
+                            
+                        if (PMobSkill->getID() == 3802) { //Trick Atack
+						    mobjaID = 60;
+                            SetCurrentMobSkill(PMobSkill);
+							SetCurrentJobAbility(mobjaID);
+							m_PBattleSubTarget = m_PPet;  //Target Self
+							break;
+                        }
+			        }
+				preparePetAbility(m_PBattleSubTarget);
+				m_LastLionTrickAttackTime = m_Tick;
+				return;	
+				}				
+			}
+		} */
 		
 		
 		 if (m_PPet->m_PetID == PETID_NANAA_MIHGO && trustlevel >=15)
@@ -3533,7 +3962,28 @@ void CAIPetDummy::ActionAttack()
 	     }		 
 
 		 if (m_PPet->m_PetID == PETID_EXCENMILLE)
-		{		
+		{
+		 if (m_Tick >= m_LastExeAngonTime + m_exeAngonRecast && trustlevel >= 75 && m_PBattleTarget->StatusEffectContainer->HasStatusEffect(EFFECT_DIA) && excenAngon == 1) //ANGON
+			{
+			m_PWeaponSkill = nullptr;
+            int16 mobjaID = -1;			
+			for (int i = 0; i < m_PPet->PetSkills.size(); i++) {
+                    auto PMobSkill = battleutils::GetMobSkill(m_PPet->PetSkills.at(i));
+                            
+                        if (PMobSkill->getID() == 3707) { //Angon
+						    mobjaID = 154;
+                            SetCurrentMobSkill(PMobSkill);
+							SetCurrentJobAbility(mobjaID);
+							m_PBattleSubTarget = m_PBattleTarget;
+							break;
+                        }
+			        }
+				preparePetAbility(m_PBattleSubTarget);
+				m_LastExeJumpTime = m_Tick;
+				return;	
+				}
+
+		
 		 if (m_Tick >= m_LastExeJumpTime + m_exeJumpRecast && trustlevel >=10)
 			{
 			m_PWeaponSkill = nullptr;
@@ -3765,7 +4215,7 @@ void CAIPetDummy::ActionAttack()
 				}	*/					
 		}
 
-	  // uint8 fighttime = ((CBattleEntity*)m_PPet)->PBattleAI->GetBattleTime();
+	 
 	  
       // this is to only start the loop if pet is in battle for more than 8 seconds
 	  // This lets the player make the decision on front or backline
@@ -3779,7 +4229,7 @@ void CAIPetDummy::ActionAttack()
 				uint16 family = m_PPet->m_Family;
 				uint16 petID = m_PPet->m_PetID;
         
-		
+		        //printf("Ulmia Spell Check Triggered \n", spellID);
 				spellID = UlmiaSpell();
 		        //printf("Ulmia Spell is: %d \n", spellID);
 				if (spellID != -1)
@@ -3853,7 +4303,88 @@ void CAIPetDummy::ActionAttack()
 				return;
 			    }
 		    }
-        }			
+        }
+		
+
+
+	 if (m_PPet->m_PetID == PETID_ZEID)
+		{
+		 if (m_Tick >= m_LastZeidMagicTime + m_zeidMagicRecast) // Check Every 4 Seconds as universal check 
+			{
+			    int16 spellID = -1;
+				uint16 family = m_PPet->m_Family;
+				uint16 petID = m_PPet->m_PetID;
+        
+		
+				spellID = ZeidSpell();
+		
+				if (spellID != -1)
+				{
+				SetCurrentSpell(spellID);
+				m_ActionType = ACTION_MAGIC_START;
+				ActionMagicStart();
+				return;
+			    }
+		    }		
+		 if (m_Tick >= m_LastZeidArcaneCircleTime + m_zeidArcaneCircleRecast && m_PBattleTarget->m_EcoSystem == SYSTEM_ARCANA) // Only use Arcane Circle against Arcana
+			{
+			m_PWeaponSkill = nullptr;
+            int16 mobjaID = -1;			
+			for (int i = 0; i < m_PPet->PetSkills.size(); i++) {
+                    auto PMobSkill = battleutils::GetMobSkill(m_PPet->PetSkills.at(i));
+                            
+                        if (PMobSkill->getID() == 3755) { //Arcane Circle
+						    mobjaID = 34;
+                            SetCurrentMobSkill(PMobSkill);
+							SetCurrentJobAbility(mobjaID);
+							m_PBattleSubTarget = m_PPet;
+							break;
+                        }
+			        }
+				preparePetAbility(m_PBattleSubTarget);
+				m_LastZeidArcaneCircleTime = m_Tick;
+				return;	
+			}
+		 if (m_Tick >= m_LastZeidWeaponBashTime + m_zeidWeaponBashRecast && Action.messageID == 327)
+			{
+			m_PWeaponSkill = nullptr;
+            int16 mobjaID = -1;			
+			for (int i = 0; i < m_PPet->PetSkills.size(); i++) {
+                    auto PMobSkill = battleutils::GetMobSkill(m_PPet->PetSkills.at(i));
+                            
+                        if (PMobSkill->getID() == 3756) { //Weapon Bash
+						    mobjaID = 61;
+                            SetCurrentMobSkill(PMobSkill);
+							SetCurrentJobAbility(mobjaID);
+							m_PBattleSubTarget = m_PBattleTarget;
+							break;
+                        }
+			        }
+				preparePetAbility(m_PBattleSubTarget);
+				m_LastZeidWeaponBashTime = m_Tick;
+				return;	
+			}	
+		 if (m_Tick >= m_LastZeidLastResortTime + m_zeidLastResortRecast)
+			{
+			m_PWeaponSkill = nullptr;
+            int16 mobjaID = -1;			
+			for (int i = 0; i < m_PPet->PetSkills.size(); i++) {
+                    auto PMobSkill = battleutils::GetMobSkill(m_PPet->PetSkills.at(i));
+                            
+                        if (PMobSkill->getID() == 3757) { //Last Resort
+						    mobjaID = 35;
+                            SetCurrentMobSkill(PMobSkill);
+							SetCurrentJobAbility(mobjaID);
+							m_PBattleSubTarget = m_PPet;
+							break;
+                        }
+			        }
+				preparePetAbility(m_PBattleSubTarget);
+				m_LastZeidLastResortTime = m_Tick;
+				return;	
+			}			
+				
+		}		
 		
 	
 
@@ -3907,12 +4438,13 @@ void CAIPetDummy::ActionAttack()
 	//Ayame will use WS if the players TP is less than 80%.  If the player's TP is 80% she will hold TP until the player get 100%.
 	
 	int8 petleveldiff = 0;
+	uint32 tpWait = charutils::GetVar((CCharEntity*)m_PPet->PMaster,"tpWait");
 	if (m_PPet->getPetType() == PETTYPE_TRUST){
 	petleveldiff = (moblevel - trustlevel);  // Find level difference
 	}
 	
 		if (m_PPet->getPetType() == PETTYPE_TRUST && m_PPet->m_PetID != PETID_NAJI && m_PPet->m_PetID != PETID_NANAA_MIHGO && m_PPet->m_PetID != PETID_AYAME && m_PPet->m_PetID != PETID_LION 
-		&& m_PPet->m_PetID != PETID_PRISHE && m_PPet->health.tp >= 1000 && m_PPet->PetSkills.size() > 0)
+		&& m_PPet->m_PetID != PETID_PRISHE && m_PPet->m_PetID != PETID_CURILLA && m_PPet->m_PetID != PETID_ZEID && m_PPet->health.tp >= 1000 && m_PPet->PetSkills.size() > 0)
     {
 	    ShowWarning(CL_RED"Other Trust Triggered WS \n" CL_RESET);
 		m_PBattleSubTarget = m_PBattleTarget;
@@ -3920,8 +4452,27 @@ void CAIPetDummy::ActionAttack()
         ActionAbilityStart();
         return;
 	}
+		if (m_PPet->getPetType() == PETTYPE_TRUST && m_Tick >= m_LastEngageStart + 3000 && m_PPet->m_PetID == PETID_CURILLA && m_PPet->health.tp >= 1000 && m_PPet->PetSkills.size() > 0
+		&& m_Tick <= m_LastCurillaChivalryTime + 240000 && m_PPet->GetMPP() >= 20)  //Chivalry countdown 5 min down to 1 min and mp greater than 30% use WS
+    {
+	    ShowWarning(CL_RED"Other Trust Triggered WS \n" CL_RESET);
+		m_PBattleSubTarget = m_PBattleTarget;
+        m_ActionType = ACTION_MOBABILITY_START;
+        ActionAbilityStart();
+        return;
+	}
+		if (m_PPet->getPetType() == PETTYPE_TRUST && m_Tick >= m_LastEngageStart + 3000 && m_PPet->m_PetID == PETID_CURILLA && m_PPet->health.tp >= 1000 && m_PPet->PetSkills.size() > 0
+		&& m_Tick >= m_LastCurillaChivalryTime + 300000 && m_PPet->GetMPP() >= 20)  //Chivalry countdown has ended but still WS
+    {
+	    ShowWarning(CL_RED"Other Trust Triggered WS \n" CL_RESET);
+		m_PBattleSubTarget = m_PBattleTarget;
+        m_ActionType = ACTION_MOBABILITY_START;
+        ActionAbilityStart();
+        return;
+	}		
+	
 	    //Ayame will wait until 200% if sekkanoki is active
-		if (m_PPet->getPetType() == PETTYPE_TRUST && m_Tick >= m_LastEngageStart + 7000 && m_PPet->m_PetID == PETID_AYAME && m_PPet->health.tp >= 2000 && m_PPet->PetSkills.size() > 0
+		if (m_PPet->getPetType() == PETTYPE_TRUST && m_Tick >= m_LastEngageStart + 7000 + tpWait && m_PPet->m_PetID == PETID_AYAME && m_PPet->health.tp >= 2000 && m_PPet->PetSkills.size() > 0
 		&& m_PPet->StatusEffectContainer->HasStatusEffect(EFFECT_SEKKANOKI) == true && m_sekkaStatus == 2)
     {
 		m_PBattleSubTarget = m_PBattleTarget;
@@ -3930,7 +4481,7 @@ void CAIPetDummy::ActionAttack()
         return;
 	}
 	    //Ayame will use WS right after using Sekkanoki	
-		if (m_PPet->getPetType() == PETTYPE_TRUST && m_Tick >= m_LastEngageStart + 7000 && m_PPet->m_PetID == PETID_AYAME && m_PPet->health.tp >= 1000 && m_PPet->PetSkills.size() > 0 && 
+		if (m_PPet->getPetType() == PETTYPE_TRUST && m_Tick >= m_LastEngageStart + 7000 + tpWait && m_PPet->m_PetID == PETID_AYAME && m_PPet->health.tp >= 1000 && m_PPet->PetSkills.size() > 0 && 
 		(m_Tick >= m_LastSkillchainStart + 6000) && m_PPet->StatusEffectContainer->HasStatusEffect(EFFECT_SEKKANOKI) == false && m_sekkaStatus == 1)
     {
 		m_PBattleSubTarget = m_PBattleTarget;
@@ -3939,7 +4490,7 @@ void CAIPetDummy::ActionAttack()
         return;
 	}	
 	    //Ayame will use WS if player TP is less than 80%  //TODO sekka off = 0	
-		if (m_PPet->getPetType() == PETTYPE_TRUST && m_Tick >= m_LastEngageStart + 7000 && m_PPet->m_PetID == PETID_AYAME && m_PPet->health.tp >= 1000 && m_PPet->PetSkills.size() > 0 && m_PPet->PMaster->health.tp < 800
+		if (m_PPet->getPetType() == PETTYPE_TRUST && m_Tick >= m_LastEngageStart + 7000 + tpWait && m_PPet->m_PetID == PETID_AYAME && m_PPet->health.tp >= 1000 && m_PPet->PetSkills.size() > 0 && m_PPet->PMaster->health.tp < 800
 		&& m_PPet->StatusEffectContainer->HasStatusEffect(EFFECT_SEKKANOKI) == false && m_sekkaStatus == 0)
     {
 		m_PBattleSubTarget = m_PBattleTarget;
@@ -3948,7 +4499,7 @@ void CAIPetDummy::ActionAttack()
         return;
 	}
 	    //Ayame will use WS Once player has 100%		
-		if (m_PPet->getPetType() == PETTYPE_TRUST && m_Tick >= m_LastEngageStart + 7000 && m_PPet->m_PetID == PETID_AYAME && m_PPet->health.tp >= 1000 && m_PPet->PetSkills.size() > 0 && m_PPet->PMaster->health.tp >= 1000
+		if (m_PPet->getPetType() == PETTYPE_TRUST && m_Tick >= m_LastEngageStart + 7000 + tpWait && m_PPet->m_PetID == PETID_AYAME && m_PPet->health.tp >= 1000 && m_PPet->PetSkills.size() > 0 && m_PPet->PMaster->health.tp >= 1000
 		&& m_PPet->StatusEffectContainer->HasStatusEffect(EFFECT_SEKKANOKI) == false && m_sekkaStatus == 0)
     {
 		m_PBattleSubTarget = m_PBattleTarget;
@@ -3967,7 +4518,7 @@ void CAIPetDummy::ActionAttack()
         return;
 	} */
 	    //Use WS if SA is active
-		if (m_PPet->getPetType() == PETTYPE_TRUST && m_Tick >= m_LastEngageStart + 7000 && m_PPet->m_PetID == PETID_NANAA_MIHGO && m_PPet->health.tp >= 1000 && m_PPet->PetSkills.size() > 0
+		if (m_PPet->getPetType() == PETTYPE_TRUST && m_Tick >= m_LastEngageStart + 7000 + tpWait && m_PPet->m_PetID == PETID_NANAA_MIHGO && m_PPet->health.tp >= 1000 && m_PPet->PetSkills.size() > 0
 		&& m_PPet->StatusEffectContainer->HasStatusEffect(EFFECT_TRUST_SNEAK_ATTACK))
     {
 		m_PBattleSubTarget = m_PBattleTarget;
@@ -3976,7 +4527,7 @@ void CAIPetDummy::ActionAttack()
         return;
 	}
 	    //Use WS if SA timer has more than 25 seconds left
-		if (m_PPet->getPetType() == PETTYPE_TRUST && m_Tick >= m_LastEngageStart + 7000 && m_PPet->m_PetID == PETID_NANAA_MIHGO && m_PPet->health.tp >= 1000 && m_PPet->PetSkills.size() > 0
+		if (m_PPet->getPetType() == PETTYPE_TRUST && m_Tick >= m_LastEngageStart + 7000 + tpWait && m_PPet->m_PetID == PETID_NANAA_MIHGO && m_PPet->health.tp >= 1000 && m_PPet->PetSkills.size() > 0
 		&& m_Tick < m_LastNanaaSneakAttackTime + 20000)
     {
 		m_PBattleSubTarget = m_PBattleTarget;
@@ -3985,7 +4536,7 @@ void CAIPetDummy::ActionAttack()
         return;
 	}
 	    //No SA available for Nanaa Yet
-		if (m_PPet->getPetType() == PETTYPE_TRUST && m_Tick >= m_LastEngageStart + 7000 && m_PPet->m_PetID == PETID_NANAA_MIHGO && m_PPet->health.tp >= 1000 && m_PPet->PetSkills.size() > 0
+		if (m_PPet->getPetType() == PETTYPE_TRUST && m_Tick >= m_LastEngageStart + 7000 + tpWait && m_PPet->m_PetID == PETID_NANAA_MIHGO && m_PPet->health.tp >= 1000 && m_PPet->PetSkills.size() > 0
 		&& trustlevel < 15)
     {
 		m_PBattleSubTarget = m_PBattleTarget;
@@ -3993,98 +4544,104 @@ void CAIPetDummy::ActionAttack()
         ActionAbilityStart();
         return;
 	}
-		if (m_PPet->getPetType() == PETTYPE_TRUST && m_Tick >= m_LastEngageStart + 7000 && m_PPet->m_PetID == PETID_NAJI && m_PPet->health.tp >= 1000 && m_PPet->PetSkills.size() > 0)
+		if (m_PPet->getPetType() == PETTYPE_TRUST && m_Tick >= m_LastEngageStart + 7000 + tpWait && m_PPet->m_PetID == PETID_NAJI && m_PPet->health.tp >= 1000 && m_PPet->PetSkills.size() > 0)
     {
 		m_PBattleSubTarget = m_PBattleTarget;
         m_ActionType = ACTION_MOBABILITY_START;
         ActionAbilityStart();
         return;
 	} 
-		if (m_PPet->getPetType() == PETTYPE_TRUST && m_Tick >= m_LastEngageStart + 7000 && m_PPet->m_PetID == PETID_BLUE && m_PPet->health.tp >= 1000 && m_PPet->PetSkills.size() > 0)
+		if (m_PPet->getPetType() == PETTYPE_TRUST && m_Tick >= m_LastEngageStart + 7000 + tpWait && m_PPet->m_PetID == PETID_BLUE && m_PPet->health.tp >= 1000 && m_PPet->PetSkills.size() > 0)
     {
 		m_PBattleSubTarget = m_PBattleTarget;
         m_ActionType = ACTION_MOBABILITY_START;
         ActionAbilityStart();
         return;
 	} 	
-		if (m_PPet->getPetType() == PETTYPE_TRUST && m_Tick >= m_LastEngageStart + 7000 && m_PPet->m_PetID == PETID_ADELHIED && m_PPet->health.tp >= 1000 && m_PPet->PetSkills.size() > 0)
+		if (m_PPet->getPetType() == PETTYPE_TRUST && m_Tick >= m_LastEngageStart + 7000 + tpWait && m_PPet->m_PetID == PETID_ADELHIED && m_PPet->health.tp >= 1000 && m_PPet->PetSkills.size() > 0)
     {
 		m_PBattleSubTarget = m_PBattleTarget;
         m_ActionType = ACTION_MOBABILITY_START;
         ActionAbilityStart();
         return;
 	}
-	    //Prishe is in the Party with Lion and Lion has enough TP to signal the start of the SC.
-		if (m_PPet->getPetType() == PETTYPE_TRUST && m_Tick >= m_LastEngageStart + 7000 && m_PPet->m_PetID == PETID_LION && m_PPet->health.tp >= 1000 && m_PPet->PetSkills.size() > 0 
-		&& prishe == 1 && lionsc != 1)
-    {
-		int32 value = 1;
-		std::string varname;
-		const int8* fmtQuery = "INSERT INTO char_vars SET charid = %u, varname = 'LionSC', value = '1' ON DUPLICATE KEY UPDATE value = '1';";
-        Sql_Query(SqlHandle, fmtQuery, m_PPet->PMaster->id, varname, value, value);	 	
-	} 	
-
-	    //Prishe is in the Party with Lion and Just Skillchained.  Set the M-Tick Properly
-		if (m_PPet->getPetType() == PETTYPE_TRUST && m_Tick >= m_LastEngageStart + 7000 && m_Tick >= m_LastPrisheSCTime && m_PPet->m_PetID == PETID_LION && m_PPet->health.tp >= 1000 && m_PPet->PetSkills.size() > 0 
-		&& prishe == 1 && prishesc == 2)
-    {
-		int32 value = 5;
-		std::string varname;
-		const int8* fmtQuery = "INSERT INTO char_vars SET charid = %u, varname = 'PrisheSC', value = '5' ON DUPLICATE KEY UPDATE value = '5';";
-        Sql_Query(SqlHandle, fmtQuery, m_PPet->PMaster->id, varname, value, value);	 
-        m_LastPrisheSCTime = m_Tick + 6000;
-	} 
-	    //Prishe is in the Party with Lion and Just Skillchained.  With the M-Tick set try to WS	
-		if (m_PPet->getPetType() == PETTYPE_TRUST && m_Tick >= m_LastEngageStart + 7000 && m_Tick >= m_LastPrisheSCTime && m_PPet->m_PetID == PETID_LION && m_PPet->health.tp >= 1000 && m_PPet->PetSkills.size() > 0 
-		&& prishe == 1 && prishesc == 5)
-    {
-	    ShowWarning(CL_CYAN"LION WS TRIGGERED with time of %u \n" CL_RESET, m_LastPrisheSCTime);	
-		m_PBattleSubTarget = m_PBattleTarget;
-        m_ActionType = ACTION_MOBABILITY_START;
-        ActionAbilityStart();
-        return;
-	} 	
-	    //Prishe is NOT in the party so just SC when at 1000% TP
-		if (m_PPet->getPetType() == PETTYPE_TRUST && m_Tick >= m_LastEngageStart + 7000 && m_PPet->m_PetID == PETID_LION && m_PPet->health.tp >= 1000 && m_PPet->PetSkills.size() > 0 
-		&& prishe != 1)
+		if (m_PPet->getPetType() == PETTYPE_TRUST && m_Tick >= m_LastEngageStart + 7000 + tpWait && m_PPet->m_PetID == PETID_EXCENMILLE && m_PPet->health.tp >= 1000 && m_PPet->PetSkills.size() > 0)
     {
 		m_PBattleSubTarget = m_PBattleTarget;
         m_ActionType = ACTION_MOBABILITY_START;
         ActionAbilityStart();
         return;
 	}
-	    // Lion is in the Party with Prishe and Lion has TP to close the SC and you are 7 levels or lower than the mobs level and HP is < 90 but greater than 35%
-		if (m_PPet->getPetType() == PETTYPE_TRUST && m_Tick >= m_LastEngageStart + 7000 && m_PPet->m_PetID == PETID_PRISHE && m_PPet->health.tp >= 1000 && m_PPet->PetSkills.size() > 0 
-		&& lion == 1 && lionsc == 1 && (m_PBattleTarget->GetHPP() > 35 && m_PBattleTarget->GetHPP() < 90) && petleveldiff <= 7)
-    {
-	    //m_LastPrisheSCTime = m_Tick;	
-	    ShowWarning(CL_RED"PRISHE WS TRIGGERED LEVEL DIFF LESS THAN 7 \n" CL_RESET);
-		m_PBattleSubTarget = m_PBattleTarget;
-        m_ActionType = ACTION_MOBABILITY_START;
-        ActionAbilityStart();
-        return;
-	}   
-	    //Lion is in the Party with Prishe and Lion has TP to close the SC and the mob is greater than 7 levels higher than you
-		if (m_PPet->getPetType() == PETTYPE_TRUST && m_Tick >= m_LastEngageStart + 7000 && m_PPet->m_PetID == PETID_PRISHE && m_PPet->health.tp >= 1000 && m_PPet->PetSkills.size() > 0 
-		&& lion == 1 && lionsc == 1 && petleveldiff > 7)
-    {
-	    //m_LastPrisheSCTime = m_Tick;
-		ShowWarning(CL_RED"PRISHE WS TRIGGERED LEVEL DIFF GREATER THAN 7 \n" CL_RESET);
-		m_PBattleSubTarget = m_PBattleTarget;
-        m_ActionType = ACTION_MOBABILITY_START;
-        ActionAbilityStart();
-        return;
-	} 
 	
-	    //Lion is NOT in the party so just SC when at 1000% TP
-		if (m_PPet->getPetType() == PETTYPE_TRUST && m_Tick >= m_LastEngageStart + 7000 && m_PPet->m_PetID == PETID_PRISHE && m_PPet->health.tp >= 1000 && m_PPet->PetSkills.size() > 0 
-		&& lion != 1)
+	
+	CBattleEntity* lionSCPartner = getLionSCPartnerZeid();
+	CBattleEntity* zeidSCPartner = getZeidSCPartner();
+	
+	// First check if Lion has TP
+	if (m_PPet->getPetType() == PETTYPE_TRUST && m_Tick >= m_LastEngageStart + 7000 + tpWait && m_PPet->m_PetID == PETID_LION && m_PPet->health.tp >= 1000 && m_PPet->PetSkills.size() > 0)
+	{
+	   //Now check if Zeid is in the party
+	    if (m_PPet->m_PetID == PETID_LION && lionSCPartner != nullptr) //Zeid is in the party
+	    {
+	        if (m_PPet->m_PetID == PETID_LION && lionSCPartner->health.tp >= 1000)
+			{
+				
+                //int16 wsReady = skillchainTimer();//starts the timer
+				ShowWarning(CL_GREEN"LION and ZEID have TP!! LION START SC!! APPLY EFFECT TO MOB \n" CL_RESET);
+		        m_PBattleSubTarget = m_PBattleTarget;
+				m_PBattleTarget->StatusEffectContainer->AddStatusEffect(new CStatusEffect(EFFECT_TRUST_SKILLCHAIN_TIMER, EFFECT_TRUST_SKILLCHAIN_TIMER, 1, 0, 9),true);
+                m_ActionType = ACTION_MOBABILITY_START;
+                ActionAbilityStart();
+                return;
+			}
+			else
+			{
+			    //ShowWarning(CL_CYAN"LION TP BUT ZEID DOESNT!!! \n" CL_RESET);	
+			}
+	    }
+		//Add Else IF for Prishe 
+		else if (m_PPet->m_PetID == PETID_LION && lionSCPartner == nullptr) //Zeid is not in the party
+	    {
+		    //ShowWarning(CL_CYAN"ZEID IS NOT IN THE PARTY SO SC WHENEVER!!! \n" CL_RESET);
+		    m_PBattleSubTarget = m_PBattleTarget;
+            m_ActionType = ACTION_MOBABILITY_START;
+            ActionAbilityStart();
+            return;
+	    }
+	}
+
+	//TODO ADD PRISHE DETERMINATION
+
+	if (m_PPet->getPetType() == PETTYPE_TRUST && m_Tick >= m_LastEngageStart + 7000 + tpWait && m_PPet->m_PetID == PETID_ZEID && m_PPet->health.tp >= 1000 && m_PPet->PetSkills.size() > 0)
     {
-	    ShowWarning(CL_RED"PRISHE WS TRIGGERED LION NOT IN PT \n" CL_RESET);
-		m_PBattleSubTarget = m_PBattleTarget;
-        m_ActionType = ACTION_MOBABILITY_START;
-        ActionAbilityStart();
-        return;
+	    //ShowWarning(CL_CYAN"ZEID Checking to see if approrpiate for Skillchain!! \n" CL_RESET);
+		uint32 zeidSCReady = charutils::GetVar((CCharEntity*)m_PPet->PMaster,"ZeidSCReady");	
+		if (m_PPet->m_PetID == PETID_ZEID && zeidSCPartner != nullptr && (m_PBattleTarget->StatusEffectContainer->HasStatusEffect(EFFECT_TRUST_SKILLCHAIN_TIMER) == false) && zeidSCReady > 0) 
+		{
+		    //int16 zeidSCReady = skillchainTimer();
+			//zeidSCReady = ZeidSkillchain();
+			//ShowWarning(CL_GREEN"EFFECT IS OFF THE MOB!! \n" CL_RESET);
+		    if (m_PPet->m_PetID == PETID_ZEID)
+			{
+			    //ShowWarning(CL_GREEN"START ZEID SKILLCHAIN LION HAS Melee'd enough!! \n" CL_RESET);
+				m_PBattleSubTarget = m_PBattleTarget;
+                m_ActionType = ACTION_MOBABILITY_START;
+                ActionAbilityStart();
+                return;
+			}
+			else
+			{
+			    //ShowWarning(CL_CYAN"ZEID HAS TP WAITING FOR LION TO WS!!! \n" CL_RESET);
+			}
+		}
+		else if (m_PPet->m_PetID == PETID_ZEID && zeidSCPartner == nullptr)
+		{
+		    ShowWarning(CL_CYAN"LION NOT PRESENT GOING TO WS ANYWAYS!!! \n" CL_RESET);
+		    m_PBattleSubTarget = m_PBattleTarget;
+            m_ActionType = ACTION_MOBABILITY_START;
+            ActionAbilityStart();
+            return;
+		}	
 	}  	
 
     m_PPathFind->LookAt(m_PBattleTarget->loc.p);
@@ -4161,7 +4718,7 @@ void CAIPetDummy::ActionAttack()
     {
 	    ShowWarning(CL_RED"Ulma Move to Back Line triggered \n" CL_RESET);
 	    position_t* pos = &m_PBattleTarget->loc.p;
-		position_t nearEntity = nearPosition(*pos, 13.0f, M_PI); // add decimal to pi maybe 
+		position_t nearEntity = nearPosition(*pos, 13.0f, M_PI); // add decimal to pi maybe.  
         if (m_PPathFind->PathAround(nearEntity, PATHFLAG_RUN | PATHFLAG_WALLHACK))
         {
             m_PPathFind->FollowPath();		
@@ -4207,7 +4764,7 @@ void CAIPetDummy::ActionAttack()
     if ((currentDistance < 12 || currentDistance > 13) && m_PPet->m_PetID == PETID_ADELHIED && m_PPet->speed != 0)
     {
 	    position_t* pos = &m_PBattleTarget->loc.p;
-		position_t nearEntity = nearPosition(*pos, 13.0f, M_PI);
+		position_t nearEntity = nearPosition(*pos, 13.0f, M_PI - 0.08);
         if (m_PPathFind->PathAround(nearEntity, PATHFLAG_RUN | PATHFLAG_WALLHACK))
         {
             m_PPathFind->FollowPath();
@@ -4268,9 +4825,11 @@ void CAIPetDummy::ActionAttack()
     }	*/
 	
 		
+	int32 fighttime = ((CBattleEntity*)m_PPet->PMaster)->PBattleAI->GetBattleTime();
 		
-		
-    if (currentDistance > m_PBattleTarget->m_ModelSize && (m_PPet->m_PetID != PETID_ULMIA && m_PPet->m_PetID != PETID_KUPIPI && m_PPet->m_PetID != PETID_NANAA_MIHGO && m_PPet->m_PetID != PETID_ADELHIED) && m_PPet->speed != 0)
+    if (currentDistance > m_PBattleTarget->m_ModelSize && (m_PPet->m_PetID != PETID_ULMIA && m_PPet->m_PetID != PETID_KUPIPI &&
+	m_PPet->m_PetID != PETID_NANAA_MIHGO && m_PPet->m_PetID != PETID_ADELHIED && m_PPet->m_PetID != PETID_CURILLA) // Add Lion back to this when working on Trick Attack
+	&& m_PPet->speed != 0)
     {
 	    //ShowWarning(CL_RED"Wrong Distance triggered\n" CL_RESET);
         if (m_PPathFind->PathAround(m_PBattleTarget->loc.p, 2.0f, PATHFLAG_RUN | PATHFLAG_WALLHACK))
@@ -4282,6 +4841,142 @@ void CAIPetDummy::ActionAttack()
 			
         }
     }
+	
+	 if (currentDistance > m_PBattleTarget->m_ModelSize && (m_PPet->m_PetID == PETID_CURILLA) && m_PPet->speed != 0)
+    {
+	    //ShowWarning(CL_RED"Wrong Distance triggered\n" CL_RESET);
+        if (m_PPathFind->PathAround(m_PBattleTarget->loc.p, 2.0f, PATHFLAG_RUN | PATHFLAG_WALLHACK))  //Put Curilla Close
+        {
+            m_PPathFind->FollowPath();
+
+            // recalculate
+            currentDistance = distance(m_PPet->loc.p, m_PBattleTarget->loc.p);
+			
+        }
+    }
+
+	
+	// Disabled Lion Distance
+	/*
+	
+	//LION Set her always 45 degrees from the mob if Trick Attack is not available
+	if (m_PPet->m_PetID == PETID_LION){
+		CMobEntity* PMob = (CMobEntity*)m_PBattleTarget;
+		CBattleEntity* trickAttackPartner = getTrickAttackPartner();
+		//m_PBattleSubTarget = trickAttackPartner;
+		//int8 rotation = m_PBattleTarget->loc.p.rotation - m_PPet->loc.p.rotation;
+		uint32 engaging = m_Tick - m_LastEngageStart + 7000;
+		//int8 tahp = trickAttackPartner->health.hp;
+		
+		//if (trickAttackPartner == m_PPet->getPetType() == PETTYPE_TRUST)
+		//{
+		//   ShowWarning(CL_GREEN"TRICK ATTACK PARTNER IS A TRUST \n", CL_RESET);
+		//}
+
+
+	    if (m_Tick >= m_LastLionCheckTime + m_lionCheck) // Every 10 seconds to see to decide if Lion needs to move
+	    {
+		    //ShowWarning(CL_GREEN"LION TA CHECK!! \n" CL_RESET);
+			
+	        // SUPER EXPERIMENTAL - First check to see if there is a valid TA partner which is Trust PLD or NIN
+			// Then set that object/trust as the object to move around and get behind
+			//ShowWarning(CL_GREEN"LION Fight Time is: %i \n", CL_RESET, fighttime);
+			//Check to see if Lion is 45 degrees to the target or not and used TA recently
+			
+	       // if ((abs(m_PBattleTarget->loc.p.rotation - m_PPet->loc.p.rotation) > 34) &&
+		   // (abs(m_PBattleTarget->loc.p.rotation - m_PPet->loc.p.rotation) < 152) && PMob->PEnmityContainer->GetHighestEnmity() != m_PPet &&
+		//	m_Tick >= m_LastLionTrickAttackTime + 8000 && m_PPet->StatusEffectContainer->HasStatusEffect(EFFECT_TRUST_TRICK_ATTACK) == false) // used Trick Attack wait for hit then move change to not having the status effect
+		
+
+           
+
+
+
+		
+		    //if (((((abs(m_PBattleTarget->loc.p.rotation - m_PPet->loc.p.rotation) - 64) < 120) && ((abs(m_PBattleTarget->loc.p.rotation - m_PPet->loc.p.rotation)) > 64)) 
+			//|| ((abs(m_PBattleTarget->loc.p.rotation - m_PPet->loc.p.rotation) - 64) > 136)) && PMob->PEnmityContainer->GetHighestEnmity() != m_PPet &&
+			//m_Tick >= m_LastLionTrickAttackTime + 8000 && m_PPet->StatusEffectContainer->HasStatusEffect(EFFECT_TRUST_TRICK_ATTACK) == false) // used Trick Attack wait for hit then move change to not having the status effect
+			//Not 45 degrees so send Lion 45 degrees to the target
+
+			/*
+		    else if (((abs(m_PBattleTarget->loc.p.rotation - m_PPet->loc.p.rotation) + 64) > 160) && PMob->PEnmityContainer->GetHighestEnmity() != m_PPet &&
+			m_Tick >= m_LastLionTrickAttackTime + 8000 && m_PPet->StatusEffectContainer->HasStatusEffect(EFFECT_TRUST_TRICK_ATTACK) == false) // used Trick Attack wait for hit then move change to not having the status effect
+			//Not 45 degrees so send Lion 45 degrees to the target
+		    {	
+			    ShowWarning(CL_RED"LION DOESNT HAVE HATE SO MOVING 45 DEGREES second\n" CL_RESET);
+			    position_t* pos = &m_PBattleTarget->loc.p;
+			    position_t nearEntity = nearPosition(*pos, 2.0f, 0.5f * M_PI); 
+			    m_PPathFind->PathTo(nearEntity, PATHFLAG_WALLHACK | PATHFLAG_RUN);
+			    {
+			        m_PPathFind->FollowPath();
+			    }
+		        m_LastLionCheckTime = m_Tick;  
+            }*/
+			
+			
+			//***********************************************************************//
+			//Last known Trick Attack Placement I was Working on.  Needs more work  //
+			//**********************************************************************//
+			
+			/*
+		    if ((abs(m_PBattleTarget->loc.p.rotation - m_PPet->loc.p.rotation) > 23) && m_PPet->m_PetID == PETID_LION && PMob->PEnmityContainer->GetHighestEnmity() != m_PPet) //Send Lion to the back 
+		    {	
+			    ShowWarning(CL_RED"LION DOESNT HAVE HATE SO MOVING TO BACKLINE\n" CL_RESET);
+			    position_t* pos = &m_PBattleTarget->loc.p;
+			    position_t nearEntity = nearPosition(*pos, 4.0f, M_PI);  
+			    m_PPathFind->PathTo(nearEntity, PATHFLAG_WALLHACK | PATHFLAG_RUN);
+			    {
+				    m_PPathFind->FollowPath();
+			    }
+			    m_LastLionCheckTime = m_Tick;  
+            }			
+			else if (m_Tick >= m_LastLionTrickAttackTime + m_lionTrickAttackRecast && trickAttackPartner != nullptr) //If TA is up and there is a TA Partner
+			{
+			    //Do Distance
+				ShowWarning(CL_RED"LION HAS A TRICK ATTACK PARTNER MOVING BEHIND TANK\n" CL_RESET);
+				//ShowWarning(CL_GREEN"LION difference is: %i \n", CL_RESET, rotation);
+				
+				if (abs(trickAttackPartner->loc.p.rotation - m_PPet->loc.p.rotation) > 23) 
+				//&& currentDistance <= m_PBattleTarget->m_ModelSize)
+				
+				//if ((abs(trickAttackPartner->loc.p.rotation - m_PPet->loc.p.rotation) > 20) && currentDistance <= m_PBattleTarget->m_ModelSize)
+				//(abs(trickAttackPartner->loc.p.rotation - m_PPet->loc.p.rotation) < 118)) // This should mean not facing the tanks target
+				{
+				ShowWarning(CL_RED"LION triggered 1st condition and is attempting to move in front of target\n" CL_RESET);
+				    position_t* pos = &trickAttackPartner->loc.p;
+			        position_t nearEntity = nearPosition(*pos, 3.0f, M_PI);
+			        m_PPathFind->PathTo(nearEntity, PATHFLAG_WALLHACK | PATHFLAG_RUN);
+			        {
+				        m_PPathFind->FollowPath();
+			        }
+					m_LastLionCheckTime = m_Tick;
+				}
+			
+				else if ((abs(trickAttackPartner->loc.p.rotation - m_PPet->loc.p.rotation) > 135) && 
+				(abs(trickAttackPartner->loc.p.rotation - m_PPet->loc.p.rotation) < 250)) // This should mean not facing the tanks target
+				{
+				ShowWarning(CL_RED"LION triggered SECOND condition\n" CL_RESET);
+				    position_t* pos = &trickAttackPartner->loc.p;
+			        position_t nearEntity = nearPosition(*pos, 3.6f, M_PI + 0.09);
+			        m_PPathFind->PathTo(nearEntity, PATHFLAG_WALLHACK | PATHFLAG_RUN);
+			        {
+				        m_PPathFind->FollowPath();
+			        }
+					m_LastLionCheckTime = m_Tick;
+				} */	
+
+          /* Remove This				
+			}			
+		    else
+			{	
+			    //Already 45 degrees
+			    //m_nanaacheck = 5000;
+                m_LastLionCheckTime = m_Tick;
+			}
+	    }
+	} */	
+	
+	
 	
 	if (m_PPet->m_PetID == PETID_NANAA_MIHGO){
 	if (m_Tick >= m_LastNanaaCheckTime + m_nanaacheck) // Every 5 seconds to see if nanaa or kupipi is not facing target
@@ -4332,7 +5027,7 @@ void CAIPetDummy::ActionAttack()
 	}
 	
 	
-	if (m_PPet->m_PetID == PETID_KUPIPI){
+	if (m_PPet->m_PetID == PETID_KUPIPI && (checklevel < 5 && !(PMob->m_Type & MOBTYPE_NOTORIOUS))){
 	if (m_Tick >= m_LastNanaaCheckTime + m_nanaacheck) // Every 5 seconds to see if nanaa or kupipi is not facing target
 	{
 	    //Check to see if facing target
@@ -4380,10 +5075,25 @@ void CAIPetDummy::ActionAttack()
 	}
 	}
 	
-	// Below is for Kupipi 3.0
+	// Below is for Kupipi 3.0 to move to the backline
 	
-	/*
-	if (m_PPet->m_PetID == PETID_KUPIPI && checklevel >= 5)
+
+	if (m_PPet->m_PetID == PETID_KUPIPI && (checklevel >= 5 || PMob->m_Type & MOBTYPE_NOTORIOUS))
+	{
+        if ((currentDistance < 12 || currentDistance > 13) && m_PPet->speed != 0)
+        {
+	        position_t* pos = &m_PBattleTarget->loc.p;
+		    position_t nearEntity = nearPosition(*pos, 13.0f, M_PI + 0.08);  //This will offset Kupipi to the right by 10 degrees
+            if (m_PPathFind->PathAround(nearEntity, PATHFLAG_RUN | PATHFLAG_WALLHACK))
+            {
+                m_PPathFind->FollowPath();
+
+            // recalculate
+            //currentDistance = distance(m_PPet->loc.p, m_PBattleTarget->loc.p);	
+            }
+        }    
+	}
+	else if (m_PPet->m_PetID == PETID_KUPIPI)
 	{
 	    if (m_Tick >= m_LastNanaaCheckTime + m_nanaacheck) // Every 5 seconds to see if nanaa or kupipi is not facing target
 	    {
@@ -4424,7 +5134,7 @@ void CAIPetDummy::ActionAttack()
                 m_LastNanaaCheckTime = m_Tick;
 			}	
 	    }
-	}  */
+	} 
 
 	
 	
@@ -4504,6 +5214,10 @@ void CAIPetDummy::ActionAttack()
 			                {					
                                 damage = (int32)((m_PPet->GetMainWeaponDmg() + m_PPet->DEX() + battleutils::GetFSTR(m_PPet, m_PBattleTarget, SLOT_MAIN)) * DamageRatio);
                             }
+						    else if (m_PPet->StatusEffectContainer->HasStatusEffect(EFFECT_TRUST_TRICK_ATTACK))
+			                {					
+                                damage = (int32)((m_PPet->GetMainWeaponDmg() + m_PPet->AGI() + battleutils::GetFSTR(m_PPet, m_PBattleTarget, SLOT_MAIN)) * DamageRatio);
+                            }							
 							else
 							{
 							    damage = (int32)((m_PPet->GetMainWeaponDmg() + + naturalh2hDMG + battleutils::GetFSTR(m_PPet, m_PBattleTarget, SLOT_MAIN)) * DamageRatio);
@@ -4512,7 +5226,12 @@ void CAIPetDummy::ActionAttack()
 			                {
 					            //ShowWarning(CL_GREEN"HIT OCCURED REMOVING SA in AI PET DUMMY \n" CL_RESET);
 						        m_PPet->StatusEffectContainer->DelStatusEffect(EFFECT_TRUST_SNEAK_ATTACK);
-					        }	
+					        }
+							if (m_PPet->StatusEffectContainer->HasStatusEffect(EFFECT_TRUST_TRICK_ATTACK))
+			                {
+					            ShowWarning(CL_GREEN"HIT OCCURED REMOVING TRICK ATTACK FROM LION \n" CL_RESET);
+						        m_PPet->StatusEffectContainer->DelStatusEffect(EFFECT_TRUST_TRICK_ATTACK);
+					        }							
 			
                         }
                     }
@@ -4805,6 +5524,8 @@ int16 CAIPetDummy::KupipiSpell()
 	uint8 lowtriggercuraga = 25;
 	uint8 level = m_PPet->GetMLevel();
     int16 spellID = -1;
+    uint32 kupipiPro = charutils::GetVar((CCharEntity*)m_PPet->PMaster,"TrustPro_Kup");
+    uint32 kupipiShell = charutils::GetVar((CCharEntity*)m_PPet->PMaster,"TrustShell_Kup");	
 	
  CBattleEntity* master = m_PPet->PMaster;  
  CBattleEntity* mostWounded = getWounded(trigger);
@@ -5155,7 +5876,32 @@ int16 CAIPetDummy::KupipiSpell()
 		else if (m_PPet->PMaster->StatusEffectContainer->HasStatusEffect(EFFECT_PROTECT) == false) 
 			{
 			m_PBattleSubTarget = m_PPet->PMaster; //Target master to hit all members
-			if (level >= 63)
+			if (kupipiPro == 1) // Cast Pro 5 if user has Trust Tribute for it
+			    if (m_PPet->health.mp > 83)
+				    {
+					 spellID = 129;
+					}
+                else if (m_PPet->health.mp > 64)
+					{
+					 spellID = 128;
+					}
+				else if (m_PPet->health.mp > 45)
+					{
+					 spellID = 127;
+					}
+				else if (m_PPet->health.mp > 27)
+					{
+					 spellID = 126;
+					}
+				else if (m_PPet->health.mp > 8)
+					{
+					 spellID = 125;
+					}
+				else 
+			        {
+				     spellID = -1;
+				    } 	    					
+			else if (level >= 63)
 				if (m_PPet->health.mp > 64)
 					{
 					 spellID = 128;
@@ -5225,7 +5971,32 @@ int16 CAIPetDummy::KupipiSpell()
 		else if (m_PPet->PMaster->StatusEffectContainer->HasStatusEffect(EFFECT_SHELL) == false) 
 			{
 			m_PBattleSubTarget = m_PPet->PMaster;
-			if (level >= 68)
+			if (kupipiShell == 1)  // Check if user has Shellra V Tribute
+				if (m_PPet->health.mp > 92)
+					{
+					 spellID = 134;
+					}			
+				else if (m_PPet->health.mp > 74)
+					{
+					 spellID = 133;
+					}
+				else if (m_PPet->health.mp > 55)
+					{
+					 spellID = 132;
+					}
+				else if (m_PPet->health.mp > 36)
+					{
+					 spellID = 131;
+					}
+				else if (m_PPet->health.mp > 17)
+					{
+					 spellID = 130;
+					}
+				else 
+			        {
+				     spellID = -1;
+				    } 			
+			else if (level >= 68)
 				if (m_PPet->health.mp > 74)
 					{
 					 spellID = 133;
@@ -8841,7 +9612,7 @@ int16 CAIPetDummy::UlmiaSpell()
 	float pdif;
 	int32 value;
 	
-
+     printf("Ulmia is trying to determine  a spell \n");
 	//Decide which spell combo to cast.  Always prioritieze accuracy!
     // Song Combo List
 	// #1 [DONE!] Madrigal x2                if hitrate is < 60 
@@ -10639,7 +11410,102 @@ int16 CAIPetDummy::PrisheSpell()
        }
 	}
     return spellID;
+}
+
+
+
+int16 CAIPetDummy::ZeidSpell()
+{	
+    int16 spellID = -1;
+	uint8 lvl = m_PPet->PMaster->GetMLevel();
+    uint8 hitrate = battleutils::GetHitRate(m_PPet, m_PBattleTarget, 0);	
+	
+	if (m_Tick >= m_LastZeidAbsorbTime + m_zeidAbsorbRecast && m_PPet->StatusEffectContainer->HasStatusEffect(EFFECT_SILENCE) == false)  //Check Absorb Timers if NOT silenced
+	{
+	    if (m_Tick >= m_LastZeidDrainTime + m_zeidDrainRecast && m_ActionType != ACTION_MAGIC_CASTING && m_PPet->GetHPP() == 100)
+	    {      
+            m_PBattleSubTarget = m_PBattleTarget;
+	        if (lvl >= 62 && m_PPet->health.mp > 36)
+		    {  
+                spellID = 246; // Drain II
+		    }
+            else
+            {
+                spellID = -1;
+            }
+            m_LastZeidDrainTime = m_Tick;				
+	    }	
+	    else if (m_Tick >= m_LastZeidAbsTPTime + m_zeidAbsTPRecast && m_ActionType != ACTION_MAGIC_CASTING && m_PPet->health.tp >= 400)
+	    {      
+            m_PBattleSubTarget = m_PBattleTarget;
+	        if (lvl >= 45 && m_PPet->health.mp > 32)
+		    {  
+                spellID = 275; // Absorb TP
+		    }
+            else
+            {
+                spellID = -1;
+            }
+            m_LastZeidAbsTPTime = m_Tick;				
+	    }
+	    else if (m_Tick >= m_LastZeidAbsACCTime + m_zeidAbsACCRecast && m_ActionType != ACTION_MAGIC_CASTING && hitrate < 85)
+	    {      
+            m_PBattleSubTarget = m_PBattleTarget;
+	        if (lvl >= 61 && m_PPet->health.mp > 32)
+		    {  
+                spellID = 242; // Absorb ACC
+		    }
+            else
+            {
+                spellID = -1;
+            }
+            m_LastZeidAbsACCTime = m_Tick;				
+	    }
+	    else if (m_Tick >= m_LastZeidAbsSTRTime + m_zeidAbsSTRRecast && m_ActionType != ACTION_MAGIC_CASTING)
+	    {      
+            m_PBattleSubTarget = m_PBattleTarget;
+	        if (lvl >= 43 && m_PPet->health.mp > 32)
+		    {  
+                spellID = 266; // Absorb STR
+		    }
+            else
+            {
+                spellID = -1;
+            }
+            m_LastZeidAbsSTRTime = m_Tick;				
+	    }	
+        m_LastZeidAbsorbTime = m_Tick;
+	}
+	else if (m_Tick >= m_LastZeidEnfeebTime +  m_zeidEnfeebRecast)  //Check Enfeeble Timers
+    {
+        if (m_PPet->GetHPP() < 60 && m_PPet->StatusEffectContainer->HasStatusEffect(EFFECT_DREAD_SPIKES) == false)
+        {
+		    m_PBattleSubTarget = m_PPet;
+			if (lvl >= 71 && m_PPet->health.mp > 77)
+			{
+			    spellID = 277;
+			}
+			else
+			{
+			    spellID = -1;
+			}
+        }   // Can Add Bio Here later? 	
+	}
+	
+	
+	
+	
+	//Input Spells here mostly Absorb and spikes and possibly stun
+	return spellID;
 }	
+
+
+
+uint32 CAIPetDummy::ZeidSkillchain()
+{
+    uint32 zeidSCReady = charutils::GetVar((CCharEntity*)m_PPet->PMaster,"ZeidSCReady");	
+    return zeidSCReady;
+}
 
 
 
@@ -10807,3 +11673,90 @@ CBattleEntity* CAIPetDummy::getWoundedAga(uint8 threshold)
     }
 
 }
+
+CBattleEntity* CAIPetDummy::getTrickAttackPartner()
+{
+    CBattleEntity* lionTAPartner = nullptr;
+	uint8 allyhp = 0;
+    if (m_PPet->PMaster->PAlly.size() > 0)  // If there are other trusts in the party look for their job
+    {
+        for (auto ally : m_PPet->PMaster->PAlly)
+        {
+            if (ally->getMod(MOD_ENMITY) > 0) //This will cycle thru the trust list to see if Curilla or Gessho is in the pt
+            {    
+                lionTAPartner = ally;
+				//allyhp = ally->GetHPP();
+				//ShowWarning(CL_GREEN"CURILLA OR GESHO HP Percent is: %u \n" CL_RESET, allyhp);
+				//ShowWarning(CL_GREEN"CURILLA OR GESHO IS PRESET!!!!!! \n" CL_RESET);
+				break;
+            }
+        }
+    }
+    return lionTAPartner;
+}
+
+
+CBattleEntity* CAIPetDummy::getLionSCPartnerZeid()
+{
+    CBattleEntity* lionSCPartner = nullptr;
+	uint8 allyhp = 0;
+    if (m_PPet->PMaster->PAlly.size() > 0)  // If there are other trusts in the party look for their job
+    {
+        for (auto ally : m_PPet->PMaster->PAlly)
+        {
+            if (ally->getMod(MOD_PARALYZERES) > 0) //This will cycle thru the trust list to see if Zeid
+            {    
+                lionSCPartner = ally;
+				allyhp = ally->GetHPP();
+				//ShowWarning(CL_GREEN"ZEID IS PRESENT HP is %u \n" CL_RESET, allyhp);
+				//ShowWarning(CL_GREEN"CURILLA OR GESHO IS PRESET!!!!!! \n" CL_RESET);
+				break;
+            }
+        }
+    }
+    return lionSCPartner;
+}
+
+
+CBattleEntity* CAIPetDummy::getZeidSCPartner()
+{
+    CBattleEntity* zeidSCPartner = nullptr;
+	uint8 allyhp = 0;
+    if (m_PPet->PMaster->PAlly.size() > 0)  // If there are other trusts in the party look for their job
+    {
+        for (auto ally : m_PPet->PMaster->PAlly)
+        {
+            if (ally->getMod(MOD_GRAVITYRES) > 0) //This will cycle thru the trust list to see if Lion is in the party
+            {    
+                zeidSCPartner = ally;
+				//allyhp = ally->GetHPP();
+				//ShowWarning(CL_GREEN"LION IS PRESENT HP is %u \n" CL_RESET, allyhp);
+				//ShowWarning(CL_GREEN"LION IS PRESENT!!!!!! \n" CL_RESET);
+				break;
+            }
+        }
+    }
+    return zeidSCPartner;
+}
+
+int16 CAIPetDummy::skillchainTimer()
+{
+    ShowWarning(CL_GREEN"M TICK FOR SC TIMER IS %u \n" CL_RESET, m_Tick);
+	ShowWarning(CL_GREEN"Last Universal SC TIme is %u \n" CL_RESET, m_LastUniversalSCTime);
+    int16 wsReady = -1;
+    if (m_Tick >= m_LastUniversalSCTime + m_skillchainTimer)
+	{
+       wsReady = 1;
+	   m_LastUniversalSCTime = m_Tick;
+	   ShowWarning(CL_YELLOW"M TICK FOR SC TIMER IS %u \n" CL_RESET, m_Tick);
+	   ShowWarning(CL_YELLOW"Last Universal SC TIme is %u \n" CL_RESET, m_LastUniversalSCTime);
+
+	}
+
+
+    return wsReady;
+}	
+	
+	
+	
+

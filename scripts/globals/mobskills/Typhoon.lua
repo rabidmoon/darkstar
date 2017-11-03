@@ -18,6 +18,9 @@ end;
 
 function onMobWeaponSkill(target, mob, skill)
 	local numhits = 4;
+	if (mob:getName() == "Faust") then
+	local numhits = 3;
+	end
 	local accmod = 1;
 	local dmgmod = 0.5;
 	local info = MobPhysicalMove(mob,target,skill,numhits,accmod,dmgmod,TP_NO_EFFECT);

@@ -19,6 +19,7 @@ end;
 -----------------------------------
 
 function onEffectTick(target,effect)
+printf("BattleField");
 end;
 
 -----------------------------------

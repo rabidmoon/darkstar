@@ -132,7 +132,7 @@ INSERT INTO `pet_list` VALUES (87, 'Prishe', 7812, 1, 99, 0, 0);
 INSERT INTO `pet_list` VALUES (88, 'Ulmia', 7813, 1, 99, 0, 0); 
 INSERT INTO `pet_list` VALUES (89, 'Luzaf', 7814, 1, 99, 0, 0);
 INSERT INTO `pet_list` VALUES (90, 'Gessho', 7815, 1, 99, 0, 0);
-INSERT INTO `pet_list` VALUES (91, 'Zazarg', 7816, 1, 99, 0, 0);
+INSERT INTO `pet_list` VALUES (91, 'Zeid', 7816, 1, 99, 0, 0);
 INSERT INTO `pet_list` VALUES (92, 'Lilisette', 7817, 1, 99, 0, 0);
 INSERT INTO `pet_list` VALUES (93, 'Lady Lilith', 7818, 1, 99, 0, 0);
 INSERT INTO `pet_list` VALUES (94, 'Lilith Ascendant', 7819, 1, 99, 0, 0);

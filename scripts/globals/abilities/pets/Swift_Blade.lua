@@ -17,7 +17,7 @@ function onMobSkillCheck(target,mob,skill)
 end;
 
 function onPetAbility(target, pet, skill)
-    local basemod = 1.3;
+    local basemod = 1;
     local numhits = 4;
 	local attmod = 1;
     local accmod = 1;
@@ -34,7 +34,7 @@ function onPetAbility(target, pet, skill)
 
 
 	
-	local info = AutoPhysicalMove(pet,target,skill,basemod,numhits,attmod,accmod,str_wsc,dex_wsc,agi_wsc,vit_wsc,mnd_wsc,TP_DMG_VARIES,2.5,3,3.5);
+	local info = AutoPhysicalMove(pet,target,skill,basemod,numhits,attmod,accmod,str_wsc,dex_wsc,agi_wsc,vit_wsc,mnd_wsc,TP_DMG_VARIES,1.0,2,3.5);
  
     local dmg = MobFinalAdjustments(info.dmg,pet,skill,target,MOBSKILL_PHYSICAL,MOBPARAM_SLASH,info.hitslanded);
 	
@@ -57,6 +57,7 @@ function onPetAbility(target, pet, skill)
     
 
     target:delHP(dmg);
+	target:addEnmity(pet, 0, 1000);
     return dmg;
 end;
 

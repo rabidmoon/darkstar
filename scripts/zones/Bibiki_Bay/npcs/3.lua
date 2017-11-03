@@ -210,7 +210,7 @@ if (trade:hasItemQty(1404, 1 )) and (trade:hasItemQty(1405, 1)) and (trade:hasIt
 			player:delCurrency("infamy", payment);
     		player:tradeComplete();	
 		elseif (player:getVar("NINHAFight") == 3) then  -- NIN
-    		player:addItem(19275,1,146,4,59,0) 
+    		player:addItem(19275,1,140,4,59,0) 
 			player:messageSpecial(ITEM_OBTAINED,19275);		
 			player:setVar("NINHAFight",4);
 			player:delCurrency("infamy", payment);

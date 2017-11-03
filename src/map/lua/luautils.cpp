@@ -315,9 +315,9 @@ namespace luautils
 
     int32 GetMobByID(lua_State* L)
     {
-        if (!lua_isnil(L, -1) && lua_isnumber(L, -1))
+        if (!lua_isnil(L, -1) && lua_isnumber(L, 1))
         {
-            uint32 mobid = (uint32)lua_tointeger(L, -1);
+            uint32 mobid = (uint32)lua_tointeger(L, 1);
 
              CInstance* PInstance {nullptr};
              CBaseEntity* PMob {nullptr};
@@ -329,7 +329,7 @@ namespace luautils
              }
              if (PInstance)
              {
-                 PInstance->GetEntity(mobid, TYPE_MOB | TYPE_PET);
+                 PInstance->GetEntity(mobid & 0xFFF, TYPE_MOB | TYPE_PET);
              }
              else
              {
@@ -337,21 +337,22 @@ namespace luautils
              }
             
 			
-			
+			/*
 			if (!PMob)
             {
                 ShowWarning("luautils::GetMobByID Mob doesn't exist (%d)\n", mobid);
                 lua_pushnil(L);
             }
             else
-            {
+            {*/
                 lua_getglobal(L, CLuaBaseEntity::className);
                 lua_pushstring(L, "new");
                 lua_gettable(L, -2);
                 lua_insert(L, -2);
                 lua_pushlightuserdata(L, (void*)PMob);
                 lua_pcall(L, 2, 1, 0);
-            }
+            /*
+			}*/
 
             return 1;
         }

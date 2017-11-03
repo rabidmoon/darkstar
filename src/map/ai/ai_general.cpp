@@ -101,6 +101,7 @@ void CAIGeneral::Reset()
 	m_LastCurillaFlash = 0;
 	m_LastCurillaBashTime = 0;
 	m_LastCurillaReprisalTime = 0;	
+	m_LastCurillaChivalryTime = 0;
 	m_LastKupipiMagicTime = 0;
 	m_LastKupipiEnhanceTime = 0;
 	m_LastKupipiSolaceTime = 0;	
@@ -145,6 +146,23 @@ void CAIGeneral::Reset()
 	m_LastPrisheSCTime = 0;
 	m_LastPrisheMagicTime = 0;
 	
+    m_LastZeidArcaneCircleTime = 0;
+	m_LastZeidWeaponBashTime = 0;
+	m_LastZeidLastResortTime = 0;		
+	m_LastZeidMagicTime = 0;
+    m_LastZeidAbsorbTime = 0;
+	m_LastZeidDrainTime = 0;
+	m_LastZeidAbsTPTime = 0;
+	m_LastZeidAbsACCTime = 0;
+	m_LastZeidAbsSTRTime = 0;
+	m_LastZeidEnfeebTime = 0;
+
+    m_LastLionTrickAttackTime = 0;	
+	m_LastLionCheckTime = 0;
+	m_LastZeidSCTime = 0;
+	m_LastZeidTrigger = 0;
+	m_LastUniversalSCTime = 0;
+	
 	m_LastAyameMeditateTime = 0;
 	m_LastAyameThirdEyeTime = 0;
 	m_LastAyameSekkaTime = 0;	
@@ -153,6 +171,7 @@ void CAIGeneral::Reset()
 	m_LastExeJumpTime = 0;
 	m_LastExeHjumpTime = 0;
 	m_LastExeSjumpTime = 0;
+	m_LastExeAngonTime = 0;
 	m_LastChainTime = 0;
     m_WaitTime = 0;
     m_LastWaitTime = 0;
@@ -412,6 +431,11 @@ void CAIGeneral::SetLastCurillaBashTime(uint32 time)
 	m_LastCurillaBashTime = time;
 }
 
+void CAIGeneral::SetLastCurillaChivalryTime(uint32 time)
+{
+	m_LastCurillaChivalryTime = time;
+}
+
 void CAIGeneral::SetLastCurillaReprisalTime(uint32 time)
 {
 	m_LastCurillaReprisalTime = time;
@@ -480,6 +504,11 @@ void CAIGeneral::SetLastExeHjumpTime(uint32 time)
 void CAIGeneral::SetLastExeSjumpTime(uint32 time)
 {
 	m_LastExeSjumpTime = time;
+} 
+
+void CAIGeneral::SetLastExeAngonTime(uint32 time)
+{
+	m_LastExeAngonTime = time;
 } 
 
 void CAIGeneral::SetLastEngageStart(uint32 time)
@@ -668,10 +697,81 @@ void CAIGeneral::SetLastPrisheSCTime(uint32 time)
 	m_LastPrisheSCTime = time;
 }
 
-void CAIGeneral::SetLastPrisheMagicTime(uint32 time)
+void CAIGeneral::SetLastPrisheMagicTime(uint32 time) //
 {
 	m_LastPrisheMagicTime = time;
 }
+
+void CAIGeneral::SetLastZeidArcaneCircleTime(uint32 time)
+{
+	m_LastZeidArcaneCircleTime = time;
+}
+
+void CAIGeneral::SetLastZeidWeaponBashTime(uint32 time)
+{
+	m_LastZeidWeaponBashTime = time;
+}
+
+void CAIGeneral::SetLastZeidLastResortTime(uint32 time)
+{
+	m_LastZeidLastResortTime = time;
+}
+
+void CAIGeneral::SetLastZeidMagicTime(uint32 time)
+{
+	m_LastZeidMagicTime = time;
+}
+
+void CAIGeneral::SetLastZeidAbsorbTime(uint32 time)
+{
+	m_LastZeidAbsorbTime = time;
+}
+
+void CAIGeneral::SetLastZeidAbsTPTime(uint32 time)
+{
+	m_LastZeidAbsTPTime = time;
+}
+
+void CAIGeneral::SetLastZeidAbsACCRecast(uint32 time)
+{
+	m_LastZeidAbsACCTime = time;
+}
+
+void CAIGeneral::SetLastZeidAbsSTRRecast(uint32 time)
+{
+	m_LastZeidAbsSTRTime = time;
+}
+
+void CAIGeneral::SetLastZeidEnfeebRecast(uint32 time)
+{
+	m_LastZeidEnfeebTime = time;
+}
+
+void CAIGeneral::SetLastZeidDrainRecast(uint32 time)
+{
+	m_LastZeidDrainTime = time;
+}
+
+void CAIGeneral::SetLastLionTrickAttackRecast(uint32 time)
+{
+   m_LastLionTrickAttackTime = time;
+}
+
+void CAIGeneral::SetLastLionCheckRecast(uint32 time)
+{
+    m_LastLionCheckTime = time;
+}
+
+void CAIGeneral::SetLastZeidSCTime(uint32 time)
+{
+    m_LastZeidSCTime = time;
+}
+
+void CAIGeneral::SetLastUniversalSCTime(uint32 time)
+{
+    m_LastUniversalSCTime = time;
+}
+
 
 void CAIGeneral::SetBattleTarget(CBattleEntity* PEntity)
 {
@@ -948,3 +1048,5 @@ void CAIGeneral::Wait(int32 waitTime)
 
     m_LastWaitTime = m_Tick;
 }
+
+

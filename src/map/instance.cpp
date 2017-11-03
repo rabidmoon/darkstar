@@ -32,7 +32,8 @@ This file is part of DarkStar-server source code.
 #include "../common/timer.h"
 
 
-CInstance::CInstance(CZone* zone, uint8 instanceid) : CZoneEntities(zone)
+CInstance::CInstance(CZone* zone, uint8 instanceid) : CZoneEntities(zone),
+   m_instanceid(instanceid)
 {
 	m_zone = zone;
 	m_instanceid = instanceid;
@@ -267,3 +268,4 @@ void CInstance::Cancel()
 {
 	m_status = INSTANCE_FAILED;
 }
+

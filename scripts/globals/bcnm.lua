@@ -24,7 +24,7 @@ itemid_bcnmid_map = {6, {0, 0}, -- Bearclaw_Pinnacle
                    35, {0, 0}, -- The Garden of RuHmet
                    36, {0, 0}, -- Empyreal Paradox
 				   129, {0, 0}, 
-                   139, {1177, 4, 1552, 10, 1553, 11, 1131, 12, 1175, 15, 1180, 17}, -- Horlais Peak
+                   139, {1177, 4, 1552, 10, 1553, 11, 1131, 12, 1175, 15, 1180, 17},
                    140, {1551, 34, 1552, 35, 1552, 36}, -- Ghelsba Outpost
                    144, {1166, 68, 1178, 81, 1553, 76, 1180, 82, 1130, 79, 1552, 73}, -- Waughroon Shrine
                    146, {1553, 107, 1551, 105, 1177, 100}, -- Balgas Dias
@@ -62,10 +62,10 @@ bcnmid_param_map = {6, {640, 0},
                   36, {1056, 0},
 				 -- 86, {1376, 0}, -- Everbloom Hollow (Ixion)
 				 -- 98, {1375, 4}, -- Everbloom Hollow/Ghoyus Reverie (Dark Ixion)				  
-                  139, {0, 0, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 10, 10, 11, 11, 12, 12, 15, 15, 17, 17},
+                  139, {0, 0, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 10, 10, 11, 11, 12, 12, 15, 15, 17, 17, 1377, 17, 1378, 18},  
                   140, {32, 0, 33, 1, 34, 2, 35, 3, 36, 4},
-                  144, {65, 1, 73, 9, 64, 0, 67, 3, 68, 4, 70, 6, 71, 7, 72, 8, 81, 17, 76, 12, 82, 18, 79, 15},
-                  146, {99, 3, 96, 0, 101, 5, 102, 6, 103, 7, 107, 11, 105, 9},
+                  144, {65, 1, 73, 9, 64, 0, 67, 3, 68, 4, 70, 6, 71, 7, 72, 8, 81, 17, 76, 12, 82, 18, 79, 15, 1379, 16, 1380, 17},  -- Wahungo Shrine
+                  146, {99, 3, 96, 0, 101, 5, 102, 6, 103, 7, 107, 11, 105, 9, 1381, 11, 1382, 12}, -- Balgas Dais
                   163, {128, 0, 129, 1},
                   165, {160, 0, 161, 1},
                   168, {192, 0, 194, 2, 195, 3, 196, 4},
@@ -73,10 +73,11 @@ bcnmid_param_map = {6, {640, 0},
                   179, {256, 0},
                   180, {293, 5, 288, 0, 289, 1, 290, 2, 291, 3, 292, 4},
                   181, {320, 0},
+				  183, {1387, 0},
                   201, {416, 0, 417, 1, 418, 2, 420, 4},
                   202, {448, 0, 449, 1, 450, 2, 452, 4},
                   203, {480, 0, 481, 1, 482, 2, 484, 4},
-                  206, {512, 0, 516, 4, 517, 5, 518, 6, 519, 7, 532, 20},
+                  206, {512, 0, 516, 4, 517, 5, 518, 6, 519, 7, 532, 20, 1383, 8, 1384, 8, 1385, 8, 1386, 8},  -- Qui'Bay Arena
                   207, {544, 0, 545, 1, 547, 3},
                   209, {576, 0, 577, 1, 578, 2, 580, 4},
                   211, {608, 0, 609, 1, 611, 3}};
@@ -374,7 +375,9 @@ function ItemToBCNMID(player, zone, trade)
                         questTimelineOK = 1;
                     elseif (item == 1174 and player:getVar("CarbuncleDebacleProgress") == 6) then -- Carbuncle Debacle (Ogmios)
                         questTimelineOK = 1;
-                    end
+					elseif(item == 10116) then -- Curilla Fight
+						questTimelineOK = 1;	
+					end
 
                     if (questTimelineOK == 1) then
                         player:setVar("trade_bcnmid", itemid_bcnmid_map[zoneindex+1][bcnmindex+1]);
@@ -500,7 +503,13 @@ function checkNonTradeBCNM(player, npc)
         elseif (player:getCurrentMission(SANDORIA) == THE_SECRET_WEAPON and player:getVar("SecretWeaponStatus") == 2) then
             mask = GetBattleBitmask(3, Zone, 1)
             player:setVar("trade_bcnmid", 3);
-        end
+		elseif (player:getVar("CURILLA_TRIB_FIGHT") == 1) then  -- Curilla Tribute Fight
+            mask = GetBattleBitmask(1377, Zone, 1)
+			player:setVar("trade_bcnmid", 1377);
+		elseif (player:getVar("EXCEN_TRIB_FIGHT") == 1) then  -- Excenmille Tribute Fight
+            mask = GetBattleBitmask(1378, Zone, 1)
+			player:setVar("trade_bcnmid", 1378);
+	    end
     elseif (Zone == 140) then -- Ghelsba Outpost
         local MissionStatus = player:getVar("MissionStatus");
         local sTcCompleted = player:hasCompletedMission(SANDORIA, SAVE_THE_CHILDREN)
@@ -519,6 +528,12 @@ function checkNonTradeBCNM(player, npc)
         elseif ((player:getCurrentMission(BASTOK) == ON_MY_WAY) and (player:getVar("MissionStatus") == 2)) then
             mask = GetBattleBitmask(67, Zone, 1);
             player:setVar("trade_bcnmid", 67);
+		elseif (player:getVar("AYAME_TRIB_FIGHT") == 1) then  -- Ayame Tribute Fight
+            mask = GetBattleBitmask(1379, Zone, 1)
+			player:setVar("trade_bcnmid", 1379);
+		elseif (player:getVar("NAJI_TRIB_FIGHT") == 1) then  -- Naji Tribute Fight
+            mask = GetBattleBitmask(1380, Zone, 1)
+			player:setVar("trade_bcnmid", 1380);			
         end
     elseif (Zone == 146) then -- Balga's Dais
         if (player:hasKeyItem(DARK_KEY)) then -- Mission 2-3
@@ -527,6 +542,12 @@ function checkNonTradeBCNM(player, npc)
         elseif ((player:getCurrentMission(WINDURST) == SAINTLY_INVITATION) and (player:getVar("MissionStatus") == 1)) then -- Mission 6-2
             mask = GetBattleBitmask(99, Zone, 1);
             player:setVar("trade_bcnmid", 99);
+		elseif (player:getVar("KUPIPI_TRIB_FIGHT") == 1) then  -- Kupipi Tribute Fight
+            mask = GetBattleBitmask(1381, Zone, 1)
+			player:setVar("trade_bcnmid", 1381);
+		elseif (player:getVar("NANAA_TRIB_FIGHT") == 1) then  -- Nanaa Tribute Fight
+            mask = GetBattleBitmask(1382, Zone, 1)
+			player:setVar("trade_bcnmid", 1382);			
         end
     elseif (Zone == 163) then -- Sacrificial Chamber
         if (player:getCurrentMission(ZILART) == THE_TEMPLE_OF_UGGALEPIH) then -- Zilart Mission 4
@@ -586,6 +607,11 @@ function checkNonTradeBCNM(player, npc)
             mask = GetBattleBitmask(320, Zone, 1);
             player:setVar("trade_bcnmid", 320);
         end
+    elseif (Zone == 183) then -- Legion
+        if (player:getVar("TRUST_POINT_FIGHT") == 1) then  -- Trust point Fight
+            mask = GetBattleBitmask(1387, Zone, 1)
+			player:setVar("trade_bcnmid", 1387);	
+		end	
     elseif (Zone == 201) then -- Cloister of Gales
         if (player:hasKeyItem(TUNING_FORK_OF_WIND)) then -- Trial by Wind
             mask = GetBattleBitmask(416, Zone, 1);
@@ -617,6 +643,19 @@ function checkNonTradeBCNM(player, npc)
         elseif (player:getCurrentMission(SANDORIA) == THE_HEIR_TO_THE_LIGHT and player:getVar("MissionStatus") == 3) then -- sando 9-2
             mask = GetBattleBitmask(516, Zone, 1);
             player:setVar("trade_bcnmid", 516);
+		elseif (player:getVar("DARC_TRIB_FIGHT") == 1) then  -- Darcullin Tribute Fight
+            mask = GetBattleBitmask(1383, Zone, 1)
+			player:setVar("trade_bcnmid", 1383);
+		elseif (player:getVar("ADEL_TRIB_FIGHT") == 1) then  -- Adelheid Tribute Fight
+            mask = GetBattleBitmask(1384, Zone, 1)
+			player:setVar("trade_bcnmid", 1384);
+		elseif (player:getVar("LION_TRIB_FIGHT") == 1) then  -- Lion Tribute Fight
+            mask = GetBattleBitmask(1385, Zone, 1)
+			player:setVar("trade_bcnmid", 1385);
+		elseif (player:getVar("ZEID_TRIB_FIGHT") == 1) then  -- Zeid Tribute Fight
+            mask = GetBattleBitmask(1386, Zone, 1)
+			player:setVar("trade_bcnmid", 1386);			
+			
 
         -- Temp disabled pending BCNM mob fixes
         -- elseif (player:getCurrentMission(ACP) >= THOSE_WHO_LURK_IN_SHADOWS_III and player:hasKeyItem(MARK_OF_SEED)) then -- ACP Mission 7

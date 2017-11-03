@@ -297,3 +297,15 @@ INSERT INTO `bcnm_info` VALUES ('1306', '37', 'Central_Temenos_4th_Floor', null,
 INSERT INTO `bcnm_info` VALUES ('1307', '37', 'Central_Temenos_4th_Floor_II', null, null, '3600', '0', '18', '0', '7');
 INSERT INTO `bcnm_info` VALUES ('1375', '86', 'the_dark_horse', null, null, '1800', '75', '6', '200', '15');
 INSERT INTO `bcnm_info` VALUES ('1376', '86', 'the_light_horse', null, null, '1800', '75', '6', '201', '15');
+INSERT INTO `bcnm_info` VALUES ('1377', '139', 'impersonating_curilla', null, null, '1800', '75', '1', '0', '15');
+INSERT INTO `bcnm_info` VALUES ('1378', '139', 'impersonating_excenmille', null, null, '1800', '75', '1', '0', '15');
+
+INSERT INTO `bcnm_info` VALUES ('1379', '144', 'impersonating_ayame', null, null, '1800', '75', '1', '0', '7');
+INSERT INTO `bcnm_info` VALUES ('1380', '144', 'impersonating_naja', null, null, '1800', '75', '1', '0', '7');
+INSERT INTO `bcnm_info` VALUES ('1381', '146', 'impersonating_kupipi', null, null, '1800', '75', '1', '0', '7');
+INSERT INTO `bcnm_info` VALUES ('1382', '146', 'impersonating_nanaa', null, null, '1800', '75', '1', '0', '7');
+INSERT INTO `bcnm_info` VALUES ('1383', '206', 'impersonating_darcullin', null, null, '1800', '75', '1', '0', '7');
+INSERT INTO `bcnm_info` VALUES ('1384', '206', 'impersonating_adelheid', null, null, '1800', '75', '1', '0', '7');
+INSERT INTO `bcnm_info` VALUES ('1385', '206', 'impersonating_lion', null, null, '1800', '75', '1', '0', '7');
+INSERT INTO `bcnm_info` VALUES ('1386', '206', 'impersonating_zeid', null, null, '1800', '75', '1', '0', '7');
+INSERT INTO `bcnm_info` VALUES ('1387', '183', 'test_your_fortitude', null, null, '1800', '75', '18', '0', '7');

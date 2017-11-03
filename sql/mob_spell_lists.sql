@@ -1617,6 +1617,35 @@ INSERT INTO `mob_spell_lists` VALUES ('Ulmia', 272, 420, 1, 255); -- Victory Mar
 INSERT INTO `mob_spell_lists` VALUES ('Ulmia', 272, 421, 1, 255); -- Battlefield Elegy
 INSERT INTO `mob_spell_lists` VALUES ('Ulmia', 272, 422, 1, 255); -- Carnage Elegy
 
+INSERT INTO `mob_spell_lists` VALUES ('Test', 273, 186, 1, 255); -- Carnage Elegy
+
+INSERT INTO `mob_spell_lists` VALUES ('Adelheid', 275, 162, 1, 255); -- Stone IV
+INSERT INTO `mob_spell_lists` VALUES ('Adelheid', 275, 157, 1, 255); -- Aero IV
+INSERT INTO `mob_spell_lists` VALUES ('Adelheid', 275, 172, 1, 255); -- Water IV
+INSERT INTO `mob_spell_lists` VALUES ('Adelheid', 275, 147, 1, 255); -- Fire IV
+INSERT INTO `mob_spell_lists` VALUES ('Adelheid', 275, 152, 1, 255); -- Bilzzard IV
+INSERT INTO `mob_spell_lists` VALUES ('Adelheid', 275, 167, 1, 255); -- Thunder IV
+INSERT INTO `mob_spell_lists` VALUES ('Adelheid', 275, 278, 1, 255); -- Geohelix
+INSERT INTO `mob_spell_lists` VALUES ('Adelheid', 275, 279, 1, 255); -- HydroHelix
+INSERT INTO `mob_spell_lists` VALUES ('Adelheid', 275, 280, 1, 255); -- Anemohelix
+INSERT INTO `mob_spell_lists` VALUES ('Adelheid', 275, 281, 1, 255); -- Pyrohelix
+INSERT INTO `mob_spell_lists` VALUES ('Adelheid', 275, 282, 1, 255); -- Cryohelix
+INSERT INTO `mob_spell_lists` VALUES ('Adelheid', 275, 283, 1, 255); -- Ionohelix
+INSERT INTO `mob_spell_lists` VALUES ('Adelheid', 275, 284, 1, 255); -- Noctohelix
+INSERT INTO `mob_spell_lists` VALUES ('Adelheid', 275, 285, 1, 255); -- Luminohelix
+INSERT INTO `mob_spell_lists` VALUES ('Adelheid', 275, 111, 1, 255); -- Regen III
+INSERT INTO `mob_spell_lists` VALUES ('Adelheid', 275, 4, 1, 255); -- Cure IV
+INSERT INTO `mob_spell_lists` VALUES ('Adelheid', 275, 250, 1, 255); -- Ice Spikes
+INSERT INTO `mob_spell_lists` VALUES ('Adelheid', 275, 259, 1, 255); -- Sleep II
+
+INSERT INTO `mob_spell_lists` VALUES ('Darcullin', 276, 593, 1, 255); -- Magic Fruit
+INSERT INTO `mob_spell_lists` VALUES ('Darcullin', 276, 612, 1, 255); -- Actinic Burst
+INSERT INTO `mob_spell_lists` VALUES ('Darcullin', 276, 617, 1, 255); -- Vertical Cleave
+INSERT INTO `mob_spell_lists` VALUES ('Darcullin', 276, 626, 1, 255); -- Bomb Toss
+INSERT INTO `mob_spell_lists` VALUES ('Darcullin', 276, 611, 1, 255); -- Disseverment
+INSERT INTO `mob_spell_lists` VALUES ('Darcullin', 276, 616, 1, 255); -- Temporal Shift
+INSERT INTO `mob_spell_lists` VALUES ('Darcullin', 276, 632, 1, 255); -- Diamondhide
+
 
 /*!40000 ALTER TABLE `mob_spell_lists` ENABLE KEYS */;
 UNLOCK TABLES;

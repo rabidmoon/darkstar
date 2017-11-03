@@ -39,7 +39,7 @@ function onMobFight(mob, target)
         mob:setLocalVar("twohourTime",battletime + math.random(60,120));
     end
 	
-	    if (GetMobAction(mobId) ~= ACTION_ATTACK) then
+	    if (GetMobAction(17408019) ~= ACTION_ATTACK) then
 	mob:setLocalVar("depopTime", os.time());
     end
 end;
@@ -48,7 +48,7 @@ function onMobRoam(mob)
     local despawnTime = mob:getLocalVar("depopTime");
 
     if (os.time() - despawnTime > 180) then
-        DespawnMob(mob:getID());
+        DespawnMob(17408019);
     end
 end;
 

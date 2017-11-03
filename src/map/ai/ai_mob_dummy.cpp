@@ -2435,6 +2435,13 @@ void CAIMobDummy::Stun(uint32 stunTime)
     m_ActionType = ACTION_STUN;
 }
 
+void CAIMobDummy::Engage(uint32 targid)
+{
+	m_TargID = targid;
+	m_PMob->PBattleAI->SetCurrentAction(ACTION_ENGAGE, m_TargID);
+
+}
+
 void CAIMobDummy::SetupEngage()
 {
     m_checkDespawn = false;

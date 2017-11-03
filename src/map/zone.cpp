@@ -436,6 +436,7 @@ void CZone::DeletePET(CBaseEntity* PPet)
 void CZone::InsertPET(CBaseEntity* PPet)
 {
     m_zoneEntities->InsertPET(PPet);
+    ShowWarning(CL_RED"REGULAR INSERT PET" CL_RESET);
 }
 
 /************************************************************************

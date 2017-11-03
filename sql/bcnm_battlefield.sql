@@ -2350,6 +2350,48 @@ INSERT INTO `bcnm_battlefield` VALUES ('1301', '4','16929087','1');-- Temenos Ae
 
 INSERT INTO `bcnm_battlefield` VALUES ('1375', '1','17129764','3');-- Dark Ixion
 INSERT INTO `bcnm_battlefield` VALUES ('1376', '1','17129768','3');-- Ixion
+
+INSERT INTO `bcnm_battlefield` VALUES ('1377', '1','17347100','1');-- Curilla Fight
+INSERT INTO `bcnm_battlefield` VALUES ('1377', '1','17347091','2');-- Curilla Fight Mammett
+INSERT INTO `bcnm_battlefield` VALUES ('1378', '1','17347105','1');-- Excenmille Fight
+INSERT INTO `bcnm_battlefield` VALUES ('1378', '1','17347106','2');-- Excenmille Fight Mammett
+INSERT INTO `bcnm_battlefield` VALUES ('1378', '1','17347107','1');-- Excenmille Fight WYvern
+
+INSERT INTO `bcnm_battlefield` VALUES ('1379', '1','17367330','1');-- Ayame Fight
+INSERT INTO `bcnm_battlefield` VALUES ('1379', '1','17367331','2');-- Ayame Fight Mammett
+
+INSERT INTO `bcnm_battlefield` VALUES ('1380', '1','17367332','1');-- Naji Fight
+INSERT INTO `bcnm_battlefield` VALUES ('1380', '1','17367333','2');-- Naji Fight Mammett
+
+INSERT INTO `bcnm_battlefield` VALUES ('1381', '1','17375770','1');-- Kupipi Fight
+INSERT INTO `bcnm_battlefield` VALUES ('1381', '1','17375771','2');-- Kupipi Fight Mammett
+
+INSERT INTO `bcnm_battlefield` VALUES ('1382', '1','17375772','1');-- Nanaa Fight
+INSERT INTO `bcnm_battlefield` VALUES ('1382', '1','17375773','2');-- Nanaa Fight Mammett
+
+INSERT INTO `bcnm_battlefield` VALUES ('1383', '1','17621314','1');-- Darcullin Fight
+INSERT INTO `bcnm_battlefield` VALUES ('1383', '1','17621315','2');-- Darcullin Fight Mammett
+
+INSERT INTO `bcnm_battlefield` VALUES ('1384', '1','17621316','1');-- Adelheid Fight
+INSERT INTO `bcnm_battlefield` VALUES ('1384', '1','17621317','2');-- Adelheid Fight Mammett
+
+INSERT INTO `bcnm_battlefield` VALUES ('1385', '1','17621312','1');-- Lion Fight
+INSERT INTO `bcnm_battlefield` VALUES ('1385', '1','17621313','2');-- Lion Fight Mammett
+
+INSERT INTO `bcnm_battlefield` VALUES ('1386', '1','17621310','1');-- Zeid Fight
+INSERT INTO `bcnm_battlefield` VALUES ('1386', '1','17621311','2');-- Zeid Fight Mammett
+
+INSERT INTO `bcnm_battlefield` VALUES ('1387', '1','17526936','1'); -- Mammet
+-- INSERT INTO `bcnm_battlefield` VALUES ('1387', '1','17526937','0'); -- Coeurl
+-- INSERT INTO `bcnm_battlefield` VALUES ('1387', '1','17526938','0'); -- Dhalmel
+-- INSERT INTO `bcnm_battlefield` VALUES ('1387', '1','17526939','0'); -- Sheep
+-- INSERT INTO `bcnm_battlefield` VALUES ('1387', '1','17526940','0'); -- Tiger
+-- INSERT INTO `bcnm_battlefield` VALUES ('1387', '1','17526941','0'); -- Manticore NM
+INSERT INTO `bcnm_battlefield` VALUES ('1387', '1','17527050','3'); -- Final Mob
+-- 1 is spawned at start
+-- 2 is kill to win
+-- 3 spawn mob on entry and kill to win
+
 -- -----------------------------------------
 -- -----------------------------------------
 

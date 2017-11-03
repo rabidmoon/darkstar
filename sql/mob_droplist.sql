@@ -1213,7 +1213,7 @@ INSERT INTO `mob_droplist` VALUES (205,0,1165,40);
 INSERT INTO `mob_droplist` VALUES (206,0,914,90);
 INSERT INTO `mob_droplist` VALUES (206,4,954,0);
 INSERT INTO `mob_droplist` VALUES (206,0,954,220);
-INSERT INTO `mob_droplist` VALUES (206,0,1195,20);
+INSERT INTO `mob_droplist` VALUES (206,0,1195,200);
 INSERT INTO `mob_droplist` VALUES (206,0,1430,200);
 INSERT INTO `mob_droplist` VALUES (206,0,4659,20);
 INSERT INTO `mob_droplist` VALUES (206,0,4774,20);
@@ -2359,6 +2359,9 @@ INSERT INTO `mob_droplist` VALUES (397,0,1420,1000);
 INSERT INTO `mob_droplist` VALUES (397,0,1420,500);
 INSERT INTO `mob_droplist` VALUES (397,0,1441,520);
 INSERT INTO `mob_droplist` VALUES (397,2,17622,0);
+INSERT INTO `mob_droplist` VALUES (397,0,2764,1000);  -- Dweeomer Steel
+INSERT INTO `mob_droplist` VALUES (397,0,2764,300);
+INSERT INTO `mob_droplist` VALUES (397,0,2764,70);
 INSERT INTO `mob_droplist` VALUES (398,0,15468,440);
 INSERT INTO `mob_droplist` VALUES (399,0,1620,60);
 INSERT INTO `mob_droplist` VALUES (399,0,1621,80);
@@ -3996,6 +3999,9 @@ INSERT INTO `mob_droplist` VALUES (716,0,1422,1000);
 INSERT INTO `mob_droplist` VALUES (716,0,1422,500);
 INSERT INTO `mob_droplist` VALUES (716,0,1442,460);
 INSERT INTO `mob_droplist` VALUES (716,0,18044,210);
+INSERT INTO `mob_droplist` VALUES (716,0,2766,1000);  -- Oberon's Gold Ingot
+INSERT INTO `mob_droplist` VALUES (716,0,2766,300);
+INSERT INTO `mob_droplist` VALUES (716,0,2766,70);
 INSERT INTO `mob_droplist` VALUES (717,0,1060,60);
 INSERT INTO `mob_droplist` VALUES (718,0,816,70);
 INSERT INTO `mob_droplist` VALUES (718,4,839,0);
@@ -19544,6 +19550,9 @@ INSERT INTO `mob_droplist` VALUES (3350,0,1418,500);
 INSERT INTO `mob_droplist` VALUES (3350,0,1441,510);
 INSERT INTO `mob_droplist` VALUES (3350,0,1445,70);
 INSERT INTO `mob_droplist` VALUES (3350,0,17511,200);
+INSERT INTO `mob_droplist` VALUES (3350,0,2762,1000);  -- Feyweald Lumber
+INSERT INTO `mob_droplist` VALUES (3350,0,2762,300);
+INSERT INTO `mob_droplist` VALUES (3350,0,2762,70);
 INSERT INTO `mob_droplist` VALUES (3351,0,926,270);
 INSERT INTO `mob_droplist` VALUES (3351,0,1028,70);
 INSERT INTO `mob_droplist` VALUES (3351,2,4362,0);
@@ -30749,6 +30758,9 @@ INSERT INTO `mob_droplist` VALUES (4347,0,1424,1000);
 INSERT INTO `mob_droplist` VALUES (4347,0,1424,500);
 INSERT INTO `mob_droplist` VALUES (4347,0,1442,420);
 INSERT INTO `mob_droplist` VALUES (4347,0,17804,230);
+INSERT INTO `mob_droplist` VALUES (4347,0,2762,1000);  -- Feyweald Lumber
+INSERT INTO `mob_droplist` VALUES (4347,0,2762,300);
+INSERT INTO `mob_droplist` VALUES (4347,0,2762,70);
 INSERT INTO `mob_droplist` VALUES (4348,0,14807,370);
 INSERT INTO `mob_droplist` VALUES (4349,2,751,0);
 INSERT INTO `mob_droplist` VALUES (4349,0,2525,20);
@@ -30862,19 +30874,31 @@ INSERT INTO `mob_droplist` VALUES (4373,0,1419,1000);
 INSERT INTO `mob_droplist` VALUES (4373,0,1419,500);
 INSERT INTO `mob_droplist` VALUES (4373,0,1441,430);
 INSERT INTO `mob_droplist` VALUES (4373,0,17774,310);
+INSERT INTO `mob_droplist` VALUES (4373,0,2769,1000);  -- Buggane Horn
+INSERT INTO `mob_droplist` VALUES (4373,0,2769,300);
+INSERT INTO `mob_droplist` VALUES (4373,0,2769,70);
 INSERT INTO `mob_droplist` VALUES (4374,0,1421,1000);
 INSERT INTO `mob_droplist` VALUES (4374,0,1421,500);
 INSERT INTO `mob_droplist` VALUES (4374,0,1442,350);
 INSERT INTO `mob_droplist` VALUES (4374,0,16838,230);
+INSERT INTO `mob_droplist` VALUES (4374,0,2766,1000);  -- Oberon's Gold Ingot
+INSERT INTO `mob_droplist` VALUES (4374,0,2766,300);
+INSERT INTO `mob_droplist` VALUES (4374,0,2766,70);
 INSERT INTO `mob_droplist` VALUES (4375,0,1423,1000);
 INSERT INTO `mob_droplist` VALUES (4375,0,1423,500);
 INSERT INTO `mob_droplist` VALUES (4375,0,1442,360);
 INSERT INTO `mob_droplist` VALUES (4375,0,18199,190);
+INSERT INTO `mob_droplist` VALUES (4375,0,2764,1000);  -- Dweeomer Steel
+INSERT INTO `mob_droplist` VALUES (4375,0,2764,300);
+INSERT INTO `mob_droplist` VALUES (4375,0,2764,70);
 INSERT INTO `mob_droplist` VALUES (4376,0,1425,1000);
 INSERT INTO `mob_droplist` VALUES (4376,0,1425,500);
 INSERT INTO `mob_droplist` VALUES (4376,0,1441,420);
 INSERT INTO `mob_droplist` VALUES (4376,0,1445,70);
 INSERT INTO `mob_droplist` VALUES (4376,0,16956,210);
+INSERT INTO `mob_droplist` VALUES (4376,0,2769,1000);  -- Buggane Horn
+INSERT INTO `mob_droplist` VALUES (4376,0,2769,300);
+INSERT INTO `mob_droplist` VALUES (4376,0,2769,70);
 INSERT INTO `mob_droplist` VALUES (4377,0,644,250);
 INSERT INTO `mob_droplist` VALUES (4377,0,955,70);
 INSERT INTO `mob_droplist` VALUES (4377,0,955,70);

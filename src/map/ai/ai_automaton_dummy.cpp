@@ -54,6 +54,8 @@ CAIAutomatonDummy::CAIAutomatonDummy(CPetEntity* PPet)
     m_magicRecast = 4000;
     m_magicEnfeebleRecast = 18000;
 	m_magicEnfeebCast = 0;
+	m_magicDrain = 0;
+	m_magicAspir = 0;
 
     
     m_magicHealRecast = 20000;
@@ -4924,45 +4926,54 @@ int16 CAIAutomatonDummy::StormFrameSpiritAttack()
     
     //CBattleEntity* mostWounded = m_PPet;
 	// Enhancing Spells
-	// Order when Dark Maneuver is up:  Aspir > Drain > Absorb INT > Blind > Bio > Poison 2
+	//On enfeebs first check if maneuver up is no dark 
+	// then check if it is dark but no ice to do Aspir > Drain > Absorb INT > Blind > Bio > Poison 2
+	// check if dark and ice are up and do no enfeebs
 	
 
 	if (m_Tick >= m_LastMagicTimeEnf + m_magicEnfeebleRecast)  // Look for last enfeeble spell time 
 	{
-	  if (m_PBattleTarget != nullptr && m_PPet->PMaster->StatusEffectContainer->HasStatusEffect(EFFECT_DARK_MANEUVER) == true && m_PPet->GetMPP() < 75)
-	{
+	  if (m_PPet->PMaster->StatusEffectContainer->HasStatusEffect(EFFECT_DARK_MANEUVER) == false) //No Dark Maneuvers use only Drain Aspir then nuke
+	  {
+	    if (m_PBattleTarget != nullptr && m_magicAspir == 0 && m_PPet->GetMPP() < 95)
+	    {
 		m_PBattleSubTarget = m_PBattleTarget;
         if (mskill >= 77)
 		    if (m_PPet->health.mp > 9)  	
 			    {
-				 spellID = 247;
+				 spellID = 247;  //Aspir
 				}
             else
 			    {
 				 spellID = -1;
 				}
 		m_magicEnfeebCast = 1;
-		m_magicEnfeebleRecast = 11000;
-        
-	}
-	    else if (m_PBattleTarget != nullptr && m_PPet->PMaster->StatusEffectContainer->HasStatusEffect(EFFECT_DARK_MANEUVER) == true && m_PPet->GetHPP() < 75) 
-	{
-	   m_PBattleSubTarget = m_PBattleTarget;
+		m_magicAspir = 1;
+		m_magicEnfeebleRecast = 11000;    
+	    }
+	    else if (m_PBattleTarget != nullptr && m_magicDrain == 0 && m_PPet->GetHPP() < 85) 
+	    {
+	    m_PBattleSubTarget = m_PBattleTarget;
         if (mskill > 44)
 		    if (m_PPet->health.mp >= 20)  	
 			    {
-				 spellID = 245;
+				 spellID = 245;  // Drain
 				}
             else
 			    {
 				 spellID = -1;
 				} 
         m_magicEnfeebCast = 1;
-		m_magicEnfeebleRecast = 11000;
-	
-	}
-	    else if (m_PBattleTarget != nullptr && m_PPet->PMaster->StatusEffectContainer->HasStatusEffect(EFFECT_DARK_MANEUVER) == true && m_PPet->GetHPP() < 65) // Dread Spikes
+		m_magicAspir = 0;
+		m_magicDrain = 0;
+		m_magicEnfeebleRecast = 45000;
+	    }
+	   }
+	   else if (m_PBattleTarget != nullptr && (m_PPet->PMaster->StatusEffectContainer->HasStatusEffect(EFFECT_DARK_MANEUVER) == true && 
+	   m_PPet->PMaster->StatusEffectContainer->HasStatusEffect(EFFECT_ICE_MANEUVER) == false))
 	{
+	  if (m_PBattleTarget != nullptr && m_PPet->GetHPP() < 65) // Dread Spikes
+	  {
 	   m_PBattleSubTarget = m_PPet;
         if (mskill >= 256)
 		    if (m_PPet->health.mp >= 78)  	
@@ -4975,9 +4986,8 @@ int16 CAIAutomatonDummy::StormFrameSpiritAttack()
 				} 
         m_magicEnfeebCast = 1;
 		m_magicEnfeebleRecast = 11000;
-	
-	}	
-	    else if (m_PBattleTarget != nullptr && m_PBattleTarget->StatusEffectContainer->HasStatusEffect(EFFECT_INT_DOWN) == false && m_PPet->PMaster->StatusEffectContainer->HasStatusEffect(EFFECT_DARK_MANEUVER) == true) //Absorb INT
+	    }
+  else if (m_PBattleTarget != nullptr && m_PBattleTarget->StatusEffectContainer->HasStatusEffect(EFFECT_INT_DOWN) == false && m_PPet->PMaster->StatusEffectContainer->HasStatusEffect(EFFECT_DARK_MANEUVER) == true) //Absorb INT
 	{
 	   m_PBattleSubTarget = m_PBattleTarget;
 		// m_magicRecast = 5000;
@@ -5011,7 +5021,7 @@ int16 CAIAutomatonDummy::StormFrameSpiritAttack()
 		m_magicEnfeebleRecast = 11000;
 	
 	}	
-	    else if (m_PBattleTarget != nullptr && m_PBattleTarget->StatusEffectContainer->HasStatusEffect(EFFECT_BIO) == false && m_PPet->PMaster->StatusEffectContainer->HasStatusEffect(EFFECT_DARK_MANEUVER) == true && m_PBattleTarget->GetHPP() >= requiredHPP) // Bio
+	    else if (m_PBattleTarget != nullptr && m_PBattleTarget->StatusEffectContainer->HasStatusEffect(EFFECT_BIO) == false && m_PBattleTarget->GetHPP() >= requiredHPP) // Bio
 	{
 	   m_PBattleSubTarget = m_PBattleTarget;
 		// m_magicRecast = 5000;
@@ -5041,7 +5051,7 @@ int16 CAIAutomatonDummy::StormFrameSpiritAttack()
 		m_magicEnfeebleRecast = 11000;
 	
 	}	
-		else if (m_PBattleTarget != nullptr && m_PBattleTarget->StatusEffectContainer->HasStatusEffect(EFFECT_SILENCE) == false && m_PPet->PMaster->StatusEffectContainer->HasStatusEffect(EFFECT_DARK_MANEUVER) == true && m_PBattleTarget->GetHPP() >= requiredHPP) // Silence
+		else if (m_PBattleTarget != nullptr && m_PBattleTarget->StatusEffectContainer->HasStatusEffect(EFFECT_SILENCE) == false && m_PBattleTarget->GetHPP() >= requiredHPP) // Silence
 	{
 	   m_PBattleSubTarget = m_PBattleTarget;
 		// m_magicRecast = 5000;
@@ -5058,7 +5068,7 @@ int16 CAIAutomatonDummy::StormFrameSpiritAttack()
 		m_magicEnfeebleRecast = 11000;
 	
 	}
-		else if (m_PBattleTarget != nullptr && m_PBattleTarget->StatusEffectContainer->HasStatusEffect(EFFECT_SLOW) == false && m_PPet->PMaster->StatusEffectContainer->HasStatusEffect(EFFECT_DARK_MANEUVER) == true && m_PBattleTarget->GetHPP() >= requiredHPP) // Slow
+		else if (m_PBattleTarget != nullptr && m_PBattleTarget->StatusEffectContainer->HasStatusEffect(EFFECT_SLOW) == false && m_PBattleTarget->GetHPP() >= requiredHPP) // Slow
 	{
 	   m_PBattleSubTarget = m_PBattleTarget;
 		// m_magicRecast = 5000;
@@ -5075,7 +5085,7 @@ int16 CAIAutomatonDummy::StormFrameSpiritAttack()
 		m_magicEnfeebleRecast = 11000;
 	
 	}
-	    else if (m_PBattleTarget != nullptr && m_PBattleTarget->StatusEffectContainer->HasStatusEffect(EFFECT_PARALYSIS) == false && m_PPet->PMaster->StatusEffectContainer->HasStatusEffect(EFFECT_DARK_MANEUVER) == true && m_PBattleTarget->GetHPP() >= requiredHPP) // Para
+	    else if (m_PBattleTarget != nullptr && m_PBattleTarget->StatusEffectContainer->HasStatusEffect(EFFECT_PARALYSIS) == false && m_PBattleTarget->GetHPP() >= requiredHPP) // Para
 	{
 	   m_PBattleSubTarget = m_PBattleTarget;
 		// m_magicRecast = 5000;
@@ -5092,7 +5102,7 @@ int16 CAIAutomatonDummy::StormFrameSpiritAttack()
 		m_magicEnfeebleRecast = 11000;
 	
 	}
-	    else if (m_PBattleTarget != nullptr && m_PBattleTarget->StatusEffectContainer->HasStatusEffect(EFFECT_BIO) == false && m_PPet->PMaster->StatusEffectContainer->HasStatusEffect(EFFECT_DARK_MANEUVER) == true && m_PBattleTarget->GetHPP() >= requiredHPP) // Poison
+	    else if (m_PBattleTarget != nullptr && m_PBattleTarget->StatusEffectContainer->HasStatusEffect(EFFECT_BIO) == false && m_PBattleTarget->GetHPP() >= requiredHPP) // Poison
 	{
 	   m_PBattleSubTarget = m_PBattleTarget;
 		// m_magicRecast = 5000;
@@ -5121,7 +5131,10 @@ int16 CAIAutomatonDummy::StormFrameSpiritAttack()
         m_magicEnfeebCast = 1;
 		m_magicEnfeebleRecast = 11000;
 	
+	}			
+		
 	}	
+	  
 	}
 	
 	//--------------------------------------------//

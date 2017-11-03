@@ -144,6 +144,13 @@ function onEffectLose(target,effect)
     target:delKeyItem(AZURE_GRANULES_OF_TIME);
     target:delKeyItem(AMBER_GRANULES_OF_TIME);	
 	target:setPos(-284.751,-39.923,-422.948,235,0x6F);  -- Warp Back to Glacier	
+	elseif (zone == 135) then
+	target:setVar("ScyldMultiplier",0);
+	target:delKeyItem(ALABASTER_GRANULES_OF_TIME);
+    target:delKeyItem(CRIMSON_GRANULES_OF_TIME);
+    target:delKeyItem(AZURE_GRANULES_OF_TIME);
+    target:delKeyItem(AMBER_GRANULES_OF_TIME);	
+	target:setPos(569.312,-0.098,-270.158,90,0x70);  -- Warp Back to Xarc		
 	elseif (zone == 86) and (chest == 1) then
 	target:setVar("IxionChest",0);	
 	target:setPos(-319,0,523,94,0x62); -- S Campaign [S]

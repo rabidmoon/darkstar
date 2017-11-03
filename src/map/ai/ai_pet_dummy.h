@@ -70,6 +70,7 @@ protected:
 	uint32 m_curillaFlashRecast;
 	uint32 m_curillaBashRecast;
 	uint32 m_curillaReprisalRecast;
+	uint32 m_curillaChivalryRecast;
 	uint32 m_kupipiHealCast;
 	uint32 m_kupipiHealRecast;
 	uint32 m_kupipiSolaceRecast;
@@ -82,6 +83,8 @@ protected:
 	uint32 m_exeJumpRecast;
 	uint32 m_exeHjumpRecast;
 	uint32 m_exeSjumpRecast;
+	uint32 m_exeAngonRecast;
+	
 	uint32 m_ayameThirdEyeRecast;
 	uint32 m_ayameSekkaRecast;
 	uint32 m_blueChainAffinityRecast;
@@ -123,6 +126,20 @@ protected:
 	uint32 m_magicPrisheRecast;
 	uint32 m_prisheHealRecast;
 	
+	uint32 m_zeidArcaneCircleRecast;
+	uint32 m_zeidWeaponBashRecast;
+	uint32 m_zeidLastResortRecast;
+	uint32 m_zeidMagicRecast;
+	uint32 m_zeidAbsorbRecast;
+	uint32 m_zeidAbsTPRecast;
+	uint32 m_zeidAbsACCRecast;
+	uint32 m_zeidAbsSTRRecast;
+	uint32 m_zeidDrainRecast;
+	uint32 m_zeidEnfeebRecast;
+	uint32 m_lionCheck;
+	uint32 m_lionTrickAttackRecast;
+	uint32 m_zeidSCReady;
+	uint32 m_skillchainTimer;
 	
 	
 	int8 m_magicburst;
@@ -163,9 +180,16 @@ protected:
 	int16 UlmiaSpell();
 	int16 PrisheSpell();
 	int16 GesshoSpell();
+	int16 ZeidSpell();
+	int16 skillchainTimer();
+	uint32 ZeidSkillchain();
 	CBattleEntity* getWounded(uint8 threshold);
 	CBattleEntity* getWoundedLow(uint8 threshold);	
 	CBattleEntity* getWoundedAga(uint8 threshold);
+	CBattleEntity* getTrickAttackPartner();
+	CBattleEntity* getLionSCPartnerZeid();	
+	CBattleEntity* getZeidSCPartner();	
+	
 
     void SendTooFarInterruptMessage(CBattleEntity* PTarg);
 

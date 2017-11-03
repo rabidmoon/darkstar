@@ -1,6 +1,6 @@
 ---------------------------------------------------
 -- Walk the Plank
--- Skillchain Properties: Fragmentation/Distortion
+-- Skillchain Properties: Fusion
 ---------------------------------------------------
 
 require("/scripts/globals/settings");
@@ -23,7 +23,7 @@ function onPetAbility(target, pet, skill)
 	local agi_wsc = 0;
 	local vit_wsc = 0;
 	local mnd_wsc = 0;
-    skill:setSkillchain(56);
+    skill:setSkillchain(168);  -- Hexa Strike Fusion Based
 	local player = pet:getMaster();
     local prishe = player:getVar("PrishePT");		
 	

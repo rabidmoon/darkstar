@@ -13,6 +13,7 @@ require("scripts/globals/common");
 -----------------------------------
 
 function onEffectGain(target,effect)
+  target:addMod(MOD_CURE_POTENCY, 10);
 end;
 
 -----------------------------------
@@ -20,6 +21,7 @@ end;
 -----------------------------------
 
 function onEffectTick(target,effect)
+  target:addMod(MOD_CURE_POTENCY, -6);
 end;
 
 -----------------------------------
@@ -27,6 +29,7 @@ end;
 -----------------------------------
 
 function onEffectLose(target,effect)
+  target:addMod(MOD_CURE_POTENCY, 50);
 end;
 
 

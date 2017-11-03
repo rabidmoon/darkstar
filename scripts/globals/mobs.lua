@@ -10,6 +10,7 @@ require("scripts/globals/quests");
 require("scripts/globals/missions");
 require("scripts/globals/conquest");
 require("scripts/globals/status");
+require("scripts/globals/trustpoints");
 
 -----------------------------------
 --
@@ -38,9 +39,7 @@ function onMobDeathEx(mob, killer, isKillShot, isWeaponSkillKill)
 	local infamycap = killer:getVar("infamycap");
 	local infamymult = killer:getVar("infamymult");
 	local newinfamymult = (infamymult / 2);
-	local cardmob = mob:getID();
-    local carddrop = math.random(1,10);
-	local aura = killer:getVar("FerretoryAura");
+ 
 	
 
 
@@ -149,7 +148,7 @@ end
 		kill = killer:getVar("FerretoryPlantoid");
 		if (killer:getVar("FerretoryPlantoid") > 0) then 
 		killer:PrintToPlayer("Aura Quest #5 Objectives Remaining: " ..kill..".", 0x15);  -- Print objectives remaining
-		else if (killer:getVar("FerretoryPlantoid") == 0) then  -- check to see kills have been completed
+		else if (killer:getVar("FerretoryPlantoid") < 1) then  -- check to see kills have been completed
 		killer:PrintToPlayer("You have completed your objective.  Please report to Maccus for your reward", 0x15);  -- Print message to player
 		killer:setVar("FerretoryPlantoidComplete",5);
 		end
@@ -278,13 +277,13 @@ end
 
 --  Infamy Point Calculations
 -- Check to see if they have finished the respective mob family quest.  Only get infamy based on mob families you've quested.
-if ((mobfamily == 17) and (killer:getVar("FerretoryQuest1") > 1)) or ((mobfamily == 14) and (killer:getVar("FerretoryQuest1") > 2)) or
-((mobfamily == 8) and (killer:getVar("FerretoryQuest1") > 3)) or ((mobfamily == 6) and (killer:getVar("FerretoryQuest1") > 4)) or
-((mobfamily == 1) and (killer:getVar("FerretoryQuest1") > 5)) or ((mobfamily == 20) and (killer:getVar("FerretoryQuest1") > 6)) or
-((mobfamily == 2) and (killer:getVar("FerretoryQuest1") > 7)) or ((mobfamily == 3) and (killer:getVar("FerretoryQuest75") > 8)) or
-((mobfamily == 19) and (killer:getVar("FerretoryQuest75") > 8)) or ((mobfamily == 9) and (killer:getVar("FerretoryQuest75") > 9)) or 
-((mobfamily == 10) and (killer:getVar("FerretoryQuest75") > 9)) or ((mobfamily == 15) and (killer:getVar("FerretoryQuest75") > 10)) or
-((mobfamily == 16) and (killer:getVar("FerretoryQuest75") > 10) or ((mobfamily == 7) and (killer:getVar("FerretoryQuest75") >= 11))) then
+if ((mobfamily == 17) and (killer:getVar("FerretoryExp") > 1)) or ((mobfamily == 14) and (killer:getVar("FerretoryExp") > 2)) or
+((mobfamily == 8) and (killer:getVar("FerretoryExp") > 3)) or ((mobfamily == 6) and (killer:getVar("FerretoryExp") > 4)) or
+((mobfamily == 1) and (killer:getVar("FerretoryExp") > 5)) or ((mobfamily == 20) and (killer:getVar("FerretoryExp") > 6)) or
+((mobfamily == 2) and (killer:getVar("FerretoryExp") > 7)) or ((mobfamily == 3) and (killer:getVar("FerretoryQuest75Exp") > 8)) or
+((mobfamily == 19) and (killer:getVar("FerretoryQuest75Exp") > 8)) or ((mobfamily == 9) and (killer:getVar("FerretoryQuest75Exp") > 9)) or 
+((mobfamily == 10) and (killer:getVar("FerretoryQuest75Exp") > 9)) or ((mobfamily == 15) and (killer:getVar("FerretoryQuest75Exp") > 10)) or
+((mobfamily == 16) and (killer:getVar("FerretoryQuest75Exp") > 10) or ((mobfamily == 7) and (killer:getVar("FerretoryQuest75Exp") >= 11))) then
 
 
 
@@ -327,18 +326,30 @@ end
 end
 end
 
--- 62, 61, 58,59
 
 
- 
 
+-- if (mob:checkBaseExp()) then
+  --   newbonus = restexp - reduction;
+	-- killer:setVar("RestExp",newbonus);
+	-- end
 	
+-- Set Resting Bonus Variable for dashboard
+
+
+local restpower = 0;
+if (killer:hasStatusEffect(EFFECT_RESTING_BONUS)) then
+    local resting = killer:getStatusEffect(EFFECT_RESTING_BONUS);
+    power = resting:getPower();
+	killer:setVar("RestingBonus",power);
+end
+
+
+trustPoints(killer,mob);
 
 
 
-
-
-
+-- Check to see if trust is in party and reward points 
 
 
 

@@ -15,7 +15,7 @@ end;
 
 function onPetAbility(target, pet, skill)
     local basemod = 1;
-    local numhits = 4;
+    local numhits = 3;
 	local attmod = 1.25;
     local accmod = 1;
 	local str_wsc = 0.40;
@@ -23,7 +23,7 @@ function onPetAbility(target, pet, skill)
 	local agi_wsc = 0;
 	local vit_wsc = 0;
 	local mnd_wsc = 0;
-    skill:setSkillchain(72);
+    skill:setSkillchain(154);
 	local player = pet:getMaster();
 	
 	

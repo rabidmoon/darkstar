@@ -14,6 +14,7 @@ function onEffectGain(target,effect)
 	target:addMod(MOD_UDMGPHYS,-effect:getPower());
 	target:addMod(MOD_ENMITY, 100);
     target:addMod(MOD_ENMITY_LOSS_REDUCTION, effect:getSubPower());
+	target:addMod(MOD_ABSORB_PHYSDMG_TO_MP, 20);
 end;
 
 -----------------------------------
@@ -45,4 +46,5 @@ function onEffectLose(target,effect)
 	target:delMod(MOD_UDMGPHYS,-effect:getPower());
 	target:delMod(MOD_ENMITY, 100);
     target:delMod(MOD_ENMITY_LOSS_REDUCTION, effect:getSubPower());
+	target:delMod(MOD_ABSORB_PHYSDMG_TO_MP, 20);	
 end;

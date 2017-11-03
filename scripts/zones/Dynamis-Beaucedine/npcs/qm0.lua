@@ -5,10 +5,10 @@
 -- Notes: 4 Puks spawn depeding on Key Items
 -- @pos 280,20,468
 --------------------------
-package.loaded["scripts/zones/Beadeaux/TextIDs"] = nil;
+package.loaded["scripts/zones/Dynamis-Beaucedine/TextIDs"] = nil;
 --------------------------
 
-require("scripts/zones/Beadeaux/TextIDs");
+require("scripts/zones/Dynamis-Beaucedine/TextIDs");
 require("scripts/globals/keyitems");
 require("scripts/globals/weather");
 

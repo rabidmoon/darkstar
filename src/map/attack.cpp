@@ -314,7 +314,7 @@ void CAttack::ProcessDamage()
 		m_attacker->StatusEffectContainer->HasStatusEffect(EFFECT_TRUST_SNEAK_ATTACK) &&
 		((abs(m_victim->loc.p.rotation - m_attacker->loc.p.rotation) < 23)))
 	{
-		ShowWarning(CL_GREEN"SNEAK ATTACK BY NANAA IS TRIGGERED!!!!!!\n" CL_RESET);
+		//ShowWarning(CL_GREEN"SNEAK ATTACK BY NANAA IS TRIGGERED!!!!!!\n" CL_RESET);
 		m_trickAttackDamage = m_attacker->DEX();
 	}
 
@@ -325,6 +325,14 @@ void CAttack::ProcessDamage()
 	{
 		m_trickAttackDamage += m_attacker->AGI() * (1 + m_attacker->getMod(MOD_TRICK_ATK_AGI)/100);
 	}
+	
+	// Trick attack Lion.
+	if (m_attacker->objtype == TYPE_PET && 
+		m_isFirstSwing && 
+		m_attackRound->GetTAEntity() != nullptr)
+	{
+		m_trickAttackDamage += m_attacker->AGI() * (1 + m_attacker->getMod(MOD_TRICK_ATK_AGI)/100);
+	}	
 
 	// H2H.
 	if (m_attackRound->IsH2H())

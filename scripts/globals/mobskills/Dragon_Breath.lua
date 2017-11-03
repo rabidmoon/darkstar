@@ -25,7 +25,11 @@ function onMobSkillCheck(target,mob,skill)
 end;
 
 function onMobWeaponSkill(target, mob, skill)
-    local dmgmod = MobBreathMove(mob, target, 0.2, 1.25, ELE_FIRE, 1400);
+    local currentsize = target:getPartySize();
+	local partycalc = math.ceil(target:getPartySize()/3);
+	local cap = partycalc * 500;
+
+    local dmgmod = MobBreathMove(mob, target, 0.2, 1.25, ELE_FIRE, cap);
     local angle = mob:getAngle(target);
 
     angle = mob:getRotPos() - angle;
