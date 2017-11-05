@@ -749,6 +749,8 @@ EFFECT_TRUST_SUBLIMATION_COMPLETE = 808
 EFFECT_REFRESH_DOWN               = 809
 EFFECT_TRUST_SNEAK_ATTACK         = 810
 EFFECT_DYNA_RESTRICTION           = 811
+EFFECT_TRUST_LAST_RESORT          = 812
+EFFECT_TRUST_TRICK_ATTACK         = 813
 -- EFFECT_PLACEHOLDER              = 802 -- Description
 -- 802-1022
 -- EFFECT_PLACEHOLDER             = 1023 -- The client dat file seems to have only this many "slots", results of exceeding that are untested.
@@ -1803,6 +1805,7 @@ MSGBASIC_DEFEATS_TARG           = 6 -- The <player> defeats <target>.
 MSGBASIC_ALREADY_CLAIMED        = 12 -- Cannot attack. Your target is already claimed.
 MSGBASIC_IS_INTERRUPTED         = 16 -- The <player>'s casting is interrupted.
 MSGBASIC_UNABLE_TO_CAST         = 18 -- Unable to cast spells at this time.
+MSGBASIC_RECOVERS_MP            = 25 -- <target> recovers MP
 MSGBASIC_CANNOT_PERFORM         = 71 -- The <player> cannot perform that action.
 MSGBASIC_CANNOT_PERFORM_TARG    = 72 -- That action cannot be performed on <target>.
 MSGBASIC_UNABLE_TO_USE_JA       = 87 -- Unable to use job ability.
