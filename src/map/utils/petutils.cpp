@@ -1004,9 +1004,9 @@ namespace petutils
 
 	    int32 attExcen = charutils::GetVar(PChar, "TrustAtt_Excen");
 	    int32 accExcen = charutils::GetVar(PChar, "TrustAcc_Excen");
-	    int32 jumpExcen = charutils::GetVar(PChar, "TrustJump_Excen");  -- SCRIPT
-	    int32 enmExcen = charutils::GetVar(PChar, "TrustEnm_Excen");  -- Enmity		
-	    int32 trait1Excen = charutils::GetVar(PChar, "TrustJA_Excen"); -- CORE
+	    int32 jumpExcen = charutils::GetVar(PChar, "TrustJump_Excen");
+	    int32 enmExcen = charutils::GetVar(PChar, "TrustEnm_Excen");	
+	    int32 trait1Excen = charutils::GetVar(PChar, "TrustJA_Excen"); 
 
 	    int32 attAya = charutils::GetVar(PChar, "TrustAtt_Ayame");
 	    int32 accAya = charutils::GetVar(PChar, "TrustAcc_Ayame");

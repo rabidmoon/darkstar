@@ -31,61 +31,61 @@ function onTrade(player,npc,trade)
 		end
 	end
 	
-        if ((player:getVar("NAJI_TRIB_FIGHT") == 3) and (player:getVar("TributeRank_Naji") == 0) and (trade:hasItemQty(65535, 1000) then
+        if ((player:getVar("NAJI_TRIB_FIGHT") == 3) and (player:getVar("TributeRank_Naji") == 0) and (trade:hasItemQty(65535, 1000))) then
 	      player:PrintToPlayer("Naji : Thank you for your Tribute.",0x0D);
           player:PrintToPlayer("Naji's Attack is raised by 5 points! (Total: 5)", 0x15);
 		  player:setVar("TrustAtt_Naji",5);
 		  player:setVar("TributeRank_Naji",1);
 	      currentTokens = currentTokens - 1;		  
-        elseif ((player:getVar("NAJI_TRIB_FIGHT") == 3) and (player:getVar("TributeRank_Naji") == 1) and (trade:hasItemQty(65535, 2000) then
+        elseif ((player:getVar("NAJI_TRIB_FIGHT") == 3) and (player:getVar("TributeRank_Naji") == 1) and (trade:hasItemQty(65535, 2000))) then
 	      player:PrintToPlayer("Naji : Thank you for your Tribute.",0x0D);
           player:PrintToPlayer("Naji's Accuracy is raised by 5 points! (Total: 5)", 0x15);
 		  player:setVar("TrustAcc_Naji",5);	
 		  player:setVar("TributeRank_Naji",2);
 		  currentTokens = currentTokens - 2;
-        elseif ((player:getVar("NAJI_TRIB_FIGHT") == 3) and (player:getVar("TributeRank_Naji") == 2) and (trade:hasItemQty(65535, 3000) then
+        elseif ((player:getVar("NAJI_TRIB_FIGHT") == 3) and (player:getVar("TributeRank_Naji") == 2) and (trade:hasItemQty(65535, 3000))) then
 	      player:PrintToPlayer("Naji : Thank you for your Tribute.",0x0D);
           player:PrintToPlayer("Naji's Double Attack is raised by 2 points! (Total: 2%)", 0x15);
 		  player:setVar("TrustDA_Naji",2);	
 		  player:setVar("TributeRank_Naji",3);
 		  currentTokens = currentTokens - 3;
-        elseif ((player:getVar("NAJI_TRIB_FIGHT") == 3) and (player:getVar("TributeRank_Naji") == 3) and (trade:hasItemQty(65535, 4000) then
+        elseif ((player:getVar("NAJI_TRIB_FIGHT") == 3) and (player:getVar("TributeRank_Naji") == 3) and (trade:hasItemQty(65535, 4000))) then
 	      player:PrintToPlayer("Naji : Thank you for your Tribute.",0x0D);
           player:PrintToPlayer("Naji's Attack is raised by 5 points! (Total: 10)", 0x15);
 		  player:setVar("TrustAtt_Naji",10);	
 		  player:setVar("TributeRank_Naji",4);
 		  currentTokens = currentTokens - 4;
-        elseif ((player:getVar("NAJI_TRIB_FIGHT") == 3) and (player:getVar("TributeRank_Naji") == 4) and (trade:hasItemQty(65535, 5000) then
+        elseif ((player:getVar("NAJI_TRIB_FIGHT") == 3) and (player:getVar("TributeRank_Naji") == 4) and (trade:hasItemQty(65535, 5000))) then
 	      player:PrintToPlayer("Naji : Thank you for your Tribute.",0x0D);
           player:PrintToPlayer("Naji's Accuracy is raised by 5 points! (Total: 10)", 0x15);
 		  player:setVar("TrustAcc_Naji",10);	
 		  player:setVar("TributeRank_Naji",5);
 		  currentTokens = currentTokens - 5;
-        elseif ((player:getVar("NAJI_TRIB_FIGHT") == 3) and (player:getVar("TributeRank_Naji") == 5) and (trade:hasItemQty(65535, 10000) then
+        elseif ((player:getVar("NAJI_TRIB_FIGHT") == 3) and (player:getVar("TributeRank_Naji") == 5) and (trade:hasItemQty(65535, 10000))) then
 	      player:PrintToPlayer("Naji : Thank you for your Tribute.",0x0D);
           player:PrintToPlayer("Naji's Double Attack is raised by 3 points! (Total: 5%)", 0x15);
 		  player:setVar("TrustDA_Naji",5);	
 		  player:setVar("TributeRank_Naji",6);
 		  currentTokens = currentTokens - 10;
-        elseif ((player:getVar("NAJI_TRIB_FIGHT") == 3) and (player:getVar("TributeRank_Naji") == 6) and (trade:hasItemQty(65535, 15000) then
+        elseif ((player:getVar("NAJI_TRIB_FIGHT") == 3) and (player:getVar("TributeRank_Naji") == 6) and (trade:hasItemQty(65535, 15000))) then
 	      player:PrintToPlayer("Naji : Thank you for your Tribute.",0x0D);
           player:PrintToPlayer("Naji's Attack is raised by 5 points! (Total: 15)", 0x15);
 		  player:setVar("TrustAtt_Naji",15);	
 		  player:setVar("TributeRank_Naji",7);
 		  currentTokens = currentTokens - 15;
-        elseif ((player:getVar("NAJI_TRIB_FIGHT") == 3) and (player:getVar("TributeRank_Naji") == 7) and (trade:hasItemQty(65535, 30000) then
+        elseif ((player:getVar("NAJI_TRIB_FIGHT") == 3) and (player:getVar("TributeRank_Naji") == 7) and (trade:hasItemQty(65535, 30000))) then
 	      player:PrintToPlayer("Naji : Thank you for your Tribute.",0x0D);
           player:PrintToPlayer("Naji's Accuracy is raised by 5 points! (Total: 15)", 0x15);
 		  player:setVar("TrustAcc_Naji",15);	
 		  player:setVar("TributeRank_Naji",8);
 		  currentTokens = currentTokens - 20;
-        elseif ((player:getVar("NAJI_TRIB_FIGHT") == 3) and (player:getVar("TributeRank_Naji") == 8) and (trade:hasItemQty(65535, 75000) then
+        elseif ((player:getVar("NAJI_TRIB_FIGHT") == 3) and (player:getVar("TributeRank_Naji") == 8) and (trade:hasItemQty(65535, 75000))) then
 	      player:PrintToPlayer("Naji : Thank you for your Tribute.",0x0D);
           player:PrintToPlayer("Naji's Crit. Hit Rate is raised by 3%! (Total: 3%)", 0x15);
 		  player:setVar("TrustCrit_Naji",3);	
 		  player:setVar("TributeRank_Naji",9);	
           currentTokens = currentTokens - 30;		  
-        elseif ((player:getVar("NAJI_TRIB_FIGHT") == 3) and (player:getVar("TributeRank_Naji") == 9) and (trade:hasItemQty(65535, 150000) then
+        elseif ((player:getVar("NAJI_TRIB_FIGHT") == 3) and (player:getVar("TributeRank_Naji") == 9) and (trade:hasItemQty(65535, 150000))) then
 	      player:PrintToPlayer("Naji : Thank you for your Tribute.",0x0D);
           player:PrintToPlayer("Naji's Berserk Effect is raised by 1%! (Total: 1%)", 0x15);
 		  player:setVar("TrustBerserk_Naji",1);	

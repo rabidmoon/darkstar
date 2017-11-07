@@ -165,7 +165,7 @@ function onTrigger(player,npc)
     elseif ((player:getVar("AYAME_TRIB_FIGHT") == 3) and (player:getVar("TributeRank_Cur") == 9)) then
       player:PrintToPlayer("Ayame : Bring me 35 of my Trust Tokens and 150,000 gil so I can Meditate by 20 TP",0x0D);
     end	
-	end
+	
 	
 	
 	

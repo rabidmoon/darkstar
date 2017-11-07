@@ -29,7 +29,7 @@ function onTrade(player,npc,trade)
             end
         -- Trade Cup of Sweet Tea
         elseif (trade:hasItemQty(3340,1) and trade:getItemCount() == 1 and (paragon == 1)) then
-            if (LandKingSystem_HQ ~= 0) then
+            if (LandKingSystem_HQ ~= 1) then
                 player:tradeComplete();
                 SpawnMob(17408019):updateClaim(player);
             end

@@ -3422,7 +3422,7 @@ void CAIPetDummy::ActionAttack()
 	
 	//Trust Tokens
 	uint32 curillaChivalry = 0;
-    uint32 excenAngon = charutils::GetVar((CCharEntity*)m_PPet->PMaster,"TrustJA_Excen")
+	uint32 excenAngon = charutils::GetVar((CCharEntity*)m_PPet->PMaster, "TrustJA_Excen");
 
 	CMobEntity* PMob = (CMobEntity*)m_PBattleTarget;
 	apAction_t Action;

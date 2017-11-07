@@ -146,10 +146,6 @@ function onTrigger(player,npc)
       player:PrintToPlayer("Excenmille : Bring me 30 of my Trust Tokens and 75,000 gil to decrease my Enmity by 5",0x0D);
     elseif ((player:getVar("EXCEN_TRIB_FIGHT") == 3) and (player:getVar("TributeRank_Cur") == 9)) then
       player:PrintToPlayer("Excenmille : Bring me 35 of my Trust Tokens and 150,000 gil so I can learn 'Angon'",0x0D);
-    end	
-	
-	
-	
 	else
 	player:startEvent(0x001d);
 	end

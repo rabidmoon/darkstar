@@ -5,10 +5,15 @@
 
 cmdprops =
 {
-    permission = 1,
+    permission = 0,
     parameters = ""
 };
 
 function onTrigger(player,npc)
-    player:sendMenu(3);
+    local aura = player:getVar("FerretoryAura");
+	if (aura >= 3) then
+	player:sendMenu(3);
+	else
+	player:PrintToPlayer("You do not have enough Feretory Aura to access this feature.", 0xE);
+	end
 end;

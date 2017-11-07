@@ -105,17 +105,17 @@ function onTrigger(player,npc)
 	
 	-- Obtain Lion Cipher requires that ZM9 is done
 	
-	if ((player:hasCompletedMission(ZILART,ROMAEVE)) and (player:hasKeyItem(RED_INSTITUTE_CARD)) and (player:hasSpell(907) == false))
+	if ((player:hasCompletedMission(ZILART,ROMAEVE)) and (player:hasKeyItem(RED_INSTITUTE_CARD)) and (player:hasSpell(907) == false)) then
 		player:PrintToPlayer("Your Red Institute Card flashes brilliantly!", 0x1C);
         player:PrintToPlayer("Gilgamesh : My daughter is very connected to you.  She told me if you ever need help, just call for her.", 0xD);
         player:addSpell(907);
 		player:PrintToPlayer("You are now able to summon Lion!", 0x1C);		
-    elseif ((player:hasCompletedMission(ZILART,ROMAEVE)) and (player:hasKeyItem(GREEN_INSTITUTE_CARD)) and (player:hasSpell(907) == false))
+    elseif ((player:hasCompletedMission(ZILART,ROMAEVE)) and (player:hasKeyItem(GREEN_INSTITUTE_CARD)) and (player:hasSpell(907) == false)) then
 		player:PrintToPlayer("Your Green Institute Card flashes brilliantly!", 0x1C);
         player:PrintToPlayer("Gilgamesh : My daughter is very connected to you.  She told me if you ever need help, just call for her.", 0xD);
         player:addSpell(907);
 		player:PrintToPlayer("You are now able to summon Lion!", 0x1C);
-    elseif ((player:hasCompletedMission(ZILART,ROMAEVE)) and (player:hasKeyItem(BLUE_INSTITUTE_CARD)) and (player:hasSpell(907) == false))
+    elseif ((player:hasCompletedMission(ZILART,ROMAEVE)) and (player:hasKeyItem(BLUE_INSTITUTE_CARD)) and (player:hasSpell(907) == false)) then
 		player:PrintToPlayer("Your Blue Institute Card flashes brilliantly!", 0x1C);
         player:PrintToPlayer("Gilgamesh : My daughter is very connected to you.  She told me if you ever need help, just call for her.", 0xD);
         player:addSpell(907);
