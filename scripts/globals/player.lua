@@ -12,6 +12,7 @@ require("scripts/globals/shop");
 require("scripts/globals/status");
 require("scripts/globals/titles");
 require("scripts/globals/gear_sets");
+require("scripts/globals/playertips");
 
 -----------------------------------
 -- onGameIn
@@ -38,7 +39,7 @@ local zone = player:getZoneID();
 		if (player:getObjType() == TYPE_PC) then
 		player:PrintToServer(string.format("%s has logged in...", player:getName()), 0x1C);
 		-- Login Logout message handled in Core
-		
+
 		  if ((player:hasStatusEffect(EFFECT_RESTING_BONUS) == false) and loginok == 1) then
 			if ((logintime - lastlogin) >= 39600) then  --39600 is 11 hours
 			bonus = (((logintime - lastlogin) - 39600)) * 0.001388; -- 1 hour is 1.66% exp
@@ -55,9 +56,10 @@ local zone = player:getZoneID();
 	if (player:hasKeyItem(PORTAL_CHARM) == false) then
 	    player:addKeyItem(PORTAL_CHARM);
 	end	
-		
-		
-		
+	
+	player:setVar("Player_Tips",1);	
+
+	
     end
 
     if (zoning) then -- Things checked ONLY during zone in go here.
@@ -65,6 +67,7 @@ local zone = player:getZoneID();
 		if ((player:getObjType() == TYPE_PC) and (player:hasStatusEffect(EFFECT_DYNA_RESTRICTION)) and (zone ~= 135) and (zone ~= 134) and (zone ~= 185) and (zone ~= 186) and (zone ~= 187) and (zone ~= 188)) then
 		player:delStatusEffect(EFFECT_DYNA_RESTRICTION);
 	   end	
+	  
     end
 
     -- Things checked BOTH during logon AND zone in below this line.
@@ -148,8 +151,6 @@ local zone = player:getZoneID();
 	
 	
 
-	
-	
 	
 	
 	

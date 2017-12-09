@@ -79,8 +79,9 @@ function onZoneIn(player,prevZone)
 	reentertime = 0;
 	end
 	
-	
+	printf("Entering Xarc");
 	if (player:hasStatusEffect(EFFECT_DYNA_RESTRICTION) == false) then
+	printf("adding Dyna Restriction");
 	player:addStatusEffectEx(EFFECT_DYNA_RESTRICTION,EFFECT_LEVEL_RESTRICTION,75,3,5400);
     player:PrintToPlayer("You have 90 minutes remaining in Dynamis", 0xD);
 	if (reduction == 0) then

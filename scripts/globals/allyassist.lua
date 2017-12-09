@@ -23,7 +23,7 @@ function startAllyAssist(entity, assistMode)
     print("start inserting mob")
     local targetMobs = {}
     for j,mob in pairs(mobs) do
-        if (mob:getStatus(STATUS_DISAPPEAR) == false and mob:isAlive()) then
+        if (mob:getStatus() ~= STATUS_DISAPPEAR and mob:getHP() > 0) then
             if (mob:isAlly()) then
                 table.insert(allies, mob)
             else
@@ -53,6 +53,7 @@ function startAllyAssist(entity, assistMode)
         -- A variety of reasons could cause this - players have hate but are not engaged is one.
         -- Being aggroed when not engaged is another.
         if (assistTarget > 0) then
+		    printf("Assist Target is: %u", assistTarget);
             for _,ally in ipairs(allies) do
                 ally:engage(assistTarget);
             end
@@ -66,8 +67,11 @@ function startAllyAssist(entity, assistMode)
 
 
     local target = targetMobs[math.random(#targetMobs)]
-
+	-- local newtarget = player:getMobByID();
+	local showid = target:getShortID();
+    
     for _,ally in ipairs(allies) do
-        ally:engage(target:getShortID())
+	    printf("LOOKING FOR TARGET!!!");
+	    ally:engage(target:getShortID());	
     end
 end

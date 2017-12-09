@@ -751,6 +751,7 @@ EFFECT_TRUST_SNEAK_ATTACK         = 810
 EFFECT_DYNA_RESTRICTION           = 811
 EFFECT_TRUST_LAST_RESORT          = 812
 EFFECT_TRUST_TRICK_ATTACK         = 813
+EFFECT_TRUST_BARRAGE              = 815
 -- EFFECT_PLACEHOLDER              = 802 -- Description
 -- 802-1022
 -- EFFECT_PLACEHOLDER             = 1023 -- The client dat file seems to have only this many "slots", results of exceeding that are untested.
