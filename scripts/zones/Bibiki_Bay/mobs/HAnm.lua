@@ -153,6 +153,10 @@ printf("done");
 	    killer:setVar("PLDHAFight",2);
 	end
 
+    if (killer:getVar("PLDHAFightShield") == 1) then
+	    killer:setVar("PLDHAFightShield",2);
+	end	
+	
     if (killer:getVar("DRKHAFight") == 1) then
 	    killer:setVar("DRKHAFight",2);
 	end	

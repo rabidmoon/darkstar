@@ -138,7 +138,7 @@ function onTrigger(player,npc)
     player:PrintToPlayer("Curilla : I humbly accept your request.  I will fight by your side", 0xD);
     player:addSpell(902);
 	player:PrintToPlayer("You are now able to summon the trust Curilla!", 0x15);
-	elseif (mainlvl >= 71 and skill >= 240 and player:getQuestStatus(SANDORIA,OLD_WOUNDS) ~= QUEST_ACCEPTED) then
+	elseif (mainlvl >= 71 and skill >= 240 and player:getQuestStatus(SANDORIA,OLD_WOUNDS) ~= QUEST_ACCEPTED and wsnm == nil) then
 	   player:PrintToPlayer("Curilla : Savage Blade eh?  Use it 100 times and then come see me afterwards.",0x0D);
 	   player:setVar("SAVAGE_BLADE",100);
 	   player:addQuest(SANDORIA,OLD_WOUNDS);

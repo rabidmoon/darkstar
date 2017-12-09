@@ -26,7 +26,7 @@ local body = player:getVar("BLU_AF_BODY");
 local feet = player:getVar("BLU_AF_FEET");
 local head = player:getVar("BLU_AF_HEAD");
 
-if (job === JOBS.BLU and lvl >= 50) then
+if (job == JOBS.BLU and lvl >= 50) then
    
     -- Check for armor Completions
     if (feet == 0) then -- Haven't Done Feet
@@ -96,7 +96,7 @@ local feet = player:getVar("BLU_AF_FEET");
 local head = player:getVar("BLU_AF_HEAD");
 
 
-if (job === JOBS.BLU and lvl >= 50) then
+if (job == JOBS.BLU and lvl >= 50) then
     -- Check for armor Completions
     if (feet == 0) then -- Haven't Done feet
         player:PrintToPlayer("Lathuya : I see you are a BLU Mage, but you lack the attire.  Bring me a Gold Chain,", 0xD);
@@ -121,7 +121,7 @@ if (job === JOBS.BLU and lvl >= 50) then
 		    0x3BA1,    50000, -- Magus Keffiyeh
 			0x3CF0,    15000, -- Magus Shalwar
 		    0x3A50,    20000, -- Magus Bazubands
-		    0x38B9,    30000  -- Magus Jubbah
+		    0x38B9,    30000,  -- Magus Jubbah
 		    0x3D44,    10000  -- Magus Charuqs	
 		}
 		showShop(player, STATIC, afshop);		
@@ -129,7 +129,7 @@ if (job === JOBS.BLU and lvl >= 50) then
 	    local afshop = {
 		    0x3CF0,    15000, -- Magus Shalwar
 		    0x3A50,    20000, -- Magus Bazubands
-		    0x38B9,    30000  -- Magus Jubbah
+		    0x38B9,    30000,  -- Magus Jubbah
 		    0x3D44,    10000  -- Magus Charuqs	
 		}
 		showShop(player, STATIC, afshop);	
