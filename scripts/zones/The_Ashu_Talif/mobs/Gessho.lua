@@ -25,9 +25,11 @@ end
 function onMobSpawn(mob)
     -- Gessho will engage by himself ~1min in if you stall too long.
     -- Give a little buffer for while the instance loads
-   -- mob:timer(80000, function(mob)
-        -- if(mob:getLocalVar("ready") == 0 and not(mob:getTarget())) then
-            startAllyAssist(mob, ALLY_ASSIST_RANDOM);
+	-- printf("SPAWNING GESHO!!!");
+    
+       -- if(mob:getLocalVar("ready") == 0 and not(mob:getTarget())) then
+         --    startAllyAssist(mob, ALLY_ASSIST_PLAYER);
+			-- print("Random too choose");
         -- end
     
 
@@ -52,12 +54,45 @@ end;
 -----------------------------------
 
 function onMobRoam(mob)
-    local ready = mob:getLocalVar("ready");
+local start = mob:getLocalVar("start");
+local targets;
+local chars;
+local wait = mob:getLocalVar("wait");
+targets = mob:getInstance():getMobs(); -- gets the current mobs in the zone
+chars = mob:getInstance():getChars(); -- Gets all characters in the instance
 
-    -- When Gessho becomes ready via you pulling, he will assist you
-    if (ready == 1) then
-        startAllyAssist(mob, ALLY_ASSIST_PLAYER);
-    end
+-- Loop thru chars to see if a character is attacking
+
+    for j,player in pairs(chars) do
+	    local battleTarget = player:getTarget();
+		
+		if (battleTarget ~= nil) then
+		   printf("Battle Target Acquired!!");
+		   mob:addEnmity(battleTarget, 0, 1);
+		   break;
+		 end
+	end	 
+
+if (start == 0 and wait > 100) then -- Wait 100 Seconds before Attacking
+    -- printf("Time to Attack!!!!");
+    for i,fight in pairs(targets) do -- Loop thru all mobs and attack the first one
+                if (fight:isAlly()) then
+				   -- printf("This is Gessho");
+				else
+				    -- fight:delHP(100);
+					-- printf("This THE ENEMY!!!");
+				    mob:addEnmity(fight, 0, 10);
+				
+				-- mob:setLocalVar("start",1);
+		        break;
+				end
+	end	
+else
+  printf("Wait is %u",wait);
+  mob:setLocalVar("wait", wait+3);
+  printf("I am NOT ready to fight yet");
+end  
+		
 end;
 
 -----------------------------------

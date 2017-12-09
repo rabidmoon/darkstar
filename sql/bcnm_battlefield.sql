@@ -740,6 +740,8 @@ INSERT INTO `bcnm_battlefield` VALUES ('1056','2','16924675','1');
 INSERT INTO `bcnm_battlefield` VALUES ('1056','2','16924676','2');
 INSERT INTO `bcnm_battlefield` VALUES ('1056','3','16924677','1');
 INSERT INTO `bcnm_battlefield` VALUES ('1056','3','16924678','2');
+INSERT INTO `bcnm_battlefield` VALUES ('1124','1','17039400','3');  -- Shields of Diplomacy
+INSERT INTO `bcnm_battlefield` VALUES ('1124','1','17039401','0');
 INSERT INTO `bcnm_battlefield` VALUES ('1283', '1', '17547530', '3');
 INSERT INTO `bcnm_battlefield` VALUES ('1283', '1', '17547531', '3');
 INSERT INTO `bcnm_battlefield` VALUES ('1283', '1', '17547532', '3');
@@ -2388,6 +2390,9 @@ INSERT INTO `bcnm_battlefield` VALUES ('1387', '1','17526936','1'); -- Mammet
 -- INSERT INTO `bcnm_battlefield` VALUES ('1387', '1','17526940','0'); -- Tiger
 -- INSERT INTO `bcnm_battlefield` VALUES ('1387', '1','17526941','0'); -- Manticore NM
 INSERT INTO `bcnm_battlefield` VALUES ('1387', '1','17527050','3'); -- Final Mob
+
+INSERT INTO `bcnm_battlefield` VALUES ('1388', '1','16908475','3'); -- Prishe
+INSERT INTO `bcnm_battlefield` VALUES ('1388', '1','16908476','1'); -- Ulmia
 -- 1 is spawned at start
 -- 2 is kill to win
 -- 3 spawn mob on entry and kill to win

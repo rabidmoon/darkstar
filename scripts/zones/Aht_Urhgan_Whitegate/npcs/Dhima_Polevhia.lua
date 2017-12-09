@@ -25,7 +25,7 @@ local body = player:getVar("PUP_AF_BODY");
 local feet = player:getVar("PUP_AF_FEET");
 local head = player:getVar("PUP_AF_HEAD");
 
-if (job === JOBS.PUP and lvl >= 50) then 
+if (job == JOBS.PUP and lvl >= 50) then 
     -- Check for armor Completions
     if (pants == 0) then -- Haven't Done Feet
 	    if ((trade:hasItemQty(821,1)) and (trade:hasItemQty(2289,1)) and (trade:hasItemQty(2152,1))) then
@@ -91,7 +91,7 @@ local feet = player:getVar("PUP_AF_FEET");
 local head = player:getVar("PUP_AF_HEAD");
 
 
-if (job === JOBS.PUP and lvl >= 50) then
+if (job == JOBS.PUP and lvl >= 50) then
     -- Check for armor Completions
     if (pants == 0) then -- Haven't Done pants
         player:PrintToPlayer("Dhima Polevhia : I see you are a Puppetmaster, but you lack the attire.  Bring me a Rainbow Thread,", 0xD);
@@ -116,7 +116,7 @@ if (job === JOBS.PUP and lvl >= 50) then
 		    0x3BA3,    50000, -- Puppetry Taj
 			0x38BB,    30000, -- Puppetry Tobe
 		    0x3A52,    20000, -- Puppetry's Hands	
-		    0x3D46,    10000  -- Puppetry Feet			
+		    0x3D46,    10000,  -- Puppetry Feet			
 		    0x3CF2,    15000  -- Puppetrys Legs			
 		}
 		showShop(player, STATIC, afshop);		
@@ -124,20 +124,20 @@ if (job === JOBS.PUP and lvl >= 50) then
 	    local afshop = {
 			0x38BB,    30000, -- Puppetry Tobe
 		    0x3A52,    20000, -- Puppetry's Hands	
-		    0x3D46,    10000  -- Puppetry Feet			
+		    0x3D46,    10000, -- Puppetry Feet			
 		    0x3CF2,    15000  -- Puppetrys Legs		
 		}
 		showShop(player, STATIC, afshop);		
 	elseif (hands == 1) then
 	    local afshop = {
 		    0x3A52,    20000, -- Puppetry's Hands	
-		    0x3D46,    10000  -- Puppetry Feet			
+		    0x3D46,    10000,  -- Puppetry Feet			
 		    0x3CF2,    15000  -- Puppetrys Legs		
 		}
 		showShop(player, STATIC, afshop);	
 	elseif (feet == 1) then
 	    local afshop = {	
-		    0x3D46,    10000  -- Puppetry Feet			
+		    0x3D46,    10000,  -- Puppetry Feet			
 		    0x3CF2,    15000  -- Puppetrys Legs				
 		}
 		showShop(player, STATIC, afshop);		

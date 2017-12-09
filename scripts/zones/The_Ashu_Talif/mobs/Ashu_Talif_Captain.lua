@@ -11,7 +11,9 @@ local TheAshuTalif = require("scripts/zones/The_Ashu_Talif/IDs");
 -----------------------------------
 
 function onMobSpawn(mob)
-    mob:setUnkillable(true);
+    mob:setUnkillable(false);
+	mob:untargetable(false); 
+
 end;
 
 -----------------------------------
@@ -20,23 +22,21 @@ end;
 
 function onMobFight(mob, target)
     -- The captain gives up at <= 20% HP. Everyone disengages
-    local instance = mob:getInstance();
+    local instance = target:getInstance();
     if (mob:getHPP() <= 20 and instance:completed() == false) then
-        instance:complete();
+	    mob:addStatusEffect(EFFECT_TERROR,1,0,120);
+		mob:untargetable(true); 
+
+		
+	    printf("Should be done");
+		mob:setHP(0);
+
+        mob:setPos(0,-28,-7);
+		instance:complete();
     end
 
-    mob:addListener("WEAPONSKILL_STATE_ENTER", "WS_START_MSG", function(mob, skillID)
-        -- Vulcan Shot
-        if(skillId == 254) then
-            mob:showText(mob,TheAshuTalif.text.FOR_EPHRAMAD);
-            mob:timer(3000, function(mob)
-                mob:showText(mob,TheAshuTalif.text.TROUBLESOME_SQUABS);
-            end)
-        -- Circle Blade
-        elseif(skillId == 938) then
-            mob:showText(mob,TheAshuTalif.text.FOR_THE_BLACK_COFFIN);
-        end
-    end);
+
+ 
 end;
 
 -----------------------------------
@@ -46,28 +46,12 @@ end;
 function onMobRoam(mob)
     local jumped = mob:getLocalVar("jump");
     local ready = mob:getLocalVar("ready");
-
+mob:untargetable(false); 
     -- Becomes ready when the Crew is engaged. Jump down!
-    if (ready == 1 and jumped == 0) then
-        mob:showText(mob,TheAshuTalif.text.OVERPOWERED_CREW);
 
-        mob:hideName(true);
-        mob:entityAnimationPacket("jmp0");
-
-        mob:timer(2000, function(mob)
-            mob:setPos(0,-22,13,192);
-            mob:entityAnimationPacket("jmp1");
-
-            mob:showText(mob,TheAshuTalif.text.TEST_YOUR_BLADES);
-
-            mob:timer(2000, function(mob)
-                mob:hideName(false);
-                mob:untargetable(false);
-            end)
-        end)
 
         mob:setLocalVar("jump", 1);
-    end
+    
 
 end;
 
@@ -89,7 +73,9 @@ end;
 -- onMobDeath
 -----------------------------------
 
-function onMobDeath(mob, player, isKiller)
+function onMobDeath(mob, killer)
+  printf("Mob Died");
+	
 end;
 
 -----------------------------------
@@ -97,4 +83,5 @@ end;
 -----------------------------------
 
 function onMobDespawn(mob)
+
 end;

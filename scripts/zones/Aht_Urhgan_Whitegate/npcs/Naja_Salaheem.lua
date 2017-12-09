@@ -72,7 +72,7 @@ function onTrigger(player,npc)
                     player:startEvent(3077,0,0,0,0,0,0,0,0,0);
                 end
             end
-        elseif (player:getCurrentMission(TOAU) == PASSING_GLORY and player:getVar("TOAUM18_STARTDAY") ~= VanadielDayOfTheYear() and needToZone == false) then
+        elseif (player:getCurrentMission(TOAU) == PASSING_GLORY and needToZone == false) then
             player:startEvent(3090,0,0,0,0,0,0,0,0,0);	
 	
 	
@@ -145,6 +145,7 @@ function onEventFinish(player,csid,option)
         elseif (csid == 3074) then
             player:completeMission(TOAU,GHOSTS_OF_THE_PAST_TOAU);
             player:addMission(TOAU,GUESTS_OF_THE_EMPIRE);
+			player:setVar("AhtUrganStatus", 1);
 
         if(option == 2) then
             player:setVar("AhtUrganStatus", 1);

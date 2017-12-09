@@ -1765,6 +1765,9 @@ namespace battleutils
             case 6: // ochain
                 base = 110;
                 break;
+			case 7: // HA Shield
+			    base = 15;
+				break;
             default:
                 return 0;
         }
@@ -3670,6 +3673,49 @@ namespace battleutils
                     }
                 }
             }
+			//Trick Attack on Trust
+			else if (taUser->PAlly.size() > 0) 
+			{
+			    for (uint8 i = 0; i < taUser->PAlly.size(); ++i)
+                {
+                    CBattleEntity* member = taUser->PAlly[i];
+                    if (member->id != taUser->id && distance(member->loc.p, PMob->loc.p) <= distance(taUser->loc.p, PMob->loc.p))
+                    {
+                        if (zDependent)
+                        {
+                            //is member between taUser and PMob on x line?
+                            if ((member->loc.p.x <= taUserX && member->loc.p.x >= mobX) ||
+                                (member->loc.p.x >= taUserX && member->loc.p.x <= mobX))
+                            {
+                                if ((member->loc.p.z - mobZ <= (member->loc.p.x - mobX)*maxSlope) &&
+                                    (member->loc.p.z - mobZ >= (member->loc.p.x - mobX)*minSlope))
+                                {
+                                    //finally found a TA partner
+                                    return member;
+                                }
+                            }
+                        }
+                        else {
+                            //is member between taUser and PMob on z line?
+                            if ((member->loc.p.z <= taUserZ && member->loc.p.z >= mobZ) ||
+                                (member->loc.p.z >= taUserZ && member->loc.p.z <= mobZ))
+                            {
+                                if ((member->loc.p.x - mobX <= (member->loc.p.z - mobZ)*maxSlope) &&
+                                    (member->loc.p.x - mobX >= (member->loc.p.z - mobZ)*minSlope))
+                                {
+                                    //finally found a TA partner
+                                    return member;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+			
+			
+			
+			
+			
             else {//no alliance
                 for (uint8 i = 0; i < taUser->PParty->members.size(); ++i)
                 {

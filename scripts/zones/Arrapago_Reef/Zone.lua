@@ -75,14 +75,16 @@ end;
 function onEventFinish(player,csid,option)
     -- printf("CSID: %u",csid);
     -- printf("RESULT: %u",option);
-if (csid == 0x0008) then
-player:setVar("TOAUM15",1);
-player:delKeyItem(EPHRAMADIAN_GOLD_COIN);
-player:startEvent(0x0022,1,1,1,1,1,1,1,1);
+    if (csid == 0x0008) then
+        player:setVar("TOAUM15",1);
+        player:delKeyItem(EPHRAMADIAN_GOLD_COIN);
+        player:startEvent(0x0022,1,1,1,1,1,1,1,1);
     elseif (csid == 9) then  -- Finish Black Coffin and then warp to Nashmau to finish
         player:setVar("AhtUrganStatus",3);
         player:setPos(0,0,0,0,53);
-elseif (csid == 0x0022 and player:getVar("TOAUM15") == 1) then
-player:startEvent(0x0023);
-end    
+    elseif (csid == 0x0022 and player:getVar("TOAUM15") == 1) then
+        player:startEvent(0x0023);
+    elseif (csid == 90) then -- enter instance: the ashu talif
+        player:setPos(0,0,0,0,60);		
+    end    
 end;

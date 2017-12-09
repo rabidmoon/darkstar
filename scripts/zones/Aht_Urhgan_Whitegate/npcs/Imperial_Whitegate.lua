@@ -26,7 +26,8 @@ end;
 
 function onTrigger(player,npc)
     if (player:getEquipID(SLOT_MAIN) == 0 and player:getEquipID(SLOT_SUB) == 0 and
-            player:getEquipID(SLOT_RANGE) == 0 and player:getEquipID(SLOT_AMMO) == 0) then
+            player:getEquipID(SLOT_RANGED) == 0 and player:getEquipID(SLOT_AMMO) == 0) then
+			printf("Nothing in main ranged ammo or sub");
         if (player:getCurrentMission(TOAU) == GUESTS_OF_THE_EMPIRE and player:getVar("AhtUrganStatus") == 1 and
                 doRoyalPalaceArmorCheck(player) == true) then
             player:startEvent(3078,0,1,0,0,0,0,0,1,0);
