@@ -88,6 +88,7 @@ CAIPetDummy::CAIPetDummy(CPetEntity* PPet)
 	m_curillaReprisalRecast = 180000;
 	m_curillaChivalryRecast = 300000; 
 	m_magicKupipiRecast = 4000;
+	m_magicShantottoRecast = 7000;
 	m_nanaacheck = 5000;  //For Nanaa Mihgo to check every 5 seconds if she is facing target or not
 	m_nanaaSneakAttackRecast = 50000;
 	
@@ -156,6 +157,14 @@ CAIPetDummy::CAIPetDummy(CPetEntity* PPet)
 	m_skillchainTimer = 10000;
 	m_lionCheck = 10000;
 	m_zeidSCReady = 0;
+	
+	m_najelithBerserkRecast = 300000;
+	m_najelithRangedRecast = 15000;  // Ranged Attack every 11 seconds
+	m_najelithSharpshotRecast = 300000;
+	m_najelithBarrageRecast = 300000;
+
+    m_shantottoEleRecast = 21000; // 18 second recast on Shantotto Spells	
+	m_shantottoDebuffRecast = 8000;
 	
 
 	
@@ -2048,6 +2057,33 @@ void CAIPetDummy::ActionAbilityStart()
 		}
 
 
+		
+	 if (m_PPet->m_PetID == PETID_NAJELITH && m_PPet->health.tp >= 1000 && m_Tick >= m_LastNajelithWSTime + 7000 && m_PBattleTarget != nullptr){
+			int16 mobwsID = -1;
+			if (lvl > 71) {
+			uint8 wsrandom = dsprand::GetRandomNumber(1, 3); // Empyreal Arrow or Typhonic Arrow
+            for (int i = 0; i < m_PPet->PetSkills.size(); i++) {
+                auto PMobSkill = battleutils::GetMobSkill(m_PPet->PetSkills.at(i));
+  					if (PMobSkill->getID() == 1834 && wsrandom >= 2) { //Typhonic Arrow
+					SetCurrentMobSkill(PMobSkill);
+                    break;
+                    }
+                    else if (PMobSkill->getID() == 3764 && wsrandom < 2) { //Empyreal Arrow
+					mobwsID = 199;
+					SetCurrentMobSkill(PMobSkill);
+			        SetCurrentWeaponSkill(mobwsID);
+                    break;
+                    } 						
+
+                }
+            }			
+            preparePetAbility(m_PBattleSubTarget);
+			return;	
+            }		
+		
+		
+		
+		
 
 		
 
@@ -2367,16 +2403,17 @@ void CAIPetDummy::preparePetAbility(CBattleEntity* PTarg) {
             }
             DSP_DEBUG_BREAK_IF(m_PBattleSubTarget == nullptr);
         }
-		
 
-        Action.ActionTarget = m_PBattleSubTarget;
-        Action.reaction = REACTION_HIT;
-        Action.speceffect = SPECEFFECT_HIT;
-        Action.animation = 0;
+
+            Action.ActionTarget = m_PBattleSubTarget;
+            Action.reaction = REACTION_HIT;
+            Action.speceffect = SPECEFFECT_HIT;
+            Action.animation = 0;
+
         Action.param = m_PMobSkill->getMsgForAction();
         if (m_PMobSkill->getID() != 1688 && m_PMobSkill->getID() != 1689 && m_PMobSkill->getID() != 1690 && 
 		m_PMobSkill->getID() != 1691 && m_PMobSkill->getID() != 1692 && m_PMobSkill->getID() != 1693 &&
-        m_PMobSkill->getID() != 1178)  //Prevents readies message on Ranged Attacks
+        m_PMobSkill->getID() != 1178 && m_PMobSkill->getID() != 946)  //Prevents readies message on Ranged Attacks
 		{
         Action.messageID = 43; //readies message
 		}
@@ -2387,7 +2424,8 @@ void CAIPetDummy::preparePetAbility(CBattleEntity* PTarg) {
         m_PMobSkill->getID() != 1689 && m_PMobSkill->getID() != 1690 && m_PMobSkill->getID() != 1691 &&
 		m_PMobSkill->getID() != 1811 && m_PMobSkill->getID() != 2488 && m_PMobSkill->getID() != 1692 &&
 		m_PMobSkill->getID() != 2044 && m_PMobSkill->getID() != 1810 && m_PMobSkill->getID() != 1809 && 
-		m_PMobSkill->getID() != 3711 && m_PMobSkill->getID() != 3801 && m_PMobSkill->getID() != 3712)  //Prevents Ranged Attacks and WS's from resetting TP since they are considered an ability
+		m_PMobSkill->getID() != 3711 && m_PMobSkill->getID() != 3801 && m_PMobSkill->getID() != 3712 &&
+		m_PMobSkill->getID() != 946)  //Prevents Ranged Attacks and WS's from resetting TP since they are considered an ability
 		{
         m_PPet->health.tp = 0;
         }
@@ -2395,7 +2433,12 @@ void CAIPetDummy::preparePetAbility(CBattleEntity* PTarg) {
         m_PPet->loc.zone->PushPacket(m_PPet, CHAR_INRANGE, new CActionPacket(m_PPet));
 
         m_LastActionTime = m_Tick;
+
+
+		
         m_ActionType = ACTION_MOBABILITY_USING;
+
+		
 		
     }
 	
@@ -2705,7 +2748,24 @@ void CAIPetDummy::ActionAbilityFinish() {
         return x;
     }
 	
+/*
+void CAIPetDummy::ActionRangedFinish() {
+	
+    uint16 animationId = m_PMobSkill->getPetAnimationID();
+	apAction_t Action;
+	Action.ActionTarget = m_PBattleSubTarget;
+	Action.reaction = REACTION_HIT;
+	Action.speceffect = SPECEFFECT_HIT;
+	Action.animation = animationId;
+	Action.knockback = 0;
 
+    TransitionBack();
+}	*/
+	
+	
+	
+	
+	
 void CAIPetDummy::ActionWeaponSkillFinish() 
 {
  
@@ -3430,7 +3490,7 @@ void CAIPetDummy::ActionAttack()
 
 	Action.ActionTarget = m_PBattleTarget;
 	
-	
+	int8 checklevel = moblevel - trustlevel;	
 	//****************************************************************//
 	//   TRUST ABILITIES BY TRUST NAME                               //
 	//**************************************************************//
@@ -3707,6 +3767,39 @@ void CAIPetDummy::ActionAttack()
 		}
 		
 		
+	// Shantotto is handled differently.  She will cast a tier below her highest until the mob reaches 80%
+	  if (m_PPet->m_PetID == PETID_SHANTOTTO)
+		{
+		 if (m_Tick >= m_LastShantottoMagicTime + m_magicShantottoRecast) // Check Every 4 Seconds as universal check
+			{
+			    int16 spellID = -1;
+				uint16 family = m_PPet->m_Family;
+				uint16 petID = m_PPet->m_PetID;
+        
+		        if (checklevel < 7 && m_PBattleTarget->GetHPP() > 80) //If the mob HP is greater than 80% and isn't a high level mob use lower tier nukes to start
+				{
+				    ShowWarning(CL_GREEN"Shantotto SpellCast Check \n" CL_RESET);
+				    spellID = ShantottoSpellDebuff();
+				}
+				else if (checklevel < 7) //Start using normal nukes
+				{
+				    spellID = ShantottoSpell();
+				}
+				else
+				{
+				    spellID = ShantottoSpell();
+				}					
+				if (spellID != -1)
+				{
+				SetCurrentSpell(spellID);
+				m_ActionType = ACTION_MAGIC_START;
+				ActionMagicStart();
+				return;
+			    }
+		    }					
+		}
+		
+		
 	
 	
 	
@@ -3750,7 +3843,7 @@ void CAIPetDummy::ActionAttack()
 			}				
 				
 		}
-uint32 adelhiedMB = charutils::GetVar((CCharEntity*)m_PPet->PMaster,"TrustMB");
+        // uint32 adelhiedMB = charutils::GetVar((CCharEntity*)m_PPet->PMaster,"TrustMB"); WHy is this here??
 		 if (m_PPet->m_PetID == PETID_CURILLA && trustlevel >=15)
 		{		
 		 if ((m_Tick >= m_LastCurillaBashTime + m_curillaBashRecast) && (m_Tick >= m_LastEngageStart + 7000)) // Only use shield bash if mob is casting??  actionTarget.messageID = 327
@@ -4385,7 +4478,85 @@ uint32 adelhiedMB = charutils::GetVar((CCharEntity*)m_PPet->PMaster,"TrustMB");
 			}			
 				
 		}		
+
 		
+		 if (m_PPet->m_PetID == PETID_NAJELITH)
+		{
+		    if (m_Tick >= m_LastNajelithRangeTime + m_najelithRangedRecast) //Ranged Attack
+			{
+			    m_PWeaponSkill = nullptr;
+			    int16 mobwsID = -1;
+				m_LastNajelithWSTime = m_Tick; // Creates a wait time that is referenced in the WS.  Wait 7 seconds between shots before WS
+			    for (int i = 0; i < m_PPet->PetSkills.size(); i++) {
+                    auto PMobSkill = battleutils::GetMobSkill(m_PPet->PetSkills.at(i));
+                        if (PMobSkill->getID() == 946) { //Ranged Attack
+                            SetCurrentMobSkill(PMobSkill);
+                            break;
+                        }
+					}	
+				preparePetAbility(m_PBattleSubTarget);
+				m_LastNajelithRangeTime = m_Tick;
+				return;	
+			}
+		    else if (m_Tick >= m_LastNajelithBerserkTime + m_najelithBerserkRecast && trustlevel >= 50)
+			{
+			   m_PWeaponSkill = nullptr;
+               int16 mobjaID = -1;			
+			   for (int i = 0; i < m_PPet->PetSkills.size(); i++) {
+                    auto PMobSkill = battleutils::GetMobSkill(m_PPet->PetSkills.at(i));
+                            
+                        if (PMobSkill->getID() == 441) { //Berserk
+						    mobjaID = 15;
+                            SetCurrentMobSkill(PMobSkill);
+							SetCurrentJobAbility(mobjaID);
+							m_PBattleSubTarget = m_PPet;
+							break;
+                        }
+			        }
+				preparePetAbility(m_PBattleSubTarget);
+				m_LastNajelithBerserkTime = m_Tick;
+				return;	
+			}
+		    else if (m_Tick >= m_LastNajelithSharpshotTime + m_najelithSharpshotRecast && trustlevel >= 5)
+			{
+			   m_PWeaponSkill = nullptr;
+               int16 mobjaID = -1;			
+			   for (int i = 0; i < m_PPet->PetSkills.size(); i++) {
+                    auto PMobSkill = battleutils::GetMobSkill(m_PPet->PetSkills.at(i));
+                            
+                        if (PMobSkill->getID() == 3765) { //Sharpshot
+						    mobjaID = 43;
+                            SetCurrentMobSkill(PMobSkill);
+							SetCurrentJobAbility(mobjaID);
+							m_PBattleSubTarget = m_PPet;
+							break;
+                        }
+			        }
+				preparePetAbility(m_PBattleSubTarget);
+				m_LastNajelithSharpshotTime = m_Tick;
+				return;	
+			}
+		    else if (m_Tick >= m_LastNajelithBarrageTime + m_najelithBarrageRecast && trustlevel >= 30 && (m_Tick >= m_LastEngageStart + 15000)) // Won't use barrage until 15 seconds into the fight
+			{
+			   m_PWeaponSkill = nullptr;
+               int16 mobjaID = -1;			
+			   for (int i = 0; i < m_PPet->PetSkills.size(); i++) {
+                    auto PMobSkill = battleutils::GetMobSkill(m_PPet->PetSkills.at(i));
+                            
+                        if (PMobSkill->getID() == 3766) { //Barrage
+						    mobjaID = 44;
+                            SetCurrentMobSkill(PMobSkill);
+							SetCurrentJobAbility(mobjaID);
+							m_PBattleSubTarget = m_PPet;
+							break;
+                        }
+			        }
+				preparePetAbility(m_PBattleSubTarget);
+				m_LastNajelithBarrageTime = m_Tick;
+				return;	
+			}			
+		 			
+	     }			
 	
 
     //if 2 bsts are in party, make sure their pets cannot fight eachother
@@ -4444,7 +4615,7 @@ uint32 adelhiedMB = charutils::GetVar((CCharEntity*)m_PPet->PMaster,"TrustMB");
 	}
 	
 		if (m_PPet->getPetType() == PETTYPE_TRUST && m_PPet->m_PetID != PETID_NAJI && m_PPet->m_PetID != PETID_NANAA_MIHGO && m_PPet->m_PetID != PETID_AYAME && m_PPet->m_PetID != PETID_LION 
-		&& m_PPet->m_PetID != PETID_PRISHE && m_PPet->m_PetID != PETID_CURILLA && m_PPet->m_PetID != PETID_ZEID && m_PPet->health.tp >= 1000 && m_PPet->PetSkills.size() > 0)
+		&& m_PPet->m_PetID != PETID_PRISHE && m_PPet->m_PetID != PETID_CURILLA && m_PPet->m_PetID != PETID_ZEID && m_PPet->m_PetID != PETID_NAJELITH && m_PPet->health.tp >= 1000 && m_PPet->PetSkills.size() > 0)
     {
 	    ShowWarning(CL_RED"Other Trust Triggered WS \n" CL_RESET);
 		m_PBattleSubTarget = m_PBattleTarget;
@@ -4572,6 +4743,13 @@ uint32 adelhiedMB = charutils::GetVar((CCharEntity*)m_PPet->PMaster,"TrustMB");
         ActionAbilityStart();
         return;
 	}
+		if (m_PPet->getPetType() == PETTYPE_TRUST && m_Tick >= m_LastEngageStart + 7000 + tpWait && m_Tick >= m_LastNajelithWSTime + 7000 && m_PPet->m_PetID == PETID_NAJELITH && m_PPet->health.tp >= 1000 && m_PPet->PetSkills.size() > 0)
+    {
+		m_PBattleSubTarget = m_PBattleTarget;
+        m_ActionType = ACTION_MOBABILITY_START;
+        ActionAbilityStart();
+        return;
+	}	
 	
 	
 	CBattleEntity* lionSCPartner = getLionSCPartnerZeid();
@@ -4775,7 +4953,7 @@ uint32 adelhiedMB = charutils::GetVar((CCharEntity*)m_PPet->PMaster,"TrustMB");
         }
     }
 	
-	int8 checklevel = moblevel - trustlevel;
+
     //Move Kupipi to the backline if the mob is 5 levels higher than you
  /*   if ((currentDistance < 12 || currentDistance > 13) && checklevel >= 5 && m_PPet->m_PetID == PETID_KUPIPI && m_PPet->speed != 0)
     {
@@ -4828,7 +5006,7 @@ uint32 adelhiedMB = charutils::GetVar((CCharEntity*)m_PPet->PMaster,"TrustMB");
 	int32 fighttime = ((CBattleEntity*)m_PPet->PMaster)->PBattleAI->GetBattleTime();
 		
     if (currentDistance > m_PBattleTarget->m_ModelSize && (m_PPet->m_PetID != PETID_ULMIA && m_PPet->m_PetID != PETID_KUPIPI &&
-	m_PPet->m_PetID != PETID_NANAA_MIHGO && m_PPet->m_PetID != PETID_ADELHIED && m_PPet->m_PetID != PETID_CURILLA) // Add Lion back to this when working on Trick Attack
+	m_PPet->m_PetID != PETID_NANAA_MIHGO && m_PPet->m_PetID != PETID_ADELHIED && m_PPet->m_PetID != PETID_CURILLA && m_PPet->m_PetID != PETID_SHANTOTTO) // Add Lion back to this when working on Trick Attack
 	&& m_PPet->speed != 0)
     {
 	    //ShowWarning(CL_RED"Wrong Distance triggered\n" CL_RESET);
@@ -5075,6 +5253,25 @@ uint32 adelhiedMB = charutils::GetVar((CCharEntity*)m_PPet->PMaster,"TrustMB");
 	}
 	}
 	
+	
+	if (m_PPet->m_PetID == PETID_SHANTOTTO)  //Shantotto always stays back
+	{
+        if ((currentDistance < 12 || currentDistance > 13) && m_PPet->speed != 0)
+        {
+	        position_t* pos = &m_PBattleTarget->loc.p;
+		    position_t nearEntity = nearPosition(*pos, 13.0f, M_PI + 0.08);  //This will offset Kupipi to the right by 10 degrees
+            if (m_PPathFind->PathAround(nearEntity, PATHFLAG_RUN | PATHFLAG_WALLHACK))
+            {
+                m_PPathFind->FollowPath();
+
+            // recalculate
+            //currentDistance = distance(m_PPet->loc.p, m_PBattleTarget->loc.p);	
+            }
+        }    
+	}	
+	
+	
+	
 	// Below is for Kupipi 3.0 to move to the backline
 	
 
@@ -5091,7 +5288,22 @@ uint32 adelhiedMB = charutils::GetVar((CCharEntity*)m_PPet->PMaster,"TrustMB");
             // recalculate
             //currentDistance = distance(m_PPet->loc.p, m_PBattleTarget->loc.p);	
             }
-        }    
+        }
+        else
+        {
+	        position_t* pos = &m_PBattleTarget->loc.p;
+		    position_t nearEntity = nearPosition(*pos, 13.0f, M_PI + 0.08);  //This will offset Kupipi to the right by 10 degrees
+            if (m_PPathFind->PathAround(nearEntity, PATHFLAG_RUN | PATHFLAG_WALLHACK))
+            {
+                m_PPathFind->FollowPath();
+
+            // recalculate
+            //currentDistance = distance(m_PPet->loc.p, m_PBattleTarget->loc.p);	
+            }
+        } 
+
+
+		
 	}
 	else if (m_PPet->m_PetID == PETID_KUPIPI)
 	{
@@ -5533,8 +5745,29 @@ int16 CAIPetDummy::KupipiSpell()
  CBattleEntity* mostWoundedAga = getWounded(lowtriggercuraga);
  if (m_Tick >= m_LastKupipiMagicTime + m_kupipiHealRecast)  // Look for last magic healing spell time 
 	{
+	    //Prioritize wake up for Sleep
+		if (m_PPet->PMaster->StatusEffectContainer->HasStatusEffect(EFFECT_SLEEP) || m_PPet->PMaster->StatusEffectContainer->HasStatusEffect(EFFECT_LULLABY))
+		{
+		ShowWarning(CL_RED"PLAYER IS ASLEEP WAKE THEM UP!!!\n" CL_RESET);
+		m_PBattleSubTarget = m_PPet->PMaster;
+		if (level > 15)
+			if (m_PPet->health.mp > 59)  // Curaga
+			    {
+				 spellID = 7;
+				}
+			else 
+			    {
+				 spellID = -1;
+				}
+		else
+		        {
+				 spellID = -1;
+				} 				
+        m_LastKupipiMagicTime = m_Tick; // reset mtick no eligible healing spell to cast
+		m_kupipiHealRecast = 12000;					
+	    }		
 	    // Curaga
- 		if (mostWoundedAga != nullptr)
+ 		else if (mostWoundedAga != nullptr)
 		{
         m_PBattleSubTarget = mostWoundedAga;
 		if (level > 50)
@@ -6087,9 +6320,25 @@ int16 CAIPetDummy::CurillaSpell()
 	
  CBattleEntity* master = m_PPet->PMaster;  
  CBattleEntity* mostWounded = getWounded(trigger);
+ CBattleEntity* sleptMage = getSleptMage();
 if (m_Tick >= m_LastMagicTimeHeal + m_magicHealRecast)  // Look for last magic healing spell time 
 	{
-		if (mostWounded != nullptr)
+	    // Cure White Mage Trust if slept
+		if (sleptMage != nullptr && (sleptMage->StatusEffectContainer->HasStatusEffect(EFFECT_SLEEP) == true || sleptMage->StatusEffectContainer->HasStatusEffect(EFFECT_LULLABY) == true))
+		{
+		ShowWarning(CL_RED"KUPIPI IS SLEPT!! WAKE HER UP\n" CL_RESET);
+		m_PBattleSubTarget = sleptMage;
+            if (level > 4)
+			    if (m_PPet->health.mp > 7)  	
+			    {
+				 spellID = 1;
+				}
+			    else
+			    {
+				 spellID = -1;
+				} 
+		}
+		else if (mostWounded != nullptr)
 		{
         m_PBattleSubTarget = mostWounded;
 		if (level > 54)
@@ -11497,9 +11746,1682 @@ int16 CAIPetDummy::ZeidSpell()
 	
 	//Input Spells here mostly Absorb and spikes and possibly stun
 	return spellID;
-}	
+}
 
 
+int16 CAIPetDummy::ShantottoSpellDebuff()
+{	
+    int16 spellID = -1;
+	float charAtt;
+	float mobDef;
+	float pdif;
+	uint8 level = m_PPet->PMaster->GetMLevel();
+    charAtt = m_PPet->ATT();
+	mobDef = m_PBattleTarget->DEF();
+    pdif = (charAtt / mobDef);
+    if (m_Tick >= m_LastShantottoDebuffRecast + m_shantottoDebuffRecast && m_ActionType != ACTION_MAGIC_CASTING)	
+    {
+		m_PBattleSubTarget = m_PBattleTarget;
+		ShowWarning(CL_GREEN"Shantotto CHecking Which Spell to use \n" CL_RESET);
+		if (pdif < 1) // Trust has Low Attack use Frost Drown Rasp to help with melee
+		{
+		    ShowWarning(CL_GREEN"Shantotto FDR \n" CL_RESET);
+		    if (level >= 22 && m_PBattleTarget->StatusEffectContainer->HasStatusEffect(EFFECT_FROST) == false)
+			  if (m_PPet->health.mp > 24)
+			  {
+			    spellID = 236;
+			  }	
+			  else
+			  {
+		        spellID = -1;
+			  }
+		    else if (level >= 27 && m_PBattleTarget->StatusEffectContainer->HasStatusEffect(EFFECT_DROWN) == false)
+			  if (m_PPet->health.mp > 24)
+			  {				
+				spellID = 240;
+		      }
+			  else
+			  {
+		        spellID = -1;
+			  }			  
+		    else if (level >= 18 && m_PBattleTarget->StatusEffectContainer->HasStatusEffect(EFFECT_RASP) == false)
+			  if (m_PPet->health.mp > 24)
+			  {			  
+		        spellID = 238;
+		      }
+		      else
+			  {
+		        spellID = -1;
+			  }
+			else
+			{
+			  spellID = -1;
+			}
+            m_LastShantottoDebuffRecast = m_Tick;			
+		}
+		else // Trusts have high Attack value switch to SCB
+		{
+		    ShowWarning(CL_GREEN"Shantotto SCB \n" CL_RESET);
+		    if (level >= 16 && m_PBattleTarget->StatusEffectContainer->HasStatusEffect(EFFECT_SHOCK) == false)
+			  if (m_PPet->health.mp > 24)
+			  {
+			    spellID = 239;
+			  }	
+			  else
+			  {
+		        spellID = -1;
+			  }
+		    else if (level >= 20 && m_PBattleTarget->StatusEffectContainer->HasStatusEffect(EFFECT_CHOKE) == false)
+			  if (m_PPet->health.mp > 24)
+			  {				
+				spellID = 237;
+		      }
+			  else
+			  {
+		        spellID = -1;
+			  }			  
+		    else if (level >= 24 && m_PBattleTarget->StatusEffectContainer->HasStatusEffect(EFFECT_BURN) == false)
+			  if (m_PPet->health.mp > 24)
+			  {			  
+		        spellID = 235;
+		      }
+		      else
+			  {
+		        spellID = -1;
+			  }
+			else
+			{
+			  spellID = -1;
+			}
+            m_LastShantottoDebuffRecast = m_Tick;			
+		}		
+		
+	}
+	m_LastShantottoMagicTime = m_Tick;
+	return spellID;
+}
+
+
+
+int16 CAIPetDummy::ShantottoSpellLowTier()
+{	
+    int16 spellID = -1;
+	uint8 level = m_PPet->PMaster->GetMLevel();
+    if (m_Tick >= m_LastShantottoEleCast + m_shantottoEleRecast && m_ActionType != ACTION_MAGIC_CASTING)	
+    {
+		m_PBattleSubTarget = m_PBattleTarget;
+		if (level >= 75)
+		    if (m_PPet->health.mp > 90)
+			{
+			 spellID = 166; //THUNDER III
+			}
+        else if (m_PPet->health.mp > 74)
+			{
+			 spellID = 151; //BLIZZARD III
+			}
+        else if (m_PPet->health.mp > 62)
+			{
+			 spellID = 146; //FIRE III
+			}
+        else if (m_PPet->health.mp > 53)
+			{
+			 spellID = 156; //AERO III
+			}
+        else if (m_PPet->health.mp > 45)
+			{
+			 spellID = 171; //WATER III
+			}
+        else if (m_PPet->health.mp > 39)
+			{
+			 spellID = 161; //STONE III
+			}
+        else if (m_PPet->health.mp > 36)
+			{
+			 spellID = 165; //THUNDER II
+			}
+        else if (m_PPet->health.mp > 30)
+			{
+			 spellID = 150; //BLIZZARD II
+			}
+        else if (m_PPet->health.mp > 25)
+			{
+			 spellID = 145; //FIRE II
+			}
+        else if (m_PPet->health.mp > 21)
+			{
+			 spellID = 155; //AERO II
+			}
+        else if (m_PPet->health.mp > 18)
+			{
+			 spellID = 170; //WATER II
+			}
+        else if (m_PPet->health.mp > 15)
+			{
+			 spellID = 160; //STONE II
+			}
+        else if (m_PPet->health.mp > 8)
+			{
+			 spellID = 164; //THUNDER I
+			}
+        else if (m_PPet->health.mp > 7)
+			{
+			 spellID = 149; //BLIZZARD I
+			}
+        else if (m_PPet->health.mp > 6)
+			{
+			 spellID = 144; //FIRE I
+			}
+        else if (m_PPet->health.mp > 5)
+			{
+			 spellID = 154; //AERO I
+			}
+        else if (m_PPet->health.mp > 4)
+			{
+			 spellID = 169; //WATER I
+			}
+        else if (m_PPet->health.mp > 3)
+			{
+			 spellID = 159; //STONE I
+			}
+        else
+			{
+		     spellID = -1;
+			}
+		else if (level >= 66)
+		   if (m_PPet->health.mp > 36)
+			{
+			 spellID = 165; //THUNDER II
+			}
+        else if (m_PPet->health.mp > 30)
+			{
+			 spellID = 150; //BLIZZARD II
+			}
+        else if (m_PPet->health.mp > 25)
+			{
+			 spellID = 145; //FIRE II
+			}
+        else if (m_PPet->health.mp > 21)
+			{
+			 spellID = 155; //AERO II
+			}
+        else if (m_PPet->health.mp > 18)
+			{
+			 spellID = 170; //WATER II
+			}
+        else if (m_PPet->health.mp > 15)
+			{
+			 spellID = 160; //STONE II
+			}
+        else if (m_PPet->health.mp > 8)
+			{
+			 spellID = 164; //THUNDER I
+			}
+        else if (m_PPet->health.mp > 7)
+			{
+			 spellID = 149; //BLIZZARD I
+			}
+        else if (m_PPet->health.mp > 6)
+			{
+			 spellID = 144; //FIRE I
+			}
+        else if (m_PPet->health.mp > 5)
+			{
+			 spellID = 154; //AERO I
+			}
+        else if (m_PPet->health.mp > 4)
+			{
+			 spellID = 169; //WATER I
+			}
+        else if (m_PPet->health.mp > 3)
+			{
+			 spellID = 159; //STONE I
+			}
+        else
+			{
+		     spellID = -1;
+			}		
+		else if (level >= 21)
+		   if (m_PPet->health.mp > 8)
+			{
+			 spellID = 164; //THUNDER I
+			}
+        else if (m_PPet->health.mp > 7)
+			{
+			 spellID = 149; //BLIZZARD I
+			}
+        else if (m_PPet->health.mp > 6)
+			{
+			 spellID = 144; //FIRE I
+			}
+        else if (m_PPet->health.mp > 5)
+			{
+			 spellID = 154; //AERO I
+			}
+        else if (m_PPet->health.mp > 4)
+			{
+			 spellID = 169; //WATER I
+			}
+        else if (m_PPet->health.mp > 3)
+			{
+			 spellID = 159; //STONE I
+			}
+        else
+			{
+		     spellID = -1;
+			}
+		else if (level >= 17)
+		   if (m_PPet->health.mp > 7)
+			{
+			 spellID = 149; //BLIZZARD I
+			}
+        else if (m_PPet->health.mp > 6)
+			{
+			 spellID = 144; //FIRE I
+			}
+        else if (m_PPet->health.mp > 5)
+			{
+			 spellID = 154; //AERO I
+			}
+        else if (m_PPet->health.mp > 4)
+			{
+			 spellID = 169; //WATER I
+			}
+        else if (m_PPet->health.mp > 3)
+			{
+			 spellID = 159; //STONE I
+			}
+        else
+			{
+		     spellID = -1;
+			}
+		else if (level >= 13)
+		  if (m_PPet->health.mp > 6)
+			{
+			 spellID = 144; //FIRE I
+			}
+        else if (m_PPet->health.mp > 5)
+			{
+			 spellID = 154; //AERO I
+			}
+        else if (m_PPet->health.mp > 4)
+			{
+			 spellID = 169; //WATER I
+			}
+        else if (m_PPet->health.mp > 3)
+			{
+			 spellID = 159; //STONE I
+			}
+        else
+			{
+		     spellID = -1;
+			}	
+		else if (level >= 9)
+		   if (m_PPet->health.mp > 5)
+			{
+			 spellID = 154; //AERO I
+			}
+        else if (m_PPet->health.mp > 4)
+			{
+			 spellID = 169; //WATER I
+			}
+        else if (m_PPet->health.mp > 3)
+			{
+			 spellID = 159; //STONE I
+			}
+        else
+			{
+		     spellID = -1;
+			}
+		else if (level >= 4)
+		   if (m_PPet->health.mp > 4)
+			{
+			 spellID = 169; //WATER I
+			}
+        else if (m_PPet->health.mp > 3)
+			{
+			 spellID = 159; //STONE I
+			}
+        else
+			{
+		     spellID = -1;
+			}	
+	    m_LastShantottoEleCast = m_Tick;
+    }			
+	else 
+	   {
+          m_shantottoEleRecast = 20000; //ShantCast
+	   }
+	   m_LastShantottoMagicTime = m_Tick;
+	  return spellID;	
+}
+
+int16 CAIPetDummy::ShantottoSpell()
+{	
+    int16 spellID = -1;
+	uint8 level = m_PPet->PMaster->GetMLevel();
+    if (m_Tick >= m_LastShantottoEleCast + m_shantottoEleRecast && m_ActionType != ACTION_MAGIC_CASTING)	
+    {
+		m_PBattleSubTarget = m_PBattleTarget;
+		if (level >= 75)
+		    if (m_PPet->health.mp > 194)
+			{
+			 spellID = 167; //THUNDER IV
+			}
+        else if (m_PPet->health.mp > 161)
+			{
+			 spellID = 152; //BLIZZARD IV
+			}
+        else if (m_PPet->health.mp > 134)
+			{
+			 spellID = 147; //FIRE IV
+			}
+        else if (m_PPet->health.mp > 114)
+			{
+			 spellID = 157; //AERO IV
+			}
+        else if (m_PPet->health.mp > 98)
+			{
+			 spellID = 172; //WATER IV
+			}
+        else if (m_PPet->health.mp > 87)
+			{
+			 spellID = 162; //STONE IV
+			}
+        else if (m_PPet->health.mp > 90)
+			{
+			 spellID = 166; //THUNDER III
+			}
+        else if (m_PPet->health.mp > 74)
+			{
+			 spellID = 151; //BLIZZARD III
+			}
+        else if (m_PPet->health.mp > 62)
+			{
+			 spellID = 146; //FIRE III
+			}
+        else if (m_PPet->health.mp > 53)
+			{
+			 spellID = 156; //AERO III
+			}
+        else if (m_PPet->health.mp > 45)
+			{
+			 spellID = 171; //WATER III
+			}
+        else if (m_PPet->health.mp > 39)
+			{
+			 spellID = 161; //STONE III
+			}
+        else if (m_PPet->health.mp > 36)
+			{
+			 spellID = 165; //THUNDER II
+			}
+        else if (m_PPet->health.mp > 30)
+			{
+			 spellID = 150; //BLIZZARD II
+			}
+        else if (m_PPet->health.mp > 25)
+			{
+			 spellID = 145; //FIRE II
+			}
+        else if (m_PPet->health.mp > 21)
+			{
+			 spellID = 155; //AERO II
+			}
+        else if (m_PPet->health.mp > 18)
+			{
+			 spellID = 170; //WATER II
+			}
+        else if (m_PPet->health.mp > 15)
+			{
+			 spellID = 160; //STONE II
+			}
+        else if (m_PPet->health.mp > 8)
+			{
+			 spellID = 164; //THUNDER I
+			}
+        else if (m_PPet->health.mp > 7)
+			{
+			 spellID = 149; //BLIZZARD I
+			}
+        else if (m_PPet->health.mp > 6)
+			{
+			 spellID = 144; //FIRE I
+			}
+        else if (m_PPet->health.mp > 5)
+			{
+			 spellID = 154; //AERO I
+			}
+        else if (m_PPet->health.mp > 4)
+			{
+			 spellID = 169; //WATER I
+			}
+        else if (m_PPet->health.mp > 3)
+			{
+			 spellID = 159; //STONE I
+			}
+        else
+			{
+		     spellID = -1;
+			}
+		else if (level >= 74)
+		    if (m_PPet->health.mp > 161)
+			{
+			 spellID = 152; //BLIZZARD IV
+			}
+        else if (m_PPet->health.mp > 134)
+			{
+			 spellID = 147; //FIRE IV
+			}
+        else if (m_PPet->health.mp > 114)
+			{
+			 spellID = 157; //AERO IV
+			}
+        else if (m_PPet->health.mp > 98)
+			{
+			 spellID = 172; //WATER IV
+			}
+        else if (m_PPet->health.mp > 87)
+			{
+			 spellID = 162; //STONE IV
+			}
+        else if (m_PPet->health.mp > 90)
+			{
+			 spellID = 166; //THUNDER III
+			}
+        else if (m_PPet->health.mp > 74)
+			{
+			 spellID = 151; //BLIZZARD III
+			}
+        else if (m_PPet->health.mp > 62)
+			{
+			 spellID = 146; //FIRE III
+			}
+        else if (m_PPet->health.mp > 53)
+			{
+			 spellID = 156; //AERO III
+			}
+        else if (m_PPet->health.mp > 45)
+			{
+			 spellID = 171; //WATER III
+			}
+        else if (m_PPet->health.mp > 39)
+			{
+			 spellID = 161; //STONE III
+			}
+        else if (m_PPet->health.mp > 36)
+			{
+			 spellID = 165; //THUNDER II
+			}
+        else if (m_PPet->health.mp > 30)
+			{
+			 spellID = 150; //BLIZZARD II
+			}
+        else if (m_PPet->health.mp > 25)
+			{
+			 spellID = 145; //FIRE II
+			}
+        else if (m_PPet->health.mp > 21)
+			{
+			 spellID = 155; //AERO II
+			}
+        else if (m_PPet->health.mp > 18)
+			{
+			 spellID = 170; //WATER II
+			}
+        else if (m_PPet->health.mp > 15)
+			{
+			 spellID = 160; //STONE II
+			}
+        else if (m_PPet->health.mp > 8)
+			{
+			 spellID = 164; //THUNDER I
+			}
+        else if (m_PPet->health.mp > 7)
+			{
+			 spellID = 149; //BLIZZARD I
+			}
+        else if (m_PPet->health.mp > 6)
+			{
+			 spellID = 144; //FIRE I
+			}
+        else if (m_PPet->health.mp > 5)
+			{
+			 spellID = 154; //AERO I
+			}
+        else if (m_PPet->health.mp > 4)
+			{
+			 spellID = 169; //WATER I
+			}
+        else if (m_PPet->health.mp > 3)
+			{
+			 spellID = 159; //STONE I
+			}
+        else
+			{
+		     spellID = -1;
+			}	
+		else if (level >= 73)
+		    if (m_PPet->health.mp > 134)
+			{
+			 spellID = 147; //FIRE IV
+			}
+        else if (m_PPet->health.mp > 114)
+			{
+			 spellID = 157; //AERO IV
+			}
+        else if (m_PPet->health.mp > 98)
+			{
+			 spellID = 172; //WATER IV
+			}
+        else if (m_PPet->health.mp > 87)
+			{
+			 spellID = 162; //STONE IV
+			}
+        else if (m_PPet->health.mp > 90)
+			{
+			 spellID = 166; //THUNDER III
+			}
+        else if (m_PPet->health.mp > 74)
+			{
+			 spellID = 151; //BLIZZARD III
+			}
+        else if (m_PPet->health.mp > 62)
+			{
+			 spellID = 146; //FIRE III
+			}
+        else if (m_PPet->health.mp > 53)
+			{
+			 spellID = 156; //AERO III
+			}
+        else if (m_PPet->health.mp > 45)
+			{
+			 spellID = 171; //WATER III
+			}
+        else if (m_PPet->health.mp > 39)
+			{
+			 spellID = 161; //STONE III
+			}
+        else if (m_PPet->health.mp > 36)
+			{
+			 spellID = 165; //THUNDER II
+			}
+        else if (m_PPet->health.mp > 30)
+			{
+			 spellID = 150; //BLIZZARD II
+			}
+        else if (m_PPet->health.mp > 25)
+			{
+			 spellID = 145; //FIRE II
+			}
+        else if (m_PPet->health.mp > 21)
+			{
+			 spellID = 155; //AERO II
+			}
+        else if (m_PPet->health.mp > 18)
+			{
+			 spellID = 170; //WATER II
+			}
+        else if (m_PPet->health.mp > 15)
+			{
+			 spellID = 160; //STONE II
+			}
+        else if (m_PPet->health.mp > 8)
+			{
+			 spellID = 164; //THUNDER I
+			}
+        else if (m_PPet->health.mp > 7)
+			{
+			 spellID = 149; //BLIZZARD I
+			}
+        else if (m_PPet->health.mp > 6)
+			{
+			 spellID = 144; //FIRE I
+			}
+        else if (m_PPet->health.mp > 5)
+			{
+			 spellID = 154; //AERO I
+			}
+        else if (m_PPet->health.mp > 4)
+			{
+			 spellID = 169; //WATER I
+			}
+        else if (m_PPet->health.mp > 3)
+			{
+			 spellID = 159; //STONE I
+			}
+        else
+			{
+		     spellID = -1;
+			}	
+		else if (level >= 72)
+		    if (m_PPet->health.mp > 114)
+			{
+			 spellID = 157; //AERO IV
+			}
+        else if (m_PPet->health.mp > 98)
+			{
+			 spellID = 172; //WATER IV
+			}
+        else if (m_PPet->health.mp > 87)
+			{
+			 spellID = 162; //STONE IV
+			}
+        else if (m_PPet->health.mp > 90)
+			{
+			 spellID = 166; //THUNDER III
+			}
+        else if (m_PPet->health.mp > 74)
+			{
+			 spellID = 151; //BLIZZARD III
+			}
+        else if (m_PPet->health.mp > 62)
+			{
+			 spellID = 146; //FIRE III
+			}
+        else if (m_PPet->health.mp > 53)
+			{
+			 spellID = 156; //AERO III
+			}
+        else if (m_PPet->health.mp > 45)
+			{
+			 spellID = 171; //WATER III
+			}
+        else if (m_PPet->health.mp > 39)
+			{
+			 spellID = 161; //STONE III
+			}
+        else if (m_PPet->health.mp > 36)
+			{
+			 spellID = 165; //THUNDER II
+			}
+        else if (m_PPet->health.mp > 30)
+			{
+			 spellID = 150; //BLIZZARD II
+			}
+        else if (m_PPet->health.mp > 25)
+			{
+			 spellID = 145; //FIRE II
+			}
+        else if (m_PPet->health.mp > 21)
+			{
+			 spellID = 155; //AERO II
+			}
+        else if (m_PPet->health.mp > 18)
+			{
+			 spellID = 170; //WATER II
+			}
+        else if (m_PPet->health.mp > 15)
+			{
+			 spellID = 160; //STONE II
+			}
+        else if (m_PPet->health.mp > 8)
+			{
+			 spellID = 164; //THUNDER I
+			}
+        else if (m_PPet->health.mp > 7)
+			{
+			 spellID = 149; //BLIZZARD I
+			}
+        else if (m_PPet->health.mp > 6)
+			{
+			 spellID = 144; //FIRE I
+			}
+        else if (m_PPet->health.mp > 5)
+			{
+			 spellID = 154; //AERO I
+			}
+        else if (m_PPet->health.mp > 4)
+			{
+			 spellID = 169; //WATER I
+			}
+        else if (m_PPet->health.mp > 3)
+			{
+			 spellID = 159; //STONE I
+			}
+        else
+			{
+		     spellID = -1;
+			}	
+		else if (level >= 70)
+		   if (m_PPet->health.mp > 98)
+			{
+			 spellID = 172; //WATER IV
+			}
+        else if (m_PPet->health.mp > 87)
+			{
+			 spellID = 162; //STONE IV
+			}
+        else if (m_PPet->health.mp > 90)
+			{
+			 spellID = 166; //THUNDER III
+			}
+        else if (m_PPet->health.mp > 74)
+			{
+			 spellID = 151; //BLIZZARD III
+			}
+        else if (m_PPet->health.mp > 62)
+			{
+			 spellID = 146; //FIRE III
+			}
+        else if (m_PPet->health.mp > 53)
+			{
+			 spellID = 156; //AERO III
+			}
+        else if (m_PPet->health.mp > 45)
+			{
+			 spellID = 171; //WATER III
+			}
+        else if (m_PPet->health.mp > 39)
+			{
+			 spellID = 161; //STONE III
+			}
+        else if (m_PPet->health.mp > 36)
+			{
+			 spellID = 165; //THUNDER II
+			}
+        else if (m_PPet->health.mp > 30)
+			{
+			 spellID = 150; //BLIZZARD II
+			}
+        else if (m_PPet->health.mp > 25)
+			{
+			 spellID = 145; //FIRE II
+			}
+        else if (m_PPet->health.mp > 21)
+			{
+			 spellID = 155; //AERO II
+			}
+        else if (m_PPet->health.mp > 18)
+			{
+			 spellID = 170; //WATER II
+			}
+        else if (m_PPet->health.mp > 15)
+			{
+			 spellID = 160; //STONE II
+			}
+        else if (m_PPet->health.mp > 8)
+			{
+			 spellID = 164; //THUNDER I
+			}
+        else if (m_PPet->health.mp > 7)
+			{
+			 spellID = 149; //BLIZZARD I
+			}
+        else if (m_PPet->health.mp > 6)
+			{
+			 spellID = 144; //FIRE I
+			}
+        else if (m_PPet->health.mp > 5)
+			{
+			 spellID = 154; //AERO I
+			}
+        else if (m_PPet->health.mp > 4)
+			{
+			 spellID = 169; //WATER I
+			}
+        else if (m_PPet->health.mp > 3)
+			{
+			 spellID = 159; //STONE I
+			}
+        else
+			{
+		     spellID = -1;
+			}		
+        else if (level >= 68)
+		  if (m_PPet->health.mp > 87)
+			{
+			 spellID = 162; //STONE IV
+			}
+        else if (m_PPet->health.mp > 90)
+			{
+			 spellID = 166; //THUNDER III
+			}
+        else if (m_PPet->health.mp > 74)
+			{
+			 spellID = 151; //BLIZZARD III
+			}
+        else if (m_PPet->health.mp > 62)
+			{
+			 spellID = 146; //FIRE III
+			}
+        else if (m_PPet->health.mp > 53)
+			{
+			 spellID = 156; //AERO III
+			}
+        else if (m_PPet->health.mp > 45)
+			{
+			 spellID = 171; //WATER III
+			}
+        else if (m_PPet->health.mp > 39)
+			{
+			 spellID = 161; //STONE III
+			}
+        else if (m_PPet->health.mp > 36)
+			{
+			 spellID = 165; //THUNDER II
+			}
+        else if (m_PPet->health.mp > 30)
+			{
+			 spellID = 150; //BLIZZARD II
+			}
+        else if (m_PPet->health.mp > 25)
+			{
+			 spellID = 145; //FIRE II
+			}
+        else if (m_PPet->health.mp > 21)
+			{
+			 spellID = 155; //AERO II
+			}
+        else if (m_PPet->health.mp > 18)
+			{
+			 spellID = 170; //WATER II
+			}
+        else if (m_PPet->health.mp > 15)
+			{
+			 spellID = 160; //STONE II
+			}
+        else if (m_PPet->health.mp > 8)
+			{
+			 spellID = 164; //THUNDER I
+			}
+        else if (m_PPet->health.mp > 7)
+			{
+			 spellID = 149; //BLIZZARD I
+			}
+        else if (m_PPet->health.mp > 6)
+			{
+			 spellID = 144; //FIRE I
+			}
+        else if (m_PPet->health.mp > 5)
+			{
+			 spellID = 154; //AERO I
+			}
+        else if (m_PPet->health.mp > 4)
+			{
+			 spellID = 169; //WATER I
+			}
+        else if (m_PPet->health.mp > 3)
+			{
+			 spellID = 159; //STONE I
+			}
+        else
+			{
+		     spellID = -1;
+			}		
+        else if (level >= 66)
+		   if (m_PPet->health.mp > 90)
+			{
+			 spellID = 166; //THUNDER III
+			}
+        else if (m_PPet->health.mp > 74)
+			{
+			 spellID = 151; //BLIZZARD III
+			}
+        else if (m_PPet->health.mp > 62)
+			{
+			 spellID = 146; //FIRE III
+			}
+        else if (m_PPet->health.mp > 53)
+			{
+			 spellID = 156; //AERO III
+			}
+        else if (m_PPet->health.mp > 45)
+			{
+			 spellID = 171; //WATER III
+			}
+        else if (m_PPet->health.mp > 39)
+			{
+			 spellID = 161; //STONE III
+			}
+        else if (m_PPet->health.mp > 36)
+			{
+			 spellID = 165; //THUNDER II
+			}
+        else if (m_PPet->health.mp > 30)
+			{
+			 spellID = 150; //BLIZZARD II
+			}
+        else if (m_PPet->health.mp > 25)
+			{
+			 spellID = 145; //FIRE II
+			}
+        else if (m_PPet->health.mp > 21)
+			{
+			 spellID = 155; //AERO II
+			}
+        else if (m_PPet->health.mp > 18)
+			{
+			 spellID = 170; //WATER II
+			}
+        else if (m_PPet->health.mp > 15)
+			{
+			 spellID = 160; //STONE II
+			}
+        else if (m_PPet->health.mp > 8)
+			{
+			 spellID = 164; //THUNDER I
+			}
+        else if (m_PPet->health.mp > 7)
+			{
+			 spellID = 149; //BLIZZARD I
+			}
+        else if (m_PPet->health.mp > 6)
+			{
+			 spellID = 144; //FIRE I
+			}
+        else if (m_PPet->health.mp > 5)
+			{
+			 spellID = 154; //AERO I
+			}
+        else if (m_PPet->health.mp > 4)
+			{
+			 spellID = 169; //WATER I
+			}
+        else if (m_PPet->health.mp > 3)
+			{
+			 spellID = 159; //STONE I
+			}
+        else
+			{
+		     spellID = -1;
+			}
+		else if (level >= 64)
+		   if (m_PPet->health.mp > 74)
+			{
+			 spellID = 151; //BLIZZARD III
+			}
+        else if (m_PPet->health.mp > 62)
+			{
+			 spellID = 146; //FIRE III
+			}
+        else if (m_PPet->health.mp > 53)
+			{
+			 spellID = 156; //AERO III
+			}
+        else if (m_PPet->health.mp > 45)
+			{
+			 spellID = 171; //WATER III
+			}
+        else if (m_PPet->health.mp > 39)
+			{
+			 spellID = 161; //STONE III
+			}
+        else if (m_PPet->health.mp > 36)
+			{
+			 spellID = 165; //THUNDER II
+			}
+        else if (m_PPet->health.mp > 30)
+			{
+			 spellID = 150; //BLIZZARD II
+			}
+        else if (m_PPet->health.mp > 25)
+			{
+			 spellID = 145; //FIRE II
+			}
+        else if (m_PPet->health.mp > 21)
+			{
+			 spellID = 155; //AERO II
+			}
+        else if (m_PPet->health.mp > 18)
+			{
+			 spellID = 170; //WATER II
+			}
+        else if (m_PPet->health.mp > 15)
+			{
+			 spellID = 160; //STONE II
+			}
+        else if (m_PPet->health.mp > 8)
+			{
+			 spellID = 164; //THUNDER I
+			}
+        else if (m_PPet->health.mp > 7)
+			{
+			 spellID = 149; //BLIZZARD I
+			}
+        else if (m_PPet->health.mp > 6)
+			{
+			 spellID = 144; //FIRE I
+			}
+        else if (m_PPet->health.mp > 5)
+			{
+			 spellID = 154; //AERO I
+			}
+        else if (m_PPet->health.mp > 4)
+			{
+			 spellID = 169; //WATER I
+			}
+        else if (m_PPet->health.mp > 3)
+			{
+			 spellID = 159; //STONE I
+			}
+        else
+			{
+		     spellID = -1;
+			}
+		else if (level >= 62)
+		    if (m_PPet->health.mp > 62)
+			{
+			 spellID = 146; //FIRE III
+			}
+        else if (m_PPet->health.mp > 53)
+			{
+			 spellID = 156; //AERO III
+			}
+        else if (m_PPet->health.mp > 45)
+			{
+			 spellID = 171; //WATER III
+			}
+        else if (m_PPet->health.mp > 39)
+			{
+			 spellID = 161; //STONE III
+			}
+        else if (m_PPet->health.mp > 36)
+			{
+			 spellID = 165; //THUNDER II
+			}
+        else if (m_PPet->health.mp > 30)
+			{
+			 spellID = 150; //BLIZZARD II
+			}
+        else if (m_PPet->health.mp > 25)
+			{
+			 spellID = 145; //FIRE II
+			}
+        else if (m_PPet->health.mp > 21)
+			{
+			 spellID = 155; //AERO II
+			}
+        else if (m_PPet->health.mp > 18)
+			{
+			 spellID = 170; //WATER II
+			}
+        else if (m_PPet->health.mp > 15)
+			{
+			 spellID = 160; //STONE II
+			}
+        else if (m_PPet->health.mp > 8)
+			{
+			 spellID = 164; //THUNDER I
+			}
+        else if (m_PPet->health.mp > 7)
+			{
+			 spellID = 149; //BLIZZARD I
+			}
+        else if (m_PPet->health.mp > 6)
+			{
+			 spellID = 144; //FIRE I
+			}
+        else if (m_PPet->health.mp > 5)
+			{
+			 spellID = 154; //AERO I
+			}
+        else if (m_PPet->health.mp > 4)
+			{
+			 spellID = 169; //WATER I
+			}
+        else if (m_PPet->health.mp > 3)
+			{
+			 spellID = 159; //STONE I
+			}
+        else
+			{
+		     spellID = -1;
+			}
+		else if (level >= 59)
+		    if (m_PPet->health.mp > 53)
+			{
+			 spellID = 156; //AERO III
+			}
+        else if (m_PPet->health.mp > 45)
+			{
+			 spellID = 171; //WATER III
+			}
+        else if (m_PPet->health.mp > 39)
+			{
+			 spellID = 161; //STONE III
+			}
+        else if (m_PPet->health.mp > 36)
+			{
+			 spellID = 165; //THUNDER II
+			}
+        else if (m_PPet->health.mp > 30)
+			{
+			 spellID = 150; //BLIZZARD II
+			}
+        else if (m_PPet->health.mp > 25)
+			{
+			 spellID = 145; //FIRE II
+			}
+        else if (m_PPet->health.mp > 21)
+			{
+			 spellID = 155; //AERO II
+			}
+        else if (m_PPet->health.mp > 18)
+			{
+			 spellID = 170; //WATER II
+			}
+        else if (m_PPet->health.mp > 15)
+			{
+			 spellID = 160; //STONE II
+			}
+        else if (m_PPet->health.mp > 8)
+			{
+			 spellID = 164; //THUNDER I
+			}
+        else if (m_PPet->health.mp > 7)
+			{
+			 spellID = 149; //BLIZZARD I
+			}
+        else if (m_PPet->health.mp > 6)
+			{
+			 spellID = 144; //FIRE I
+			}
+        else if (m_PPet->health.mp > 5)
+			{
+			 spellID = 154; //AERO I
+			}
+        else if (m_PPet->health.mp > 4)
+			{
+			 spellID = 169; //WATER I
+			}
+        else if (m_PPet->health.mp > 3)
+			{
+			 spellID = 159; //STONE I
+			}
+        else
+			{
+		     spellID = -1;
+			}
+		else if (level >= 55)
+		   if (m_PPet->health.mp > 45)
+			{
+			 spellID = 171; //WATER III
+			}
+        else if (m_PPet->health.mp > 39)
+			{
+			 spellID = 161; //STONE III
+			}
+        else if (m_PPet->health.mp > 36)
+			{
+			 spellID = 165; //THUNDER II
+			}
+        else if (m_PPet->health.mp > 30)
+			{
+			 spellID = 150; //BLIZZARD II
+			}
+        else if (m_PPet->health.mp > 25)
+			{
+			 spellID = 145; //FIRE II
+			}
+        else if (m_PPet->health.mp > 21)
+			{
+			 spellID = 155; //AERO II
+			}
+        else if (m_PPet->health.mp > 18)
+			{
+			 spellID = 170; //WATER II
+			}
+        else if (m_PPet->health.mp > 15)
+			{
+			 spellID = 160; //STONE II
+			}
+        else if (m_PPet->health.mp > 8)
+			{
+			 spellID = 164; //THUNDER I
+			}
+        else if (m_PPet->health.mp > 7)
+			{
+			 spellID = 149; //BLIZZARD I
+			}
+        else if (m_PPet->health.mp > 6)
+			{
+			 spellID = 144; //FIRE I
+			}
+        else if (m_PPet->health.mp > 5)
+			{
+			 spellID = 154; //AERO I
+			}
+        else if (m_PPet->health.mp > 4)
+			{
+			 spellID = 169; //WATER I
+			}
+        else if (m_PPet->health.mp > 3)
+			{
+			 spellID = 159; //STONE I
+			}
+        else
+			{
+		     spellID = -1;
+			}
+		else if (level >= 51)
+		   if (m_PPet->health.mp > 39)
+			{
+			 spellID = 161; //STONE III
+			}
+        else if (m_PPet->health.mp > 36)
+			{
+			 spellID = 165; //THUNDER II
+			}
+        else if (m_PPet->health.mp > 30)
+			{
+			 spellID = 150; //BLIZZARD II
+			}
+        else if (m_PPet->health.mp > 25)
+			{
+			 spellID = 145; //FIRE II
+			}
+        else if (m_PPet->health.mp > 21)
+			{
+			 spellID = 155; //AERO II
+			}
+        else if (m_PPet->health.mp > 18)
+			{
+			 spellID = 170; //WATER II
+			}
+        else if (m_PPet->health.mp > 15)
+			{
+			 spellID = 160; //STONE II
+			}
+        else if (m_PPet->health.mp > 8)
+			{
+			 spellID = 164; //THUNDER I
+			}
+        else if (m_PPet->health.mp > 7)
+			{
+			 spellID = 149; //BLIZZARD I
+			}
+        else if (m_PPet->health.mp > 6)
+			{
+			 spellID = 144; //FIRE I
+			}
+        else if (m_PPet->health.mp > 5)
+			{
+			 spellID = 154; //AERO I
+			}
+        else if (m_PPet->health.mp > 4)
+			{
+			 spellID = 169; //WATER I
+			}
+        else if (m_PPet->health.mp > 3)
+			{
+			 spellID = 159; //STONE I
+			}
+        else
+			{
+		     spellID = -1;
+			}
+		else if (level >= 46)
+		   if (m_PPet->health.mp > 36)
+			{
+			 spellID = 165; //THUNDER II
+			}
+        else if (m_PPet->health.mp > 30)
+			{
+			 spellID = 150; //BLIZZARD II
+			}
+        else if (m_PPet->health.mp > 25)
+			{
+			 spellID = 145; //FIRE II
+			}
+        else if (m_PPet->health.mp > 21)
+			{
+			 spellID = 155; //AERO II
+			}
+        else if (m_PPet->health.mp > 18)
+			{
+			 spellID = 170; //WATER II
+			}
+        else if (m_PPet->health.mp > 15)
+			{
+			 spellID = 160; //STONE II
+			}
+        else if (m_PPet->health.mp > 8)
+			{
+			 spellID = 164; //THUNDER I
+			}
+        else if (m_PPet->health.mp > 7)
+			{
+			 spellID = 149; //BLIZZARD I
+			}
+        else if (m_PPet->health.mp > 6)
+			{
+			 spellID = 144; //FIRE I
+			}
+        else if (m_PPet->health.mp > 5)
+			{
+			 spellID = 154; //AERO I
+			}
+        else if (m_PPet->health.mp > 4)
+			{
+			 spellID = 169; //WATER I
+			}
+        else if (m_PPet->health.mp > 3)
+			{
+			 spellID = 159; //STONE I
+			}
+        else
+			{
+		     spellID = -1;
+			}
+		else if (level >= 42)
+		   if (m_PPet->health.mp > 30)
+			{
+			 spellID = 150; //BLIZZARD II
+			}
+        else if (m_PPet->health.mp > 25)
+			{
+			 spellID = 145; //FIRE II
+			}
+        else if (m_PPet->health.mp > 21)
+			{
+			 spellID = 155; //AERO II
+			}
+        else if (m_PPet->health.mp > 18)
+			{
+			 spellID = 170; //WATER II
+			}
+        else if (m_PPet->health.mp > 15)
+			{
+			 spellID = 160; //STONE II
+			}
+        else if (m_PPet->health.mp > 8)
+			{
+			 spellID = 164; //THUNDER I
+			}
+        else if (m_PPet->health.mp > 7)
+			{
+			 spellID = 149; //BLIZZARD I
+			}
+        else if (m_PPet->health.mp > 6)
+			{
+			 spellID = 144; //FIRE I
+			}
+        else if (m_PPet->health.mp > 5)
+			{
+			 spellID = 154; //AERO I
+			}
+        else if (m_PPet->health.mp > 4)
+			{
+			 spellID = 169; //WATER I
+			}
+        else if (m_PPet->health.mp > 3)
+			{
+			 spellID = 159; //STONE I
+			}
+        else
+			{
+		     spellID = -1;
+			}
+		else if (level >= 38)
+		  if (m_PPet->health.mp > 25)
+			{
+			 spellID = 145; //FIRE II
+			}
+        else if (m_PPet->health.mp > 21)
+			{
+			 spellID = 155; //AERO II
+			}
+        else if (m_PPet->health.mp > 18)
+			{
+			 spellID = 170; //WATER II
+			}
+        else if (m_PPet->health.mp > 15)
+			{
+			 spellID = 160; //STONE II
+			}
+        else if (m_PPet->health.mp > 8)
+			{
+			 spellID = 164; //THUNDER I
+			}
+        else if (m_PPet->health.mp > 7)
+			{
+			 spellID = 149; //BLIZZARD I
+			}
+        else if (m_PPet->health.mp > 6)
+			{
+			 spellID = 144; //FIRE I
+			}
+        else if (m_PPet->health.mp > 5)
+			{
+			 spellID = 154; //AERO I
+			}
+        else if (m_PPet->health.mp > 4)
+			{
+			 spellID = 169; //WATER I
+			}
+        else if (m_PPet->health.mp > 3)
+			{
+			 spellID = 159; //STONE I
+			}
+        else
+			{
+		     spellID = -1;
+			}
+		else if (level >= 34)
+		   if (m_PPet->health.mp > 21)
+			{
+			 spellID = 155; //AERO II
+			}
+        else if (m_PPet->health.mp > 18)
+			{
+			 spellID = 170; //WATER II
+			}
+        else if (m_PPet->health.mp > 15)
+			{
+			 spellID = 160; //STONE II
+			}
+        else if (m_PPet->health.mp > 8)
+			{
+			 spellID = 164; //THUNDER I
+			}
+        else if (m_PPet->health.mp > 7)
+			{
+			 spellID = 149; //BLIZZARD I
+			}
+        else if (m_PPet->health.mp > 6)
+			{
+			 spellID = 144; //FIRE I
+			}
+        else if (m_PPet->health.mp > 5)
+			{
+			 spellID = 154; //AERO I
+			}
+        else if (m_PPet->health.mp > 4)
+			{
+			 spellID = 169; //WATER I
+			}
+        else if (m_PPet->health.mp > 3)
+			{
+			 spellID = 159; //STONE I
+			}
+        else
+			{
+		     spellID = -1;
+			}
+		else if (level >= 30)
+		   if (m_PPet->health.mp > 18)
+			{
+			 spellID = 170; //WATER II
+			}
+        else if (m_PPet->health.mp > 15)
+			{
+			 spellID = 160; //STONE II
+			}
+        else if (m_PPet->health.mp > 8)
+			{
+			 spellID = 164; //THUNDER I
+			}
+        else if (m_PPet->health.mp > 7)
+			{
+			 spellID = 149; //BLIZZARD I
+			}
+        else if (m_PPet->health.mp > 6)
+			{
+			 spellID = 144; //FIRE I
+			}
+        else if (m_PPet->health.mp > 5)
+			{
+			 spellID = 154; //AERO I
+			}
+        else if (m_PPet->health.mp > 4)
+			{
+			 spellID = 169; //WATER I
+			}
+        else if (m_PPet->health.mp > 3)
+			{
+			 spellID = 159; //STONE I
+			}
+        else
+			{
+		     spellID = -1;
+			}
+		else if (level >= 26)
+		   if (m_PPet->health.mp > 15)
+			{
+			 spellID = 160; //STONE II
+			}
+        else if (m_PPet->health.mp > 8)
+			{
+			 spellID = 164; //THUNDER I
+			}
+        else if (m_PPet->health.mp > 7)
+			{
+			 spellID = 149; //BLIZZARD I
+			}
+        else if (m_PPet->health.mp > 6)
+			{
+			 spellID = 144; //FIRE I
+			}
+        else if (m_PPet->health.mp > 5)
+			{
+			 spellID = 154; //AERO I
+			}
+        else if (m_PPet->health.mp > 4)
+			{
+			 spellID = 169; //WATER I
+			}
+        else if (m_PPet->health.mp > 3)
+			{
+			 spellID = 159; //STONE I
+			}
+        else
+			{
+		     spellID = -1;
+			}
+		else if (level >= 21)
+		   if (m_PPet->health.mp > 8)
+			{
+			 spellID = 164; //THUNDER I
+			}
+        else if (m_PPet->health.mp > 7)
+			{
+			 spellID = 149; //BLIZZARD I
+			}
+        else if (m_PPet->health.mp > 6)
+			{
+			 spellID = 144; //FIRE I
+			}
+        else if (m_PPet->health.mp > 5)
+			{
+			 spellID = 154; //AERO I
+			}
+        else if (m_PPet->health.mp > 4)
+			{
+			 spellID = 169; //WATER I
+			}
+        else if (m_PPet->health.mp > 3)
+			{
+			 spellID = 159; //STONE I
+			}
+        else
+			{
+		     spellID = -1;
+			}
+		else if (level >= 17)
+		   if (m_PPet->health.mp > 7)
+			{
+			 spellID = 149; //BLIZZARD I
+			}
+        else if (m_PPet->health.mp > 6)
+			{
+			 spellID = 144; //FIRE I
+			}
+        else if (m_PPet->health.mp > 5)
+			{
+			 spellID = 154; //AERO I
+			}
+        else if (m_PPet->health.mp > 4)
+			{
+			 spellID = 169; //WATER I
+			}
+        else if (m_PPet->health.mp > 3)
+			{
+			 spellID = 159; //STONE I
+			}
+        else
+			{
+		     spellID = -1;
+			}
+		else if (level >= 13)
+		  if (m_PPet->health.mp > 6)
+			{
+			 spellID = 144; //FIRE I
+			}
+        else if (m_PPet->health.mp > 5)
+			{
+			 spellID = 154; //AERO I
+			}
+        else if (m_PPet->health.mp > 4)
+			{
+			 spellID = 169; //WATER I
+			}
+        else if (m_PPet->health.mp > 3)
+			{
+			 spellID = 159; //STONE I
+			}
+        else
+			{
+		     spellID = -1;
+			}	
+		else if (level >= 9)
+		   if (m_PPet->health.mp > 5)
+			{
+			 spellID = 154; //AERO I
+			}
+        else if (m_PPet->health.mp > 4)
+			{
+			 spellID = 169; //WATER I
+			}
+        else if (m_PPet->health.mp > 3)
+			{
+			 spellID = 159; //STONE I
+			}
+        else
+			{
+		     spellID = -1;
+			}
+		else if (level >= 4)
+		   if (m_PPet->health.mp > 4)
+			{
+			 spellID = 169; //WATER I
+			}
+        else if (m_PPet->health.mp > 3)
+			{
+			 spellID = 159; //STONE I
+			}
+        else
+			{
+		     spellID = -1;
+			}	
+	    m_LastShantottoEleCast = m_Tick;
+    }			
+	else 
+	   {
+          m_shantottoEleRecast = 20000; //ShantCast
+	   }
+	   m_LastShantottoMagicTime = m_Tick;
+	return spellID;	
+}
 
 uint32 CAIPetDummy::ZeidSkillchain()
 {
@@ -11716,6 +13638,30 @@ CBattleEntity* CAIPetDummy::getLionSCPartnerZeid()
     }
     return lionSCPartner;
 }
+
+
+CBattleEntity* CAIPetDummy::getSleptMage()
+{
+    CBattleEntity* sleptMage = nullptr;
+	uint8 allyhp = 0;
+    if (m_PPet->PMaster->PAlly.size() > 0)  // If there are other trusts in the party look for their job
+    {
+        for (auto ally : m_PPet->PMaster->PAlly)
+        {
+            if (ally->GetMJob() == JOB_WHM) //This will cycle thru the trust list to see if a WHM is in the party and then target them
+            {    
+			    //ShowWarning(CL_GREEN"FOUND A WHM\n" CL_RESET);
+                sleptMage = ally;
+				//allyhp = ally->GetHPP();
+				//ShowWarning(CL_GREEN"LION IS PRESENT HP is %u \n" CL_RESET, allyhp);
+				//ShowWarning(CL_GREEN"LION IS PRESENT!!!!!! \n" CL_RESET);
+				break;
+            }
+        }
+    }
+    return sleptMage;
+}
+
 
 
 CBattleEntity* CAIPetDummy::getZeidSCPartner()

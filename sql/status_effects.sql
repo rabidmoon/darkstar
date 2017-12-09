@@ -657,6 +657,7 @@ INSERT INTO `status_effects` VALUES (811,'dyna_restriction',0,0,0,0,0,0,0,0);
 INSERT INTO `status_effects` VALUES (812,'trust_last_resort',32,0,0,0,0,0,0,0);
 INSERT INTO `status_effects` VALUES (813,'trust_trick_attack',32,0,0,0,0,0,0,0);
 INSERT INTO `status_effects` VALUES (814,'trust_skillchain_timer',4128,9,0,2,0,0,0,0);
+INSERT INTO `status_effects` VALUES (815,'trust_barrage',32,0,0,0,0,0,0,0);
 /*!40000 ALTER TABLE `status_effects` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;

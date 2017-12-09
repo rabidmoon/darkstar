@@ -991,7 +991,7 @@ INSERT INTO `mob_skills` VALUES (942,794,'Randgrith',0,7.0,2000,1500,4,0,0,0);  
 INSERT INTO `mob_skills` VALUES (943,801,'Gate_of_Tartarus',0,7.0,2000,1500,4,0,0,0);     -- Animated_Staff
 INSERT INTO `mob_skills` VALUES (944,804,'Namas_Arrow',0,18.0,2000,1500,4,0,0,0);          -- Animated_Longbow
 INSERT INTO `mob_skills` VALUES (945,805,'Coronach',0,18.0,2000,1500,4,0,0,0);            -- Animated_Gun
--- INSERT INTO `mob_skills` VALUES (946,946,'Ranged_Attack',0,7.0,2000,1500,4,0,0,0);
+INSERT INTO `mob_skills` VALUES (946,1617,'Trust_Ranged_Attack',0,15.0,2000,1500,4,0,0,0);
 -- INSERT INTO `mob_skills` VALUES (947,947,'Ranged_Attack',0,7.0,2000,1500,4,0,0,0);
 -- INSERT INTO `mob_skills` VALUES (948,948,'Ranged_Attack',0,7.0,2000,1500,4,0,0,0);
 -- INSERT INTO `mob_skills` VALUES (949,949,'Ranged_Attack',0,7.0,2000,1500,4,0,0,0);
@@ -1879,7 +1879,7 @@ INSERT INTO `mob_skills` VALUES (1818,1415,'Detonating_grip',0,7.0,2000,1000,4,0
 -- INSERT INTO `mob_skills` VALUES (1831,1831,'.',0,7.0,2000,1500,4,0,0,0);
 -- INSERT INTO `mob_skills` VALUES (1832,1832,'Victory_Beacon',0,7.0,2000,1500,4,0,0,0);
 -- INSERT INTO `mob_skills` VALUES (1833,1833,'Salamander_Flame',0,7.0,2000,1500,4,0,0,0);
--- INSERT INTO `mob_skills` VALUES (1834,1834,'Typhonic_Arrow',0,7.0,2000,1500,4,0,0,0);
+INSERT INTO `mob_skills` VALUES (1834,1429,'Typhonic_Arrow',0,15.0,2000,1500,4,0,0,0);
 -- INSERT INTO `mob_skills` VALUES (1835,1835,'Meteoric_Impact',0,7.0,2000,1500,4,0,0,0);
 -- INSERT INTO `mob_skills` VALUES (1836,1836,'Scouring_Bubbles',0,7.0,2000,1500,4,0,0,0);
 -- INSERT INTO `mob_skills` VALUES (1837,1837,'.',0,7.0,2000,1500,4,0,0,0);
@@ -3782,7 +3782,7 @@ INSERT INTO `mob_skills` VALUES (3733,3733,'Leaden_Salute',0,7.0,2000,1500,4,0,0
 INSERT INTO `mob_skills` VALUES (3734,3734,'Hunter_s_Roll',0,7.0,2000,1500,4,0,0,0);
 INSERT INTO `mob_skills` VALUES (3735,3735,'Chaos_Roll',0,7.0,2000,1500,4,0,0,0);
 INSERT INTO `mob_skills` VALUES (3736,3736,'Chivalry',0,7.0,2000,1500,4,0,0,0);
--- INSERT INTO `mob_skills` VALUES (3737,3737,'#2201',0,7.0,2000,1500,4,0,0,0);
+INSERT INTO `mob_skills` VALUES (3737,16,'Trust_Ranged_Attack',0,15.0,2000,1500,4,0,0,0);
 -- INSERT INTO `mob_skills` VALUES (3738,3738,'#2202',0,7.0,2000,1500,4,0,0,0);
 INSERT INTO `mob_skills` VALUES (3739,3739,'Fast_Blade',0,7.0,2000,1500,4,0,0,0);
 INSERT INTO `mob_skills` VALUES (3740,3740,'Red_Lotus_Blade',0,7.0,2000,1500,4,0,0,0);
@@ -3808,11 +3808,11 @@ INSERT INTO `mob_skills` VALUES (3757,3757,'Last_Resort',0,7.0,2000,1500,4,0,0,0
 -- INSERT INTO `mob_skills` VALUES (3759,3759,'#2223',0,7.0,2000,1500,4,0,0,0);
 INSERT INTO `mob_skills` VALUES (3760,3760,'Chain_Affinity',0,7.0,2000,1500,4,0,0,0);
 -- INSERT INTO `mob_skills` VALUES (3761,3761,'#2225',0,7.0,2000,1500,4,0,0,0);
--- INSERT INTO `mob_skills` VALUES (3762,3762,'#2226',0,7.0,2000,1500,4,0,0,0);
--- INSERT INTO `mob_skills` VALUES (3763,3763,'#2227',0,7.0,2000,1500,4,0,0,0);
--- INSERT INTO `mob_skills` VALUES (3764,3764,'#2228',0,7.0,2000,1500,4,0,0,0);
--- INSERT INTO `mob_skills` VALUES (3765,3765,'#2229',0,7.0,2000,1500,4,0,0,0);
--- INSERT INTO `mob_skills` VALUES (3766,3766,'#2230',0,7.0,2000,1500,4,0,0,0);
+INSERT INTO `mob_skills` VALUES (3762,3762,'Cyclone',0,7.0,2000,1500,4,0,0,0);
+INSERT INTO `mob_skills` VALUES (3763,3763,'Sidewinder',0,7.0,2000,1500,4,0,0,0);
+INSERT INTO `mob_skills` VALUES (3764,3764,'Empyreal_Arrow',0,7.0,2000,1500,4,0,0,0);
+INSERT INTO `mob_skills` VALUES (3765,3765,'Sharpshot',0,7.0,2000,1500,4,0,0,0);
+INSERT INTO `mob_skills` VALUES (3766,3766,'Trust_Barrage',0,7.0,2000,1500,4,0,0,0);
 INSERT INTO `mob_skills` VALUES (3767,3767,'Solace',0,7.0,2000,1500,4,0,0,0);
 -- INSERT INTO `mob_skills` VALUES (3768,3768,'#2232',0,7.0,2000,1500,4,0,0,0);
 INSERT INTO `mob_skills` VALUES (3769,3769,'Starlight',0,7.0,2000,1500,4,0,0,0);

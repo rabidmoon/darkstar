@@ -173,6 +173,18 @@ void CAIGeneral::Reset()
 	m_LastExeSjumpTime = 0;
 	m_LastExeAngonTime = 0;
 	m_LastChainTime = 0;
+	
+    m_LastShantottoEleCast = 0;	
+    m_LastNajelithBerserkTime = 0;	
+    m_LastNajelithRangeTime = 0;	
+    m_LastNajelithSharpshotTime = 0;		
+    m_LastNajelithBarrageTime = 0;
+
+    m_LastShantottoEleTime = 0;	
+	m_LastShantottoMagicTime = 0;
+	m_LastShantottoCheck = 0;
+	m_LastShantottoDebuffRecast = 0;
+	
     m_WaitTime = 0;
     m_LastWaitTime = 0;
     m_interruptSpell = false;
@@ -771,6 +783,53 @@ void CAIGeneral::SetLastUniversalSCTime(uint32 time)
 {
     m_LastUniversalSCTime = time;
 }
+
+
+void CAIGeneral::SetLastNajelithBerserkTime(uint32 time)
+{
+    m_LastNajelithBerserkTime = time;
+}
+
+void CAIGeneral::SetLastNajelithRangeTime(uint32 time)
+{
+    m_LastNajelithRangeTime = time;
+}
+
+void CAIGeneral::SetLastNajelithSharpshotTime(uint32 time)
+{
+    m_LastNajelithSharpshotTime = time;
+}
+
+void CAIGeneral::SetLastNajelithBarrageTime(uint32 time)
+{
+    m_LastNajelithBarrageTime = time;
+}
+
+void CAIGeneral::SetLastNajelithWSTime(uint32 time)
+{
+    m_LastNajelithWSTime = time;
+}
+
+void CAIGeneral::SetLastShantottoEleTime(uint32 time)
+{
+    m_LastShantottoEleTime = time;
+}
+
+void CAIGeneral::SetLastShantottoMagicTime(uint32 time)
+{
+    m_LastShantottoMagicTime = time;
+}
+
+void CAIGeneral::SetLastShantottoCheck(uint32 time)
+{
+    m_LastShantottoCheck = time;
+}
+
+void CAIGeneral::SetLastShantottoDebuffRecast(uint32 time)
+{
+    m_LastShantottoDebuffRecast = time;
+}
+
 
 
 void CAIGeneral::SetBattleTarget(CBattleEntity* PEntity)

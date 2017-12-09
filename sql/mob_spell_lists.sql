@@ -1646,6 +1646,15 @@ INSERT INTO `mob_spell_lists` VALUES ('Darcullin', 276, 611, 1, 255); -- Disseve
 INSERT INTO `mob_spell_lists` VALUES ('Darcullin', 276, 616, 1, 255); -- Temporal Shift
 INSERT INTO `mob_spell_lists` VALUES ('Darcullin', 276, 632, 1, 255); -- Diamondhide
 
+INSERT INTO `mob_spell_lists` VALUES ('Prishe', 277, 4, 1, 255); -- Cure IV
+INSERT INTO `mob_spell_lists` VALUES ('Prishe', 277, 22, 1, 255); -- Holy 2
+INSERT INTO `mob_spell_lists` VALUES ('Prishe', 277, 26, 1, 255); -- Dia IV
+INSERT INTO `mob_spell_lists` VALUES ('Prishe', 277, 36, 1, 255); -- Diaga IV
+INSERT INTO `mob_spell_lists` VALUES ('Prishe', 277, 57, 1, 255); -- Haste
+INSERT INTO `mob_spell_lists` VALUES ('Prishe', 277, 357, 1, 255); -- Slowga
+INSERT INTO `mob_spell_lists` VALUES ('Prishe', 277, 47, 1, 255); -- Protect V
+INSERT INTO `mob_spell_lists` VALUES ('Prishe', 277, 52, 1, 255); -- Shell V
+INSERT INTO `mob_spell_lists` VALUES ('Prishe', 277, 356, 1, 255); -- Paralyga
 
 /*!40000 ALTER TABLE `mob_spell_lists` ENABLE KEYS */;
 UNLOCK TABLES;

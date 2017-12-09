@@ -41,6 +41,7 @@ This file is part of DarkStar-server source code.
 #include "../ability.h"
 #include "../modifier.h"
 #include "../lua/luautils.h"
+#include "../zone_instance.h"
 
 #include "../ai/ai_automaton_dummy.h"
 #include "../ai/ai_pet_dummy.h"
@@ -954,15 +955,13 @@ namespace petutils
        
        
         
-		if (PMaster->getZone() == 60)
+		if (PMaster->PInstance)
 		{
-			PMaster->PInstance->InsertPET(PPet);
-			ShowWarning(CL_RED"INSTANCE INSERT PET" CL_RESET);
+			PPet->PInstance = PMaster->PInstance;
 		}
-		else
-		{
-			PMaster->loc.zone->InsertPET(PPet);
-		}
+	
+		PMaster->loc.zone->InsertPET(PPet);
+		
       
          if (PMaster->objtype == TYPE_PC)
         {
@@ -1131,6 +1130,7 @@ namespace petutils
 		}
 	    else if (PetID == PETID_KUPIPI)
 		{
+		PAlly->SetMJob(JOB_WHM);
 		uint16 kupatt = (PAlly->GetMLevel() * 1.0) + attKup;
 		uint16 kupacc = (PAlly->GetMLevel() * 0.5) + accKup; 
 		
@@ -1292,6 +1292,7 @@ namespace petutils
 		}
 		else if (PetID == PETID_EXCENMILLE)
 		{
+		PAlly->SetMJob(JOB_DRG);		
 		uint16 haste = 0;
 		uint16 exeatt = (PAlly->GetMLevel() * 1.0) + attExcen;
 		uint16 exeacc = (PAlly->GetMLevel() * 0.5) + accExcen;
@@ -1336,6 +1337,7 @@ namespace petutils
 		}
 		else if (PetID == PETID_BLUE)
 		{
+		PAlly->SetMJob(JOB_BLU);
 		uint16 bmoddatt = (PAlly->GetMLevel() * 1.0) + attDarc;
 		uint16 bmoddacc = (PAlly->GetMLevel() * 0.5) + accDarc;
 		uint16 bstr = (PAlly->GetMLevel() * 0.5);
@@ -1375,6 +1377,7 @@ namespace petutils
 		}
 		else if (PetID == PETID_ADELHIED)
 		{
+		PAlly->SetMJob(JOB_SCH);
 		uint16 moddatt = (PAlly->GetMLevel() * 1.0);
 		uint16 moddacc = (PAlly->GetMLevel() * 0.5);
 		uint16 modmab = (PAlly->GetMLevel() / 2);
@@ -1427,6 +1430,7 @@ namespace petutils
 		
 		else if (PetID == PETID_LION)
 		{
+		PAlly->SetMJob(JOB_THF);
 	    uint16 haste = 0;
 		uint16 bmoddatt = (PAlly->GetMLevel() * 1.0);
 		uint16 bmoddacc = (PAlly->GetMLevel() * 0.5);		
@@ -1647,6 +1651,7 @@ namespace petutils
 		}
 		else if (PetID == PETID_GESSHO)
 		{
+		PAlly->SetMJob(JOB_NIN);
 	    uint16 haste = 0;
 		uint16 bmoddatt = (PAlly->GetMLevel() * 1.0);
 		uint16 bmoddacc = (PAlly->GetMLevel() * 0.5);		
@@ -1748,8 +1753,98 @@ namespace petutils
 				PAlly->setModifier(MOD_DOUBLE_ATTACK, 15);
 				PAlly->setModifier(MOD_STORETP, 10); // Small Store TP Bonus
 		   }
+		}
+
+		else if (PetID == PETID_NAJELITH)
+		{
+		PAlly->SetMJob(JOB_RNG);
+		uint16 moddatt = (PAlly->GetMLevel() * 1.1);
+		uint16 bmoddacc = (PAlly->GetMLevel() * 0.5);
+		uint16 bmodratt = (PAlly->GetMLevel() * 1.2);
+		uint16 bmodracc = (PAlly->GetMLevel() * 1.3);		
+		uint16 bstr = (PAlly->GetMLevel() * 0.5);
+		uint16 bdex = (PAlly->GetMLevel() * 0.4);
+		uint16 bagi = (PAlly->GetMLevel() * 0.7);	
+		PAlly->setModifier(MOD_STR, bstr); //added str 
+		//PAlly->setModifier(MOD_DEX, bdex); //added dex
+		//PAlly->setModifier(MOD_AGI, bagi); //added dex	
+		PAlly->setModifier(MOD_ENMITY, -15);		
+		PAlly->setModifier(MOD_ACC, battleutils::GetMaxSkill(SKILL_GAX, JOB_WAR, PAlly->GetMLevel()) + bmoddacc); //A+ Acc
+		PAlly->setModifier(MOD_RACC, battleutils::GetMaxSkill(SKILL_GAX, JOB_WAR, PAlly->GetMLevel()) + bmodracc); //A+ Acc		
+		PAlly->setModifier(MOD_EVA, battleutils::GetMaxSkill(SKILL_SYH, JOB_WAR, PAlly->GetMLevel())); //B+ Evasion
+		PAlly->setModifier(MOD_ATT, battleutils::GetMaxSkill(SKILL_GAX, JOB_WAR, PAlly->GetMLevel()) + moddatt);// A+ Attack
+		PAlly->setModifier(MOD_RATT, battleutils::GetMaxSkill(SKILL_GAX, JOB_WAR, PAlly->GetMLevel()) + bmodratt);// A+ R.Attack			
+		PAlly->setModifier(MOD_DEF, battleutils::GetMaxSkill(SKILL_POL, JOB_WAR, PAlly->GetMLevel()));// B- Defense
+
+	    PAlly->setModifier(MOD_CONVMPTOHP, 1);
+		PAlly->setModifier(MOD_CONVHPTOMP, 1);
+		PAlly->setModifier(MOD_FOOD_MPP, 1);
+		PAlly->setModifier(MOD_FOOD_MP_CAP, 1);	
+		PAlly->setModifier(MOD_MPP, 1);
+		PAlly->setModifier(MOD_HPP, 1);	
+        PAlly->setModifier(MOD_MOVE, 10);		
+		PAlly->m_Weapons[SLOT_MAIN]->setDamage(floor(PAlly->GetMLevel()*0.38f) + 4);// D:32 @75
+		PAlly->m_Weapons[SLOT_MAIN]->setDelay(floor(1000.0f*(200.0f / 60.0f))); //200 delay
+		PAlly->m_Weapons[SLOT_RANGED]->setDamage(floor(PAlly->GetMLevel()*1.3f));// D:110 @75		
+		PAlly->m_Weapons[SLOT_RANGED]->setDelay(floor(1000.0f*(500.0f / 60.0f))); //500 delay		
+		PAlly->health.maxhp = (int16)(22 + (3.41f*(plvl * 3.12f))); 
+		PAlly->UpdateHealth();
+        PAlly->health.mp = PAlly->health.maxhp;		
+		   if (plvl > 50){
+				PAlly->setModifier(MOD_ATT, 15); // Attack Bonus
+				
+		   }	   
 		}		
-		
+
+		else if (PetID == PETID_SHANTOTTO)
+		{
+		PAlly->SetMJob(JOB_BLM);
+		uint16 moddatt = (PAlly->GetMLevel() * 1.0);
+		uint16 moddacc = (PAlly->GetMLevel() * 0.5);
+		uint16 modmab = (PAlly->GetMLevel() / 2);
+		uint16 modmacc = (PAlly->GetMLevel());
+		uint16 bint = (PAlly->GetMLevel() * 0.9);	
+		PAlly->setModifier(MOD_INT, bint); //added INT	
+		//PAlly->setModifier(MOD_ACC, battleutils::GetMaxSkill(SKILL_POL, JOB_WAR, PAlly->GetMLevel()) + moddacc); //B+ Acc
+		PAlly->setModifier(MOD_EVA, battleutils::GetMaxSkill(SKILL_POL, JOB_WAR, PAlly->GetMLevel())); //B+ Evasion
+		//PAlly->setModifier(MOD_ATT, battleutils::GetMaxSkill(SKILL_POL, JOB_WAR, PAlly->GetMLevel()) + moddatt);// B+ Attack
+		PAlly->setModifier(MOD_DEF, battleutils::GetMaxSkill(SKILL_POL, JOB_WAR, PAlly->GetMLevel()));// B- Defense
+		PAlly->setModifier(MOD_ELEM, battleutils::GetMaxSkill(SKILL_GAX, JOB_WAR, PAlly->GetMLevel()));// A Elemental
+		PAlly->setModifier(MOD_ENFEEBLE, battleutils::GetMaxSkill(SKILL_POL, JOB_WAR, PAlly->GetMLevel()));// B- Enfeebling		
+		// PAlly->setModifier(MOD_MATT, modmab); //Magic Attack Bonus	
+		PAlly->setModifier(MOD_MACC, modmacc); //Magic Accuracy Bonus
+		PAlly->m_Weapons[SLOT_MAIN]->setDamage(floor(PAlly->GetMLevel()*0.49f));// D:37 @75
+		PAlly->m_Weapons[SLOT_MAIN]->setDelay(floor(1000.0f*(340.0f / 60.0f))); //340 delay	
+		PAlly->setModifier(MOD_CONVMPTOHP, 1);
+		PAlly->setModifier(MOD_CONVHPTOMP, 1);
+		PAlly->setModifier(MOD_FOOD_MPP, 1);
+		PAlly->setModifier(MOD_FOOD_MP_CAP, 1);
+		PAlly->setModifier(MOD_ENMITY, -15);		
+		PAlly->setModifier(MOD_MPP, 1);
+		PAlly->setModifier(MOD_HPP, 1);
+		PAlly->setModifier(MOD_MOVE, 10);
+		PAlly->health.maxmp = (int16)(22 + (3.86f*(plvl * 3.66f))); 
+		PAlly->health.maxhp = (int16)(24 + (2.70f*(plvl * 3.10f))); 		
+		PAlly->UpdateHealth();
+        PAlly->health.mp = PAlly->health.maxmp;
+		if (plvl > 74){
+			PAlly->setModifier(MOD_MATT, 28);		
+			PAlly->setModifier(MOD_REFRESH, 3);
+			PAlly->setModifier(MOD_FASTCAST, 20);
+			PAlly->setModifier(MOD_MACC, 20);			
+		}
+        else if (plvl > 50){
+			PAlly->setModifier(MOD_MATT, 24);
+			PAlly->setModifier(MOD_FASTCAST, 10);
+		}
+		else if (plvl > 25){
+			PAlly->setModifier(MOD_MATT, 15);
+			PAlly->setModifier(MOD_REFRESH, 1);
+		}
+		else {
+			PAlly->setModifier(MOD_MATT, 10);
+		}	
+        }		
 		
         PAlly->PBattleAI = new CAIPetDummy(PAlly);
         PAlly->PBattleAI->SetLastActionTime(gettick());
@@ -1757,15 +1852,13 @@ namespace petutils
         PAlly->PMaster = PMaster;
 
 		
-		if (PMaster->getZone() == 60)
+		if (PMaster->PInstance)
 		{
-			PMaster->PInstance->InsertPET(PAlly);
-			ShowWarning(CL_RED"INSTANCE INSERT Ally" CL_RESET);
+			PAlly->PInstance = PMaster->PInstance;		
 		}
-		else
-		{
-			PMaster->loc.zone->InsertPET(PAlly);
-		}
+
+	    PMaster->loc.zone->InsertPET(PAlly);
+	
 		
         //PMaster->loc.zone->InsertPET(PAlly);
         PMaster->PParty->ReloadParty();	

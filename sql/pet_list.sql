@@ -137,4 +137,6 @@ INSERT INTO `pet_list` VALUES (92, 'Lilisette', 7817, 1, 99, 0, 0);
 INSERT INTO `pet_list` VALUES (93, 'Lady Lilith', 7818, 1, 99, 0, 0);
 INSERT INTO `pet_list` VALUES (94, 'Lilith Ascendant', 7819, 1, 99, 0, 0);
 INSERT INTO `pet_list` VALUES (95, 'Luopon', 7900, 1, 99, 0, 0);
+INSERT INTO `pet_list` VALUES (96, 'Najelith', 7820, 1, 99, 0, 0);
+INSERT INTO `pet_list` VALUES (97, 'Shantotto', 7821, 1, 99, 0, 0);
  

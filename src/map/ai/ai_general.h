@@ -229,6 +229,18 @@ public:
 	void			SetLastZeidSCTime(uint32 time);
 	void			SetLastUniversalSCTime(uint32 time);
 	
+	void			SetLastShantottoEleCast(uint32 time);
+	void			SetLastShantottoMagicTime(uint32 time);
+	void			SetLastShantottoCheck(uint32 time);
+	void            SetLastShantottoDebuffRecast(uint32 time);
+	void            SetLastNajelithBerserkTime(uint32 time);
+	void            SetLastNajelithRangeTime(uint32 time);
+	void            SetLastNajelithSharpshotTime(uint32 time);
+	void            SetLastNajelithBarrageTime(uint32 time);
+	void			SetLastNajelithWSTime(uint32 time);
+	
+    void			SetLastShantottoEleTime(uint32 time);	
+	
 	void			SetCurrentAction(ACTIONTYPE Action, uint16 TargetID = 0);
 	void			SetLastCorsairRoll(uint16 ability);
 	void			SetAutoAttackEnabled(bool enabled);
@@ -350,6 +362,18 @@ protected:
 	uint32			m_LastZeidSCTime;
 	uint32			m_LastZeidTrigger;
 	uint32 			m_LastUniversalSCTime;
+
+    uint32          m_LastShantottoEleCast;	
+    uint32          m_LastShantottoMagicTime;
+    uint32          m_LastShantottoCheck;	
+	uint32          m_LastShantottoDebuffRecast;
+    uint32          m_LastNajelithBerserkTime;	
+    uint32          m_LastNajelithRangeTime;	
+    uint32          m_LastNajelithSharpshotTime;		
+    uint32          m_LastNajelithBarrageTime;
+	uint32			m_LastNajelithWSTime;
+
+    uint32          m_LastShantottoEleTime;	
 	
 	uint32			m_LastEngageStart;
 	uint32 			m_LastSkillchainStart;

@@ -60,6 +60,7 @@ protected:
 	//individual universal recast timers
 	uint32 m_magicRecast;
 	uint32 m_magicKupipiRecast;
+	uint32 m_magicShantottoRecast;
 	uint32 m_blueCheck;
 	uint32 m_schCheck;
 	
@@ -141,6 +142,13 @@ protected:
 	uint32 m_zeidSCReady;
 	uint32 m_skillchainTimer;
 	
+	uint32 m_najelithBerserkRecast;
+	uint32 m_najelithRangedRecast;
+	uint32 m_najelithSharpshotRecast;
+	uint32 m_najelithBarrageRecast;
+	
+    uint32 m_shantottoEleRecast;
+	uint32 m_shantottoDebuffRecast;
 	
 	int8 m_magicburst;
 	int8 m_sekkaStatus;
@@ -181,6 +189,9 @@ protected:
 	int16 PrisheSpell();
 	int16 GesshoSpell();
 	int16 ZeidSpell();
+	int16 ShantottoSpell();
+	int16 ShantottoSpellLowTier();	
+	int16 ShantottoSpellDebuff();
 	int16 skillchainTimer();
 	uint32 ZeidSkillchain();
 	CBattleEntity* getWounded(uint8 threshold);
@@ -189,6 +200,7 @@ protected:
 	CBattleEntity* getTrickAttackPartner();
 	CBattleEntity* getLionSCPartnerZeid();	
 	CBattleEntity* getZeidSCPartner();	
+	CBattleEntity* getSleptMage();	
 	
 
     void SendTooFarInterruptMessage(CBattleEntity* PTarg);

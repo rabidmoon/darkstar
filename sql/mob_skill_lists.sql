@@ -2569,4 +2569,9 @@ INSERT INTO `mob_skill_lists` VALUES ('Curilla',748,3262);  -- Glory
 INSERT INTO `mob_skill_lists` VALUES ('Mammett_Sword',749,91);  -- Glory
 INSERT INTO `mob_skill_lists` VALUES ('Mammett_Sword',749,163);  -- Glory
 INSERT INTO `mob_skill_lists` VALUES ('Mammett_Sword',749,166);  -- Glory
-
+INSERT INTO `mob_skill_lists` VALUES ('Najelith',750,946);  -- Ranged Attack
+INSERT INTO `mob_skill_lists` VALUES ('Najelith',750,441);  -- Berserk
+INSERT INTO `mob_skill_lists` VALUES ('Najelith',750,3765);  -- Sharpshot
+INSERT INTO `mob_skill_lists` VALUES ('Najelith',750,3766);  -- Barrage
+INSERT INTO `mob_skill_lists` VALUES ('Najelith',750,1834);  -- Typhonic Arrow
+INSERT INTO `mob_skill_lists` VALUES ('Najelith',750,3764);  -- Empyreal Arrow
