@@ -1,7 +1,7 @@
 -----------------------------------
 -- Area: Horlias peak
--- Name: under_observation
--- BCNM40
+-- Name: impersonating_curilla
+-- BCNM75
 -----------------------------------
 package.loaded["scripts/zones/Horlais_Peak/TextIDs"] = nil;
 -----------------------------------
@@ -39,9 +39,9 @@ end;
 function onBcnmLeave(player,instance,leavecode)
 -- print("leave code "..leavecode);
 	
-	
 	if (leavecode == 2) then -- play end CS. Need time and battle id for record keeping + storage
 		player:setVar("CURILLA_TRIB_FIGHT",2);  -- Win Fight
+		player:startEvent(0x7d01,1,1,1,instance:getTimeInside(),1,12,0);
 	elseif (leavecode == 4) then
 		player:startEvent(0x7d02);
 	end

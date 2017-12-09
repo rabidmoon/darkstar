@@ -103,6 +103,8 @@ function onTrigger(player,npc)
     local srank = player:getRank();
 	local wrank = player:getRank();
 	local brank = player:getRank();
+	local mainlvl = player:getMainLvl();
+    local tribfight = player:getVar("NAJI_TRIB_FIGHT");
 	
 	if (srank >= 4) and (player:hasKeyItem(RED_INSTITUTE_CARD)) and (player:hasSpell(897) == false) then  -- Sandy Rnak 4 or higher
 	player:PrintToPlayer("Your Red Institute Card flashes brilliantly!", 0x1C);

@@ -123,6 +123,7 @@ function onTrigger(player,npc)
 	local currentMission = player:getCurrentMission(pNation);
 	local MissionStatus = player:getVar("MissionStatus");
 	local tribfight = player:getVar("KUPIPI_TRIB_FIGHT");
+	local mainlvl = player:getMainLvl();
 	
 	
 	

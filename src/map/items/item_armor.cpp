@@ -142,7 +142,7 @@ uint8 CItemArmor::getShieldAbsorption()
 
 bool CItemArmor::IsShield()
 {
-    return m_shieldSize > 0 && m_shieldSize <= 6;
+    return m_shieldSize > 0 && m_shieldSize <= 7;
 }
 
 /************************************************************************
@@ -196,6 +196,9 @@ void CItemArmor::addModifier(CModifier* modifier)
             case 5: // Aegis
                 pdt += 55;
                 break;
+			case 7: // HA Shield
+			    pdt += 80;
+				break;
         }
         m_absorption = dsp_min(pdt,100);
     }

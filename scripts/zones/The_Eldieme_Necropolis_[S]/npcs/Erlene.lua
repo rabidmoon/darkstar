@@ -126,6 +126,8 @@ function onTrigger(player,npc)
     local onSabbatical = player:getQuestStatus(CRYSTAL_WAR,ON_SABBATICAL);
     local onSabbaticalProgress = player:getVar("OnSabbatical");
     local downwardHelix = player:getQuestStatus(CRYSTAL_WAR, DOWNWARD_HELIX);
+	local mainlvl = player:getMainLvl();
+    local tribfight = player:getVar("ADEL_TRIB_FIGHT");	
 
     if (ALittleKnowledge == QUEST_AVAILABLE) then
         if (mLvl >= ADVANCED_JOB_LEVEL) then

@@ -103,6 +103,8 @@ function onTrigger(player,npc)
 	BorghertzCS = player:getVar("BorghertzCS");
 	X = player:getXPos();
 	Z = player:getZPos();
+	local mainlvl = player:getMainLvl();
+    local tribfight = player:getVar("ZEID_TRIB_FIGHT");
 	
 	if (OldGauntlets == true and ShadowFlames == false and BorghertzCS >= 2) then
 		if (player:getVar("BorghertzSparkKilled") == 1) then 
@@ -144,17 +146,17 @@ function onTrigger(player,npc)
 				player:setVar("BorghertzChooseTorch",1);
 			end
 		end
-	elseif ((player:hasCompletedMission(ZILART,THE_GATE_OF_THE_GODS)) and (player:hasKeyItem(RED_INSTITUTE_CARD)) and (player:hasSpell(906) == false))
+	elseif ((player:hasCompletedMission(ZILART,THE_GATE_OF_THE_GODS)) and (player:hasKeyItem(RED_INSTITUTE_CARD)) and (player:hasSpell(906) == false)) then
 		player:PrintToPlayer("Your Red Institute Card flashes brilliantly!", 0x1C);
         player:PrintToPlayer("??? : I will help you rid Vanadiel from all of the evil that persists...", 0xD);
         player:addSpell(906);
 		player:PrintToPlayer("You are now able to summon Zeid!", 0x1C);		
-    elseif ((player:hasCompletedMission(ZILART,THE_GATE_OF_THE_GODS)) and (player:hasKeyItem(GREEN_INSTITUTE_CARD)) and (player:hasSpell(906) == false))
+    elseif ((player:hasCompletedMission(ZILART,THE_GATE_OF_THE_GODS)) and (player:hasKeyItem(GREEN_INSTITUTE_CARD)) and (player:hasSpell(906) == false)) then
 		player:PrintToPlayer("Your Green Institute Card flashes brilliantly!", 0x1C);
         player:PrintToPlayer("??? : I will help you rid Vanadiel from all of the evil that persists...", 0xD);
         player:addSpell(906);
 		player:PrintToPlayer("You are now able to summon Zeid!", 0x1C);
-    elseif ((player:hasCompletedMission(ZILART,THE_GATE_OF_THE_GODS)) and (player:hasKeyItem(BLUE_INSTITUTE_CARD)) and (player:hasSpell(906) == false))
+    elseif ((player:hasCompletedMission(ZILART,THE_GATE_OF_THE_GODS)) and (player:hasKeyItem(BLUE_INSTITUTE_CARD)) and (player:hasSpell(906) == false)) then
 		player:PrintToPlayer("Your Blue Institute Card flashes brilliantly!", 0x1C);
         player:PrintToPlayer("??? : I will help you rid Vanadiel from all of the evil that persists...", 0xD);
         player:addSpell(906);

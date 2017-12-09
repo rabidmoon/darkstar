@@ -81,7 +81,7 @@ function onCriticalHit(mob)
 	local wsweakness = math.random(1,25);
     -- Function to break Mob out of its fake Form less than 50%
     if ((hp <= 50) and (changed == 1)) then
-        if (wsweakness < 99) and (isweak ~= 1) then
+        if (wsweakness < 5) and (isweak ~= 1) then
 		    mob:setUnkillable(false);
 		    mob:weaknessTrigger(2);
             mob:addStatusEffect(EFFECT_TERROR,1,0,3);

@@ -117,6 +117,7 @@ function onTrigger(player,npc)
 	local currentMission = player:getCurrentMission(pNation);
 	local srank = getNationRank(SANDORIA);
 	local tribfight = player:getVar("AYAME_TRIB_FIGHT");
+	local mainlvl = player:getMainLvl();
 		
     if (player:getNation() == 1) and (player:hasKeyItem(BLUE_INSTITUTE_CARD)) and (player:hasSpell(900) == false) then  -- Bastok Nation and mission 2-3
 	player:PrintToPlayer("Your Blue Institute Card flashes brilliantly!", 0x1C);

@@ -1527,7 +1527,23 @@ void SmallPacket0x04B(map_session_data_t* session, CCharEntity* PChar, CBasicPac
             PChar->pushPacket(new CChatMessagePacket(PChar, CHAT_MESSAGE_TYPE::MESSAGE_SYSTEM_1, "Server does not support this client version. You may continue to play but you may encounter bugs."));
         else
             PChar->pushPacket(new CChatMessagePacket(PChar, CHAT_MESSAGE_TYPE::MESSAGE_SYSTEM_1, "Report bugs at on the Cleopatra Forums.  Thank you."));
-    }	
+    }
+
+
+    // Player Tips
+	uint8 tips = dsprand::GetRandomNumber(5);
+	ShowWarning(CL_GREEN"Random Tip Number is: %u\n" CL_RESET, tips);
+	if (tips == 1)
+	    PChar->pushPacket(new CChatMessagePacket(PChar, CHAT_MESSAGE_TYPE::MESSAGE_NS_PARTY, "Tip#001: On Monk, Boost doesn't wear off when striking an enemy and can be stored up to three times at Level 75."));
+    else if (tips == 2)
+	    PChar->pushPacket(new CChatMessagePacket(PChar, CHAT_MESSAGE_TYPE::MESSAGE_NS_PARTY, "Tip#002: Last Resort's defense penalty is 0 when a DRK has full MP, and -25% when DRK has no MP."));
+    else if (tips == 3)	
+	    PChar->pushPacket(new CChatMessagePacket(PChar, CHAT_MESSAGE_TYPE::MESSAGE_NS_PARTY, "Tip#003: Last Resort provides a Parry Bonus when DRK is the main job."));
+    else if (tips == 4)
+	    PChar->pushPacket(new CChatMessagePacket(PChar, CHAT_MESSAGE_TYPE::MESSAGE_NS_PARTY, "Tip#004: The spell 'Stun' has an enmity Bonus when used by a Dark Knight."));
+    else if (tips == 5)
+	    PChar->pushPacket(new CChatMessagePacket(PChar, CHAT_MESSAGE_TYPE::MESSAGE_NS_PARTY, "Tip#005: Unlimited Shot on RNG provides lightning quick shooting, but sacrafices power and accuracy."));
+	
     return;
 }
 

@@ -12,6 +12,7 @@ require("scripts/globals/settings");
 require("scripts/globals/quests");
 require("scripts/globals/keyitems");
 require("scripts/globals/titles");
+require("scripts/globals/missions");
 
 -----------------------------------
 -- onTrade Action
@@ -24,6 +25,29 @@ function onTrade(player,npc,trade)
 	local lvl = player:getMainLvl();
 	local job = player:getMainJob();
 	local viruscurse = player:getVar("BLMVirusCurse");
+	
+	-- Shantotto Trust
+    if (player:getNation() == 0) and (player:hasKeyItem(RED_INSTITUTE_CARD)) and (player:hasSpell(896) == false) and (player:hasCompletedMission(TOAU,SHIELD_OF_DIPLOMACY) == true) then  -- ToAU Shield of Diplomacy Completed
+	player:PrintToPlayer("Your Red Institute Card flashes brilliantly!", 0x1C);
+    player:PrintToPlayer("Shantotto : Ah I see you have a Red Institute Card.  From now on, you can summon me if your battle is too hard.", 0xD);
+    player:addSpell(896);	
+	player:PrintToPlayer("You are now able to summon the trust Shantotto!", 0x15);		
+    elseif (player:getNation() == 1) and (player:hasKeyItem(BLUE_INSTITUTE_CARD)) and (player:hasSpell(896) == false) and (player:hasCompletedMission(TOAU,SHIELD_OF_DIPLOMACY) == true) then  -- ToAU Shield of Diplomacy Completed
+	player:PrintToPlayer("Your Blue Institute Card flashes brilliantly!", 0x1C);
+    player:PrintToPlayer("Shantotto : Ah I see you have a Blue Institute Card.  From now on, you can summon me if your battle is too hard.", 0xD);
+    player:addSpell(896);
+	player:PrintToPlayer("You are now able to summon the trust Shantotto!", 0x15);		
+    elseif (player:getNation() == 2) and (player:hasKeyItem(GREEN_INSTITUTE_CARD)) and (player:hasSpell(896) == false) and (player:hasCompletedMission(TOAU,SHIELD_OF_DIPLOMACY) == true) then  -- ToAU Shield of Diplomacy Completed
+	player:PrintToPlayer("Your Green Institute Card flashes brilliantly!", 0x1C);
+    player:PrintToPlayer("Shantotto : Ah I see you have a Green Institute Card.  From now on, you can summon me if your battle is too hard.", 0xD);
+    player:addSpell(896);
+	player:PrintToPlayer("You are now able to summon the trust Shantotto!", 0x15);	
+    end
+		
+	
+	
+	
+	
 	-- Curses Foiled Again!
 	if (player:getQuestStatus(WINDURST,CURSES_FOILED_AGAIN_1) == QUEST_ACCEPTED) then
 		if (trade:hasItemQty(928,1) and trade:hasItemQty(880,2) and count == 3) then

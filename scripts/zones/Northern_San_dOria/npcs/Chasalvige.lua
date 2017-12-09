@@ -142,6 +142,25 @@ elseif ((job == 7) and (player:getVar("PLDAFweapon") == 3) and (mainlvl >= 75) a
     player:PrintToPlayer("Chasalvige : I will need 3x Dweomer Steel Ingots and 200,000 infamy donation to purify that Artifact Weapon.", 0xD); 
 end
 
+-- PLD Shield Trade
+if ((job == 7) and (player:getVar("PLDAFshield") == 3) and (trade:hasItemQty(12307,1)) and (trade:hasItemQty(2764,3))) then
+    if (pinfamy >= amount) then
+	player:delCurrency("infamy", amount);
+    player:tradeComplete();
+    player:PrintToPlayer("Chasalvige : I will roughly one day to finish the ritual.  Please come back then.", 0xD); 
+	player:setVar("PLDHAshield",1);
+	player:setVar("PLDAFshield",0);
+	player:setVar("HA_Weapon_Wait", os.time());
+	else
+	balance = amount - pinfamy;
+    player:PrintToPlayer("Chasalvige : I am sorry.  You need "..balance.." more infamy for the donation.", 0xD); 
+    end	
+elseif ((job == 7) and (player:getVar("PLDAFweapon") == 3) and (mainlvl >= 75) and (player:getVar("HA_Weapon_Start") == 1) and (trade:hasItemQty(17643,1))) then
+    player:PrintToPlayer("Chasalvige : I will need 3x Dweomer Steel Ingots and 200,000 infamy donation to purify that Artifact Weapon.", 0xD); 
+end
+
+
+
 -- DRK Trade
 if ((job == 8) and (player:getVar("DRKAFweapon") == 3) and (trade:hasItemQty(16798,1)) and (trade:hasItemQty(2764,3))) then
     if (pinfamy >= amount) then
@@ -448,6 +467,13 @@ local daywait = player:getVar("HA_Weapon_Wait") + 600;
   player:setVar("HA_Weapon_Wait", 0);
   player:setVar("PLDHAWeapon", 2);
   player:messageSpecial(ITEM_OBTAINED, 17762); 
+  -- PLD Shield
+  elseif ((player:getVar("PLDHAshield") == 1) and (daywait < os.time())) then
+  player:PrintToPlayer("Chasalvige : Now your shield is mostly ready.", 0xD);
+  player:addItem(12307, 1, 2047, 0, 2047, 0 , 2047, 0);
+  player:setVar("HA_Weapon_Wait", 0);
+  player:setVar("PLDHAshield", 2);
+  player:messageSpecial(ITEM_OBTAINED, 17762); 
   -- DRK  
   elseif ((player:getVar("DRKHAWeapon") == 1) and (daywait < os.time())) then
   player:PrintToPlayer("Chasalvige : Now your weapon is mostly ready.", 0xD);
@@ -543,14 +569,16 @@ local daywait = player:getVar("HA_Weapon_Wait") + 600;
    or (player:getVar("RDMHAweapon") == 2) or (player:getVar("THFHAweapon") == 2) or (player:getVar("PLDHAweapon") == 2) or (player:getVar("DRKHAweapon") == 2)
    or (player:getVar("BSTHAweapon") == 2) or (player:getVar("BRDHAweapon") == 2) or (player:getVar("RNGHAweapon") == 2) or (player:getVar("SAMHAweapon") == 2)
    or (player:getVar("NINHAweapon") == 2) or (player:getVar("DRGHAweapon") == 2) or (player:getVar("SMNHAweapon") == 2) or (player:getVar("BLUHAweapon") == 2)
-   or (player:getVar("CORHAweapon") == 2) or (player:getVar("PUPHAweapon") == 2) or (player:getVar("SCHHAweapon") == 2) or (player:getVar("DNCHAweapon") == 2)) then
+   or (player:getVar("CORHAweapon") == 2) or (player:getVar("PUPHAweapon") == 2) or (player:getVar("SCHHAweapon") == 2) or (player:getVar("DNCHAweapon") == 2)
+   or (player:getVar("DNCHAshield") == 2)) then
   player:PrintToPlayer("Chasalvige : To finish the Ceremony, bury your weapon near the beach in Purgonorgo Isle to absorb the Malice there.  It should draw ", 0xD);
   player:PrintToPlayer("Chasalvige : out the negative energy your Artifact Weapon once had and allow it to manifest itself.", 0xD);  
   elseif ((player:getVar("WARAFweapon") == 3) or (player:getVar("MNKAFweapon") == 3) or (player:getVar("WHMAFweapon") == 3) or (player:getVar("BLMAFweapon") == 3) or
    (player:getVar("RDMAFweapon") == 3) or (player:getVar("THFAFweapon") == 3) or (player:getVar("PLDAFweapon") == 3) or (player:getVar("DRKAFweapon") == 3) or
    (player:getVar("BSTAFweapon") == 3) or (player:getVar("BRDAFweapon") == 3) or (player:getVar("RNGAFweaponbow") == 3) or (player:getVar("SAMAFweapon") == 3) or
    (player:getVar("NINAFweapon") == 3) or (player:getVar("DRGAFweapon") == 3) or (player:getVar("SMNAFweapon") == 3) or (player:getVar("BLUAFweapon") == 3) or
-   (player:getVar("CORAFweapon") == 3) or (player:getVar("PUPAFweapon") == 3) or (player:getVar("SCHAFweapon") == 3) or (player:getVar("DNCAFweapon") == 3)) then
+   (player:getVar("CORAFweapon") == 3) or (player:getVar("PUPAFweapon") == 3) or (player:getVar("SCHAFweapon") == 3) or (player:getVar("DNCAFweapon") == 3) or
+   (player:getVar("PLDAFshield") == 3)) then
     player:PrintToPlayer("Chasalvige : Looks like Oboro is at it again...If you want a real weapon, trade me your Artifact so I can examine it.", 0xD);
 	player:setVar("HA_Weapon_Start",1);
 

@@ -24,5 +24,6 @@ function onMobWeaponSkill(target, mob, skill)
     local dmg = MobFinalAdjustments(info.dmg,mob,skill,target,MOBSKILL_PHYSICAL,MOBPARAM_BLUNT,info.hitslanded);
     
     target:delHP(dmg);
+	mob:setTP(6);
     return dmg;
 end;

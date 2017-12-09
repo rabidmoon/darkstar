@@ -35,7 +35,7 @@ function onTrade(player,npc,trade)
 	
 	end
 	
-    if (job === JOBS.BLU and lvl >= 50) then 
+    if (job == JOBS.COR and lvl >= 50) then 
     -- Check for armor Completions
     if (pants == 0) then -- Haven't Done Feet
 	    if ((trade:hasItemQty(823,1)) and (trade:hasItemQty(2304,1)) and (trade:hasItemQty(879,1))) then
@@ -104,7 +104,7 @@ function onTrigger(player,npc)
 		-- player:startEvent(0x0108); -- Basic Dialog		
 	-- end
 	
-if (job === JOBS.COR and lvl >= 50) then
+if (job == JOBS.COR and lvl >= 50) then
     -- Check for armor Completions
     if (pants == 0) then -- Haven't Done pants
         player:PrintToPlayer("Leleroon : I see you are a Corsair, but you lack the attire.  Bring me a Gold Thread,", 0xD);
@@ -128,7 +128,7 @@ if (job === JOBS.COR and lvl >= 50) then
 	    local afshop = {
 		    0x3BA2,    50000, -- Corairs Tricorn
 			0x38BA,    15000, -- Corsair's Frac
-		    0x3D45,    10000  -- Corsair Feet
+		    0x3D45,    10000,  -- Corsair Feet
 		    0x3A51,    20000, -- Corsair's Hands			
 		    0x3CF1,    30000  -- Corsairs Legs			
 		}
@@ -136,14 +136,14 @@ if (job === JOBS.COR and lvl >= 50) then
 	elseif (body == 1) then
 	    local afshop = {
 			0x38BA,    15000, -- Corsair's Frac
-		    0x3D45,    10000  -- Corsair Feet
+		    0x3D45,    10000,  -- Corsair Feet
 		    0x3A51,    20000, -- Corsair's Hands			
 		    0x3CF1,    30000  -- Corsairs Legs		
 		}
 		showShop(player, STATIC, afshop);	
 	elseif (feet == 1) then
 	    local afshop = {
-		    0x3D45,    10000  -- Corsair Feet
+		    0x3D45,    10000,  -- Corsair Feet
 		    0x3A51,    20000, -- Corsair's Hands			
 		    0x3CF1,    30000  -- Corsairs Legs			
 		}
@@ -169,7 +169,7 @@ player:startEvent(0x0302);
 end
 end; 
 	
-end; 
+ 
 
 -----------------------------------
 -- onEventUpdate

@@ -52,6 +52,11 @@ elseif (player:getVar("PLDHAWeapon") == 2 and trade:hasItemQty(17762,1)) then
     player:tradeComplete();
 	player:setVar("PLDHAWeapon",0);
 	player:setVar("PLDHAFight",1);
+	player:PrintToPlayer("Your shield begins to react violently!", 0xD); 
+elseif (player:getVar("PLDHAshield") == 2 and trade:hasItemQty(12307,1)) then
+    player:tradeComplete();
+	player:setVar("PLDHAshield",0);
+	player:setVar("PLDHAFightShield",1);
 	player:PrintToPlayer("Your weapon begins to react violently!", 0xD); 
 elseif (player:getVar("DRKHAWeapon") == 2 and trade:hasItemQty(18995,1)) then
     player:tradeComplete();
@@ -179,6 +184,12 @@ if (trade:hasItemQty(1404, 1 )) and (trade:hasItemQty(1405, 1)) and (trade:hasIt
 			player:setVar("PLDHAFight",4);
 			player:delCurrency("infamy", payment);
     		player:tradeComplete();	
+		elseif (player:getVar("PLDHAFightShield") == 3) then  -- PLD Shield
+    		player:addItem(12407,1)  
+			player:messageSpecial(ITEM_OBTAINED,12407);		
+			player:setVar("PLDHAFightShield",4);
+			player:delCurrency("infamy", payment);
+    		player:tradeComplete();				
 		elseif (player:getVar("DRKHAFight") == 3) then  -- DRK
     		player:addItem(18955,1,343,9,59,0) 
 			player:messageSpecial(ITEM_OBTAINED,18995);		
@@ -290,7 +301,8 @@ function onTrigger(player,npc)
 if ((player:getVar("WARHAFight") == 1) or (player:getVar("MNKHAFight") == 1) or (player:getVar("WHMHAFight") == 1) or (player:getVar("BLMHAFight") == 1) or (player:getVar("RDMHAFight") == 1) or 
    (player:getVar("THFHAFight") == 1) or (player:getVar("PLDHAFight") == 1) or (player:getVar("DRKHAFight") == 1) or (player:getVar("BSTHAFight") == 1) or (player:getVar("BRDHAFight") == 1) or 
    (player:getVar("RNGHAFight") == 1) or (player:getVar("SAMHAFight") == 1) or (player:getVar("NINHAFight") == 1) or (player:getVar("DRGHAFight") == 1) or (player:getVar("SMNHAFight") == 1) or 
-   (player:getVar("BLUHAFight") == 1) or (player:getVar("CORHAFight") == 1) or (player:getVar("PUPHAFight") == 1) or (player:getVar("DNCHAFight") == 1) or (player:getVar("SCHHAFight") == 1)) then
+   (player:getVar("BLUHAFight") == 1) or (player:getVar("CORHAFight") == 1) or (player:getVar("PUPHAFight") == 1) or (player:getVar("DNCHAFight") == 1) or (player:getVar("SCHHAFight") == 1) or
+   (player:getVar("PLDHAFightShield") == 1)) then
     SpawnMob(16793977):updateEnmity(player);
 end	
 
@@ -298,7 +310,8 @@ end
 if ((player:getVar("WARHAFight") == 2) or (player:getVar("MNKHAFight") == 2) or (player:getVar("WHMHAFight") == 2) or (player:getVar("BLMHAFight") == 2) or (player:getVar("RDMHAFight") == 2) or 
    (player:getVar("THFHAFight") == 2) or (player:getVar("PLDHAFight") == 2) or (player:getVar("DRKHAFight") == 2) or (player:getVar("BSTHAFight") == 2) or (player:getVar("BRDHAFight") == 2) or 
    (player:getVar("RNGHAFight") == 2) or (player:getVar("SAMHAFight") == 2) or (player:getVar("NINHAFight") == 2) or (player:getVar("DRGHAFight") == 2) or (player:getVar("SMNHAFight") == 2) or 
-   (player:getVar("BLUHAFight") == 2) or (player:getVar("CORHAFight") == 2) or (player:getVar("PUPHAFight") == 2) or (player:getVar("DNCHAFight") == 2) or (player:getVar("SCHHAFight") == 2)) then
+   (player:getVar("BLUHAFight") == 2) or (player:getVar("CORHAFight") == 2) or (player:getVar("PUPHAFight") == 2) or (player:getVar("DNCHAFight") == 2) or (player:getVar("SCHHAFight") == 2) or
+   (player:getVar("PLDHAFightShield") == 2)) then
    player:PrintToPlayer("??? : Bring more power to me!!!  Four seals of the Gods and 400,000 Infamy!!", 0xD);
 end	
 

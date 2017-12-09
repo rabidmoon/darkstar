@@ -21,6 +21,36 @@ function onTrade(player,npc,trade)
 	if (TradeBCNM(player,player:getZoneID(),trade,npc)) then
 		return;
 	end
+	
+	local party = player:getParty();
+    if (party ~= nil) then
+        for i,member in ipairs(party) do
+		    if (member:hasItem(3557) == true) then
+	        member:setVar("PrisheFight",1);
+		    else
+			member:PrintToPlayer("Not all members have the required item",0x0D);
+			end
+		end
+	elseif (party == nil) then
+	    if (player:hasItem(3557)) then
+     		player:setVar("PrisheFight",1);	
+		else
+		    player:PrintToPlayer("You do not meet the requirements",0x0D);
+		end
+	end
+
+	
+	if (player:getVar("PrisheFight") == 1) then
+        if (party ~= nil) then
+            for i,member in ipairs(party) do
+			    member:delItem(3557,1);
+			    member:setPos(-640,-231,529,66,0x20);
+			end
+	    else
+	        player:delItem(3557,1);
+	        player:setPos(-640,-231,529,66,0x20);
+	    end
+	end
 
 end;
 

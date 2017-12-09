@@ -1997,7 +1997,7 @@ void CAIMobDummy::TryLink()
    // Code below will force Trusts to fight anything that agros.  Disabled for now 
    uint32 bodygaurd = charutils::GetVar((CCharEntity*)m_PBattleTarget, "TrustBodygaurd");
    
-   if (m_PBattleTarget->PAlly.size() != 0 && bodygaurd == 1)
+   if (m_PBattleTarget->PAlly.size() != 0 && bodygaurd == 1 && m_PMob->id != 16908476) //ID is set to not attack Ulmia
     {
        for ( auto ally : m_PBattleTarget->PAlly)
         {

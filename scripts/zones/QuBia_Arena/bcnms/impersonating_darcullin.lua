@@ -1,12 +1,14 @@
 -----------------------------------
--- Area: Horlias peak
--- Name: under_observation
--- BCNM40
+-- Area: Qu'Bia Arena
+-- Name: imperonsating_darcullin
+-- BCNM75
 -----------------------------------
-package.loaded["scripts/zones/Horlais_Peak/TextIDs"] = nil;
+package.loaded["scripts/zones/QuBia_Arena/TextIDs"] = nil;
 -----------------------------------
 
-require("scripts/zones/Horlais_Peak/TextIDs");
+require("scripts/globals/keyitems");
+require("scripts/globals/missions");
+require("scripts/zones/QuBia_Arena/TextIDs");
 
 -----------------------------------
 -- EXAMPLE SCRIPT
@@ -39,9 +41,9 @@ end;
 function onBcnmLeave(player,instance,leavecode)
 -- print("leave code "..leavecode);
 	
-	
 	if (leavecode == 2) then -- play end CS. Need time and battle id for record keeping + storage
 		player:setVar("DARCULLIN_TRIB_FIGHT",2);  -- Win Fight
+		player:startEvent(0x7d01,1,1,1,instance:getTimeInside(),1,4,1);		
 	elseif (leavecode == 4) then
 		player:startEvent(0x7d02);
 	end

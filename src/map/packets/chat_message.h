@@ -39,6 +39,15 @@ enum CHAT_MESSAGE_TYPE
     MESSAGE_SYSTEM_1    = 0x06,
     MESSAGE_SYSTEM_2    = 0x07,
     MESSAGE_EMOTION     = 0x08,
+	
+    MESSAGE_NS_SAY        = 0x0D, // Same as MESSAGESAY but has no speaker object displayed
+    MESSAGE_NS_SHOUT      = 0x0E, // Same as MESSAGESHOUT but has no speaker object displayed
+    MESSAGE_NS_PARTY      = 0x0F, // Same as MESSAGEPARTY but has no speaker object displayed
+    MESSAGE_NS_LINKSHELL  = 0x10, // Same as MESSAGELINKSHELL but has no speaker object displayed
+    MESSAGE_UNKNOWN_17    = 0x11, // 17 through 25 appear to repeat the effects of other values	
+	
+	
+	
     MESSAGE_YELL        = 0x1A,
     MESSAGE_LINKSHELL2  = 0x1B,
 	MESSAGE_LOGON       = 0x1C,

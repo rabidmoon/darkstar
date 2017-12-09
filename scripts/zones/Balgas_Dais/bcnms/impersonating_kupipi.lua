@@ -1,12 +1,14 @@
 -----------------------------------
--- Area: Horlias peak
--- Name: under_observation
--- BCNM40
+-- Area: Balgas Dais
+-- Name: impersonating_kupipi
+-- BCNM75
 -----------------------------------
-package.loaded["scripts/zones/Horlais_Peak/TextIDs"] = nil;
------------------------------------
+package.loaded["scripts/zones/Balgas_Dais/TextIDs"] = nil;
+-------------------------------------
 
-require("scripts/zones/Horlais_Peak/TextIDs");
+require("scripts/globals/titles");
+require("scripts/globals/quests");
+require("scripts/zones/Balgas_Dais/TextIDs");
 
 -----------------------------------
 -- EXAMPLE SCRIPT
@@ -22,10 +24,12 @@ require("scripts/zones/Horlais_Peak/TextIDs");
 
 -- After registering the BCNM via bcnmRegister(bcnmid)
 function onBcnmRegister(player,instance)
+
 end;
 
 -- Physically entering the BCNM via bcnmEnter(bcnmid)
-function onBcnmEnter(player,instance)
+function onBcnmEnter(player,instance)  
+   	
 end;
 
 -- Leaving the BCNM by every mean possible, given by the LeaveCode
@@ -38,10 +42,10 @@ end;
 
 function onBcnmLeave(player,instance,leavecode)
 -- print("leave code "..leavecode);
-	
-	
+		
 	if (leavecode == 2) then -- play end CS. Need time and battle id for record keeping + storage
 		player:setVar("KUPIPI_TRIB_FIGHT",2);  -- Win Fight
+		player:startEvent(0x7d01,1,1,1,instance:getTimeInside(),1,1,0);
 	elseif (leavecode == 4) then
 		player:startEvent(0x7d02);
 	end

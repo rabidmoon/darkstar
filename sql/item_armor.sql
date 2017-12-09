@@ -2154,7 +2154,7 @@ INSERT INTO `item_armor` VALUES (12403,'magicians_shield',30,0,4194303,37,2,0,2,
 INSERT INTO `item_armor` VALUES (12404,'elegant_shield',40,0,147976,44,1,0,2,0);
 INSERT INTO `item_armor` VALUES (12405,'jennet_shield',38,0,193,25,3,0,2,0);
 INSERT INTO `item_armor` VALUES (12406,'coated_shield',36,0,2421,38,2,0,2,0);
-INSERT INTO `item_armor` VALUES (12407,'palmerins_shield',72,0,64,30,3,0,2,0);
+INSERT INTO `item_armor` VALUES (12407,'palmerins_shield',72,0,64,30,7,0,2,0);
 INSERT INTO `item_armor` VALUES (12408,'absorbing_shield',71,0,2421,46,2,0,2,0);
 INSERT INTO `item_armor` VALUES (12409,'numinous_shield',69,0,2421,35,2,0,2,0);
 INSERT INTO `item_armor` VALUES (12410,'numinous_shield_+1',69,0,2421,35,2,0,2,0);

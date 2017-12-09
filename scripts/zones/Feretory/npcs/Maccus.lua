@@ -60,6 +60,16 @@ local aura = player:getVar("FerretoryAura");
 local plvl = player:getMainLvl();
 local trustdyna = player:getVar("TrustDynamis");
 
+    -- Retroactively Fix Feretory Quest 3 Nation Warp
+	if (player:getVar("Aura3WarpUnlock") ~= 1 and (player:getVar("FerretoryAura") >= 3)) then
+	player:addNationTeleport(0,2097120);
+    player:addNationTeleport(1,2097120);
+    player:addNationTeleport(2,2097120);
+	player:setVar("Aura3WarpUnlock",1);
+	player:PrintToPlayer("All outpost warps except Tu'Lia and Tavnazia have been unlocked!", 0x15);
+	end
+	
+
     if (player:getNation() == 0) and (trustdyna ~= 1) and (player:hasCompletedMission(SANDORIA,THE_SHADOW_LORD) == true) then 
     player:PrintToPlayer("You may now summon Trusts inside Dynamis!", 0xD);
 	player:setVar("TrustDynamis",1);
@@ -147,11 +157,15 @@ local trustdyna = player:getVar("TrustDynamis");
 	player:setVar("FerretoryPlantoidComplete",0);
 	player:setVar("FerretoryExp",4);
 	player:setVar("FerretoryAura",3);
+	player:addNationTeleport(0,2097120);
+    player:addNationTeleport(1,2097120);
+    player:addNationTeleport(2,2097120);
+	player:setVar("Aura3WarpUnlock", 1);
 	aura = player:getVar("FerretoryAura");
 	player:PrintToPlayer("Your Aura has reached Level "..aura.."!", 0x15);
 	player:PrintToPlayer("New items are available in Mogshop #8", 0x15);
 	player:PrintToPlayer("You may now summon the Auction House anywhere with @ah.  Taxes are higher outside cities.", 0x15);	
-
+	player:PrintToPlayer("All outpost warps except Tu'Lia and Tavnazia have been unlocked!", 0x15);
     
 	
 	

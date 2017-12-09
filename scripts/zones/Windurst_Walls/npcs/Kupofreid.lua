@@ -18,7 +18,7 @@ end;
 -----------------------------------
 
 function onTrigger(player,npc)
-	if (player:getVar("Kupo_Paragon") =~ 1) then
+	if (player:getVar("Kupo_Paragon") ~= 1) then
 		if (player:getMainLvl() >= 75) then
 		    player:setVar("Kupo_Paragon",1);
 			player:PrintToPlayer("KupoKupo : You now have clearance to participate in Paragon.", 0xD);	

@@ -16,10 +16,12 @@ function onMagicCastingCheck(caster,target,spell)
 	local dynamis = caster:getVar("TrustDynamis");
 	if (((zone == 185) or (zone == 186) or (zone == 187)) and (dynamis ~= 1)) then
 	caster:PrintToPlayer("You cannot summon a trust in this area",0xD);
-	elseif (bf ~= nil) then
-	    if (((bf:getBcnmID() > 1385) and (bf:getBcnmID() < 1387)) or ((bf:getBcnmID() > 1376) and (bf:getBcnmID() < 1385))) then
+	elseif ((bf ~= nil) and (((bf:getBcnmID() > 1385) and (bf:getBcnmID() < 1387)) or ((bf:getBcnmID() > 1376) and (bf:getBcnmID() < 1385)))) then
 	    caster:PrintToPlayer("Lion is unavailable for this fight.  Please try another Trust.",0xD);		
-	    end
+	    return MSGBASIC_CANT_BE_USED_IN_AREA;
+	elseif (bf == nil and (zone == 139 or zone == 144 or zone == 146 or zone == 206)) then
+	  caster:PrintToPlayer("Lion cannot be summoned outside a BC fight.",0xD);
+	  return MSGBASIC_CANT_BE_USED_IN_AREA;		
 	elseif(not caster:canUsePet()) then
 		return MSGBASIC_CANT_BE_USED_IN_AREA;
 	elseif (not caster:isUniqueAlly(86)) then

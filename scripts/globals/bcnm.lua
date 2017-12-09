@@ -23,6 +23,7 @@ itemid_bcnmid_map = {6, {0, 0}, -- Bearclaw_Pinnacle
                    32, {0, 0}, -- Sealion's Den
                    35, {0, 0}, -- The Garden of RuHmet
                    36, {0, 0}, -- Empyreal Paradox
+                   64, {0, 0}, -- Navukgo Execution Chamber				   
 				   129, {0, 0}, 
                    139, {1177, 4, 1552, 10, 1553, 11, 1131, 12, 1175, 15, 1180, 17},
                    140, {1551, 34, 1552, 35, 1552, 36}, -- Ghelsba Outpost
@@ -60,6 +61,7 @@ bcnmid_param_map = {6, {640, 0},
                   32, {992, 0, 993, 1},
                   35, {1024, 0},
                   36, {1056, 0},
+		          64, {1124, 4},	-- ToAU 22	  
 				 -- 86, {1376, 0}, -- Everbloom Hollow (Ixion)
 				 -- 98, {1375, 4}, -- Everbloom Hollow/Ghoyus Reverie (Dark Ixion)				  
                   139, {0, 0, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 10, 10, 11, 11, 12, 12, 15, 15, 17, 17, 1377, 17, 1378, 18},  
@@ -160,7 +162,8 @@ function EventUpdateBCNM(player, csid, option, entrance)
     print("UPDATE csid "..csid.." option "..option);
     -- seen: option 2, 3, 0 in that order
     if (csid == 0x7d03 and option == 2) then -- leaving a BCNM the player is currently in.
-        player:bcnmLeave(1);
+        -- player:bcnmLeave(1);
+		player:updateEvent(3)
         return true;
     end
     if (option == 255 and csid == 0x7d00) then -- Clicked yes, try to register bcnmid
@@ -259,6 +262,13 @@ function EventFinishBCNM(player, csid, option)
         elseif ((item >= 1426 and item <= 1440) or item == 1130 or item == 1131 or item == 1175 or item == 1177 or item == 1180 or item == 1178 or item == 1551 or item == 1552 or item == 1553) then -- Orb and Testimony (one time item)
             player:createWornItem(item);
         end
+-- remove if doesn't work
+        if csid == 0x7d03 and option == 4 then
+            if player:getBattlefield() then
+                player:bcnmLeave(1);
+            end
+        end		
+-- End Remove		
         return true;
     end
 
@@ -376,7 +386,7 @@ function ItemToBCNMID(player, zone, trade)
                     elseif (item == 1174 and player:getVar("CarbuncleDebacleProgress") == 6) then -- Carbuncle Debacle (Ogmios)
                         questTimelineOK = 1;
 					elseif(item == 10116) then -- Curilla Fight
-						questTimelineOK = 1;	
+						questTimelineOK = 1;						
 					end
 
                     if (questTimelineOK == 1) then
@@ -493,8 +503,13 @@ function checkNonTradeBCNM(player, npc)
 		    -- player:PrintToPlayer("ACCEPTED!!!!!");
          --   mask = GetBattleBitmask(1375, Zone, 1);
           --  player:setVar("trade_bcnmid", 1375);
-      --  end			
+      --  end	
 
+    elseif (Zone == 64) then -- Navukgo Execution Chamber
+        if (player:getCurrentMission(TOAU) ==  SHIELD_OF_DIPLOMACY and player:getVar("AhtUrganStatus")==2) then -- TOAU-22 shield of diplomacy
+            mask = GetBattleBitmask(1124, Zone, 1);
+            player:setVar("trade_bcnmid", 1124);
+        end	  
     elseif (Zone == 139) then -- Horlais Peak
         if ((player:getCurrentMission(BASTOK) == THE_EMISSARY_SANDORIA2 or
             player:getCurrentMission(WINDURST) == THE_THREE_KINGDOMS_SANDORIA2) and player:getVar("MissionStatus") == 9) then -- Mission 2-3
@@ -694,7 +709,7 @@ function checkNonTradeBCNM(player, npc)
 	 elseif (mask ~= 0) and (Zone == 98) then
        player:startEvent(0x00ca, mask, 0, 0, 0, 0, 0, 0, 0);
        print("BCNMID found with Zone at 98 and mask "..mask);
-       return true;	
+       return true;	   
     elseif (mask ~= 0) then
         player:startEvent(0x7d00, 0, 0, 0, mask, 0, 0, 0, 0);
         print("BCNMID found with mask "..mask);

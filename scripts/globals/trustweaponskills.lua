@@ -101,8 +101,9 @@ SC_GRAVITATION = 11;
 SC_DARK = 12;
 SC_LIGHT = 13;
 
-function AutoRangedMove(mob,target,skill,basemod,numhits,attmod,accmod,defignore,str_wsc,dex_wsc,agi_wsc,vit_wsc,mnd_wsc,tpeffect,mtp000,mtp150,mtp300,offcratiomod)
-    local returninfo = {};
+function AutoRangedMove(mob,target,skill,basemod,numhits,attmod,accmod,defignore,str_wsc,dex_wsc,agi_wsc,vit_wsc,mnd_wsc,tpeffect,mtp100,mtp200,mtp300,offcratiomod)
+
+ local returninfo = {};
 
     --get dstr (bias to monsters, so no fSTR)
     local dstr = mob:getStat(MOD_STR) - target:getStat(MOD_VIT);
@@ -154,22 +155,22 @@ function AutoRangedMove(mob,target,skill,basemod,numhits,attmod,accmod,defignore
         base = 1;
     end
 	
-	print("Calculated WSC");
-	print(wsc);
-	print("Final FSTR2");
-	print(fstr2);
-	print("Weapon Base Damage");
-	print(weaponbase);
-	print("Final Base Damage");
-	print(base);
+	-- print("Calculated WSC");
+	-- print(wsc);
+	-- print("Final FSTR2");
+	-- print(fstr2);
+	-- print("Weapon Base Damage");
+	-- print(weaponbase);
+	-- print("Final Base Damage");
+	-- print(base);
 
     --work out and cap ratio
     if (offcratiomod == nil) then -- default to attack. Pretty much every physical mobskill will use this, Cannonball being the exception.
-        offcratiomod = (mob:getStat(MOD_ATT) * attmod);
+        offcratiomod = (mob:getMod(MOD_RATT) * attmod);
         -- print ("Nothing passed, defaulting to attack");
     end;
     local ratio = offcratiomod/target:getStat(MOD_DEF);
-    ratio = utils.clamp(ratio, 0, 3);
+    ratio = utils.clamp(ratio, 0, 3.15);
     print("pDIF before correction");
 	print(ratio);
 	
@@ -201,7 +202,7 @@ function AutoRangedMove(mob,target,skill,basemod,numhits,attmod,accmod,defignore
    local hitrate = acc + accmod;
 	
 	if (tpeffect==TP_ACC_VARIES) then
-		hitrate = hitrate + AutoAccBonus(tp, mtp000, mtp150, mtp300);  
+		hitrate = hitrate + AutoAccBonus(tp, mtp100, mtp200, mtp300);  
 	end   
 
     hitrate = ((hitrate - eva) / 2 ) + 75;	
@@ -225,16 +226,20 @@ function AutoRangedMove(mob,target,skill,basemod,numhits,attmod,accmod,defignore
 
     --apply ftp (assumes 1~3 scalar linear mod)
     if (tpeffect==TP_DMG_BONUS) then
-        hitdamage = hitdamage * fTP(tp, mtp000, mtp150, mtp300);
+        hitdamage = hitdamage * fTP(tp, mtp100, mtp200, mtp300);
     end
 	
 	if (tpeffect==TP_ATK_VARIES) then
-        hitdamage = hitdamage * AutoIgnoredDef(skill:getTP(), mtp000, mtp150, mtp300);
+        hitdamage = hitdamage * AutoIgnoredDef(skill:getTP(), mtp100, mtp200, mtp300);
     end
 	
 	if (tpeffect==TP_NO_EFFECT) then
         hitdamage = hitdamage * 1;
     end
+	
+    if (tpeffect==TP_DMG_VARIES) then
+        hitdamage = hitdamage * fTP(tp, mtp100, mtp200, mtp300);
+	end
 	
 	print("Final Damage before pDIF");
 	print(hitdamage);
@@ -310,6 +315,8 @@ function AutoRangedMove(mob,target,skill,basemod,numhits,attmod,accmod,defignore
         end
         hitsdone = hitsdone + 1;
     end
+	
+	print("Final pDIF: u%",pdif);
 
     -- printf("final: %f, hits: %f, acc: %f", finaldmg, hitslanded, hitrate);
 
@@ -409,14 +416,14 @@ function AutoPhysicalMove(mob,target,skill,basemod,numhits,attmod,accmod,str_wsc
         base = 1;
     end
 	
-	-- print("Calculated WSC");
-	-- print(wsc);
-	-- print("Final FSTR2");
-	-- print(fstr2);
-	-- print("Weapon Base Damage");
-	-- print(weaponbase);
-	-- print("Final Base Damage");
-	-- print(base);
+	print("Calculated WSC");
+	print(wsc);
+	print("Final FSTR2");
+	print(fstr2);
+	print("Weapon Base Damage");
+	print(weaponbase);
+	print("Final Base Damage");
+	print(base);
 
 
     --work out and cap ratio
@@ -439,8 +446,8 @@ function AutoPhysicalMove(mob,target,skill,basemod,numhits,attmod,accmod,str_wsc
 	ratio = ratio + 1;
 	end
     ratio = utils.clamp(ratio, 0, 3.15);
-	-- print("pDIF Corrected");
-	-- print(ratio);
+	print("pDIF Corrected");
+	print(ratio);
 	
 	local tp = mob:getTP();
     

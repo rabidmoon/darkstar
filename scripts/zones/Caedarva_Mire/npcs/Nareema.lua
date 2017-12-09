@@ -100,7 +100,8 @@ end;
 function onTrigger(player,npc)
 
     local IPpoint = player:getCurrency("imperial_standing");
-	
+	local mainlvl = player:getMainLvl();
+    local tribfight = player:getVar("DARC_TRIB_FIGHT");	
 
 
 	if (player:getCurrentMission(TOAU) == IMMORTAL_SENTRIES) then

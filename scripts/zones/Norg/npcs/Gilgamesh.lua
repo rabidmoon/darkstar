@@ -102,6 +102,8 @@ end;
 function onTrigger(player,npc)
 	
 	local ZilartMission = player:getCurrentMission(ZILART);
+	local mainlvl = player:getMainLvl();
+    local tribfight = player:getVar("LION_TRIB_FIGHT");
 	
 	-- Obtain Lion Cipher requires that ZM9 is done
 	
