@@ -12,29 +12,29 @@ cmdprops =
 function onTrigger(player, choice)
 local tokenCap = player:getVar("TokenCap");
 
-local AdelheidTokens = player:getVar("CurrentTokens_Adel");
-local AdelheidPoints = player:getVar("CurrentPoints_Adel");
+local AdelheidTokens = player:getVar("CurrentTokens_Adelheid");
+local AdelheidPoints = player:getVar("CurrentPoints_Adelheid");
 
-local AyameTokens = player:getVar("CurrentTokens_Ayam");
-local AyamePoints = player:getVar("CurrentPoints_Ayam");
+local AyameTokens = player:getVar("CurrentTokens_Ayame");
+local AyamePoints = player:getVar("CurrentPoints_Ayame");
 
-local CurillaTokens = player:getVar("CurrentTokens_Cur");
-local CurillaPoints = player:getVar("CurrentPoints_Cur");
+local CurillaTokens = player:getVar("CurrentTokens_Curilla");
+local CurillaPoints = player:getVar("CurrentPoints_Curilla");
 
-local DarcullinTokens = player:getVar("CurrentTokens_Darc");
-local DarcullinPoints = player:getVar("CurrentPoints_Darc");
+local DarcullinTokens = player:getVar("CurrentTokens_Darcullin");
+local DarcullinPoints = player:getVar("CurrentPoints_Darcullin");
 
-local ExcenmilleTokens = player:getVar("CurrentTokens_Exc");
-local ExcenmillePoints = player:getVar("CurrentPoints_Exc");
+local ExcenmilleTokens = player:getVar("CurrentTokens_Excenmille");
+local ExcenmillePoints = player:getVar("CurrentPoints_Excenmille");
 
-local KupipiTokens = player:getVar("CurrentTokens_Kup");
-local KupipiPoints = player:getVar("CurrentPoints_Kup");
+local KupipiTokens = player:getVar("CurrentTokens_Kupipi");
+local KupipiPoints = player:getVar("CurrentPoints_Kupipi");
 
 local LionTokens = player:getVar("CurrentTokens_Lion");
 local LionPoints = player:getVar("CurrentPoints_Lion");
 
-local NanaaTokens = player:getVar("CurrentTokens_Nana");
-local NanaaPoints = player:getVar("CurrentPoints_Nana");
+local NanaaTokens = player:getVar("CurrentTokens_Nanaa");
+local NanaaPoints = player:getVar("CurrentPoints_Nanaa");
 
 local NajiTokens = player:getVar("CurrentTokens_Naja");
 local NajiPoints = player:getVar("CurrentPoints_Naja");
