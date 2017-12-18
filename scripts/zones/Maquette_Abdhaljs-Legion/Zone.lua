@@ -21,9 +21,42 @@ end;
 -----------------------------------
 
 function onZoneIn(player,prevZone)
-	local cs = -1;
+cs = -1;
 
-	return cs;
+if (prevZone == 110) then
+player:addTempItem(5349,1);
+ player:PrintToPlayer("REGISTERED22");
+ if (player:isBcnmsFull() == 1) then
+            if (player:hasStatusEffect(EFFECT_DYNAMIS, 0) == false) then
+                inst = player:addPlayerToBcnm(1387);
+                player:PrintToPlayer("REGISTERED");
+                if (inst == 1) then
+                    player:bcnmEnter(1387);
+                else
+                     cs = 0;
+                end
+            else
+                player:bcnmEnter(1387);
+            end
+        else
+            inst = player:bcnmRegister(1387);
+
+            if (inst == 1) then
+                player:bcnmEnter(1387);
+            else
+                cs = 0;
+            end
+
+       
+  
+    end
+
+	end
+	
+
+	encuranceResetZone(player,prevZone)
+
+    return cs;
 end;
 
 -----------------------------------
