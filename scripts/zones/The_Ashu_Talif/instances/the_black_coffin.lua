@@ -6,7 +6,6 @@
 
 require("scripts/globals/instance")
 require("scripts/globals/keyitems");
-require("scripts/globals/missions");
 local TheAshuTalif = require("scripts/zones/The_Ashu_Talif/IDs");
 
 -----------------------------------
@@ -59,20 +58,21 @@ end;
 
 function onInstanceProgressUpdate(instance, progress)
 
-    if (progress == 1) then
+    if (progress == 5) then
         for i,v in pairs(TheAshuTalif.mobs[2]) do
             SpawnMob(v, instance);
         end
     elseif (progress >= 10 and instance:completed() == false) then
         local v = GetMobByID(TheAshuTalif.mobs.GESSHO, instance);
 
- 
+        if(v:isAlive()) then
+            v:setLocalVar("ready",2);
+        end
 
         local chars = instance:getChars();
 
         for i,v in pairs(chars) do
-		    printf("Event 102 because Captain is under 70% HP");
-            v:startEvent(101);
+            v:startEvent(102);
         end
 
         instance:complete();
@@ -85,32 +85,20 @@ end;
 -----------------------------------
 
 function onInstanceComplete(instance)
-   
-	-- for i,v in pairs(TheAshuTalif.mobs[2]) do
-	   --     printf("DespawnMobs");
-         --   DespawnMob(v, instance);
-	-- end
 
-	
     local chars = instance:getChars();
 
     for i,v in pairs(chars) do
-        if (v:getCurrentMission(TOAU) == THE_BLACK_COFFIN) then
+        if (v:getCurrentMission(TOAU) == THE_BLACK_COFFIN and v:getVar("AhtUrganStatus") == 1) then
             v:setVar("AhtUrganStatus", 2);
             v:startEvent(101);
-			v:setPos(-462,-2,-394,0,54);
-		else
-            v:startEvent(101);
-			v:setPos(-462,-2,-394,0,54);		
         end
     end
 end;
 
-function onEventUpdate(player,csid,option)
 
-end;
+function onEventUpdate(player,csid,option)
+end
 
 function onEventFinish(player,csid,option)
-
-end;
-
+end
