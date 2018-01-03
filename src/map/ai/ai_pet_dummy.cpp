@@ -13462,7 +13462,7 @@ CBattleEntity* CAIPetDummy::getWounded(uint8 threshold)
     {
         for (auto ally : m_PPet->PMaster->PAlly)
         {
-            if ( ally->GetHPP() < lowest)
+            if ( ally->GetHPP() < lowest && ally->objtype != PETTYPE_AVATAR)
             {
                 lowest = ally->GetHPP();
                 mostWounded = ally;
