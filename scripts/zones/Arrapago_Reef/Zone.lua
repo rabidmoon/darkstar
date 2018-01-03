@@ -54,9 +54,11 @@ end;
 -----------------------------------
 
 function onRegionEnter(player,region)
-if (player:getCurrentMission(TOAU) ==  THE_BLACK_COFFIN and player:hasKeyItem(EPHRAMADIAN_GOLD_COIN) and player:getVar("TOAUM15") ==0) then
-player:startEvent(0x0008);
-end
+    if (player:getCurrentMission(TOAU) ==  THE_BLACK_COFFIN and player:hasKeyItem(EPHRAMADIAN_GOLD_COIN) and player:getVar("TOAUM15") ==0) then
+        player:startEvent(0x0008);
+    elseif (player:getCurrentMission(TOAU) == PREVALENCE_OF_PIRATES and player:getVar("AhtUrganStatus") == 1) then
+        player:startEvent(14);
+    end
 end;
 
 -----------------------------------
@@ -82,8 +84,16 @@ function onEventFinish(player,csid,option)
     elseif (csid == 9) then  -- Finish Black Coffin and then warp to Nashmau to finish
         player:setVar("AhtUrganStatus",3);
         player:setPos(0,0,0,0,53);
+    elseif (csid == 13) then
+        player:setVar("AhtUrganStatus",1);		
     elseif (csid == 0x0022 and player:getVar("TOAUM15") == 1) then
         player:startEvent(0x0023);
+    elseif (csid == 14) then
+        player:completeMission(TOAU,PREVALENCE_OF_PIRATES);
+        player:setVar("AhtUrganStatus",0);
+        player:addKeyItem(PERIQIA_ASSAULT_AREA_ENTRY_PERMIT);
+        player:messageSpecial(KEYITEM_OBTAINED,PERIQIA_ASSAULT_AREA_ENTRY_PERMIT);
+        player:addMission(TOAU,SHADES_OF_VENGEANCE);		
     elseif (csid == 90) then -- enter instance: the ashu talif
         player:setPos(0,0,0,0,60);		
     end    

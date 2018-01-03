@@ -79,26 +79,31 @@ function onRegionEnter(player,region)
 	    player:completeMission(TOAU,LAND_OF_SACRED_SERPENTS,player);
 	    player:addMission(TOAU,IMMORTAL_SENTRIES,player);
 	    player:setVar("TOAUM",1);
+	elseif (player:getCurrentMission(TOAU) == A_MERCENARY_LIFE) then
+            if (prevZone ~= 50) then
+                player:startEvent(0x0Bea,3,3,3,3,3,3,3,3,0);
+	        end		
     elseif (player:getCurrentMission(TOAU) == FINDERS_KEEPERS) then
         player:startEvent(3093);		
     elseif (player:getCurrentMission(TOAU) == SOCIAL_GRACES) then
         player:startEvent(3095)	 
     elseif (player:getCurrentMission(TOAU) == FOILED_AMBITION and player:getVar("TOAUM23_STARTDAY") ~= VanadielDayOfTheYear() and player:needToZone() == false) then
         player:startEvent(3097,0,0,0,0,0,0,0,0,0)		
-	elseif (player:getCurrentMission(TOAU) == A_MERCENARY_LIFE) then
-            if (prevZone ~= 50) then
-                player:startEvent(0x0Bea,3,3,3,3,3,3,3,3,0);
-	    end
+    elseif (player:getCurrentMission(TOAU) == PLAYING_THE_PART and player:getVar("TOAUM24_STARTDAY") ~= VanadielDayOfTheYear() and player:needToZone() == false) then
+        player:startEvent(3110);
 	
 	
 	
 	
 	end
 	end,
-        [4] = function (x) -- AH mission 
-        if (player:getCurrentMission(TOAU)== KNIGHT_OF_GOLD and player:getVar("TOAUM4") == 2)	then	player:startEvent(0x0Bd0,0,0,0,0,0,0,0,0,0);
+    [4] = function (x) -- AH mission 
+        if (player:getCurrentMission(TOAU)== KNIGHT_OF_GOLD and player:getVar("TOAUM4") == 2) then	
+		    player:startEvent(0x0Bd0,0,0,0,0,0,0,0,0,0);
+        elseif (player:getCurrentMission(TOAU)== BASTION_OF_KNOWLEDGE) then
+            player:startEvent(3112);
         end
-        end,
+    end,
 	[5] = function (x) -- AH mission 
         if (player:getCurrentMission(TOAU)== KNIGHT_OF_GOLD and player:getVar("TOAUM4") == 3)	then	player:startEvent(0x0Bd2,0,0,0,0,0,0,0,0,0);
 	elseif (player:getCurrentMission(TOAU) == WESTERLY_WINDS and player:getVar("TOAUM7") == 0) then
@@ -219,6 +224,14 @@ printf("RESULT: %u",option);
         player:setVar("TOAUM23_STARTDAY", 0);
         player:needToZone(true);
         player:setVar("TOAUM24_STARTDAY", VanadielDayOfTheYear());
-        player:addMission(TOAU,PLAYING_THE_PART);	
+        player:addMission(TOAU,PLAYING_THE_PART);
+    elseif (csid == 3110) then
+        player:completeMission(TOAU,PLAYING_THE_PART);
+        player:setVar("TOAUM24_STARTDAY", 0);
+        player:addMission(TOAU,SEAL_OF_THE_SERPENT);
+    elseif (csid == 3112) then
+        player:completeMission(TOAU,BASTION_OF_KNOWLEDGE);
+        player:setTitle(APHMAUS_MERCENARY);
+        player:addMission(TOAU,PUPPET_IN_PERIL);		
 	end
 end;

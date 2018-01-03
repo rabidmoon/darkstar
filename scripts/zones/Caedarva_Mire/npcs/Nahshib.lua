@@ -31,6 +31,11 @@ function onTrigger(player,npc)
 		elseif (player:getVar("TOAUM2") == 1) then
 			player:startEvent(0x0006);
 		end
+
+    -- SHADES OF VENGEANCE
+    elseif (toauMission == SHADES_OF_VENGEANCE and player:hasKeyItem(PERIQIA_ASSAULT_AREA_ENTRY_PERMIT) == false and vanaDay() > player:getVar("TOAUM31_PERMITDAY")) then
+        player:startEvent(22);		
+		
 	elseif (player:getCurrentMission(TOAU) >= PRESIDENT_SALAHEEM) then
 		if (player:hasKeyItem(PERIQIA_ASSAULT_ORDERS) and player:hasKeyItem(ASSAULT_ARMBAND) == false) then
 			player:startEvent(0x0094,50,IPpoint);
@@ -68,6 +73,11 @@ function onEventFinish(player,csid,option)
 	elseif (csid == 0x0005 and option == 1) then
 		player:delKeyItem(SUPPLIES_PACKAGE);
 		player:setVar("TOAUM2",1);
+    -- SHADES OF VENGEANCE
+    elseif (csid == 22) then
+        player:setVar("TOAUM31_PERMITDAY",vanaDay());
+        player:addKeyItem(PERIQIA_ASSAULT_AREA_ENTRY_PERMIT);
+        player:messageSpecial(KEYITEM_OBTAINED,PERIQIA_ASSAULT_AREA_ENTRY_PERMIT);		
 	end
 
 end;

@@ -742,6 +742,7 @@ INSERT INTO `bcnm_battlefield` VALUES ('1056','3','16924677','1');
 INSERT INTO `bcnm_battlefield` VALUES ('1056','3','16924678','2');
 INSERT INTO `bcnm_battlefield` VALUES ('1124','1','17039400','3');  -- Shields of Diplomacy
 INSERT INTO `bcnm_battlefield` VALUES ('1124','1','17039401','0');
+INSERT INTO `bcnm_battlefield` VALUES ('1156','1','17051694','3'); -- puppet_in_peril
 INSERT INTO `bcnm_battlefield` VALUES ('1283', '1', '17547530', '3');
 INSERT INTO `bcnm_battlefield` VALUES ('1283', '1', '17547531', '3');
 INSERT INTO `bcnm_battlefield` VALUES ('1283', '1', '17547532', '3');

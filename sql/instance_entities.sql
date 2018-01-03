@@ -158,6 +158,18 @@ INSERT INTO `instance_entities` VALUES (53,17022987);
 INSERT INTO `instance_entities` VALUES (53,17022988);
 INSERT INTO `instance_entities` VALUES (53,17022989);
 
+-- Shades of Vengeance
+INSERT INTO `instance_entities` VALUES (79,17006754);
+INSERT INTO `instance_entities` VALUES (79,17006755);
+INSERT INTO `instance_entities` VALUES (79,17006756);
+INSERT INTO `instance_entities` VALUES (79,17006757);
+INSERT INTO `instance_entities` VALUES (79,17006758);
+INSERT INTO `instance_entities` VALUES (79,17006759);
+INSERT INTO `instance_entities` VALUES (79,17006760);
+INSERT INTO `instance_entities` VALUES (79,17006761);
+INSERT INTO `instance_entities` VALUES (79,17006762);
+INSERT INTO `instance_entities` VALUES (79,17006763);
+
 /*!40000 ALTER TABLE `instance_entities` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;

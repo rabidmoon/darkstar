@@ -63,7 +63,8 @@ bcnmid_param_map = {6, {640, 0},
                   36, {1056, 0},
 		          64, {1124, 4},	-- ToAU 22	  
 				 -- 86, {1376, 0}, -- Everbloom Hollow (Ixion)
-				 -- 98, {1375, 4}, -- Everbloom Hollow/Ghoyus Reverie (Dark Ixion)				  
+				 -- 98, {1375, 4}, -- Everbloom Hollow/Ghoyus Reverie (Dark Ixion)	
+                  67, {1152,1153,1154,1155,1156},				 
                   139, {0, 0, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 10, 10, 11, 11, 12, 12, 15, 15, 17, 17, 1377, 17, 1378, 18},  
                   140, {32, 0, 33, 1, 34, 2, 35, 3, 36, 4},
                   144, {65, 1, 73, 9, 64, 0, 67, 3, 68, 4, 70, 6, 71, 7, 72, 8, 81, 17, 76, 12, 82, 18, 79, 15, 1379, 16, 1380, 17},  -- Wahungo Shrine
@@ -510,6 +511,11 @@ function checkNonTradeBCNM(player, npc)
             mask = GetBattleBitmask(1124, Zone, 1);
             player:setVar("trade_bcnmid", 1124);
         end	  
+    elseif (Zone == 67) then -- Navukgo Execution Chamber
+        if (player:getCurrentMission(TOAU) ==  PUPPET_IN_PERIL and player:getVar("AhtUrganStatus")==1) then -- TOAU-29 Puppet In Peril
+            mask = GetBattleBitmask(1156, Zone, 1);
+            player:setVar("trade_bcnmid", 1156);
+        end	 		
     elseif (Zone == 139) then -- Horlais Peak
         if ((player:getCurrentMission(BASTOK) == THE_EMISSARY_SANDORIA2 or
             player:getCurrentMission(WINDURST) == THE_THREE_KINGDOMS_SANDORIA2) and player:getVar("MissionStatus") == 9) then -- Mission 2-3

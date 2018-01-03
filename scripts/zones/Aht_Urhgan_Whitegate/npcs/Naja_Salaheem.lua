@@ -74,7 +74,8 @@ function onTrigger(player,npc)
             end
         elseif (player:getCurrentMission(TOAU) == PASSING_GLORY and needToZone == false) then
             player:startEvent(3090,0,0,0,0,0,0,0,0,0);	
-	
+        elseif (player:getCurrentMission(TOAU) == IN_THE_BLOOD) then
+            player:startEvent(3113,0,0,0,0,0,0,0,0,0);	
 	
 	
 	
@@ -154,7 +155,13 @@ function onEventFinish(player,csid,option)
         player:completeMission(TOAU,PASSING_GLORY);
         player:setVar("TOAUM18_STARTDAY", 0);
         player:addMission(TOAU,SWEETS_FOR_THE_SOUL);		
-		
+    elseif (csid == 3113) then
+        player:completeMission(TOAU,IN_THE_BLOOD);
+        player:setVar("TOAUM33_STARTDAY", VanadielDayOfTheYear());
+        player:needToZone(true);
+        player:addItem(2187);
+        player:messageSpecial(ITEM_OBTAINED,2187);
+        player:addMission(TOAU,SENTINELS_HONOR);		
 		
 		
 	end
