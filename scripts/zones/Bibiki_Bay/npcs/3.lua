@@ -140,7 +140,10 @@ end
 
 
 if (trade:hasItemQty(1404, 1 )) and (trade:hasItemQty(1405, 1)) and (trade:hasItemQty(1406, 1)) and (trade:hasItemQty(1407, 1)) then
-    -- Obtain High Artifact
+    if (player:getFreeSlotsCount() == 0) then
+	    player:PrintToPlayer("Please make room in your inventory", 0xD); 
+	elseif (player:getFreeSlotsCount() > 0) then
+	-- Obtain High Artifact
 	if (pinfamy >= payment) then   
         if (player:getVar("WARHAFight") == 3) then  -- WAR
     	    player:addItem(18505,1,143,1,59,0) 
@@ -273,6 +276,7 @@ if (trade:hasItemQty(1404, 1 )) and (trade:hasItemQty(1405, 1)) and (trade:hasIt
 	    balance = payment - pinfamy; 
         player:PrintToPlayer( "??? : You can't fool me, you need "..balance.." more infamy.", 0xD);
 	end	
+	end
 	
 	-- Standard Message
 end

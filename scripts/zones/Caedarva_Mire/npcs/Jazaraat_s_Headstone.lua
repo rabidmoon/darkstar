@@ -56,8 +56,8 @@ function onEventFinish(player,csid,option)
 -- printf("CSID: %u",csid);
 -- printf("RESULT: %u",option);
     if (csid == 0x0008) then
-        player:setVar("AhtUrganStatus", 1);
+        player:setVar("TOAUM13", 1);
     elseif (csid == 0x0009) then
-       player:setVar("AhtUrganStatus", 3);
+       player:setVar("TOAUM13", 3);
     end
 end;

@@ -9,7 +9,7 @@ cmdprops =
     parameters = "ii"
 };
 
-function onTrigger(player, itemId, quantity)
+function onTrigger(player, itemId, quantity, aug0, aug0val)
     -- Ensure item id was given..
     if (itemId == nil or tonumber(itemId) == nil or tonumber(itemId) == 0) then
         player:PrintToPlayer( "You must enter a valid item id." );

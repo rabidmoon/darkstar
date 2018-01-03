@@ -48,8 +48,10 @@ function onEffectTick(target,effect)
 			    pet:addMP(12+(0.5*math.floor(target:getMainLvl()+5))+((healtime-2) * (1+(pet:getMod(MOD_MPHEAL)))));
 			    end
 				--master:PrintToPlayer("Trust is out!");
+				if (pet ~= nil) then
 				master:updateHealth();
-				target:updateHealth();
+				end
+				-- target:updateHealth();
 			end
          -- Each rank of Clear Mind provides +3 hMP (via MOD_MPHEAL)
          -- Each tic of healing should be +1mp more than the last
