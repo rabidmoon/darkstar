@@ -2045,22 +2045,30 @@ namespace petutils
             return;
         }
 
+		if (PPet->objtype != PETTYPE_TRUST)
+		{
+			petutils::DetachPet(PMaster);
+		}
 
-        petutils::DetachPet(PMaster);
-        // when Ally dies
-        uint8 counter = 0;
-        if (PMaster != nullptr && PMaster->PAlly.size() != 0){
-            for (auto ally : PMaster->PAlly)
-            {
-                //if (ally == this)
-                //{
-                    PMaster->PAlly.erase(PMaster->PAlly.begin() + counter);
-                    break;
-                //}
-                counter++;
-            }
-            PMaster->PParty->ReloadParty();
-        }
+		else if (PPet->objtype == PETTYPE_TRUST)
+		{
+			//Check if Pet is an avatar, wyvern, or jugpet here
+			//petutils::DetachPet(PMaster);
+			// when Ally dies
+			uint8 counter = 0;
+			if (PMaster != nullptr && PMaster->PAlly.size() != 0) {
+				for (auto ally : PMaster->PAlly)
+				{
+					//if (ally == this)
+					//{
+					PMaster->PAlly.erase(PMaster->PAlly.begin() + counter);
+					break;
+					//}
+					counter++;
+				}
+				PMaster->PParty->ReloadParty();
+			}
+		}
 		
     }
 
