@@ -7,6 +7,7 @@ package.loaded["scripts/zones/Wajaom_Woodlands/TextIDs"] = nil;
 -----------------------------------
 require("scripts/zones/Wajaom_Woodlands/TextIDs");
 require("scripts/globals/status");
+require("scripts/zones/Davoi/TextIDs");
 
 -----------------------------------
 -- onTrade Action
@@ -19,6 +20,11 @@ function onTrade(player,npc,trade)
             player:tradeComplete();
             SpawnMob(mobID):updateClaim(player);
         end
+    elseif (trade:hasItemQty(2616,1) and trade:getItemCount() == 1) then -- Trade Vulpangue's Wing
+        if (GetMobAction(mobID) == ACTION_NONE) then
+            player:tradeComplete();
+            player:addKeyItem(MAROON_SEAL);
+        end		
     end
 end;
 
