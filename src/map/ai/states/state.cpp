@@ -76,13 +76,13 @@ bool CState::CheckValidTarget(CBattleEntity* PTarget)
 {
 	if(PTarget == nullptr)
 	{
-		ShowWarning(CL_RED"CheckValidTarget is Null\n" CL_RESET);
+		//ShowWarning(CL_RED"CheckValidTarget is Null\n" CL_RESET);
 		return false;
 	}
 
 	if (PTarget->status == STATUS_DISAPPEAR)
 	{
-		ShowWarning(CL_RED"Target has disappeared!!!\n" CL_RESET);
+		//ShowWarning(CL_RED"Target has disappeared!!!\n" CL_RESET);
 		return false;
 	}
 
@@ -112,8 +112,15 @@ bool CState::CheckValidTarget(CBattleEntity* PTarget)
         }
     }
 
+	if (m_PEntity->objtype == TYPE_PET)
+	{
+		return !(m_PEntity->loc.zone == nullptr);
+	}
+	else
+	{
+		return !(m_PEntity->loc.zone == nullptr || PTarget->getZone() != m_PEntity->getZone() || PTarget->IsNameHidden());
+	}
 
-	return !(m_PEntity->loc.zone == nullptr || PTarget->getZone() != m_PEntity->getZone() || PTarget->IsNameHidden());
 }
 
 void CState::Clear()
