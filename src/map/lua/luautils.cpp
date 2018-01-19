@@ -3476,6 +3476,7 @@ namespace luautils
         return 0;
     }
 
+	
     int32 AfterInstanceRegister(uint32 tick, CTaskMgr::CTask *PTask)
     {
         CCharEntity* PChar = (CCharEntity*)PTask->m_data;

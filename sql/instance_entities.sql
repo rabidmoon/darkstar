@@ -158,6 +158,51 @@ INSERT INTO `instance_entities` VALUES (53,17022987);
 INSERT INTO `instance_entities` VALUES (53,17022988);
 INSERT INTO `instance_entities` VALUES (53,17022989);
 
+-- Arrapago Remnants
+-- npc
+INSERT INTO `instance_entities` VALUES (65,17080591);  -- Armoury Crate
+INSERT INTO `instance_entities` VALUES (65,17080598);
+INSERT INTO `instance_entities` VALUES (65,17080970);
+INSERT INTO `instance_entities` VALUES (65,17080971);
+INSERT INTO `instance_entities` VALUES (65,17080972);
+INSERT INTO `instance_entities` VALUES (65,17080973);
+INSERT INTO `instance_entities` VALUES (65,17080974);
+INSERT INTO `instance_entities` VALUES (65,17080975);
+INSERT INTO `instance_entities` VALUES (65,17080976);
+INSERT INTO `instance_entities` VALUES (65,17080977);
+INSERT INTO `instance_entities` VALUES (65,17080978);
+INSERT INTO `instance_entities` VALUES (65,17080979);
+INSERT INTO `instance_entities` VALUES (65,17080980);
+INSERT INTO `instance_entities` VALUES (65,17080981);
+INSERT INTO `instance_entities` VALUES (65,17080982);
+INSERT INTO `instance_entities` VALUES (65,17080983);
+INSERT INTO `instance_entities` VALUES (65,17080984);
+INSERT INTO `instance_entities` VALUES (65,17080985);
+INSERT INTO `instance_entities` VALUES (65,17080986);
+INSERT INTO `instance_entities` VALUES (65,17080987);
+INSERT INTO `instance_entities` VALUES (65,17080988);
+INSERT INTO `instance_entities` VALUES (65,17080989);
+INSERT INTO `instance_entities` VALUES (65,17080991);
+
+-- mobs --
+-- Floor 1
+
+-- North West Path
+INSERT INTO `instance_entities` VALUES (65,17080321);  -- Rampart
+INSERT INTO `instance_entities` VALUES (65,17080322);  -- Sabotender
+INSERT INTO `instance_entities` VALUES (65,17080323);  -- Qutrub
+INSERT INTO `instance_entities` VALUES (65,17080324);  -- Qutrub
+INSERT INTO `instance_entities` VALUES (65,17080325);  -- Qutrub
+INSERT INTO `instance_entities` VALUES (65,17080326);  -- Lamia Graverobber
+INSERT INTO `instance_entities` VALUES (65,17080327);  -- Qutrub
+INSERT INTO `instance_entities` VALUES (65,17080328);  -- Qutrub
+INSERT INTO `instance_entities` VALUES (65,17080329);  -- Lamia Graverobber
+INSERT INTO `instance_entities` VALUES (65,17080330);  -- Qutrub
+INSERT INTO `instance_entities` VALUES (65,17080331);  -- Qutrub
+INSERT INTO `instance_entities` VALUES (65,17080332);  -- Qutrub
+INSERT INTO `instance_entities` VALUES (65,17080333);  -- Qutrub
+
+
 -- Shades of Vengeance
 INSERT INTO `instance_entities` VALUES (79,17006754);
 INSERT INTO `instance_entities` VALUES (79,17006755);

@@ -128,25 +128,25 @@ function onTrigger(player,npc)
     player:setVar("TRIB_FIGHT",0);	
 	
 	-- Handle Token Quest
-    elseif ((player:getVar("EXCEN_TRIB_FIGHT") == 3) and (player:getVar("TributeRank_Cur") == 0)) then
+    elseif ((player:getVar("EXCEN_TRIB_FIGHT") == 3) and (player:getVar("TributeRank_Excen") == 0)) then
       player:PrintToPlayer("Excenmille : Bring me 1 of my Trust Tokens and 1,000 gil to raise my Attack by 5",0x0D);
-    elseif ((player:getVar("EXCEN_TRIB_FIGHT") == 3) and (player:getVar("TributeRank_Cur") == 1)) then
+    elseif ((player:getVar("EXCEN_TRIB_FIGHT") == 3) and (player:getVar("TributeRank_Excen") == 1)) then
       player:PrintToPlayer("Excenmille : Bring me 2 of my Trust Tokens and 2,000 gil to raise my Accuracy by 5",0x0D);
-    elseif ((player:getVar("EXCEN_TRIB_FIGHT") == 3) and (player:getVar("TributeRank_Cur") == 2)) then
+    elseif ((player:getVar("EXCEN_TRIB_FIGHT") == 3) and (player:getVar("TributeRank_Excen") == 2)) then
       player:PrintToPlayer("Excenmille : Bring me 3 of my Trust Tokens and 3,000 gil to raise my Jump Damage by 2",0x0D);
-    elseif ((player:getVar("EXCEN_TRIB_FIGHT") == 3) and (player:getVar("TributeRank_Cur") == 3)) then
+    elseif ((player:getVar("EXCEN_TRIB_FIGHT") == 3) and (player:getVar("TributeRank_Excen") == 3)) then
       player:PrintToPlayer("Excenmille : Bring me 4 of my Trust Tokens and 4,000 gil to raise my Attack by 5",0x0D);
-    elseif ((player:getVar("EXCEN_TRIB_FIGHT") == 3) and (player:getVar("TributeRank_Cur") == 4)) then
+    elseif ((player:getVar("EXCEN_TRIB_FIGHT") == 3) and (player:getVar("TributeRank_Excen") == 4)) then
       player:PrintToPlayer("Excenmille : Bring me 5 of my Trust Tokens and 5,000 gil to raise my Accuracy by 5",0x0D);
-    elseif ((player:getVar("EXCEN_TRIB_FIGHT") == 3) and (player:getVar("TributeRank_Cur") == 5)) then
+    elseif ((player:getVar("EXCEN_TRIB_FIGHT") == 3) and (player:getVar("TributeRank_Excen") == 5)) then
       player:PrintToPlayer("Excenmille : Bring me 10 of my Trust Tokens and 10,000 gil to raise my Jump Damage by 3",0x0D);
-    elseif ((player:getVar("EXCEN_TRIB_FIGHT") == 3) and (player:getVar("TributeRank_Cur") == 6)) then
+    elseif ((player:getVar("EXCEN_TRIB_FIGHT") == 3) and (player:getVar("TributeRank_Excen") == 6)) then
       player:PrintToPlayer("Excenmille : Bring me 15 of my Trust Tokens and 15,000 gil to raise my Attack by 5",0x0D);
-    elseif ((player:getVar("EXCEN_TRIB_FIGHT") == 3) and (player:getVar("TributeRank_Cur") == 7)) then
+    elseif ((player:getVar("EXCEN_TRIB_FIGHT") == 3) and (player:getVar("TributeRank_Excen") == 7)) then
       player:PrintToPlayer("Excenmille : Bring me 20 of my Trust Tokens and 30,000 gil to raise my Accuracy by 5",0x0D);
-    elseif ((player:getVar("EXCEN_TRIB_FIGHT") == 3) and (player:getVar("TributeRank_Cur") == 8)) then
+    elseif ((player:getVar("EXCEN_TRIB_FIGHT") == 3) and (player:getVar("TributeRank_Excen") == 8)) then
       player:PrintToPlayer("Excenmille : Bring me 30 of my Trust Tokens and 75,000 gil to decrease my Enmity by 5",0x0D);
-    elseif ((player:getVar("EXCEN_TRIB_FIGHT") == 3) and (player:getVar("TributeRank_Cur") == 9)) then
+    elseif ((player:getVar("EXCEN_TRIB_FIGHT") == 3) and (player:getVar("TributeRank_Excen") == 9)) then
       player:PrintToPlayer("Excenmille : Bring me 35 of my Trust Tokens and 150,000 gil so I can learn 'Angon'",0x0D);
 	else
 	player:startEvent(0x001d);

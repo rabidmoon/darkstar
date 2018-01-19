@@ -30,6 +30,12 @@ end;
 
 function onMobDespawn(mob)
     local instance = mob:getInstance();
-    local progress = math.random(1,4);
+    local progress = math.random(3,6);
     instance:setProgress(instance:getProgress() + progress);
+	local iprogress = instance:getProgress();
+	if (iprogress >= 10) then
+	    for i,v in pairs(Periqia.mobs[79]) do
+        DespawnMob(v, instance);
+        end
+	end	
 end;
