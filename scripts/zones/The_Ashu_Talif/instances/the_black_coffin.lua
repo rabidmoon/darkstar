@@ -65,10 +65,8 @@ function onInstanceProgressUpdate(instance, progress)
     elseif (progress >= 10 and instance:completed() == false) then
         local v = GetMobByID(TheAshuTalif.mobs.GESSHO, instance);
 
-        if(v:isAlive()) then
-            v:setLocalVar("ready",2);
-        end
 
+        printf("Progress is 10 use event 102");
         local chars = instance:getChars();
 
         for i,v in pairs(chars) do
@@ -87,18 +85,27 @@ end;
 function onInstanceComplete(instance)
 
     local chars = instance:getChars();
-
     for i,v in pairs(chars) do
-        if (v:getCurrentMission(TOAU) == THE_BLACK_COFFIN and v:getVar("AhtUrganStatus") == 1) then
+        if (v:getCurrentMission(TOAU) == THE_BLACK_COFFIN) then
             v:setVar("AhtUrganStatus", 2);
-            v:startEvent(101);
+			printf("ROLL CS AND ZONE!!!");
+            -- v:startEvent(101);
+			v:setPos(0,0,0,0,54);
+		else
+            v:setPos(-462,-2,-394,54);		
         end
     end
+	
 end;
 
 
 function onEventUpdate(player,csid,option)
+    printf("Event Update CSID: %u",csid);
+
+
 end
 
 function onEventFinish(player,csid,option)
+    printf("Event Finish CSID: %u",csid);
+
 end

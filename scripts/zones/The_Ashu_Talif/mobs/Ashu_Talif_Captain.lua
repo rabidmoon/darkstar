@@ -22,19 +22,25 @@ end;
 
 function onMobFight(mob, target)
     -- The captain gives up at <= 20% HP. Everyone disengages
-    local instance = target:getInstance();
+    local instance = mob:getInstance();
+	local crew1 = GetMobByID(17022986);
+	local crew2 = GetMobByID(17022987);
+	local crew3 = GetMobByID(17022988);
+	local crew4 = GetMobByID(17022989);
+
     if (mob:getHPP() <= 20 and instance:completed() == false) then
 	    mob:addStatusEffect(EFFECT_TERROR,1,0,120);
-		mob:untargetable(true); 
+		mob:untargetable(true);
+        instance:setProgress(10);
 
 		
 	    printf("Should be done");
 		mob:setHP(0);
 
         mob:setPos(0,-28,-7);
-		instance:complete();
+		
     end
-
+	
 
  
 end;

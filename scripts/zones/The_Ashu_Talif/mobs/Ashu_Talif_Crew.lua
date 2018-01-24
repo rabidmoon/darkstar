@@ -29,7 +29,21 @@ end;
 function onMobEngaged(mob,target)
 
 
+
  
+end;
+
+function onMobFight(mob,target)
+    local instance = mob:getInstance();
+	local progress = instance:getProgress();
+    if (progress == 10) then
+		mob:addStatusEffect(EFFECT_TERROR,1,0,120);
+		
+		mob:untargetable(true); 
+	    mob:setHP(0);
+		mob:setPos(0,-28,-7);
+
+    end
 end;
 
 -----------------------------------

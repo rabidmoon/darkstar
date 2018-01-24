@@ -21,6 +21,7 @@ end;
 
 function onTrigger(player,npc)
     skyDoors(player,npc)
+	printf("Trigger doors");
 end;
 
 -----------------------------------

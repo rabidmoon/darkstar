@@ -145,25 +145,25 @@ function onTrigger(player,npc)
 	player:setVar("AYAME_TRIB_FIGHT",3);
 	player:setVar("TRIB_FIGHT",0);
 	-- Handle Token Quest
-    elseif ((player:getVar("AYAME_TRIB_FIGHT") == 3) and (player:getVar("TributeRank_Cur") == 0)) then
+    elseif ((player:getVar("AYAME_TRIB_FIGHT") == 3) and (player:getVar("TributeRank_Ayame") == 0)) then
       player:PrintToPlayer("Ayame : Bring me 1 of my Trust Tokens and 1,000 gil to raise my Attack by 5",0x0D);
-    elseif ((player:getVar("AYAME_TRIB_FIGHT") == 3) and (player:getVar("TributeRank_Cur") == 1)) then
+    elseif ((player:getVar("AYAME_TRIB_FIGHT") == 3) and (player:getVar("TributeRank_Ayame") == 1)) then
       player:PrintToPlayer("Ayame : Bring me 2 of my Trust Tokens and 2,000 gil to raise my Accuracy by 5",0x0D);
-    elseif ((player:getVar("AYAME_TRIB_FIGHT") == 3) and (player:getVar("TributeRank_Cur") == 2)) then
+    elseif ((player:getVar("AYAME_TRIB_FIGHT") == 3) and (player:getVar("TributeRank_Ayame") == 2)) then
       player:PrintToPlayer("Ayame : Bring me 3 of my Trust Tokens and 3,000 gil to raise my Store TP by 5",0x0D);
-    elseif ((player:getVar("AYAME_TRIB_FIGHT") == 3) and (player:getVar("TributeRank_Cur") == 3)) then
+    elseif ((player:getVar("AYAME_TRIB_FIGHT") == 3) and (player:getVar("TributeRank_Ayame") == 3)) then
       player:PrintToPlayer("Ayame : Bring me 4 of my Trust Tokens and 4,000 gil to raise my Attack by 5",0x0D);
-    elseif ((player:getVar("AYAME_TRIB_FIGHT") == 3) and (player:getVar("TributeRank_Cur") == 4)) then
+    elseif ((player:getVar("AYAME_TRIB_FIGHT") == 3) and (player:getVar("TributeRank_Ayame") == 4)) then
       player:PrintToPlayer("Ayame : Bring me 5 of my Trust Tokens and 5,000 gil to raise my Accuracy by 5",0x0D);
-    elseif ((player:getVar("AYAME_TRIB_FIGHT") == 3) and (player:getVar("TributeRank_Cur") == 5)) then
+    elseif ((player:getVar("AYAME_TRIB_FIGHT") == 3) and (player:getVar("TributeRank_Ayame") == 5)) then
       player:PrintToPlayer("Ayame : Bring me 10 of my Trust Tokens and 10,000 gil to raise my Store TP by 5",0x0D);
-    elseif ((player:getVar("AYAME_TRIB_FIGHT") == 3) and (player:getVar("TributeRank_Cur") == 6)) then
+    elseif ((player:getVar("AYAME_TRIB_FIGHT") == 3) and (player:getVar("TributeRank_Ayame") == 6)) then
       player:PrintToPlayer("Ayame : Bring me 15 of my Trust Tokens and 15,000 gil to raise my Attack by 5",0x0D);
-    elseif ((player:getVar("AYAME_TRIB_FIGHT") == 3) and (player:getVar("TributeRank_Cur") == 7)) then
+    elseif ((player:getVar("AYAME_TRIB_FIGHT") == 3) and (player:getVar("TributeRank_Ayame") == 7)) then
       player:PrintToPlayer("Ayame : Bring me 20 of my Trust Tokens and 30,000 gil to raise my Accuracy by 5",0x0D);
-    elseif ((player:getVar("AYAME_TRIB_FIGHT") == 3) and (player:getVar("TributeRank_Cur") == 8)) then
+    elseif ((player:getVar("AYAME_TRIB_FIGHT") == 3) and (player:getVar("TributeRank_Ayame") == 8)) then
       player:PrintToPlayer("Ayame : Bring me 30 of my Trust Tokens and 75,000 gil to increase by Zanshin by 5",0x0D);
-    elseif ((player:getVar("AYAME_TRIB_FIGHT") == 3) and (player:getVar("TributeRank_Cur") == 9)) then
+    elseif ((player:getVar("AYAME_TRIB_FIGHT") == 3) and (player:getVar("TributeRank_Ayame") == 9)) then
       player:PrintToPlayer("Ayame : Bring me 35 of my Trust Tokens and 150,000 gil so I can Meditate by 20 TP",0x0D);
     end	
 	

@@ -99,7 +99,7 @@ local job = player:getMainJob();
 --------------------------------------------------------
 
 
-	if (job == 2) and (trade:hasItemQty(17478, 1)) and trade:hasItemQty( 1453, 10 ) and (player:getVar("MNKAFweapon") == 3)
+	if (job == 2) and (trade:hasItemQty(17478, 1)) and trade:hasItemQty( 1453, 10 ) and (player:getVar("MNKAFweapon") == 3) then
              -- Complete the trade..
             player:tradeComplete();
 			player:PrintToPlayer("Netblyx : Here you go.", 0xD);
@@ -180,7 +180,7 @@ local job = player:getMainJob();
 --      WHITE MAGE TRADE Blessed Hammer 17422         --
 --------------------------------------------------------
 
-if (job == 3) and (trade:hasItemQty(17422, 1)) and trade:hasItemQty( 1453, 10 ) and (player:getVar("WHMAFweapon") == 3)
+if (job == 3) and (trade:hasItemQty(17422, 1)) and trade:hasItemQty( 1453, 10 ) and (player:getVar("WHMAFweapon") == 3) then
              -- Complete the trade..
             player:tradeComplete();
 			player:PrintToPlayer("Netblyx : Here you go.", 0xD);
@@ -260,7 +260,7 @@ if (job == 3) and (trade:hasItemQty(17422, 1)) and trade:hasItemQty( 1453, 10 ) 
 
 
 
-if (job == 4) and (trade:hasItemQty(17572, 1)) and trade:hasItemQty( 1450, 10 ) and (player:getVar("BLMAFweapon") == 3)
+if (job == 4) and (trade:hasItemQty(17572, 1)) and trade:hasItemQty( 1450, 10 ) and (player:getVar("BLMAFweapon") == 3) then
              -- Complete the trade..
             player:tradeComplete();
 			player:PrintToPlayer("Netblyx : Here you go.", 0xD);
@@ -338,7 +338,7 @@ if (job == 4) and (trade:hasItemQty(17572, 1)) and trade:hasItemQty( 1450, 10 ) 
 
 
 
-if (job == 5) and (trade:hasItemQty(16829, 1)) and trade:hasItemQty( 1456, 10 ) and (player:getVar("RDMAFweapon") == 3)
+if (job == 5) and (trade:hasItemQty(16829, 1)) and trade:hasItemQty( 1456, 10 ) and (player:getVar("RDMAFweapon") == 3) then
              -- Complete the trade..
             player:tradeComplete();
 			player:PrintToPlayer("Netblyx : Here you go.", 0xD);
@@ -417,7 +417,7 @@ if (job == 5) and (trade:hasItemQty(16829, 1)) and trade:hasItemQty( 1456, 10 ) 
 
 
 
-if (job == 6) and (trade:hasItemQty(16764, 1)) and trade:hasItemQty( 1453, 10 ) and (player:getVar("THFAFweapon") == 3)
+if (job == 6) and (trade:hasItemQty(16764, 1)) and trade:hasItemQty( 1453, 10 ) and (player:getVar("THFAFweapon") == 3) then
              -- Complete the trade..
             player:tradeComplete();
 			player:PrintToPlayer("Netblyx : Here you go.", 0xD);
@@ -496,7 +496,7 @@ if (job == 6) and (trade:hasItemQty(16764, 1)) and trade:hasItemQty( 1453, 10 ) 
 
 
 
-if (job == 7) and (trade:hasItemQty(17643, 1)) and trade:hasItemQty( 1453, 10 ) and (player:getVar("PLDAFweapon") == 3)
+if (job == 7) and (trade:hasItemQty(17643, 1)) and trade:hasItemQty( 1453, 10 ) and (player:getVar("PLDAFweapon") == 3) then
              -- Complete the trade..
             player:tradeComplete();
 			player:PrintToPlayer("Netblyx : Here you go.", 0xD);
@@ -576,7 +576,7 @@ if (job == 7) and (trade:hasItemQty(17643, 1)) and trade:hasItemQty( 1453, 10 ) 
 --------------------------------------------------------
 
 
-if (job == 7) and (trade:hasItemQty(12307, 1)) and trade:hasItemQty( 1450, 10 ) and (player:getVar("PLDAFshield") == 3)
+if (job == 7) and (trade:hasItemQty(12307, 1)) and trade:hasItemQty( 1450, 10 ) and (player:getVar("PLDAFshield") == 3) then
              -- Complete the trade..
             player:tradeComplete();
 			player:PrintToPlayer("Netblyx : Here you go.", 0xD);
@@ -584,42 +584,42 @@ if (job == 7) and (trade:hasItemQty(12307, 1)) and trade:hasItemQty( 1450, 10 ) 
 			player:setVar("PLDAFshield", 0);
 			player:setVar("PLDRelicshield", 1);
 			player:messageSpecial(ITEM_OBTAINED, 15068);
-    elseif (job == 7) and (trade:hasItemQty(15068, 1)) and trade:hasItemQty( 1456, 20 ) and (player:getVar("PLDRelicshield") == 1)
+    elseif (job == 7) and (trade:hasItemQty(15068, 1)) and trade:hasItemQty( 1456, 20 ) and (player:getVar("PLDRelicshield") == 1) then
              -- Complete the trade..
             player:tradeComplete();
 			player:PrintToPlayer("Netblyx : Here you go.", 0xD);
 			player:addItem(15068, 1, 521,5);
 			player:setVar("PLDRelicshield", 2);
 			player:messageSpecial(ITEM_OBTAINED, 15068);
-    elseif (job == 7) and (trade:hasItemQty(15068, 1)) and trade:hasItemQty( 1453, 30 ) and (player:getVar("PLDRelicshield") == 2)
+    elseif (job == 7) and (trade:hasItemQty(15068, 1)) and trade:hasItemQty( 1453, 30 ) and (player:getVar("PLDRelicshield") == 2) then
              -- Complete the trade..
             player:tradeComplete();
 			player:PrintToPlayer("Netblyx : Here you go.", 0xD);
 			player:addItem(15068, 1, 521,4);
 			player:setVar("PLDRelicshield", 3);
 			player:messageSpecial(ITEM_OBTAINED, 15068);
-    elseif (job == 7) and (trade:hasItemQty(15068, 1)) and trade:hasItemQty( 1453, 40 ) and (player:getVar("PLDRelicshield") == 3)
+    elseif (job == 7) and (trade:hasItemQty(15068, 1)) and trade:hasItemQty( 1453, 40 ) and (player:getVar("PLDRelicshield") == 3) then
              -- Complete the trade..
             player:tradeComplete();
 			player:PrintToPlayer("Netblyx : Here you go.", 0xD);
 			player:addItem(15068, 1, 521,3);
 			player:setVar("PLDRelicshield", 4);
 			player:messageSpecial(ITEM_OBTAINED, 15068);
-    elseif (job == 7) and (trade:hasItemQty(15068, 1)) and trade:hasItemQty( 1456, 50 ) and (player:getVar("PLDRelicshield") == 4)
+    elseif (job == 7) and (trade:hasItemQty(15068, 1)) and trade:hasItemQty( 1456, 50 ) and (player:getVar("PLDRelicshield") == 4) then
              -- Complete the trade..
             player:tradeComplete();
 			player:PrintToPlayer("Netblyx : Here you go.", 0xD);
 			player:addItem(15068, 1, 521,2);
 			player:setVar("PLDRelicshield", 5);
 			player:messageSpecial(ITEM_OBTAINED, 15068);
-    elseif (job == 7) and (trade:hasItemQty(15068, 1)) and trade:hasItemQty( 1450, 60 ) and (player:getVar("PLDRelicshield") == 5)
+    elseif (job == 7) and (trade:hasItemQty(15068, 1)) and trade:hasItemQty( 1450, 60 ) and (player:getVar("PLDRelicshield") == 5) then
              -- Complete the trade..
             player:tradeComplete();
 			player:PrintToPlayer("Netblyx : Here you go.", 0xD);
 			player:addItem(15068, 1, 521,1);
 			player:setVar("PLDRelicshield", 6);
 			player:messageSpecial(ITEM_OBTAINED, 15068);	
-    elseif (job == 7) and (trade:hasItemQty(15068, 1)) and trade:hasItemQty( 1456, 70 ) and trade:hasItemQty( 1821, 1 )and (player:getVar("PLDRelicshield") == 6)
+    elseif (job == 7) and (trade:hasItemQty(15068, 1)) and trade:hasItemQty( 1456, 70 ) and trade:hasItemQty( 1821, 1 )and (player:getVar("PLDRelicshield") == 6) then
              -- Complete the trade..
             player:tradeComplete();
 			player:PrintToPlayer("Netblyx : Here you go.", 0xD);
@@ -656,7 +656,7 @@ if (job == 7) and (trade:hasItemQty(12307, 1)) and trade:hasItemQty( 1450, 10 ) 
 
 
 
-if (job == 8) and (trade:hasItemQty(16798, 1)) and trade:hasItemQty( 1450, 10 ) and (player:getVar("DRKAFweapon") == 3)
+if (job == 8) and (trade:hasItemQty(16798, 1)) and trade:hasItemQty( 1450, 10 ) and (player:getVar("DRKAFweapon") == 3) then
              -- Complete the trade..
             player:tradeComplete();
 			player:PrintToPlayer("Netblyx : Here you go.", 0xD);
@@ -738,7 +738,7 @@ if (job == 8) and (trade:hasItemQty(16798, 1)) and trade:hasItemQty( 1450, 10 ) 
 
 
 
-if (job == 8) and (trade:hasItemQty(16590, 1)) and trade:hasItemQty( 1450, 10 ) and (player:getVar("DRKAFweapongs") == 3)
+if (job == 8) and (trade:hasItemQty(16590, 1)) and trade:hasItemQty( 1450, 10 ) and (player:getVar("DRKAFweapongs") == 3) then
              -- Complete the trade..
             player:tradeComplete();
 			player:PrintToPlayer("Netblyx : Here you go.", 0xD);
@@ -817,7 +817,7 @@ if (job == 8) and (trade:hasItemQty(16590, 1)) and trade:hasItemQty( 1450, 10 ) 
 
 
 
-if (job == 9) and (trade:hasItemQty(16680, 1)) and trade:hasItemQty( 1450, 10 ) and (player:getVar("BSTAFweapon") == 3)
+if (job == 9) and (trade:hasItemQty(16680, 1)) and trade:hasItemQty( 1450, 10 ) and (player:getVar("BSTAFweapon") == 3) then
              -- Complete the trade..
             player:tradeComplete();
 			player:PrintToPlayer("Netblyx : Here you go.", 0xD);
@@ -898,7 +898,7 @@ if (job == 9) and (trade:hasItemQty(16680, 1)) and trade:hasItemQty( 1450, 10 ) 
 
 
 
-if (job == 10) and (trade:hasItemQty(16766, 1)) and trade:hasItemQty( 1453, 10 ) and (player:getVar("BRDAFweapon") == 3)
+if (job == 10) and (trade:hasItemQty(16766, 1)) and trade:hasItemQty( 1453, 10 ) and (player:getVar("BRDAFweapon") == 3) then
              -- Complete the trade..
             player:tradeComplete();
 			player:PrintToPlayer("Netblyx : Here you go.", 0xD);
@@ -974,7 +974,7 @@ if (job == 10) and (trade:hasItemQty(16766, 1)) and trade:hasItemQty( 1453, 10 )
 --             BRD TRADE HORN 17352                   --
 --------------------------------------------------------
 
-if (job == 10) and (trade:hasItemQty(17352, 1)) and trade:hasItemQty( 1450, 10 ) and (player:getVar("BRDAFweapon") == 3)
+if (job == 10) and (trade:hasItemQty(17352, 1)) and trade:hasItemQty( 1450, 10 ) and (player:getVar("BRDAFweapon") == 3) then
              -- Complete the trade..
             player:tradeComplete();
 			player:PrintToPlayer("Netblyx : Here you go.", 0xD);
@@ -982,42 +982,42 @@ if (job == 10) and (trade:hasItemQty(17352, 1)) and trade:hasItemQty( 1450, 10 )
 			player:setVar("BRDAFweapon", 0);
 			player:setVar("BRDRelicweapon", 1);
 			player:messageSpecial(ITEM_OBTAINED, 18340);
-    elseif (job == 10) and (trade:hasItemQty(18340, 1)) and trade:hasItemQty( 1456, 20 ) and (player:getVar("BRDRelicweapon") == 1)
+    elseif (job == 10) and (trade:hasItemQty(18340, 1)) and trade:hasItemQty( 1456, 20 ) and (player:getVar("BRDRelicweapon") == 1) then
              -- Complete the trade..
             player:tradeComplete();
 			player:PrintToPlayer("Netblyx : Here you go.", 0xD);
 			player:addItem(18340, 1, 525,5);
 			player:setVar("BRDRelicweapon", 2);
 			player:messageSpecial(ITEM_OBTAINED, 18340);
-    elseif (job == 10) and (trade:hasItemQty(18340, 1)) and trade:hasItemQty( 1453, 30 ) and (player:getVar("BRDRelicweapon") == 2)
+    elseif (job == 10) and (trade:hasItemQty(18340, 1)) and trade:hasItemQty( 1453, 30 ) and (player:getVar("BRDRelicweapon") == 2) then
              -- Complete the trade..
             player:tradeComplete();
 			player:PrintToPlayer("Netblyx : Here you go.", 0xD);
 			player:addItem(18340, 1, 525,4);
 			player:setVar("BRDRelicweapon", 3);
 			player:messageSpecial(ITEM_OBTAINED, 18340);
-    elseif (job == 10) and (trade:hasItemQty(18340, 1)) and trade:hasItemQty( 1453, 40 ) and (player:getVar("BRDRelicweapon") == 3)
+    elseif (job == 10) and (trade:hasItemQty(18340, 1)) and trade:hasItemQty( 1453, 40 ) and (player:getVar("BRDRelicweapon") == 3) then
              -- Complete the trade..
             player:tradeComplete();
 			player:PrintToPlayer("Netblyx : Here you go.", 0xD);
 			player:addItem(18340, 1, 525,3);
 			player:setVar("BRDRelicweapon", 4);
 			player:messageSpecial(ITEM_OBTAINED, 18340);
-    elseif (job == 10) and (trade:hasItemQty(18340, 1)) and trade:hasItemQty( 1456, 50 ) and (player:getVar("BRDRelicweapon") == 4)
+    elseif (job == 10) and (trade:hasItemQty(18340, 1)) and trade:hasItemQty( 1456, 50 ) and (player:getVar("BRDRelicweapon") == 4) then
              -- Complete the trade..
             player:tradeComplete();
 			player:PrintToPlayer("Netblyx : Here you go.", 0xD);
 			player:addItem(18340, 1, 525,2);
 			player:setVar("BRDRelicweapon", 5);
 			player:messageSpecial(ITEM_OBTAINED, 18340);
-    elseif (job == 10) and (trade:hasItemQty(18340, 1)) and trade:hasItemQty( 1450, 60 ) and (player:getVar("BRDRelicweapon") == 5)
+    elseif (job == 10) and (trade:hasItemQty(18340, 1)) and trade:hasItemQty( 1450, 60 ) and (player:getVar("BRDRelicweapon") == 5) then
              -- Complete the trade..
             player:tradeComplete();
 			player:PrintToPlayer("Netblyx : Here you go.", 0xD);
 			player:addItem(18340, 1, 525,1);
 			player:setVar("BRDRelicweapon", 6);
 			player:messageSpecial(ITEM_OBTAINED, 18340);	
-    elseif (job == 10) and (trade:hasItemQty(18340, 1)) and trade:hasItemQty( 1456, 70 ) and trade:hasItemQty( 1569,1) and (player:getVar("BRDRelicweapon") == 6)
+    elseif (job == 10) and (trade:hasItemQty(18340, 1)) and trade:hasItemQty( 1456, 70 ) and trade:hasItemQty( 1569,1) and (player:getVar("BRDRelicweapon") == 6) then
              -- Complete the trade..
             player:tradeComplete();
 			player:PrintToPlayer("Netblyx : Here you go.", 0xD);
@@ -1051,7 +1051,7 @@ if (job == 10) and (trade:hasItemQty(17352, 1)) and trade:hasItemQty( 1450, 10 )
 
 
 
-if (job == 11) and (trade:hasItemQty(17188, 1)) and trade:hasItemQty( 1450, 10 ) and (player:getVar("RNGAFweaponbow") == 3)
+if (job == 11) and (trade:hasItemQty(17188, 1)) and trade:hasItemQty( 1450, 10 ) and (player:getVar("RNGAFweaponbow") == 3) then
              -- Complete the trade..
             player:tradeComplete();
 			player:PrintToPlayer("Netblyx : Here you go.", 0xD);
@@ -1129,7 +1129,7 @@ if (job == 11) and (trade:hasItemQty(17188, 1)) and trade:hasItemQty( 1450, 10 )
 --------------------------------------------------------
 
 
-if (job == 11) and (trade:hasItemQty(17256, 1)) and trade:hasItemQty( 1456, 10 ) and (player:getVar("RNGAFweapongun") == 3)
+if (job == 11) and (trade:hasItemQty(17256, 1)) and trade:hasItemQty( 1456, 10 ) and (player:getVar("RNGAFweapongun") == 3) then
              -- Complete the trade..
             player:tradeComplete();
 			player:PrintToPlayer("Netblyx : Here you go.", 0xD);
@@ -1197,7 +1197,7 @@ if (job == 11) and (trade:hasItemQty(17256, 1)) and trade:hasItemQty( 1456, 10 )
 --         SMN TRADE DRAGON STAFF 17597               --
 --------------------------------------------------------
 
-if (job == 12) and (trade:hasItemQty(17597, 1)) and trade:hasItemQty( 1450, 10 ) and (player:getVar("SMNAFweapon") == 3)
+if (job == 12) and (trade:hasItemQty(17597, 1)) and trade:hasItemQty( 1450, 10 ) and (player:getVar("SMNAFweapon") == 3) then
              -- Complete the trade..
             player:tradeComplete();
 			player:PrintToPlayer("Netblyx : Here you go.", 0xD);
@@ -1278,7 +1278,7 @@ if (job == 12) and (trade:hasItemQty(17597, 1)) and trade:hasItemQty( 1450, 10 )
 
 
 
-if (job == 13) and (trade:hasItemQty(17772, 1)) and trade:hasItemQty(17771, 10) and trade:hasItemQty( 1450, 10 ) and (player:getVar("NINAFweapon") == 3)
+if (job == 13) and (trade:hasItemQty(17772, 1)) and trade:hasItemQty(17771, 10) and trade:hasItemQty( 1450, 10 ) and (player:getVar("NINAFweapon") == 3) then
              -- Complete the trade..
             player:tradeComplete();
 			player:PrintToPlayer("Netblyx : Here you go.", 0xD);
@@ -1333,7 +1333,7 @@ if (job == 13) and (trade:hasItemQty(17772, 1)) and trade:hasItemQty(17771, 10) 
     end		
 if (job == 13) and (trade:hasItemQty(17771, 1)) and (trade:hasItemQty(17772, 1)) and (player:getVar("NINAFweapon") == 3) then
 			player:PrintToPlayer("Netblyx : Here's the deal, trade me your Zushio and Anju and I'll make it a Kikoku eventually with 10 One-Hundred Byne Bills", 0xD);
-elseif (job == 13) and (trade:hasItemQty(18310, 1)) and player:getVar("NINRelicweapon") == 1) then
+elseif (job == 13) and (trade:hasItemQty(18310, 1)) and (player:getVar("NINRelicweapon") == 1) then
 			player:PrintToPlayer("Netblyx : I'll make it a Kikoku eventually with 20 L.Jadeshells", 0xD);			
 elseif (job == 13) and (trade:hasItemQty(18310, 1)) and (player:getVar("NINRelicweapon") == 2) then
 			player:PrintToPlayer("Netblyx : I'll make it a Kikoku eventually with 30 Montiont Silverpieces", 0xD);			
@@ -1357,7 +1357,7 @@ elseif (job == 13) and (trade:hasItemQty(18311, 1)) and (player:getVar("NINRelic
 
 
 
-if (job == 14) and (trade:hasItemQty(17478, 1)) and trade:hasItemQty( 1450, 10 ) and (player:getVar("DRGAFweapon") == 3)
+if (job == 14) and (trade:hasItemQty(17478, 1)) and trade:hasItemQty( 1450, 10 ) and (player:getVar("DRGAFweapon") == 3) then
              -- Complete the trade..
             player:tradeComplete();
 			player:PrintToPlayer("Netblyx : Here you go.", 0xD);
@@ -1437,7 +1437,7 @@ if (job == 14) and (trade:hasItemQty(17478, 1)) and trade:hasItemQty( 1450, 10 )
 
 
 
-if (job == 15) and (trade:hasItemQty(17812, 1)) and trade:hasItemQty( 1453, 10 ) and (player:getVar("SAMAFweapon") == 3)
+if (job == 15) and (trade:hasItemQty(17812, 1)) and trade:hasItemQty( 1453, 10 ) and (player:getVar("SAMAFweapon") == 3) then
              -- Complete the trade..
             player:tradeComplete();
 			player:PrintToPlayer("Netblyx : Here you go.", 0xD);

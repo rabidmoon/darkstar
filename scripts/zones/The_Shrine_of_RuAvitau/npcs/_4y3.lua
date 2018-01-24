@@ -3,10 +3,12 @@
 -- NPC:  Door (Yellow)
 -----------------------------------
 package.loaded["scripts/zones/The_Shrine_of_RuAvitau/TextIDs"] = nil;
+
 -----------------------------------
 
 require("scripts/zones/The_Shrine_of_RuAvitau/TextIDs");
 require("scripts/globals/skydoors");
+
 
 -----------------------------------
 -- onTrade Action
@@ -21,6 +23,7 @@ end;
 
 function onTrigger(player,npc)
     skyDoors(player,npc)
+
 end;
 
 -----------------------------------
