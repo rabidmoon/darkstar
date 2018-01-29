@@ -53,7 +53,7 @@ if (job == JOBS.BLU and lvl >= 50) then
 		player:setVar("BLU_AF_BODY",1);
 		player:tradeComplete();
 		end
-	elseif (body == 0) then -- Haven't Done Head
+	elseif (head == 0) then -- Haven't Done Head
         if ((trade:hasItemQty(761,3)) and (trade:hasItemQty(828,1)) and (trade:hasItemQty(2340,1)) and (trade:hasItemQty(2175,5))) then		
 		player:PrintToPlayer("Lathuya : Perfect. Give me a moment and your Magus Keffiyeh will be available for purchase.", 0xD);
 		player:setVar("BLU_AF_HEAD",1);

@@ -11,29 +11,32 @@
 -- Job IDs
 ------------------------------------
 
-JOB_NON = 0
-JOB_WAR = 1
-JOB_MNK = 2
-JOB_WHM = 3
-JOB_BLM = 4
-JOB_RDM = 5
-JOB_THF = 6
-JOB_PLD = 7
-JOB_DRK = 8
-JOB_BST = 9
-JOB_BRD = 10
-JOB_RNG = 11
-JOB_SAM = 12
-JOB_NIN = 13
-JOB_DRG = 14
-JOB_SMN = 15
-JOB_BLU = 16
-JOB_COR = 17
-JOB_PUP = 18
-JOB_DNC = 19
-JOB_SCH = 20
-JOB_GEO = 21
-JOB_RUN = 22
+JOBS =
+{
+    ["NONE"] = 0,
+    ["WAR"] =  1,
+    ["MNK"] =  2,
+    ["WHM"] =  3,
+    ["BLM"] =  4,
+    ["RDM"] =  5,
+    ["THF"] =  6,
+    ["PLD"] =  7,
+    ["DRK"] =  8,
+    ["BST"] =  9,
+    ["BRD"] = 10,
+    ["RNG"] = 11,
+    ["SAM"] = 12,
+    ["NIN"] = 13,
+    ["DRG"] = 14,
+    ["SMN"] = 15,
+    ["BLU"] = 16,
+    ["COR"] = 17,
+    ["PUP"] = 18,
+    ["DNC"] = 19,
+    ["SCH"] = 20,
+    ["GEO"] = 21,
+    ["RUN"] = 22
+}
 MAX_JOB_TYPE = 23
 
 ------------------------------------

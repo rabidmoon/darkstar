@@ -27,22 +27,22 @@ local head = player:getVar("PUP_AF_HEAD");
 
 if (job == JOBS.PUP and lvl >= 50) then 
     -- Check for armor Completions
-    if (pants == 0) then -- Haven't Done Feet
+    if (pants == 0) then -- Haven't Done Pants
 	    if ((trade:hasItemQty(821,1)) and (trade:hasItemQty(2289,1)) and (trade:hasItemQty(2152,1))) then
-		player:PrintToPlayer("Dhima Polevhia : Perfect. Give me a moment and your Puppetry's Babouches will be available for purchase.", 0xD);
-		player:setVar("PUP_AF_FEET",1);
+		player:PrintToPlayer("Dhima Polevhia : Perfect. Give me a moment and your Puppetry's Churidars will be available for purchase.", 0xD);
+		player:setVar("PUP_AF_PANTS",1);
 		player:tradeComplete();
 		end	
 	elseif (feet == 0) then -- Haven't Done Hands
         if ((trade:hasItemQty(786,1)) and (trade:hasItemQty(2289,1)) and (trade:hasItemQty(2152,1)) and (trade:hasItemQty(754,1))) then
-        player:PrintToPlayer("Dhima Polevhia : Perfect. Give me a moment and your Puppetry Dastanas will be available for purchase.", 0xD);
-		player:setVar("PUP_AF_HANDS",1);
+        player:PrintToPlayer("Dhima Polevhia : Perfect. Give me a moment and your Puppetry Babouches will be available for purchase.", 0xD);
+		player:setVar("PUP_AF_FEET",1);
 		player:tradeComplete();
 		end		
-    elseif (hands == 0) then -- Haven't Done Pants
+    elseif (hands == 0) then -- Haven't Done Hands
 	    if ((trade:hasItemQty(821,1)) and (trade:hasItemQty(2289,1)) and (trade:hasItemQty(2152,1)) and (trade:hasItemQty(754,1))) then
-		player:PrintToPlayer("Dhima Polevhia : Perfect. Give me a moment and your Puppetry Churidars will be available for purchase.", 0xD);
-		player:setVar("PUP_AF_PANTS",1);
+		player:PrintToPlayer("Dhima Polevhia : Perfect. Give me a moment and your Puppetry Dastanas will be available for purchase.", 0xD);
+		player:setVar("PUP_AF_HANDS",1);
 		player:tradeComplete();
 		end
 
@@ -52,7 +52,7 @@ if (job == JOBS.PUP and lvl >= 50) then
 		player:setVar("PUP_AF_BODY",1);
 		player:tradeComplete();
 		end
-	elseif (body == 0) then -- Haven't Done Head
+	elseif (head == 0) then -- Haven't Done Head
         if ((trade:hasItemQty(786,3)) and (trade:hasItemQty(2289,3)) and (trade:hasItemQty(2007,3)) and (trade:hasItemQty(1636,5))) then		
 		player:PrintToPlayer("Dhima Polevhia : Perfect. Give me a moment and your Puppetry Taj will be available for purchase.", 0xD);
 		player:setVar("PUP_AF_HEAD",1);
@@ -95,13 +95,13 @@ if (job == JOBS.PUP and lvl >= 50) then
     -- Check for armor Completions
     if (pants == 0) then -- Haven't Done pants
         player:PrintToPlayer("Dhima Polevhia : I see you are a Puppetmaster, but you lack the attire.  Bring me a Rainbow Thread,", 0xD);
-		player:PrintToPlayer("Dhima Polevhia : Wamoura Cloth, and Marid Leather, and I'll sell you a Puppetry Babouches", 0xD);	
-    elseif (feet == 0) then -- Haven't Done Hands
+		player:PrintToPlayer("Dhima Polevhia : Wamoura Cloth, and Marid Leather, and I'll sell you a Puppetry Churidars", 0xD);	
+    elseif (feet == 0) then -- Haven't Done Feet
         player:PrintToPlayer("Dhima Polevhia : I see you are a Puppetmaster, but you lack the attire.  Bring me a Ruby,", 0xD);
-		player:PrintToPlayer("Dhima Polevhia : Wamoura Cloth, Marid Leather, and Platinum Sheet and I'll sell you a Puppetry Dastanas", 0xD);   
+		player:PrintToPlayer("Dhima Polevhia : Wamoura Cloth, Marid Leather, and Platinum Sheet and I'll sell you a Puppetry Babouches", 0xD);   
     elseif (hands == 0) then -- Haven't Done hands
         player:PrintToPlayer("Dhima Polevhia : I see you are a Puppetmaster, but you lack the attire.  Bring me a Rainbow Thread,", 0xD);
-		player:PrintToPlayer("Dhima Polevhia : Wamoura Cloth, Marid Leather, and Platinum Sheet and I'll sell you a Puppetry Churidars", 0xD);		
+		player:PrintToPlayer("Dhima Polevhia : Wamoura Cloth, Marid Leather, and Platinum Sheet and I'll sell you a Puppetry Dastanas", 0xD);		
     elseif (body == 0) then -- Haven't Done Body
         player:PrintToPlayer("Dhima Polevhia : I see you are a Puppetmaster, but you lack the attire.  Bring me a Ruby,", 0xD);
 		player:PrintToPlayer("Dhima Polevhia : Wamoura Cloth, Moblinwave, and Scarlette Linene and I'll sell you a Puppetry Tobe", 0xD);

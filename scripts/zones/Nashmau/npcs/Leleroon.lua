@@ -37,19 +37,19 @@ function onTrade(player,npc,trade)
 	
     if (job == JOBS.COR and lvl >= 50) then 
     -- Check for armor Completions
-    if (pants == 0) then -- Haven't Done Feet
+    if (feet == 0) then -- Haven't Done Feet
 	    if ((trade:hasItemQty(823,1)) and (trade:hasItemQty(2304,1)) and (trade:hasItemQty(879,1))) then
 		player:PrintToPlayer("Leleroon : Perfect. Give me a moment and your Corsair's Bootes will be available for purchase.", 0xD);
 		player:setVar("COR_AF_FEET",1);
 		player:tradeComplete();
 		end	
-    elseif (hands == 0) then -- Haven't Done Pants
+    elseif (pants == 0) then -- Haven't Done Pants
 	    if ((trade:hasItemQty(823,1)) and (trade:hasItemQty(1829,1)) and (trade:hasItemQty(879,1)) and (trade:hasItemQty(2304,1))) then
 		player:PrintToPlayer("Leleroon : Perfect. Give me a moment and your Corsair's Culottes will be available for purchase.", 0xD);
 		player:setVar("COR_AF_PANTS",1);
 		player:tradeComplete();
 		end
-	elseif (feet == 0) then -- Haven't Done Hands
+	elseif (hands == 0) then -- Haven't Done Hands
         if ((trade:hasItemQty(879,1)) and (trade:hasItemQty(2007,1)) and (trade:hasItemQty(663,1)) and (trade:hasItemQty(2010,1))) then
         player:PrintToPlayer("Leleroon : Perfect. Give me a moment and your Corsair's Gnats will be available for purchase.", 0xD);
 		player:setVar("COR_AF_HANDS",1);
@@ -61,7 +61,7 @@ function onTrade(player,npc,trade)
 		player:setVar("COR_AF_BODY",1);
 		player:tradeComplete();
 		end
-	elseif (body == 0) then -- Haven't Done Head
+	elseif (head == 0) then -- Haven't Done Head
         if ((trade:hasItemQty(828,3)) and (trade:hasItemQty(1997,3)) and (trade:hasItemQty(2007,3)) and (trade:hasItemQty(2175,5))) then		
 		player:PrintToPlayer("Leleroon : Perfect. Give me a moment and your Corsair's Tricorne will be available for purchase.", 0xD);
 		player:setVar("COR_AF_HEAD",1);
