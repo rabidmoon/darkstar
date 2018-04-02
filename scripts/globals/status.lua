@@ -37,6 +37,31 @@ JOBS =
     ["GEO"] = 21,
     ["RUN"] = 22
 }
+
+
+JOB_NON = 0
+JOB_WAR = 1
+JOB_MNK = 2
+JOB_WHM = 3
+JOB_BLM = 4
+JOB_RDM = 5
+JOB_THF = 6
+JOB_PLD = 7
+JOB_DRK = 8
+JOB_BST = 9
+JOB_BRD = 10
+JOB_RNG = 11
+JOB_SAM = 12
+JOB_NIN = 13
+JOB_DRG = 14
+JOB_SMN = 15
+JOB_BLU = 16
+JOB_COR = 17
+JOB_PUP = 18
+JOB_DNC = 19
+JOB_SCH = 20
+JOB_GEO = 21
+JOB_RUN = 22
 MAX_JOB_TYPE = 23
 
 ------------------------------------
@@ -755,6 +780,14 @@ EFFECT_DYNA_RESTRICTION           = 811
 EFFECT_TRUST_LAST_RESORT          = 812
 EFFECT_TRUST_TRICK_ATTACK         = 813
 EFFECT_TRUST_BARRAGE              = 815
+EFFECT_NO_REST                    = 816
+EFFECT_LEVEL_TWO_SC               = 950
+EFFECT_LEVEL_THREE_SC             = 951
+EFFECT_LEVEL_FOUR_SC              = 952
+EFFECT_AFTERMATH_PLUS             = 953
+EFFECT_AFTERMATH_PLUSHA1          = 954 
+EFFECT_AFTERMATH_PLUSHA2          = 955
+EFFECT_AFTERMATH_PLUSHA3          = 956
 -- EFFECT_PLACEHOLDER              = 802 -- Description
 -- 802-1022
 -- EFFECT_PLACEHOLDER             = 1023 -- The client dat file seems to have only this many "slots", results of exceeding that are untested.

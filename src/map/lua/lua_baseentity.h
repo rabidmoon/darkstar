@@ -227,6 +227,7 @@ public:
 
     int32 setSpawn(lua_State*);                // Sets spawn point
 	int32 spawnAlly(lua_State*);              // Calls Ally
+    int32 getRespawnTime(lua_State*);	
     int32 setRespawnTime(lua_State*);          // set respawn time
     int32 getDynamisUniqueID(lua_State*);      //Get unique Dynamis ID
     int32 addPlayerToDynamis(lua_State*);      //Add player to the Dynamis
@@ -401,6 +402,7 @@ public:
     int32 getWeaponSkillType(lua_State*);    // gets the type of weapon equipped
     int32 getWeaponSubSkillType(lua_State*); // gets the subskill of weapon equipped
     int32 getWSSkillchainProp(lua_State* L); // returns weapon skill's skillchain properties (up to 3)
+	int32 setWeaponskillElement(lua_State* L); // Sets the primary skillchain element for a user so you can change SC properties on the fly
 
     int32 isBehind(lua_State*);               // true if you're behind the input target
     int32 isFacing(lua_State*);               // true if you are facing the target

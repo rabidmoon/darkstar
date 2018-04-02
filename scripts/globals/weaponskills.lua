@@ -11,6 +11,11 @@
 require("scripts/globals/status");
 require("scripts/globals/utils");
 require("scripts/globals/magic");
+require("scripts/globals/besiegedhelper");
+
+
+SC_LIGHT = 13;
+
 
 local elementalGorget = { 15495, 15498, 15500, 15497, 15496, 15499, 15501, 15502 };
 local elementalBelt =   { 11755, 11758, 11760, 11757, 11756, 11759, 11761, 11762 };
@@ -246,6 +251,7 @@ function doPhysicalWeaponskill(attacker, target, params)
 	finaldmg = finaldmg * ((100 + bonusdmg)/100);
 
 	attacker:delStatusEffectSilent(EFFECT_BUILDING_FLOURISH);
+	besiegedWSPoints(attacker,finaldmg)
 	return finaldmg, criticalHit, tpHitsLanded, extraHitsLanded;
 end;
 

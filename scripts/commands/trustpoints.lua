@@ -41,10 +41,79 @@ local NajiPoints = player:getVar("CurrentPoints_Naja");
 
 local ZeidTokens = player:getVar("CurrentTokens_Zeid");
 local ZeidPoints = player:getVar("CurrentPoints_Zeid");
+
+
+-- Get Trib Quest Info
+local location = "";
+local trust = "";
+local npc = "";
+local active = 0;
+
+    if (player:getVar("ADEL_TRIB_FIGHT") == 1) then
+	    npc = "Erline - Eldieme Necroplis [S]";
+		trust = "Adelhied";
+		location = "QuBai Arena";
+		active = 1;
+    elseif (player:getVar("AYAME_TRIB_FIGHT") == 1) then
+	    npc = "Ayame - Metalworks";
+		trust = "Ayame";
+		location = "Waughroon Shrine";
+		active = 1;	
+    elseif (player:getVar("CURILLA_TRIB_FIGHT") == 1) then
+	    npc = "Curilla - Chateau d'Oraguille";
+		trust = "Curilla";
+		location = "Horlais Peak";
+		active = 1;	
+    elseif (player:getVar("DARC_TRIB_FIGHT") == 1) then
+	    npc = "Nareema - Caedarva Mire";
+		trust = "Darcullin";
+		location = "QuBai Arena";
+		active = 1;	
+    elseif (player:getVar("EXCEN_TRIB_FIGHT") == 1) then
+	    npc = "Excenmille - Northern San d'Oria";
+		trust = "Exenmille";
+		location = "Horlais Peak";
+		active = 1;			
+    elseif (player:getVar("KUPIPI_TRIB_FIGHT") == 1) then
+	    npc = "Kupipi - Heaven's Tower";
+		trust = "Kupipi";
+		location = "Balgas Dais";
+		active = 1;
+    elseif (player:getVar("LION_TRIB_FIGHT") == 1) then
+	    npc = "Gilgamesh - Norg";
+		trust = "Lion";
+		location = "QuBai Arena";
+		active = 1;	
+    elseif (player:getVar("NANAA_TRIB_FIGHT") == 1) then
+	    npc = "Nanaa Mihgo - Windurst Woods";
+		trust = "Nanaa Mihgo";
+		location = "Balgas Dais";
+		active = 1;	 
+    elseif (player:getVar("NAJI_TRIB_FIGHT") == 1) then
+	    npc = "Naji - Metalworks";
+		trust = "Naji";
+		location = "Waughroon Shrine";
+		active = 1;	
+    elseif (player:getVar("ZIED_TRIB_FIGHT") == 1) then
+	    npc = "Torch - Castle Zvahl Baileys ";
+		trust = "Zied";
+		location = "QuBai Arena";
+		active = 1;			
+    end
+
+
     if (choice == nil) then
 	player:PrintToPlayer("Syntax @trustpoints <#>.  The following choices are available:" ,0x1C);
-	player:PrintToPlayer("1: Adelheid, 2: Ayame, 3: Curilla, 4: Darcullin, 5: Excenmille, 6: Kupipi" ,0x1C);
-	player:PrintToPlayer("7: Lion, 8: Nanaa Mihgo, 9: Naji, 10: Zeid" ,0x1C);	
+	player:PrintToPlayer("0: Current Quest Info, 1: Adelheid, 2: Ayame, 3: Curilla, 4: Darcullin, 5: Excenmille, " ,0x1C);
+	player:PrintToPlayer("6: Kupipi, 7: Lion, 8: Nanaa Mihgo, 9: Naji, 10: Zeid" ,0x1C);	
+	elseif (tonumber(choice) == 0) then
+	    if (active == 1) then
+		    player:PrintToPlayer("Current Trust Point Quest: "..trust..".",0x1C);
+		    player:PrintToPlayer("Starting NPC: "..npc..".",0x1C);			
+		    player:PrintToPlayer("Fight Location: "..location..".",0x1C);			
+		else
+		    player:PrintToPlayer("You currently have no Trust Point Quests Active.",0x1C);	
+        end			
 	elseif (tonumber(choice) == 1) then
 		player:PrintToPlayer("Adelheid: "..AdelheidPoints.."/".."10000 Trust Points.  Trust Tokens(Adelheid): "..AdelheidTokens,0x1C);
 	elseif (tonumber(choice) == 2) then

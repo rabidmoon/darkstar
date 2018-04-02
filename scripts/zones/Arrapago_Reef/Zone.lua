@@ -15,6 +15,64 @@ require("scripts/zones/Arrapago_Reef/TextIDs");
 
 function onInitialize(zone)
 zone:registerRegion(1,-462,-4,-420,-455,-1,-392);
+-- Check for Astral Candy and General Capture
+    local posession = GetServerVariable("AC_Posession");
+	local rug = GetServerVariable("RughadjeenCapture");
+	local gad = GetServerVariable("GadalarCapture");
+	local zaz = GetServerVariable("ZazargCapture");
+	local mih = GetServerVariable("MihliCapture");
+	local naj = GetServerVariable("NajelithCapture");
+	-- Get Mirrors 
+	local mir1hp = GetServerVariable("[AR]Mirror1")
+	local mir2hp = GetServerVariable("[AR]Mirror2")
+	local mir3hp = GetServerVariable("[AR]Mirror3")	
+	
+	
+	-- Spawn Mirrors Prisoners Achieve and Blu Helper on Reboot
+	if (posession == 2) then
+	    if (rug == 1) then
+            GetNPCByID(16998975):setStatus(STATUS_NORMAL);
+		end      
+        if (gad == 1) then		
+            GetNPCByID(16998976):setStatus(STATUS_NORMAL);
+		end
+        if (mih == 1) then		
+            GetNPCByID(16998977):setStatus(STATUS_NORMAL);	
+		end
+        if (zaz == 1) then		
+            GetNPCByID(16998978):setStatus(STATUS_NORMAL);
+		end		
+		if (naj == 1) then
+            GetNPCByID(16998979):setStatus(STATUS_NORMAL);	
+	    end
+		
+		-- Spawn Mirrors
+		printf("AR Zone.lua - Start mirrors");
+		
+		if (mir1hp ~= 0) then
+	    SpawnMob(16998838);
+		end
+		
+		if (mir2hp > 0) then
+	    SpawnMob(16998839);
+		end
+		
+		if (mir3hp > 0) then
+	    SpawnMob(16998840);	
+		end
+		
+		printf("AR Zone.lua - end mirrors");		
+	    -- Spawn Achieve Master
+	    local achieve = GetNPCByID(16998895);
+	    achieve:setStatus(STATUS_NORMAL);
+	    -- Spawn BLU Helper
+	   DeterMob(16999067, false);
+	   printf("Mirrors");
+        GetMobByID(16999067):setRespawnTime(35);	   
+	   -- SpawnMob();	
+		
+    end
+	
 end;
 
 -----------------------------------
@@ -36,6 +94,13 @@ function onZoneIn(player,prevZone)
             player:setPos(-180.028,-10.335,-559.987,182);
         end
     end
+	
+	-- Besieged
+	if (GetServerVariable("Besieged_Horde") > 0) then
+	    player:addStatusEffect(EFFECT_BESIEGED,3,0,3600);
+		player:ChangeMusic(1, 142);
+		player:ChangeMusic(2, 142);
+	end
 
     return cs;
 end;

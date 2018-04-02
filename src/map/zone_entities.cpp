@@ -400,6 +400,7 @@ void CZoneEntities::SpawnMOBs(CCharEntity* PChar)
 	for (EntityList_t::const_iterator it = m_mobList.begin(); it != m_mobList.end(); ++it)
 	{
 		CMobEntity* PCurrentMob = (CMobEntity*)it->second;
+
 		SpawnIDList_t::iterator MOB = PChar->SpawnMOBList.lower_bound(PCurrentMob->id);
 
 		float CurrentDistance = distance(PChar->loc.p, PCurrentMob->loc.p);
@@ -420,16 +421,19 @@ void CZoneEntities::SpawnMOBs(CCharEntity* PChar)
 			// проверка ночного/дневного сна монстров уже учтена в проверке CurrentAction, т.к. во сне монстры не ходят ^^
 
 			uint16 expGain = (uint16)charutils::GetRealExp(PChar->GetMLevel(), PCurrentMob->GetMLevel());
-
+			
 			CAIMobDummy* PAIMob = (CAIMobDummy*)PCurrentMob->PBattleAI;
 
 			bool validAggro = expGain > 50 || PChar->animation == ANIMATION_HEALING || PCurrentMob->getMobMod(MOBMOD_ALWAYS_AGGRO);
 
 			if (validAggro && PAIMob->CanAggroTarget(PChar))
 			{
+			    //ShowWarning(CL_YELLOW"Player Aggro'd Mob\n" CL_RESET);
 				PCurrentMob->PEnmityContainer->AddAggroEnmity(PChar);
 			}
 		}
+		
+			
 		else
 		{
 			if (MOB != PChar->SpawnMOBList.end() &&

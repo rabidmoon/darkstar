@@ -16,8 +16,8 @@ Arrapago = {
         DOOR_IS_SEALED_MYSTERIOUS = 7463, -- The door is sealed by some mysterious force...
 
         -- Salvage Texts
-        SALVAGE_START          = 7234, -- You feel an incredible pressure bearing down on you. This area appears to be blanketed in some sort of intense psionic field...
-        TIME_TO_COMPLETE       = 7441, -- You have <number> [minute/minutes] (Earth time) to complete this mission.
+        SALVAGE_START          = 7232, -- You feel an incredible pressure bearing down on you. This area appears to be blanketed in some sort of intense psionic field...
+        TIME_TO_COMPLETE       = 7439, -- You have <number> [minute/minutes] (Earth time) to complete this mission.
         MISSION_FAILED         = 7442, -- The mission has failed. Leaving area.
         TIME_REMAINING_MINUTES = 7446, -- Time remaining: <number> [minute/minutes] (Earth time).
         TIME_REMAINING_SECONDS = 7447, -- Time remaining: <number> [second/seconds] (Earth time).
@@ -29,7 +29,7 @@ Arrapago = {
         [1] = {
             [2] = {
                 mobs_start = 17080323,
-                mobs_end = 17080395,
+                mobs_end = 17080331,
                 rampart = 17080321,
                 sabotender = 17080322,
             }
@@ -61,10 +61,17 @@ Arrapago = {
                 DOOR1 = 17080974,
             },
             [2] = {
-                ARMORY_CRATE = 17080594,
+                ARMORY_CRATE = 17080591,
             }
         }
-    }
+    },
+	
+    ph = {
+	    [1] = {
+		    LAMIA_DARTIST1 = 17080334,
+			LAMIA_DARTIST2 = 17080339,
+		}
+	}
 }
 
 return Arrapago;

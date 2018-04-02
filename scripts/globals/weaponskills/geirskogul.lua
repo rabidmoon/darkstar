@@ -34,6 +34,9 @@ function onUseWeaponSkill(player, target, wsID)
 	local damage, criticalHit, tpHits, extraHits = doPhysicalWeaponskill(player, target, params);
 	if ((player:getEquipID(SLOT_MAIN) == 18300) and (player:getMainJob() == JOB_DRG)) then
 		if (damage > 0) then
+		    if ((player:getVar("AftermathPlus_Pole") == 1) and (player:hasStatusEffect(EFFECT_LEVEL_FOUR_SC) == false)) then
+			    player:addStatusEffectEx(EFFECT_AFTERMATH_PLUS,EFFECT_AFTERMATH_LV3,0,3,60);
+            end		
 			if (player:getTP() >= 100 and player:getTP() < 200) then
 				player:addStatusEffect(EFFECT_AFTERMATH, 6, 0, 20, 0, 7);
 			elseif (player:getTP() >= 200 and player:getTP() < 300) then

@@ -233,7 +233,7 @@ void CAIMobDummy::ActionRoaming()
         {
             // do not check for despawning because i'm at home
             m_checkDespawn = false;
-
+		
             if (m_PMob->getMobMod(MOBMOD_SPECIAL_SKILL) != 0 && m_Tick >= m_LastSpecialTime + m_PMob->getBigMobMod(MOBMOD_SPECIAL_COOL) && TrySpecialSkill())
             {
                 // I spawned a pet
@@ -243,6 +243,13 @@ void CAIMobDummy::ActionRoaming()
                 // summon pet
                 CastSpell(m_PMob->SpellContainer->GetBuffSpell());
             }
+			/*
+			else if (CanCastSpells() && dsprand::GetRandomNumber(10) < 6 && m_PMob->SpellContainer->HasHealSpells() && m_PMob->m_Pool == 2068)
+			{
+				// cast Healing Spells for Beseiged NPCs
+				CastSpell(m_PMob->SpellContainer->GetHealSpell());
+			}*/
+
             else if (CanCastSpells() && dsprand::GetRandomNumber(10) < 3 && m_PMob->SpellContainer->HasBuffSpells())
             {
                 // cast buff
@@ -1992,6 +1999,15 @@ void CAIMobDummy::TryLink()
             m_PBattleTarget->PPet->PBattleAI->SetBattleTarget(m_PMob);
         }
     }
+
+	/*
+	if (m_PBattleTarget->PMob != nullptr && m_PBattleTarget->PMob->PBattleAI->GetBattleTarget() == nullptr)
+	{
+		if (m_PBattleTarget->PMob->objtype == TYPE_MOB && ((CPetEntity*)m_PBattleTarget->allegiance == ALLEGIANCE_PLAYER)
+		{
+			m_PBattleTarget->PMob->PBattleAI->SetBattleTarget(m_PMob);
+		}
+	} */
    
   
    // Code below will force Trusts to fight anything that agros.  Disabled for now 

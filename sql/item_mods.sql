@@ -19820,13 +19820,13 @@ INSERT INTO `item_mods` VALUES (17758,249,2);
 INSERT INTO `item_mods` VALUES (17759,8,4);
 INSERT INTO `item_mods` VALUES (17759,9,4);
 INSERT INTO `item_mods` VALUES (17759,224,2);
-INSERT INTO `item_mods` VALUES (17761,355,47); -- RDM High Artifact
+INSERT INTO `item_mods` VALUES (17761,355,239); -- RDM High Artifact
 INSERT INTO `item_mods` VALUES (17760,11,2);
 INSERT INTO `item_mods` VALUES (17760,68,2);
-INSERT INTO `item_mods` VALUES (17762,355,47); -- PLD High Artifact
+INSERT INTO `item_mods` VALUES (17762,355,239); -- PLD High Artifact
 INSERT INTO `item_mods` VALUES (17762,366,4);
 INSERT INTO `item_mods` VALUES (17763,366,6);
-INSERT INTO `item_mods` VALUES (17763,355,47);  -- BLU High Artifact
+INSERT INTO `item_mods` VALUES (17763,355,239);  -- BLU High Artifact
 INSERT INTO `item_mods` VALUES (17768,431,1);
 INSERT INTO `item_mods` VALUES (17770,431,1);
 INSERT INTO `item_mods` VALUES (17771,8,-1);
@@ -20549,6 +20549,7 @@ INSERT INTO `item_mods` VALUES (18449,27,5);
 INSERT INTO `item_mods` VALUES (18450,289,2);
 INSERT INTO `item_mods` VALUES (18451,431,1);
 INSERT INTO `item_mods` VALUES (18452,355,155);  -- HA SAM
+-- INSERT INTO `item_mods` VALUES (18452,355,155);  -- TP Bonus Fix
 INSERT INTO `item_mods` VALUES (18457,8,12);
 INSERT INTO `item_mods` VALUES (18457,9,12);
 INSERT INTO `item_mods` VALUES (18457,10,12);

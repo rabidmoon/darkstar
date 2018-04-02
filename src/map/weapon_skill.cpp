@@ -101,13 +101,28 @@ void CWeaponSkill::setTertiarySkillchain(uint8 skillchain)
     m_TertiarySkillchain = skillchain;
 }
 
+void CWeaponSkill::setQuaternarySkillchain(uint8 skillchain)
+{
+    m_QuaternarySkillchain = skillchain;
+}
+
+void CWeaponSkill::setQuinarySkillchain(uint8 skillchain)
+{
+    m_QuinarySkillchain = skillchain;
+}
+
+void CWeaponSkill::setSenarySkillchain(uint8 skillchain)
+{
+    m_SenarySkillchain = skillchain;
+}
+
 void CWeaponSkill::setName(int8* name)
 {
 	m_name.clear();
 	m_name.insert(0,name);
 }
 
-void CWeaponSkill::setAnimationId(int16 id)
+void CWeaponSkill::setAnimationId(int8 id)
 {
 	m_AnimationId = id;
 }
@@ -152,7 +167,7 @@ bool CWeaponSkill::isElemental()
     return m_Element != 0;
 }
 
-uint16 CWeaponSkill::getAnimationId()
+uint8 CWeaponSkill::getAnimationId()
 {
 	return m_AnimationId;
 }
@@ -180,4 +195,19 @@ uint8 CWeaponSkill::getSecondarySkillchain()
 uint8 CWeaponSkill::getTertiarySkillchain()
 {
     return m_TertiarySkillchain;
+}
+
+uint8 CWeaponSkill::getQuaternarySkillchain()
+{
+    return m_QuaternarySkillchain;
+}
+
+uint8 CWeaponSkill::getQuinarySkillchain()
+{
+    return m_QuinarySkillchain;
+}
+
+uint8 CWeaponSkill::getSenarySkillchain()
+{
+    return m_SenarySkillchain;
 }

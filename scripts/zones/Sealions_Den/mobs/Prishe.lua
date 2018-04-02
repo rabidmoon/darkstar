@@ -49,7 +49,7 @@ function onMobFight(mob,target)
     end
 	
 	local mobtp = mob:getTP();
-	print(mobtp);
+	-- print(mobtp);
 	
 
 

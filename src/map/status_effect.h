@@ -701,13 +701,21 @@ enum EFFECT
 	EFFECT_TRUST_TRICK_ATTACK       = 813,
 	EFFECT_TRUST_SKILLCHAIN_TIMER   = 814,
 	EFFECT_TRUST_BARRAGE            = 815,	
+    EFFECT_NO_REST                    = 816,
+	EFFECT_LEVEL_TWO_SC             = 950,
+	EFFECT_LEVEL_THREE_SC             = 951,
+	EFFECT_LEVEL_FOUR_SC             = 952,	
+	EFFECT_AFTERMATH_PLUS            = 953,
+	EFFECT_AFTERMATH_PLUSHA1         = 954,
+	EFFECT_AFTERMATH_PLUSHA2         = 955,
+	EFFECT_AFTERMATH_PLUSHA3         = 956,
 
     // EFFECT_PLACEHOLDER              = 802 // Description
     // 802-1022
     // EFFECT_PLACEHOLDER             = 1023 // The client dat file seems to have only this many "slots", results of exceeding that are untested.
 };
 
-#define MAX_EFFECTID    816  // 768 real + 32 custom
+#define MAX_EFFECTID    957 // 768 real + 32 custom
 
 /************************************************************************
 *                                                                       *

@@ -93,7 +93,7 @@ end
 function calculateAcumen(player, spell)
 	local occult = player:getMod(MOD_OCCULT_ACUMEN);
 	if (occult == 0) then 
-	    print("No Occult Found!!!")
+	    -- print("No Occult Found!!!")
 		return
 	end
 	local mp = spell:getMPCost();
@@ -110,7 +110,7 @@ function calculateAcumen(player, spell)
 	elseif (mp > 1) then
 	tpreturn = ((occult / 100) * (mp / 2)) + 1;
     end
-    print(tpreturn);
+    -- print(tpreturn);
 
 	
 	player:addTP(tpreturn);
@@ -228,7 +228,7 @@ end;
     -- whatever casts will use the correct skill	
 	skill = caster:getSkillLevel(AUTOMATON_MAGIC_SKILL) + caster:getMod(MOD_HEALING);  
 	end	
-	print(skill);
+	-- print(skill);
 
     local power = math.floor(MND/2) + math.floor(VIT/4) + skill;
     return power;
@@ -326,7 +326,7 @@ function getCureFinal(caster,spell,basecure,minCure,isBlueMagic)
         dayWeatherBonus = 1.35;
     end
 
-    local final = math.floor(math.floor(math.floor(math.floor(basecure) * potency) * dayWeatherBonus) * rapture) * dSeal;
+    local final = math.floor(math.floor(math.floor(math.floor(basecure) * potency) * dayWeatherBonus) * rapture) * dSeal;	
     return final;
 end;
 

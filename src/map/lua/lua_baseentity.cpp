@@ -6662,6 +6662,26 @@ inline int32 CLuaBaseEntity::getWSSkillchainProp(lua_State* L)
     return 1;
 }
 
+
+/************************************************************************
+*  Function: setWeaponskillElement()
+*  Purpose : Override primary sc element for weaponskill
+*  Example :attacker:setWeaponskillElement(1)
+*  Notes   :
+************************************************************************/
+
+inline int32 CLuaBaseEntity::setWeaponskillElement(lua_State* L)
+{
+    DSP_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
+   // DSP_DEBUG_BREAK_IF(m_PBaseEntity->objtype != TYPE_MOB);
+
+    DSP_DEBUG_BREAK_IF(lua_isnil(L, 1) || !lua_isnumber(L, 1));
+    
+	CWeaponSkill* PWeaponSkill = ((CCharEntity*)m_PBaseEntity)->PBattleAI->GetCurrentWeaponSkill();
+	PWeaponSkill->setPrimarySkillchain((uint8)lua_tonumber(L, 1));
+    return 0;
+}
+
 //==========================================================//
 
 inline int32 CLuaBaseEntity::getRangedDmg(lua_State *L)
@@ -7251,6 +7271,34 @@ inline int32 CLuaBaseEntity::setSpawn(lua_State *L)
 
     return 0;
 }
+
+
+/************************************************************************
+*  Function: getRespawnTime()
+*  Purpose : Returns the remaining respawn time for a Mob
+*  Example : if (nm:getRespawnTime() == 0)
+*  Notes   : Used in mobs.lua...and directly in Charybdis
+************************************************************************/
+
+inline int32 CLuaBaseEntity::getRespawnTime(lua_State* L)
+{
+    DSP_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
+    DSP_DEBUG_BREAK_IF(m_PBaseEntity->objtype != TYPE_MOB);
+
+    CMobEntity* PMob = static_cast<CMobEntity*>(m_PBaseEntity);
+
+    if (PMob->m_AllowRespawn)
+    {
+        lua_pushinteger(L, PMob->m_RespawnTime);
+        return 1;
+    }
+    else
+    {
+        lua_pushinteger(L, 0);
+        return 1;
+    }
+}
+
 
 inline int32 CLuaBaseEntity::setRespawnTime(lua_State* L)
 {
@@ -10680,6 +10728,7 @@ Lunar<CLuaBaseEntity>::Register_t CLuaBaseEntity::methods[] =
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,getWeaponSkillType),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,getWeaponSubSkillType),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,getWSSkillchainProp),
+	LUNAR_DECLARE_METHOD(CLuaBaseEntity,setWeaponskillElement),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,getRangedDmg),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,getRangedDmgForRank),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,getAmmoDmg),
@@ -10807,6 +10856,7 @@ Lunar<CLuaBaseEntity>::Register_t CLuaBaseEntity::methods[] =
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,wait),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,pathTo),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,setSpawn),
+    LUNAR_DECLARE_METHOD(CLuaBaseEntity,getRespawnTime),	
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,setRespawnTime),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,unlockAttachment),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,disableLevelSync),

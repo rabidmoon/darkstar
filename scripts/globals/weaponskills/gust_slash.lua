@@ -25,6 +25,7 @@ function onUseWeaponSkill(player, target, wsID)
 	params.ele = ELE_WIND;
 	params.skill = SKILL_DAG;
 	params.includemab = true;
+	
 
 	if (USE_ADOULIN_WEAPON_SKILL_CHANGES == true) then
 		params.dex_wsc = 0.4; params.int_wsc = 0.4;
@@ -32,6 +33,7 @@ function onUseWeaponSkill(player, target, wsID)
 
 	local damage, criticalHit, tpHits, extraHits = doMagicWeaponskill(player, target, params);
 	damage = damage * WEAPON_SKILL_POWER
+
 	return tpHits, extraHits, criticalHit, damage;
 
 end

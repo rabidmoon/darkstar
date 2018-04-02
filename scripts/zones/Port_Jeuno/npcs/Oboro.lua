@@ -116,7 +116,7 @@ end
 
 
 --------------------------------------------------------
---      BLAC MAGE TRADE DUSKY STAFF 17572             --
+--      BLACK MAGE TRADE DUSKY STAFF 17572             --
 --------------------------------------------------------
 
 
@@ -125,7 +125,7 @@ if (job == 4) and (trade:hasItemQty(17572, 1)) and trade:hasItemQty( 1126, 15 ) 
              -- Complete the trade..
             player:tradeComplete();
 			player:PrintToPlayer("Oboro : Thank you for the requested items. Come see me again when you are stronger.", 0xD);
-			player:addItem(17572, 1, 45, 10);
+			player:addItem(17572, 1, 45, 9, 133, 9);
 			player:setVar("BLMAFweapon", 1);
 			player:messageSpecial(ITEM_OBTAINED, 17572);
 			
@@ -134,7 +134,7 @@ end
              -- Complete the trade..
             player:tradeComplete();
 			player:PrintToPlayer("Oboro : Thank you for the requested items. Come see me again when you are stronger.", 0xD);
-			player:addItem(17572, 1, 45, 11);
+			player:addItem(17572, 1, 45, 76, 0, 133, 10);
 			player:setVar("BLMAFweapon", 2);
 			player:messageSpecial(ITEM_OBTAINED, 17572);
 			
@@ -143,7 +143,7 @@ end
              -- Complete the trade..
             player:tradeComplete();
 			player:PrintToPlayer("Oboro : Thank you for the requested items. Come see me again when you are stronger.", 0xD);
-			player:addItem(17572, 1, 76, 0);
+			player:addItem(17572, 1, 76, 12, 133, 11);
 			player:setVar("BLMAFweapon", 3);
 			player:messageSpecial(ITEM_OBTAINED, 17572);
 			
@@ -229,7 +229,7 @@ if (job == 7) and (trade:hasItemQty(17643, 1)) and trade:hasItemQty( 1126, 15 ) 
              -- Complete the trade..
             player:tradeComplete();
 			player:PrintToPlayer("Oboro : Thank you for the requested items. Come see me again when you are stronger.", 0xD);
-			player:addItem(17643, 1, 45, 2);
+			player:addItem(17643, 1, 45, 2, 39, 1); -- DMG+3 Enmity +2
 			player:setVar("PLDAFweapon", 1);
 			player:messageSpecial(ITEM_OBTAINED, 17643);
 			
@@ -238,7 +238,7 @@ end
              -- Complete the trade..
             player:tradeComplete();
 			player:PrintToPlayer("Oboro : Thank you for the requested items. Come see me again when you are stronger.", 0xD);
-			player:addItem(17643, 1, 45, 6, 25, 4);  -- Attack +5
+			player:addItem(17643, 1, 45, 6, 25, 4, 39, 2);  -- Attack +5 Enmity +3
 			player:setVar("PLDAFweapon", 2);
 			player:messageSpecial(ITEM_OBTAINED, 17643);
 			
@@ -247,7 +247,7 @@ end
              -- Complete the trade..
             player:tradeComplete();
 			player:PrintToPlayer("Oboro : Thank you for the requested items. Come see me again when you are stronger.", 0xD);
-			player:addItem(17643, 1, 45, 9, 25, 6); -- Attack +7
+			player:addItem(17643, 1, 45, 9, 25, 6, 39, 3); -- Attack +7 Enmity +4
 			player:setVar("PLDAFweapon", 3);
 			player:messageSpecial(ITEM_OBTAINED, 17643);
 			
@@ -283,7 +283,7 @@ end
              -- Complete the trade..
             player:tradeComplete();
 			player:PrintToPlayer("Oboro : Thank you for the requested items. Come see me again when you are stronger.", 0xD);
-			player:addItem(12307, 1, 33, 4, 286, 4);  -- +5 DEF and +5 Shield Skill
+			player:addItem(12307, 1, 33, 9, 286, 4);  -- +5 DEF and +5 Shield Skill
 			player:setVar("PLDAFshield", 3);
 			player:messageSpecial(ITEM_OBTAINED, 12307);
 			
@@ -547,7 +547,7 @@ end
             -- Complete the trade..
             player:tradeComplete();
 			player:PrintToPlayer("Oboro : Next time I require 5000g to upgrade this bow!", 0xD);
-			player:addItem(17174,1,750,16,751,0,35,5);  -- DMG -48/Magic Acc+5
+			player:addItem(17174,1,750,16,751,0,35,4);  -- DMG -48/Magic Acc+5
             player:setVar("BRDJudgesBow",6);
 			player:messageSpecial(ITEM_OBTAINED, 17174);
 	elseif (job == 10 and (trade:hasItemQty(17174, 1)) and level >= 55 and (player:getVar("BRDJudgesBow") == 5)) then
@@ -557,7 +557,7 @@ end
             -- Complete the trade..
             player:tradeComplete();
 			player:PrintToPlayer("Oboro : Next time I require 10000g to upgrade this bow!", 0xD);
-			player:addItem(17174,1,750,6,751,0,35,7);  -- DMG -39
+			player:addItem(17174,1,750,6,751,0,35,6);  -- DMG -39
             player:setVar("BRDJudgesBow",7);
 			player:messageSpecial(ITEM_OBTAINED, 17174);
 	elseif (job == 10 and (trade:hasItemQty(17174, 1)) and level >= 65 and (player:getVar("BRDJudgesBow") == 6)) then
@@ -567,7 +567,7 @@ end
             -- Complete the trade..
             player:tradeComplete();
 			player:PrintToPlayer("Oboro : Here you go!  Not much else I can do at this time.", 0xD);
-			player:addItem(17174,1,750,31,35,10,27,19);  -- DMG -32
+			player:addItem(17174,1,750,31,35,9,27,19);  -- DMG -32
             player:setVar("BRDJudgesBow",8);
 			player:messageSpecial(ITEM_OBTAINED, 17174);
 	elseif (job == 10 and (trade:hasItemQty(17174, 1)) and level >= 75 and (player:getVar("BRDJudgesBow") == 7)) then
@@ -595,12 +595,7 @@ elseif(tcount > 0 and job == 10 and level >=45 and trade:hasItemQty(17330,tcount
           player:tradeComplete();
 		  player:addItem(17326,tcount,750,7,751,31)
           player:PrintToPlayer("Oboro : Here you go!", 0xD);
-		  player:messageSpecial(ITEM_OBTAINED, 17326);			  
-elseif(tcount > 0 and job == 10 and level >=55 and trade:hasItemQty(17330,tcount)) then
-          player:tradeComplete();
-		  player:addItem(17326,tcount,750,10,751,31)
-          player:PrintToPlayer("Oboro : Here you go!", 0xD);
-		  player:messageSpecial(ITEM_OBTAINED, 17326);	
+		  player:messageSpecial(ITEM_OBTAINED, 17326);			  	
 elseif(tcount > 0 and job == 10 and level >=35 and trade:hasItemQty(17330,tcount)) then
           player:tradeComplete();
 		  player:addItem(17326,tcount,750,14,751,31)
@@ -927,7 +922,7 @@ if (job == 17) and (trade:hasItemQty(18702, 1)) and trade:hasItemQty( 1126, 15 )
              -- Complete the trade..
             player:tradeComplete();
 			player:PrintToPlayer("Oboro : Thank you for the requested items. Come see me again when you are stronger.", 0xD);
-			player:addItem(18702, 1, 45, 2, 26, 2, 27, 2);
+			player:addItem(18702, 1, 45, 2, 29, 2, 27, 2);
 			player:setVar("CORAFweapon", 1);
 			player:messageSpecial(ITEM_OBTAINED, 18702);
 			
@@ -936,7 +931,7 @@ end
              -- Complete the trade..
             player:tradeComplete();
 			player:PrintToPlayer("Oboro : Thank you for the requested items. Come see me again when you are stronger.", 0xD);
-			player:addItem(18702, 1, 45, 5, 26, 4, 27, 4);
+			player:addItem(18702, 1, 45, 5, 29, 4, 27, 4);
 			player:setVar("CORAFweapon", 2);
 			player:messageSpecial(ITEM_OBTAINED, 18702);
 			
@@ -945,7 +940,7 @@ end
              -- Complete the trade..
             player:tradeComplete();
 			player:PrintToPlayer("Oboro : Thank you for the requested items. Come see me again when you are stronger.", 0xD);
-			player:addItem(18702, 1, 45, 8, 26, 6, 27, 6);
+			player:addItem(18702, 1, 45, 8, 29, 6, 27, 6);
 			player:setVar("CORAFweapon", 3);
 			player:messageSpecial(ITEM_OBTAINED, 18702);
 end	
@@ -1001,7 +996,7 @@ end
              -- Complete the trade..
             player:tradeComplete();
 			player:PrintToPlayer("Oboro : Thank you for the requested items. Come see me again when you are stronger.", 0xD);
-			player:addItem(16467, 1, 45, 7, 518, 2);
+			player:addItem(16467, 1, 45, 7, 518, 2, 330, 1);
 			player:setVar("DNCAFweapon", 2);
 			player:messageSpecial(ITEM_OBTAINED, 16467);
 			
@@ -1010,7 +1005,7 @@ end
              -- Complete the trade..
             player:tradeComplete();
 			player:PrintToPlayer("Oboro : Thank you for the requested items. Come see me again when you are stronger.", 0xD);
-			player:addItem(16467, 1, 45, 10, 518, 2);
+			player:addItem(16467, 1, 45, 10, 518, 3, 330, 2);
 			player:setVar("DNCAFweapon", 3);
 			player:messageSpecial(ITEM_OBTAINED, 16467);
 end	

@@ -15,6 +15,10 @@ require("scripts/globals/status");
 
 
 function onEffectGain(target,effect)
+    -- if (target:hasStatusEffect(EFFECT_LEVEL_FOUR_SC) == false) then
+       -- target:PrintToPlayer("EFFECT GAINED!!!");
+       -- target:addStatusEffect(EFFECT_LEVEL_FOUR_SC, 3, 0, 30);
+	-- end
 	local power = effect:getPower(); 
 	if (effect:getSubPower() == 1) then -- H2H
 		target:addMod(MOD_SUBTLE_BLOW,power);
@@ -52,12 +56,13 @@ function onEffectGain(target,effect)
 		target:addMod(MOD_ENMITY,power)
 	elseif (effect:getSubPower() == 12) then
 		target:addMod(MOD_RACC,power)
-	elseif (effect:getSubPower() == 13) then -- HA WAR
-		-- Nothing
-       
+	elseif (effect:getSubPower() == 13) then -- High Artifacts
+		target:addMod(MOD_ALL_WSDMG_ALL_HITS,power)
+		target:addMod(MOD_REGAIN,15)
 	elseif (effect:getSubPower() == 15) then -- HA WHM		
        -- Nothing
 	end
+
 end;
 
 -----------------------------------
@@ -65,6 +70,7 @@ end;
 -----------------------------------
 
 function onEffectTick(target,effect)
+
 end;
 
 -----------------------------------
@@ -109,9 +115,9 @@ function onEffectLose(target,effect)
 		target:delMod(MOD_ENMITY,power)
 	elseif (effect:getSubPower() == 12) then
 		target:delMod(MOD_RACC,power)
-	elseif (effect:getSubPower() == 13) then  -- HA WAR
-		target:delMod(MOD_REGAIN,power)
-        target:delMod(MOD_STR, 11);	
+	elseif (effect:getSubPower() == 13) then -- High Artifacts
+		target:delMod(MOD_ALL_WSDMG_ALL_HITS,power)
+		target:delMod(MOD_REGAIN,15)
 	elseif (effect:getSubPower() == 15) then -- HA WHM
 		target:delMod(MOD_REGAIN,power)
         target:delMod(MOD_MND, 10);	

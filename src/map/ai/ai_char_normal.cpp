@@ -2780,6 +2780,211 @@ void CAICharNormal::ActionWeaponSkillFinish()
     // weapon skills such as: Spirits Within, Spirit Taker, Energy Steal, Energy Drain, Starlight, and Moonlight.
     if (Action.reaction == REACTION_HIT && m_PWeaponSkill->getPrimarySkillchain() != 0 && !(m_PBattleSubTarget->isDead()))
     {
+		// NOTE: Lets put a unique effect here.  If a player has X effect active, change the primary SC element
+		// It will allow for changing elements
+		
+		// Transfixtion, Liquefication get bumped to Fusion
+		if ((m_PWeaponSkill->getPrimarySkillchain() == 1) && m_PChar->StatusEffectContainer->HasStatusEffect(EFFECT_LEVEL_TWO_SC))
+		{
+			m_PWeaponSkill->setPrimarySkillchain(11);
+			ShowWarning(CL_CYAN"SETTING PRIMARY SKILLCHAIN TO 11\n" CL_RESET);
+		}			
+		if ((m_PWeaponSkill->getPrimarySkillchain() == 3) && m_PChar->StatusEffectContainer->HasStatusEffect(EFFECT_LEVEL_TWO_SC))
+		{
+			m_PWeaponSkill->setPrimarySkillchain(11);
+			ShowWarning(CL_CYAN"SETTING PRIMARY SKILLCHAIN TO 11\n" CL_RESET);
+		}		
+		// Detonation, Impaction get bumped to Fragmentation
+		if ((m_PWeaponSkill->getPrimarySkillchain() == 6) && m_PChar->StatusEffectContainer->HasStatusEffect(EFFECT_LEVEL_TWO_SC))
+		{
+			m_PWeaponSkill->setPrimarySkillchain(12);
+			ShowWarning(CL_CYAN"SETTING PRIMARY SKILLCHAIN TO 11\n" CL_RESET);
+		}			
+		if ((m_PWeaponSkill->getPrimarySkillchain() == 8) && m_PChar->StatusEffectContainer->HasStatusEffect(EFFECT_LEVEL_TWO_SC))
+		{
+			m_PWeaponSkill->setPrimarySkillchain(12);
+			ShowWarning(CL_CYAN"SETTING PRIMARY SKILLCHAIN TO 11\n" CL_RESET);
+		}		
+		// Compression, Scission get bumped to Gravitation
+		if ((m_PWeaponSkill->getPrimarySkillchain() == 2) && m_PChar->StatusEffectContainer->HasStatusEffect(EFFECT_LEVEL_TWO_SC))
+		{
+			m_PWeaponSkill->setPrimarySkillchain(9);
+			ShowWarning(CL_CYAN"SETTING PRIMARY SKILLCHAIN TO 9\n" CL_RESET);
+		}
+		if ((m_PWeaponSkill->getPrimarySkillchain() == 4) && m_PChar->StatusEffectContainer->HasStatusEffect(EFFECT_LEVEL_TWO_SC))
+		{
+			m_PWeaponSkill->setPrimarySkillchain(9);
+			ShowWarning(CL_CYAN"SETTING PRIMARY SKILLCHAIN TO 9\n" CL_RESET);
+		}
+        // Reverberation, Induration get bumped to Distortion		
+		if ((m_PWeaponSkill->getPrimarySkillchain() == 5) && m_PChar->StatusEffectContainer->HasStatusEffect(EFFECT_LEVEL_TWO_SC))
+		{
+			m_PWeaponSkill->setPrimarySkillchain(10);
+			ShowWarning(CL_CYAN"SETTING PRIMARY SKILLCHAIN TO 10\n" CL_RESET);
+		}		
+		if ((m_PWeaponSkill->getPrimarySkillchain() == 7) && m_PChar->StatusEffectContainer->HasStatusEffect(EFFECT_LEVEL_TWO_SC))
+		{
+			m_PWeaponSkill->setPrimarySkillchain(10);
+			ShowWarning(CL_CYAN"SETTING PRIMARY SKILLCHAIN TO 10\n" CL_RESET);
+		}			
+
+		
+		// Fusion/Frag && Gravitation/Distortion get bumped to Light/Dark
+		if ((m_PWeaponSkill->getPrimarySkillchain() == 9) && m_PChar->StatusEffectContainer->HasStatusEffect(EFFECT_LEVEL_THREE_SC))
+		{
+			m_PWeaponSkill->setPrimarySkillchain(14);
+			ShowWarning(CL_CYAN"SETTING PRIMARY SKILLCHAIN TO 14\n" CL_RESET);
+		}			
+		if ((m_PWeaponSkill->getPrimarySkillchain() == 10) && m_PChar->StatusEffectContainer->HasStatusEffect(EFFECT_LEVEL_THREE_SC))
+		{
+			m_PWeaponSkill->setPrimarySkillchain(14);
+			ShowWarning(CL_CYAN"SETTING PRIMARY SKILLCHAIN TO 14\n" CL_RESET);
+		}			
+		
+		if ((m_PWeaponSkill->getPrimarySkillchain() == 11) && m_PChar->StatusEffectContainer->HasStatusEffect(EFFECT_LEVEL_THREE_SC))
+		{
+			m_PWeaponSkill->setPrimarySkillchain(13);
+			ShowWarning(CL_CYAN"SETTING PRIMARY SKILLCHAIN TO 13\n" CL_RESET);
+		}	
+		if ((m_PWeaponSkill->getPrimarySkillchain() == 12) && m_PChar->StatusEffectContainer->HasStatusEffect(EFFECT_LEVEL_THREE_SC))
+		{
+			m_PWeaponSkill->setPrimarySkillchain(13);
+			ShowWarning(CL_CYAN"SETTING PRIMARY SKILLCHAIN TO 13\n" CL_RESET);
+		}	
+
+
+
+	    // Level 1 Element with Level 2 Active get bumped to Fusion
+		if ((m_PWeaponSkill->getPrimarySkillchain() == 1) && m_PChar->StatusEffectContainer->HasStatusEffect(EFFECT_LEVEL_TWO_SC))
+		{
+			m_PWeaponSkill->setPrimarySkillchain(11);
+		}			
+		if ((m_PWeaponSkill->getPrimarySkillchain() == 3) && m_PChar->StatusEffectContainer->HasStatusEffect(EFFECT_LEVEL_TWO_SC))
+		{
+			m_PWeaponSkill->setPrimarySkillchain(11);
+		}
+
+	    // Level 1 Element with Level 2 Active get bumped to Fragmentation		
+		if ((m_PWeaponSkill->getPrimarySkillchain() == 6) && m_PChar->StatusEffectContainer->HasStatusEffect(EFFECT_LEVEL_TWO_SC))
+		{
+			m_PWeaponSkill->setPrimarySkillchain(12);
+		}			
+		if ((m_PWeaponSkill->getPrimarySkillchain() == 8) && m_PChar->StatusEffectContainer->HasStatusEffect(EFFECT_LEVEL_TWO_SC))
+		{
+			m_PWeaponSkill->setPrimarySkillchain(12);
+		}	
+
+		
+	    // Level 1 Element with Level 2 Active get bumped to Gravitation
+		if ((m_PWeaponSkill->getPrimarySkillchain() == 2) && m_PChar->StatusEffectContainer->HasStatusEffect(EFFECT_LEVEL_TWO_SC))
+		{
+			m_PWeaponSkill->setPrimarySkillchain(9);
+		}			
+		if ((m_PWeaponSkill->getPrimarySkillchain() == 4) && m_PChar->StatusEffectContainer->HasStatusEffect(EFFECT_LEVEL_TWO_SC))
+		{
+			m_PWeaponSkill->setPrimarySkillchain(9);
+		}
+
+		 // Level 1 Element with Level 2 Active get bumped to Distortion
+		if ((m_PWeaponSkill->getPrimarySkillchain() == 5) && m_PChar->StatusEffectContainer->HasStatusEffect(EFFECT_LEVEL_TWO_SC))
+		{
+			m_PWeaponSkill->setPrimarySkillchain(10);
+		}			
+		if ((m_PWeaponSkill->getPrimarySkillchain() == 7) && m_PChar->StatusEffectContainer->HasStatusEffect(EFFECT_LEVEL_TWO_SC))
+		{
+			m_PWeaponSkill->setPrimarySkillchain(10);
+		}	
+
+
+         
+
+		
+		
+	    // Level 1 Element with Level 3 Active get bumped to Light
+		if ((m_PWeaponSkill->getPrimarySkillchain() == 1) && m_PChar->StatusEffectContainer->HasStatusEffect(EFFECT_LEVEL_THREE_SC))
+		{
+			m_PWeaponSkill->setPrimarySkillchain(13);
+		}			
+		if ((m_PWeaponSkill->getPrimarySkillchain() == 3) && m_PChar->StatusEffectContainer->HasStatusEffect(EFFECT_LEVEL_THREE_SC))
+		{
+			m_PWeaponSkill->setPrimarySkillchain(13);
+		}		
+		if ((m_PWeaponSkill->getPrimarySkillchain() == 6) && m_PChar->StatusEffectContainer->HasStatusEffect(EFFECT_LEVEL_THREE_SC))
+		{
+			m_PWeaponSkill->setPrimarySkillchain(13);
+		}			
+		if ((m_PWeaponSkill->getPrimarySkillchain() == 8) && m_PChar->StatusEffectContainer->HasStatusEffect(EFFECT_LEVEL_THREE_SC))
+		{
+			m_PWeaponSkill->setPrimarySkillchain(13);
+		}		
+	    // Level 1 Element with Level 3 Active get bumped to Darkness
+		if ((m_PWeaponSkill->getPrimarySkillchain() == 2) && m_PChar->StatusEffectContainer->HasStatusEffect(EFFECT_LEVEL_THREE_SC))
+		{
+			m_PWeaponSkill->setPrimarySkillchain(14);
+		}			
+		if ((m_PWeaponSkill->getPrimarySkillchain() == 4) && m_PChar->StatusEffectContainer->HasStatusEffect(EFFECT_LEVEL_THREE_SC))
+		{
+			m_PWeaponSkill->setPrimarySkillchain(14);
+		}		
+		if ((m_PWeaponSkill->getPrimarySkillchain() == 5) && m_PChar->StatusEffectContainer->HasStatusEffect(EFFECT_LEVEL_THREE_SC))
+		{
+			m_PWeaponSkill->setPrimarySkillchain(14);
+		}			
+		if ((m_PWeaponSkill->getPrimarySkillchain() == 7) && m_PChar->StatusEffectContainer->HasStatusEffect(EFFECT_LEVEL_THREE_SC))
+		{
+			m_PWeaponSkill->setPrimarySkillchain(14);
+		}			
+		
+		
+		
+
+	    // Level 1 Element with Level 4 Active get bumped to Light II
+		if ((m_PWeaponSkill->getPrimarySkillchain() == 1) && m_PChar->StatusEffectContainer->HasStatusEffect(EFFECT_LEVEL_FOUR_SC))
+		{
+			m_PWeaponSkill->setPrimarySkillchain(15);
+		}			
+		if ((m_PWeaponSkill->getPrimarySkillchain() == 3) && m_PChar->StatusEffectContainer->HasStatusEffect(EFFECT_LEVEL_FOUR_SC))
+		{
+			m_PWeaponSkill->setPrimarySkillchain(15);
+		}		
+		if ((m_PWeaponSkill->getPrimarySkillchain() == 6) && m_PChar->StatusEffectContainer->HasStatusEffect(EFFECT_LEVEL_FOUR_SC))
+		{
+			m_PWeaponSkill->setPrimarySkillchain(15);
+		}			
+		if ((m_PWeaponSkill->getPrimarySkillchain() == 8) && m_PChar->StatusEffectContainer->HasStatusEffect(EFFECT_LEVEL_FOUR_SC))
+		{
+			m_PWeaponSkill->setPrimarySkillchain(15);
+		}		
+	    // Level 1 Element with Level 4 Active get bumped to Darkness II
+		if ((m_PWeaponSkill->getPrimarySkillchain() == 2) && m_PChar->StatusEffectContainer->HasStatusEffect(EFFECT_LEVEL_FOUR_SC))
+		{
+			m_PWeaponSkill->setPrimarySkillchain(16);
+		}			
+		if ((m_PWeaponSkill->getPrimarySkillchain() == 4) && m_PChar->StatusEffectContainer->HasStatusEffect(EFFECT_LEVEL_FOUR_SC))
+		{
+			m_PWeaponSkill->setPrimarySkillchain(16);
+		}		
+		if ((m_PWeaponSkill->getPrimarySkillchain() == 5) && m_PChar->StatusEffectContainer->HasStatusEffect(EFFECT_LEVEL_FOUR_SC))
+		{
+			m_PWeaponSkill->setPrimarySkillchain(16);
+		}			
+		if ((m_PWeaponSkill->getPrimarySkillchain() == 7) && m_PChar->StatusEffectContainer->HasStatusEffect(EFFECT_LEVEL_FOUR_SC))
+		{
+			m_PWeaponSkill->setPrimarySkillchain(16);
+		}		
+		
+		
+		//Level 3 Element with Level 4 active gets bumped to Umbra/Radiance
+		if ((m_PWeaponSkill->getPrimarySkillchain() == 13) && m_PChar->StatusEffectContainer->HasStatusEffect(EFFECT_LEVEL_FOUR_SC))
+		{
+			m_PWeaponSkill->setPrimarySkillchain(15);
+		}		
+
+		if ((m_PWeaponSkill->getPrimarySkillchain() == 14) && m_PChar->StatusEffectContainer->HasStatusEffect(EFFECT_LEVEL_FOUR_SC))
+		{
+			m_PWeaponSkill->setPrimarySkillchain(16);
+		}
+
         // NOTE: GetSkillChainEffect is INSIDE this if statement because it
         //  ALTERS the state of the resonance, which misses and non-elemental skills should NOT do.
         SUBEFFECT effect = battleutils::GetSkillChainEffect(m_PBattleSubTarget, GetCurrentWeaponSkill());

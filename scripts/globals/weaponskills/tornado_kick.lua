@@ -39,8 +39,20 @@ function onUseWeaponSkill(player, target, wsID)
 	params.atkmulti = 1;
 	-- Tornado kick is not considered a kick attack and is not modified by Footwork http://www.bluegartr.com/threads/121610-Rehauled-Weapon-Skills-tier-lists?p=6140907&viewfull=1#post6140907
 
+	local mnkha = 0;
+	local pupha = 0;
+
+	if (((player:getEquipID(SLOT_MAIN) == 18764) and player:getVar("MNKHAFight") == 5)) then
+	   mnkha = 1;
+    end	   
+	
+	if (((player:getEquipID(SLOT_MAIN) == 18765) and player:getVar("PUPHAFight") == 5)) then
+	   pupha = 1;
+    end		
+	
+	
 	if (USE_ADOULIN_WEAPON_SKILL_CHANGES == true) then
-		params.ftp100 = 2.25; params.ftp200 = 3.25; params.ftp300 = 7.5;
+		params.ftp100 = 2.25; params.ftp200 = 3.25; params.ftp300 = 0.5;  --7.5
 		params.str_wsc = 0.4; params.dex_wsc = 0.4; params.vit_wsc = 0.0; params.agi_wsc = 0.0; params.int_wsc = 0.0; params.mnd_wsc = 0.0; params.chr_wsc = 0.0;
 		params.atkmulti = 1.5;
 	end
@@ -48,12 +60,24 @@ function onUseWeaponSkill(player, target, wsID)
 	local damage, criticalHit, tpHits, extraHits = doPhysicalWeaponskill(player, target, params);
 	if((player:getEquipID(SLOT_MAIN) == 18764) or (player:getEquipID(SLOT_MAIN) == 18765)) then
 		if(damage > 0) then
-			if(player:getTP() >= 100 and player:getTP() < 200 and ((player:hasStatusEffect(EFFECT_AFTERMATH_LV2) == false) and (player:hasStatusEffect(EFFECT_AFTERMATH_LV3) == false))) then
-				player:addStatusEffect(EFFECT_AFTERMATH_LV1, 5, 0, 30, 0, 13);
-			elseif(player:getTP() >= 200 and player:getTP() < 300 and (player:hasStatusEffect(EFFECT_AFTERMATH_LV3) == false)) then
-				player:addStatusEffect(EFFECT_AFTERMATH_LV2, 7, 0, 45, 0, 13);
+			if(player:getTP() >= 100 and player:getTP() < 200) then
+		        if (((mnkha == 1) or (pupha == 1)) and (player:hasStatusEffect(EFFECT_AFTERMATH_PLUSHA3) == false) and (player:hasStatusEffect(EFFECT_LEVEL_TWO_SC) == false) 
+				    and (player:hasStatusEffect(EFFECT_LEVEL_THREE_SC) == false) and (player:hasStatusEffect(EFFECT_LEVEL_FOUR_SC) == false)) then
+			        player:addStatusEffectEx(EFFECT_AFTERMATH_PLUSHA1,EFFECT_AFTERMATH_LV1,0,3,60);
+                end							
+				player:addStatusEffect(EFFECT_AFTERMATH, 7, 3, 20, 0, 13);
+			elseif(player:getTP() >= 200 and player:getTP() < 300) then
+		        if (((mnkha == 1) or (pupha == 1)) and (player:hasStatusEffect(EFFECT_AFTERMATH_PLUSHA3) == false) and (player:hasStatusEffect(EFFECT_LEVEL_TWO_SC) == false) 
+				    and (player:hasStatusEffect(EFFECT_LEVEL_THREE_SC) == false) and (player:hasStatusEffect(EFFECT_LEVEL_FOUR_SC) == false)) then
+			        player:addStatusEffectEx(EFFECT_AFTERMATH_PLUSHA2,EFFECT_AFTERMATH_LV2,0,3,60);
+                end				
+				player:addStatusEffect(EFFECT_AFTERMATH, 7, 3, 40, 0, 13);
 			elseif(player:getTP() == 300) then
-				player:addStatusEffect(EFFECT_AFTERMATH_LV3, 10, 0, 60, 0, 13);
+		        if (((mnkha == 1) or (pupha == 1)) and (player:hasStatusEffect(EFFECT_AFTERMATH_PLUSHA3) == false) and (player:hasStatusEffect(EFFECT_LEVEL_TWO_SC) == false) 
+				    and (player:hasStatusEffect(EFFECT_LEVEL_THREE_SC) == false) and (player:hasStatusEffect(EFFECT_LEVEL_FOUR_SC) == false)) then
+			        player:addStatusEffectEx(EFFECT_AFTERMATH_PLUSHA3,EFFECT_AFTERMATH_LV3,0,3,60);
+                end				
+				player:addStatusEffect(EFFECT_AFTERMATH, 7, 3, 60, 0, 13);
 			end		
 		
 		end

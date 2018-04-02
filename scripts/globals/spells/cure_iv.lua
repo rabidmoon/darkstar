@@ -6,6 +6,7 @@
 require("scripts/globals/settings");
 require("scripts/globals/status");
 require("scripts/globals/magic");
+require("scripts/globals/besiegedhelper");
 
 -----------------------------------------
 -- OnSpellCast
@@ -124,6 +125,9 @@ function onSpellCast(caster,target,spell)
             end
             target:addHP(final);
 		end
+	end
+	if (caster:hasStatusEffect(EFFECT_BESIEGED) == true) then
+    besiegedCurePoints(caster,final)	
 	end
 	return final;
 end;

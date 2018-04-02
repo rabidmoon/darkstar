@@ -34,15 +34,44 @@ function onUseWeaponSkill(player, target, wsID)
 	end
 
 	local damage, criticalHit, tpHits, extraHits = doMagicWeaponskill(player, target, params);
+	
+	local blmha = 0;
+	local smnha = 0;
+	local schha = 0;
+	if (((player:getEquipID(SLOT_MAIN) == 18589) and player:getVar("BLMHAFight") == 5)) then
+	   blmha = 1;
+    end	   
+	
+	if (((player:getEquipID(SLOT_MAIN) == 18601) and player:getVar("SMNHAFight") == 5)) then
+	   smnha = 1;
+    end	   
+	
+	if (((player:getEquipID(SLOT_MAIN) == 18602) and player:getVar("SCHHAFight") == 5)) then
+	   schha = 1;
+	end	
+	
+	
 	if((player:getEquipID(SLOT_MAIN) == 18589) or (player:getEquipID(SLOT_MAIN) == 18601) or (player:getEquipID(SLOT_MAIN) == 18602)) then
 		if(damage > 0) then
-			if(player:getTP() >= 100 and player:getTP() < 200 and ((player:hasStatusEffect(EFFECT_AFTERMATH_LV2) == false) and (player:hasStatusEffect(EFFECT_AFTERMATH_LV3) == false))) then
-				player:addStatusEffect(EFFECT_AFTERMATH_LV1, 5, 0, 30, 0, 13);
-			elseif(player:getTP() >= 200 and player:getTP() < 300 and (player:hasStatusEffect(EFFECT_AFTERMATH_LV3) == false)) then
-				player:addStatusEffect(EFFECT_AFTERMATH_LV2, 7, 0, 45, 0, 13);
+			if(player:getTP() >= 100 and player:getTP() < 200) then
+		        if (((blmha == 1) or (smnha == 1) or (schha == 1)) and (player:hasStatusEffect(EFFECT_AFTERMATH_PLUSHA3) == false) and (player:hasStatusEffect(EFFECT_LEVEL_TWO_SC) == false) 
+				    and (player:hasStatusEffect(EFFECT_LEVEL_THREE_SC) == false) and (player:hasStatusEffect(EFFECT_LEVEL_FOUR_SC) == false)) then
+			        player:addStatusEffectEx(EFFECT_AFTERMATH_PLUSHA1,EFFECT_AFTERMATH_LV1,0,3,60);
+                end							
+				player:addStatusEffect(EFFECT_AFTERMATH, 7, 3, 20, 0, 13);
+			elseif(player:getTP() >= 200 and player:getTP() < 300) then
+		        if (((blmha == 1) or (smnha == 1) or (schha == 1)) and (player:hasStatusEffect(EFFECT_AFTERMATH_PLUSHA3) == false) and (player:hasStatusEffect(EFFECT_LEVEL_TWO_SC) == false) 
+				    and (player:hasStatusEffect(EFFECT_LEVEL_THREE_SC) == false) and (player:hasStatusEffect(EFFECT_LEVEL_FOUR_SC) == false)) then
+			        player:addStatusEffectEx(EFFECT_AFTERMATH_PLUSHA2,EFFECT_AFTERMATH_LV2,0,3,60);
+                end				
+				player:addStatusEffect(EFFECT_AFTERMATH, 7, 3, 40, 0, 13);
 			elseif(player:getTP() == 300) then
-				player:addStatusEffect(EFFECT_AFTERMATH_LV3, 10, 0, 60, 0, 13);
-			end		
+		        if (((blmha == 1) or (smnha == 1) or (schha == 1)) and (player:hasStatusEffect(EFFECT_AFTERMATH_PLUSHA3) == false) and (player:hasStatusEffect(EFFECT_LEVEL_TWO_SC) == false) 
+				    and (player:hasStatusEffect(EFFECT_LEVEL_THREE_SC) == false) and (player:hasStatusEffect(EFFECT_LEVEL_FOUR_SC) == false)) then
+			        player:addStatusEffectEx(EFFECT_AFTERMATH_PLUSHA3,EFFECT_AFTERMATH_LV3,0,3,60);
+                end				
+				player:addStatusEffect(EFFECT_AFTERMATH, 7, 3, 60, 0, 13);
+			end				
 		
 		end
 	end	

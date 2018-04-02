@@ -30,6 +30,46 @@ end;
 -----------------------------------
 
 function onEffectTick(target,effect)
+
+    -- Add/Remove Buffs based on trigger points
+	-- Trigger Points Based on Consectutive wins
+    local subPower = effect:getSubPower(); 
+	local power = effect:getPower(); -- 1 = regen, 2 = refresh, 3 = food.
+	local duration = target:getStatusEffect(EFFECT_SANCTION):getDuration();
+	local hp = target:getHP();
+	local mp = target:getMP();
+	
+	-- HP Regen
+	if (power == 1) then
+	    if (hp < subPower and target:hasStatusEffect(EFFECT_REGEN) == false) then -- Trigger Regen
+        	target:addStatusEffect(EFFECT_REGEN,1,3,duration);
+		elseif (hp >= subPower and target:hasStatusEffect(EFFECT_REGEN) == true) then -- Remove regen
+		    target:delStatusEffect(EFFECT_REGEN);
+		end
+	end
+	
+	-- MP Refresh
+	if (power == 2) then
+	    if (mp < subPower and target:hasStatusEffect(EFFECT_REFRESH) == false) then -- Trigger Regen
+        	target:addStatusEffect(EFFECT_REFRESH,1,3,duration);
+		elseif (mp >= subPower and target:hasStatusEffect(EFFECT_REFRESH) == true) then -- Remove regen
+		    target:delStatusEffect(EFFECT_REFRESH);
+		end
+	end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 end;
 
 -----------------------------------

@@ -139,7 +139,7 @@ namespace battleutils
 
     void LoadWeaponSkillsList()
     {
-        const int8* fmtQuery = "SELECT weaponskillid, name, jobs, type, skilllevel, element, animation, `range`, aoe, primary_sc, secondary_sc, tertiary_sc, main_only \
+        const int8* fmtQuery = "SELECT weaponskillid, name, jobs, type, skilllevel, element, animation, `range`, aoe, primary_sc, secondary_sc, tertiary_sc, quaternary_sc, quinary_sc, senary_sc, main_only \
 							FROM weapon_skills \
 							WHERE weaponskillid < %u \
 							ORDER BY type, skilllevel ASC";
@@ -163,7 +163,10 @@ namespace battleutils
                 PWeaponSkill->setPrimarySkillchain(Sql_GetIntData(SqlHandle, 9));
                 PWeaponSkill->setSecondarySkillchain(Sql_GetIntData(SqlHandle, 10));
                 PWeaponSkill->setTertiarySkillchain(Sql_GetIntData(SqlHandle, 11));
-                PWeaponSkill->setMainOnly(Sql_GetIntData(SqlHandle, 12));
+                PWeaponSkill->setQuaternarySkillchain(Sql_GetIntData(SqlHandle, 12));
+                PWeaponSkill->setQuinarySkillchain(Sql_GetIntData(SqlHandle, 13));
+                PWeaponSkill->setSenarySkillchain(Sql_GetIntData(SqlHandle, 14));				
+                PWeaponSkill->setMainOnly(Sql_GetIntData(SqlHandle, 15));
 
                 g_PWeaponSkillList[PWeaponSkill->getID()] = PWeaponSkill;
                 g_PWeaponSkillsList[PWeaponSkill->getType()].push_back(PWeaponSkill);
@@ -2961,8 +2964,8 @@ namespace battleutils
                 {
                     // Level 4 Pairs
 					// TODO -> Change it to LIGHT_II to LIGHT_II this way relics can't 3 step it for Radiance/Umbra
-					case PAIR(SC_LIGHT_II, SC_LIGHT): return SC_RADIANCE;     break; // -> Lv5
-					case PAIR(SC_DARKNESS_II, SC_DARKNESS): return SC_UMBRA;     break; // -> Lv5
+					case PAIR(SC_LIGHT_II, SC_LIGHT_II): return SC_RADIANCE;     break; // -> Lv5
+					case PAIR(SC_DARKNESS_II, SC_DARKNESS_II): return SC_UMBRA;     break; // -> Lv5
 					
                     // Level 3 Pairs
                     case PAIR(SC_LIGHT, SC_LIGHT): return SC_LIGHT_II;      break; // -> Lv4
@@ -3023,6 +3026,9 @@ namespace battleutils
         CStatusEffect* PCBEffect = PDefender->StatusEffectContainer->GetStatusEffect(EFFECT_CHAINBOUND, 0);
         SKILLCHAIN_ELEMENT skillchain = SC_NONE;
 
+	
+		
+
         if (PSCEffect == nullptr && PCBEffect == nullptr)
         {
             // No effect exists, apply an effect using the weaponskill ID as the power with a tier of 0.
@@ -3032,9 +3038,33 @@ namespace battleutils
         else
         {
             std::list<SKILLCHAIN_ELEMENT> skillProperties;
-            skillProperties.push_back((SKILLCHAIN_ELEMENT)PWeaponSkill->getPrimarySkillchain());
-            skillProperties.push_back((SKILLCHAIN_ELEMENT)PWeaponSkill->getSecondarySkillchain());
-            skillProperties.push_back((SKILLCHAIN_ELEMENT)PWeaponSkill->getTertiarySkillchain());
+
+            if (PWeaponSkill->getPrimarySkillchain() == 9 || PWeaponSkill->getPrimarySkillchain() == 10 ||
+			    PWeaponSkill->getPrimarySkillchain() == 11 || PWeaponSkill->getPrimarySkillchain() == 12)
+			{
+               skillProperties.push_back((SKILLCHAIN_ELEMENT)PWeaponSkill->getQuaternarySkillchain());			
+               skillProperties.push_back((SKILLCHAIN_ELEMENT)PWeaponSkill->getPrimarySkillchain());
+               skillProperties.push_back((SKILLCHAIN_ELEMENT)PWeaponSkill->getSecondarySkillchain());
+			}			
+            else if (PWeaponSkill->getPrimarySkillchain() == 13 || PWeaponSkill->getPrimarySkillchain() == 14)
+			{
+               skillProperties.push_back((SKILLCHAIN_ELEMENT)PWeaponSkill->getQuinarySkillchain());			
+               skillProperties.push_back((SKILLCHAIN_ELEMENT)PWeaponSkill->getPrimarySkillchain());
+               skillProperties.push_back((SKILLCHAIN_ELEMENT)PWeaponSkill->getSecondarySkillchain());
+			}					
+            else if (PWeaponSkill->getPrimarySkillchain() == 15 || PWeaponSkill->getPrimarySkillchain() == 16)
+			{
+               skillProperties.push_back((SKILLCHAIN_ELEMENT)PWeaponSkill->getSenarySkillchain());			
+               skillProperties.push_back((SKILLCHAIN_ELEMENT)PWeaponSkill->getPrimarySkillchain());
+               skillProperties.push_back((SKILLCHAIN_ELEMENT)PWeaponSkill->getSecondarySkillchain());
+			}
+            else
+			{
+               skillProperties.push_back((SKILLCHAIN_ELEMENT)PWeaponSkill->getPrimarySkillchain());
+               skillProperties.push_back((SKILLCHAIN_ELEMENT)PWeaponSkill->getSecondarySkillchain());
+			   skillProperties.push_back((SKILLCHAIN_ELEMENT)PWeaponSkill->getTertiarySkillchain());
+			}
+            //skillProperties.push_back((SKILLCHAIN_ELEMENT)PWeaponSkill->getTertiarySkillchain());
 
             std::list<SKILLCHAIN_ELEMENT> resonanceProperties;
 
@@ -3077,9 +3107,31 @@ namespace battleutils
                 {
                     if (PSCEffect->GetPower())
                     {
-                        resonanceProperties.push_back((SKILLCHAIN_ELEMENT)g_PWeaponSkillList[PSCEffect->GetPower()]->getPrimarySkillchain());
-                        resonanceProperties.push_back((SKILLCHAIN_ELEMENT)g_PWeaponSkillList[PSCEffect->GetPower()]->getSecondarySkillchain());
-                        resonanceProperties.push_back((SKILLCHAIN_ELEMENT)g_PWeaponSkillList[PSCEffect->GetPower()]->getTertiarySkillchain());
+					    if (PWeaponSkill->getPrimarySkillchain() == 9 || PWeaponSkill->getPrimarySkillchain() == 10 ||
+			                PWeaponSkill->getPrimarySkillchain() == 11 || PWeaponSkill->getPrimarySkillchain() == 12)
+						{
+                            resonanceProperties.push_back((SKILLCHAIN_ELEMENT)g_PWeaponSkillList[PSCEffect->GetPower()]->getQuaternarySkillchain());
+                            resonanceProperties.push_back((SKILLCHAIN_ELEMENT)g_PWeaponSkillList[PSCEffect->GetPower()]->getPrimarySkillchain());
+                            resonanceProperties.push_back((SKILLCHAIN_ELEMENT)g_PWeaponSkillList[PSCEffect->GetPower()]->getSecondarySkillchain());				        
+			            }
+						else if (PWeaponSkill->getPrimarySkillchain() == 13 || PWeaponSkill->getPrimarySkillchain() == 14)
+						{
+                            resonanceProperties.push_back((SKILLCHAIN_ELEMENT)g_PWeaponSkillList[PSCEffect->GetPower()]->getQuinarySkillchain());
+                            resonanceProperties.push_back((SKILLCHAIN_ELEMENT)g_PWeaponSkillList[PSCEffect->GetPower()]->getPrimarySkillchain());
+                            resonanceProperties.push_back((SKILLCHAIN_ELEMENT)g_PWeaponSkillList[PSCEffect->GetPower()]->getSecondarySkillchain());				        
+			            }						
+						else if (PWeaponSkill->getPrimarySkillchain() == 15 || PWeaponSkill->getPrimarySkillchain() == 16)
+			            {
+                            resonanceProperties.push_back((SKILLCHAIN_ELEMENT)g_PWeaponSkillList[PSCEffect->GetPower()]->getSenarySkillchain());
+                            resonanceProperties.push_back((SKILLCHAIN_ELEMENT)g_PWeaponSkillList[PSCEffect->GetPower()]->getPrimarySkillchain());
+                            resonanceProperties.push_back((SKILLCHAIN_ELEMENT)g_PWeaponSkillList[PSCEffect->GetPower()]->getSecondarySkillchain());				        
+			            }
+                        else
+			            {
+                            resonanceProperties.push_back((SKILLCHAIN_ELEMENT)g_PWeaponSkillList[PSCEffect->GetPower()]->getPrimarySkillchain());
+                            resonanceProperties.push_back((SKILLCHAIN_ELEMENT)g_PWeaponSkillList[PSCEffect->GetPower()]->getSecondarySkillchain());
+                            resonanceProperties.push_back((SKILLCHAIN_ELEMENT)g_PWeaponSkillList[PSCEffect->GetPower()]->getTertiarySkillchain());
+			            }
                     }
                     else
                     {

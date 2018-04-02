@@ -23,7 +23,7 @@ end;
 function onEffectTick(target,effect)
  local duration = target:getStatusEffect(EFFECT_LEVEL_RESTRICTION):getTimeRemaining();
  local zone = target:getZoneID();
- target:PrintToPlayer("Tick");
+ -- target:PrintToPlayer("Tick");
  
   
  

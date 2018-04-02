@@ -1878,7 +1878,7 @@ INSERT INTO `mob_skills` VALUES (1818,1415,'Detonating_grip',0,7.0,2000,1000,4,0
 -- INSERT INTO `mob_skills` VALUES (1830,1830,'Grim_Reaper',0,7.0,2000,1500,4,0,0,0);
 -- INSERT INTO `mob_skills` VALUES (1831,1831,'.',0,7.0,2000,1500,4,0,0,0);
 -- INSERT INTO `mob_skills` VALUES (1832,1832,'Victory_Beacon',0,7.0,2000,1500,4,0,0,0);
--- INSERT INTO `mob_skills` VALUES (1833,1833,'Salamander_Flame',0,7.0,2000,1500,4,0,0,0);
+INSERT INTO `mob_skills` VALUES (1833,1428,'Salamander_Flame',0,7.0,2000,1500,4,0,0,0);
 INSERT INTO `mob_skills` VALUES (1834,1429,'Typhonic_Arrow',0,15.0,2000,1500,4,0,0,0);
 -- INSERT INTO `mob_skills` VALUES (1835,1835,'Meteoric_Impact',0,7.0,2000,1500,4,0,0,0);
 -- INSERT INTO `mob_skills` VALUES (1836,1836,'Scouring_Bubbles',0,7.0,2000,1500,4,0,0,0);
@@ -1923,11 +1923,11 @@ INSERT INTO `mob_skills` VALUES (1870,151,'Zantetsuken',4,10.0,2000,1000,4,0,0,0
 -- INSERT INTO `mob_skills` VALUES (1875,1875,'.',0,7.0,2000,1500,4,0,0,0);
 -- INSERT INTO `mob_skills` VALUES (1876,1876,'Replicator',0,7.0,2000,1500,4,0,0,0);
 -- INSERT INTO `mob_skills` VALUES (1877,1877,'Liar's_Dice',0,7.0,2000,1500,4,0,0,0);
--- INSERT INTO `mob_skills` VALUES (1878,1878,'Victory_Beacon',0,7.0,2000,1500,4,0,0,0);
--- INSERT INTO `mob_skills` VALUES (1879,1879,'Salamander_Flame',0,7.0,2000,1500,4,0,0,0);
--- INSERT INTO `mob_skills` VALUES (1880,1880,'Typhonic_Arrow',0,7.0,2000,1500,4,0,0,0);
--- INSERT INTO `mob_skills` VALUES (1881,1881,'Meteoric_Impact',0,7.0,2000,1500,4,0,0,0);
--- INSERT INTO `mob_skills` VALUES (1882,1882,'Scouring_Bubbles',0,7.0,2000,1500,4,0,0,0);
+INSERT INTO `mob_skills` VALUES (1878,1427,'Victory_Beacon',0,7.0,2000,1500,4,0,0,0);
+INSERT INTO `mob_skills` VALUES (1879,1428,'Salamander_Flame',0,7.0,2000,1500,4,0,0,0);
+INSERT INTO `mob_skills` VALUES (1880,1429,'Typhonic_Arrow',0,7.0,2000,1500,4,0,0,0);
+INSERT INTO `mob_skills` VALUES (1881,1430,'Meteoric_Impact',0,7.0,2000,1500,4,0,0,0);
+INSERT INTO `mob_skills` VALUES (1882,1431,'Scouring_Bubbles',0,7.0,2000,1500,4,0,0,0);
 -- INSERT INTO `mob_skills` VALUES (1883,1883,'Doom',0,7.0,2000,1500,4,0,0,0);
 -- INSERT INTO `mob_skills` VALUES (1884,1884,'Peacebreaker',0,7.0,2000,1500,4,0,0,0);
 -- INSERT INTO `mob_skills` VALUES (1885,1885,'Radiant_Sacrament',0,7.0,2000,1500,4,0,0,0);
@@ -2992,7 +2992,7 @@ INSERT INTO `mob_skills` VALUES (2936,200,'Vorpal_Blade',0,7.0,2000,1500,4,0,0,0
 -- INSERT INTO `mob_skills` VALUES (2944,2944,'Powder_Keg',0,7.0,2000,1500,4,0,0,0);
 -- INSERT INTO `mob_skills` VALUES (2945,2945,'Walk_the_Plank',0,7.0,2000,1500,4,0,0,0);
 -- INSERT INTO `mob_skills` VALUES (2946,2946,'Uriel_Blade',0,7.0,2000,1500,4,0,0,0);
--- INSERT INTO `mob_skills` VALUES (2947,2947,'Scouring_Bubbles',0,7.0,2000,1500,4,0,0,0);
+INSERT INTO `mob_skills` VALUES (2947,1431,'Scouring_Bubbles',1,7.0,2000,1500,4,0,0,0);
 -- INSERT INTO `mob_skills` VALUES (2948,2948,'Amatsu_Tsukikage',0,7.0,2000,1500,4,0,0,0);
 -- INSERT INTO `mob_skills` VALUES (2949,2949,'Berserk-Ruf',0,7.0,2000,1500,4,0,0,0);
 -- INSERT INTO `mob_skills` VALUES (2950,2950,'Astral_Distortion',0,7.0,2000,1500,4,0,0,0);
@@ -3028,7 +3028,7 @@ INSERT INTO `mob_skills` VALUES (2965,2302,'Atramentous_Libations',1,18.0,2000,1
 -- INSERT INTO `mob_skills` VALUES (2980,2980,'Knuckle_Sandwich',0,7.0,2000,1500,4,0,0,0);
 -- INSERT INTO `mob_skills` VALUES (2981,2981,'Victory_Beacon',0,7.0,2000,1500,4,0,0,0);
 -- INSERT INTO `mob_skills` VALUES (2982,2982,'Salamander_Flame',0,7.0,2000,1500,4,0,0,0);
--- INSERT INTO `mob_skills` VALUES (2983,2983,'Typhonic_Arrow',0,7.0,2000,1500,4,0,0,0);
+INSERT INTO `mob_skills` VALUES (2983,1429,'Typhonic_Arrow',0,7.0,2000,1500,4,0,0,0);
 -- INSERT INTO `mob_skills` VALUES (2984,2984,'Meteoric_Impact',0,7.0,2000,1500,4,0,0,0);
 -- INSERT INTO `mob_skills` VALUES (2985,2985,'Shining_Salvo',0,7.0,2000,1500,4,0,0,0);
 -- INSERT INTO `mob_skills` VALUES (2986,2986,'Palling_Salvo',0,7.0,2000,1500,4,0,0,0);

@@ -600,6 +600,7 @@ CZone* CreateZone(uint16 ZoneID)
         ShowFatalError(CL_RED"zoneutils::CreateZone: Cannot load zone settings (%u)\n" CL_RESET, ZoneID);
         return nullptr;
     }
+
 }
 
 /************************************************************************

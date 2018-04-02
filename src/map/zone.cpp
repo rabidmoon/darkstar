@@ -131,7 +131,10 @@ int32 zone_update_weather(uint32 tick, CTaskMgr::CTask* PTask)
 
 CZone::CZone(ZONEID ZoneID, REGIONTYPE RegionID, CONTINENTTYPE ContinentID)
 {
+    if (ZoneID != 54)
+	{
     ZoneTimer = nullptr;
+	}
 
     m_zoneID = ZoneID;
     m_zoneType = ZONETYPE_NONE;
@@ -145,6 +148,24 @@ CZone::CZone(ZONEID ZoneID, REGIONTYPE RegionID, CONTINENTTYPE ContinentID)
     m_navMesh = nullptr;
     m_zoneEntities = new CZoneEntities(this);
 
+	if (m_zoneID == 48)
+	{
+		createZoneTimer();
+	}
+	if (m_zoneID == 54)
+	{
+		createZoneTimer();
+	}
+
+	if (m_zoneID == 62)
+	{
+		createZoneTimer();
+	}	
+	
+	if (m_zoneID == 65)
+	{
+		createZoneTimer();
+	}	
     // settings should load first
     LoadZoneSettings();
 
@@ -579,11 +600,11 @@ void CZone::DecreaseZoneCounter(CCharEntity* PChar)
 {
     m_zoneEntities->DecreaseZoneCounter(PChar);
 
-    if (ZoneTimer && m_zoneEntities->CharListEmpty())
+    if (ZoneTimer && m_zoneEntities->CharListEmpty() && m_zoneID != 48 && m_zoneID != 54 && m_zoneID != 62 && m_zoneID != 65)
     {
         ZoneTimer->m_type = CTaskMgr::TASK_REMOVE;
         ZoneTimer = nullptr;
-
+        // This seems to cause all mobs to heal when no one is in the zone... WHY??
         m_zoneEntities->HealAllMobs();
     }
     else

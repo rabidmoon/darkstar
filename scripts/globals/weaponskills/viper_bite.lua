@@ -20,7 +20,9 @@ require("scripts/globals/weaponskills");
 -----------------------------------
 
 function onUseWeaponSkill(player, target, wsID)
-
+   -- player:setWeaponskillElement(14);
+	local SCProp1, SCProp2, SCProp3 = player:getWSSkillchainProp();
+	printf("Weaponskill ID is %u", SCProp1);
 	local params = {};
 	params.numHits = 1;
 	params.ftp100 = 1; params.ftp200 = 1; params.ftp300 = 1;
@@ -38,6 +40,7 @@ function onUseWeaponSkill(player, target, wsID)
 
 	if damage > 0 then
 		local tp = player:getTP();
+
 		local duration = (tp/100 * 60) + 30;
 		if (target:hasStatusEffect(EFFECT_POISON) == false) then
 			target:addStatusEffect(EFFECT_POISON, 3, 0, duration);

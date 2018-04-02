@@ -148,9 +148,7 @@ local job = player:getMainJob();
 			player:PrintToPlayer("Netblyx : You are almost done.  Here you go.", 0xD);
 			player:addItem(18263, 1); 
 			player:setVar("MNKRelicweapon", 7);
-			player:messageSpecial(ITEM_OBTAINED, 18263);			
-	elseif (job == 2) and (trade:hasItemQty(18263, 1)) and (player:getVar("MNKRelicweapon") == 7) then
-			player:PrintToPlayer("Netblyx : Your weapon speaks...Xarcabard...Frag...Netblyx has no clue", 0xD);		
+			player:messageSpecial(ITEM_OBTAINED, 18263);				
     end	
 	if (job == 2) and (trade:hasItemQty(17478, 1)) and (player:getVar("MNKAFweapon") == 3) then
 			player:PrintToPlayer("Netblyx : I can make this into a Spharai...eventually with 10 Montiont Silverpieces", 0xD);		
@@ -229,9 +227,7 @@ if (job == 3) and (trade:hasItemQty(17422, 1)) and trade:hasItemQty( 1453, 10 ) 
 			player:PrintToPlayer("Netblyx : Here you go.", 0xD);
 			player:addItem(18323, 1); 
 			player:setVar("WHMRelicweapon", 7);
-			player:messageSpecial(ITEM_OBTAINED, 18323);			
-	elseif (job == 3) and (trade:hasItemQty(18323, 1)) and (player:getVar("WHMRelicweapon") == 7) then
-			player:PrintToPlayer("Netblyx : Your weapon speaks...Xarcabard...Frag...Netblyx has no clue", 0xD);		
+			player:messageSpecial(ITEM_OBTAINED, 18323);				
     end
 	if (job == 3) and (trade:hasItemQty(17422, 1)) and (player:getVar("WHMAFweapon") == 3) then
 			player:PrintToPlayer("Netblyx : I can make this into a Mjolnir...eventually with 10 Montiont Silverpieces", 0xD);
@@ -309,9 +305,7 @@ if (job == 4) and (trade:hasItemQty(17572, 1)) and trade:hasItemQty( 1450, 10 ) 
 			player:PrintToPlayer("Netblyx : Here you go.", 0xD);
 			player:addItem(18329, 1); 
 			player:setVar("BLMRelicweapon", 7);
-			player:messageSpecial(ITEM_OBTAINED, 18329);				
-	elseif (job == 4) and (trade:hasItemQty(18329, 1)) and (player:getVar("BLMRelicweapon") == 7) then
-			player:PrintToPlayer("Netblyx : Your weapon speaks...Xarcabard...Frag...Netblyx has no clue", 0xD);		
+			player:messageSpecial(ITEM_OBTAINED, 18329);					
     end
 	if (job == 4) and (trade:hasItemQty(17572, 1)) and (player:getVar("BLMAFweapon") == 3) then
 			player:PrintToPlayer("Netblyx : I can make this into an Claustrum...eventually with 10 L.Jadeshells", 0xD);		
@@ -388,8 +382,6 @@ if (job == 5) and (trade:hasItemQty(16829, 1)) and trade:hasItemQty( 1456, 10 ) 
 			player:addItem(18275, 1); 
 			player:setVar("RDMRelicweapon", 7);
 			player:messageSpecial(ITEM_OBTAINED, 18275);			
-	elseif (job == 5) and (trade:hasItemQty(18274, 1)) and (player:getVar("RDMRelicweapon") == 7) then
-			player:PrintToPlayer("Netblyx : Your weapon speaks...Xarcabard...Frag...Netblyx has no clue", 0xD);	
     end	
 	if (job == 5) and (trade:hasItemQty(16829, 1)) and (player:getVar("RDMAFweapon") == 3) then
 			player:PrintToPlayer("Netblyx : I can make this into an Excalibur...eventually with 10 Montiont Silverpices.", 0xD);	
@@ -464,11 +456,9 @@ if (job == 6) and (trade:hasItemQty(16764, 1)) and trade:hasItemQty( 1453, 10 ) 
              -- Complete the trade..
             player:tradeComplete();
 			player:PrintToPlayer("Netblyx : Here you go.", 0xD);
-			player:addItem(18267, 1); 
+			player:addItem(18269, 1); 
 			player:setVar("THFRelicweapon", 7);
-			player:messageSpecial(ITEM_OBTAINED, 18267);						
-	elseif (job == 6) and (trade:hasItemQty(18268, 1)) and (player:getVar("THFRelicweapon") == 7) then
-			player:PrintToPlayer("Netblyx : Your weapon speaks...Xarcabard...Frag...Netblyx has no clue", 0xD);		
+			player:messageSpecial(ITEM_OBTAINED, 18269);							
     end		
 	if (job == 6) and (trade:hasItemQty(16764, 1)) and (player:getVar("THFAFweapon") == 3) then
 			player:PrintToPlayer("Netblyx : I can make this into a Mandau...eventually with 10 Montiont Silverpieces", 0xD);	
@@ -545,9 +535,7 @@ if (job == 7) and (trade:hasItemQty(17643, 1)) and trade:hasItemQty( 1453, 10 ) 
 			player:PrintToPlayer("Netblyx : Here you go.", 0xD);
 			player:addItem(18275, 1); 
 			player:setVar("PLDRelicweapon", 7);
-			player:messageSpecial(ITEM_OBTAINED, 18275);			
-	elseif (job == 7) and (trade:hasItemQty(18274, 1)) and (player:getVar("PLDRelicweapon") == 7) then
-			player:PrintToPlayer("Netblyx : Your weapon speaks...Xarcabard...Frag...Netblyx has no clue", 0xD);			
+			player:messageSpecial(ITEM_OBTAINED, 18275);					
     end	
 	if (job == 7) and (trade:hasItemQty(17643, 1)) and (player:getVar("PLDAFweapon") == 3) then
 			player:PrintToPlayer("Netblyx : I can make this into an Excalibur...eventually with 10 Montiont Silverpieces.", 0xD);	
@@ -705,9 +693,7 @@ if (job == 8) and (trade:hasItemQty(16798, 1)) and trade:hasItemQty( 1450, 10 ) 
 			player:PrintToPlayer("Netblyx : Here you go.", 0xD);
 			player:addItem(18305, 1); 
 			player:setVar("DRKRelicweapon", 7);
-			player:messageSpecial(ITEM_OBTAINED, 18305);			
-	elseif (job == 8) and (trade:hasItemQty(18304, 1)) and (player:getVar("DRKRelicweapon") == 7) then
-			player:PrintToPlayer("Netblyx : Your weapon speaks...Xarcabard...Frag...Netblyx has no clue", 0xD);			
+			player:messageSpecial(ITEM_OBTAINED, 18305);					
     end		
 	if (job == 8) and (trade:hasItemQty(16798, 1)) and (player:getVar("DRKAFweapon") == 3) then
 			player:PrintToPlayer("Netblyx : I can make this into an Apocalypse...eventually with 10 L.Jadeshells.", 0xD);	
@@ -723,7 +709,7 @@ if (job == 8) and (trade:hasItemQty(16798, 1)) and trade:hasItemQty( 1450, 10 ) 
 			player:PrintToPlayer("Netblyx : I can make this into an Apocalypse...eventually with 60 L.Jadeshells.", 0xD);
 	elseif (job == 8) and (trade:hasItemQty(18304, 1)) and (player:getVar("DRKRelicweapon") == 6) then
 			player:PrintToPlayer("Netblyx : Bring me 70 Montiont Silverpieces and an Attestation of Vigor", 0xD);
-	elseif (job == 8) and (trade:hasItemQty(18304, 1)) and (player:getVar("DRKRelicweapon") == 6) then
+	elseif (job == 8) and (trade:hasItemQty(18305, 1)) and (player:getVar("DRKRelicweapon") == 6) then
 			player:PrintToPlayer("Netblyx : Get a Tenebrous Fragment, Necropsyche and R. Stripeshell and go to N. Gustaberg.", 0xD);
             player:setVar("RELIC_IN_PROGRESS",4);				
 			
@@ -787,9 +773,7 @@ if (job == 8) and (trade:hasItemQty(16590, 1)) and trade:hasItemQty( 1450, 10 ) 
 			player:PrintToPlayer("Netblyx : Here you go.", 0xD);
 			player:addItem(18281, 1); 
 			player:setVar("DRKRelicweapongs", 7);
-			player:messageSpecial(ITEM_OBTAINED, 18281);			
-	elseif (job == 8) and (trade:hasItemQty(18280, 1)) and (player:getVar("DRKRelicweapongsgs") == 7) then
-			player:PrintToPlayer("Netblyx : Your weapon speaks...Xarcabard...Frag...Netblyx has no clue", 0xD);		
+			player:messageSpecial(ITEM_OBTAINED, 18281);				
     end	
 	if (job == 8) and (trade:hasItemQty(16590, 1)) and (player:getVar("DRKAFweapongs") == 3) then
 			player:PrintToPlayer("Netblyx : I can make this into an Ragnarok...eventually with 10 L.Jadeshells", 0xD);	
@@ -866,9 +850,7 @@ if (job == 9) and (trade:hasItemQty(16680, 1)) and trade:hasItemQty( 1450, 10 ) 
 			player:PrintToPlayer("Netblyx : Here you go.", 0xD);
 			player:addItem(18287, 1); 
 			player:setVar("BSTRelicweapon", 7);
-			player:messageSpecial(ITEM_OBTAINED, 18287);			
-	elseif (job == 9) and (trade:hasItemQty(18286, 1)) and (player:getVar("BSTRelicweapon") == 7) then
-			player:PrintToPlayer("Netblyx : Your weapon speaks...Xarcabard...Frag...Netblyx has no clue", 0xD);		
+			player:messageSpecial(ITEM_OBTAINED, 18287);				
     end	
 	if (job == 9) and (trade:hasItemQty(16680, 1)) and (player:getVar("BSTAFweapon") == 3) then
 			player:PrintToPlayer("Netblyx : I can make this into a Guttler...eventually with 10 L.Jadeshells", 0xD);
@@ -945,11 +927,10 @@ if (job == 10) and (trade:hasItemQty(16766, 1)) and trade:hasItemQty( 1453, 10 )
              -- Complete the trade..
             player:tradeComplete();
 			player:PrintToPlayer("Netblyx : Here you go.", 0xD);
-			player:addItem(18267, 1); 
+			player:addItem(18269, 1); 
 			player:setVar("BRDRelicweapon", 7);
-			player:messageSpecial(ITEM_OBTAINED, 18267);				
-	elseif (job == 10) and (trade:hasItemQty(18268, 1)) and (player:getVar("BRDRelicweapon") == 7) then
-			player:PrintToPlayer("Netblyx : Your weapon speaks...Xarcabard...Frag...Netblyx has no clue", 0xD);		
+			player:messageSpecial(ITEM_OBTAINED, 18269);				
+	
     end	
 	if (job == 10) and (trade:hasItemQty(16766, 1)) and (player:getVar("BRDAFweapon") == 3) then
 			player:PrintToPlayer("Netblyx : I can make this into a Mandau...eventually with 10 Montiont Silverpieces", 0xD);
@@ -1039,7 +1020,7 @@ if (job == 10) and (trade:hasItemQty(17352, 1)) and trade:hasItemQty( 1450, 10 )
 			player:PrintToPlayer("Netblyx : I can make this into a Gjallahorn...eventually with 60 L.Jadeshells", 0xD);	
 	elseif (job == 10) and (trade:hasItemQty(18340, 1)) and (player:getVar("BRDRelicweapon") == 6) then
 			player:PrintToPlayer("Netblyx : Bring me 70 One-Hundred Byne Bills and an Attestation of Harmony.", 0xD);				
- 	elseif (job == 10) and (trade:hasItemQty(18340, 1)) and (player:getVar("BRDRelicweapon") == 7) then
+ 	elseif (job == 10) and (trade:hasItemQty(18341, 1)) and (player:getVar("BRDRelicweapon") == 7) then
 			player:PrintToPlayer("Netblyx : Get a Mysternal Fragment, Necropsyche, 10,000 Shells, and go to the Valley of Sorrows.", 0xD);  
             player:setVar("RELIC_IN_PROGRESS",4);				
 	end
@@ -1100,9 +1081,7 @@ if (job == 11) and (trade:hasItemQty(17188, 1)) and trade:hasItemQty( 1450, 10 )
 			player:PrintToPlayer("Netblyx : Here you go.", 0xD);
 			player:addItem(18347, 1); 
 			player:setVar("RNGRelicbowweapon", 7);
-			player:messageSpecial(ITEM_OBTAINED, 18347);			
-	elseif (job == 11) and (trade:hasItemQty(18346, 1)) and (player:getVar("RNGRelicbowweapon") == 7) then
-			player:PrintToPlayer("Netblyx : Your weapon speaks...Xarcabard...Frag...Netblyx has no clue", 0xD);			
+			player:messageSpecial(ITEM_OBTAINED, 18347);					
     end	
 	if (job == 11) and (trade:hasItemQty(17188, 1)) and (player:getVar("RNGAFweaponbow") == 3) then
 			player:PrintToPlayer("Netblyx : I can make this into a Yoichinoyumi...eventually with 10 Montiont Silverpieces", 0xD);
@@ -1118,7 +1097,7 @@ if (job == 11) and (trade:hasItemQty(17188, 1)) and trade:hasItemQty( 1450, 10 )
 			player:PrintToPlayer("Netblyx : I can make this into a Yoichinoyumi...eventually with 60 Montiont Silverpieces", 0xD);	
 	elseif (job == 11) and (trade:hasItemQty(18346, 1)) and (player:getVar("RNGRelicbowweapon") == 6) then
 			player:PrintToPlayer("Netblyx : Bring me 70 100 Hundred Byne Bills and an Attestation of Transcendence", 0xD);	
-	elseif (job == 11) and (trade:hasItemQty(18346, 1)) and (player:getVar("RNGRelicbowweapon") == 7) then
+	elseif (job == 11) and (trade:hasItemQty(18347, 1)) and (player:getVar("RNGRelicbowweapon") == 7) then
 		player:PrintToPlayer("Netblyx : Get a Snarled Fragment, Necropsyche, and an R.Goldpiece and go to Cape Teriggan.", 0xD);
             player:setVar("RELIC_IN_PROGRESS",4);			
     end
@@ -1169,9 +1148,7 @@ if (job == 11) and (trade:hasItemQty(17256, 1)) and trade:hasItemQty( 1456, 10 )
 			player:PrintToPlayer("Netblyx : Here you go.", 0xD);
 			player:addItem(18335, 1); 
 			player:setVar("RNGRelicgunweapon", 7);
-			player:messageSpecial(ITEM_OBTAINED, 18335);				
-	elseif (job == 11) and (trade:hasItemQty(18335, 1)) and (player:getVar("RNGRelicgunweapon") == 7) then
-			player:PrintToPlayer("Netblyx : Your weapon speaks...Glacier, Attest...Netblyx has no clue", 0xD);		
+			player:messageSpecial(ITEM_OBTAINED, 18335);					
     end	
 	if (job == 11) and (trade:hasItemQty(17256, 1)) and (player:getVar("RNGAFweapongun") == 3) then
 			player:PrintToPlayer("Netblyx : I can make this into an Annihilator...eventually with 10 One-Hundred Byne Bills", 0xD);	
@@ -1187,7 +1164,7 @@ if (job == 11) and (trade:hasItemQty(17256, 1)) and trade:hasItemQty( 1456, 10 )
 			player:PrintToPlayer("Netblyx : I can make this into an Annihilator...eventually with 60 One-Hundred Byne Bills", 0xD);	
 	elseif (job == 11) and (trade:hasItemQty(18334, 1)) and (player:getVar("RNGRelicgunweapon") == 6) then
 			player:PrintToPlayer("Netblyx : Bring me 70 L.Jadeshells and an Attestation of Accuracy", 0xD);	
-	elseif (job == 11) and (trade:hasItemQty(18334, 1)) and (player:getVar("RNGRelicgunweapon") == 7) then
+	elseif (job == 11) and (trade:hasItemQty(18335, 1)) and (player:getVar("RNGRelicgunweapon") == 7) then
 		player:PrintToPlayer("Netblyx : Get an Ethereal Fragment, Necropsyche, and a 10,0000 Byne Bill and go to Metalworks", 0xD);	
             player:setVar("RELIC_IN_PROGRESS",4);			
     end
@@ -1246,9 +1223,7 @@ if (job == 12) and (trade:hasItemQty(17597, 1)) and trade:hasItemQty( 1450, 10 )
 			player:PrintToPlayer("Netblyx : Here you go.", 0xD);
 			player:addItem(18329, 1); 
 			player:setVar("SMNRelicweapon", 7);
-			player:messageSpecial(ITEM_OBTAINED, 18329);			
-	elseif (job == 12) and (trade:hasItemQty(18329, 1)) and (player:getVar("SMNRelicweapon") == 7) then
-			player:PrintToPlayer("Netblyx : Your weapon speaks...Xarcabard...Frag...Netblyx has no clue", 0xD);			
+			player:messageSpecial(ITEM_OBTAINED, 18329);					
     end		
 	if (job == 12) and (trade:hasItemQty(17597, 1)) and (player:getVar("SMNAFweapon") == 3) then
 			player:PrintToPlayer("Netblyx : I can make this into an Claustrum...eventually with 10 L.Jadeshells", 0xD);	
@@ -1327,9 +1302,7 @@ if (job == 13) and (trade:hasItemQty(17772, 1)) and trade:hasItemQty(17771, 10) 
 			player:PrintToPlayer("Netblyx : Here you go.", 0xD);
 			player:addItem(18311, 1); 
 			player:setVar("NINRelicweapon", 7);
-			player:messageSpecial(ITEM_OBTAINED, 18311);			
-	elseif (job == 13) and (trade:hasItemQty(18311, 1)) and (player:getVar("NINRelicweapon") == 7) then			
-			player:PrintToPlayer("Netblyx : Your weapon speaks...Xarcabard...Frag...Netblyx has no clue", 0xD);		
+			player:messageSpecial(ITEM_OBTAINED, 18311);				
     end		
 if (job == 13) and (trade:hasItemQty(17771, 1)) and (trade:hasItemQty(17772, 1)) and (player:getVar("NINAFweapon") == 3) then
 			player:PrintToPlayer("Netblyx : Here's the deal, trade me your Zushio and Anju and I'll make it a Kikoku eventually with 10 One-Hundred Byne Bills", 0xD);
@@ -1406,9 +1379,7 @@ if (job == 14) and (trade:hasItemQty(17478, 1)) and trade:hasItemQty( 1450, 10 )
 			player:PrintToPlayer("Netblyx : Here you go.", 0xD);
 			player:addItem(18299, 1); 
 			player:setVar("DRGRelicweapon", 7);
-			player:messageSpecial(ITEM_OBTAINED, 18299);			
-	elseif (job == 14) and (trade:hasItemQty(18299, 1)) and (player:getVar("DRGRelicweapon") == 7) then
-			player:PrintToPlayer("Netblyx : Your weapon speaks...Xarcabard...Frag...Netblyx has no clue", 0xD);		
+			player:messageSpecial(ITEM_OBTAINED, 18299);				
     end		
 	if (job == 14) and (trade:hasItemQty(17478, 1)) and (player:getVar("DRGAFweapon") == 3) then
 			player:PrintToPlayer("Netblyx : I can make this into a Gungnir...eventually with 10 L.Jadeshells", 0xD);	
@@ -1487,8 +1458,6 @@ if (job == 15) and (trade:hasItemQty(17812, 1)) and trade:hasItemQty( 1453, 10 )
 			player:addItem(18317, 1); 
 			player:setVar("SAMRelicweapon", 7);
 			player:messageSpecial(ITEM_OBTAINED, 18317);			
-	elseif (job == 15) and (trade:hasItemQty(18317, 1)) and (player:getVar("SAMRelicweapon") == 6) then
-			player:PrintToPlayer("Netblyx : Your weapon speaks...Xarcabard...Frag...Netblyx has no clue", 0xD);		
     end		
 	if (job == 15) and (trade:hasItemQty(17812, 1)) and (player:getVar("SAMAFweapon") == 3) then
 			player:PrintToPlayer("Netblyx : I can make this into a Amanomurakumo...eventually with 10 Montiont Silverpieces", 0xD);	
@@ -1504,7 +1473,7 @@ if (job == 15) and (trade:hasItemQty(17812, 1)) and trade:hasItemQty( 1453, 10 )
 			player:PrintToPlayer("Netblyx : I can make this into a Amanomurakumo...eventually with 60 Montiont Silverpices", 0xD);	
 	elseif (job == 15) and (trade:hasItemQty(18316, 1)) and (player:getVar("SAMRelicweapon") == 6) then
 			player:PrintToPlayer("Netblyx : Bring me 70 L.Jadeshells and an Attestation of Decisiveness", 0xD);
-	 elseif (job == 15) and (trade:hasItemQty(18316, 1)) and (player:getVar("SAMRelicweapon") == 7) then
+	 elseif (job == 15) and (trade:hasItemQty(18317, 1)) and (player:getVar("SAMRelicweapon") == 7) then
 			player:PrintToPlayer("Netblyx : Get a Divine Fragment, Necropsyche, and an R. Goldpiece and go to Horlais Peak.", 0xD);	
             player:setVar("RELIC_IN_PROGRESS",4);				
     end

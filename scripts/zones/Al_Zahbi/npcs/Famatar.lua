@@ -67,8 +67,12 @@ function onEventFinish(player,csid,option)
 			player:delStatusEffect(EFFECT_SIGIL);
 			player:delStatusEffect(EFFECT_SANCTION);
 			player:delStatusEffect(EFFECT_SIGNET);
+			local wins = GetServerVariable("Consecutive_BWins");
 			local duration = getSanctionDuration(player);
-			local subPower = 0; -- getImperialDefenseStats()
+			local subPower = 30 + (wins * 3);
+			if (subPower > 95) then
+			    subPower = 95;
+			end
 			player:addStatusEffect(EFFECT_SANCTION,option / 16,0,duration,subPower); -- effect size 1 = regen, 2 = refresh, 3 = food.
 			player:messageSpecial(SANCTION);
 

@@ -26,10 +26,10 @@ function onMobDeath(mob,killer)
         -- Check if LL window is open, and there is not an LL popped already(ACTION_NONE = 0)
         if (LL_ToD <= os.time(t) and GetMobAction(Leaping_Lizzy) == 0) then
 
-            -- printf("LL window open");
+            printf("LL window open");
             -- Give Rock_Lizard 5 percent chance to pop LL
-            if (math.random(1,20) == 5) then
-                -- printf("LL will pop");
+            if (math.random(1,20) <= 3) then
+                printf("LL will pop");
                 UpdateNMSpawnPoint(Leaping_Lizzy);
                 GetMobByID(Leaping_Lizzy):setRespawnTime(GetMobRespawnTime(mob));
                 SetServerVariable("[PH]Leaping_Lizzy", mob);
