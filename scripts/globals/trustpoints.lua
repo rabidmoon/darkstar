@@ -70,6 +70,9 @@ local trustpoint = mob:getBaseExp() * 1;
 			    NajiPoints = killer:getVar("CurrentPoints_Naji");
 			    if (NajiPoints > 10000) then
 			        killer:setVar("CurrentTokens_Naji", NajiTokens + 1);
+					if (killer:getVar("CurrentTokens_Naji", NajiTokens) >= 35) then
+					    killer:setVar("CurrentTokens_Naji", 35);
+					end						
 				    NajiTokens = killer:getVar("CurrentTokens_Naji");
 	                killer:PrintToPlayer("You obtain "..NajiTokens.." Trust Token(Naji).  Total: ("..NajiTokens.."/"..tokenCap..").", 0x15);
 				    killer:setVar("CurrentPoints_Naji", NajiPoints - 10000);
@@ -81,6 +84,9 @@ local trustpoint = mob:getBaseExp() * 1;
 			    KupipiPoints = killer:getVar("CurrentPoints_Kupipi");
 			    if (KupipiPoints > 10000) then
 					killer:setVar("CurrentTokens_Kupipi", KupipiTokens + 1);
+					if (killer:getVar("CurrentTokens_Kupipi", KupipiTokens) >= 35) then
+					    killer:setVar("CurrentTokens_Kupipi", 35);
+					end						
 					KupipiTokens = killer:getVar("CurrentTokens_Kupipi");
 					killer:PrintToPlayer("You obtain "..KupipiTokens.." Trust Token(Kupipi).  Total: ("..KupipiTokens.."/"..tokenCap..").", 0x15);
 					killer:setVar("CurrentPoints_Kupipi", KupipiPoints - 10000);
@@ -92,6 +98,9 @@ local trustpoint = mob:getBaseExp() * 1;
 				AyamePoints = killer:getVar("CurrentPoints_Ayame");
 				if (AyamePoints > 10000) then
 					killer:setVar("CurrentTokens_Ayame", AyameTokens + 1);
+					if (killer:getVar("CurrentTokens_Ayame", AyameTokens) >= 35) then
+					    killer:setVar("CurrentTokens_Ayame", 35);
+					end						
 					AyameTokens = killer:getVar("CurrentTokens_Ayame");
 					killer:PrintToPlayer("You obtain "..AyameTokens.." Trust Token(Ayame).  Total: ("..AyameTokens.."/"..tokenCap..").", 0x15);
 					killer:setVar("CurrentPoints_Ayame", AyamePoints - 10000);
@@ -103,6 +112,9 @@ local trustpoint = mob:getBaseExp() * 1;
 				NanaaPoints = killer:getVar("CurrentPoints_Nanaa");
 				if (NanaaPoints > 10000) then
 					killer:setVar("CurrentTokens_Nanaa", NanaaTokens + 1);
+					if (killer:getVar("CurrentTokens_Nanaa", NanaaTokens) >= 35) then
+					    killer:setVar("CurrentTokens_Nanaa", 35);
+					end						
 					NanaaTokens = killer:getVar("CurrentTokens_Nanaa");
 					killer:PrintToPlayer("You obtain "..NanaaTokens.." Trust Token(Nanaa).  Total: ("..NanaaTokens.."/"..tokenCap..").", 0x15);
 					killer:setVar("CurrentPoints_Nanaa", NanaaPoints - 10000);
@@ -113,8 +125,11 @@ local trustpoint = mob:getBaseExp() * 1;
 				killer:setVar("CurrentPoints_Curilla", CurillaPoints + trustpoint);
 				CurillaPoints = killer:getVar("CurrentPoints_Curilla");
 				if (CurillaPoints > 10000) then
-					killer:setVar("CurrentTokens_Curilla", CurillaTokens + 1);
-					CurillaTokens = killer:getVar("CurrentTokens_Curilla");
+					killer:setVar("CurrentTokens_Curilla", CurillaTokens + 1);	
+					if (killer:getVar("CurrentTokens_Curilla", CurillaTokens) >= 35) then
+					    killer:setVar("CurrentTokens_Curilla", 35);
+					end						
+					CurillaTokens = killer:getVar("CurrentTokens_Curilla");					
 					killer:PrintToPlayer("You obtain "..CurillaTokens.." Trust Token(Curilla).  Total: ("..CurillaTokens.."/"..tokenCap..").", 0x15);
 					killer:setVar("CurrentPoints_Curilla", CurillaPoints - 10000);
 				end
@@ -125,6 +140,9 @@ local trustpoint = mob:getBaseExp() * 1;
 				ExcenmillePoints = killer:getVar("CurrentPoints_Excenmille");
 				if (ExcenmillePoints > 10000) then
 					killer:setVar("CurrentTokens_Excenmille", ExcenmilleTokens + 1);
+					if (killer:getVar("CurrentTokens_Excenmille", ExcenmilleTokens) >= 35) then
+					    killer:setVar("CurrentTokens_Excenmille", 35);
+					end						
 					ExcenmilleTokens = killer:getVar("CurrentTokens_Excenmille");
 					killer:PrintToPlayer("You obtain "..ExcenmilleTokens.." Trust Token(Excenmille).  Total: ("..ExcenmilleTokens.."/"..tokenCap..").", 0x15);
 					killer:setVar("CurrentPoints_Excenmille", ExcenmillePoints - 10000);
@@ -136,6 +154,9 @@ local trustpoint = mob:getBaseExp() * 1;
 				DarcullinPoints = killer:getVar("CurrentPoints_Darcullin");
 				if (DarcullinPoints > 10000) then
 					killer:setVar("CurrentTokens_Darcullin", DarcullinTokens + 1);
+					if (killer:getVar("CurrentTokens_Darcullin", DarcullinTokens) >= 35) then
+					    killer:setVar("CurrentTokens_Darcullin", 35);
+					end						
 					DarcullinTokens = killer:getVar("CurrentTokens_Darcullin");
 					killer:PrintToPlayer("You obtain "..DarcullinTokens.." Trust Token(Darcullin).  Total: ("..DarcullinTokens.."/"..tokenCap..").", 0x15);
 					killer:setVar("CurrentPoints_Darcullin", DarcullinPoints - 10000);
@@ -147,6 +168,9 @@ local trustpoint = mob:getBaseExp() * 1;
 				AdelheidPoints = killer:getVar("CurrentPoints_Adelheid");
 				if (AdelheidPoints > 10000) then
 					killer:setVar("CurrentTokens_Adelheid", AdelheidTokens + 1);
+					if (killer:getVar("CurrentTokens_Adelheid", AdelheidTokens) >= 35) then
+					    killer:setVar("CurrentTokens_Adelheid", 35);
+					end					
 					AdelheidTokens = killer:getVar("CurrentTokens_Adelheid");
 					killer:PrintToPlayer("You obtain "..AdelheidTokens.." Trust Token(Adelheid).  Total: ("..AdelheidTokens.."/"..tokenCap..").", 0x15);
 					killer:setVar("CurrentPoints_Adelheid", AdelheidPoints - 10000);
@@ -158,6 +182,9 @@ local trustpoint = mob:getBaseExp() * 1;
 				LionPoints = killer:getVar("CurrentPoints_Lion");
 				if (LionPoints > 10000) then
 					killer:setVar("CurrentTokens_Lion", LionTokens + 1);
+					if (killer:getVar("CurrentTokens_Lion", LionTokens) >= 35) then
+					    killer:setVar("CurrentTokens_Lion", 35);
+					end						
 					LionTokens = killer:getVar("CurrentTokens_Lion");
 					killer:PrintToPlayer("You obtain "..LionTokens.." Trust Token(Lion).  Total: ("..LionTokens.."/"..tokenCap..").", 0x15);
 					killer:setVar("CurrentPoints_Lion", LionPoints - 10000);
@@ -170,6 +197,9 @@ local trustpoint = mob:getBaseExp() * 1;
 				ZeidPoints = killer:getVar("CurrentPoints_Zeid");
 				if (ZeidPoints > 10000) then
 					killer:setVar("CurrentTokens_Zeid", ZeidTokens + 1);
+					if (killer:getVar("CurrentTokens_Zeid", ZeidTokens) >= 35) then
+					    killer:setVar("CurrentTokens_Zeid", 35);
+					end						
 					ZeidTokens = killer:getVar("CurrentTokens_Zeid");
 					killer:PrintToPlayer("You obtain "..ZeidTokens.." Trust Token(Zeid).  Total: ("..ZeidTokens.."/"..tokenCap..").", 0x15);
 					killer:setVar("CurrentPoints_Zeid", ZeidPoints - 10000);

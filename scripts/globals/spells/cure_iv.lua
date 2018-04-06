@@ -126,7 +126,7 @@ function onSpellCast(caster,target,spell)
             target:addHP(final);
 		end
 	end
-	if (caster:hasStatusEffect(EFFECT_BESIEGED) == true) then
+	if (caster:hasStatusEffect(EFFECT_BESIEGED) == true and caster:getObjType() == TYPE_PC) then
     besiegedCurePoints(caster,final)	
 	end
 	return final;

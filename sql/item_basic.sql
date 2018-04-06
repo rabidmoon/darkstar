@@ -3744,6 +3744,7 @@ INSERT INTO `item_basic` VALUES (4050,0,'fat_burrow_worm','fat_burrow_worm',12,2
 INSERT INTO `item_basic` VALUES (4054,0,'beetle_spirit','beetle_spirit',99,2837,0,1,0);
 INSERT INTO `item_basic` VALUES (4055,0,'antlion_spirit','antlion_spirit',99,2837,0,1,0);
 INSERT INTO `item_basic` VALUES (4056,0,'pachypodium_spirit','pachypodium_spirit',99,2837,0,1,0);
+INSERT INTO `item_basic` VALUES (4059,0,'pluton','pluton',99,4100,65,0,0);
 INSERT INTO `item_basic` VALUES (4096,0,'fire_crystal','fire_crystal',12,512,35,0,13);
 INSERT INTO `item_basic` VALUES (4097,0,'ice_crystal','ice_crystal',12,512,35,0,30);
 INSERT INTO `item_basic` VALUES (4098,0,'wind_crystal','wind_crystal',12,512,35,0,14);

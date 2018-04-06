@@ -18,7 +18,7 @@ require("scripts/zones/Chateau_dOraguille/TextIDs");
 
 function onTrade(player,npc,trade)
 
-    local currentTokens = player:getVar("CurrentTokens_Cur");
+    local currentTokens = player:getVar("CurrentTokens_Curilla");
 	
 	if (player:getQuestStatus(SANDORIA,FLYERS_FOR_REGINE) == QUEST_ACCEPTED) then
 		if (trade:hasItemQty(532,1) and trade:getItemCount() == 1) then -- Trade Magicmart_flyer
@@ -26,76 +26,76 @@ function onTrade(player,npc,trade)
 		end
 	end
 	
-    if ((player:getVar("CURILLA_TRIB_FIGHT") == 3) and (player:getVar("TributeRank_Cur") == 0) and (trade:hasItemQty(65535, 1000)) and (currentTokens >= 1)) then
+    if ((player:getVar("CURILLA_TRIB_FIGHT") == 3) and (player:getVar("TributeRank_Curilla") == 0) and (trade:hasItemQty(65535, 1000)) and (currentTokens >= 1)) then
       player:PrintToPlayer("Curilla : Thank you for your Tribute.",0x0D);
       player:PrintToPlayer("Curilla's Attack is raised by 5 points! (Total: 5)", 0x15);
 	  player:setVar("TrustAtt_Cur",5);
-	  player:setVar("TributeRank_Cur",1);
+	  player:setVar("TributeRank_Curilla",1);
 	  currentTokens = currentTokens - 1;
-	  player:setVar("CurrentTokens_Cur",currentTokens);
-    elseif ((player:getVar("CURILLA_TRIB_FIGHT") == 3) and (player:getVar("TributeRank_Cur") == 1) and (trade:hasItemQty(65535, 2000)) and (currentTokens >= 2)) then
+	  player:setVar("CurrentTokens_Curilla",currentTokens);
+    elseif ((player:getVar("CURILLA_TRIB_FIGHT") == 3) and (player:getVar("TributeRank_Curilla") == 1) and (trade:hasItemQty(65535, 2000)) and (currentTokens >= 2)) then
 	  player:PrintToPlayer("Curilla : Thank you for your Tribute.",0x0D);
       player:PrintToPlayer("Curilla's Accuracy is raised by 5 points! (Total: 5)", 0x15);
 	  player:setVar("TrustAcc_Cur",5);	
-	  player:setVar("TributeRank_Cur",2);
+	  player:setVar("TributeRank_Curilla",2);
 	  currentTokens = currentTokens - 2;
-	  player:setVar("CurrentTokens_Cur",currentTokens);	  
-    elseif ((player:getVar("CURILLA_TRIB_FIGHT") == 3) and (player:getVar("TributeRank_Cur") == 2) and (trade:hasItemQty(65535, 3000)) and (currentTokens >= 3)) then
+	  player:setVar("CurrentTokens_Curilla",currentTokens);	  
+    elseif ((player:getVar("CURILLA_TRIB_FIGHT") == 3) and (player:getVar("TributeRank_Curilla") == 2) and (trade:hasItemQty(65535, 3000)) and (currentTokens >= 3)) then
       player:PrintToPlayer("Curilla : Thank you for your Tribute.",0x0D);
       player:PrintToPlayer("Curilla's Defense is raised by 10 points! (Total: 10)", 0x15);
 	  player:setVar("TrustDEF_Cur",10);	
-	  player:setVar("TributeRank_Cur",3);
+	  player:setVar("TributeRank_Curilla",3);
 	  currentTokens = currentTokens - 3;
-	  player:setVar("CurrentTokens_Cur",currentTokens);	  
-    elseif ((player:getVar("CURILLA_TRIB_FIGHT") == 3) and (player:getVar("TributeRank_Cur") == 3) and (trade:hasItemQty(65535, 4000)) and (currentTokens >= 4)) then
+	  player:setVar("CurrentTokens_Curilla",currentTokens);	  
+    elseif ((player:getVar("CURILLA_TRIB_FIGHT") == 3) and (player:getVar("TributeRank_Curilla") == 3) and (trade:hasItemQty(65535, 4000)) and (currentTokens >= 4)) then
       player:PrintToPlayer("Curilla : Thank you for your Tribute.",0x0D);
       player:PrintToPlayer("Curilla's Attack is raised by 5 points! (Total: 10)", 0x15);
 	  player:setVar("TrustAtt_Cur",10);	
-	  player:setVar("TributeRank_Cur",4);
+	  player:setVar("TributeRank_Curilla",4);
 	  currentTokens = currentTokens - 4;
-	  player:setVar("CurrentTokens_Cur",currentTokens);	  
-    elseif ((player:getVar("CURILLA_TRIB_FIGHT") == 3) and (player:getVar("TributeRank_Cur") == 4) and (trade:hasItemQty(65535, 5000)) and (currentTokens >= 5)) then
+	  player:setVar("CurrentTokens_Curilla",currentTokens);	  
+    elseif ((player:getVar("CURILLA_TRIB_FIGHT") == 3) and (player:getVar("TributeRank_Curilla") == 4) and (trade:hasItemQty(65535, 5000)) and (currentTokens >= 5)) then
       player:PrintToPlayer("Curilla : Thank you for your Tribute.",0x0D);
       player:PrintToPlayer("Curilla's Accuracy is raised by 5 points! (Total: 10)", 0x15);
 	  player:setVar("TrustAcc_Cur",10);	
-	  player:setVar("TributeRank_Cur",5);
+	  player:setVar("TributeRank_Curilla",5);
 	  currentTokens = currentTokens - 5;
-	  player:setVar("CurrentTokens_Cur",currentTokens);	  
-    elseif ((player:getVar("CURILLA_TRIB_FIGHT") == 3) and (player:getVar("TributeRank_Cur") == 5) and (trade:hasItemQty(65535, 10000)) and (currentTokens >= 10)) then
+	  player:setVar("CurrentTokens_Curilla",currentTokens);	  
+    elseif ((player:getVar("CURILLA_TRIB_FIGHT") == 3) and (player:getVar("TributeRank_Curilla") == 5) and (trade:hasItemQty(65535, 10000)) and (currentTokens >= 10)) then
       player:PrintToPlayer("Curilla : Thank you for your Tribute.",0x0D);
       player:PrintToPlayer("Curilla's Defense is raised by 10 points! (Total: 20)", 0x15);
 	  player:setVar("TrustDEF_Cur",20);	
-	  player:setVar("TributeRank_Cur",6);
+	  player:setVar("TributeRank_Curilla",6);
 	  currentTokens = currentTokens - 10;
-	  player:setVar("CurrentTokens_Cur",currentTokens);	  
-    elseif ((player:getVar("CURILLA_TRIB_FIGHT") == 3) and (player:getVar("TributeRank_Cur") == 6) and (trade:hasItemQty(65535, 15000)) and (currentTokens >= 15)) then
+	  player:setVar("CurrentTokens_Curilla",currentTokens);	  
+    elseif ((player:getVar("CURILLA_TRIB_FIGHT") == 3) and (player:getVar("TributeRank_Curilla") == 6) and (trade:hasItemQty(65535, 15000)) and (currentTokens >= 15)) then
       player:PrintToPlayer("Curilla : Thank you for your Tribute.",0x0D);
       player:PrintToPlayer("Curilla's Attack is raised by 5 points! (Total: 15)", 0x15);
 	  player:setVar("TrustAtt_Cur",15);	
-	  player:setVar("TributeRank_Cur",7);
+	  player:setVar("TributeRank_Curilla",7);
 	  currentTokens = currentTokens - 15;
-	  player:setVar("CurrentTokens_Cur",currentTokens);	  
-    elseif ((player:getVar("CURILLA_TRIB_FIGHT") == 3) and (player:getVar("TributeRank_Cur") == 7) and (trade:hasItemQty(65535, 30000)) and (currentTokens >= 20)) then
+	  player:setVar("CurrentTokens_Curilla",currentTokens);	  
+    elseif ((player:getVar("CURILLA_TRIB_FIGHT") == 3) and (player:getVar("TributeRank_Curilla") == 7) and (trade:hasItemQty(65535, 30000)) and (currentTokens >= 20)) then
       player:PrintToPlayer("Curilla : Thank you for your Tribute.",0x0D);
       player:PrintToPlayer("Curilla's Accuracy is raised by 5 points! (Total: 15)", 0x15);
 	  player:setVar("TrustAcc_Cur",15);	
-	  player:setVar("TributeRank_Cur",8);
+	  player:setVar("TributeRank_Curilla",8);
 	  currentTokens = currentTokens - 20;
-	  player:setVar("CurrentTokens_Cur",currentTokens);	  
-    elseif ((player:getVar("CURILLA_TRIB_FIGHT") == 3) and (player:getVar("TributeRank_Cur") == 8) and (trade:hasItemQty(65535, 75000)) and (currentTokens >= 30)) then
+	  player:setVar("CurrentTokens_Curilla",currentTokens);	  
+    elseif ((player:getVar("CURILLA_TRIB_FIGHT") == 3) and (player:getVar("TributeRank_Curilla") == 8) and (trade:hasItemQty(65535, 75000)) and (currentTokens >= 30)) then
       player:PrintToPlayer("Curilla : Thank you for your Tribute.",0x0D);
       player:PrintToPlayer("Curilla's Enmity is raised by 5 points! (Total: 5)", 0x15);
 	  player:setVar("TrustEnm_Cur",5);	
-	  player:setVar("TributeRank_Cur",9);	
+	  player:setVar("TributeRank_Curilla",9);	
 	  currentTokens = currentTokens - 30;
-	  player:setVar("CurrentTokens_Cur",currentTokens);	  
-    elseif ((player:getVar("CURILLA_TRIB_FIGHT") == 3) and (player:getVar("TributeRank_Cur") == 9) and (trade:hasItemQty(65535, 150000)) and (currentTokens >= 35)) then
+	  player:setVar("CurrentTokens_Curilla",currentTokens);	  
+    elseif ((player:getVar("CURILLA_TRIB_FIGHT") == 3) and (player:getVar("TributeRank_Curilla") == 9) and (trade:hasItemQty(65535, 150000)) and (currentTokens >= 35)) then
       player:PrintToPlayer("Curilla : Thank you for your Tribute.",0x0D);
       player:PrintToPlayer("Curilla learns the ability 'Chivalry'!", 0x15);
 	  player:setVar("TrustTrait1_Cur",5);	
-	  player:setVar("TributeRank_Cur",10);
+	  player:setVar("TributeRank_Curilla",10);
 	  currentTokens = currentTokens - 35;
-	  player:setVar("CurrentTokens_Cur",currentTokens);	
+	  player:setVar("CurrentTokens_Curilla",currentTokens);	
     else
       player:PrintToPlayer("Curilla : Please trade the correct amount of Tokens and Gil.",0x0D);	
 	end	
@@ -195,25 +195,25 @@ function onTrigger(player,npc)
 	end
 	
 	-- Handle Token Quest
-    if ((player:getVar("CURILLA_TRIB_FIGHT") == 3) and (player:getVar("TributeRank_Cur") == 0)) then
+    if ((player:getVar("CURILLA_TRIB_FIGHT") == 3) and (player:getVar("TributeRank_Curilla") == 0)) then
       player:PrintToPlayer("Curilla : Bring me 1 of my Trust Tokens and 1,000 gil to raise my Attack by 5",0x0D);
-    elseif ((player:getVar("CURILLA_TRIB_FIGHT") == 3) and (player:getVar("TributeRank_Cur") == 1)) then
+    elseif ((player:getVar("CURILLA_TRIB_FIGHT") == 3) and (player:getVar("TributeRank_Curilla") == 1)) then
       player:PrintToPlayer("Curilla : Bring me 2 of my Trust Tokens and 2,000 gil to raise my Accuracy by 5",0x0D);
-    elseif ((player:getVar("CURILLA_TRIB_FIGHT") == 3) and (player:getVar("TributeRank_Cur") == 2)) then
+    elseif ((player:getVar("CURILLA_TRIB_FIGHT") == 3) and (player:getVar("TributeRank_Curilla") == 2)) then
       player:PrintToPlayer("Curilla : Bring me 3 of my Trust Tokens and 3,000 gil to raise my Defense by 10",0x0D);
-    elseif ((player:getVar("CURILLA_TRIB_FIGHT") == 3) and (player:getVar("TributeRank_Cur") == 3)) then
+    elseif ((player:getVar("CURILLA_TRIB_FIGHT") == 3) and (player:getVar("TributeRank_Curilla") == 3)) then
       player:PrintToPlayer("Curilla : Bring me 4 of my Trust Tokens and 4,000 gil to raise my Attack by 5",0x0D);
-    elseif ((player:getVar("CURILLA_TRIB_FIGHT") == 3) and (player:getVar("TributeRank_Cur") == 4)) then
+    elseif ((player:getVar("CURILLA_TRIB_FIGHT") == 3) and (player:getVar("TributeRank_Curilla") == 4)) then
       player:PrintToPlayer("Curilla : Bring me 5 of my Trust Tokens and 5,000 gil to raise my Accuracy by 5",0x0D);
-    elseif ((player:getVar("CURILLA_TRIB_FIGHT") == 3) and (player:getVar("TributeRank_Cur") == 5)) then
+    elseif ((player:getVar("CURILLA_TRIB_FIGHT") == 3) and (player:getVar("TributeRank_Curilla") == 5)) then
       player:PrintToPlayer("Curilla : Bring me 10 of my Trust Tokens and 10,000 gil to raise my Defense by 10",0x0D);
-    elseif ((player:getVar("CURILLA_TRIB_FIGHT") == 3) and (player:getVar("TributeRank_Cur") == 6)) then
+    elseif ((player:getVar("CURILLA_TRIB_FIGHT") == 3) and (player:getVar("TributeRank_Curilla") == 6)) then
       player:PrintToPlayer("Curilla : Bring me 15 of my Trust Tokens and 15,000 gil to raise my Attack by 5",0x0D);
-    elseif ((player:getVar("CURILLA_TRIB_FIGHT") == 3) and (player:getVar("TributeRank_Cur") == 7)) then
+    elseif ((player:getVar("CURILLA_TRIB_FIGHT") == 3) and (player:getVar("TributeRank_Curilla") == 7)) then
       player:PrintToPlayer("Curilla : Bring me 20 of my Trust Tokens and 30,000 gil to raise my Accuracy by 5",0x0D);
-    elseif ((player:getVar("CURILLA_TRIB_FIGHT") == 3) and (player:getVar("TributeRank_Cur") == 8)) then
+    elseif ((player:getVar("CURILLA_TRIB_FIGHT") == 3) and (player:getVar("TributeRank_Curilla") == 8)) then
       player:PrintToPlayer("Curilla : Bring me 30 of my Trust Tokens and 75,000 gil to raise my Enmity by 5",0x0D);
-    elseif ((player:getVar("CURILLA_TRIB_FIGHT") == 3) and (player:getVar("TributeRank_Cur") == 9)) then
+    elseif ((player:getVar("CURILLA_TRIB_FIGHT") == 3) and (player:getVar("TributeRank_Curilla") == 9)) then
       player:PrintToPlayer("Curilla : Bring me 35 of my Trust Tokens and 150,000 gil so I can learn Chivalry",0x0D);
     end
 	
