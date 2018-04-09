@@ -22,7 +22,6 @@ end;
 -----------------------------------
 
 function onTrigger(player,npc)
-
 	homepointMenu( player, 0x21fc, 29);
 end; 
 

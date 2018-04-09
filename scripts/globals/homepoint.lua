@@ -234,7 +234,7 @@ function freeHpTeleport( player, hpIndex)
 	for x = 1, 20 do
 		if ( freeHpTeleGroups[x] ~= nil) then
 			for y = 1, 20 do
-				if ( freeHpTeleGroups[x][y] ~= nil) then
+				if (freeHpTeleGroups[y] ~= nil) then
 					if ( freeHpTeleGroups[x][y] == currentHpIndex) then
 						for z = 1, 20 do
 							if ( freeHpTeleGroups[x][z] ~= nil) then

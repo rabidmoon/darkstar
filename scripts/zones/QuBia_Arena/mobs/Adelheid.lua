@@ -101,7 +101,7 @@ function onMobDeath(mob,killer)
 local killx = mob:getXPos();
 local killy = mob:getYPos();
 local killz = mob:getZPos();
-local mammett = 17621315;	
+local mammett = 17621317;	
 	
 	
 	SpawnMob(mammett):setPos(killx,killy,killz);
