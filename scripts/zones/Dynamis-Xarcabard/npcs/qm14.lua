@@ -17,8 +17,10 @@ require("scripts/zones/Dynamis-Xarcabard/TextIDs");
 function onTrade(player,npc,trade)
     if (trade:hasItemQty(3372,1)) then
         SpawnMob(17330207):updateEnmity(player); 
+		player:tradeComplete();
 	elseif (trade:hasItemQty(3373,1)) then
         SpawnMob(17330208):updateEnmity(player);
+		player:tradeComplete();
     end
 end;
 
