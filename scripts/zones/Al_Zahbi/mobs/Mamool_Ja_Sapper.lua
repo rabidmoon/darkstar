@@ -40,6 +40,7 @@ function onMobSpawn(mob)
 			SetServerVariable("MamoolTimer",os.time() + 600);	
 	    else	
         	printf("MAMOOL JA HAS JUST POPPED!!!");
+			mob:PrintToServer("The Mamool Ja Savages have begun their attack on Al Zahbi!",0x1C);
 			SetServerVariable("Besieged_Timer", os.time() + 3600) -- Set besieged to 1 hour 3600
 		    --  mob:setBehaviour(BEHAVIOUR_AGGRO_AMBUSH);
 			mob:untargetable(true);

@@ -18,7 +18,7 @@ function onTrade(player,npc,trade)
 	local posession = GetServerVariable("AC_Posession");
 	if (trade:hasItemQty(65535,3000) and (posession == 2)) then	
 	    player:tradeComplete();	
-	    player:setPos(-10,112,54,50,0x36);
+	    player:setPos(465,-10,112,0,0x36);
 	elseif (trade:hasItemQty(65535,3000) and (posession == 3)) then
 	    player:tradeComplete();
 	    player:setPos(-32,9,334,62,0x3E);

@@ -76,6 +76,13 @@ function onTrigger(player,npc)
             player:startEvent(3090,0,0,0,0,0,0,0,0,0);	
         elseif (player:getCurrentMission(TOAU) == IN_THE_BLOOD) then
             player:startEvent(3113,0,0,0,0,0,0,0,0,0);	
+---------------- New 3.4
+        elseif (player:getCurrentMission(TOAU) == SENTINELS_HONOR) then
+            if(player:getVar("TOAUM18_STARTDAY") ~= VanadielDayOfTheYear() and needToZone == false) then
+                player:startEvent(3130,0,0,0,0,0,0,0,0,0);
+            else
+                player:startEvent(3120,0,0,0,0,0,0,0,0,0);
+            end			
 	
 	
 	
@@ -142,7 +149,7 @@ function onEventFinish(player,csid,option)
         elseif (csid == 0x0c00) then
             player:completeMission(TOAU,THE_DOLPHIN_CREST);
             player:addMission(TOAU,THE_BLACK_COFFIN);
-------------------- New
+------------------- New 3.0
         elseif (csid == 3074) then
             player:completeMission(TOAU,GHOSTS_OF_THE_PAST_TOAU);
             player:addMission(TOAU,GUESTS_OF_THE_EMPIRE);
@@ -162,7 +169,11 @@ function onEventFinish(player,csid,option)
         player:addItem(2187);
         player:messageSpecial(ITEM_OBTAINED,2187);
         player:addMission(TOAU,SENTINELS_HONOR);		
-		
+----------------- New 3.4	
+    elseif (csid == 3130) then
+        player:completeMission(TOAU,SENTINELS_HONOR);
+        player:setVar("TOAUM33_STARTDAY", 0);
+        player:addMission(TOAU,TESTING_THE_WATERS);	
 		
 	end
 end;

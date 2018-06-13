@@ -20,7 +20,12 @@ end;
 -----------------------------------
 
 function onTrigger(player,npc)
-    if (player:getCurrentMission(TOAU) == LOST_KINGDOM and player:hasKeyItem(VIAL_OF_SPECTRAL_SCENT) and player:getVar("TOAUM13") == 0) then
+    if (player:hasCompletedMission(TOAU,LOST_KINGDOM)) then
+        if (not player:hasKeyItem(EPHRAMADIAN_GOLD_COIN)) then
+            player:addKeyItem(EPHRAMADIAN_GOLD_COIN);
+            player:messageSpecial(KEYITEM_OBTAINED,EPHRAMADIAN_GOLD_COIN);
+        end
+    elseif (player:getCurrentMission(TOAU) == LOST_KINGDOM and player:hasKeyItem(VIAL_OF_SPECTRAL_SCENT) and player:getVar("TOAUM13") == 0) then
         player:startEvent(0x0008);
     elseif (player:getVar("TOAUM13") == 1) then
         if (GetMobAction(17101146) == 0) then

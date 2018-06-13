@@ -38,6 +38,7 @@ function onMobSpawn(mob)
 		    GetMobByID(16974025):setRespawnTime(600);
 			SetServerVariable("UndeadTimer",os.time() + 600);	
 	    else
+		    mob:PrintToServer("The Undead Swarm has begun their attack on Al Zahbi!",0x1C);
 	        printf("LAMIA HAS JUST POPPED!!!");
 	        SetServerVariable("Besieged_Timer", os.time() + 3600) -- Set besieged to 1 hour 3600
 	       --  mob:setBehaviour(BEHAVIOUR_AGGRO_AMBUSH);

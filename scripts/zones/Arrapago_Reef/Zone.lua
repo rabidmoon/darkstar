@@ -123,6 +123,8 @@ function onRegionEnter(player,region)
         player:startEvent(0x0008);
     elseif (player:getCurrentMission(TOAU) == PREVALENCE_OF_PIRATES and player:getVar("AhtUrganStatus") == 1) then
         player:startEvent(14);
+    elseif (player:getCurrentMission(TOAU) == TESTING_THE_WATERS and player:hasKeyItem(EPHRAMADIAN_GOLD_COIN)) then
+        player:startEvent(15);
     end
 end;
 

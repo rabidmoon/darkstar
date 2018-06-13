@@ -8992,7 +8992,7 @@ inline int32 CLuaBaseEntity::PrintToPlayer(lua_State* L)
 inline int32 CLuaBaseEntity::PrintToServer(lua_State* L)
 {
    DSP_DEBUG_BREAK_IF(m_PBaseEntity == NULL);
-   DSP_DEBUG_BREAK_IF(m_PBaseEntity->objtype != TYPE_PC);
+   //DSP_DEBUG_BREAK_IF(m_PBaseEntity->objtype != TYPE_PC);
    DSP_DEBUG_BREAK_IF(lua_isnil(L, 1) || !lua_isstring(L, 1));
    CHAT_MESSAGE_TYPE messageType = (!lua_isnil(L, 2) && lua_isnumber(L, 2) ? (CHAT_MESSAGE_TYPE)lua_tointeger(L, 2) : MESSAGE_SYSTEM_1);
    message::send(MSG_CHAT_SERVMES, 0, 0, new CChatMessagePacket((CCharEntity*)m_PBaseEntity, messageType, (char*)lua_tostring(L, 1)));
