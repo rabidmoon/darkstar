@@ -23,6 +23,7 @@ itemid_bcnmid_map = {6, {0, 0}, -- Bearclaw_Pinnacle
                    32, {0, 0}, -- Sealion's Den
                    35, {0, 0}, -- The Garden of RuHmet
                    36, {0, 0}, -- Empyreal Paradox
+				   57, {0, 0}, -- Talacca Cove
                    64, {0, 0}, -- Navukgo Execution Chamber		
                    67, {0, 0}, -- Jade Sepulcher				   
 				   129, {0, 0}, 
@@ -62,6 +63,7 @@ bcnmid_param_map = {6, {640, 0},
                   32, {992, 0, 993, 1},
                   35, {1024, 0},
                   36, {1056, 0},
+				  57, {1092, 4},
 		          64, {1124, 4},	-- ToAU 22	  
 				 -- 86, {1376, 0}, -- Everbloom Hollow (Ixion)
 				 -- 98, {1375, 4}, -- Everbloom Hollow/Ghoyus Reverie (Dark Ixion)	
@@ -506,6 +508,11 @@ function checkNonTradeBCNM(player, npc)
          --   mask = GetBattleBitmask(1375, Zone, 1);
           --  player:setVar("trade_bcnmid", 1375);
       --  end	
+    elseif (Zone == 57) then --  Talacca Cove
+        if (player:getCurrentMission(TOAU) ==  LEGACY_OF_THE_LOST) then -- TOAU-35 Legacy of the Lost
+            mask = GetBattleBitmask(1092, Zone, 1);
+            player:setVar("trade_bcnmid", 1092);
+        end
 
     elseif (Zone == 64) then -- Navukgo Execution Chamber
         if (player:getCurrentMission(TOAU) ==  SHIELD_OF_DIPLOMACY and player:getVar("AhtUrganStatus")==2) then -- TOAU-22 shield of diplomacy

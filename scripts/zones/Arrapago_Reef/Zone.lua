@@ -1,21 +1,26 @@
 -----------------------------------
 --
 -- Zone: Arrapago_Reef (54)
---
+-- approach -422 -4 -425 54
 -----------------------------------
 package.loaded["scripts/zones/Arrapago_Reef/TextIDs"] = nil;
 -----------------------------------
 
 require("scripts/globals/settings");
 require("scripts/zones/Arrapago_Reef/TextIDs");
+require("scripts/globals/missions");
+require("scripts/globals/quests");
+require("scripts/globals/keyitems");
 
 -----------------------------------
 -- onInitialize
 -----------------------------------
 
 function onInitialize(zone)
-zone:registerRegion(1,-462,-4,-420,-455,-1,-392);
+zone:registerRegion(1, -462,-4,-420,-455,-1,-392);
+--zone:registerRegion(1,-456,-3,-413,0,0,0);
 -- Check for Astral Candy and General Capture
+
     local posession = GetServerVariable("AC_Posession");
 	local rug = GetServerVariable("RughadjeenCapture");
 	local gad = GetServerVariable("GadalarCapture");
@@ -72,6 +77,7 @@ zone:registerRegion(1,-462,-4,-420,-455,-1,-392);
 	   -- SpawnMob();	
 		
     end
+
 	
 end;
 
@@ -119,13 +125,13 @@ end;
 -----------------------------------
 
 function onRegionEnter(player,region)
-    if (player:getCurrentMission(TOAU) ==  THE_BLACK_COFFIN and player:hasKeyItem(EPHRAMADIAN_GOLD_COIN) and player:getVar("TOAUM15") ==0) then
-        player:startEvent(0x0008);
-    elseif (player:getCurrentMission(TOAU) == PREVALENCE_OF_PIRATES and player:getVar("AhtUrganStatus") == 1) then
-        player:startEvent(14);
-    elseif (player:getCurrentMission(TOAU) == TESTING_THE_WATERS and player:hasKeyItem(EPHRAMADIAN_GOLD_COIN)) then
-        player:startEvent(15);
-    end
+    switch (region:GetRegionID()): caseof
+	{
+	    [1] = function (x)
+		    printf("INSIDE REGOPM")
+		    player:startEvent(14);
+	    end,
+	}
 end;
 
 -----------------------------------

@@ -33,7 +33,7 @@ function onTrigger(player,npc)
 		end
 
     -- SHADES OF VENGEANCE
-    elseif (toauMission == SHADES_OF_VENGEANCE and player:hasKeyItem(PERIQIA_ASSAULT_AREA_ENTRY_PERMIT) == false and vanaDay() > player:getVar("TOAUM31_PERMITDAY")) then
+    elseif (toauMission == SHADES_OF_VENGEANCE and player:hasKeyItem(PERIQIA_ASSAULT_AREA_ENTRY_PERMIT) == false) then
         player:startEvent(22);		
 		
 	elseif (player:getCurrentMission(TOAU) >= PRESIDENT_SALAHEEM) then

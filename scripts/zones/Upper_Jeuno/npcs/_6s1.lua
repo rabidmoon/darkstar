@@ -42,7 +42,7 @@ function onTrigger(player,npc)
     elseif (player:getCurrentMission(COP) == DAWN and player:getVar("PromathiaStatus")== 4) then
         player:startEvent(0x0081);
     elseif ((player:getCurrentMission(COP) == DAWN and player:getVar("PromathiaStatus")> 4) or player:hasCompletedMission(COP,DAWN)) then  	  
-        if (playerhaveCOPring == false  ) then
+        if (playerhaveCOPring == false) then
             if (ringtakeNbr==0) then
                 player:startEvent(0x0054,RajasRing,SattvaRing,TamasRing); 
             elseif (ringtakeNbr ==1) then -- First time you throw away
@@ -50,6 +50,10 @@ function onTrigger(player,npc)
             elseif (ringtakeNbr >1 and (currentday-lastRingday)>26) then -- Ring was thrown away more than once
                 player:startEvent(0x00CC,RajasRing,SattvaRing,TamasRing);
             end
+        elseif (playerhaveCOPring == true) then
+            if (ringtakeNbr > 0) then -- First time you throw away
+                player:startEvent(0x00CC,RajasRing,SattvaRing,TamasRing);
+		    end
         end
     else
         return -1; 

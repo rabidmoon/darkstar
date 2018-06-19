@@ -115,6 +115,6 @@ INSERT INTO `bcnm_treasure_chests` VALUES ('673', '1', '16810019');
 -- Cloister of Tides
 
 
-INSERT INTO `bcnm_treasure_chests` VALUES ('1375', '1', '17129765');
-INSERT INTO `bcnm_treasure_chests` VALUES ('1376', '1', '17129767');
+INSERT INTO `bcnm_treasure_chests` VALUES ('1375', '1', '17129717');
+INSERT INTO `bcnm_treasure_chests` VALUES ('1376', '1', '17129718');
 INSERT INTO `bcnm_treasure_chests` VALUES ('1388', '1', '16908479');

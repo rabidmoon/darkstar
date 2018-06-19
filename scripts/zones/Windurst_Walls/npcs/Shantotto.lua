@@ -66,13 +66,13 @@ function onTrade(player,npc,trade)
 	
 		
 	end
-	if (trade:hasItemQty(955,3) and (job == 4) and (lvl >= 50) and (viruscurse == 1) and (player:hasSpell(257) == false)) then
+	if (trade:hasItemQty(955,12) and (job == 4) and (lvl >= 50) and (viruscurse == 1) and (player:hasSpell(257) == false)) then
 	player:PrintToPlayer("Shantotto : No pain, no gain!", 0xD);
     player:addSpell(257);
 	player:setVar("BLMVirusCurse",2);
     end
      
-	if (trade:hasItemQty(935,3) and (job == 4) and (lvl >= 50) and (viruscurse == 3) and (player:hasSpell(256) == false)) then
+	if (trade:hasItemQty(935,12) and (job == 4) and (lvl >= 30) and (viruscurse == 3) and (player:hasSpell(256) == false)) then
 	player:PrintToPlayer("Shantotto : No pain, no gain!", 0xD);
     player:addSpell(256);
 	player:setVar("BLMVirusCurse",0);
@@ -99,11 +99,11 @@ function onTrigger(player,npc)
 	local lvl = player:getMainLvl();
 	local job = player:getMainJob();
 
-	if ((job == 4) and (lvl >= 50) and (player:hasSpell(257) == false)) then
-	player:PrintToPlayer("Shantotto : A black mage can never show all their cards.  A new spell for you for 3 Golem Shards", 0xD);
+	if ((job == 4) and (lvl >= 30) and (player:hasSpell(257) == false)) then
+	player:PrintToPlayer("Shantotto : A black mage can never show all their cards.  A new spell for you for 12 Golem Shards", 0xD);
 	player:setVar("BLMVirusCurse",1);
-	elseif ((job == 5) and (lvl >= 50) and (viruscurse == 2) and (player:hasSpell(256) == false)) then
-	player:PrintToPlayer("Shantotto : I have something for you amongst all these things. A new spell for you for 3 Ahriman Wings", 0xD);
+	elseif ((job == 4) and (lvl >= 50) and (viruscurse == 2) and (player:hasSpell(256) == false)) then
+	player:PrintToPlayer("Shantotto : I have something for you amongst all these things. A new spell for you for 12 Ahriman Wings", 0xD);
 	player:setVar("BLMVirusCurse",3);
 	elseif (player:getCurrentMission(WINDURST) == THE_JESTER_WHO_D_BE_KING and player:getVar("MissionStatus") == 7) then
 		player:startEvent(0x18d,0,0,0,282);
