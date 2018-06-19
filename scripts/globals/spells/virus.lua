@@ -20,6 +20,9 @@ function onSpellCast(caster,target,spell)
 
 	local pINT = caster:getStat(MOD_INT);
 	local mINT = target:getStat(MOD_INT);
+	local enf = caster:getSkillLevel(ENFEEBLING_MAGIC_SKILL);
+	
+	local tick = math.floor(enf / 50) + 1;
 
 	local dINT = (pINT - mINT);
 		
@@ -27,7 +30,7 @@ function onSpellCast(caster,target,spell)
     if (resist >= 0.5) then -- effect taken
         duration = duration * resist;
 
-        if (target:addStatusEffect(effect,5,3,duration)) then
+        if (target:addStatusEffect(effect,tick,3,duration)) then
             spell:setMsg(236);
         else
             spell:setMsg(75);
