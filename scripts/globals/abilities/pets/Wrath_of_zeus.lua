@@ -36,6 +36,7 @@ function onPetAbility(target, pet, skill, master)
     target:addStatusEffect(EFFECT_SILENCE, 1, 0, 60);
 	--master:addStatusEffect(EFFECT_SILENCE, 1, 0, 60);
     master:addStatusEffect(EFFECT_WEAKNESS,1,0,180);
+	master:delStatusEffect(EFFECT_ASTRAL_FLOW);
 	
     return damage; 
 

@@ -264,7 +264,8 @@ namespace petutils
         {
             PPet->PBattleAI->SetBattleTarget(PTarget);
             if (!(PPet->objtype == TYPE_PET && ((CPetEntity*)PPet)->m_PetID == PETID_ODIN || ((CPetEntity*)PPet)->m_PetID == PETID_BAHAMUT ||
-			((CPetEntity*)PPet)->m_PetID == PETID_DARK_IXION || ((CPetEntity*)PPet)->m_PetID == PETID_LIGHT_IXION))
+		   	((CPetEntity*)PPet)->m_PetID == PETID_DARK_IXION || ((CPetEntity*)PPet)->m_PetID == PETID_LIGHT_IXION))
+			//if (!(PPet->objtype == TYPE_PET && ((CPetEntity*)PPet)->m_PetID == PETID_ODIN))
                 PPet->PBattleAI->SetCurrentAction(ACTION_ENGAGE);
         }
     }
@@ -918,24 +919,37 @@ namespace petutils
 		
         PMaster->StatusEffectContainer->CopyConfrontationEffect(PPet);
 
-        if (PetID == PETID_ALEXANDER || PetID == PETID_ODIN || PetID == PETID_BAHAMUT || PetID == PETID_DARK_IXION || PetID == PETID_LIGHT_IXION)
+        if (PetID == PETID_ALEXANDER || PetID == PETID_ODIN || PetID == PETID_BAHAMUT)
+        //if (PetID == PETID_ALEXANDER || PetID == PETID_ODIN || PetID == PETID_BAHAMUT || PetID == PETID_DARK_IXION || PetID == PETID_LIGHT_IXION)
         {
-		    if (PetID == PETID_DARK_IXION)
-	        {
-				apAction_t Action;
-				PPet->m_ActionList.clear();
-
-				Action.ActionTarget = PPet;
-				Action.reaction = REACTION_NONE;
-				Action.speceffect = SPECEFFECT_NONE;
-				Action.animation = 607;
-				ShowWarning(CL_GREEN"Setting to Spawn Animation 607!!! \n" CL_RESET);
-				PPet->m_ActionList.push_back(Action);
-				//PPet->loc.zone->PushPacket(PPet, CHAR_INRANGE, new CActionPacket(PPet));
-			}
 
             PPet->PBattleAI = new CAIUltimateSummon(PPet);
         }
+		
+		
+		
+		else if (PetID == PETID_LIGHT_IXION)
+		{
+		    int32 smskill = PMaster->GetSkill(SKILL_SUM);
+		    ShowWarning(CL_GREEN"Summoning Skill is: %u \n" CL_RESET, smskill);
+		    PPet->setModifier(MOD_DIVINE, smskill);
+			PPet->setModifier(MOD_UFASTCAST,140);
+			PPet->setModifier(MOD_MATT, 50);
+			PPet->setModifier(MOD_REFRESH, 50);
+			PPet->PBattleAI = new CAIPetDummy(PPet);
+		}
+
+        else if (PetID == PETID_DARK_IXION)
+		{
+		    int32 smskille = PMaster->GetSkill(SKILL_SUM);
+		    PPet->setModifier(MOD_ELEM, smskille);
+			PPet->setModifier(MOD_UFASTCAST,140);
+			PPet->setModifier(MOD_MATT, 90);
+			PPet->setModifier(MOD_REFRESH, 50);
+			PPet->PBattleAI = new CAIPetDummy(PPet);
+		}
+		
+		
         else if (PetID >= PETID_HARLEQUINFRAME && PetID <= PETID_STORMWAKERFRAME)
         {
             PPet->PBattleAI = new CAIAutomatonDummy(PPet);
@@ -1517,6 +1531,7 @@ namespace petutils
 		PAlly->setModifier(MOD_CONVHPTOMP, 1);
 		PAlly->setModifier(MOD_FOOD_MPP, 1);
 		PAlly->setModifier(MOD_FOOD_MP_CAP, 1);	
+		PAlly->setModifier(MOD_POISONRES, 10);
 		PAlly->setModifier(MOD_MPP, 1);
 		PAlly->setModifier(MOD_HPP, 1);	
         PAlly->setModifier(MOD_MOVE, 10);
@@ -1844,7 +1859,138 @@ namespace petutils
 		else {
 			PAlly->setModifier(MOD_MATT, 10);
 		}	
-        }		
+        }
+
+		else if (PetID == PETID_ZAZARG)
+		{
+		uint16 haste = 0;
+		uint16 attZaz = (floor(PAlly->GetMLevel() * 1.0));
+		uint16 accZaz = (floor(PAlly->GetMLevel() * 1.0));		
+		uint16 hpZaz = (floor(PAlly->GetMLevel() * 3.6));
+		uint16 maxhaste = PAlly->GetMLevel();
+		haste = (floor(maxhaste * 2.7));
+		if (haste > 200){
+		haste = 200;
+		}		
+		//ShowWarning(CL_GREEN"CURILLA TRIGGERED SPAWN ALLY!!! \n" CL_RESET);
+		PAlly->SetMJob(JOB_MNK);
+		PAlly->setModifier(MOD_ACC, battleutils::GetMaxSkill(SKILL_GAX, JOB_WAR, PAlly->GetMLevel()) + accZaz); //A+ Acc
+		PAlly->setModifier(MOD_EVA, battleutils::GetMaxSkill(SKILL_SYH, JOB_WAR, PAlly->GetMLevel())); //B+ Evasion
+		PAlly->setModifier(MOD_ATT, battleutils::GetMaxSkill(SKILL_GAX, JOB_WAR, PAlly->GetMLevel()) + attZaz);// B+ Attack
+		PAlly->setModifier(MOD_DEF, battleutils::GetMaxSkill(SKILL_GAX, JOB_WAR, PAlly->GetMLevel()));// A+ Defense
+        PAlly->m_Weapons[SLOT_MAIN]->setSkillType(SKILL_H2H);	
+        PAlly->m_Weapons[SLOT_SUB]->setSkillType(SKILL_H2H);		
+		//PAlly->m_Weapons[SLOT_MAIN]->setDamage((floor(PAlly->GetMLevel()*0.2)) + 3.0f);// D:32 @75
+		PAlly->m_Weapons[SLOT_MAIN]->setDelay(floor(1000.0f*(290.0f / 60.0f))); //+48 Delay.  Default H2H delay is 480	
+		PAlly->m_Weapons[SLOT_SUB]->setDelay(floor(1000.0f*(290.0f / 60.0f))); //+48 Delay.  Default H2H delay is 480	
+		PAlly->m_Weapons[SLOT_MAIN]->setDamage((floor(PAlly->GetMLevel()*0.2)) + 3.0f);// D:32 @75		
+		PAlly->m_Weapons[SLOT_SUB]->setDamage((floor(PAlly->GetMLevel()*0.2)) + 3.0f);// D:32 @75			
+        PAlly->SetMJob(JOB_MNK);
+		PAlly->setModifier(MOD_HASTE_GEAR, haste);
+		PAlly->setModifier(MOD_CONVMPTOHP, 1);
+		PAlly->setModifier(MOD_CONVHPTOMP, 1);
+		PAlly->setModifier(MOD_FOOD_MPP, 1);
+		PAlly->setModifier(MOD_FOOD_MP_CAP, 1);	
+		PAlly->setModifier(MOD_MPP, 1);
+		PAlly->setModifier(MOD_HPP, 1);	
+        PAlly->setModifier(MOD_MOVE, 10);		
+		PAlly->health.maxhp = (int16)(15 + hpZaz + (3.66f*(plvl * 4.17f)));
+		PAlly->UpdateHealth();
+		PAlly->health.hp = PAlly->health.maxhp;
+		   if (plvl > 74){
+				//PAlly->setModifier(MOD_MARTIAL_ARTS, 180);
+				PAlly->setModifier(MOD_DOUBLE_ATTACK, 10);	
+				PAlly->setModifier(MOD_KICK_ATTACK, 12);
+				PAlly->setModifier(MOD_COUNTER, 8);
+				PAlly->setModifier(MOD_DUAL_WIELD, 45); // Dual Wield			
+		   }
+		   else if (plvl > 70){
+				//PAlly->setModifier(MOD_MARTIAL_ARTS, 160);
+				PAlly->setModifier(MOD_DOUBLE_ATTACK, 10);	
+				PAlly->setModifier(MOD_KICK_ATTACK, 12);
+				PAlly->setModifier(MOD_COUNTER, 8);
+				PAlly->setModifier(MOD_DUAL_WIELD, 37); // Dual Wield
+		   }		   
+		   else if (plvl > 60){
+				//PAlly->setModifier(MOD_MARTIAL_ARTS, 160);
+				PAlly->setModifier(MOD_DOUBLE_ATTACK, 10);	
+				PAlly->setModifier(MOD_COUNTER, 8);	
+				PAlly->setModifier(MOD_DUAL_WIELD, 34); // Dual Wield
+		   }
+		   else if (plvl > 50){
+				PAlly->setModifier(MOD_KICK_ATTACK, 10);		   
+				PAlly->setModifier(MOD_DOUBLE_ATTACK, 10);
+				PAlly->setModifier(MOD_COUNTER, 8);
+				PAlly->setModifier(MOD_DUAL_WIELD, 31); // Dual Wield
+		   }		   
+		   else if (plvl > 49){
+				PAlly->setModifier(MOD_DOUBLE_ATTACK, 10);
+				PAlly->setModifier(MOD_COUNTER, 8);
+				PAlly->setModifier(MOD_DUAL_WIELD, 31); // Dual Wield
+		   }
+		   else if (plvl > 45){
+				//PAlly->setModifier(MOD_MARTIAL_ARTS, 140);
+				PAlly->setModifier(MOD_COUNTER, 8);
+				PAlly->setModifier(MOD_DUAL_WIELD, 31); // Dual Wield
+		   }		   
+		   else if (plvl > 30){
+				//PAlly->setModifier(MOD_MARTIAL_ARTS, 120);
+				PAlly->setModifier(MOD_COUNTER, 8);
+                PAlly->setModifier(MOD_DUAL_WIELD, 28); // Dual Wield				
+		   }		   
+		   else if (plvl > 15){
+				//PAlly->setModifier(MOD_MARTIAL_ARTS, 100);
+				PAlly->setModifier(MOD_COUNTER, 8);
+                PAlly->setModifier(MOD_DUAL_WIELD, 25); // Dual Wield				
+		   }
+		   else if (plvl > 9){
+				//PAlly->setModifier(MOD_MARTIAL_ARTS, 80);
+				PAlly->setModifier(MOD_COUNTER, 8);
+				PAlly->setModifier(MOD_DUAL_WIELD, 22); // Dual Wield
+		   }		   
+		   else if (plvl > 1){
+				//PAlly->setModifier(MOD_MARTIAL_ARTS, 80);
+				PAlly->setModifier(MOD_DUAL_WIELD, 19); // Dual Wield
+		   }
+		}
+
+	    else if (PetID == PETID_MIHLI)
+		{
+		PAlly->SetMJob(JOB_WHM);
+		uint16 milatt = (PAlly->GetMLevel() * 1.2);
+		uint16 milacc = (PAlly->GetMLevel() * 0.4); 
+		
+		PAlly->setModifier(MOD_ACC, battleutils::GetMaxSkill(SKILL_GAX, JOB_WAR, PAlly->GetMLevel()) + milacc); //A+ Acc
+		PAlly->setModifier(MOD_EVA, battleutils::GetMaxSkill(SKILL_POL, JOB_WAR, PAlly->GetMLevel())); //B- Evasion
+		PAlly->setModifier(MOD_ATT, battleutils::GetMaxSkill(SKILL_POL, JOB_WAR, PAlly->GetMLevel()) + milatt);// B- Attack
+		PAlly->setModifier(MOD_DEF, battleutils::GetMaxSkill(SKILL_POL, JOB_WAR, PAlly->GetMLevel()));// B- Defense
+		PAlly->setModifier(MOD_HEALING, battleutils::GetMaxSkill(SKILL_GAX, JOB_WAR, PAlly->GetMLevel()));// A+ Healing
+		PAlly->setModifier(MOD_DIVINE, battleutils::GetMaxSkill(SKILL_GAX, JOB_WAR, PAlly->GetMLevel()));// A+ Divine Magic
+		PAlly->m_Weapons[SLOT_MAIN]->setDamage(floor(PAlly->GetMLevel()*0.55f) + 3);// D:42 @75
+		PAlly->m_Weapons[SLOT_MAIN]->setDelay(floor(1000.0f*(315.0f / 60.0f))); //320 delay
+		PAlly->setModifier(MOD_ENMITY, -15);		
+		PAlly->setModifier(MOD_CONVMPTOHP, 1);
+		PAlly->setModifier(MOD_CONVHPTOMP, 1);
+		PAlly->setModifier(MOD_FOOD_MPP, 1);
+		PAlly->setModifier(MOD_FOOD_MP_CAP, 1);
+		PAlly->setModifier(MOD_MPP, 1);
+		PAlly->setModifier(MOD_HPP, 1);	
+		PAlly->setModifier(MOD_MOVE, 10);
+		PAlly->health.maxhp = (int16)(17 + (3.3f*(plvl * 3.8f))); 		
+		PAlly->health.maxmp = (int16)(18 + (3.51f*(plvl * 3.3f))); 
+		PAlly->UpdateHealth();
+        PAlly->health.mp = PAlly->health.maxmp;
+		   if (plvl > 74){
+		   PAlly->setModifier(MOD_REFRESH, 3);
+		   }
+		   else if (plvl > 24){
+		   PAlly->setModifier(MOD_REFRESH, 1);
+		   }
+		   
+		}
+
+
+		
 		
         PAlly->PBattleAI = new CAIPetDummy(PAlly);
         PAlly->PBattleAI->SetLastActionTime(gettick());
@@ -2186,6 +2332,64 @@ namespace petutils
             else
                 cost = 15;
         }
+        else if (id == 84)
+        {
+            if (level < 10)
+                cost = 4;
+            else if (level < 19)
+                cost = 6;
+            else if (level < 28)
+                cost = 7;
+            else if (level < 38)
+                cost = 8;
+            else if (level < 47)
+                cost = 9;
+            else if (level < 56)
+                cost = 10;
+            else if (level < 65)
+                cost = 12;
+            else if (level < 68)
+                cost = 13;
+            else if (level < 71)
+                cost = 14;
+            else if (level < 74)
+                cost = 15;
+            else if (level < 81)
+                cost = 16;
+            else if (level < 91)
+                cost = 17;
+            else
+                cost = 20;
+        }
+        else if (id == 85)
+        {
+            if (level < 10)
+                cost = 4;
+            else if (level < 19)
+                cost = 6;
+            else if (level < 28)
+                cost = 7;
+            else if (level < 38)
+                cost = 8;
+            else if (level < 47)
+                cost = 9;
+            else if (level < 56)
+                cost = 10;
+            else if (level < 65)
+                cost = 12;
+            else if (level < 68)
+                cost = 13;
+            else if (level < 71)
+                cost = 14;
+            else if (level < 74)
+                cost = 15;
+            else if (level < 81)
+                cost = 16;
+            else if (level < 91)
+                cost = 17;
+            else
+                cost = 20;
+        }		
 
         return cost;
     }
@@ -2287,6 +2491,14 @@ namespace petutils
         {
             petType = PETTYPE_AVATAR;
         }
+		if (PetID == PETID_LIGHT_IXION)
+        {
+            petType = PETTYPE_AVATAR;
+        }
+		if (PetID == PETID_DARK_IXION)
+        {
+            petType = PETTYPE_AVATAR;
+        }		
         //TODO: move this out of modifying the global pet list
         else if (PetID == PETID_WYVERN)
         {

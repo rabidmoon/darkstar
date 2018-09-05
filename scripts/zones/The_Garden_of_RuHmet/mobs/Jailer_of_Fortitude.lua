@@ -5,12 +5,14 @@
 
 require("scripts/globals/status");
 require("scripts/globals/magic");
+require("scripts/globals/mobscaler");
 
 -----------------------------------
 -- onMobSpawn Action
 -----------------------------------
 
 function onMobSpawn(mob)
+    mob:setLocalVar("PartySize",6); 
     -- Give it two hour
     mob:setMobMod(MOBMOD_MAIN_2HOUR, 1);
     mob:setMobMod(MOBMOD_2HOUR_MULTI, 1);
@@ -24,6 +26,8 @@ end;
 -----------------------------------
 
 function onMobFight(mob)
+    local size = target:getPartySize();
+	mobScaler(mob,target);
     local delay = mob:getLocalVar("delay");
     local LastCast = mob:getLocalVar("LAST_CAST");
     local spell = mob:getLocalVar("COPY_SPELL");
@@ -67,6 +71,15 @@ end;
 -----------------------------------
 
 function onMobDeath(mob, killer, npc)
+	if (killer:getObjType() == TYPE_PET) then
+        player:setVar("Fort_Win",1);
+	    player:addCurrency('zeni_point',250);
+	    player:PrintToPlayer("You obtain 250 Zeni Points.", 0x15);	
+    elseif (killer:getObjType() == TYPE_PC) then
+        player:setVar("Fort_Win",1);
+	    player:addCurrency('zeni_point',250);
+	    player:PrintToPlayer("You obtain 250 Zeni Points.", 0x15);		
+    end
     -- Despawn the pets if alive
     DespawnMob(Kf_Ghrah_WHM);
     DespawnMob(Kf_Ghrah_BLM);

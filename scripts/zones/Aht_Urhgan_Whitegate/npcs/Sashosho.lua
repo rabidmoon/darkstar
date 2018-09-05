@@ -198,7 +198,7 @@ end
 
 
 
-if (job == 6) and (trade:hasItemQty(16764, 1)) and trade:hasItemQty( 2184, 10 ) and level >= 75 then and (player:getVar("THFAFweapon") == 3) then
+if (job == 6) and (trade:hasItemQty(16764, 1)) and trade:hasItemQty( 2184, 10 ) and level >= 75 and (player:getVar("THFAFweapon") == 3) then
              -- Complete the trade..
             player:tradeComplete();
 			player:PrintToPlayer("Sashosho : Thank you for the requested items. Come see me again when you are stronger.", 0xD);

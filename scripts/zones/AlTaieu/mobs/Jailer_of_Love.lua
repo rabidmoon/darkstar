@@ -5,12 +5,14 @@
 
 require("scripts/globals/status");
 require("scripts/globals/magic");
+require("scripts/globals/mobscaler");
 
 -----------------------------------
 -- onMobSpawn Action
 -----------------------------------
 
 function onMobSpawn(mob)
+    mob:setLocalVar("PartySize",6);  
 end;
 
 -----------------------------------
@@ -28,6 +30,8 @@ end;
 -----------------------------------
 
 function onMobFight(mob, target)
+    local size = target:getPartySize();
+	mobScaler(mob,target);
     -- Only 9 Qn'xzomit and 9 Qn'hpemde can be summoned. Ru'phuabo (Sharks) are unlimited.
     local XZOMITS = mob:getLocalVar("JoL_Qn_xzomit_Killed");
     local HPEMDES = mob:getLocalVar("JoL_Qn_hpemde_Killed");
@@ -128,6 +132,15 @@ end;
 -----------------------------------
 
 function onMobDeath(mob, killer)
+	if (killer:getObjType() == TYPE_PET) then
+        player:setVar("Love_Win",1);
+	    player:addCurrency('zeni_point',1000);
+	    player:PrintToPlayer("You obtain 1000 Zeni Points.", 0x15);	
+    elseif (killer:getObjType() == TYPE_PC) then
+        player:setVar("Love_Win",1);
+	    player:addCurrency('zeni_point',1000);
+	    player:PrintToPlayer("You obtain 1000 Zeni Points.", 0x15);		
+    end
     local AV_CHANCE = 25;
     if (AV_CHANCE > math.random(0,99)) then
         SpawnMob(16912876, 180);

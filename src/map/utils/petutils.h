@@ -78,7 +78,9 @@ enum PETID
 	PETID_GESSHO             = 90,
 	PETID_ZEID               = 91,
     PETID_NAJELITH           = 96,
-    PETID_SHANTOTTO          = 97	
+    PETID_SHANTOTTO          = 97,
+    PETID_ZAZARG             = 98,
+    PETID_MIHLI              = 99	
 };
 
 

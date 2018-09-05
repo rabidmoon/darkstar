@@ -158,7 +158,8 @@ public:
     void            SetLastCurillaFlash(uint32 time);
     void            SetLastCurillaBashTime(uint32 time);
     void            SetLastCurillaChivalryTime(uint32 time);	
-    void            SetLastCurillaReprisalTime(uint32 time);	
+    void            SetLastCurillaReprisalTime(uint32 time);
+    void			SetLastCurillaSentinelTime(uint32 time);	
 	void            SetLastKupipiMagicTime(uint32 time);
 	void            SetLastKupipiEnhanceTime(uint32 time);
 	void            SetLastKupipiSolaceTime(uint32 time);	
@@ -241,6 +242,11 @@ public:
 	
     void			SetLastShantottoEleTime(uint32 time);	
 	
+	void            SetLastMihliMagicTime(uint32 time);
+	void            SetLastMihliEnhanceTime(uint32 time);	
+	
+	void            SetLastBPTime(uint32 time);
+	
 	void			SetCurrentAction(ACTIONTYPE Action, uint16 TargetID = 0);
 	void			SetLastCorsairRoll(uint16 ability);
 	void			SetAutoAttackEnabled(bool enabled);
@@ -291,7 +297,8 @@ protected:
 	uint32          m_LastCurillaFlash;
 	uint32          m_LastCurillaBashTime;
 	uint32          m_LastCurillaChivalryTime;
-	uint32          m_LastCurillaReprisalTime;	
+	uint32          m_LastCurillaReprisalTime;
+    uint32			m_LastCurillaSentinelTime;	
 	uint32          m_LastKupipiMagicTime;
 	uint32			m_LastKupipiEnhanceTime;
 	uint32			m_LastKupipiSolaceTime;	
@@ -375,8 +382,13 @@ protected:
 
     uint32          m_LastShantottoEleTime;	
 	
+	uint32          m_LastMihliMagicTime;
+	uint32			m_LastMihliEnhanceTime;	
+	
 	uint32			m_LastEngageStart;
 	uint32 			m_LastSkillchainStart;
+	
+	uint32          m_LastBP;
 
 
     uint32			m_Tick;					// текущее значение времени

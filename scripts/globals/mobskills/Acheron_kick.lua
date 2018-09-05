@@ -19,6 +19,11 @@ function onMobWeaponSkill(target, mob, skill)
 	local numhits = 1;
 	local accmod = 1;
 	local dmgmod = 1.7;
+	 print("Acheron Kick");
+	if (mob:getObjType() == TYPE_PET) then
+	    print("Triggered Pet Type");
+	     dmgmob = 6;
+	end
 	local info = MobPhysicalMove(mob,target,skill,numhits,accmod,dmgmod,TP_DMG_VARIES,1,2,3);
 	local dmg = MobFinalAdjustments(info.dmg,mob,skill,target,MOBSKILL_PHYSICAL,MOBPARAM_BLUNT,info.hitslanded);
 

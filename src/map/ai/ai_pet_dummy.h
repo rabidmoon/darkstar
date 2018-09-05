@@ -60,6 +60,7 @@ protected:
 	//individual universal recast timers
 	uint32 m_magicRecast;
 	uint32 m_magicKupipiRecast;
+	uint32 m_magicMihliRecast;
 	uint32 m_magicShantottoRecast;
 	uint32 m_blueCheck;
 	uint32 m_schCheck;
@@ -72,10 +73,14 @@ protected:
 	uint32 m_curillaBashRecast;
 	uint32 m_curillaReprisalRecast;
 	uint32 m_curillaChivalryRecast;
+	uint32 m_curillaSentRecast;
 	uint32 m_kupipiHealCast;
+	uint32 m_mihliHealCast;
 	uint32 m_kupipiHealRecast;
+	uint32 m_mihliHealRecast;
 	uint32 m_kupipiSolaceRecast;
 	uint32 m_kupipiEnhanceRecast;
+	uint32 m_mihliEnhanceRecast;
 	uint32 m_nanaacheck;
 	uint32 m_nanaaSneakAttackRecast;
 	uint32 m_ayameMeditateRecast;
@@ -154,6 +159,9 @@ protected:
 	int8 m_sekkaStatus;
 	int8 m_chainAffinityStatus;
 	
+	int32 m_BPrecast;
+
+	
 
 	
 
@@ -189,9 +197,13 @@ protected:
 	int16 PrisheSpell();
 	int16 GesshoSpell();
 	int16 ZeidSpell();
+	int16 MihliSpell();
 	int16 ShantottoSpell();
 	int16 ShantottoSpellLowTier();	
 	int16 ShantottoSpellDebuff();
+	int16 LightIxionSpell();
+	int16 DarkIxionSpell();	
+	int16 SummonBloodPact();
 	int16 skillchainTimer();
 	uint32 ZeidSkillchain();
 	CBattleEntity* getWounded(uint8 threshold);
@@ -199,7 +211,8 @@ protected:
 	CBattleEntity* getWoundedAga(uint8 threshold);
 	CBattleEntity* getTrickAttackPartner();
 	CBattleEntity* getLionSCPartnerZeid();	
-	CBattleEntity* getZeidSCPartner();	
+	CBattleEntity* getZeidSCPartner();
+	CBattleEntity* getPrisheSCPartnerLion();	
 	CBattleEntity* getSleptMage();	
 	
 

@@ -27,6 +27,7 @@ local lastlogin = player:getVar("logoutRestStart");
 local loginok = player:getVar("logoutOK");
 local bonus = 0;
 local zone = player:getZoneID();
+local abuse = player:getVar("AHexploit");
 
    --  if (player:getObjType() == TYPE_PC) then
   --	player:addMod(MOD_RERAISE_III,1);
@@ -37,10 +38,21 @@ local zone = player:getZoneID();
             CharCreate(player);
         end
 		if (player:getObjType() == TYPE_PC) then
-		player:PrintToServer(string.format("%s has logged in...", player:getName()), 0x1C);
-		-- Login Logout message handled in Core
-
-		  if ((player:hasStatusEffect(EFFECT_RESTING_BONUS) == false) and loginok == 1) then
+		    player:PrintToServer(string.format("%s has logged in...", player:getName()), 0x1C);
+		    -- Login Logout message handled in Core
+		end
+		
+        if (abuse == 1) then
+		    player:addStatusEffectEx(EFFECT_RESTING_BONUS,EFFECT_DEDICATION,-50,0,86400,0,20000);
+		
+		elseif (abuse == 2) then
+		    player:addStatusEffectEx(EFFECT_RESTING_BONUS,EFFECT_DEDICATION,-70,0,86400,0,20000);		
+		
+		elseif (abuse == 3) then
+		    player:addStatusEffectEx(EFFECT_RESTING_BONUS,EFFECT_DEDICATION,-80,0,86400,0,20000);		
+		
+		
+		elseif ((player:hasStatusEffect(EFFECT_RESTING_BONUS) == false) and loginok == 1) then
 			if ((logintime - lastlogin) >= 39600) then  --39600 is 11 hours
 			bonus = (((logintime - lastlogin) - 39600)) * 0.001388; -- 1 hour is 1.66% exp
 			math.floor(bonus);
@@ -50,24 +62,32 @@ local zone = player:getZoneID();
 			player:setVar("RestExp",bonus);
 			player:addStatusEffectEx(EFFECT_RESTING_BONUS,EFFECT_DEDICATION,bonus,0,86400,0,20000);
 			end
-			end
-		end	
-
+		end
+			
+			
+			
+	player:setVar("Player_Tips",1);			
+	end	
+	
+	
 	if (player:hasKeyItem(PORTAL_CHARM) == false) then
 	    player:addKeyItem(PORTAL_CHARM);
 	end	
 	
-	player:setVar("Player_Tips",1);	
+
 
 	
-    end
+
 
     if (zoning) then -- Things checked ONLY during zone in go here.
         -- Nothing here yet :P
+		local besieged = GetServerVariable("Besieged_Horde");
 		if ((player:getObjType() == TYPE_PC) and (player:hasStatusEffect(EFFECT_DYNA_RESTRICTION)) and (zone ~= 135) and (zone ~= 134) and (zone ~= 185) and (zone ~= 186) and (zone ~= 187) and (zone ~= 188)) then
 		player:delStatusEffect(EFFECT_DYNA_RESTRICTION);
-	   end	
-	  
+	    end	
+	    if ((player:getObjType() == TYPE_PC) and (zone == 48) and (besieged > 0)) then
+            player:addStatusEffect(EFFECT_BESIEGED,3,0,3600);
+        end			 
     end
 
     -- Things checked BOTH during logon AND zone in below this line.

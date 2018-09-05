@@ -17,7 +17,7 @@ require("scripts/globals/keyitems");
 -----------------------------------
 
 function onInitialize(zone)
-zone:registerRegion(1, -462,-4,-420,-455,-1,-392);
+
 --zone:registerRegion(1,-456,-3,-413,0,0,0);
 -- Check for Astral Candy and General Capture
 
@@ -77,6 +77,9 @@ zone:registerRegion(1, -462,-4,-420,-455,-1,-392);
 	   -- SpawnMob();	
 		
     end
+	
+	zone:registerRegion(1, -462,-4,-420,-455,-1,-392);
+zone:registerRegion(2, -452,1,-424,-452,-6,-404);
 
 	
 end;
@@ -99,14 +102,16 @@ function onZoneIn(player,prevZone)
         else
             player:setPos(-180.028,-10.335,-559.987,182);
         end
-    end
+    elseif (player:getCurrentMission(TOAU) == PREVALENCE_OF_PIRATES and player:getVar("AhtUrganStatus") == 1) then
+        player:startEvent(14);   
+   end
 	
 	-- Besieged
-	if (GetServerVariable("Besieged_Horde") > 0) then
-	    player:addStatusEffect(EFFECT_BESIEGED,3,0,3600);
-		player:ChangeMusic(1, 142);
-		player:ChangeMusic(2, 142);
-	end
+	--if (GetServerVariable("Besieged_Horde") > 0) then
+	  --  player:addStatusEffect(EFFECT_BESIEGED,3,0,3600);
+		--player:ChangeMusic(1, 142);
+		--player:ChangeMusic(2, 142);
+	--end
 
     return cs;
 end;
@@ -124,14 +129,21 @@ end;
 -- onRegionEnter
 -----------------------------------
 
+
 function onRegionEnter(player,region)
-    switch (region:GetRegionID()): caseof
-	{
-	    [1] = function (x)
-		    printf("INSIDE REGOPM")
-		    player:startEvent(14);
-	    end,
-	}
+    
+	if (region:GetRegionID() == 1) then
+	       print("Entered Region");
+            player:startEvent(14);
+			
+        printf("Player entered region!!!");
+    elseif (player:getCurrentMission(TOAU) ==  THE_BLACK_COFFIN and player:hasKeyItem(EPHRAMADIAN_GOLD_COIN) and player:getVar("TOAUM15") == 0) then
+            player:startEvent(0x0008);
+    elseif (player:getCurrentMission(TOAU) == PREVALENCE_OF_PIRATES and player:getVar("AhtUrganStatus") == 1) then
+            player:startEvent(14);
+    elseif (player:getCurrentMission(TOAU) == TESTING_THE_WATERS and player:hasKeyItem(EPHRAMADIAN_GOLD_COIN)) then
+            player:startEvent(15);
+    end
 end;
 
 -----------------------------------
@@ -158,7 +170,8 @@ function onEventFinish(player,csid,option)
         player:setVar("AhtUrganStatus",3);
         player:setPos(0,0,0,0,53);
     elseif (csid == 13) then
-        player:setVar("AhtUrganStatus",1);		
+        player:setVar("AhtUrganStatus",1);	
+        player:startEvent(14);		
     elseif (csid == 0x0022 and player:getVar("TOAUM15") == 1) then
         player:startEvent(0x0023);
     elseif (csid == 14) then

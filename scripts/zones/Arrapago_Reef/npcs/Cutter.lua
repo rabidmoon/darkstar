@@ -72,6 +72,7 @@ end;
 -----------------------------------
 
 function onInstanceCreated(player,target,instance)
+    -- print(instance);
     if (instance) then        
         player:setInstance(instance);
         player:instanceEntry(target,4);

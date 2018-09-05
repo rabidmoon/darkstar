@@ -2300,7 +2300,7 @@ namespace charutils
             {
                 CAbility* PAbility = AbilitiesList.at(i);
 
-                if (PPet->GetMLevel() >= PAbility->getLevel() && PetID >= 8 && PetID <= 20 && CheckAbilityAddtype(PChar, PAbility))
+                if (PPet->GetMLevel() >= PAbility->getLevel() && ((PetID >= 8 && PetID <= 20) || (PetID == 85)) && CheckAbilityAddtype(PChar, PAbility))
                 {
                     if (PetID == 8)
                     {
@@ -2328,6 +2328,14 @@ namespace charutils
                         if (PAbility->getID() >= 505 && PAbility->getID() <= 512)
                         {
                             addPetAbility(PChar, PAbility->getID() - 496);
+                        }
+                    }
+					//Test
+					else if (PetID == 85)
+                    {
+                        if (PAbility->getID() == 752)
+                        {
+                            addPetAbility(PChar, PAbility->getID() - 729);
                         }
                     }
                 }

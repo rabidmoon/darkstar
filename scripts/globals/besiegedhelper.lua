@@ -322,6 +322,7 @@ function undeadVictory(mob,killer)
 	-- Find out if there is a Victory
 	if ((kills == win) or (timeout == 1)) then
 	    printf("Undead have Retreated!! Al Zahbi is Victorious!!");
+		mob:PrintToServer("The Undead Swarm have retreated!",0x1C);
 	    SetServerVariable("UndeadKills",0); -- Reset Undead Kills
 		local consecwins = GetServerVariable("Consecutive_BWins");
 		consecwins = consecwins + 1;
@@ -414,6 +415,7 @@ function trollLoss(mob,killer) -- Victory for Al Zahbi Loss for Trolls
 	-- Find out if there is a Victory
 	if ((kills == win) or (timeout == 1)) then
 	    printf("Trolls have Retreated!! Al Zahbi is Victorious!!");
+		mob:PrintToServer("The Troll Mercenaries have retreated!",0x1C);
 	    SetServerVariable("TrollKills",0); -- Reset Undead Kills
 		local consecwins = GetServerVariable("Consecutive_BWins");
 		consecwins = consecwins + 1;
@@ -509,6 +511,7 @@ function mamoolLoss(mob,killer) -- Victory for Al Zahbi Loss for Mamool
 	-- Find out if there is a Victory
 	if ((kills == win) or (timeout == 1)) then
 	    printf("The Mamool Ja Savages have Retreated!! Al Zahbi is Victorious!!");
+		mob:PrintToServer("The Mamool Ja Savages have retreated!",0x1C);
 	    SetServerVariable("MamoolKills",0); -- Reset Mamool Kills
 		local consecwins = GetServerVariable("Consecutive_BWins");
 		consecwins = consecwins + 1;
@@ -594,6 +597,7 @@ end;
 function undeadLoss(mob)  -- Victory for Undead (Should change to be more consistant)
     SetServerVariable("AC_Posession",2) -- Undead now has posession
 	printf("Undead has taken the Astral Candy!!");
+	mob:PrintToServer("The Undead Swarm have taken the Astral Candescence!",0x1C);
 	SetServerVariable("Consecutive_BWins",0);
 	SetServerVariable("Dead_Helpers",0);
 	SetServerVariable("UndeadACKilled",0); -- Set AC mobs to 0 kills
@@ -681,6 +685,7 @@ end
 function trollVictory(mob)  -- Victory for Trolls
     SetServerVariable("AC_Posession",3) -- Trolls now have posession
 	printf("The Troll Mercenaries have taken the Astral Candy!!");
+	mob:PrintToServer("The Troll Mercenaries have taken the Astral Candescence!",0x1C);	
 	SetServerVariable("Consecutive_BWins",0);	
 	SetServerVariable("Dead_Helpers",0);
 	SetServerVariable("TrollACKilled",0); -- Set AC mobs to 0 kills
@@ -785,6 +790,7 @@ end
 function mamoolVictory(mob)  -- Victory for Trolls
     SetServerVariable("AC_Posession",4) -- Trolls now have posession
 	printf("The Mamool Ja Savages have taken the Astral Candy!!");
+	mob:PrintToServer("The Mamool Ja Savages have taken the Astral Candescence!",0x1C);	
 	SetServerVariable("Consecutive_BWins",0);	
 	SetServerVariable("Dead_Helpers",0);
 	SetServerVariable("TrollACKilled",0); -- Set AC mobs to 0 kills

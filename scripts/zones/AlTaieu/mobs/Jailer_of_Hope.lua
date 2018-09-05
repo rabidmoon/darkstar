@@ -4,6 +4,7 @@
 -----------------------------------
 
 require("scripts/globals/status");
+require("scripts/globals/mobscaler");
 
 -----------------------------------
 -- onMobInitialize Action
@@ -18,6 +19,7 @@ end;
 -----------------------------------
 
 function onMobSpawn(mob)
+    mob:setLocalVar("PartySize",6); 
     mob:setSpellList(0); -- If it dies with the ability to cast spells, the next spawn would be able to cast from the start.
     mob:setMobMod(MOBMOD_MAGIC_COOL, 20); -- This gives around 6 - 15 seconds between casts. Doesn't seem to work anywhere except in this function.
 end;
@@ -27,6 +29,8 @@ end;
 -----------------------------------
 
 function onMobFight(mob, target)
+    local size = target:getPartySize();
+    mobScaler(mob,target);
     if (mob:getLocalVar("SpellTime") < os.time() and mob:getLocalVar("SpellTime") ~= 0) then -- Checks for it being 0 because it gets set to 0 to avoid setting the spell list repeatedly
         mob:setSpellList(0);
         mob:setLocalVar("SpellTime", 0)
@@ -63,4 +67,13 @@ end;
 -----------------------------------
 
 function onMobDeath(mob, killer)
+	if (killer:getObjType() == TYPE_PET) then
+        player:setVar("Hope_Win",1);
+	    player:addCurrency('zeni_point',500);
+	    player:PrintToPlayer("You obtain 500 Zeni Points.", 0x15);	
+    elseif (killer:getObjType() == TYPE_PC) then
+        player:setVar("Hope_Win",1);
+	    player:addCurrency('zeni_point',500);
+	    player:PrintToPlayer("You obtain 500 Zeni Points.", 0x15);		
+    end
 end;

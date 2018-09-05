@@ -11,6 +11,7 @@ require("scripts/globals/missions");
 require("scripts/globals/conquest");
 require("scripts/globals/status");
 require("scripts/globals/trustpoints");
+require("scripts/globals/endgamearmortrials");
 
 -----------------------------------
 --
@@ -347,8 +348,9 @@ end
 
 trustPoints(killer,mob);
 
-
-
+    if (killer:getVar("ArmorTrialsActive") == 1) then
+        endgameArmorTrial(mob, killer);
+    end
 -- Check to see if trust is in party and reward points 
 
 

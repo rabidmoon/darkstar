@@ -5,6 +5,7 @@
 
 require("scripts/globals/magic");
 require("scripts/globals/status");
+require("scripts/globals/mobscaler");
 
 -----------------------------------
 -- OnMobSpawn Action
@@ -13,6 +14,7 @@ require("scripts/globals/status");
 -----------------------------------
 
 function onMobSpawn(mob)
+    mob:setLocalVar("PartySize",6); 
 	-- Give it two hour
 	mob:setMod(MOBMOD_MAIN_2HOUR, 1);
 	-- Change animation to pot
@@ -37,6 +39,8 @@ end;
 -----------------------------------
 
 function onMobFight(mob)
+    local size = target:getPartySize();
+	mobScaler(mob,target);
 	-- Forms: 0 = Pot  1 = Pot  2 = Poles  3 = Rings
 	local randomTime = math.random(30,180);
 	local changeTime = mob:getLocalVar("changeTime");
@@ -106,6 +110,15 @@ end;
 -- onMobDeath	
 -----------------------------------	
 function onMobDeath(mob,killer)	
+	if (killer:getObjType() == TYPE_PET) then
+        player:setVar("Temper_Win",1);
+	    player:addCurrency('zeni_point',250);
+	    player:PrintToPlayer("You obtain 250 Zeni Points.", 0x15);	
+    elseif (killer:getObjType() == TYPE_PC) then
+        player:setVar("Temper_Win",1);
+	    player:addCurrency('zeni_point',250);
+	    player:PrintToPlayer("You obtain 250 Zeni Points.", 0x15);		
+    end
 	SetServerVariable("[SEA]Jailer_of_Temperance_POP", os.time(t) + 900); -- 15 mins
 	DeterMob(mob:getID(), true);
 	

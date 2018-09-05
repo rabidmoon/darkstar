@@ -10637,28 +10637,69 @@ INSERT INTO `mob_droplist` VALUES (1831,4,2924,0);
 INSERT INTO `mob_droplist` VALUES (1831,0,2924,140);
 INSERT INTO `mob_droplist` VALUES (1831,4,4377,0);
 INSERT INTO `mob_droplist` VALUES (1831,0,4377,180);
+-- Faith
 INSERT INTO `mob_droplist` VALUES (1832,0,1856,1000);
 INSERT INTO `mob_droplist` VALUES (1832,0,15512,200);
 INSERT INTO `mob_droplist` VALUES (1832,0,18360,1000);
+INSERT INTO `mob_droplist` VALUES (1832,0,14905,80);  -- Homama Hands
+INSERT INTO `mob_droplist` VALUES (1832,0,15662,80);  -- Nashira Feet
+INSERT INTO `mob_droplist` VALUES (1834,0,9836,1000);  -- Dusk NQ
+INSERT INTO `mob_droplist` VALUES (1834,0,8930,1000);  -- Snow NQ
+INSERT INTO `mob_droplist` VALUES (1834,0,8933,1000);  -- Leaf NQ
+-- Fortitude
 INSERT INTO `mob_droplist` VALUES (1833,0,1853,1000);
 INSERT INTO `mob_droplist` VALUES (1833,0,15511,160);
 INSERT INTO `mob_droplist` VALUES (1833,0,18222,1000);
+INSERT INTO `mob_droplist` VALUES (1833,0,15472,300);  -- Altrustic Cape
+-- Hope
 INSERT INTO `mob_droplist` VALUES (1834,0,1847,1000);
 INSERT INTO `mob_droplist` VALUES (1834,0,15509,230);
 INSERT INTO `mob_droplist` VALUES (1834,0,17595,1000);
+INSERT INTO `mob_droplist` VALUES (1834,0,15661,80); -- Homam Feet
+INSERT INTO `mob_droplist` VALUES (1834,0,14906,80); -- Nashira Hands
+INSERT INTO `mob_droplist` VALUES (1834,0,9836,1000);  -- Dusk NQ
+INSERT INTO `mob_droplist` VALUES (1834,0,8930,1000);  -- Snow NQ
+INSERT INTO `mob_droplist` VALUES (1834,0,8933,1000);  -- Leaf NQ
+-- Justice
 INSERT INTO `mob_droplist` VALUES (1835,0,1848,1000);
 INSERT INTO `mob_droplist` VALUES (1835,0,15508,180);
 INSERT INTO `mob_droplist` VALUES (1835,0,17710,1000);
+INSERT INTO `mob_droplist` VALUES (1835,0,15576,80); -- Homam Legs
+INSERT INTO `mob_droplist` VALUES (1835,0,15577,80);  -- nashira Legs
+INSERT INTO `mob_droplist` VALUES (1835,0,9837,1000);  -- Dusk HQ1
+INSERT INTO `mob_droplist` VALUES (1835,0,8931,1000);  -- Snow HQ1
+INSERT INTO `mob_droplist` VALUES (1835,0,8934,1000);  -- Leaf HQ1
+-- Love
 INSERT INTO `mob_droplist` VALUES (1836,0,1911,490);
 INSERT INTO `mob_droplist` VALUES (1836,0,1912,490);
 INSERT INTO `mob_droplist` VALUES (1836,0,15514,450);
 INSERT INTO `mob_droplist` VALUES (1836,0,18100,1000);
+INSERT INTO `mob_droplist` VALUES (1836,0,15514,80);  -- Love Torque
+INSERT INTO `mob_droplist` VALUES (1836,0,14488,80);  -- Homam Body
+INSERT INTO `mob_droplist` VALUES (1836,0,9838,1000);  -- Dusk HQ2
+INSERT INTO `mob_droplist` VALUES (1836,0,8932,1000);  -- Snow HQ2
+INSERT INTO `mob_droplist` VALUES (1836,0,8935,1000);  -- Leaf HQ2
+INSERT INTO `mob_droplist` VALUES (1836,0,9837,300);  -- Dusk HQ1
+INSERT INTO `mob_droplist` VALUES (1836,0,8931,300);  -- Snow HQ1
+INSERT INTO `mob_droplist` VALUES (1836,0,8934,300);  -- Leaf HQ1
+
+
+
+-- Prudence
 INSERT INTO `mob_droplist` VALUES (1837,0,1849,1000);
 INSERT INTO `mob_droplist` VALUES (1837,0,15510,220);
 INSERT INTO `mob_droplist` VALUES (1837,0,18397,1000);
+INSERT INTO `mob_droplist` VALUES (1837,0,15240,80);  -- Homam Head
+INSERT INTO `mob_droplist` VALUES (1837,0,15241,80);  -- Nashira Head
+INSERT INTO `mob_droplist` VALUES (1837,0,9837,1000);  -- Dusk HQ1
+INSERT INTO `mob_droplist` VALUES (1837,0,8931,1000);  -- Snow HQ1
+INSERT INTO `mob_droplist` VALUES (1837,0,8934,1000);  -- Leaf HQ1
+-- Temperance
 INSERT INTO `mob_droplist` VALUES (1838,0,1850,1000);
 INSERT INTO `mob_droplist` VALUES (1838,0,15513,220);
 INSERT INTO `mob_droplist` VALUES (1838,0,17948,1000);
+INSERT INTO `mob_droplist` VALUES (1838,0,15471,80);  -- Merciful Cape
+INSERT INTO `mob_droplist` VALUES (1838,0,15473,80);  -- Astute Cape
 INSERT INTO `mob_droplist` VALUES (1839,0,14551,1000);
 INSERT INTO `mob_droplist` VALUES (1840,0,930,10);
 INSERT INTO `mob_droplist` VALUES (1840,0,1125,20);

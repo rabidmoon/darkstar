@@ -2497,6 +2497,7 @@ INSERT INTO `mob_skill_lists` VALUES ('Curilla',734,3711); -- Provoke
 INSERT INTO `mob_skill_lists` VALUES ('Curilla',734,3709); -- Shield Bash
 INSERT INTO `mob_skill_lists` VALUES ('Curilla',734,3710); -- Reprisal
 INSERT INTO `mob_skill_lists` VALUES ('Curilla',734,3736); -- Chivalry
+INSERT INTO `mob_skill_lists` VALUES ('Curilla',734,451); -- Sentinel
 
 INSERT INTO `mob_skill_lists` VALUES ('Excenmille',735,3712); -- Jump
 INSERT INTO `mob_skill_lists` VALUES ('Excenmille',735,3713); -- High Jump
@@ -2521,12 +2522,24 @@ INSERT INTO `mob_skill_lists` VALUES ('Adelhied',737,3770); -- Shining Strike
 
 INSERT INTO `mob_skill_lists` VALUES ('Bahamut-Pet',738,1296); -- GigaFlare
 INSERT INTO `mob_skill_lists` VALUES ('Light_Ixion',739,2114); -- Grace of Hera
-INSERT INTO `mob_skill_lists` VALUES ('Pet_Dark_Ixion',740,2078); -- Wrath of Zeus
+INSERT INTO `mob_skill_lists` VALUES ('Light_Ixion',739,2080); -- Acheron Kick
+INSERT INTO `mob_skill_lists` VALUES ('Light_Ixion',739,2081); -- Damsel Memento
+INSERT INTO `mob_skill_lists` VALUES ('Light_Ixion',739,2082); -- Rampant Stance
+INSERT INTO `mob_skill_lists` VALUES ('Light_Ixion',739,2113); -- Scintillant Lance
 
-INSERT INTO `mob_skill_lists` VALUES ('Avatar-Light-Ixion',741,2113);
-INSERT INTO `mob_skill_lists` VALUES ('Avatar-Light-Ixion',741,2080);
-INSERT INTO `mob_skill_lists` VALUES ('Avatar-Light-Ixion',741,2081);
-INSERT INTO `mob_skill_lists` VALUES ('Avatar-Light-Ixion',741,2082);
+
+INSERT INTO `mob_skill_lists` VALUES ('Pet_Dark_Ixion',740,2078); -- Wrath of Zeus
+INSERT INTO `mob_skill_lists` VALUES ('Pet_Dark_Ixion',740,2079); -- Lightning Spear
+INSERT INTO `mob_skill_lists` VALUES ('Pet_Dark_Ixion',740,2080); -- Acheron Kick
+INSERT INTO `mob_skill_lists` VALUES ('Pet_Dark_Ixion',740,2081); -- Memento
+INSERT INTO `mob_skill_lists` VALUES ('Pet_Dark_Ixion',740,2082); -- Rampant Stance
+
+
+INSERT INTO `mob_skill_lists` VALUES ('Avatar-Light-Ixion',741,2080); -- Acheron Kick
+INSERT INTO `mob_skill_lists` VALUES ('Avatar-Light-Ixion',741,2081);  -- Memento
+INSERT INTO `mob_skill_lists` VALUES ('Avatar-Light-Ixion',741,2082);  -- Rampant Stance
+INSERT INTO `mob_skill_lists` VALUES ('Avatar-Light-Ixion',741,2113); -- Scilliant Lance
+INSERT INTO `mob_skill_lists` VALUES ('Avatar-Light-Ixion',741,2114);  -- Grace of Hera
 
 INSERT INTO `mob_skill_lists` VALUES ('Lion',742,2635);  -- Grape Shot
 INSERT INTO `mob_skill_lists` VALUES ('Lion',742,2636);  -- Pirate Pummel
@@ -2580,3 +2593,20 @@ INSERT INTO `mob_skill_lists` VALUES ('Najelith',750,3765);  -- Sharpshot
 INSERT INTO `mob_skill_lists` VALUES ('Najelith',750,3766);  -- Barrage
 INSERT INTO `mob_skill_lists` VALUES ('Najelith',750,1834);  -- Typhonic Arrow
 INSERT INTO `mob_skill_lists` VALUES ('Najelith',750,3764);  -- Empyreal Arrow
+INSERT INTO `mob_skill_lists` VALUES ('Zazarg',751,1881);  -- Meteoric IMpact
+INSERT INTO `mob_skill_lists` VALUES ('Zazarg',751,3808);  -- Combo
+INSERT INTO `mob_skill_lists` VALUES ('Zazarg',751,3809);  -- One Inch Punch
+INSERT INTO `mob_skill_lists` VALUES ('Zazarg',751,3810);  -- Raging Fist
+INSERT INTO `mob_skill_lists` VALUES ('Zazarg',751,3811);  -- Howling Fists
+INSERT INTO `mob_skill_lists` VALUES ('Zazarg',751,3812);  -- Dragon Kick
+INSERT INTO `mob_skill_lists` VALUES ('Zazarg',751,3813);  -- Asuran Fists
+INSERT INTO `mob_skill_lists` VALUES ('Zazarg',751,3814);  -- Ascetics Fury
+
+INSERT INTO `mob_skill_lists` VALUES ('Mihli',752,3770); -- Shining Strike
+INSERT INTO `mob_skill_lists` VALUES ('Mihli',752,3771); -- Brainshaker
+INSERT INTO `mob_skill_lists` VALUES ('Mihli',752,3772); -- True Strike
+INSERT INTO `mob_skill_lists` VALUES ('Mihli',752,3773); -- Judgement
+INSERT INTO `mob_skill_lists` VALUES ('Mihli',752,3774); -- Hexa Strike
+INSERT INTO `mob_skill_lists` VALUES ('Mihli',752,3775); -- Black Halo
+INSERT INTO `mob_skill_lists` VALUES ('Mihli',752,3776); -- Mystic_Boon
+INSERT INTO `mob_skill_lists` VALUES ('Mihli',752,1882); -- Scouring Bubbles

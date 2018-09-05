@@ -31,7 +31,7 @@ function onEffectGain(target,effect)
 	    target:PrintToPlayer("You have been gifted with Tier I Temp items!",0x15);
 	    target:addTempItem(4181,1); -- Instant Reraise
 	    target:addTempItem(5432,1); -- Dusty Ether	
-	    target:addTempItem(5432,1); -- Dusty Potion	
+	    target:addTempItem(5431,1); -- Dusty Potion	
 	    target:addTempItem(5433,1); -- Dusty Elixir Restore 25% HP and MP		
 	end
     if (target:hasKeyItem(PFC_WILDCAT_BADGE) == true) then
@@ -88,30 +88,5 @@ function onEffectLose(target,effect)
 	target:delMod(MOD_DMGPHYS, -buff);
 	target:delMod(MOD_DMGMAGIC, -buff);
 	target:delMod(MOD_DMGRANGE, -buff);
-	if (target:hasKeyItem(PSC_WILDCAT_BADGE) == true) then	
-	    target:delTempItem(4181,1); -- Instant Reraise
-	    target:delTempItem(5432,1); -- Dusty Ether	
-	    target:delTempItem(5432,1); -- Dusty Potion	
-	    target:delTempItem(5433,1); -- Dusty Elixir Restore 25% HP and MP		
-	end
-    if (target:hasKeyItem(PFC_WILDCAT_BADGE) == true) then
-	    target:delTempItem(4155,1);	-- Remedy
-	    target:delTempItem(5439,1);	-- Vicar's Drink
-    end
-	if (target:hasKeyItem(SP_WILDCAT_BADGE) == true) then
-	    target:delTempItem(4144,1);	-- High Elixir Restores 50% hp and MP	
-	    target:delTempItem(5435,1);	-- Fools Drink (null phys dmg)
-	    target:delTempItem(5434,1);	-- Fans Drink (null mag dmg)		
-    end
-	if (target:hasKeyItem(LC_WILDCAT_BADGE) == true) then
-	    target:delTempItem(5388,1);	-- Assassins Drink	
-	    target:delTempItem(5386,1);	-- Fighters Drink
-	    target:delTempItem(4146,1);	-- Revitalizer	
-    end	
-    if (target:hasKeyItem(C_WILDCAT_BADGE) == true) then
-	    target:delTempItem(4254,1); -- Mexalixir Restore 100% HP and MP
-	    target:delTempItem(5242,1);	-- Wizards Drink MP+100%
-	    target:delTempItem(5241,1);	-- Giants Drink HP+100%
-	    target:delTempItem(5390,1);	-- Bravers Drink Attributes by 15		
-	end
+
 end;

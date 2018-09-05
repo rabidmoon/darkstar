@@ -31,6 +31,8 @@ function onPetAbility(target, pet, skill, master)
     skill:setMsg(MSG_SELF_HEAL);
     target:addStatusEffect(EFFECT_REGEN, regen, 3, 60);
 	target:addStatusEffect(EFFECT_REGAIN, regain, 3, 60);
-    master:delMod(MOD_UFASTCAST, -300);	
+   -- master:delMod(MOD_UFASTCAST, -300);	
+	master:addStatusEffect(EFFECT_WEAKNESS,1,0,180);
+	master:delStatusEffect(EFFECT_ASTRAL_FLOW);
     return base;
 end;

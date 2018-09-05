@@ -16,8 +16,7 @@ require("scripts/zones/AlTaieu/mobIDs");
 
 function onTrade(player,npc,trade)
     -- Trade the Third Virtue, Deed of Sensibility, and High-Quality Hpemde Organ
-    if (GetMobAction(16912846) == 0 and GetMobAction(16912847) == 0 and trade:hasItemQty(1856,1) and trade:hasItemQty(1870,1) and 
-    trade:hasItemQty(1871,1) and trade:getItemCount() == 3) then
+    if (GetMobAction(16912846) == 0 and GetMobAction(16912847) == 0 and trade:hasItemQty(1856,1) and trade:hasItemQty(1871,1) and trade:getItemCount() == 2) then
         player:tradeComplete();
         SpawnMob(PrudenceOne,900):updateClaim(player); -- Spawn Jailer of Prudence 1
         SpawnMob(PrudenceTwo,900);                     -- Spawn Jailer of Prudence 2 unclaimed

@@ -102,6 +102,7 @@ void CAIGeneral::Reset()
 	m_LastCurillaBashTime = 0;
 	m_LastCurillaReprisalTime = 0;	
 	m_LastCurillaChivalryTime = 0;
+	m_LastCurillaSentinelTime = 0;
 	m_LastKupipiMagicTime = 0;
 	m_LastKupipiEnhanceTime = 0;
 	m_LastKupipiSolaceTime = 0;	
@@ -184,6 +185,10 @@ void CAIGeneral::Reset()
 	m_LastShantottoMagicTime = 0;
 	m_LastShantottoCheck = 0;
 	m_LastShantottoDebuffRecast = 0;
+
+	m_LastMihliMagicTime = 0;
+	m_LastMihliEnhanceTime = 0;
+	m_LastBP = 0;
 	
     m_WaitTime = 0;
     m_LastWaitTime = 0;
@@ -451,6 +456,11 @@ void CAIGeneral::SetLastCurillaChivalryTime(uint32 time)
 void CAIGeneral::SetLastCurillaReprisalTime(uint32 time)
 {
 	m_LastCurillaReprisalTime = time;
+}
+
+void CAIGeneral::SetLastCurillaSentinelTime(uint32 time)
+{
+	m_LastCurillaSentinelTime = time;
 }
 
 void CAIGeneral::SetLastKupipiMagicTime(uint32 time)
@@ -830,6 +840,20 @@ void CAIGeneral::SetLastShantottoDebuffRecast(uint32 time)
     m_LastShantottoDebuffRecast = time;
 }
 
+void CAIGeneral::SetLastMihliMagicTime(uint32 time)
+{
+	m_LastMihliMagicTime = time;
+}
+
+void CAIGeneral::SetLastMihliEnhanceTime(uint32 time)
+{
+	m_LastMihliEnhanceTime = time;
+}
+
+void CAIGeneral::SetLastBPTime(uint32 time)
+{
+    m_LastBP = time;
+}
 
 
 void CAIGeneral::SetBattleTarget(CBattleEntity* PEntity)

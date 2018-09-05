@@ -78,16 +78,21 @@ CAIPetDummy::CAIPetDummy(CPetEntity* PPet)
 	m_magicHealRecast = 25000;
 	m_magicHealCast = 0;
 	m_kupipiHealRecast = 12000;
+	m_mihliHealRecast = 12000;
 	m_adelhiedHealRecast = 20000;
 	m_adelhiedSub = 180000; // 3 minutes between using Sublimation if its completed
 	m_kupipiEnhanceRecast = 10000;  // Enhancing such as Haste Pro/Shell and ~na's will share the same cast timer
+	m_mihliEnhanceRecast = 10000;
 	m_kupipiHealCast = 0;
+	m_mihliHealCast = 0;
 	m_kupipiSolaceRecast = 7200000; // two hour duraton
 	m_curillaFlashRecast = 50000;
 	m_curillaBashRecast = 180000;
 	m_curillaReprisalRecast = 180000;
 	m_curillaChivalryRecast = 300000; 
+	m_curillaSentRecast = 300000;
 	m_magicKupipiRecast = 4000;
+	m_magicMihliRecast = 4000;
 	m_magicShantottoRecast = 7000;
 	m_nanaacheck = 5000;  //For Nanaa Mihgo to check every 5 seconds if she is facing target or not
 	m_nanaaSneakAttackRecast = 50000;
@@ -165,6 +170,8 @@ CAIPetDummy::CAIPetDummy(CPetEntity* PPet)
 
     m_shantottoEleRecast = 21000; // 18 second recast on Shantotto Spells	
 	m_shantottoDebuffRecast = 8000;
+	m_BPrecast = 60000;
+
 	
 
 	
@@ -236,6 +243,224 @@ void CAIPetDummy::ActionAbilityStart()
     {
         return;
     }
+	
+	int16 mastermp = m_PPet->PMaster->health.mp;
+	
+	
+    //Handle Advanced Avatar Astral Flow here:
+    int16 summonskill = SummonBloodPact();
+    if ((m_PPet->m_PetID == PETID_LIGHT_IXION || m_PPet->m_PetID == PETID_DARK_IXION) & m_PPet->PMaster->StatusEffectContainer->HasStatusEffect(EFFECT_ASTRAL_FLOW)){
+        if (m_PPet->m_PetID == PETID_LIGHT_IXION){
+            for (int i = 0; i < m_PPet->PetSkills.size(); i++) {
+				auto PMobSkill = battleutils::GetMobSkill(m_PPet->PetSkills.at(i));
+  					if (PMobSkill->getID() == 2114) { //Grace oF Hera
+                    m_PBattleSubTarget = m_PPet; 
+					SetCurrentMobSkill(PMobSkill);
+			        ShowWarning("Grace of Hera!! \n");
+                    break;
+                } 
+            }
+        }		
+        else if (m_PPet->m_PetID == PETID_DARK_IXION){
+            for (int i = 0; i < m_PPet->PetSkills.size(); i++) {
+				auto PMobSkill = battleutils::GetMobSkill(m_PPet->PetSkills.at(i));
+  					if (PMobSkill->getID() == 2078) { //Wrath of Zeus
+                    SetCurrentMobSkill(PMobSkill);
+			        ShowWarning("Zeus!! \n");
+                    break;
+                } 
+            }
+        }
+        m_LastBP = m_Tick;			
+        preparePetAbility(m_PBattleSubTarget);
+        return;
+    }   
+	
+	
+	if (m_PPet->m_PetID == PETID_LIGHT_IXION && m_Tick >= m_LastBP + (m_BPrecast - summonskill)){
+	    uint8 bprandom = dsprand::GetRandomNumber(1,12);
+		if (bprandom <= 5 && lvl >= 20) {
+			int16 spellID = -1;
+			uint16 family = m_PPet->m_Family;
+			uint16 petID = m_PPet->m_PetID;
+        
+		
+			spellID = LightIxionSpell();
+		    if (spellID != -1){
+				SetCurrentSpell(spellID);
+				m_ActionType = ACTION_MAGIC_START;
+				ActionMagicStart();
+				return;
+			}
+		}
+	    else
+		{
+			uint8 wsrandom = dsprand::GetRandomNumber(1, 4);
+            for (int i = 0; i < m_PPet->PetSkills.size(); i++) {
+		        //printf("Random Number: %d \n", wsrandom);
+				if (lvl > 69){ 
+				auto PMobSkill = battleutils::GetMobSkill(m_PPet->PetSkills.at(i));
+  					if (PMobSkill->getID() == 2113 && wsrandom >= 3 && m_PPet->PMaster->health.mp > 209) { //LANCE
+                    SetCurrentMobSkill(PMobSkill);
+			        ShowWarning("LANCE!! \n");
+                    break;
+                    }
+					else if (PMobSkill->getID() == 2080 && wsrandom == 2 && m_PPet->health.mp > 119) { //ACHERON KIC
+                    SetCurrentMobSkill(PMobSkill);
+			        ShowWarning("ACHE KICK!!!!! \n");
+                    break;
+                    } 	
+					else if (PMobSkill->getID() == 2081 && wsrandom == 1 && m_PPet->GetHPP() < 50 && m_PPet->health.mp > 49) { //Memento
+                    SetCurrentMobSkill(PMobSkill);
+			        ShowWarning("MEMENTO!!!!! \n");
+                    break;
+                    }
+                } 
+				else if (lvl > 49){ // 
+				auto PMobSkill = battleutils::GetMobSkill(m_PPet->PetSkills.at(i));
+                    if (PMobSkill->getID() == 2080 && wsrandom >= 3 && m_PPet->health.mp > 119) { //ACHEKICK
+                    SetCurrentMobSkill(PMobSkill);
+			        ShowWarning("ACHE KICK \n");
+                    break;
+                    } 
+					else if (PMobSkill->getID() == 2081 && wsrandom == 2 && m_PPet->GetHPP() < 50 && m_PPet->health.mp > 49) { //Memento
+                    SetCurrentMobSkill(PMobSkill);
+			        ShowWarning("MEMENTO!!!!! \n");
+                    break;
+                    }
+					else if (PMobSkill->getID() == 2082 && wsrandom == 1 && m_PPet->health.mp > 9) { //RAMPANT
+                    SetCurrentMobSkill(PMobSkill);
+			        ShowWarning("RAMPANT STANCE \n");
+                    break;
+                    } 					
+
+                }	
+				else if (lvl > 29){ // 
+				auto PMobSkill = battleutils::GetMobSkill(m_PPet->PetSkills.at(i));
+                    if (PMobSkill->getID() == 2081 && wsrandom >= 3 && m_PPet->GetHPP() < 50 && m_PPet->health.mp > 49) { //Memento
+                    SetCurrentMobSkill(PMobSkill);
+			        ShowWarning("MEMENTO!!!!! \n");
+                    break;
+                    } 
+					else if (PMobSkill->getID() == 2082 && wsrandom < 3 && m_PPet->health.mp > 9) { //RAMPANT 
+                    SetCurrentMobSkill(PMobSkill);
+			        ShowWarning("RAMPANT STANCE \n");
+                    break;
+                    } 	
+
+                }				
+				else if (lvl > 9){ // 
+				auto PMobSkill = battleutils::GetMobSkill(m_PPet->PetSkills.at(i));
+                    if (PMobSkill->getID() == 2082 && m_PPet->health.mp > 9) { //RAMPANT 
+                    SetCurrentMobSkill(PMobSkill);
+			        ShowWarning("RAMPANT STANCE \n");
+                    break;
+                    } 	
+
+                }			
+			}
+            m_LastBP = m_Tick;			
+            preparePetAbility(m_PBattleSubTarget);
+            return;
+        }		
+			
+	}
+	// && m_Tick >= m_LastBP + (m_BPrecast - summonskill)
+	if (m_PPet->m_PetID == PETID_DARK_IXION){
+	    uint8 bprandom = dsprand::GetRandomNumber(1,12);
+		if (bprandom <= 5 && lvl >= 20) {
+		    ShowWarning(CL_RED"DARK IXION TRYING SPELL! \n" CL_RESET);
+			int16 spellID = -1;
+			uint16 family = m_PPet->m_Family;
+			uint16 petID = m_PPet->m_PetID;
+        
+		
+			spellID = DarkIxionSpell();
+		    if (spellID != -1){
+				SetCurrentSpell(spellID);
+				m_ActionType = ACTION_MAGIC_START;
+				ActionMagicStart();
+				return;
+			}
+		}
+	    else
+		{
+		    ShowWarning(CL_RED"DARK IXION TRYING ABILITY! \n" CL_RESET);
+			printf("Master MP IS: %d \n", mastermp);
+			uint8 wsrandom = dsprand::GetRandomNumber(1, 4);
+            for (int i = 0; i < m_PPet->PetSkills.size(); i++) {
+		        printf("Random Number: %d \n", wsrandom);
+				if (lvl > 69){ 
+				auto PMobSkill = battleutils::GetMobSkill(m_PPet->PetSkills.at(i));
+  					if (PMobSkill->getID() == 2079 && wsrandom >= 3 && m_PPet->PMaster->health.mp > 209) { //LANCE
+                    SetCurrentMobSkill(PMobSkill);
+			        ShowWarning("LANCE!! \n");
+                    break;
+                    }
+					else if (PMobSkill->getID() == 2080 && wsrandom == 2 && m_PPet->PMaster->health.mp > 119) { //ACHERON KIC
+                    SetCurrentMobSkill(PMobSkill);
+			        ShowWarning("ACHE KICK!!!!! \n");
+                    break;
+                    } 	
+					else if (PMobSkill->getID() == 2081 && wsrandom == 1 && m_PPet->GetHPP() < 50 &&m_PPet->PMaster->health.mp > 49) { //Memento
+                    SetCurrentMobSkill(PMobSkill);
+			        ShowWarning("MEMENTO!!!!! \n");
+                    break;
+                    }
+					else if (PMobSkill->getID() == 2082 && m_PPet->PMaster->health.mp > 9) { //Kick
+                    SetCurrentMobSkill(PMobSkill);
+			        ShowWarning("RAMPANT STANCE \n");
+                    break;
+                    }					
+                } 
+				else if (lvl > 49){ // 
+				auto PMobSkill = battleutils::GetMobSkill(m_PPet->PetSkills.at(i));
+                    if (PMobSkill->getID() == 2080 && wsrandom >= 3 && m_PPet->health.mp > 119) { //ACHEKICK
+                    SetCurrentMobSkill(PMobSkill);
+			        ShowWarning("ACHE KICK \n");
+                    break;
+                    } 
+					else if (PMobSkill->getID() == 2081 && wsrandom == 2 && m_PPet->GetHPP() < 50 && m_PPet->health.mp > 49) { //Memento
+                    SetCurrentMobSkill(PMobSkill);
+			        ShowWarning("MEMENTO!!!!! \n");
+                    break;
+                    }
+					else if (PMobSkill->getID() == 2082 && wsrandom == 1 && m_PPet->health.mp > 9) { //RAMPANT
+                    SetCurrentMobSkill(PMobSkill);
+			        ShowWarning("RAMPANT STANCE \n");
+                    break;
+                    } 					
+
+                }	
+				else if (lvl > 29){ // 
+				auto PMobSkill = battleutils::GetMobSkill(m_PPet->PetSkills.at(i));
+                    if (PMobSkill->getID() == 2081 && wsrandom >= 3 && m_PPet->GetHPP() < 50 && m_PPet->health.mp > 49) { //Memento
+                    SetCurrentMobSkill(PMobSkill);
+			        ShowWarning("MEMENTO!!!!! \n");
+                    break;
+                    } 
+					else if (PMobSkill->getID() == 2082 && wsrandom < 3 && m_PPet->health.mp > 9) { //RAMPANT 
+                    SetCurrentMobSkill(PMobSkill);
+			        ShowWarning("RAMPANT STANCE \n");
+                    break;
+                    } 	
+
+                }				
+				else if (lvl > 9){ // 
+				auto PMobSkill = battleutils::GetMobSkill(m_PPet->PetSkills.at(i));
+                    if (PMobSkill->getID() == 2082 && m_PPet->health.mp > 9) { //RAMPANT 
+                    SetCurrentMobSkill(PMobSkill);
+			        ShowWarning("RAMPANT STANCE \n");
+                    break;
+                    } 	
+
+                }			
+			}
+            m_LastBP = m_Tick;			
+            preparePetAbility(m_PBattleSubTarget);
+            return;
+        }		
+	}	
 	
      //********************************************************//
 	//   For Ayame to SC with.  Looks for your SC used       //
@@ -2081,9 +2306,279 @@ void CAIPetDummy::ActionAbilityStart()
 			return;	
             }		
 		
-		
-		
-		
+
+
+
+	 if (m_PPet->m_PetID == PETID_ZAZARG && m_PPet->health.tp >= 1000 && m_PBattleTarget != nullptr){
+			int16 mobwsID = -1;
+			if (lvl > 74) {
+			uint8 wsrandom = dsprand::GetRandomNumber(1, 3); // Black Halo or Hexa Strike
+            for (int i = 0; i < m_PPet->PetSkills.size(); i++) {
+                auto PMobSkill = battleutils::GetMobSkill(m_PPet->PetSkills.at(i));
+  					if (PMobSkill->getID() == 1881 && wsrandom == 1) { //Meteoric Impact
+					SetCurrentMobSkill(PMobSkill);
+                    break;
+                    }
+                    else if (PMobSkill->getID() == 3814 && wsrandom == 2) { //Ascetics Fury
+					mobwsID = 11;
+					SetCurrentMobSkill(PMobSkill);
+			        SetCurrentWeaponSkill(mobwsID);
+                    break;
+                    } 						
+                    else if (PMobSkill->getID() == 3813 && wsrandom == 3) { //Asuran FIsts
+					mobwsID = 9;
+					SetCurrentMobSkill(PMobSkill);
+			        SetCurrentWeaponSkill(mobwsID);
+                    break;
+                    }
+                }
+            }
+			else if (lvl > 70) {
+			uint8 wsrandom = dsprand::GetRandomNumber(1, 2); // Black Halo or Hexa Strike
+            for (int i = 0; i < m_PPet->PetSkills.size(); i++) {
+                auto PMobSkill = battleutils::GetMobSkill(m_PPet->PetSkills.at(i));
+  					if (PMobSkill->getID() == 3813 && wsrandom == 1) { //Asuran Fists
+					mobwsID = 9;
+					SetCurrentMobSkill(PMobSkill);
+			        SetCurrentWeaponSkill(mobwsID);
+                    break;
+                    }
+  					else if (PMobSkill->getID() == 3812 && wsrandom == 2) { //Dragon Kick
+					mobwsID = 8;
+					SetCurrentMobSkill(PMobSkill);
+			        SetCurrentWeaponSkill(mobwsID);
+                    break;
+                    }					
+                }
+            }
+			else if (lvl > 64) {
+			uint8 wsrandom = dsprand::GetRandomNumber(1, 3); // Black Halo or Hexa Strike
+            for (int i = 0; i < m_PPet->PetSkills.size(); i++) {
+                auto PMobSkill = battleutils::GetMobSkill(m_PPet->PetSkills.at(i));
+                    if (PMobSkill->getID() == 3812 && wsrandom == 1) { //Dragon Kick
+					mobwsID = 8;
+					SetCurrentMobSkill(PMobSkill);
+			        SetCurrentWeaponSkill(mobwsID);
+                    break;
+                    }
+  					else if (PMobSkill->getID() == 3811 && wsrandom >= 2) { //Howling Fists
+					mobwsID = 7;
+					SetCurrentMobSkill(PMobSkill);
+			        SetCurrentWeaponSkill(mobwsID);
+                    break;
+                    }					
+                }
+            }
+			else if (lvl > 59) {
+			uint8 wsrandom = dsprand::GetRandomNumber(1, 3); // Howling Fists or Raging Fists
+            for (int i = 0; i < m_PPet->PetSkills.size(); i++) {
+                auto PMobSkill = battleutils::GetMobSkill(m_PPet->PetSkills.at(i));
+                    if (PMobSkill->getID() == 3811 && wsrandom == 1) { //Howling Fists
+					mobwsID = 7;
+					SetCurrentMobSkill(PMobSkill);
+			        SetCurrentWeaponSkill(mobwsID);
+                    break;
+                    }
+                    else if (PMobSkill->getID() == 3810 && wsrandom >= 2) { //Raging FIsts
+					mobwsID = 6;
+					SetCurrentMobSkill(PMobSkill);
+			        SetCurrentWeaponSkill(mobwsID);
+                    break;
+                    }					
+                }
+            }	
+			else if (lvl > 44) {
+			uint8 wsrandom = dsprand::GetRandomNumber(1, 2); // Howling Fists or Raging Fists
+            for (int i = 0; i < m_PPet->PetSkills.size(); i++) {
+                auto PMobSkill = battleutils::GetMobSkill(m_PPet->PetSkills.at(i));
+                    if (PMobSkill->getID() == 3810 && wsrandom == 1) { //Raging FIsts
+					mobwsID = 6;
+					SetCurrentMobSkill(PMobSkill);
+			        SetCurrentWeaponSkill(mobwsID);
+                    break;
+                    }
+                    else if (PMobSkill->getID() == 3809 && wsrandom == 2) { //One Inch Punch
+					mobwsID = 3;
+					SetCurrentMobSkill(PMobSkill);
+			        SetCurrentWeaponSkill(mobwsID);
+                    break;
+                    }					
+                }
+            }	
+			else if (lvl > 24) {
+			uint8 wsrandom = dsprand::GetRandomNumber(1, 2); // Howling Fists or Raging Fists
+            for (int i = 0; i < m_PPet->PetSkills.size(); i++) {
+                auto PMobSkill = battleutils::GetMobSkill(m_PPet->PetSkills.at(i));
+                    if (PMobSkill->getID() == 3809 && wsrandom == 1) { //One Inch Punch
+					mobwsID = 3;
+					SetCurrentMobSkill(PMobSkill);
+			        SetCurrentWeaponSkill(mobwsID);
+                    break;
+                    }
+                    if (PMobSkill->getID() == 3808 && wsrandom == 2) { //Combo
+					mobwsID = 1;
+					SetCurrentMobSkill(PMobSkill);
+			        SetCurrentWeaponSkill(mobwsID);
+                    break;
+                    }					
+                }
+            }
+			else if (lvl > 4) {
+			uint8 wsrandom = dsprand::GetRandomNumber(1, 2); // Howling Fists or Raging Fists
+            for (int i = 0; i < m_PPet->PetSkills.size(); i++) {
+                auto PMobSkill = battleutils::GetMobSkill(m_PPet->PetSkills.at(i));
+                    if (PMobSkill->getID() == 3808) { //Combo
+					mobwsID = 1;
+					SetCurrentMobSkill(PMobSkill);
+			        SetCurrentWeaponSkill(mobwsID);
+                    break;
+                    }	
+                }
+            }			
+            preparePetAbility(m_PBattleSubTarget);
+			return;	
+        }
+
+	 if (m_PPet->m_PetID == PETID_MIHLI && m_PPet->health.tp >= 1000 && m_PBattleTarget != nullptr){
+			int16 mobwsID = -1;
+			if (lvl > 74) {
+			uint8 wsrandom = dsprand::GetRandomNumber(1, 3); // Black Halo or Hexa Strike
+            for (int i = 0; i < m_PPet->PetSkills.size(); i++) {
+                auto PMobSkill = battleutils::GetMobSkill(m_PPet->PetSkills.at(i));
+                    if (PMobSkill->getID() == 3776 && m_PPet->health.mp < 50) { //Hexa Strike penpen
+					mobwsID = 171;
+					SetCurrentMobSkill(PMobSkill);
+			        SetCurrentWeaponSkill(mobwsID);
+                    break;
+                    }				
+  					else if (PMobSkill->getID() == 3774 && wsrandom == 1) { //Hexa Strike
+					mobwsID = 168;
+					SetCurrentMobSkill(PMobSkill);
+			        SetCurrentWeaponSkill(mobwsID);
+                    break;
+                    }
+                    else if (PMobSkill->getID() == 3775 && wsrandom == 2) { //Black Halo
+					mobwsID = 169;
+					SetCurrentMobSkill(PMobSkill);
+			        SetCurrentWeaponSkill(mobwsID);
+                    break;
+                    } 
+                    else if (PMobSkill->getID() == 1881 && wsrandom == 3) { //Scouring Bubbles
+					SetCurrentMobSkill(PMobSkill);
+                    break;
+                    } 					
+                }
+            }			
+			else if (lvl > 71) {
+			uint8 wsrandom = dsprand::GetRandomNumber(1, 3); // Black Halo or Hexa Strike
+            for (int i = 0; i < m_PPet->PetSkills.size(); i++) {
+                auto PMobSkill = battleutils::GetMobSkill(m_PPet->PetSkills.at(i));
+  					if (PMobSkill->getID() == 3774 && wsrandom >= 2) { //Hexa Strike
+					mobwsID = 168;
+					SetCurrentMobSkill(PMobSkill);
+			        SetCurrentWeaponSkill(mobwsID);
+                    break;
+                    }
+                    else if (PMobSkill->getID() == 3775 && wsrandom < 2) { //Black Halo
+					mobwsID = 169;
+					SetCurrentMobSkill(PMobSkill);
+			        SetCurrentWeaponSkill(mobwsID);
+                    break;
+                    } 						
+
+                }
+            }
+            else if (lvl > 64) {
+			uint8 wsrandom = dsprand::GetRandomNumber(1, 3); //Hexa Strike or Judgement
+            for (int i = 0; i < m_PPet->PetSkills.size(); i++) {
+                auto PMobSkill = battleutils::GetMobSkill(m_PPet->PetSkills.at(i));
+  					if (PMobSkill->getID() == 3774 && wsrandom >= 2) { //Hexa Strike
+					mobwsID = 168;
+					SetCurrentMobSkill(PMobSkill);
+			        SetCurrentWeaponSkill(mobwsID);
+                    break;
+                    }
+                    else if (PMobSkill->getID() == 3773 && wsrandom < 2) { //Judgement
+					mobwsID = 167;
+					SetCurrentMobSkill(PMobSkill);
+			        SetCurrentWeaponSkill(mobwsID);
+                    break;
+                    } 						
+
+                }
+            }
+            else if (lvl > 59) {
+			uint8 wsrandom = dsprand::GetRandomNumber(1, 3); //Judgement or True STrike
+            for (int i = 0; i < m_PPet->PetSkills.size(); i++) {
+                auto PMobSkill = battleutils::GetMobSkill(m_PPet->PetSkills.at(i));
+  					if (PMobSkill->getID() == 3773 && wsrandom >= 2) { //Judgement
+					mobwsID = 167;
+					SetCurrentMobSkill(PMobSkill);
+			        SetCurrentWeaponSkill(mobwsID);
+                    break;
+                    }
+                    else if (PMobSkill->getID() == 3772 && wsrandom < 2) { //True Strike
+					mobwsID = 166;
+					SetCurrentMobSkill(PMobSkill);
+			        SetCurrentWeaponSkill(mobwsID);
+                    break;
+                    } 						
+
+                }
+            }
+           else if (lvl > 54) {
+			uint8 wsrandom = dsprand::GetRandomNumber(1, 3); //True Strike or Brainshaker
+            for (int i = 0; i < m_PPet->PetSkills.size(); i++) {
+                auto PMobSkill = battleutils::GetMobSkill(m_PPet->PetSkills.at(i));
+  					if (PMobSkill->getID() == 3772 && wsrandom >= 2) { //True Strike
+					mobwsID = 166;
+					SetCurrentMobSkill(PMobSkill);
+			        SetCurrentWeaponSkill(mobwsID);
+                    break;
+                    }
+                    else if (PMobSkill->getID() == 3771 && wsrandom < 2) { //Brainshaker
+					mobwsID = 162;
+					SetCurrentMobSkill(PMobSkill);
+			        SetCurrentWeaponSkill(mobwsID);
+                    break;
+                    } 						
+
+                }
+            }
+          else if (lvl > 24) {
+			uint8 wsrandom = dsprand::GetRandomNumber(1, 3); //True Strike or Brainshaker
+            for (int i = 0; i < m_PPet->PetSkills.size(); i++) {
+                auto PMobSkill = battleutils::GetMobSkill(m_PPet->PetSkills.at(i));
+  					if (PMobSkill->getID() == 3771 && wsrandom >= 2) { //Brain Shaker
+					mobwsID = 162;
+					SetCurrentMobSkill(PMobSkill);
+			        SetCurrentWeaponSkill(mobwsID);
+                    break;
+                    }
+                    else if (PMobSkill->getID() == 3770 && wsrandom < 2) { //Shining Strike
+					mobwsID = 160;
+					SetCurrentMobSkill(PMobSkill);
+			        SetCurrentWeaponSkill(mobwsID);
+                    break;
+                    } 						
+
+                }
+            }	
+         else if (lvl > 4) {
+            for (int i = 0; i < m_PPet->PetSkills.size(); i++) {
+                auto PMobSkill = battleutils::GetMobSkill(m_PPet->PetSkills.at(i));
+  					if (PMobSkill->getID() == 3770) { //Shinning Strike
+					mobwsID = 160;
+					SetCurrentMobSkill(PMobSkill);
+			        SetCurrentWeaponSkill(mobwsID);
+                    break;
+					}
+
+                }
+            }			
+            preparePetAbility(m_PBattleSubTarget);
+			return;
+        }			
 
 		
 
@@ -3840,8 +4335,26 @@ void CAIPetDummy::ActionAttack()
 				preparePetAbility(m_PBattleSubTarget);
 				m_LastCurillaVokeTime = m_Tick;
 				return;	
-			}				
-				
+			}
+        else if (m_Tick >= m_LastCurillaSentinelTime + m_curillaSentRecast)
+			{
+			m_PWeaponSkill = nullptr;
+            int16 mobjaID = -1;			
+			for (int i = 0; i < m_PPet->PetSkills.size(); i++) {
+                    auto PMobSkill = battleutils::GetMobSkill(m_PPet->PetSkills.at(i));
+                            
+                        if (PMobSkill->getID() == 451) { //Sentinel
+						    mobjaID = 32;
+                            SetCurrentMobSkill(PMobSkill);
+							SetCurrentJobAbility(mobjaID);
+							m_PBattleSubTarget = m_PPet;  //Target Self
+							break;
+                        }
+			        }
+				preparePetAbility(m_PBattleSubTarget);
+				m_LastCurillaSentinelTime = m_Tick;
+				return;	
+			}
 		}
         // uint32 adelhiedMB = charutils::GetVar((CCharEntity*)m_PPet->PMaster,"TrustMB"); WHy is this here??
 		 if (m_PPet->m_PetID == PETID_CURILLA && trustlevel >=15)
@@ -3919,6 +4432,29 @@ void CAIPetDummy::ActionAttack()
 				}				
 			}
 		} */
+	  if (m_PPet->m_PetID == PETID_MIHLI)
+		{
+		 //ShowDebug("KUPIPI Check \n");
+		 if (m_Tick >= m_LastMihliMagicTime + m_magicMihliRecast) // Check Every 4 Seconds as universal check
+			{
+			    int16 spellID = -1;
+				uint16 family = m_PPet->m_Family;
+				uint16 petID = m_PPet->m_PetID;
+        
+		
+				spellID = MihliSpell();
+		        //printf("Kupipi Spell is: %d \n", spellID);
+				if (spellID != -1)
+				{
+				SetCurrentSpell(spellID);
+				m_ActionType = ACTION_MAGIC_START;
+				ActionMagicStart();
+				return;
+			    }
+		    }
+        }
+
+
 		
 		
 		 if (m_PPet->m_PetID == PETID_NANAA_MIHGO && trustlevel >=15)
@@ -4173,7 +4709,7 @@ void CAIPetDummy::ActionAttack()
 						    mobjaID = 16;
                             SetCurrentMobSkill(PMobSkill);
 							SetCurrentJobAbility(mobjaID);
-							m_PBattleSubTarget = m_PBattleTarget;  
+							m_PBattleSubTarget = m_PPet;  //Target Self  
 							break;
                         }
 			        }
@@ -4608,16 +5144,62 @@ void CAIPetDummy::ActionAttack()
 	//Nanaa will use WS based on if SA is active, or won't be available for a certain period of time
 	//Ayame will use WS if the players TP is less than 80%.  If the player's TP is 80% she will hold TP until the player get 100%.
 	
+	
+	// Handle Astral Flow for Advanced Avatars Here
+	
+	if ((m_PPet->m_PetID == PETID_LIGHT_IXION || m_PPet->m_PetID == PETID_DARK_IXION) && m_PPet->PMaster->StatusEffectContainer->HasStatusEffect(EFFECT_ASTRAL_FLOW)) {
+		m_PBattleSubTarget = m_PBattleTarget;
+        m_ActionType = ACTION_MOBABILITY_START;
+		ShowWarning(CL_GREEN"ACTION ABILITY START ASTRAL FLOW \n" CL_RESET);
+        ActionAbilityStart();
+        return;
+    }		
+		
+	
+	
+	
+	
+	
 	int8 petleveldiff = 0;
 	uint32 tpWait = charutils::GetVar((CCharEntity*)m_PPet->PMaster,"tpWait");
+	if (m_PPet->m_PetID == PETID_LIGHT_IXION) {
+	    int16 summonskill = SummonBloodPact();	
+	    if (m_PPet->m_PetID == PETID_LIGHT_IXION && m_Tick >= m_LastEngageStart + 10000 && m_Tick >= m_LastBP + (m_BPrecast - summonskill)){ 
+		ShowWarning(CL_GREEN"Recast Timer is: %u \n" CL_RESET, summonskill);
+		//ShowWarning(CL_GREEN"Avatar FOUND Magic Skill: %u \n" CL_RESET, summonskill);
+		//ShowWarning(CL_RED"Avatar BP Ready \n" CL_RESET);
+		m_PBattleSubTarget = m_PBattleTarget;
+        m_ActionType = ACTION_MOBABILITY_START;
+        ActionAbilityStart();
+        return;
+        }		
+	}
+	
+	
+	if (m_PPet->m_PetID == PETID_DARK_IXION){
+	    int16 summonskill = SummonBloodPact();
+	    if (m_PPet->m_PetID == PETID_DARK_IXION && m_Tick >= m_LastEngageStart + 10000 && m_Tick >= m_LastBP + (m_BPrecast - summonskill)){ 
+		//ShowWarning(CL_GREEN"Avatar FOUND Magic Skill: %u \n" CL_RESET, summonskill);
+		ShowWarning(CL_RED"Avatar BP Ready \n" CL_RESET);
+		m_PBattleSubTarget = m_PBattleTarget;
+        m_ActionType = ACTION_MOBABILITY_START;
+        ActionAbilityStart();
+        return;
+        }		
+	}
+	
+	
+	
+	
+	
 	if (m_PPet->getPetType() == PETTYPE_TRUST){
 	petleveldiff = (moblevel - trustlevel);  // Find level difference
 	}
 	
-		if (m_PPet->getPetType() == PETTYPE_TRUST && m_PPet->m_PetID != PETID_NAJI && m_PPet->m_PetID != PETID_NANAA_MIHGO && m_PPet->m_PetID != PETID_AYAME && m_PPet->m_PetID != PETID_LION 
+		if (m_PPet->getPetType() == PETTYPE_TRUST && m_PPet->m_PetID != PETID_NAJI && m_PPet->m_PetID != PETID_NANAA_MIHGO && m_PPet->m_PetID != PETID_AYAME && m_PPet->m_PetID != PETID_LION && m_PPet->m_PetID != PETID_EXCENMILLE
 		&& m_PPet->m_PetID != PETID_PRISHE && m_PPet->m_PetID != PETID_CURILLA && m_PPet->m_PetID != PETID_ZEID && m_PPet->m_PetID != PETID_NAJELITH && m_PPet->health.tp >= 1000 && m_PPet->PetSkills.size() > 0)
     {
-	    ShowWarning(CL_RED"Other Trust Triggered WS \n" CL_RESET);
+	    ShowWarning(CL_RED"Other Trust Triggered WS FIrst \n" CL_RESET);
 		m_PBattleSubTarget = m_PBattleTarget;
         m_ActionType = ACTION_MOBABILITY_START;
         ActionAbilityStart();
@@ -4755,6 +5337,8 @@ void CAIPetDummy::ActionAttack()
 	CBattleEntity* lionSCPartner = getLionSCPartnerZeid();
 	CBattleEntity* zeidSCPartner = getZeidSCPartner();
 	
+	CBattleEntity* prisheSCPartner = getPrisheSCPartnerLion();
+	
 	// First check if Lion has TP
 	if (m_PPet->getPetType() == PETTYPE_TRUST && m_Tick >= m_LastEngageStart + 7000 + tpWait && m_PPet->m_PetID == PETID_LION && m_PPet->health.tp >= 1000 && m_PPet->PetSkills.size() > 0)
 	{
@@ -4788,7 +5372,38 @@ void CAIPetDummy::ActionAttack()
 	    }
 	}
 
-	//TODO ADD PRISHE DETERMINATION
+	// First check if Prishe has TP
+	if (m_PPet->getPetType() == PETTYPE_TRUST && m_Tick >= m_LastEngageStart + 7000 + tpWait && m_PPet->m_PetID == PETID_PRISHE && m_PPet->health.tp >= 1000 && m_PPet->PetSkills.size() > 0)
+	{
+	   //Now check if Lion is in the party
+	    if (m_PPet->m_PetID == PETID_PRISHE && prisheSCPartner != nullptr) //Prishe is in the party
+	    {
+	        if (m_PPet->m_PetID == PETID_PRISHE && prisheSCPartner->health.tp >= 1000)
+			{
+				
+                //int16 wsReady = skillchainTimer();//starts the timer
+				ShowWarning(CL_GREEN"PRISHE AND LION have TP!! PRISHE START SC!! APPLY EFFECT TO MOB \n" CL_RESET);
+		        m_PBattleSubTarget = m_PBattleTarget;
+				m_PBattleTarget->StatusEffectContainer->AddStatusEffect(new CStatusEffect(EFFECT_TRUST_SKILLCHAIN_TIMER, EFFECT_TRUST_SKILLCHAIN_TIMER, 1, 0, 9),true);
+                m_ActionType = ACTION_MOBABILITY_START;
+                ActionAbilityStart();
+                return;
+			}
+			else
+			{
+			    //ShowWarning(CL_CYAN"LION TP BUT ZEID DOESNT!!! \n" CL_RESET);	
+			}
+	    }
+		//Add Else IF for Prishe 
+		else if (m_PPet->m_PetID == PETID_PRISHE && prisheSCPartner == nullptr) //LION is not in the party
+	    {
+		    //ShowWarning(CL_CYAN"ZEID IS NOT IN THE PARTY SO SC WHENEVER!!! \n" CL_RESET);
+		    m_PBattleSubTarget = m_PBattleTarget;
+            m_ActionType = ACTION_MOBABILITY_START;
+            ActionAbilityStart();
+            return;
+	    }
+	}
 
 	if (m_PPet->getPetType() == PETTYPE_TRUST && m_Tick >= m_LastEngageStart + 7000 + tpWait && m_PPet->m_PetID == PETID_ZEID && m_PPet->health.tp >= 1000 && m_PPet->PetSkills.size() > 0)
     {
@@ -13423,6 +14038,463 @@ int16 CAIPetDummy::ShantottoSpell()
 	return spellID;	
 }
 
+
+
+
+int16 CAIPetDummy::MihliSpell()
+{
+
+	uint8 trigger = 60; // HP Trigger Threshold
+	uint8 lowHPP = 31;
+	uint8 lowtrigger = 35;	
+	uint8 lowtriggercuraga = 25;
+	uint8 level = m_PPet->GetMLevel();
+    int16 spellID = -1;
+	
+ CBattleEntity* master = m_PPet->PMaster;  
+ CBattleEntity* mostWounded = getWounded(trigger);
+ CBattleEntity* mostWoundedLow = getWounded(lowtrigger);
+ if (m_Tick >= m_LastMihliMagicTime + m_mihliHealRecast)  // Look for last magic healing spell time 
+	{
+	    //Prioritize wake up for Sleep
+		if (m_PPet->PMaster->StatusEffectContainer->HasStatusEffect(EFFECT_SLEEP) || m_PPet->PMaster->StatusEffectContainer->HasStatusEffect(EFFECT_LULLABY))
+		{
+		ShowWarning(CL_RED"PLAYER IS ASLEEP WAKE THEM UP!!!\n" CL_RESET);
+		m_PBattleSubTarget = m_PPet->PMaster;
+		if (level > 15)
+			if (m_PPet->health.mp > 59)  // Curaga
+			    {
+				 spellID = 7;
+				}
+			else 
+			    {
+				 spellID = -1;
+				}
+		else
+		        {
+				 spellID = -1;
+				} 				
+        m_LastMihliMagicTime = m_Tick; // reset mtick no eligible healing spell to cast
+		m_mihliHealRecast = 12000;					
+	    }		
+ 		else if (mostWoundedLow != nullptr)
+		{
+        m_PBattleSubTarget = mostWounded;
+		if (level > 60)
+			if (m_PPet->health.mp > 134)
+				{
+				 spellID = 5;
+				}		
+			else if (m_PPet->health.mp > 88)
+				{
+				 spellID = 4;
+				}
+			else if (m_PPet->health.mp > 46)  	
+			    {
+				 spellID = 3;
+				}
+			else if (m_PPet->health.mp > 24)  	
+			    {
+				 spellID = 2;
+				}				
+			else if (m_PPet->health.mp > 7)  	
+			    {
+				 spellID = 1;
+				}
+			else 
+			    {
+				 spellID = -1;
+				} 	
+	    }
+		else if (mostWounded != nullptr)
+		{
+        m_PBattleSubTarget = mostWounded;
+		if (level > 40)
+			if (m_PPet->health.mp > 88)
+				{
+				 spellID = 4;
+				}
+			else if (m_PPet->health.mp > 46)  	
+			    {
+				 spellID = 3;
+				}
+			else if (m_PPet->health.mp > 24)  	
+			    {
+				 spellID = 2;
+				}				
+			else if (m_PPet->health.mp > 7)  	
+			    {
+				 spellID = 1;
+				}
+			else 
+			    {
+				 spellID = -1;
+				} 
+		else if (level > 20)
+			if (m_PPet->health.mp > 46)  	
+			    {
+				 spellID = 3;
+				}
+			else if (m_PPet->health.mp > 24)  	
+			    {
+				 spellID = 2;
+				}				
+			else if (m_PPet->health.mp > 7)  	
+			    {
+				 spellID = 1;
+				}
+			else
+			    {
+				 spellID = -1;
+				}
+		else if (level > 10)
+			if (m_PPet->health.mp > 24)  	
+			    {
+				 spellID = 2;
+				}				
+			else if (m_PPet->health.mp > 7)  	
+			    {
+				 spellID = 1;
+				}
+			else
+			    {
+				 spellID = -1;
+				}
+		else if (level > 4)
+			if (m_PPet->health.mp > 7)  	
+			    {
+				 spellID = 1;
+				}
+			else
+			    {
+				 spellID = -1;
+				} 
+		else
+		        {
+				 spellID = -1;
+				} 
+		m_LastMihliMagicTime = m_Tick;	
+        m_mihliHealRecast = 12000; 		
+		if (m_PPet->StatusEffectContainer->HasStatusEffect(EFFECT_SILENCE) == true)
+		{
+	    spellID = -1;
+		} 
+        m_mihliHealRecast = 12000; 
+		m_mihliHealCast = 1; // 1 means casting a spell
+		}
+		else
+		{
+		m_LastMihliMagicTime = m_Tick; // reset mtick no eligible healing spell to cast
+		m_mihliHealRecast = 8000;		
+       }
+	}
+	
+    if (m_Tick >= m_LastMihliEnhanceTime + m_mihliEnhanceRecast)  // Look for last magic enhancing/na spell time.  ~na will take precidence over enhancing buffs Poisina, blindna, paralyna, erase
+	{
+		if (m_PPet->PMaster->StatusEffectContainer->HasStatusEffect(EFFECT_PROTECT) == false) 
+			{
+			m_PBattleSubTarget = m_PPet->PMaster; //Target master to hit all members
+			if (level >= 63)
+				if (m_PPet->health.mp > 64)
+					{
+					 spellID = 128;
+					}
+				else if (m_PPet->health.mp > 45)
+					{
+					 spellID = 127;
+					}
+				else if (m_PPet->health.mp > 27)
+					{
+					 spellID = 126;
+					}
+				else if (m_PPet->health.mp > 8)
+					{
+					 spellID = 125;
+					}
+				else 
+			        {
+				     spellID = -1;
+				    } 	
+			else if (level > 47)
+				if (m_PPet->health.mp > 45)
+					{
+					 spellID = 127;
+					}
+				else if (m_PPet->health.mp > 27)
+					{
+					 spellID = 126;
+					}
+				else if (m_PPet->health.mp > 8)
+					{
+					 spellID = 125;
+					}
+				else 
+			        {
+				     spellID = -1;
+				    } 	
+			else if (level > 27)
+				if (m_PPet->health.mp > 27)
+					{
+					 spellID = 126;
+					}
+				else if (m_PPet->health.mp > 8)
+					{
+					 spellID = 125;
+					}
+				else 
+			        {
+				     spellID = -1;
+				    } 	
+			else if (level > 6)
+				if (m_PPet->health.mp > 8)
+					{
+					 spellID = 125;
+					}
+				else 
+			        {
+				     spellID = -1;
+				    } 	
+			else
+		        {
+				 spellID = -1;
+				} 
+			m_LastMihliEnhanceTime = m_Tick;	
+			m_mihliEnhanceRecast = 10000;
+			}
+		else if (m_PPet->PMaster->StatusEffectContainer->HasStatusEffect(EFFECT_SHELL) == false) 
+			{
+			m_PBattleSubTarget = m_PPet->PMaster;
+			if (level >= 68)
+				if (m_PPet->health.mp > 74)
+					{
+					 spellID = 133;
+					}
+				else if (m_PPet->health.mp > 55)
+					{
+					 spellID = 132;
+					}
+				else if (m_PPet->health.mp > 36)
+					{
+					 spellID = 131;
+					}
+				else if (m_PPet->health.mp > 17)
+					{
+					 spellID = 130;
+					}
+				else 
+			        {
+				     spellID = -1;
+				    } 	
+			else if (level >= 57)
+				if (m_PPet->health.mp > 55)
+					{
+					 spellID = 132;
+					}
+				else if (m_PPet->health.mp > 36)
+					{
+					 spellID = 131;
+					}
+				else if (m_PPet->health.mp > 17)
+					{
+					 spellID = 130;
+					}
+				else 
+			        {
+				     spellID = -1;
+				    } 	
+			else if (level > 37)
+				if (m_PPet->health.mp > 36)
+					{
+					 spellID = 131;
+					}
+				else if (m_PPet->health.mp > 17)
+					{
+					 spellID = 130;
+					}
+				else 
+			        {
+				     spellID = -1;
+				    } 	
+			else if (level > 17)
+				if (m_PPet->health.mp > 17)
+					{
+					 spellID = 130;
+					}
+				else 
+			        {
+				     spellID = -1;
+				    } 	
+			else
+		        {
+				 spellID = -1;
+				} 			
+			m_LastMihliEnhanceTime = m_Tick;	
+			m_mihliEnhanceRecast = 10000;
+			}
+		else if (m_PPet->PMaster->StatusEffectContainer->HasStatusEffect(EFFECT_HASTE) == false) 
+			{
+			m_PBattleSubTarget = m_PPet->PMaster;
+			if (level >= 50)
+				if (m_PPet->health.mp > 80)
+					{
+					 spellID = 358;
+					}
+				else 
+			        {
+				     spellID = -1;
+				    } 	
+			else
+		        {
+				 spellID = -1;
+				} 			
+			m_LastMihliEnhanceTime = m_Tick;	
+			m_mihliEnhanceRecast = 10000;
+			}			
+	}	
+    return spellID;
+}	
+
+
+
+int16 CAIPetDummy::DarkIxionSpell()
+{	
+    int16 spellID = -1;
+	uint8 level = m_PPet->PMaster->GetMLevel();
+    if (m_ActionType != ACTION_MAGIC_CASTING)	
+    {
+		m_PBattleSubTarget = m_PBattleTarget;
+		if (level >= 50)
+		    if (m_PPet->PMaster->health.mp > 149)
+			{
+			 spellID = 212; //Burst
+			}
+			else if (m_PPet->PMaster->health.mp > 29)
+			{
+			 spellID = 165; //THUNDER II
+			}
+            else
+			{
+		     spellID = -1;
+			}
+		else if (level >= 20)	
+		    if (m_PPet->PMaster->health.mp > 29)
+			{
+			 spellID = 165; //THUNDER II
+			}
+            else
+			{
+		     spellID = -1;
+			}
+    }			
+    m_LastBP = m_Tick;
+	return spellID;	
+}
+
+int16 CAIPetDummy::LightIxionSpell()
+{	
+    int16 spellID = -1;
+	uint8 level = m_PPet->PMaster->GetMLevel();
+    if (m_ActionType != ACTION_MAGIC_CASTING)	
+    {
+		m_PBattleSubTarget = m_PBattleTarget;
+		if (level >= 50)
+		    if (m_PPet->PMaster->health.mp > 149)
+			{
+			 spellID = 31; //Banish IV
+			}
+			else if (m_PPet->PMaster->health.mp > 29)
+			{
+			 spellID = 29; //Banish II
+			}
+            else
+			{
+		     spellID = -1;
+			}
+		else if (level >= 20)	
+		    if (m_PPet->PMaster->health.mp > 29)
+			{
+			 spellID = 29; //Banish II
+			}
+            else
+			{
+		     spellID = -1;
+			}
+    }			
+    m_LastBP = m_Tick;
+	return spellID;	
+}
+
+
+int16 CAIPetDummy::SummonBloodPact()
+{
+    int16 smnMagic = -1;
+	int16 smnSkill = m_PPet->PMaster->GetSkill(SKILL_SUM);
+	if (smnSkill >= 275)
+	{
+	    smnMagic = 15000;
+	}
+	else if (smnSkill >= 251)
+	{
+	    smnMagic = 14000;	
+	}
+	else if (smnSkill >= 227)
+	{
+	    smnMagic = 13000;	
+	}
+	else if (smnSkill >= 203)
+	{
+	    smnMagic = 12000;	
+	}
+	else if (smnSkill >= 178)
+	{
+	    smnMagic = 11000;	
+	}
+	else if (smnSkill >= 138)
+	{
+	    smnMagic = 10000;	
+	}
+	else if (smnSkill >= 123)
+	{
+	    smnMagic = 9000;	
+	}
+	else if (smnSkill >= 33)
+	{
+	    smnMagic = 8000;	
+	}
+	else if (smnSkill >= 108)
+	{
+	    smnMagic = 7000;	
+	}
+	else if (smnSkill >= 93)
+	{
+	    smnMagic = 6000;	
+	}
+	else if (smnSkill >= 78)
+	{
+	    smnMagic = 5000;	
+	}
+	else if (smnSkill >= 63)
+	{
+	    smnMagic = 4000;	
+	}
+	else if (smnSkill >= 48)
+	{
+	    smnMagic = 3000;	
+	}	
+	else if (smnSkill >= 33)
+	{
+	    smnMagic = 2000;	
+	}
+
+    return smnMagic;
+}
+
+
+
+
+
+
+
 uint32 CAIPetDummy::ZeidSkillchain()
 {
     uint32 zeidSCReady = charutils::GetVar((CCharEntity*)m_PPet->PMaster,"ZeidSCReady");	
@@ -13683,6 +14755,27 @@ CBattleEntity* CAIPetDummy::getZeidSCPartner()
         }
     }
     return zeidSCPartner;
+}
+
+CBattleEntity* CAIPetDummy::getPrisheSCPartnerLion()
+{
+    CBattleEntity* prisheSCPartner = nullptr;
+	uint8 allyhp = 0;
+    if (m_PPet->PMaster->PAlly.size() > 0)  // If there are other trusts in the party look for their job
+    {
+        for (auto ally : m_PPet->PMaster->PAlly)
+        {
+            if (ally->getMod(MOD_GRAVITYRES) > 0) //This will cycle thru the trust list to see if Prishe is in the party
+            {    
+                prisheSCPartner = ally;
+				//allyhp = ally->GetHPP();
+				//ShowWarning(CL_GREEN"LION IS PRESENT HP is %u \n" CL_RESET, allyhp);
+				//ShowWarning(CL_GREEN"LION IS PRESENT!!!!!! \n" CL_RESET);
+				break;
+            }
+        }
+    }
+    return prisheSCPartner;
 }
 
 int16 CAIPetDummy::skillchainTimer()

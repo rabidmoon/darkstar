@@ -5,6 +5,7 @@
 
 require("scripts/globals/status");
 require("scripts/globals/magic");
+require("scripts/globals/mobscaler");
 
 -----------------------------------
 -- onMobInitialize
@@ -18,6 +19,7 @@ end;
 -----------------------------------
 
 function onMobSpawn(mob)
+    mob:setLocalVar("PartySize",6);  
 end;
 
 -----------------------------------
@@ -25,6 +27,8 @@ end;
 -----------------------------------
 
 function onMobFight(mob, target)
+    local size = target:getPartySize();
+	mobScaler(mob,target);
     local popTime = mob:getLocalVar("lastPetPop");
     -- ffxiclopedia says 30 sec, bgwiki says 1-2 min..
     -- Going with 60 seconds until I see proof of retails timing.
@@ -49,4 +53,13 @@ end;
 -----------------------------------
 
 function onMobDeath(mob, killer)
+	if (killer:getObjType() == TYPE_PET) then
+        player:setVar("Justice_Win",1);
+	    player:addCurrency('zeni_point',700);
+	    player:PrintToPlayer("You obtain 700 Zeni Points.", 0x15);	
+    elseif (killer:getObjType() == TYPE_PC) then
+        player:setVar("Justice_Win",1);
+	    player:addCurrency('zeni_point',700);
+	    player:PrintToPlayer("You obtain 700 Zeni Points.", 0x15);		
+    end
 end;

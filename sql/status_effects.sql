@@ -660,6 +660,9 @@ INSERT INTO `status_effects` VALUES (813,'trust_trick_attack',32,0,0,0,0,0,0,0);
 INSERT INTO `status_effects` VALUES (814,'trust_skillchain_timer',4128,9,0,2,0,0,0,0);
 INSERT INTO `status_effects` VALUES (815,'trust_barrage',32,0,0,0,0,0,0,0);
 INSERT INTO `status_effects` VALUES (816,'no_rest',4096,0,0,0,0,0,0,0);
+INSERT INTO `status_effects` VALUES (817,'ava_attack',32,0,0,0,0,0,0,0);
+INSERT INTO `status_effects` VALUES (818,'ava_defense',32,0,0,0,0,0,0,0);
+INSERT INTO `status_effects` VALUES (819,'trust_sentinel',33,0,0,0,0,0,0,0);
 -- gap
 INSERT INTO `status_effects` VALUES (950,'level_two_sc',512,0,0,2,0,0,0,0);
 INSERT INTO `status_effects` VALUES (951,'level_three_sc',512,0,0,2,0,0,0,0);

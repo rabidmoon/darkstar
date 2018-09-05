@@ -7,6 +7,7 @@ package.loaded["scripts/zones/Bibiki_Bay/TextIDs"] = nil;
 -----------------------------------
 
 require("scripts/zones/Bibiki_Bay/TextIDs");
+require("scripts/globals/status")
 
 -----------------------------------
 -- onTrade Action
@@ -547,7 +548,7 @@ end
 
 if((player:getEquipID(SLOT_MAIN) == h2h) or (player:getEquipID(SLOT_MAIN) == dagger) or (player:getEquipID(SLOT_MAIN) == sword) or (player:getEquipID(SLOT_MAIN) == gs) or (player:getEquipID(SLOT_MAIN) == axe) or 
     (player:getEquipID(SLOT_MAIN) == gaxe) or (player:getEquipID(SLOT_MAIN) == scythe) or (player:getEquipID(SLOT_MAIN) == pole) or (player:getEquipID(SLOT_MAIN) == katana) or (player:getEquipID(SLOT_MAIN) == gkatana) or 
-	(player:getEquipID(SLOT_MAIN) == club) or (player:getEquipID(SLOT_MAIN) == staff) or (player:getEquipID(SLOT_RANGE) == bow) or (player:getEquipID(SLOT_RANGE) == gun)) then
+	(player:getEquipID(SLOT_MAIN) == club) or (player:getEquipID(SLOT_MAIN) == staff) or (player:getEquipID(SLOT_RANGED) == bow) or (player:getEquipID(SLOT_RANGED) == gun)) then
    player:PrintToPlayer("??? : You seek the power of a higher Aftermath effect?  Trade me your weapon and 99 Plutons.", 0xD);	
 end
 

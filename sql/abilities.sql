@@ -275,6 +275,7 @@ INSERT INTO `abilities` VALUES ('233', 'innin', '13', '40', '1', '180', '147', '
 INSERT INTO `abilities` VALUES ('234', 'avatars_favor', '15', '55', '1', '30', '255', '0', '0', '94', '18.0', '0', '1', '60', '0', '0',null); -- ROTZ
 INSERT INTO `abilities` VALUES ('241', 'double_shot', '11', '79', '1', '180', '126', '0', '0', '225', '20.0', '0', '1', '300', '0', '0','ABYSSEA');
 INSERT INTO `abilities` VALUES ('243', 'futae', '13', '77', '1', '180', '148', '0', '0', '227', '20.0', '0', '1', '0', '0', '0','ABYSSEA');
+INSERT INTO `abilities` VALUES ('250', 'tactical_switch', '15', '5', '4', '45', '173', '0', '0', '118', '18.0', '0', '1', '60', '0', '0',null); -- ROTZ
 INSERT INTO `abilities` VALUES ('258', 'saboteur', '5', '15', '1', '300', '36', '0', '0', '258', '20.0', '0', '1', '80', '0', '4',null);
 INSERT INTO `abilities` VALUES ('259', 'spontaneity', '5', '95', '3', '600', '37', '0', '0', '259', '20.0', '0', '1', '80', '0', '0','ABYSSEA');
 INSERT INTO `abilities` VALUES ('267', 'tenuto', '10', '83', '1', '5', '47', '0', '0', '257', '20.0', '0', '0', '0', '0', '0','ABYSSEA');
@@ -332,6 +333,7 @@ INSERT INTO `abilities` VALUES ('515', 'lunar_roar', '15', '32', '4', '60', '174
 INSERT INTO `abilities` VALUES ('516', 'ecliptic_growl', '15', '43', '1', '60', '174', '0', '0', '46', '18.0', '0', '1', '60', '0', '0',null); -- ROTZ
 INSERT INTO `abilities` VALUES ('517', 'ecliptic_howl', '15', '54', '1', '60', '174', '0', '0', '57', '18.0', '0', '1', '60', '0', '0',null); -- ROTZ
 INSERT INTO `abilities` VALUES ('518', 'eclipse_bite', '15', '65', '4', '60', '173', '0', '0', '109', '18.0', '0', '1', '60', '0', '0',null); -- ROTZ
+INSERT INTO `abilities` VALUES ('519', 'stance_offense', '15', '60', '4', '60', '173', '0', '0', '118', '18.0', '0', '1', '60', '0', '0',null); -- ROTZ
 INSERT INTO `abilities` VALUES ('520', 'howling_moon', '15', '1', '4', '60', '173', '0', '0', '0', '18.0', '1', '1', '60', '0', '2',null); -- ROTZ
 INSERT INTO `abilities` VALUES ('528', 'punch', '15', '1', '4', '60', '173', '0', '0', '9', '18.0', '0', '1', '60', '0', '0',null); -- ROTZ
 INSERT INTO `abilities` VALUES ('529', 'fire_ii', '15', '10', '4', '60', '173', '0', '0', '24', '18.0', '0', '1', '60', '0', '0',null); -- ROTZ
@@ -395,8 +397,8 @@ INSERT INTO `abilities` VALUES ('643', 'ultimate_terror', '15', '37', '4', '60',
 INSERT INTO `abilities` VALUES ('644', 'noctoshield', '15', '49', '1', '60', '174', '0', '0', '92', '18.0', '0', '1', '60', '0', '0',null); -- ROTZ
 INSERT INTO `abilities` VALUES ('645', 'dream_shroud', '15', '56', '1', '60', '174', '0', '0', '121', '18.0', '0', '1', '60', '0', '0',null); -- ROTZ
 INSERT INTO `abilities` VALUES ('646', 'nether_blast', '15', '65', '4', '60', '173', '0', '0', '109', '18.0', '0', '1', '60', '0', '0',null); -- ROTZ
-INSERT INTO `abilities` VALUES ('1456', 'howl', '1', '40', '1', '300', '1', '115', '0', '211', '20.0', '0', '1', '80', '384', '0',null);
-INSERT INTO `abilities` VALUES ('1692', 'fighting_stance_a', '5', '45', '1', '60', '0', '0', '0', '176', '20.0', '0', '1', '80', '0', '0',null);
+
+
 
 
 

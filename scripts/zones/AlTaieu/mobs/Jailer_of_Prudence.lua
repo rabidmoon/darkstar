@@ -8,6 +8,7 @@
 
 require("scripts/globals/status");
 require("scripts/zones/AlTaieu/mobIDs");
+require("scripts/globals/mobscaler");
 
 -----------------------------------
 -- onMobInitialize Action
@@ -24,6 +25,7 @@ end;
 -----------------------------------
 
 function onMobSpawn(mob)
+    mob:setLocalVar("PartySize",6);  
     mob:AnimationSub(0); -- Mouth closed
     mob:addStatusEffectEx(EFFECT_FLEE,0,100,0,60);
     mob:setMod(MOD_TRIPLE_ATTACK, 20);
@@ -49,6 +51,8 @@ end;
 -----------------------------------
 
 function onMobFight(mob, target)
+    local size = target:getPartySize();
+	mobScaler(mob,target);
 end;
 
 -----------------------------------
@@ -90,4 +94,14 @@ function onMobDeath(mob, killer)
         firstPrudence:addMod(MOD_ATTP, 100);
         firstPrudence:delMod(MOD_DEFP, -50);
     end;
+	if (killer:getObjType() == TYPE_PET) then
+        player:setVar("Prude_Win",1);
+	    player:addCurrency('zeni_point',700);
+	    player:PrintToPlayer("You obtain 700 Zeni Points.", 0x15);	
+    elseif (killer:getObjType() == TYPE_PC) then
+        player:setVar("Prude_Win",1);
+	    player:addCurrency('zeni_point',700);
+	    player:PrintToPlayer("You obtain 700 Zeni Points.", 0x15);		
+    end
+
 end;
