@@ -2680,10 +2680,10 @@ function homamFeetDuskNQ(aug1,val1,aug2,val2)
   local aug2 = 2046;
   local val2 = -1;
   
-	if (augmentopt == 1) then -- Pet Attack
-	    aug1 = 114;	
-	elseif (augmentopt == 2) then -- Pet Acc
-	    aug1 = 113;
+	if (augmentopt == 1) then -- Magic dmg taken
+	    aug1 = 55;	
+	elseif (augmentopt == 2) then -- Breath dmg taken
+	    aug1 = 56;
 	end	
 	
     local tier = math.random(1,100);
@@ -2714,11 +2714,11 @@ function homamFeetDuskNQ(aug1,val1,aug2,val2)
 		elseif (augtier <= hq2t3) then
 		    val1 = 4;
         end			
-		if (val1 == 3) then  -- Magic Damage Taken
-		    aug2 = 55;
+		if (val1 == 3) then  -- Phys Damage Taken
+		    aug2 = 54;
 		    val2 = 0;
 		elseif (val1 == 4) then
-		    aug2 = 55;
+		    aug2 = 54;
 		    val2 = 1;	
 		end
 	end
@@ -2893,9 +2893,9 @@ function homamFeetDuskHQ(aug1,val1,aug2,val2)
   local val2 = -1;
   
 	if (augmentopt == 1) then -- Pet Attack
-	    aug1 = 114;	
+	    aug1 = 55;	
 	elseif (augmentopt == 2) then -- Pet Acc
-	    aug1 = 113;
+	    aug1 = 56;
 	end	
 	
     local tier = math.random(1,100);
@@ -2927,10 +2927,10 @@ function homamFeetDuskHQ(aug1,val1,aug2,val2)
 		    val1 = 4;
         end			
 		if (val1 == 3) then  -- Magic Damage Taken
-		    aug2 = 55;
+		    aug2 = 54;
 		    val2 = 0;
 		elseif (val1 == 4) then
-		    aug2 = 55;
+		    aug2 = 54;
 		    val2 = 1;	
 		end
 	end
@@ -3104,9 +3104,9 @@ function homamFeetDuskHQ2(aug1,val1,aug2,val2)
   local val2 = -1;
   
 	if (augmentopt == 1) then -- Pet Attack
-	    aug1 = 114;	
+	    aug1 = 55;	
 	elseif (augmentopt == 2) then -- Pet Acc
-	    aug1 = 113;
+	    aug1 = 56;
 	end	
 	
     local tier = math.random(1,100);
@@ -3138,10 +3138,10 @@ function homamFeetDuskHQ2(aug1,val1,aug2,val2)
 		    val1 = 4;
         end			
 		if (val1 == 3) then  -- Magic Damage Taken
-		    aug2 = 55;
+		    aug2 = 54;
 		    val2 = 0;
 		elseif (val1 == 4) then
-		    aug2 = 55;
+		    aug2 = 54;
 		    val2 = 1;	
 		end
 	end
