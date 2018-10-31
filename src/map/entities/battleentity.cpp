@@ -574,14 +574,68 @@ uint16 CBattleEntity::ATT()
 {
     //TODO: consider which weapon!
     int32 ATT = 8 + m_modStat[MOD_ATT];
+	
+	/*
     if (m_Weapons[SLOT_MAIN]->isTwoHanded())
     {
         ATT += (STR() * 3) / 4;
     }
     else {
         ATT += (STR()) / 2;
-    }
-
+    }*/
+	
+	if (m_Weapons[SLOT_MAIN]->getSkillType() == 1)  //H2h
+	{
+	    ATT += (STR() * 5) / 8;
+	}
+	else if (m_Weapons[SLOT_MAIN]->getSkillType() == 2)  //Dagger
+	{
+	    ATT += (STR()) / 2;
+	}
+	else if (m_Weapons[SLOT_MAIN]->getSkillType() == 3)  //Sword
+	{
+	    ATT += (STR() * 9) / 16;
+	}
+	else if (m_Weapons[SLOT_MAIN]->getSkillType() == 4)  //Gsword
+	{
+	    ATT += (STR() * 3) / 4;
+	}
+	else if (m_Weapons[SLOT_MAIN]->getSkillType() == 5)  //Axe
+	{
+	    ATT += (STR() * 5) / 8;
+	}
+	else if (m_Weapons[SLOT_MAIN]->getSkillType() == 6)  //Gaxe
+	{
+	    ATT += (STR() * 3) / 4;
+	}
+	else if (m_Weapons[SLOT_MAIN]->getSkillType() == 7)  //Scythe
+	{
+	    ATT += (STR() * 3) / 4;
+	}
+	else if (m_Weapons[SLOT_MAIN]->getSkillType() == 8)  //Pole
+	{
+	    ATT += (STR() * 3) / 4;
+	}
+	else if (m_Weapons[SLOT_MAIN]->getSkillType() == 9)  //Katana
+	{
+	    ATT += (STR() * 9) / 16;
+	}
+	else if (m_Weapons[SLOT_MAIN]->getSkillType() == 10)  //GKatana
+	{
+	    ATT += (STR() * 3) / 4;
+	}
+	else if (m_Weapons[SLOT_MAIN]->getSkillType() == 11)  //Club
+	{
+	    ATT += (STR() * 5) / 8;
+	}
+	else if (m_Weapons[SLOT_MAIN]->getSkillType() == 12)  //Staff
+	{
+	    ATT += (STR() * 3) / 4;
+	}	
+	
+	
+	
+	
     if (this->StatusEffectContainer->HasStatusEffect(EFFECT_ENDARK))
         ATT += this->getMod(MOD_ENSPELL_DMG);
 
@@ -622,7 +676,7 @@ uint16 CBattleEntity::RACC(uint8 skill, uint16 bonusSkill)
     }
     acc += getMod(MOD_RACC);
     acc += battleutils::GetRangedAccuracyBonuses(this);
-    acc += AGI() / 2;
+    acc += (AGI() * 5) / 8;
     if (this->objtype == TYPE_PET && ((CPetEntity*)this)->getPetType() == PETTYPE_AUTOMATON)
     {
         acc += ((CCharEntity*)PMaster)->PMeritPoints->GetMeritValue(MERIT_FINE_TUNING, (CCharEntity*)PMaster);
@@ -659,14 +713,62 @@ uint16 CBattleEntity::ACC(uint8 attackNumber, uint8 offsetAccuracy)
         }
         int16 ACC = GetSkill(skill) + iLvlSkill;
         ACC = (ACC > 200 ? (((ACC - 200)*0.9) + 200) : ACC);
-        if (m_Weapons[SLOT_MAIN]->isTwoHanded() == true)
+        /*if (m_Weapons[SLOT_MAIN]->isTwoHanded() == true)
         {
             ACC += DEX() * 0.75;
         }
         else
         {
             ACC += DEX() * 0.5;
-        }
+        }*/
+		if (m_Weapons[SLOT_MAIN]->getSkillType() == 1)  //H2h
+	    {
+	        ACC += (DEX() * 5) / 8;
+		}
+		else if (m_Weapons[SLOT_MAIN]->getSkillType() == 2)  //Dagger
+		{
+			ACC += (DEX()) / 2;
+		}
+		else if (m_Weapons[SLOT_MAIN]->getSkillType() == 3)  //Sword
+		{
+			ACC += (DEX() * 9) / 16;
+		}
+		else if (m_Weapons[SLOT_MAIN]->getSkillType() == 4)  //Gsword
+		{
+			ACC += (DEX() * 3) / 4;
+		}
+		else if (m_Weapons[SLOT_MAIN]->getSkillType() == 5)  //Axe
+		{
+			ACC += (DEX() * 5) / 8;
+		}
+		else if (m_Weapons[SLOT_MAIN]->getSkillType() == 6)  //Gaxe
+		{
+			ACC += (DEX() * 3) / 4;
+		}
+		else if (m_Weapons[SLOT_MAIN]->getSkillType() == 7)  //Scythe
+		{
+			ACC += (DEX() * 3) / 4;
+		}
+		else if (m_Weapons[SLOT_MAIN]->getSkillType() == 8)  //Pole
+		{
+			ACC += (DEX() * 3) / 4;
+		}
+		else if (m_Weapons[SLOT_MAIN]->getSkillType() == 9)  //Katana
+		{
+			ACC += (DEX() * 9) / 16;
+		}
+		else if (m_Weapons[SLOT_MAIN]->getSkillType() == 10)  //GKatana
+		{
+			ACC += (DEX() * 3) / 4;
+		}
+		else if (m_Weapons[SLOT_MAIN]->getSkillType() == 11)  //Club
+		{
+			ACC += (DEX() * 5) / 8;
+		}
+		else if (m_Weapons[SLOT_MAIN]->getSkillType() == 12)  //Staff
+		{
+			ACC += (DEX() * 3) / 4;
+		}
         ACC = (ACC + m_modStat[MOD_ACC] + offsetAccuracy);
         ACC = ACC + (ACC * m_modStat[MOD_ACCP] / 100) +
             dsp_min((ACC * m_modStat[MOD_FOOD_ACCP] / 100), m_modStat[MOD_FOOD_ACC_CAP]);
