@@ -598,7 +598,7 @@ uint16 CBattleEntity::ATT()
 	}
 	else if (m_Weapons[SLOT_MAIN]->getSkillType() == 4)  //Gsword
 	{
-	    ATT += (STR() * 3) / 4;
+	    ATT += (STR() * 7) / 9;
 	}
 	else if (m_Weapons[SLOT_MAIN]->getSkillType() == 5)  //Axe
 	{
@@ -606,15 +606,15 @@ uint16 CBattleEntity::ATT()
 	}
 	else if (m_Weapons[SLOT_MAIN]->getSkillType() == 6)  //Gaxe
 	{
-	    ATT += (STR() * 3) / 4;
+	    ATT += (STR() * 7) / 9;
 	}
 	else if (m_Weapons[SLOT_MAIN]->getSkillType() == 7)  //Scythe
 	{
-	    ATT += (STR() * 3) / 4;
+	    ATT += (STR() * 7) / 9;
 	}
 	else if (m_Weapons[SLOT_MAIN]->getSkillType() == 8)  //Pole
 	{
-	    ATT += (STR() * 3) / 4;
+	    ATT += (STR() * 7) / 9;
 	}
 	else if (m_Weapons[SLOT_MAIN]->getSkillType() == 9)  //Katana
 	{
@@ -622,7 +622,7 @@ uint16 CBattleEntity::ATT()
 	}
 	else if (m_Weapons[SLOT_MAIN]->getSkillType() == 10)  //GKatana
 	{
-	    ATT += (STR() * 3) / 4;
+	    ATT += (STR() * 7) / 9;
 	}
 	else if (m_Weapons[SLOT_MAIN]->getSkillType() == 11)  //Club
 	{
@@ -630,7 +630,7 @@ uint16 CBattleEntity::ATT()
 	}
 	else if (m_Weapons[SLOT_MAIN]->getSkillType() == 12)  //Staff
 	{
-	    ATT += (STR() * 3) / 4;
+	    ATT += (STR() * 7) / 9;
 	}	
 	
 	
@@ -735,7 +735,7 @@ uint16 CBattleEntity::ACC(uint8 attackNumber, uint8 offsetAccuracy)
 		}
 		else if (m_Weapons[SLOT_MAIN]->getSkillType() == 4)  //Gsword
 		{
-			ACC += (DEX() * 3) / 4;
+			ACC += (DEX() * 7) / 9;
 		}
 		else if (m_Weapons[SLOT_MAIN]->getSkillType() == 5)  //Axe
 		{
@@ -743,15 +743,15 @@ uint16 CBattleEntity::ACC(uint8 attackNumber, uint8 offsetAccuracy)
 		}
 		else if (m_Weapons[SLOT_MAIN]->getSkillType() == 6)  //Gaxe
 		{
-			ACC += (DEX() * 3) / 4;
+			ACC += (DEX() * 7) / 9;
 		}
 		else if (m_Weapons[SLOT_MAIN]->getSkillType() == 7)  //Scythe
 		{
-			ACC += (DEX() * 3) / 4;
+			ACC += (DEX() * 7) / 9;
 		}
 		else if (m_Weapons[SLOT_MAIN]->getSkillType() == 8)  //Pole
 		{
-			ACC += (DEX() * 3) / 4;
+			ACC += (DEX() * 7) / 9;
 		}
 		else if (m_Weapons[SLOT_MAIN]->getSkillType() == 9)  //Katana
 		{
@@ -759,7 +759,7 @@ uint16 CBattleEntity::ACC(uint8 attackNumber, uint8 offsetAccuracy)
 		}
 		else if (m_Weapons[SLOT_MAIN]->getSkillType() == 10)  //GKatana
 		{
-			ACC += (DEX() * 3) / 4;
+			ACC += (DEX() * 7) / 9;
 		}
 		else if (m_Weapons[SLOT_MAIN]->getSkillType() == 11)  //Club
 		{
@@ -767,7 +767,7 @@ uint16 CBattleEntity::ACC(uint8 attackNumber, uint8 offsetAccuracy)
 		}
 		else if (m_Weapons[SLOT_MAIN]->getSkillType() == 12)  //Staff
 		{
-			ACC += (DEX() * 3) / 4;
+			ACC += (DEX() * 7) / 9;
 		}
         ACC = (ACC + m_modStat[MOD_ACC] + offsetAccuracy);
         ACC = ACC + (ACC * m_modStat[MOD_ACCP] / 100) +
