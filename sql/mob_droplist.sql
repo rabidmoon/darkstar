@@ -9521,6 +9521,7 @@ INSERT INTO `mob_droplist` VALUES (1729,2,1452,0);
 INSERT INTO `mob_droplist` VALUES (1729,0,1452,10);
 INSERT INTO `mob_droplist` VALUES (1729,2,1455,0);
 INSERT INTO `mob_droplist` VALUES (1729,0,1455,90);
+INSERT INTO `mob_droplist` VALUES (1729,0,3362,100);  -- Deluder Fortune  DRK
 INSERT INTO `mob_droplist` VALUES (1729,0,11292,10);
 INSERT INTO `mob_droplist` VALUES (1729,0,11295,10);
 INSERT INTO `mob_droplist` VALUES (1729,0,11298,10);
@@ -9758,6 +9759,7 @@ INSERT INTO `mob_droplist` VALUES (1737,2,1452,0);
 INSERT INTO `mob_droplist` VALUES (1737,0,1452,10);
 INSERT INTO `mob_droplist` VALUES (1737,2,1455,0);
 INSERT INTO `mob_droplist` VALUES (1737,0,1455,90);
+INSERT INTO `mob_droplist` VALUES (1737,0,3359,100);  -- Despots Fortune
 INSERT INTO `mob_droplist` VALUES (1737,0,11292,10);
 INSERT INTO `mob_droplist` VALUES (1737,0,11295,10);
 INSERT INTO `mob_droplist` VALUES (1737,0,11298,10);
@@ -9817,6 +9819,7 @@ INSERT INTO `mob_droplist` VALUES (1739,2,1452,0);
 INSERT INTO `mob_droplist` VALUES (1739,0,1452,10);
 INSERT INTO `mob_droplist` VALUES (1739,2,1455,0);
 INSERT INTO `mob_droplist` VALUES (1739,0,1455,90);
+INSERT INTO `mob_droplist` VALUES (1739,0,3362,100);  -- Deluder Fortune  RNG
 INSERT INTO `mob_droplist` VALUES (1739,0,11292,10);
 INSERT INTO `mob_droplist` VALUES (1739,0,11295,10);
 INSERT INTO `mob_droplist` VALUES (1739,0,11298,10);
@@ -9869,6 +9872,7 @@ INSERT INTO `mob_droplist` VALUES (1740,0,15123,10);
 INSERT INTO `mob_droplist` VALUES (1740,0,15140,10);
 INSERT INTO `mob_droplist` VALUES (1740,0,15142,10);
 INSERT INTO `mob_droplist` VALUES (1740,0,16360,10);
+INSERT INTO `mob_droplist` VALUES (1741,0,3359,100);  -- Despots Fortune
 INSERT INTO `mob_droplist` VALUES (1741,2,1449,0);
 INSERT INTO `mob_droplist` VALUES (1741,0,1449,90);
 INSERT INTO `mob_droplist` VALUES (1741,2,1452,0);
@@ -9934,6 +9938,7 @@ INSERT INTO `mob_droplist` VALUES (1743,2,1452,0);
 INSERT INTO `mob_droplist` VALUES (1743,0,1452,10);
 INSERT INTO `mob_droplist` VALUES (1743,2,1455,0);
 INSERT INTO `mob_droplist` VALUES (1743,0,1455,90);
+INSERT INTO `mob_droplist` VALUES (1743,0,3362,100);  -- Deluder Fortune  SAM
 INSERT INTO `mob_droplist` VALUES (1743,0,11292,10);
 INSERT INTO `mob_droplist` VALUES (1743,0,11295,10);
 INSERT INTO `mob_droplist` VALUES (1743,0,11298,10);
@@ -10111,6 +10116,7 @@ INSERT INTO `mob_droplist` VALUES (1749,2,1452,0);
 INSERT INTO `mob_droplist` VALUES (1749,0,1452,10);
 INSERT INTO `mob_droplist` VALUES (1749,2,1455,0);
 INSERT INTO `mob_droplist` VALUES (1749,0,1455,90);
+INSERT INTO `mob_droplist` VALUES (1749,0,3359,100);  -- Despots Fortune
 INSERT INTO `mob_droplist` VALUES (1749,0,11292,10);
 INSERT INTO `mob_droplist` VALUES (1749,0,11295,10);
 INSERT INTO `mob_droplist` VALUES (1749,0,11298,10);
@@ -10700,7 +10706,7 @@ INSERT INTO `mob_droplist` VALUES (1838,0,15513,220);
 INSERT INTO `mob_droplist` VALUES (1838,0,17948,1000);
 INSERT INTO `mob_droplist` VALUES (1838,0,15471,80);  -- Merciful Cape
 INSERT INTO `mob_droplist` VALUES (1838,0,15473,80);  -- Astute Cape
-INSERT INTO `mob_droplist` VALUES (1839,0,14551,1000);
+INSERT INTO `mob_droplist` VALUES (1839,0,14551,200);  -- Njord Jerkin Jakko
 INSERT INTO `mob_droplist` VALUES (1840,0,930,10);
 INSERT INTO `mob_droplist` VALUES (1840,0,1125,20);
 INSERT INTO `mob_droplist` VALUES (1841,0,888,340);
