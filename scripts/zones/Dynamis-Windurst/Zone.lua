@@ -81,10 +81,13 @@ function onZoneIn(player,prevZone)
 	reentertime = 0;
 	end
 	
+	local entry = player:getVar("Dynamis_Windurst_Enter");
 	
-	if (player:hasStatusEffect(EFFECT_DYNA_RESTRICTION) == false) then
+	
+	if (player:hasStatusEffect(EFFECT_DYNA_RESTRICTION) == false and entry == 1) then
 	player:addStatusEffectEx(EFFECT_DYNA_RESTRICTION,EFFECT_LEVEL_RESTRICTION,75,3,5400);
     player:PrintToPlayer("You have 90 minutes remaining in Dynamis", 0xD);
+	player:setVar("Dynamis_Windurst_Enter",0);
 	if (reduction == 0) then
     player:PrintToPlayer("You may re-enter Dynamis in 12 Hours", 0xD);	
 	elseif (reduction == 1) then

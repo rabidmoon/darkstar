@@ -137,7 +137,7 @@ function onEventFinish(player,csid,option)
 		
 		player:setVar("Dyna_Reduction", reentertime);
 	
-			
+		player:setVar("Dynamis_Glacier_Enter",1);		
 		player:setPos(-284.751,-39.923,-422.948,235,0x86);
 	end	
 	

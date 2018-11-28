@@ -133,7 +133,7 @@ function onEventFinish(player,csid,option)
 		
 		player:setVar("Dyna_Reduction", reentertime);		
 		
-		
+		player:setVar("Dynamis_Xarc_Enter",1);		
 		player:setPos(569.312,-0.098,-270.158,90,0x87);
 	end
 	

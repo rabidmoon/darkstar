@@ -141,7 +141,7 @@ function onEventFinish(player,csid,option)
 		player:setVar("Dyna_Reduction", reentertime);
 	
 			
-				
+		player:setVar("Dynamis_Bastok_Enter",1);			
 		player:setPos(116.482,0.994,-72.121,128,0xba);
 	end
 	

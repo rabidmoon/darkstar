@@ -141,7 +141,7 @@ function onEventFinish(player,csid,option)
 		player:setVar("Dyna_Reduction", reentertime);
 	
 			
-				
+		player:setVar("Dynamis_Sandy_Enter",1);			
 		player:setPos(161.838,-2.000,161.673,93,0xb9);
 	end
 	

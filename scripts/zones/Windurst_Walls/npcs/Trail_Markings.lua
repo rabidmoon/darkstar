@@ -141,7 +141,7 @@ function onEventFinish(player,csid,option)
 		player:setVar("Dyna_Reduction", reentertime);
 	
 			
-				
+		player:setVar("Dynamis_Windurst_Enter",1);		
 		player:setPos(-221.988,1.000,-120.184,0,0xbb);
 	end
 	

@@ -142,7 +142,7 @@ function onEventFinish(player,csid,option)
 		player:setVar("Dyna_Reduction", reentertime);
 	
 			
-		
+		player:setVar("Dynamis_Jeuno_Enter",1);	
 		player:setPos(48.930,10.002,-71.032,195,0xBC);
 	end
 	
