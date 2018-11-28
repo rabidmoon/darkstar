@@ -53,7 +53,7 @@ function onZoneIn(player,prevZone)
 	if (player:getCurrentMission(COP) == DESIRES_OF_EMPTINESS and player:getVar("PromathiaStatus")==0) then
 		cs = 0x0032;	
     elseif (ENABLE_COP_ZONE_CAP == 1) then
-		player:addStatusEffect(EFFECT_LEVEL_RESTRICTION,50,0,0);-- ZONE LEVEL RESTRICTION	
+		player:addStatusEffect(EFFECT_LEVEL_RESTRICTION,60,0,0);-- ZONE LEVEL RESTRICTION	
 	end
 	return cs;	
 end;		
