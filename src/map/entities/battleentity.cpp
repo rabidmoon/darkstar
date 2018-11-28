@@ -107,6 +107,11 @@ bool CBattleEntity::isAsleep()
     return (PBattleAI->GetCurrentAction() == ACTION_SLEEP);
 }
 
+bool CBattleEntity::isMounted()
+{
+	return (animation == ANIMATION_CHOCOBO || animation == ANIMATION_MOUNT);
+}
+
 /************************************************************************
 *                                                                       *
 *  Пересчитываем максимальные значения hp и mp с учетом модификаторов   *
@@ -195,7 +200,7 @@ int32 CBattleEntity::GetMaxMP()
 
 uint8 CBattleEntity::GetSpeed()
 {
-    return (animation == ANIMATION_CHOCOBO ? 40 + map_config.speed_mod : dsp_cap(speed * (100 + getMod(MOD_MOVE)) / 100, UINT8_MIN, UINT8_MAX));
+    return (isMounted() ? 40 + map_config.speed_mod : dsp_cap(speed * (100 + getMod(MOD_MOVE)) / 100, UINT8_MIN, UINT8_MAX));
 }
 
 bool CBattleEntity::CanRest()
@@ -509,7 +514,7 @@ int32 CBattleEntity::addHP(int32 hp)
         {
             if (animation == ANIMATION_CHOCOBO)
             {
-                StatusEffectContainer->DelStatusEffectSilent(EFFECT_CHOCOBO);
+                StatusEffectContainer->DelStatusEffectSilent(EFFECT_MOUNTED);
             }
             PBattleAI->SetCurrentAction(ACTION_FALL);
         }

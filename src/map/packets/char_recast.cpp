@@ -34,7 +34,7 @@ This file is part of DarkStar-server source code.
 CCharRecastPacket::CCharRecastPacket(CCharEntity* PChar)
 {
     this->type = 0x19;
-    this->size = 0x7F;
+    this->size = 0x83;
 
     uint8 count = 0;
 
@@ -46,7 +46,12 @@ CCharRecastPacket::CCharRecastPacket(CCharEntity* PChar)
 
         uint32 recasttime = (recast->RecastTime == 0 ? 0 : ((recast->RecastTime - (time(nullptr) - recast->TimeStamp))));
 
-        if (recast->ID != 0)
+        if (recast->ID == 256) // borrowing this id for mount recast
+        {
+            WBUFL(data, (0xFC)) = recasttime;
+            WBUFL(data, (0xFE)) = recast->ID;
+        }
+        else if (recast->ID != 0)
         {
             WBUFL(data, (0x0C + count * 8) ) = recasttime;
             WBUFB(data, (0x0F + count * 8) ) = recast->ID;

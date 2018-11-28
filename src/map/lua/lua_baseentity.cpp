@@ -47,6 +47,7 @@
 #include "../packets/char_job_extra.h"
 #include "../packets/char_equip.h"
 #include "../packets/char_health.h"
+#include "../packets/char_mounts.h"
 #include "../packets/char_recast.h"
 #include "../packets/char_skills.h"
 #include "../packets/char_spells.h"
@@ -1876,13 +1877,16 @@ inline int32 CLuaBaseEntity::addKeyItem(lua_State *L)
     CCharEntity* PChar = (CCharEntity*)m_PBaseEntity;
 
     uint16 KeyItemID = (uint16)lua_tointeger(L, 1);
+	uint8 table = KeyItemID >> 9;
 
-    if (charutils::addKeyItem(PChar, KeyItemID))
+    charutils::addKeyItem(PChar, KeyItemID);
+    PChar->pushPacket(new CKeyItemsPacket(PChar, (KEYS_TABLE)table));
+
+    if (table == 6)
     {
-        PChar->pushPacket(new CKeyItemsPacket(PChar, (KEYS_TABLE)(KeyItemID >> 9)));
-
-        charutils::SaveKeyItems(PChar);
+        PChar->pushPacket(new CCharMountsPacket(PChar));
     }
+    charutils::SaveKeyItems(PChar);
     return 0;
 }
 
@@ -1899,12 +1903,10 @@ inline int32 CLuaBaseEntity::delKeyItem(lua_State *L)
 
     uint16 KeyItemID = (uint16)lua_tointeger(L, 1);
 
-    if (charutils::delKeyItem(PChar, KeyItemID))
-    {
-        PChar->pushPacket(new CKeyItemsPacket(PChar, (KEYS_TABLE)(KeyItemID >> 9)));
+    charutils::delKeyItem(PChar, KeyItemID);
+    PChar->pushPacket(new CKeyItemsPacket(PChar, (KEYS_TABLE)(KeyItemID >> 9)));
 
-        charutils::SaveKeyItems(PChar);
-    }
+    charutils::SaveKeyItems(PChar);
     return 0;
 }
 
@@ -1960,12 +1962,10 @@ inline int32 CLuaBaseEntity::unseenKeyItem(lua_State *L)
 
     uint16 KeyItemID = (uint16)lua_tointeger(L, 1);
 
-    if (charutils::unseenKeyItem(PChar, KeyItemID))
-    {
-        PChar->pushPacket(new CKeyItemsPacket(PChar, (KEYS_TABLE)(KeyItemID >> 9)));
+    charutils::unseenKeyItem(PChar, KeyItemID);
+    PChar->pushPacket(new CKeyItemsPacket(PChar, (KEYS_TABLE)(KeyItemID >> 9)));
 
-        charutils::SaveKeyItems(PChar);
-    }
+    charutils::SaveKeyItems(PChar);
     return 0;
 }
 
@@ -4319,7 +4319,7 @@ inline int32 CLuaBaseEntity::canUseChocobo(lua_State *L)
         lua_pushinteger(L, 445);
         return 1;
     }
-    lua_pushinteger(L, (m_PBaseEntity->loc.zone->CanUseMisc(MISC_CHOCOBO) ? 0 : MSGBASIC_CANT_BE_USED_IN_AREA)); //316
+    lua_pushinteger(L, (m_PBaseEntity->loc.zone->CanUseMisc(MISC_MOUNT) ? 0 : MSGBASIC_CANT_BE_USED_IN_AREA)); //316
     return 1;
 }
 

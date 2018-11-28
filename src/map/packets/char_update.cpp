@@ -36,7 +36,7 @@
 CCharUpdatePacket::CCharUpdatePacket(CCharEntity* PChar)
 {
 	this->type = 0x37;
-	this->size = 0x2E;
+	this->size = 0x30;
 
 	memcpy(data+(0x04), PChar->StatusEffectContainer->m_StatusIcons, 32);
 
@@ -98,4 +98,7 @@ CCharUpdatePacket::CCharUpdatePacket(CCharEntity* PChar)
 		WBUFB(data,(0x4A)) = 0x10;
 	}
 	WBUFU(data,(0x4C)) = PChar->StatusEffectContainer->m_Flags;
+	
+    if (PChar->animation == ANIMATION_MOUNT)
+        WBUFU(data,(0x5B)) = PChar->StatusEffectContainer->GetStatusEffect(EFFECT_MOUNTED)->GetPower();	
 }

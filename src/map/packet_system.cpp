@@ -56,6 +56,9 @@ This file is part of DarkStar-server source code.
 #include "zone.h"
 #include "utils/zoneutils.h"
 #include "message.h"
+#include "status_effect_container.h"
+#include "latent_effect_container.h"
+#include "enmity_container.h"
 
 #include "items/item_shop.h"
 
@@ -82,6 +85,7 @@ This file is part of DarkStar-server source code.
 #include "packets/char_recast.h"
 #include "packets/char_skills.h"
 #include "packets/char_spells.h"
+#include "packets/char_mounts.h"
 #include "packets/char_stats.h"
 #include "packets/char_sync.h"
 #include "packets/char_update.h"
@@ -453,6 +457,7 @@ void SmallPacket0x00F(map_session_data_t* session, CCharEntity* PChar, CBasicPac
     charutils::SendQuestMissionLog(PChar);
 
     PChar->pushPacket(new CCharSpellsPacket(PChar));
+    PChar->pushPacket(new CCharMountsPacket(PChar));	
     PChar->pushPacket(new CCharAbilitiesPacket(PChar));
     PChar->pushPacket(new CCharSyncPacket(PChar));
     PChar->pushPacket(new CBazaarMessagePacket(PChar));
@@ -654,9 +659,9 @@ void SmallPacket0x01A(map_session_data_t* session, CCharEntity* PChar, CBasicPac
 
             if (PChar->PBattleAI->GetCurrentAction() == ACTION_ENGAGE)
             {
-                if (PChar->animation == ANIMATION_CHOCOBO)
+                if (PChar->animation == ANIMATION_CHOCOBO || PChar->animation == ANIMATION_MOUNT)
                 {
-                    PChar->StatusEffectContainer->DelStatusEffectSilent(EFFECT_CHOCOBO);
+                    PChar->StatusEffectContainer->DelStatusEffectSilent(EFFECT_MOUNTED);
                 }
             }
         }
@@ -817,7 +822,7 @@ void SmallPacket0x01A(map_session_data_t* session, CCharEntity* PChar, CBasicPac
     {
         PChar->animation = ANIMATION_NONE;
         PChar->updatemask |= UPDATE_HP;
-        PChar->StatusEffectContainer->DelStatusEffectSilent(EFFECT_CHOCOBO);
+        PChar->StatusEffectContainer->DelStatusEffectSilent(EFFECT_MOUNTED);
     }
     break;
     case 0x13: // tractor menu
@@ -857,6 +862,43 @@ void SmallPacket0x01A(map_session_data_t* session, CCharEntity* PChar, CBasicPac
         PChar->pushPacket(new CMessageSystemPacket(0, 0, 224));
     }
     break;
+    case 0x1A: // mounts
+    {
+        uint8 MountID = RBUFB(data, (0x0C));
+        
+        if (PChar->animation != ANIMATION_NONE)
+            PChar->pushPacket(new CMessageBasicPacket(PChar, PChar, 0, 0, 71));
+        else if (!PChar->loc.zone->CanUseMisc(MISC_MOUNT))
+            PChar->pushPacket(new CMessageBasicPacket(PChar, PChar, 0, 0, 316));
+        else if (PChar->GetMLevel() < 20)
+            PChar->pushPacket(new CMessageBasicPacket(PChar, PChar, 20, 0, 773));
+        else if (charutils::hasKeyItem(PChar, 3072 + MountID))
+        {
+            if (PChar->PRecastContainer->HasRecast(RECAST_ABILITY, 256))
+            {
+                PChar->pushPacket(new CMessageBasicPacket(PChar, PChar, 0, 0, 94));
+
+                // add recast timer
+                //PChar->pushPacket(new CMessageBasicPacket(PChar, PChar, 0, 0, 202));
+                return;
+            }
+            // Retail prevents mounts if a player has enmity on any mob in the zone, need a function for this
+            for (SpawnIDList_t::iterator it = PChar->SpawnMOBList.begin(); it != PChar->SpawnMOBList.end(); ++it)
+            {
+                CMobEntity* PMob = (CMobEntity*)it->second;
+
+                if (PMob->PEnmityContainer->HasTargetID(PChar->id))
+                {
+                    PChar->pushPacket(new CMessageBasicPacket(PChar, PChar, 0, 0, 339));
+                    return;
+                }
+            }
+            PChar->StatusEffectContainer->AddStatusEffect(new CStatusEffect(EFFECT_MOUNTED, EFFECT_MOUNTED, (MountID ? ++MountID : 0), 0, 1800), true);
+            PChar->PRecastContainer->Add(RECAST_ABILITY, 256, 60);
+            PChar->pushPacket(new CCharRecastPacket(PChar));
+        }
+    }
+    break;	
     default:
     {
         ShowWarning(CL_YELLOW"CLIENT PERFORMING UNHANDLED ACTION %02hX\n" CL_RESET, action);
@@ -2928,7 +2970,7 @@ void SmallPacket0x063(map_session_data_t* session, CCharEntity* PChar, CBasicPac
 void SmallPacket0x064(map_session_data_t* session, CCharEntity* PChar, CBasicPacket data)
 {
     uint8 KeyTable = RBUFB(data, (0x4A));
-    memcpy(PChar->keys.seenList + (0x40 * KeyTable), data[0x08], 0x40);
+    memcpy(&PChar->keys.tables[KeyTable].seenList, data[0x08], 0x40);
 
     charutils::SaveKeyItems(PChar);
     return;

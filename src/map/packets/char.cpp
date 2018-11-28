@@ -109,6 +109,9 @@ CCharPacket::CCharPacket(CCharEntity * PChar, ENTITYUPDATE type, uint8 updatemas
                 WBUFW(data, (0x30) ) = PChar->m_Costum;
 
                 WBUFL(data, (0x34) ) = 0x010CA248; // black chocobo
+				
+                if (PChar->animation == ANIMATION_MOUNT)
+                    WBUFL(data, (0x44) ) = PChar->StatusEffectContainer->GetStatusEffect(EFFECT_MOUNTED)->GetPower() << 4;				
             }
 			if (PChar->PPet != nullptr)
 			{

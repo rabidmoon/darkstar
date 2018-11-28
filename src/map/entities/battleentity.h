@@ -479,7 +479,7 @@ public:
     bool			isInDynamis();
     bool			hasImmunity(uint32 imID);
     bool			isAsleep();
-
+    bool            isMounted();
 
     JOBTYPE		    GetMJob();					// главная профессия
     JOBTYPE		    GetSJob();					// дополнительная профессия

@@ -396,7 +396,7 @@ EFFECT_IMAGERY_5                = 248
 EFFECT_DEDICATION               = 249
 EFFECT_EF_BADGE                 = 250
 EFFECT_FOOD                     = 251
-EFFECT_CHOCOBO                  = 252
+EFFECT_MOUNTED                  = 252
 EFFECT_SIGNET                   = 253
 EFFECT_BATTLEFIELD              = 254
 EFFECT_NONE                     = 255
@@ -2007,6 +2007,7 @@ MOBMOD_BEHAVIOR       = 53
 MOBMOD_GIL_BONUS      = 54
 MOBMOD_IDLE_DESPAWN   = 55
 MOBMOD_HP_STANDBACK   = 56
+MOBMOD_HP_SCALE       = 61
 
 ------------------------------------
 -- Skills
@@ -2190,3 +2191,75 @@ ELEVATOR_KUFTAL_TUNNEL_DSPPRNG_RCK = 0;
 ELEVATOR_PORT_BASTOK_DRWBRDG       = 2;
 ELEVATOR_DAVOI_LIFT                = 3;
 ELEVATOR_PALBOROUGH_MINES_LIFT     = 4;
+
+------------------------------------
+-- Item Type
+-----------------------------------
+ITEM_BASIC       = 0x00;
+ITEM_GENERAL     = 0x01;
+ITEM_USABLE      = 0x02;
+ITEM_PUPPET      = 0x04;
+ITEM_ARMOR       = 0x08;
+ITEM_WEAPON      = 0x10;
+ITEM_CURRENCY    = 0x20;
+ITEM_FURNISHING  = 0x40;
+ITEM_LINKSHELL   = 0x80;
+
+------------------------------------
+-- Animation IDs
+------------------------------------
+ANIMATION_NONE                     = 0;
+ANIMATION_ATTACK                   = 1;
+-- Death 2                            = 2;
+ANIMATION_DEATH                    = 3;
+ANIMATION_CHOCOBO                  = 5;
+ANIMATION_FISHING                  = 6;
+ANIMATION_HEALING                  = 7;
+ANIMATION_OPEN_DOOR                = 8;
+ANIMATION_CLOSE_DOOR               = 9;
+ANIMATION_ELEVATOR_UP              = 10;
+ANIMATION_ELEVATOR_DOWN            = 11;
+-- seems to be WALLHACK               = 28;
+-- seems to be WALLHACK also..        = 31;
+ANIMATION_HEALING                  = 33;
+ANIMATION_FISHING_FISH             = 38;
+ANIMATION_FISHING_CAUGHT           = 39;
+ANIMATION_FISHING_ROD_BREAK        = 40;
+ANIMATION_FISHING_LINE_BREAK       = 41;
+ANIMATION_FISHING_MONSTER          = 42;
+ANIMATION_FISHING_STOP             = 43;
+ANIMATION_SYNTH                    = 44;
+ANIMATION_SIT                      = 47;
+ANIMATION_RANGED                   = 48;
+ANIMATION_FISHING_START            = 50;
+-- 63 through 72 are used with /sitchair
+-- 73 through 83 sitting on air (guessing future use for more chairs..)
+ANIMATION_MOUNT                    = 85;
+-- ANIMATION_TRUST                    = 90; -- This is the animation for a trust NPC spawning in.
+
+------------------------------------
+-- Mount IDs
+------------------------------------
+MOUNTS =
+{
+    CHOCOBO        = 0,
+    QUEST_RAPTOR   = 1,
+    RAPTOR         = 2,
+    TIGER          = 3,
+    CRAB           = 4,
+    RED_CRAB       = 5,
+    BOMB           = 6,
+    RAM            = 7,
+    MORBOL         = 8,
+    CRAWLER        = 9,
+    FENRIR         = 10,
+    BEETLE         = 11,
+    MOOGLE         = 12,
+    MAGIC_POT      = 13,
+    TULFAIRE       = 14,
+    WARMACHINE     = 15,
+    XZOMIT         = 16,
+    HIPPOGRYPH     = 17,
+    SPECTRAL_CHAIR = 18,
+    SPHEROID       = 19,
+}
