@@ -2,7 +2,7 @@
 -- Area: Periqia (Shades of Vengeance)
 --  MOB: K23H1-LAMIA
 -----------------------------------
-
+require("scripts/zones/Periqia/TextIDs");
 -----------------------------------
 -- onMobSpawn Action
 -----------------------------------

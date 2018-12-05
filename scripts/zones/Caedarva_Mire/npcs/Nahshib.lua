@@ -24,6 +24,8 @@ end;
 
 function onTrigger(player,npc)
     local IPpoint = player:getCurrency("imperial_standing");
+	
+	local toauMission = player:getCurrentMission(TOAU);
 
 	if (player:getCurrentMission(TOAU) == IMMORTAL_SENTRIES) then
 		if (player:hasKeyItem(SUPPLIES_PACKAGE)) then

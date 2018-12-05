@@ -149,7 +149,7 @@ function onTrigger(player,npc)
 		player:startEvent(0x0156);  -- finish
 	elseif (FoiledAGolem == QUEST_ACCEPTED) then
 		player:startEvent(0x0155);  -- reminder dialog
-	elseif (mainlvl >= 71 and skill >= 250 and player:getQuestStatus(WINDURST,BLOOD_AND_GLORY) ~= QUEST_ACCEPTED) then
+	elseif (mainlvl >= 71 and skill >= 250 and player:getQuestStatus(WINDURST,BLOOD_AND_GLORY) == QUEST_AVAILABLE) then
 	   player:PrintToPlayer("Shantotto : Full power Retribution you say?  100 enemies with it you must slay!",0x0D);
 	   player:setVar("RETRIBUTION",100);
 	   player:addQuest(WINDURST,BLOOD_AND_GLORY);
@@ -249,6 +249,7 @@ function onEventFinish(player,csid,option)
 			player:messageSpecial(ITEM_CANNOT_BE_OBTAINED,4870); 
 		else
 			player:completeQuest(WINDURST,CURSES_FOILED_A_GOLEM);
+			player:addQuest(WINDURST,BLOOD_AND_GLORY);
 			player:setVar("foiledagolemdeliverycomplete",0);
 			player:addItem(4870);
 			player:messageSpecial(ITEM_OBTAINED,4870);
