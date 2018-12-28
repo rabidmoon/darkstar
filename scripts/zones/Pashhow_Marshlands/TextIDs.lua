@@ -1,22 +1,15 @@
--- Variable TextID   Description text
-
--- General Texts
-ITEM_CANNOT_BE_OBTAINED = 6403; -- You cannot obtain the item <item>. Come back after sorting your inventory.
-          ITEM_OBTAINED = 6409; -- Obtained: <item>.
-           GIL_OBTAINED = 6410; -- Obtained <number> gil.
-       KEYITEM_OBTAINED = 6412; -- Obtained key item: <keyitem>.
- FISHING_MESSAGE_OFFSET = 7229; -- You can't fish here.
-
--- Conquest
-               CONQUEST = 7918; -- You've earned conquest points!
-
--- Other Dialog
-        BEASTMEN_BANNER = 7151; -- There is a beastmen's banner.
-        NOTHING_HAPPENS =  141; -- Nothing happens...
-
--- conquest Base
-          CONQUEST_BASE = 7070; -- Tallying conquest results...
-
--- chocobo digging
-         DIG_THROW_AWAY = 7242; -- You dig up ?Possible Special Code: 01??Possible Special Code: 01??Possible Special Code: 01? ?Possible Special Code: 01??Possible Special Code: 05?$?BAD CHAR: 8280??BAD CHAR: 80??BAD CHAR: 80?, but your inventory is full.
-           FIND_NOTHING = 7244; -- You dig and you dig, but find nothing.
+    
+        NOTHING_HAPPENS         = 141; -- Nothing happens...
+        ITEM_CANNOT_BE_OBTAINED = 6404; -- You cannot obtain the <item>. Come back after sorting your inventory.
+        ITEM_OBTAINED           = 6410; -- Obtained: <item>.
+        GIL_OBTAINED            = 6411; -- Obtained <number> gil.
+        KEYITEM_OBTAINED        = 6413; -- Obtained key item: <keyitem>.
+        NOTHING_OUT_OF_ORDINARY = 6424; -- There is nothing out of the ordinary here.
+        CONQUEST_BASE           = 7071; -- Tallying conquest results...
+        BEASTMEN_BANNER         = 7152; -- There is a beastmen's banner.
+        FISHING_MESSAGE_OFFSET  = 7230; -- You can't fish here.
+        DIG_THROW_AWAY          = 7243; -- You dig up <item>, but your inventory is full. You regretfully throw the <item> away.
+        FIND_NOTHING            = 7245; -- You dig and you dig, but find nothing.
+        CONQUEST                = 7919; -- You've earned conquest points!
+        REGIME_REGISTERED       = 10711; -- New training regime registered!
+    

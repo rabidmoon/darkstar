@@ -1,5 +1,4 @@
--- Variable TextID   Description text
-
+    
         ITEM_CANNOT_BE_OBTAINED       = 219; -- You cannot obtain the <item>. Come back after sorting your inventory.
         ITEM_CANNOT_BE_OBTAINEDX      = 223; -- You cannot obtain the <item>. Try trading again after sorting your inventory.
         ITEM_OBTAINED                 = 225; -- Obtained: <item>.
@@ -47,3 +46,4 @@
         SANCTION                      = 9801; -- You have received the Empire's Sanction.
         ZASSHAL_DIALOG                = 10995; -- 'ang about. Looks like the permit you got was the last one I 'ad, so it might take me a bit o' time to scrounge up some more. 'ere, don't gimme that look. I'll be restocked before you know it.
         RETRIEVE_DIALOG_ID            = 13514; -- You retrieve <item> from the porter moogle's care.
+    

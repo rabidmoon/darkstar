@@ -1,34 +1,16 @@
--- Variable TextID   Description text
-
--- General Texts
-           ITEM_CANNOT_BE_OBTAINED = 6381; -- You cannot obtain the item <item>. Come back after sorting your inventory.
-                     ITEM_OBTAINED = 6387; -- Obtained: <item>.
-                      GIL_OBTAINED = 6388; -- Obtained <number> gil.
-                  KEYITEM_OBTAINED = 6390; -- Obtained key item: <keyitem>.
-            FISHING_MESSAGE_OFFSET = 7207; -- You can't fish here.
-                     HOMEPOINT_SET = 7455; -- Home point set!
-            
--- Other dialog
-           NOTHING_OUT_OF_ORDINARY = 7419; -- There is nothing out of the ordinary here.
-               SENSE_OF_FOREBODING = 6402; -- You are suddenly overcome with a sense of foreboding...
-
--- Refiner Dialog
-SOMETHING_FALLS_OUT_OF_THE_MACHINE = 7370; -- Something falls out of the machine!
-   THE_MACHINE_SEEMS_TO_BE_WORKING = 7367; -- The machine seems to be working, but you cannot discern its purpose.
-     YOU_CANT_CARRY_ANY_MORE_ITEMS = 7373; -- There seems to be more left in the machine, but you can't carry any more items.
-
--- Mining
-           MINING_IS_POSSIBLE_HERE = 7394; -- Mining is possible here if you have
-
--- Treasure Coffer/Chest Dialog
-                    CHEST_UNLOCKED = 7408; -- You unlock the chest!
-                        CHEST_FAIL = 7409; -- Fails to open the chest.
-                        CHEST_TRAP = 7410; -- The chest was trapped!
-                        CHEST_WEAK = 7411; -- You cannot open the chest when you are in a weakened state.
-                       CHEST_MIMIC = 7412; -- The chest was a mimic!
-                      CHEST_MOOGLE = 7413; -- You cannot open the chest while participating in the moogle event.
-                    CHEST_ILLUSION = 7414; -- The chest was but an illusion...
-                      CHEST_LOCKED = 7415; -- The chest appears to be locked.
-
--- conquest Base
-                     CONQUEST_BASE = 7048; -- Tallying conquest results...
+    
+        ITEM_CANNOT_BE_OBTAINED            = 6382; -- You cannot obtain the <item>. Come back after sorting your inventory.
+        ITEM_OBTAINED                      = 6388; -- Obtained: <item>.
+        GIL_OBTAINED                       = 6389; -- Obtained <number> gil.
+        KEYITEM_OBTAINED                   = 6391; -- Obtained key item: <keyitem>.
+        NOTHING_OUT_OF_ORDINARY            = 6402; -- There is nothing out of the ordinary here.
+        SENSE_OF_FOREBODING                = 6403; -- You are suddenly overcome with a sense of foreboding...
+        CONQUEST_BASE                      = 7049; -- Tallying conquest results...
+        FISHING_MESSAGE_OFFSET             = 7208; -- You can't fish here.
+        THE_MACHINE_SEEMS_TO_BE_WORKING    = 7368; -- The machine seems to be working, but you cannot discern its purpose.
+        SOMETHING_FALLS_OUT_OF_THE_MACHINE = 7371; -- Something falls out of the machine!
+        YOU_CANT_CARRY_ANY_MORE_ITEMS      = 7374; -- There seems to be more left in the machine, but you can't carry any more items.
+        MINING_IS_POSSIBLE_HERE            = 7395; -- Mining is possible here if you have <item>.
+        CHEST_UNLOCKED                     = 7409; -- You unlock the chest!
+        HOMEPOINT_SET                      = 7456; -- Home point set!
+    
