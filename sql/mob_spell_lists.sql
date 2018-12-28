@@ -1656,6 +1656,23 @@ INSERT INTO `mob_spell_lists` VALUES ('Prishe', 277, 47, 1, 255); -- Protect V
 INSERT INTO `mob_spell_lists` VALUES ('Prishe', 277, 52, 1, 255); -- Shell V
 INSERT INTO `mob_spell_lists` VALUES ('Prishe', 277, 356, 1, 255); -- Paralyga
 
+INSERT INTO `mob_spell_lists` VALUES ('Mihli', 278, 5, 1, 255); -- Cure V
+INSERT INTO `mob_spell_lists` VALUES ('Mihli', 278, 22, 1, 255); -- Holy 2
+INSERT INTO `mob_spell_lists` VALUES ('Mihli', 278, 26, 1, 255); -- Dia IV
+INSERT INTO `mob_spell_lists` VALUES ('Mihli', 278, 36, 1, 255); -- Diaga IV
+INSERT INTO `mob_spell_lists` VALUES ('Mihli', 278, 57, 1, 255); -- Haste
+INSERT INTO `mob_spell_lists` VALUES ('Mihli', 278, 357, 1, 255); -- Slowga
+INSERT INTO `mob_spell_lists` VALUES ('Mihli', 278, 47, 1, 255); -- Protect V
+INSERT INTO `mob_spell_lists` VALUES ('Mihli', 278, 52, 1, 255); -- Shell V
+INSERT INTO `mob_spell_lists` VALUES ('Mihli', 278, 356, 1, 255); -- Paralyga
+
+INSERT INTO `mob_spell_lists` VALUES ('Gadalar', 279, 148, 1, 255); -- Fire V
+INSERT INTO `mob_spell_lists` VALUES ('Gadalar', 279, 177, 1, 255); -- Firaga IV
+INSERT INTO `mob_spell_lists` VALUES ('Gadalar', 279, 204, 1, 255); -- Flare
+INSERT INTO `mob_spell_lists` VALUES ('Gadalar', 279, 205, 1, 255); -- Flare II
+INSERT INTO `mob_spell_lists` VALUES ('Gadalar', 279, 235, 1, 255); -- Burn
+INSERT INTO `mob_spell_lists` VALUES ('Gadalar', 279, 249, 1, 255); -- Blaze Spikes
+
 /*!40000 ALTER TABLE `mob_spell_lists` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;

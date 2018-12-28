@@ -2278,9 +2278,19 @@ namespace battleutils
             if (PDefender->objtype == TYPE_PC && (charutils::hasTrait((CCharEntity*)PDefender, TRAIT_CLOSED_POSITION)) && ((abs(abs(PDefender->loc.p.rotation - PAttacker->loc.p.rotation) - 128) < 15))) {
                 offsetAccuracy -= ((CCharEntity*)PDefender)->PMeritPoints->GetMeritValue(MERIT_CLOSED_POSITION, (CCharEntity*)PDefender);
             }
-
-            hitrate = hitrate + (PAttacker->ACC(attackNumber, offsetAccuracy) - PDefender->EVA()) / 2 + (PAttacker->GetMLevel() - PDefender->GetMLevel()) * 2;
-
+			
+			/*
+			uint16 salvage = PDefender->getZone();
+		
+		
+            if (salvage == 73)
+			{
+               // hitrate = hitrate + (PAttacker->ACC(attackNumber, offsetAccuracy) - PDefender->EVA()) / 2 + (2) * 2;            
+            }			 
+            else
+			{*/
+			    hitrate = hitrate + (PAttacker->ACC(attackNumber, offsetAccuracy) - PDefender->EVA()) / 2 + (PAttacker->GetMLevel() - PDefender->GetMLevel()) * 2;
+            //}
             if (PAttacker->StatusEffectContainer->HasStatusEffect(EFFECT_ENLIGHT))
                 hitrate += PAttacker->getMod(MOD_ENSPELL_DMG);
 
@@ -2379,6 +2389,33 @@ namespace battleutils
 
         ratio = dsp_cap(ratio, 0, ratioCap);
         float cRatio = ratio;
+		
+		
+		uint16 salvage = PDefender->getZone();
+		
+		/*  Level correction removed for salvage
+        if (salvage != 73)
+        {
+            if (PAttacker->GetMLevel() < PDefender->GetMLevel())
+            {
+                cRatio -= 0.050f * (PDefender->GetMLevel() - PAttacker->GetMLevel());
+            }
+        }
+        else if (salvage == 73)
+        {
+            if (PAttacker->GetMLevel() < PDefender->GetMLevel())
+            {
+                cRatio -= 0.050f * (2);
+            }
+        }		
+        else
+        {
+            if (PAttacker->GetMLevel() > PDefender->GetMLevel())
+            {
+                cRatio += 0.050f * (PAttacker->GetMLevel() - PDefender->GetMLevel());
+            }
+        }*/
+		
         if (PAttacker->objtype == TYPE_PC)
         {
             if (PAttacker->GetMLevel() < PDefender->GetMLevel())

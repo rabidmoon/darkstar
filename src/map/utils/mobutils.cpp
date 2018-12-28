@@ -589,6 +589,12 @@ void SetupJob(CMobEntity* PMob)
                 // catapult
                 PMob->defaultMobMod(MOBMOD_SPECIAL_SKILL, 402);
             }
+			// Najelith
+			else if(PMob->m_Pool == 1494)
+			{
+			    PMob->defaultMobMod(MOBMOD_SPECIAL_COOL, 12);
+			    PMob->defaultMobMod(MOBMOD_SPECIAL_SKILL, 947);
+			}
             else
             {
                 // all other rangers

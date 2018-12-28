@@ -188,8 +188,9 @@ CCharEntity::~CCharEntity()
     delete m_Mogsack;
     delete m_Mogcase;
     delete m_Mogsafe2;
-    delete m_Mogsafe3;
-    delete m_Mogsafe4;	
+    delete m_Wardrobe2;
+    delete m_Wardrobe3;
+    delete m_Wardrobe4;	
 }
 
 uint8 CCharEntity::GetGender()

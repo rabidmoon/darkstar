@@ -30,9 +30,9 @@ function onTrade(player,npc,trade)
 	end
 	
 	if(player:getVar("aBoysDreamCS") >= 3) then 
-		if(trade:hasItemQty(17001,1) == true and trade:getItemCount() == 1 and player:hasItem(4562) == false) then 
+		if(trade:hasItemQty(17001,1) and trade:getItemCount() == 1) then 
 			player:startEvent(0x000f); -- During Quest "A Boy's Dream" (trading bug) madame ?
-		elseif(trade:hasItemQty(4562,1) == true and trade:getItemCount() == 1) then 
+		elseif(trade:hasItemQty(4562,1) and trade:getItemCount() == 1) then 
 			player:startEvent(0x002f); -- During Quest "A Boy's Dream" (trading odontotyrannus)
 		end	
 	end

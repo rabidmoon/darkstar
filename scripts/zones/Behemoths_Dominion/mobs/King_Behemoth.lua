@@ -58,12 +58,16 @@ end;
 -----------------------------------
 
 function onMobDeath(mob, killer)
-
-    killer:addTitle(BEHEMOTH_DETHRONER);
-	if (killer:getObjType() == TYPE_PC) then
-	killer:setVar("King_Behemoth_Win",1);
-	killer:addCurrency('prestige', 250);
-	killer:PrintToPlayer("You obtain 250 Prestige Points!", 0xD);
+    if (killer:getObjType() == TYPE_PET) then
+	    local player = killer:getMaster();
+        player:setVar("King_Behemoth_Win",1);
+	    player:addCurrency('prestige', 250);
+	    player:PrintToPlayer("You obtain 250 Prestige Points!", 0xD);
+        player:addTitle(BEHEMOTH_DETHRONER);		
+    elseif (killer:getObjType() == TYPE_PC) then
+	    killer:setVar("King_Behemoth_Win",1);
+	    killer:addCurrency('prestige', 250);
+	    killer:PrintToPlayer("You obtain 250 Prestige Points!", 0xD);
 	end
 
     -- Todo: move this to SQL after drop slots are a thing

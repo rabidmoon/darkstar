@@ -3,6 +3,7 @@
 -- auth: forgottenandlost
 -- desc: opens the custom moogle shop menu anywhere in the world
 --------------------------------------------------------------
+require("scripts/globals/keyitems");
 
 cmdprops =
 {
@@ -203,32 +204,32 @@ local aura = player:getVar("FerretoryAura");
         };
         showShop(player, STATIC, stock_6);
         player:PrintToPlayer("Merchant Moogle : Attachments Kupo", 0x1F);
-		elseif (page == 7 and aura >= 6) then
+		elseif (page == 7 and aura >= 6 and player:hasKeyItem(CHOCOBO_LICENSE))) then
 	    local stock_7 =
         {
-            10049,     25000,    -- Raptor
+            10049,     50000,    -- Raptor
 			10051,     70000,     -- Crab
 			10050,    100000,    -- Tiger
         };
         showShop(player, STATIC, stock_7);
         player:PrintToPlayer("Merchant Moogle : Mounts Kupo!", 0x1F);			
-		elseif (page == 7 and aura >= 4 and aura < 6) then
+		elseif (page == 7 and aura >= 4 and aura < 6 and player:hasKeyItem(CHOCOBO_LICENSE)) then
 	    local stock_7 =
         {
-            10049,     25000,    -- Raptor
+            10049,     50000,    -- Raptor
 			10051,     70000     -- Crab
         };
         showShop(player, STATIC, stock_7);
         player:PrintToPlayer("Merchant Moogle : Mounts! Unlock more mount options with more Aura!", 0x1F);			
-		elseif (page == 7 and aura >= 2 and aura < 4) then
+		elseif (page == 7 and aura >= 2 and aura < 4 and player:hasKeyItem(CHOCOBO_LICENSE))) then
 	    local stock_7 =
         {
-            10049,     40000    -- Raptor
+            10049,     50000    -- Raptor
         };
         showShop(player, STATIC, stock_7);
         player:PrintToPlayer("Merchant Moogle : Mounts! Unlock more mount options with more Aura!", 0x1F);
 		elseif (page == 7 and aura < 2) then
-        player:PrintToPlayer("Merchant Moogle : Gain more Feretory Aura to access this shop Kupo!", 0x1F);			
+        player:PrintToPlayer("Merchant Moogle : Gain more Feretory Aura and have a Choco License to access this shop Kupo!", 0x1F);			
 	    elseif (page == 8) then -- Beyond infinity
         local plevel = player:getMainLvl();
             if (plevel > 98) then

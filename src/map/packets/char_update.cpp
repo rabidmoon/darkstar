@@ -55,6 +55,10 @@ CCharUpdatePacket::CCharUpdatePacket(CCharEntity* PChar)
 	{
 		WBUFB(data,(0x38)) = 0x04;
 	}
+	if (PChar->StatusEffectContainer->HasStatusEffect(EFFECT_INDI_REFRESH))
+	{
+	    WBUFB(data, (0x58)) = 0x56;
+	}
 
     if (PChar->m_mentor >= 2)
         WBUFB(data,(0x38)) |= 0x10; // Mentor flag.

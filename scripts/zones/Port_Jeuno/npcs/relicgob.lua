@@ -1032,7 +1032,7 @@ if (job == 10) and (trade:hasItemQty(17352, 1)) and trade:hasItemQty( 1450, 10 )
 
 
 
-if (job == 11) and (trade:hasItemQty(17188, 1)) and trade:hasItemQty( 1450, 10 ) and (player:getVar("RNGAFweaponbow") == 3) then
+if (job == 11) and (trade:hasItemQty(17188, 1)) and trade:hasItemQty( 1453, 10 ) and (player:getVar("RNGAFweaponbow") == 3) then
              -- Complete the trade..
             player:tradeComplete();
 			player:PrintToPlayer("Netblyx : Here you go.", 0xD);

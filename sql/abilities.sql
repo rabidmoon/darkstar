@@ -275,7 +275,6 @@ INSERT INTO `abilities` VALUES ('233', 'innin', '13', '40', '1', '180', '147', '
 INSERT INTO `abilities` VALUES ('234', 'avatars_favor', '15', '55', '1', '30', '255', '0', '0', '94', '18.0', '0', '1', '60', '0', '0',null); -- ROTZ
 INSERT INTO `abilities` VALUES ('241', 'double_shot', '11', '79', '1', '180', '126', '0', '0', '225', '20.0', '0', '1', '300', '0', '0','ABYSSEA');
 INSERT INTO `abilities` VALUES ('243', 'futae', '13', '77', '1', '180', '148', '0', '0', '227', '20.0', '0', '1', '0', '0', '0','ABYSSEA');
-INSERT INTO `abilities` VALUES ('250', 'tactical_switch', '15', '5', '4', '45', '173', '0', '0', '118', '18.0', '0', '1', '60', '0', '0',null); -- ROTZ
 INSERT INTO `abilities` VALUES ('258', 'saboteur', '5', '15', '1', '300', '36', '0', '0', '258', '20.0', '0', '1', '80', '0', '4',null);
 INSERT INTO `abilities` VALUES ('259', 'spontaneity', '5', '95', '3', '600', '37', '0', '0', '259', '20.0', '0', '1', '80', '0', '0','ABYSSEA');
 INSERT INTO `abilities` VALUES ('267', 'tenuto', '10', '83', '1', '5', '47', '0', '0', '257', '20.0', '0', '0', '0', '0', '0','ABYSSEA');
@@ -286,7 +285,7 @@ INSERT INTO `abilities` VALUES ('304', 'konzen-ittai', '12', '65', '4', '180', '
 INSERT INTO `abilities` VALUES ('311', 'stymie', '5', '96', '1', '3600', '254', '0', '0', '275', '20.0', '0', '1', '0', '0', '0','SOA');
 INSERT INTO `abilities` VALUES ('319', 'mikage', '13', '96', '1', '3600', '254', '0', '0', '283', '20.0', '0', '1', '0', '0', '0','SOA');
 INSERT INTO `abilities` VALUES ('327', 'bolster', '21', '0', '1', '3600', '0', '0', '0', '33', '20.0', '0', '1', '300', '0', '0',null);
-
+INSERT INTO `abilities` VALUES ('329', 'full_circle', '21', '0', '5', '10', '0', '0', '0', '33', '20.0', '0', '1', '300', '0', '0',null);
 -- rune fencer
 INSERT INTO `abilities` VALUES ('340', 'elemental_sforzo', '22', '0', '1', '3600', '0', '0', '0', '302', '20.0', '0', '0', '0', '0', '0','SOA');
 INSERT INTO `abilities` VALUES ('341', 'Rune_enchantment', '22', '5', '1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0','SOA');

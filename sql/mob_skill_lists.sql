@@ -479,9 +479,9 @@ INSERT INTO `mob_skill_lists` VALUES ('Gargoyle',118,2167);
 INSERT INTO `mob_skill_lists` VALUES ('Gargoyle',118,2168);
 INSERT INTO `mob_skill_lists` VALUES ('Gargoyle',118,2169);
 -- INSERT INTO `mob_skill_lists` VALUES ('Gears',120,1791);
--- INSERT INTO `mob_skill_lists` VALUES ('Gears',120,1787);
--- INSERT INTO `mob_skill_lists` VALUES ('Gears',120,1789);
--- INSERT INTO `mob_skill_lists` VALUES ('Gears',120,1785);
+INSERT INTO `mob_skill_lists` VALUES ('Gears',120,1787);
+INSERT INTO `mob_skill_lists` VALUES ('Gears',120,1789);
+INSERT INTO `mob_skill_lists` VALUES ('Gears',120,1785);
 INSERT INTO `mob_skill_lists` VALUES ('Ghost',121,220);
 INSERT INTO `mob_skill_lists` VALUES ('Ghost',121,218);
 INSERT INTO `mob_skill_lists` VALUES ('Ghost',121,219);
@@ -883,7 +883,7 @@ INSERT INTO `mob_skill_lists` VALUES ('Ram',208,11);
 INSERT INTO `mob_skill_lists` VALUES ('Ram',208,12);
 INSERT INTO `mob_skill_lists` VALUES ('Ram',208,13);
 -- INSERT INTO `mob_skill_lists` VALUES ('Rampart',209,1780,?);
--- INSERT INTO `mob_skill_lists` VALUES ('Rampart',209,1778,?);
+INSERT INTO `mob_skill_lists` VALUES ('Rampart',209,1778);
 -- INSERT INTO `mob_skill_lists` VALUES ('Rampart',209,1777,?);
 -- INSERT INTO `mob_skill_lists` VALUES ('Rampart',209,1776,?);
 -- INSERT INTO `mob_skill_lists` VALUES ('Rampart',209,1779,?);
@@ -2290,7 +2290,7 @@ INSERT INTO `mob_skill_lists` VALUES ('Rug',500,1878);
 INSERT INTO `mob_skill_lists` VALUES ('Gadalar',501,1879);
 INSERT INTO `mob_skill_lists` VALUES ('Najelith',502,1880);
 INSERT INTO `mob_skill_lists` VALUES ('Zazarag',503,1881);
-INSERT INTO `mob_skill_lists` VALUES ('Mihli',504,1882);
+INSERT INTO `mob_skill_lists` VALUES ('Mihli',504,2947);
 INSERT INTO `mob_skill_lists` VALUES ('Demonic_Tiphia',700,80);
 INSERT INTO `mob_skill_lists` VALUES ('Demonic_Tiphia',700,79);
 INSERT INTO `mob_skill_lists` VALUES ('Demonic_Tiphia',700,78);
@@ -2591,7 +2591,10 @@ INSERT INTO `mob_skill_lists` VALUES ('Najelith',750,946);  -- Ranged Attack
 INSERT INTO `mob_skill_lists` VALUES ('Najelith',750,441);  -- Berserk
 INSERT INTO `mob_skill_lists` VALUES ('Najelith',750,3765);  -- Sharpshot
 INSERT INTO `mob_skill_lists` VALUES ('Najelith',750,3766);  -- Barrage
+INSERT INTO `mob_skill_lists` VALUES ('Najelith',750,3759);  -- Flaming Arrow
 INSERT INTO `mob_skill_lists` VALUES ('Najelith',750,1834);  -- Typhonic Arrow
+INSERT INTO `mob_skill_lists` VALUES ('Najelith',750,3761);  -- Blast Arrow
+INSERT INTO `mob_skill_lists` VALUES ('Najelith',750,3763);  -- Sidewinder
 INSERT INTO `mob_skill_lists` VALUES ('Najelith',750,3764);  -- Empyreal Arrow
 INSERT INTO `mob_skill_lists` VALUES ('Zazarg',751,1881);  -- Meteoric IMpact
 INSERT INTO `mob_skill_lists` VALUES ('Zazarg',751,3808);  -- Combo
@@ -2610,3 +2613,17 @@ INSERT INTO `mob_skill_lists` VALUES ('Mihli',752,3774); -- Hexa Strike
 INSERT INTO `mob_skill_lists` VALUES ('Mihli',752,3775); -- Black Halo
 INSERT INTO `mob_skill_lists` VALUES ('Mihli',752,3776); -- Mystic_Boon
 INSERT INTO `mob_skill_lists` VALUES ('Mihli',752,1882); -- Scouring Bubbles
+
+INSERT INTO `mob_skill_lists` VALUES ('Rug',753,1878); -- Victory Beacon
+INSERT INTO `mob_skill_lists` VALUES ('Rug',753,3711); -- Victory Beacon
+INSERT INTO `mob_skill_lists` VALUES ('Rug',753,3753); -- Spinning Slash
+INSERT INTO `mob_skill_lists` VALUES ('Rug',753,3752); -- Sickle Moon
+INSERT INTO `mob_skill_lists` VALUES ('Rug',753,3751); -- Crescent Moon
+INSERT INTO `mob_skill_lists` VALUES ('Rug',753,3749); -- Power Slash
+
+INSERT INTO `mob_skill_lists` VALUES ('Gadalar',754,1833); -- Victory Beacon
+INSERT INTO `mob_skill_lists` VALUES ('Gadalar',754,3807); -- Spiral Hell
+INSERT INTO `mob_skill_lists` VALUES ('Gadalar',754,3806); -- Cross Reaper
+INSERT INTO `mob_skill_lists` VALUES ('Gadalar',754,3805); -- Guillotine
+INSERT INTO `mob_skill_lists` VALUES ('Gadalar',754,3804); -- Nightmare Scythe
+INSERT INTO `mob_skill_lists` VALUES ('Gadalar',754,3803); -- Slice

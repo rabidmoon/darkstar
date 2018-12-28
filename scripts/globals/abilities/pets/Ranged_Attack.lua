@@ -16,7 +16,7 @@ function onMobSkillCheck(target,mob,skill)
 end;
 
 function onPetAbility(target, pet, skill)
-    local basemod = 1;
+    local basemod = 1.2;
     local numhits = 1;
 	local attmod = 1;
     local accmod = 0;

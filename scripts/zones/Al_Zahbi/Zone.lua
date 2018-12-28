@@ -84,10 +84,7 @@ function onZoneIn(player,prevZone)
 		player:setPos(position,0,-62,192);
 	end
 	
-	if (besieged > 0) then
-	    printf("Apply Besieged");
-	    player:addStatusEffect(EFFECT_BESIEGED,3,0,3600);
-	end
+
 	
 	return cs;
 end;

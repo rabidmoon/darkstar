@@ -1729,3 +1729,5 @@ INSERT INTO `bcnm_loot` VALUES ('202','2764','200','5'); -- Dweomer Steal
 INSERT INTO `bcnm_loot` VALUES ('202','2761','200','5'); -- Feyweald
 INSERT INTO `bcnm_loot` VALUES ('202','2766','200','5'); -- Oberon's Gold
 INSERT INTO `bcnm_loot` VALUES ('202','919','200','5'); -- Boyhoda Moss
+
+INSERT INTO `bcnm_loot` VALUES ('203','919','1000','1'); -- Boyhoda Moss

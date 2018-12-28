@@ -669,9 +669,6 @@ function checkNonTradeBCNM(player, npc)
         if (player:getCurrentMission(player:getNation()) == 14 and player:getVar("MissionStatus") == 11) then -- Mission 5-1
             mask = GetBattleBitmask(512, Zone, 1);
             player:setVar("trade_bcnmid", 512);
-        elseif (player:getCurrentMission(SANDORIA) == THE_HEIR_TO_THE_LIGHT and player:getVar("MissionStatus") == 3) then -- sando 9-2
-            mask = GetBattleBitmask(516, Zone, 1);
-            player:setVar("trade_bcnmid", 516);
 		elseif (player:getVar("DARC_TRIB_FIGHT") == 1) then  -- Darcullin Tribute Fight
             mask = GetBattleBitmask(1383, Zone, 1)
 			player:setVar("trade_bcnmid", 1383);
@@ -684,6 +681,10 @@ function checkNonTradeBCNM(player, npc)
 		elseif (player:getVar("ZEID_TRIB_FIGHT") == 1) then  -- Zeid Tribute Fight
             mask = GetBattleBitmask(1386, Zone, 1)
 			player:setVar("trade_bcnmid", 1386);			
+        elseif (player:getCurrentMission(SANDORIA) == THE_HEIR_TO_THE_LIGHT and player:getVar("MissionStatus") == 3) then -- sando 9-2
+            mask = GetBattleBitmask(516, Zone, 1);
+            player:setVar("trade_bcnmid", 516);
+			
 			
 
         -- Temp disabled pending BCNM mob fixes

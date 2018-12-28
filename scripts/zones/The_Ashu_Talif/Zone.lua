@@ -21,6 +21,7 @@ end;
 
 function onZoneIn(player,prevZone)
     local cs = -1;
+
     return cs;
 end;
 
@@ -32,7 +33,7 @@ function onRegionEnter(player,region)
     local regionID = region:GetRegionID();
 	if (regionID == 1) then
 	    player:setPos(-456,-3,-405,54);
-	end	
+	end
 end;
 
 -----------------------------------
@@ -43,8 +44,8 @@ end;
 -- onEventUpdate
 -----------------------------------
 
-function onEventUpdate(player,csid,option,target)
-    printf("Zone Update CSID: %u",csid);
+function onEventUpdate(player,csid,option)
+    -- printf("Zone Update CSID: %u",csid);
     -- printf("Zone Update RESULT: %u",option);
 end;
 

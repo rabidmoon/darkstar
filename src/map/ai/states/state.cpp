@@ -64,8 +64,11 @@ void CState::PushError(MSGBASIC_ID msgID, int32 param, int32 value, CBattleEntit
 
 STATESTATUS CState::Update(uint32 tick)
 {
-	if(m_PEntity->isDead())
+	CBattleEntity* PTarget = m_PTarget;
+    if(m_PEntity->isDead() || m_PTarget == nullptr)
+	//if(m_PEntity->isDead())
 	{
+	    ShowWarning(CL_RED"Target is dead or not valid!!\n" CL_RESET);
 		return STATESTATUS_ERROR;
 	}
 

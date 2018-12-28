@@ -12,7 +12,7 @@ require("scripts/globals/mobscaler");
 -----------------------------------
 
 function onMobSpawn(mob)
-    mob:setLocalVar("PartySize",6); 
+    mob:setLocalVar("PartySize",8); 
     -- Give it two hour
     mob:setMobMod(MOBMOD_MAIN_2HOUR, 1);
     mob:setMobMod(MOBMOD_2HOUR_MULTI, 1);
@@ -70,15 +70,16 @@ end;
 -- onMobDeath
 -----------------------------------
 
-function onMobDeath(mob, killer, npc)
+function onMobDeath(mob, killer, npc, player)
 	if (killer:getObjType() == TYPE_PET) then
+	    local player = killer:getMaster();
         player:setVar("Fort_Win",1);
 	    player:addCurrency('zeni_point',250);
 	    player:PrintToPlayer("You obtain 250 Zeni Points.", 0x15);	
     elseif (killer:getObjType() == TYPE_PC) then
-        player:setVar("Fort_Win",1);
-	    player:addCurrency('zeni_point',250);
-	    player:PrintToPlayer("You obtain 250 Zeni Points.", 0x15);		
+        killer:setVar("Fort_Win",1);
+	    killer:addCurrency('zeni_point',250);
+	    killer:PrintToPlayer("You obtain 250 Zeni Points.", 0x15);		
     end
     -- Despawn the pets if alive
     DespawnMob(Kf_Ghrah_WHM);

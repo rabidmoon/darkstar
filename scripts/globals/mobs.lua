@@ -39,7 +39,7 @@ function onMobDeathEx(mob, killer, isKillShot, isWeaponSkillKill)
 	local moblvl = mob:getMainLvl();
 	local infamycap = killer:getVar("infamycap");
 	local infamymult = killer:getVar("infamymult");
-	local newinfamymult = (infamymult / 2);
+	local newinfamymult = (infamymult / 10) + 1;
  
 	
 
@@ -290,19 +290,19 @@ if ((mobfamily == 17) and (killer:getVar("FerretoryExp") > 1)) or ((mobfamily ==
 
 if (infamy == 1) and (playerlvl <= 75) and (mob:checkBaseExp()) then -- check if infamy is turned on
 if (lvldif < -11) then  -- EP
-multiplier = 1.7;
+multiplier = 1.2;
 else if (lvldif <= -3) then
-multiplier = 2.3;
+multiplier = 1.3;
 else if (lvldif <= -1) then
-multiplier = 2.5;
+multiplier = 1.5;
 else if (lvldif == 0) then 
-multiplier = 2.7;
+multiplier = 1.7;
 else if (lvldif <= 4) then
-multiplier = 3;
+multiplier = 2;
 else if (lvldif == 5) then
-multiplier = 3.5;
+multiplier = 2.5;
 else 
-multiplier = 4.3;
+multiplier = 2.7;
 end
 end
 end
@@ -311,7 +311,7 @@ end
 end
 
 
-local infamypoints = math.floor(((lvldif + 25) * multiplier) * infamymult);
+local infamypoints = math.floor(((lvldif + 25) * multiplier) * newinfamymult);
 killer:addCurrency("infamy",infamypoints);
 if (killer:getCurrency("infamy") > infamycap) then
 killer:setCurrency("infamy",infamycap);

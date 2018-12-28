@@ -14,6 +14,9 @@ function onEffectGain(target,effect)
 	if (target:getObjType() == PC) and (zone == 188) then
 	target:PrintToPlayer("You have entered Dynamis");
 	end
+	if ((target:getObjType() == PC) and (zone == 73)) then
+	    target:PrintToPlayer("You have entered Salvage!");
+	end
 end;
 
 -----------------------------------
@@ -23,10 +26,22 @@ end;
 function onEffectTick(target,effect)
  local duration = target:getStatusEffect(EFFECT_LEVEL_RESTRICTION):getTimeRemaining();
  local zone = target:getZoneID();
- -- target:PrintToPlayer("Tick");
+
  
-  
  
+if (target:getObjType() == TYPE_PC) and (zone == 73) or (zone == 74) then
+    if (duration < 3600000 and duration > 3596000) then
+	    target:PrintToPlayer("A powerful force has weakened you to Level 35.", 0xD);	
+	    target:PrintToPlayer("You have 60 minutes remaining to complete your objective", 0xD);
+	end
+end
+
+if (target:getObjType() == TYPE_PC) and (zone == 75) or (zone == 76) then
+    if (duration < 5400000 and duration > 5396000) then
+	    target:PrintToPlayer("A powerful force has weakened you to Level 15.", 0xD);	
+	    target:PrintToPlayer("You have 90 minutes remaining to complete your objective", 0xD);
+	end
+end
 	local seconds = math.floor(duration / 1000);
 if (target:getObjType() == TYPE_PC) and (zone == 185) or (zone == 186) or (zone == 187) or (zone == 188) or (zone == 134) or (zone == 135) then	
     if (target:getVar("Dynamis_Time_Remaining") < 5400000 and (target:getVar("Dynamis_Time_Remaining") > 5396000)) then
@@ -89,6 +104,17 @@ if (target:getObjType() == TYPE_PC) and (zone == 73) or (zone == 74) or (zone ==
 	    target:PrintToPlayer("You have 15 minutes remaining until you are ejected", 0xD);
 		-- target:PrintToPlayer(duration);
 	end	
+	
+	if (seconds < 3 or seconds == 0) then
+	    target:setVar("1st_Floor_NM",0);
+	    target:setVar("2nd_Floor_NM",0);
+	    target:setVar("3rd_Floor_NM",0);
+	    target:setVar("4th_Floor_NM",0);
+	    target:setVar("5th_Floor_NM",0);
+	    target:setVar("6th_Floor_NM",0);
+		target:setVar("Salvage_Floor",0);
+        target:startEvent(1);		
+	end
 
 
 end
@@ -108,6 +134,9 @@ function onEffectLose(target,effect)
     local zone = target:getZoneID();
 	target:levelRestriction(0);
 	local chest = target:getVar("IxionChest");
+	
+
+	
 	
 	if (zone == 185) then
 	target:setVar("ScyldMultiplier",0);

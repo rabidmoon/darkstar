@@ -83,29 +83,25 @@ function onZoneIn(player,prevZone)
 	
 	local entry = player:getVar("Dynamis_Jeuno_Enter");	
 	
-	if (player:hasStatusEffect(EFFECT_DYNA_RESTRICTION) == false and entry == 1) then
-	player:addStatusEffectEx(EFFECT_DYNA_RESTRICTION,EFFECT_LEVEL_RESTRICTION,75,3,5400);
-    player:PrintToPlayer("You have 90 minutes remaining in Dynamis", 0xD);
-	player:setVar("Dynamis_Jeuno_Enter",0);	
-	if (reduction == 0) then
-    player:PrintToPlayer("You may re-enter Dynamis in 12 Hours", 0xD);	
-	elseif (reduction == 1) then
-    player:PrintToPlayer("Due to certain Key Items, you may re-enter Dynamis in 8 Hours", 0xD);
-	elseif (reduction == 2) then
-    player:PrintToPlayer("Due to certain Key Items, you may re-enter Dynamis in 6 Hours", 0xD);
-	elseif (reduction == 3) then
-    player:PrintToPlayer("Due to certain Key Items, you may re-enter Dynamis in 4 Hours", 0xD);
-	elseif (reduction == 4) then
-    player:PrintToPlayer("Due to certain Key Items, you may re-enter Dynamis in 3 Hours", 0xD);
-	elseif (reduction == 5) then
-    player:PrintToPlayer("Due to certain Key Items, you may re-enter Dynamis in 2 Hours", 0xD);
-	elseif (reduction == 6) then
-    player:PrintToPlayer("Defeating all areas of Dynamis has granted you immediate re-entry", 0xD);
+	local entertime = player:getVar("Dynamis_Entry");
+	local currentTime = os.time()
+	local fixduration = currentTime - entertime;
+	print(fixduration);
+	if (fixduration < 5400) then
+	    player:addStatusEffectEx(EFFECT_DYNA_RESTRICTION,EFFECT_LEVEL_RESTRICTION,75,3,5400 - fixduration);
+        player:PrintToPlayer("You have 90 minutes remaining in Dynamis", 0xD);
+	    player:setVar("Dynamis_Jeuno_Enter",0);
+		player:setVar("Dynamis_Time_Remaining",5400000);
+		player:setVar("ScyldMultiplier",0);
+		player:setVar("Dynamis_Reenter",os.time() + reentertime);
+	else
+		player:setVar("ScyldMultiplier",0);
+		player:delKeyItem(ALABASTER_GRANULES_OF_TIME);
+		player:delKeyItem(CRIMSON_GRANULES_OF_TIME);
+		player:delKeyItem(AZURE_GRANULES_OF_TIME);
+		player:delKeyItem(AMBER_GRANULES_OF_TIME);	
+	    player:setPos(48.930,10.002,-71.032,195,0xF3);
 	end
-	 player:setVar("Dynamis_Time_Remaining",5400000);
-	 player:setVar("ScyldMultiplier",0);
-	 player:setVar("Dynamis_Reenter",os.time() + reentertime);
-	 end
 	return cs;
 end;
 

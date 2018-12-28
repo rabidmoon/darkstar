@@ -9,6 +9,7 @@ require("scripts/globals/keyitems");
 -----------------------------------
 
 function onEffectGain(target,effect)
+    printf("Apply Effect");
 	target:setVar("Besieged_Cure_Points",1);
 	target:setVar("Besieged_WS_Points",1);
     local wins = GetServerVariable("Consecutive_BWins");
@@ -65,6 +66,43 @@ end;
 -----------------------------------
 
 function onEffectTick(target,effect)
+    local tick = effect:getLastTick();
+	-- 60 second evaluations
+	 print(tick);
+	if (tick == 1000 or tick == 800 or tick == 600 or tick == 400 or tick == 200) then
+	    printf("tick");
+	    local getcurepts = target:getVar("Besieged_Cure_Points");
+		local getwspts = target:getVar("Besieged_WS_Points");
+		local getmagpts = target:getVar("Besieged_Mag_Points");
+		local totalbes = (math.floor(getcurepts / 10) + getwspts + getmagpts);
+		
+		-- divide total by 6 create new var Besieged_Eval_Cap which is set by Abquhbah
+
+		local mercpoint = target:getVar("Mercenary_Points");
+		local bescap = target:getVar("Besieged_Cap");
+
+		
+		
+		
+        -- local totalbes = getbes + bespoint; -- Get total points along with current points
+		if (totalbes > bescap) then  -- set points given based on cap
+		    totalbes = bescap;
+		end	
+		
+		
+		target:setVar("Mercenary_Points",totalbes + mercpoint);
+		local totalpts = gettotal + mercpoint;
+		local finalpts = target:getVar("Mercenary_Points");
+		
+		-- add cap based on rank
+
+		target:PrintToPlayer("You gain "..totalbes.." Mercenary Points.  Total: "..finalpts.."",0x1C);
+		
+        -- Reset points
+	    target:setVar("Besieged_Cure_Points",0);
+		target:setVar("Besieged_WS_Points",0);
+		target:setVar("Besieged_Mag_Points",0);	
+    end		
 end;
 
 -----------------------------------

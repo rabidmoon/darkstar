@@ -705,6 +705,8 @@ enum EFFECT
 	EFFECT_AVA_ATTACK                = 817,
 	EFFECT_AVA_DEFENSE				 = 818,
 	EFFECT_TRUST_SENTINEL            = 819,
+	EFFECT_LUOPAN                    = 820,
+	EFFECT_INDI_REFRESH              = 821,
 	EFFECT_LEVEL_TWO_SC             = 950,
 	EFFECT_LEVEL_THREE_SC             = 951,
 	EFFECT_LEVEL_FOUR_SC             = 952,	

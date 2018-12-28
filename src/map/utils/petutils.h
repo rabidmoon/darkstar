@@ -80,7 +80,10 @@ enum PETID
     PETID_NAJELITH           = 96,
     PETID_SHANTOTTO          = 97,
     PETID_ZAZARG             = 98,
-    PETID_MIHLI              = 99	
+    PETID_MIHLI              = 99,
+    PETID_RUG                = 100,
+    PETID_GADALAR            = 101,
+    PETID_LUOPAN             = 102	
 };
 
 

@@ -18,6 +18,7 @@ require("scripts/globals/utils")
     STRING_SKILL           = 41;
     WIND_SKILL             = 42;
     BLUE_SKILL             = 43;
+	GEO_SKILL              = 44;
 
     FIRESDAY      = 0;
     EARTHSDAY     = 1;
@@ -1340,4 +1341,81 @@ function outputMagicHitRateInfo()
     end
 end;
 
+
+function doLuopanPotency(caster, target, spell)
+    -- Potency Table
+	local spellId = spell:getID();
+    local skill = target:getSkillLevel(GEO_SKILL);
+	local potency = 1;
+	local geobonus = 0;  -- Future use to look at if specific Geomancy+ items are equipped;
+	
+	-- Acumen
+	-- Attunement
+	-- Barrier
+	-- Stat
+	-- Fend
+	-- Focus
+	-- Fury
+	-- Haste
+	-- Languor
+	-- Paralysis
+	if (spellId == 800 or spellId == 770) then -- Poison
+	    potency = ((skill * 2) / 20);
+		potency = utils.clamp(potency, 1, 30);
+		potency = potency + geobonus;
+	end	
+	-- Precision
+	if (spellId == 800 or spellId == 770) then -- Refresh
+	    potency = ((skill * 2) / 120);
+		potency = utils.clamp(potency, 1, 6);
+		potency = potency + geobonus;
+	end
+		
+		
+	
+	-- Regen
+	-- Slip
+	-- Slow
+	-- Topor
+	-- Vex
+	-- Voidance
+	-- Wilt
+
+
+    return potency;
+end
+
 -- outputMagicHitRateInfo();
+function spawnLuopan(caster, target, spell, geoBuff, dot, buffType)
+    local pet = caster:getPet();
+    local potency = doLuopanPotency(caster, target, spell)
+	local bufftype = buffType;
+	local finaldot = (dot + caster:getMainLvl())/4;
+	local pos = target:getPos();
+	    if (pet == nil) then
+        caster:spawnPet(102);
+
+        pet = caster:getPet();
+		pet:setModelId(2855);
+		pet:setPos(pos.x,pos.y,pos.z);
+		-- pull location of target
+		
+		pet:addStatusEffect(EFFECT_BIND,1,0,3000);
+		pet:setLocalVar("Potency",potency);
+        pet:addStatusEffect(EFFECT_LUOPAN, 1, 3, 30000);
+    end
+	
+    
+	pet:setLocalVar("bufftype", buffType)
+	local hploss = math.floor((pet:getHP())/70);  -- Sets DoT
+	pet:setLocalVar(geoBuff,1);	  -- set buff type
+	pet:setLocalVar("dot",hploss);
+	
+	
+	
+	
+end
+
+
+
+

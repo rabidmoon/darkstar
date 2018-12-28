@@ -375,6 +375,13 @@ namespace petutils
         }
 
         PMob->health.maxhp = (int16)(17.0 * pow(lvl, growth) * petStats->HPscale);
+		
+		if (PMob->m_PetID == PETID_LUOPAN)
+		{
+		    uint8 plvl = PMob->GetMLevel();
+		    PMob->health.maxhp = (int16)(70 * (floor(plvl / 4.0f)));
+			PMob->setModifier(MOD_DMGPHYS, -50);
+		}
 
         switch (PMob->GetMJob()){
         case JOB_PLD:
@@ -938,6 +945,7 @@ namespace petutils
 			PPet->setModifier(MOD_REFRESH, 50);
 			PPet->PBattleAI = new CAIPetDummy(PPet);
 		}
+		
 
         else if (PetID == PETID_DARK_IXION)
 		{
@@ -1006,6 +1014,12 @@ namespace petutils
 		//ShowWarning(CL_GREEN"SPAWN ALLY \n" CL_RESET);
 		CCharEntity* PChar = (CCharEntity*)PMaster;
         uint16 partySize = PMaster->PAlly.size();
+		uint16 pallysize = PMaster->PAlly.size();
+
+		
+		
+		ShowWarning(CL_GREEN"PAlly size before is %u \n" CL_RESET, partySize);
+
 		int32 trustsize = charutils::GetVar(PChar, "Trustsize");
 		
 		//Load All Trust Tribute Variables
@@ -1075,19 +1089,26 @@ namespace petutils
             for (uint8 i = 0; i < PMaster->PParty->members.size(); i++)
             {
                 CBattleEntity* PPartyMember = PMaster->PParty->members[i];
-                partySize = partySize + 1 + PPartyMember->PAlly.size();             
+                // partySize = partySize + 1 + PPartyMember->PAlly.size(); WHY ADD 1?
+				//partySize = partySize + PPartyMember->PAlly.size();
+				partySize += 1;
+		        //ShowWarning(CL_GREEN"Previous Party now New Party size is %u \n" CL_RESET, partySize);				
             }
         }
 		else
         {
 			partySize += 1;
+			//ShowWarning(CL_RED"SOLO: Party now has a new Party size of %u \n" CL_RESET, partySize);
         } 
         
 		//Can't summon more than 4 Trusts
-        if (partySize > 7){
+        if (partySize > 6){
             return;
         }
 		
+		
+		//ShowWarning(CL_CYAN"PAlly Size is: %u \n" CL_RESET, pallysize);
+
         if (PMaster->PAlly.size() > 2 && trustsize == 0)
         {
 		    ShowWarning(CL_RED"Can't summon more than 3 Trusts \n" CL_RESET);
@@ -1097,10 +1118,17 @@ namespace petutils
         
         else if (PMaster->PAlly.size() > 3 && trustsize == 1)
         {
-		    ShowWarning(CL_RED"Maximum Trusts Spawned \n" CL_RESET);
+		    ShowWarning(CL_RED"Can't summon more than 4 Trusts \n" CL_RESET);
             PMaster->PAlly[3]->PBattleAI->SetCurrentAction(ACTION_FALL);
             PMaster->PAlly.pop_back();
         }
+        else if (PMaster->PAlly.size() > 4 && trustsize == 2)
+        {
+		    ShowWarning(CL_RED"Can't summon more than 5 \n" CL_RESET);
+            PMaster->PAlly[4]->PBattleAI->SetCurrentAction(ACTION_FALL);
+            PMaster->PAlly.pop_back();
+        }
+		
         if (PMaster->PParty == nullptr)
 		{
             PMaster->PParty = new CParty(PMaster);
@@ -1115,6 +1143,7 @@ namespace petutils
 		{
 		uint16 nmatt = (PAlly->GetMLevel() * 1.0) + attNanaa;
 		uint16 nmacc = (PAlly->GetMLevel() * 0.5) + accNanaa;
+		uint16 basedex = (PAlly->GetMLevel() * 1.1);
 		//ShowWarning(CL_GREEN"NANAA MIGHO TRIGGERED SPAWN ALLY!!! \n" CL_RESET);
 		PAlly->setModifier(MOD_ACC, battleutils::GetMaxSkill(SKILL_GAX, JOB_WAR, PAlly->GetMLevel()) + nmacc); //A+ Acc
 		PAlly->setModifier(MOD_EVA, battleutils::GetMaxSkill(SKILL_GAX, JOB_WAR, PAlly->GetMLevel())); //A+ Evasion
@@ -1132,15 +1161,20 @@ namespace petutils
 		PAlly->setModifier(MOD_MOVE, 10);
 		PAlly->health.maxhp = (int16)(14 + (3.75f*(plvl * 3.75f)));
 		PAlly->UpdateHealth();
-		   if (plvl > 74) {
-		        PAlly->setModifier(MOD_DEX, dexNanaa);
+		    if (plvl > 74) {
+		        PAlly->setModifier(MOD_DEX, basedex + dexNanaa);
 				PAlly->setModifier(MOD_TREASURE_HUNTER, 1 + trait1Nanaa);
 				PAlly->setModifier(MOD_TRIPLE_ATTACK, 5 + taNanaa);
 		    }
-		   else if (plvl > 54){
+		    else if (plvl > 54){
 		        PAlly->setModifier(MOD_TRIPLE_ATTACK, 5);
 				PAlly->setModifier(MOD_TREASURE_HUNTER, 1);
+				PAlly->setModifier(MOD_DEX, basedex);
 		    }
+		    else {
+			    PAlly->setModifier(MOD_DEX, basedex);
+			}
+			
 		}
 	    else if (PetID == PETID_KUPIPI)
 		{
@@ -1262,7 +1296,7 @@ namespace petutils
 		{
 		uint16 defrate = (floor(PAlly->GetMLevel() * 1.5)) + defCur;
 		uint16 modstat = (floor(PAlly->GetMLevel() * 1.0)) + attCur;
-		uint16 hpstat = (floor(PAlly->GetMLevel() * 3.2));
+		uint16 hpstat = (floor(PAlly->GetMLevel() * 4.5));
 		uint16 accstat = (floor(PAlly->GetMLevel() * 0.5)) + accCur;
 		uint16 shielddef = (floor(10 + (PAlly->GetMLevel() / 8)));
 		//ShowWarning(CL_GREEN"CURILLA TRIGGERED SPAWN ALLY!!! \n" CL_RESET);
@@ -1289,8 +1323,8 @@ namespace petutils
 		PAlly->setModifier(MOD_HPP, 1);	
         PAlly->setModifier(MOD_MOVE, 10);		
 		PAlly->m_Weapons[SLOT_SUB]->addModifier(new CModifier(MOD_DEF, shielddef));
-		PAlly->health.maxhp = (int16)(15 + hpstat + (3.66f*(plvl * 4.10f)));
-		PAlly->health.maxmp = (int16)(15 + (2.72f*(plvl * 2.72f))); 
+		PAlly->health.maxhp = (int16)(5 + hpstat + (3.66f*(plvl * 4.10f)));
+		PAlly->health.maxmp = (int16)((2.10f*(plvl * 2.72f))); 
 		PAlly->UpdateHealth();
         PAlly->health.mp = PAlly->health.maxmp;
 		   if (plvl > 74){
@@ -1396,6 +1430,7 @@ namespace petutils
 		uint16 moddacc = (PAlly->GetMLevel() * 0.5);
 		uint16 modmab = (PAlly->GetMLevel() / 2);
 		uint16 modmacc = (PAlly->GetMLevel());
+		uint16 adelint = (PAlly->GetMLevel() * 1.2);
 		PAlly->setModifier(MOD_ACC, battleutils::GetMaxSkill(SKILL_POL, JOB_WAR, PAlly->GetMLevel()) + moddacc); //B+ Acc
 		PAlly->setModifier(MOD_EVA, battleutils::GetMaxSkill(SKILL_POL, JOB_WAR, PAlly->GetMLevel())); //B+ Evasion
 		PAlly->setModifier(MOD_ATT, battleutils::GetMaxSkill(SKILL_POL, JOB_WAR, PAlly->GetMLevel()) + moddatt);// B+ Attack
@@ -1414,6 +1449,7 @@ namespace petutils
 		PAlly->setModifier(MOD_FOOD_MP_CAP, 1);
 		PAlly->setModifier(MOD_ENMITY, -15);		
 		PAlly->setModifier(MOD_MPP, 1);
+		PAlly->setModifier(MOD_INT, adelint);		
 		PAlly->setModifier(MOD_HPP, 1);
 		PAlly->setModifier(MOD_MOVE, 10);
 		PAlly->health.maxmp = (int16)(22 + (3.46f*(plvl * 3.46f))); 
@@ -1777,12 +1813,12 @@ namespace petutils
 		uint16 bmoddacc = (PAlly->GetMLevel() * 0.5);
 		uint16 bmodratt = (PAlly->GetMLevel() * 1.2);
 		uint16 bmodracc = (PAlly->GetMLevel() * 1.3);		
-		uint16 bstr = (PAlly->GetMLevel() * 0.5);
-		uint16 bdex = (PAlly->GetMLevel() * 0.4);
-		uint16 bagi = (PAlly->GetMLevel() * 0.7);	
+		uint16 bstr = (PAlly->GetMLevel() * 0.95);
+		uint16 bdex = (PAlly->GetMLevel() * 1.1);
+		uint16 bagi = (PAlly->GetMLevel() * 1.2);	
 		PAlly->setModifier(MOD_STR, bstr); //added str 
-		//PAlly->setModifier(MOD_DEX, bdex); //added dex
-		//PAlly->setModifier(MOD_AGI, bagi); //added dex	
+		PAlly->setModifier(MOD_DEX, bdex); //added dex
+		PAlly->setModifier(MOD_AGI, bagi); //added dex	
 		PAlly->setModifier(MOD_ENMITY, -15);		
 		PAlly->setModifier(MOD_ACC, battleutils::GetMaxSkill(SKILL_GAX, JOB_WAR, PAlly->GetMLevel()) + bmoddacc); //A+ Acc
 		PAlly->setModifier(MOD_RACC, battleutils::GetMaxSkill(SKILL_GAX, JOB_WAR, PAlly->GetMLevel()) + bmodracc); //A+ Acc		
@@ -1883,8 +1919,8 @@ namespace petutils
 		//PAlly->m_Weapons[SLOT_MAIN]->setDamage((floor(PAlly->GetMLevel()*0.2)) + 3.0f);// D:32 @75
 		PAlly->m_Weapons[SLOT_MAIN]->setDelay(floor(1000.0f*(290.0f / 60.0f))); //+48 Delay.  Default H2H delay is 480	
 		PAlly->m_Weapons[SLOT_SUB]->setDelay(floor(1000.0f*(290.0f / 60.0f))); //+48 Delay.  Default H2H delay is 480	
-		PAlly->m_Weapons[SLOT_MAIN]->setDamage((floor(PAlly->GetMLevel()*0.2)) + 3.0f);// D:32 @75		
-		PAlly->m_Weapons[SLOT_SUB]->setDamage((floor(PAlly->GetMLevel()*0.2)) + 3.0f);// D:32 @75			
+		PAlly->m_Weapons[SLOT_MAIN]->setDamage((floor(PAlly->GetMLevel()*0.45)) + 3.0f);// D:32 @75		
+		PAlly->m_Weapons[SLOT_SUB]->setDamage((floor(PAlly->GetMLevel()*0.45)) + 3.0f);// D:32 @75			
         PAlly->SetMJob(JOB_MNK);
 		PAlly->setModifier(MOD_HASTE_GEAR, haste);
 		PAlly->setModifier(MOD_CONVMPTOHP, 1);
@@ -1894,7 +1930,7 @@ namespace petutils
 		PAlly->setModifier(MOD_MPP, 1);
 		PAlly->setModifier(MOD_HPP, 1);	
         PAlly->setModifier(MOD_MOVE, 10);		
-		PAlly->health.maxhp = (int16)(15 + hpZaz + (3.66f*(plvl * 4.17f)));
+		PAlly->health.maxhp = (int16)(15 + hpZaz + (4.96f*(plvl * 3.77f)));
 		PAlly->UpdateHealth();
 		PAlly->health.hp = PAlly->health.maxhp;
 		   if (plvl > 74){
@@ -1988,6 +2024,48 @@ namespace petutils
 		   }
 		   
 		}
+		
+	    else if (PetID == PETID_RUG)
+		{
+		PAlly->SetMJob(JOB_PLD);
+		uint16 rudatt = (PAlly->GetMLevel() * 1.2);
+		uint16 rudacc = (PAlly->GetMLevel() * 0.4); 
+		uint16 hpstat = (floor(PAlly->GetMLevel() * 4.5));	
+        uint16 rugagi = (PAlly->GetMLevel() * 1.3);	  //High AGI	
+		
+		PAlly->setModifier(MOD_ACC, battleutils::GetMaxSkill(SKILL_GAX, JOB_WAR, PAlly->GetMLevel()) + rudacc); //A+ Acc
+		PAlly->setModifier(MOD_PARRY, battleutils::GetMaxSkill(SKILL_GAX, JOB_WAR, PAlly->GetMLevel())); //A+ Parry	
+		PAlly->setModifier(MOD_EVA, battleutils::GetMaxSkill(SKILL_SYH, JOB_WAR, PAlly->GetMLevel())); //B- Evasion
+		PAlly->setModifier(MOD_ATT, battleutils::GetMaxSkill(SKILL_GAX, JOB_WAR, PAlly->GetMLevel()) + rudatt);// A+ Attack
+		PAlly->setModifier(MOD_DEF, battleutils::GetMaxSkill(SKILL_GAX, JOB_WAR, PAlly->GetMLevel()));// A+ Defense
+		PAlly->setModifier(MOD_HEALING, battleutils::GetMaxSkill(SKILL_SYH, JOB_WAR, PAlly->GetMLevel()));// -B-+ Healing
+		PAlly->setModifier(MOD_DIVINE, battleutils::GetMaxSkill(SKILL_GAX, JOB_WAR, PAlly->GetMLevel()));// A+ Divine Magic
+		PAlly->m_Weapons[SLOT_MAIN]->setDamage(floor(PAlly->GetMLevel()*0.86f) + 10);// D:42 @75
+		PAlly->m_Weapons[SLOT_MAIN]->setDelay(floor(1000.0f*(470.0f / 60.0f))); //470 delay
+		PAlly->setModifier(MOD_ENMITY, 45);
+		PAlly->setModifier(MOD_AGI, rugagi); //added agi
+		PAlly->setModifier(MOD_ENMITY_LOSS_REDUCTION, 20);	
+		PAlly->setModifier(MOD_CONVMPTOHP, 1);
+		PAlly->setModifier(MOD_CONVHPTOMP, 1);
+		PAlly->setModifier(MOD_FOOD_MPP, 1);
+		PAlly->setModifier(MOD_FOOD_MP_CAP, 1);
+		PAlly->setModifier(MOD_MPP, 1);
+		PAlly->setModifier(MOD_HPP, 1);	
+		PAlly->setModifier(MOD_MOVE, 10);
+		PAlly->setModifier(MOD_UDMGPHYS, -40);
+		PAlly->health.maxhp = (int16)(5 + hpstat + (3.66f*(plvl * 4.10f)));
+		PAlly->health.maxmp = (int16)((2.10f*(plvl * 2.72f))); 
+		PAlly->UpdateHealth();
+        PAlly->health.mp = PAlly->health.maxmp;
+		   if (plvl > 74){
+		   PAlly->setModifier(MOD_REFRESH, 3);
+		   }
+		   else if (plvl > 24){
+		   PAlly->setModifier(MOD_REFRESH, 1);
+		   }
+		   
+		}
+		
 
 
 		
@@ -2498,6 +2576,10 @@ namespace petutils
 		if (PetID == PETID_DARK_IXION)
         {
             petType = PETTYPE_AVATAR;
+        }
+        if (PetID == PETID_LUOPAN)
+        {
+            petType = PETTYPE_JUG_PET;
         }		
         //TODO: move this out of modifying the global pet list
         else if (PetID == PETID_WYVERN)

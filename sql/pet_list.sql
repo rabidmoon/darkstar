@@ -141,3 +141,6 @@ INSERT INTO `pet_list` VALUES (96, 'Najelith', 7820, 1, 99, 0, 0);
 INSERT INTO `pet_list` VALUES (97, 'Shantotto', 7821, 1, 99, 0, 0);
 INSERT INTO `pet_list` VALUES (98, 'Zazarg', 7822, 1, 99, 0, 0);
 INSERT INTO `pet_list` VALUES (99, 'Mihli Aliapo', 7823, 1, 99, 0, 0);
+INSERT INTO `pet_list` VALUES (100, 'Rughadjeen', 7824, 1, 99, 0, 0);
+INSERT INTO `pet_list` VALUES (101, 'Gadalar', 7825, 1, 99, 0, 0);
+INSERT INTO `pet_list` VALUES (102, 'Luopan', 7900, 1, 99, 0, 0);

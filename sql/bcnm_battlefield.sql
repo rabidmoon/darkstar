@@ -2401,6 +2401,13 @@ INSERT INTO `bcnm_battlefield` VALUES ('1387', '1','17527050','3'); -- Final Mob
 
 INSERT INTO `bcnm_battlefield` VALUES ('1388', '1','16908475','3'); -- Prishe
 INSERT INTO `bcnm_battlefield` VALUES ('1388', '1','16908476','1'); -- Ulmia
+
+INSERT INTO `bcnm_battlefield` VALUES ('1389', '1','17010908','3'); -- Mihli Talaca Cove
+INSERT INTO `bcnm_battlefield` VALUES ('1390', '1','17039452','3'); -- Galadar
+INSERT INTO `bcnm_battlefield` VALUES ('1391', '1','17097390','3'); -- Zazarg
+INSERT INTO `bcnm_battlefield` VALUES ('1392', '1','17051905','3'); -- Najelith Jade Sepulcher
+INSERT INTO `bcnm_battlefield` VALUES ('1393', '1','17093483','3'); -- Rud Nyzul Isle
+
 -- 1 is spawned at start
 -- 2 is kill to win
 -- 3 spawn mob on entry and kill to win

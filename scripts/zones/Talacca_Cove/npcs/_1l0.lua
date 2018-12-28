@@ -1,7 +1,7 @@
 -----------------------------------
 -- Area: Talacca_Cove
 -- NPC:  rock slab (corsair job flag quest)
--- 
+-- -100.000,-9.399,-87.000,
 -----------------------------------
 package.loaded["scripts/zones/Talacca_Cove/TextIDs"] = nil;
 -----------------------------------
@@ -17,6 +17,19 @@ require("scripts/globals/bcnm");
 -----------------------------------
 
 function onTrade(player,npc,trade)
+	if (trade:hasItemQty(10115,1)) then
+	    local party = player:getParty();
+        if (party ~= nil) then
+            for i,v in ipairs(party) do
+                if v:getZoneID() == player:getZoneID() then
+                    v:setVar("Mihli_Fight",1);
+					printf("party triggered");
+				    v:setPos(-179,32,125,187,57) 
+                end
+           end
+        end
+		player:tradeComplete();
+	end
 end;
 
 -----------------------------------
@@ -26,7 +39,7 @@ end;
 function onTrigger(player,npc)
 
 	LuckOfTheDraw = player:getVar("LuckOfTheDraw");
-	
+
 	if (LuckOfTheDraw == 4) then
 		player:startEvent(0x0003);	
     elseif (player:hasCompletedMission(TOAU,LEGACY_OF_THE_LOST)) then

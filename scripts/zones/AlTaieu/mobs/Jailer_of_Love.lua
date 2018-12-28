@@ -12,7 +12,7 @@ require("scripts/globals/mobscaler");
 -----------------------------------
 
 function onMobSpawn(mob)
-    mob:setLocalVar("PartySize",6);  
+    mob:setLocalVar("PartySize",8);  
 end;
 
 -----------------------------------
@@ -133,13 +133,14 @@ end;
 
 function onMobDeath(mob, killer)
 	if (killer:getObjType() == TYPE_PET) then
+	    local player = killer:getMaster();
         player:setVar("Love_Win",1);
 	    player:addCurrency('zeni_point',1000);
 	    player:PrintToPlayer("You obtain 1000 Zeni Points.", 0x15);	
     elseif (killer:getObjType() == TYPE_PC) then
-        player:setVar("Love_Win",1);
-	    player:addCurrency('zeni_point',1000);
-	    player:PrintToPlayer("You obtain 1000 Zeni Points.", 0x15);		
+        killer:setVar("Love_Win",1);
+	    killer:addCurrency('zeni_point',1000);
+	    killer:PrintToPlayer("You obtain 1000 Zeni Points.", 0x15);		
     end
     local AV_CHANCE = 25;
     if (AV_CHANCE > math.random(0,99)) then

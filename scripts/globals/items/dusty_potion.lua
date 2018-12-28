@@ -8,7 +8,8 @@
 -- OnItemCheck
 -----------------------------------------
 
-function onItemCheck(target)
+function onItemCheck(target, itemid)
+
 	return 0;
 end;
 
@@ -17,5 +18,12 @@ end;
 -----------------------------------------
 
 function onItemUse(target)
+      printf("USING!!!!");
+    local zone = target:getZoneID();
+	local party = target:getParty();
+	if (zone == 73) then
+	    printf("ZOne!!!!");
+       
+	end
 	target:addHP(300);
 end;

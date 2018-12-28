@@ -17,8 +17,43 @@ local Besieged = require("scripts/zones/Aht_Urhgan_Whitegate/IDs");
 -----------------------------------
 
 function onTrade(player,npc,trade)
-  
-	
+    if (trade:hasItemQty(65535,500000) and player:hasKeyItem(CAPTAIN_WILDCAT_BADGE) == true) then
+		if (player:getFreeSlotsCount() > 0) then
+		    player:addItem(2489); 
+            player:messageSpecial(ITEM_OBTAINED,2489);
+        else
+		    player:messageSpecial(ITEM_CANNOT_BE_OBTAINED,2489)
+		end
+    elseif (trade:hasItemQty(65535,10000000) and player:hasKeyItem(SL_WILDCAT_BADGE) == true) then
+		if (player:getFreeSlotsCount() > 0) then
+		    player:addItem(2489); 
+            player:messageSpecial(ITEM_OBTAINED,2489);
+        else
+		    player:messageSpecial(ITEM_CANNOT_BE_OBTAINED,2489)
+		end	
+    elseif (trade:hasItemQty(65535,15000000) and player:hasKeyItem(SM_WILDCAT_BADGE) == true) then
+		if (player:getFreeSlotsCount() > 0) then
+		    player:addItem(2489); 
+            player:messageSpecial(ITEM_OBTAINED,2489);
+        else
+		    player:messageSpecial(ITEM_CANNOT_BE_OBTAINED,2489)
+		end			
+    elseif (trade:hasItemQty(65535,30000000) and player:hasKeyItem(C_WILDCAT_BADGE) == true) then
+		if (player:getFreeSlotsCount() > 0) then
+		    player:addItem(2489); 
+            player:messageSpecial(ITEM_OBTAINED,2489);
+        else
+		    player:messageSpecial(ITEM_CANNOT_BE_OBTAINED,2489)
+		end			
+    elseif (trade:hasItemQty(65535,99999999) and player:hasKeyItem(SP_WILDCAT_BADGE) == true) then
+		if (player:getFreeSlotsCount() > 0) then
+		    player:addItem(2489); 
+            player:messageSpecial(ITEM_OBTAINED,2489);
+        else
+		    player:messageSpecial(ITEM_CANNOT_BE_OBTAINED,2489)
+		end	
+	end
+
 end;
 
 -----------------------------------
@@ -34,7 +69,7 @@ function onTrigger(player,npc)
 	             0x0893,50000,	-- ??? Hands
 	             0x08EE,75000,	-- ??? Box
 			     0x08E4,100000}   -- ??? headwear
-        player:PrintToPlayer(string.format("Mercenary Dealer : Welcome Captain %s", player:getName()),0xD); 
+        player:PrintToPlayer(string.format("Mercenary Dealer : Welcome Captain %s.  I have a book for sale..trade me 500,000 gil.", player:getName()),0xD); 
         showShop(player, STATIC, stock);  
     elseif (player:hasKeyItem(SL_WILDCAT_BADGE) == true) then	
         stock = {0x0894,10000,	-- ??? Feet 
@@ -42,27 +77,27 @@ function onTrigger(player,npc)
 	             0x08ED,20000,	-- ??? cloth			 
 	             0x0893,50000,	-- ??? Hands
 	             0x08EE,75000}	-- ??? Box
-        player:PrintToPlayer(string.format("Mercenary Dealer : Welcome Second Lieutenant %s", player:getName()),0xD); 
+        player:PrintToPlayer(string.format("Mercenary Dealer : Welcome Second Lieutenant %s.  I have a book for sale..trade me 10,000,000 gil.", player:getName()),0xD); 
         showShop(player, STATIC, stock);  	
     elseif (player:hasKeyItem(SM_WILDCAT_BADGE) == true) then
         stock = {0x0894,10000,	-- ??? Feet 
 	             0x08EB,20000,	-- ??? ingot
 	             0x08ED,20000,	-- ??? cloth			 
 	             0x0893,50000}	-- ??? Hands
-        player:PrintToPlayer(string.format("Mercenary Dealer : Welcome Sergeant Major %s", player:getName()),0xD); 
+        player:PrintToPlayer(string.format("Mercenary Dealer : Welcome Sergeant Major %s.  I have a book for sale..trade me 15,000,000 gil.", player:getName()),0xD); 
         showShop(player, STATIC, stock);  	
     elseif (player:hasKeyItem(C_WILDCAT_BADGE) == true) then
         stock = {0x0894,10000,	-- ??? Feet 
 	             0x08EB,20000,	-- ??? ingot
 	             0x08ED,20000}	-- ??? cloth			 
-        player:PrintToPlayer(string.format("Mercenary Dealer : Welcome Corporal %s", player:getName()),0xD); 
+        player:PrintToPlayer(string.format("Mercenary Dealer : Welcome Corporal %s.  I have a book for sale..trade me 30,000,000 gil.", player:getName()),0xD); 
         showShop(player, STATIC, stock);  	
     elseif (player:hasKeyItem(SP_WILDCAT_BADGE) == true) then
-        stock = {0x0894,10000}	-- ??? Feet 			 
-        player:PrintToPlayer(string.format("Mercenary Dealer : Welcome Superior Private %s", player:getName()),0xD); 
+        stock = {0x0894,10000}		 
+        player:PrintToPlayer(string.format("Mercenary Dealer : Welcome Superior Private %s.  I have a book for sale..trade me 99,999,999 gil.", player:getName()),0xD); 
         showShop(player, STATIC, stock); 	
-	else
-	    player:PrintToPlayer(string.format("Mercenary Dealer : Sorry %s, but you will need a Superior Private rank or higher to access my wares.", player:getName()),0xD); 
+	else		 
+	    player:PrintToPlayer(string.format("Mercenary Dealer : Sorry %s, but you will need a Superior Private rank or higher to access my armor wares.", player:getName()),0xD); 			
 	end
 	
 	

@@ -1544,14 +1544,14 @@ void SmallPacket0x042(map_session_data_t* session, CCharEntity* PChar, CBasicPac
 
 void SmallPacket0x04B(map_session_data_t* session, CCharEntity* PChar, CBasicPacket data)
 {
-    uint8   msg_chunk = RBUFB(data, (0x04)); // The current chunk of the message to send.. (1 = start, 2 = rest of message)
-    uint8   msg_unknown1 = RBUFB(data, (0x05)); // Unknown.. always 0
-    uint8   msg_unknown2 = RBUFB(data, (0x06)); // Unknown.. always 1
+    //uint8   msg_chunk = RBUFB(data, (0x04)); // The current chunk of the message to send.. (1 = start, 2 = rest of message)
+    //uint8   msg_unknown1 = RBUFB(data, (0x05)); // Unknown.. always 0
+    //uint8   msg_unknown2 = RBUFB(data, (0x06)); // Unknown.. always 1
     uint8   msg_language = RBUFB(data, (0x07)); // Language request id (2 = English, 4 = French)
     uint32  msg_timestamp = RBUFL(data, (0x08)); // The message timestamp being requested..
-    uint32  msg_size_total = RBUFL(data, (0x0C)); // The total length of the requested server message..
+    //uint32  msg_size_total = RBUFL(data, (0x0C)); // The total length of the requested server message..
     uint32  msg_offset = RBUFL(data, (0x10)); // The offset to start obtaining the server message..
-    uint32  msg_request_len = RBUFL(data, (0x14)); // The total requested size of send to the client..
+    //uint32  msg_request_len = RBUFL(data, (0x14)); // The total requested size of send to the client..
 
     if (msg_language == 0x02)
         PChar->pushPacket(new CServerMessagePacket(map_config.server_message, msg_language, msg_timestamp, msg_offset));
@@ -1573,9 +1573,10 @@ void SmallPacket0x04B(map_session_data_t* session, CCharEntity* PChar, CBasicPac
 
 
     // Player Tips
+	/*
 	uint8 tips = dsprand::GetRandomNumber(5);
 	ShowWarning(CL_GREEN"Random Tip Number is: %u\n" CL_RESET, tips);
-	if (tips == 1)
+	if (tips <= 1)
 	    PChar->pushPacket(new CChatMessagePacket(PChar, CHAT_MESSAGE_TYPE::MESSAGE_NS_PARTY, "Tip#001: On Monk, Boost doesn't wear off when striking an enemy and can be stored up to three times at Level 75."));
     else if (tips == 2)
 	    PChar->pushPacket(new CChatMessagePacket(PChar, CHAT_MESSAGE_TYPE::MESSAGE_NS_PARTY, "Tip#002: Last Resort's defense penalty is 0 when a DRK has full MP, and -25% when DRK has no MP."));
@@ -1585,7 +1586,7 @@ void SmallPacket0x04B(map_session_data_t* session, CCharEntity* PChar, CBasicPac
 	    PChar->pushPacket(new CChatMessagePacket(PChar, CHAT_MESSAGE_TYPE::MESSAGE_NS_PARTY, "Tip#004: The spell 'Stun' has an enmity Bonus when used by a Dark Knight."));
     else if (tips == 5)
 	    PChar->pushPacket(new CChatMessagePacket(PChar, CHAT_MESSAGE_TYPE::MESSAGE_NS_PARTY, "Tip#005: Unlimited Shot on RNG provides lightning quick shooting, but sacrafices power and accuracy."));
-	
+	*/
     return;
 }
 

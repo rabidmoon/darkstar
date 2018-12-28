@@ -16,6 +16,7 @@ require("scripts/globals/missions");
 -----------------------------------
 
 function onTrade(player,npc,trade)
+
 end;
 
 -----------------------------------
@@ -25,8 +26,11 @@ end;
 function onTrigger(player,npc)
     if (player:getCurrentMission(TOAU) == THE_BLACK_COFFIN) then
         player:startEvent(221, 53, -6, 0, 99, 6, 0);
-    else
+    elseif (player:getCurrentMission(TOAU) == TESTING_THE_WATERS and player:hasKeyItem(EPHRAMADIAN_GOLD_COIN)) then
+            player:startEvent(15);
+	else
         player:messageSpecial(YOU_NO_REQS);
+		player:PrintToPlayer("You have no key item");
     end
 end;
 
@@ -35,7 +39,7 @@ end;
 -----------------------------------
 
 function onEventUpdate(player,csid,option,target)
-    -- printf("CSID: %u",csid);
+    printf("CSID: %u",csid);
     -- printf("RESULT: %u",option);
 
     if(csid == 221) then
@@ -59,12 +63,13 @@ end;
 -----------------------------------
 
 function onEventFinish(player,csid,option)
-    -- printf("CSID: %u",csid);
-    -- printf("RESULT: %u",option);
 
     if(csid == 221 and option == 4) then
         player:setPos(0,-22,27,66,60);
-    end
+    elseif (csid == 15) then
+        player:setVar("AhtUrganStatus",1)
+        player:setPos(0,0,0,0,57)
+	end
 end;
 
 -----------------------------------
@@ -72,7 +77,7 @@ end;
 -----------------------------------
 
 function onInstanceCreated(player,target,instance)
-    -- print(instance);
+
     if (instance) then        
         player:setInstance(instance);
         player:instanceEntry(target,4);

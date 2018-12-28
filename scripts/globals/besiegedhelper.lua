@@ -728,8 +728,8 @@ function trollVictory(mob)  -- Victory for Trolls
 		    totalbes = bescap;
 		end
 	   	
-		person:setVar("Besieged_Points",totalmerc);	
-		person:setVar("Mercenary_Points",totalbes);
+		person:setVar("Besieged_Points",totalbes);	
+		person:setVar("Mercenary_Points",totalmerc);
 
 		-- add cap based on rank
 		person:PrintToPlayer("You gain "..gettotal.." Mercenary Points.  Total: "..totalmerc.."",0x1C);	

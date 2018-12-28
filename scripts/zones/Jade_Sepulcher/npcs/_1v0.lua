@@ -18,6 +18,19 @@ require("scripts/zones/Jade_Sepulcher/TextIDs");
 -----------------------------------
 
 function onTrade(player,npc,trade)
+	if (trade:hasItemQty(10125,1)) then
+	    local party = player:getParty();
+        if (party ~= nil) then
+            for i,v in ipairs(party) do
+                if v:getZoneID() == player:getZoneID() then
+                    v:setVar("Najelith_Fight",1);
+					printf("party triggered");
+				    v:setPos(219,-31,273,56,67) 
+                end
+           end
+        end
+		player:tradeComplete();
+	end
 end; 
 
 -----------------------------------

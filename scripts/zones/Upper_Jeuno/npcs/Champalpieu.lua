@@ -21,7 +21,7 @@ end;
 
 function onTrigger(player,npc)
 	
-player:showText(npc,CHAMPALPIEU_SHOP_DIALOG);
+player:showText(npc,MP_SHOP_DIALOG);
 
 stock = {0x110D,120,	--Rolanberry
 	0x43A8,7,	--Iron Arrow

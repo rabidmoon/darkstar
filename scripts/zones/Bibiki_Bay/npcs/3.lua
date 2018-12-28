@@ -301,103 +301,122 @@ end
     	player:addItem(18505,1,143,1,59,0,931,3); -- Earth Affinity
 		player:messageSpecial(ITEM_OBTAINED,18505);
 		player:setVar("WARHAFight",5);
+        player:PrintToPlayer("??? : You now have the power of Aftermath+.", 0xD);		
 	elseif ((trade:hasItemQty(4059, 99)) and (player:getVar("MNKHAFight") == 4) and trade:hasItemQty(18764,1)) then  -- MNK
 	    	player:tradeComplete();		
 	    	player:addItem(18764,1,194,1,59,0,929,3); -- Ice Affinity
 			player:messageSpecial(ITEM_OBTAINED,18764);	
 			player:setVar("MNKHAFight",5);	
+            player:PrintToPlayer("??? : You now have the power of Aftermath+.", 0xD);			
 	elseif ((trade:hasItemQty(4059, 99)) and (player:getVar("WHMHAFight") == 4) and trade:hasItemQty(18870,1)) then  -- WHM
 	    	player:tradeComplete();	
 		    player:addItem(18870,1,329,9,59,0,933,3); -- Water Affinity 
 			player:messageSpecial(ITEM_OBTAINED,18870);		
 			player:setVar("WHMHAFight",5);
+            player:PrintToPlayer("??? : You now have the power of Aftermath+.", 0xD);			
     elseif ((trade:hasItemQty(4059, 99)) and (player:getVar("BLMHAFight") == 4) and trade:hasItemQty(18589,1)) then  -- BLM
 		    printf("Black Mage Triggered");
     		player:tradeComplete();	
 			player:addItem(18589,1,362,4,59,0,935,3); -- Dark AFfinity 
 			player:messageSpecial(ITEM_OBTAINED,18589);		
 			player:setVar("BLMHAFight",5);
+            player:PrintToPlayer("??? : You now have the power of Aftermath+.", 0xD);			
     elseif ((trade:hasItemQty(4059, 99)) and (player:getVar("RDMHAFight") == 4) and trade:hasItemQty(17761,1)) then  -- RDM
     		player:tradeComplete();		
-    		player:addItem(17761,1,896,1,59,0,935,3); -- Dark Affinity 
+    		player:addItem(17761,1,896,2,59,0,935,3); -- Dark Affinity 
 			player:messageSpecial(ITEM_OBTAINED,17761);		
-			player:setVar("RDMHAFight",5);	
+			player:setVar("RDMHAFight",5);
+            player:PrintToPlayer("??? : You now have the power of Aftermath+.", 0xD);			
     elseif ((trade:hasItemQty(4059, 99)) and (player:getVar("THFHAFight") == 4) and trade:hasItemQty(19115,1)) then  -- THF
     		player:tradeComplete();			
     		player:addItem(19115,1,147,0,59,0,930,3); -- Wind Affinity 
 			player:messageSpecial(ITEM_OBTAINED,19115);		
 			player:setVar("THFHAFight",5);
+            player:PrintToPlayer("??? : You now have the power of Aftermath+.", 0xD);			
     elseif ((trade:hasItemQty(4059, 99)) and (player:getVar("PLDHAFight") == 4) and trade:hasItemQty(17762,1)) then  -- THF
     		player:tradeComplete();			
-    		player:addItem(17762,1,137,0,59,0,935,3); -- Dark AFfinity
+    		player:addItem(17762,1,71,1,59,0,935,3); -- Dark AFfinity
 			player:messageSpecial(ITEM_OBTAINED,17762);		
 			player:setVar("PLDHAFight",5);
+            player:PrintToPlayer("??? : You now have the power of Aftermath+.", 0xD);			
     elseif ((trade:hasItemQty(4059, 99)) and (player:getVar("DRKHAFight") == 4) and trade:hasItemQty(18955,1)) then  -- DRK
 		    player:tradeComplete();			
     		player:addItem(18955,1,343,9,59,0,929,3); -- Ice Affinity 
 			player:messageSpecial(ITEM_OBTAINED,18995);		
 			player:setVar("DRKHAFight",5);
+            player:PrintToPlayer("??? : You now have the power of Aftermath+.", 0xD);			
     elseif ((trade:hasItemQty(4059, 99)) and (player:getVar("BSTHAFight") == 4) and trade:hasItemQty(17966,1)) then  -- BST
     		player:tradeComplete();		
     		player:addItem(17966,1,124,6,59,0,931,3); -- Earth Affinity 
 			player:messageSpecial(ITEM_OBTAINED,17966);		
 			player:setVar("BSTHAFight",5);
+            player:PrintToPlayer("??? : You now have the power of Aftermath+.", 0xD);			
     elseif ((trade:hasItemQty(4059, 99)) and (player:getVar("BRDHAFight") == 4) and trade:hasItemQty(19116,1)) then  -- BRD
     		player:tradeComplete();			
     		player:addItem(19116,1,322,4,59,0,930,3); -- Wind Affinity
 			player:messageSpecial(ITEM_OBTAINED,19116);		
 			player:setVar("BRDHAFight",5);
+            player:PrintToPlayer("??? : You now have the power of Aftermath+.", 0xD);			
     elseif ((trade:hasItemQty(4059, 99)) and (player:getVar("RNGHAFight") == 4) and trade:hasItemQty(18736,1)) then  -- RNG
     		player:tradeComplete();			
     		player:addItem(18736,1,139,4,59,0,933,3); -- Water Affinity
 			player:messageSpecial(ITEM_OBTAINED,18763);		
 			player:setVar("RNGHAFight",5);
-			player:delCurrency("infamy", payment);
+            player:PrintToPlayer("??? : You now have the power of Aftermath+.", 0xD);			
     elseif ((trade:hasItemQty(4059, 99)) and (player:getVar("SAMHAFight") == 4) and trade:hasItemQty(18452,1)) then  -- SAM
     		player:tradeComplete();			
     		player:addItem(18452,1,353,2,59,0,935,3); -- Dark Affinity  
 			player:messageSpecial(ITEM_OBTAINED,18452);		
 			player:setVar("SAMHAFight",5);	
+            player:PrintToPlayer("??? : You now have the power of Aftermath+.", 0xD);			
     elseif ((trade:hasItemQty(4059, 99)) and (player:getVar("NINHAFight") == 4) and trade:hasItemQty(19275,1)) then  -- NIN
     		player:tradeComplete();			
-    		player:addItem(19275,1,140,4,59,0,931,3);  -- Earth Affinity 
+    		player:addItem(19275,1,146,9,39,3,59,0,931,3);  -- Earth Affinity 
 			player:messageSpecial(ITEM_OBTAINED,19275);		
 			player:setVar("NINHAFight",5);
+            player:PrintToPlayer("??? : You now have the power of Aftermath+.", 0xD);			
     elseif ((trade:hasItemQty(4059, 99)) and (player:getVar("DRGHAFight") == 4) and trade:hasItemQty(19303,1)) then  -- DRG
     		player:tradeComplete();		
     		player:addItem(19303,1,124,6,59,0,931,3); -- Earth Affinity  
 			player:messageSpecial(ITEM_OBTAINED,19303);		
 			player:setVar("DRGHAFight",5);	
+            player:PrintToPlayer("??? : You now have the power of Aftermath+.", 0xD);			
     elseif ((trade:hasItemQty(4059, 99)) and (player:getVar("SMNHAFight") == 4) and trade:hasItemQty(19115,1)) then  -- SMN
     		player:tradeComplete();		
     		player:addItem(18601,1,321,2,59,0,935,3); -- Dark Affinity  
 			player:messageSpecial(ITEM_OBTAINED,18601);		
 			player:setVar("SMNHAFight",5);
+            player:PrintToPlayer("??? : You now have the power of Aftermath+.", 0xD);			
     elseif ((trade:hasItemQty(4059, 99)) and (player:getVar("BLUHAFight") == 4) and trade:hasItemQty(17763,1)) then  -- BLU
     		player:tradeComplete();		
     		player:addItem(17763,1,299,9,59,0,935,3); -- Dark Affinity 
 			player:messageSpecial(ITEM_OBTAINED,17763);		
-			player:setVar("BLUHAFight",5);		
+			player:setVar("BLUHAFight",5);
+            player:PrintToPlayer("??? : You now have the power of Aftermath+.", 0xD);			
     elseif ((trade:hasItemQty(4059, 99)) and (player:getVar("CORHAFight") == 4) and trade:hasItemQty(18737,1)) then  -- COR
     		player:tradeComplete();		
     		player:addItem(18737,1,133,14,59,0,929,3); -- Ice Affinity  
 			player:messageSpecial(ITEM_OBTAINED,18737);		
 			player:setVar("CORHAFight",5);
+            player:PrintToPlayer("??? : You now have the power of Aftermath+.", 0xD);			
     elseif ((trade:hasItemQty(4059, 99)) and (player:getVar("PUPHAFight") == 4) and trade:hasItemQty(18765,1)) then  -- PUP
     		player:tradeComplete();			
     		player:addItem(18765,1,124,6,59,0,930,3); -- Wind Affinity  
 			player:messageSpecial(ITEM_OBTAINED,18765);	
 			player:setVar("PUPHAFight",5);
+            player:PrintToPlayer("??? : You now have the power of Aftermath+.", 0xD);			
     elseif ((trade:hasItemQty(4059, 99)) and (player:getVar("DNCHAFight") == 4) and trade:hasItemQty(19117,1)) then  -- DNC
     		player:tradeComplete();		
     		player:addItem(19117,1,330,9,59,0,930,3); -- Wind Affinity 
 			player:messageSpecial(ITEM_OBTAINED,19117);		
-			player:setVar("DNCHAFight",5);	
+			player:setVar("DNCHAFight",5);
+            player:PrintToPlayer("??? : You now have the power of Aftermath+.", 0xD);			
     elseif ((trade:hasItemQty(4059, 99)) and (player:getVar("SCHHAFight") == 4) and trade:hasItemQty(18602,1)) then  -- SCH
     		player:tradeComplete();			
     		player:addItem(18602,1,1249,14,59,0,935,3); -- Dark Affinity  
 			player:messageSpecial(ITEM_OBTAINED,18602);		
-			player:setVar("SCHHAFight",5);	
+			player:setVar("SCHHAFight",5);
+            player:PrintToPlayer("??? : You now have the power of Aftermath+.", 0xD);				
 	else
         player:PrintToPlayer( "??? : ... give me the correct items...", 0xD);
 	end	

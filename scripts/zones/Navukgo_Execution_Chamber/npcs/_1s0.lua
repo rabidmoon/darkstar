@@ -17,6 +17,7 @@ require("scripts/zones/Navukgo_Execution_Chamber/TextIDs");
 -----------------------------------
 
 function onTrade(player,npc,trade)
+
 end;
 
 -----------------------------------
@@ -24,6 +25,20 @@ end;
 -----------------------------------
 
 function onTrigger(player,npc)
+     printf("Trigger");
+	if (player:getVar("GADALAR_CIPHER") == 1) then
+	    local party = player:getParty();
+        if (party ~= nil) then
+            for i,v in ipairs(party) do
+                if v:getZoneID() == player:getZoneID() then
+                    v:setVar("Gadalar_Fight",1);
+					printf("party triggered");
+				    v:setPos(287,-124,379,253,64) 
+                end
+           end
+        end
+		player:setVar("GADALAR_CIPHER",0);
+	end
     if (player:getCurrentMission(TOAU) == SHIELD_OF_DIPLOMACY and player:getVar("AhtUrganStatus") == 1) then
         player:startEvent(2);
     elseif (EventTriggerBCNM(player,npc)) then

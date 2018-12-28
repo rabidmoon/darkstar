@@ -78,7 +78,7 @@ function onTrigger(player,npc)
             player:startEvent(3113,0,0,0,0,0,0,0,0,0);	
 ---------------- New 3.4
         elseif (player:getCurrentMission(TOAU) == SENTINELS_HONOR) then
-            if(player:getVar("TOAUM18_STARTDAY") ~= VanadielDayOfTheYear() and needToZone == false) then
+            if(player:getVar("TOAUM33_STARTDAY") ~= VanadielDayOfTheYear()) then
                 player:startEvent(3130,0,0,0,0,0,0,0,0,0);
             else
                 player:startEvent(3120,0,0,0,0,0,0,0,0,0);

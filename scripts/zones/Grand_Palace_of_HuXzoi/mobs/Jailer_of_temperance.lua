@@ -14,7 +14,7 @@ require("scripts/globals/mobscaler");
 -----------------------------------
 
 function onMobSpawn(mob)
-    mob:setLocalVar("PartySize",6); 
+    mob:setLocalVar("PartySize",9); 
 	-- Give it two hour
 	mob:setMod(MOBMOD_MAIN_2HOUR, 1);
 	-- Change animation to pot
@@ -111,13 +111,14 @@ end;
 -----------------------------------	
 function onMobDeath(mob,killer)	
 	if (killer:getObjType() == TYPE_PET) then
+	    local player = killer:getMaster();
         player:setVar("Temper_Win",1);
 	    player:addCurrency('zeni_point',250);
 	    player:PrintToPlayer("You obtain 250 Zeni Points.", 0x15);	
     elseif (killer:getObjType() == TYPE_PC) then
-        player:setVar("Temper_Win",1);
-	    player:addCurrency('zeni_point',250);
-	    player:PrintToPlayer("You obtain 250 Zeni Points.", 0x15);		
+        killer:setVar("Temper_Win",1);
+	    killer:addCurrency('zeni_point',250);
+	    killer:PrintToPlayer("You obtain 250 Zeni Points.", 0x15);		
     end
 	SetServerVariable("[SEA]Jailer_of_Temperance_POP", os.time(t) + 900); -- 15 mins
 	DeterMob(mob:getID(), true);

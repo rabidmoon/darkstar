@@ -20,12 +20,15 @@ local current = 0;
 local currentpres = 0;
 local currents = 0;
 
-current = ((duration / 1000) / 60);
+current = ((duration / 1000));
 
 local currenttest = math.floor(duration / 1000);
 currentm = math.floor((duration / 1000) / 60); -- Minutes
-currentpres = current - currentm;
-currents = math.floor(currentpres * 60);
+
+currentpres = current - (currentm * 60);
+print(currentpres);
+currents = math.floor((currentpres ));
+
 if (currentm < 1) then
 player:PrintToPlayer("You have less than 1 minute remaining in Salvage.", 0x15);
 elseif (currentm < 10) then

@@ -50,7 +50,9 @@ function onTrigger(player,npc)
 	local nextsiege = siegetime - currenttime;
     local trooplevel = GetServerVariable("SiegeDonation");
 	
-	if (currenttime < tagtime) then
+	if (player:hasStatusEffect(EFFECT_BESIEGED)) then
+	    player:PrintToPlayer("Achieve Master : You are already signed up for Siege operations",0xD); 	
+	elseif (currenttime < tagtime) then
 	    tagremaining = tagtime - currenttime;
 		player:addStatusEffect(EFFECT_BESIEGED,3,0,tagremaining);
 	else

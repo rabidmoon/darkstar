@@ -591,6 +591,7 @@ public:
     int32 copyConfrontationEffect(lua_State* L);    // copy confrontation effect, param = targetEntity:getShortID()
 	int32 isAlive(lua_State* L);
 	int32 engage(lua_State* L);
+    int32 getTargetsWithinArea(lua_State* L);
 	
 };
 

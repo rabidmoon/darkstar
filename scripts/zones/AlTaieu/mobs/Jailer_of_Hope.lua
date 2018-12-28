@@ -19,7 +19,7 @@ end;
 -----------------------------------
 
 function onMobSpawn(mob)
-    mob:setLocalVar("PartySize",6); 
+    mob:setLocalVar("PartySize",8); 
     mob:setSpellList(0); -- If it dies with the ability to cast spells, the next spawn would be able to cast from the start.
     mob:setMobMod(MOBMOD_MAGIC_COOL, 20); -- This gives around 6 - 15 seconds between casts. Doesn't seem to work anywhere except in this function.
 end;
@@ -68,12 +68,13 @@ end;
 
 function onMobDeath(mob, killer)
 	if (killer:getObjType() == TYPE_PET) then
+	    local player = killer:getMaster();
         player:setVar("Hope_Win",1);
 	    player:addCurrency('zeni_point',500);
 	    player:PrintToPlayer("You obtain 500 Zeni Points.", 0x15);	
     elseif (killer:getObjType() == TYPE_PC) then
-        player:setVar("Hope_Win",1);
-	    player:addCurrency('zeni_point',500);
-	    player:PrintToPlayer("You obtain 500 Zeni Points.", 0x15);		
+        killer:setVar("Hope_Win",1);
+	    killer:addCurrency('zeni_point',500);
+	    killer:PrintToPlayer("You obtain 500 Zeni Points.", 0x15);		
     end
 end;

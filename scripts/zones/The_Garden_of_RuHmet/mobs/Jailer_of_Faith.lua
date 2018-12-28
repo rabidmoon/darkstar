@@ -11,7 +11,7 @@ require("scripts/globals/magic");
 -----------------------------------
 
 function onMobSpawn(mob)
-    mob:setLocalVar("PartySize",6); 
+    mob:setLocalVar("PartySize",8); 
     -- Give it two hour
     mob:setMod(MOBMOD_MAIN_2HOUR, 1);
     -- Change animation to open
@@ -45,15 +45,16 @@ end;
 -- onMobDeath
 -----------------------------------
 
-function onMobDeath(mob)
+function onMobDeath(mob, killer, player)
 	if (killer:getObjType() == TYPE_PET) then
+	    local player = killer:getMaster();
         player:setVar("Faith_Win",1);
 	    player:addCurrency('zeni_point',500);
 	    player:PrintToPlayer("You obtain 500 Zeni Points.", 0x15);	
     elseif (killer:getObjType() == TYPE_PC) then
-        player:setVar("Faith_Win",1);
-	    player:addCurrency('zeni_point',500);
-	    player:PrintToPlayer("You obtain 500 Zeni Points.", 0x15);		
+        killer:setVar("Faith_Win",1);
+	    killer:addCurrency('zeni_point',500);
+	    killer:PrintToPlayer("You obtain 500 Zeni Points.", 0x15);		
     end
 end;
 

@@ -19,9 +19,14 @@ end;
 
 function onMobWeaponSkill(target, mob, skill)
 
+    local dmgmod = 1;
 	local numhits = 1;
 	local accmod = 2;
-	local dmgmod = 13;
+	if (mob:getID() == 17010908) then
+	    dmgmod = 3;
+	else
+	    dmgmod = 13;
+	end
 	local info = MobPhysicalMove(mob,target,skill,numhits,accmod,dmgmod,TP_DMG_VARIES,11,17,22);
 	local dmg = MobFinalAdjustments(info.dmg,mob,skill,target,MOBSKILL_PHYSICAL,MOBPARAM_BLUNT,info.hitslanded);
 

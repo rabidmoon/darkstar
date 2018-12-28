@@ -25,7 +25,7 @@ if (trade:hasItemQty( 613, 1 )) and (player:getVar("FerretoryQuest75noaura") == 
     player:delCurrency("infamy", quest11);
     player:tradeComplete();
 	player:PrintToPlayer("Your infamy cap and bonus multiplier have increased.  You can now access Achievement NPC's!", 0x15);
-	player:setVar("infamymult",20);
+	player:setVar("infamymult",10);
 	player:setVar("infamycap",200000);
 	player:setVar("FerretoryQuest75",12); -- New Non Aura Quests
 	else

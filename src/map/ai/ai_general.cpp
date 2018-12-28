@@ -188,6 +188,14 @@ void CAIGeneral::Reset()
 
 	m_LastMihliMagicTime = 0;
 	m_LastMihliEnhanceTime = 0;
+	
+	m_LastRugVokeTime = 0;
+	m_LastRugMagicTime = 0;
+	m_LastGadalarEleCast = 0;
+	m_LastGadalarMagicTime = 0;
+	m_LastRugFlash = 0;
+	m_LastRugTimeHeal = 0;
+	
 	m_LastBP = 0;
 	
     m_WaitTime = 0;
@@ -848,6 +856,36 @@ void CAIGeneral::SetLastMihliMagicTime(uint32 time)
 void CAIGeneral::SetLastMihliEnhanceTime(uint32 time)
 {
 	m_LastMihliEnhanceTime = time;
+}
+
+void CAIGeneral::SetLastRugVokeTime(uint32 time)
+{
+	m_LastRugVokeTime = time;
+}
+
+void CAIGeneral::SetLastRugMagicTime(uint32 time)
+{
+	m_LastRugMagicTime = time;
+}
+
+void CAIGeneral::SetLastRugTimeHeal(uint32 time)
+{
+	m_LastRugTimeHeal = time;
+}
+
+void CAIGeneral::SetLastRugFlash(uint32 time)
+{
+	m_LastRugFlash = time;
+}
+
+void CAIGeneral::SetLastGadalarEleCast(uint32 time)
+{
+	m_LastGadalarEleCast = time;
+}
+
+void CAIGeneral::SetLastGadalarMagicTime(uint32 time)
+{
+	m_LastGadalarMagicTime = time;
 }
 
 void CAIGeneral::SetLastBPTime(uint32 time)

@@ -28,3 +28,18 @@ KAHAHHOBICHAI_SHOP_DIALOG = 7612; -- Step rrright up to Kahah Hobichai's Blades!
 
 -- NPC Texts
             CHOCOBO_HAPPY = 7847; -- The chocobo appears to be extremely happy.
+
+-- Besieged Texts
+			 MAMOOL_MARCH = 8083;
+              TROLL_MARCH = 8084;          
+             UNDEAD_MARCH = 8085;
+             MAMOOL_START = 8086;
+			  TROLL_START = 8087; 
+             UNDEAD_START = 8088;  -- Al Zahbi is in Besieged!
+           BESIEGED_START = 8089;  -- Al Zahbi is in Besieged!
+		      MAMOOL_LOSE = 8092;
+		       TROLL_LOSE = 8093;
+		      UNDEAD_LOSE = 8094;  -- Undead has retreated		  
+			   MAMOOL_WIN = 8097;
+			    TROLL_WIN = 8098;
+               UNDEAD_WIN = 8099;  -- The Hall of Binding has been breached, The undead swarp has taken the astral candy

@@ -310,3 +310,9 @@ INSERT INTO `bcnm_info` VALUES ('1385', '206', 'impersonating_lion', null, null,
 INSERT INTO `bcnm_info` VALUES ('1386', '206', 'impersonating_zeid', null, null, '1800', '75', '1', '0', '7');
 INSERT INTO `bcnm_info` VALUES ('1387', '183', 'test_your_fortitude', null, null, '1800', '75', '18', '0', '7');
 INSERT INTO `bcnm_info` VALUES ('1388', '32', 'double_trouble', null, null, '1800', '75', '6', '202', '15');
+
+INSERT INTO `bcnm_info` VALUES ('1389', '57', 'call_of_the_waterserpent', null, null, '1800', '75', '6', '0', '7');
+INSERT INTO `bcnm_info` VALUES ('1390', '64', 'call_of_the_flameserpent', null, null, '1800', '75', '6', '0', '7');
+INSERT INTO `bcnm_info` VALUES ('1391', '78', 'call_of_the_stoneserpent', null, null, '1800', '75', '6', '0', '7');
+INSERT INTO `bcnm_info` VALUES ('1392', '67', 'call_of_the_galeserpent', null, null, '1800', '75', '6', '0', '7');
+INSERT INTO `bcnm_info` VALUES ('1393', '77', 'call_of_the_skyserpent', null, null, '1800', '75', '6', '0', '7');

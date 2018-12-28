@@ -1,6 +1,6 @@
 -----------------------------------
 -- Area: Alzadaal Undersea Ruins
--- Door: Runic Seal
+-- Door: Runic Seal Nyzul
 -- @pos 125 -2 20 72
 -----------------------------------
 
@@ -11,12 +11,27 @@ require("scripts/globals/keyitems");
 require("scripts/globals/missions");
 require("scripts/globals/besieged");
 require("scripts/zones/Alzadaal_Undersea_Ruins/TextIDs");
+require("scripts/globals/settings");
+require("scripts/globals/bcnm");
 
 -----------------------------------
 -- onTrade Action
 -----------------------------------
 
 function onTrade(player,npc,trade)
+	if (trade:hasItemQty(10145,1)) then
+	    local party = player:getParty();
+        if (party ~= nil) then
+            for i,v in ipairs(party) do
+                if v:getZoneID() == player:getZoneID() then
+                    v:setVar("Rughadjeen_Fight",1);
+					printf("party triggered");
+				    v:setPos(-457,-3,420,0,77);
+                end
+           end
+        end
+		player:tradeComplete();
+	end
 end;
 
 -----------------------------------
@@ -24,6 +39,8 @@ end;
 -----------------------------------
 
 function onTrigger(player,npc)
+
+
 	if (player:hasKeyItem(NYZUL_ISLE_ASSAULT_ORDERS)) then
         local assaultid = player:getCurrentAssault();
         local recommendedLevel = getRecommendedAssaultLevel(assaultid);

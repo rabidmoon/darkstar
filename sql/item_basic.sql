@@ -5846,7 +5846,23 @@ INSERT INTO `item_basic` VALUES (8959,0,'snoworb_stone_+2','snoworb_stone_+2',12
 INSERT INTO `item_basic` VALUES (8960,0,'leaforb_stone','leaforb_stone',12,12352,46,1,0);
 INSERT INTO `item_basic` VALUES (8961,0,'leaforb_stone_+1','leaforb_stone_+1',12,12352,46,1,0);
 INSERT INTO `item_basic` VALUES (8962,0,'leaforb_stone_+2','leaforb_stone_+2',12,12352,46,1,0);
-
+INSERT INTO `item_basic` VALUES (10049,0,'♪raptor','♪raptor',1,61504,0,0,0);
+INSERT INTO `item_basic` VALUES (10050,0,'♪tiger','♪tiger',1,61504,0,0,0);
+INSERT INTO `item_basic` VALUES (10051,0,'♪crab','♪crab',1,61504,0,0,0);
+INSERT INTO `item_basic` VALUES (10052,0,'♪red_crab','♪red_crab',1,61504,0,0,0);
+INSERT INTO `item_basic` VALUES (10053,0,'♪bomb','♪bomb',1,61504,0,0,0);
+INSERT INTO `item_basic` VALUES (10054,0,'♪ram','♪ram',1,61504,0,0,0);
+INSERT INTO `item_basic` VALUES (10055,0,'♪morbol','♪morbol',1,61504,0,0,0);
+INSERT INTO `item_basic` VALUES (10056,0,'♪crawler','♪crawler',1,61504,0,0,0);
+INSERT INTO `item_basic` VALUES (10057,0,'♪fenrir','♪fenrir',1,61504,0,0,0);
+INSERT INTO `item_basic` VALUES (10058,0,'♪beetle','♪beetle',1,61504,0,0,0);
+INSERT INTO `item_basic` VALUES (10059,0,'♪moogle','♪moogle',1,61504,0,0,0);
+INSERT INTO `item_basic` VALUES (10060,0,'♪magic_pot','♪magic_pot',1,61504,0,0,0);
+INSERT INTO `item_basic` VALUES (10061,0,'♪tulfaire','♪tulfaire',1,61504,0,0,0);
+INSERT INTO `item_basic` VALUES (10062,0,'♪warmachine','♪warmachine',1,61504,0,0,0);
+INSERT INTO `item_basic` VALUES (10063,0,'♪xzomit','♪xzomit',1,61504,0,0,0);
+INSERT INTO `item_basic` VALUES (10064,0,'♪hippogryph','♪hippogryph',1,61504,0,0,0);
+INSERT INTO `item_basic` VALUES (10065,0,'♪spectral_chair','♪spectral_chair',1,61504,0,0,0);
 INSERT INTO `item_basic` VALUES (10112,0,'cipher_of_zeids_alter_ego','cipher_zeid',1,61504,99,0,0);
 INSERT INTO `item_basic` VALUES (10113,0,'cipher_of_lions_alter_ego','cipher_lion',1,61504,99,0,0);
 INSERT INTO `item_basic` VALUES (10114,0,'cipher_of_tenzens_alter_ego','cipher_tenzen',1,61504,99,0,0);

@@ -291,7 +291,7 @@ INSERT INTO `status_effects` VALUES (252,'mounted',164,0,0,0,0,0,0,0);
 INSERT INTO `status_effects` VALUES (253,'signet',0,0,0,0,0,0,0,0);
 INSERT INTO `status_effects` VALUES (254,'battlefield',524288,0,0,0,0,0,0,0);
 INSERT INTO `status_effects` VALUES (256,'sanction',0,0,0,0,0,0,0,0);
-INSERT INTO `status_effects` VALUES (257,'besieged',256,0,0,0,0,0,0,0);
+INSERT INTO `status_effects` VALUES (257,'besieged',0,0,0,0,0,0,0,0);
 INSERT INTO `status_effects` VALUES (258,'illusion',32,0,0,0,0,0,0,0);
 INSERT INTO `status_effects` VALUES (259,'encumbrance',32,0,0,0,0,0,0,0);
 INSERT INTO `status_effects` VALUES (260,'obliviscence',32,0,0,0,0,0,0,0);
@@ -663,6 +663,8 @@ INSERT INTO `status_effects` VALUES (816,'no_rest',4096,0,0,0,0,0,0,0);
 INSERT INTO `status_effects` VALUES (817,'ava_attack',32,0,0,0,0,0,0,0);
 INSERT INTO `status_effects` VALUES (818,'ava_defense',32,0,0,0,0,0,0,0);
 INSERT INTO `status_effects` VALUES (819,'trust_sentinel',33,0,0,0,0,0,0,0);
+INSERT INTO `status_effects` VALUES (820,'luopan',0,0,0,0,0,0,0,0);
+INSERT INTO `status_effects` VALUES (821,'indi-refresh',0,0,0,0,0,0,0,0);
 -- gap
 INSERT INTO `status_effects` VALUES (950,'level_two_sc',512,0,0,2,0,0,0,0);
 INSERT INTO `status_effects` VALUES (951,'level_three_sc',512,0,0,2,0,0,0,0);

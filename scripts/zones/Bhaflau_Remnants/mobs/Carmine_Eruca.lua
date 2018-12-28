@@ -4,12 +4,15 @@
 -----------------------------------
 
 require("scripts/globals/keyitems");
+require("scripts/globals/salvagescaler");
+require("scripts/globals/status");
 
 -----------------------------------
 -- onMobSpawn Action
 -----------------------------------
 
 function onMobSpawn(mob)
+    salvageScaler(mob)
 end;
 
 -----------------------------------
@@ -17,7 +20,7 @@ end;
 -----------------------------------
 
 function onMobDeath(mob, killer)
-
+	salvageAmbient(mob,killer);
 
 
 end;

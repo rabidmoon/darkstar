@@ -13,6 +13,7 @@ local Arrapago = require("scripts/zones/Arrapago_Remnants/IDs");
 -----------------------------------
 
 function onMobSpawn(mob)
+    salvageScaler(mob)
 end;
 
 -----------------------------------
@@ -20,15 +21,5 @@ end;
 -----------------------------------
 
 function onMobDeath(mob, killer)
-	local MobID = mob:getID();
-	local chance = math.random(1,100);
-    local pugil = 17080534;  -- Replace with Mega
-    local nmpop = 30;
-	local ph = Arrapago.ph[1].LAMIA_DARTIST1;
-	if (MobID == ph) then
-        if (killer:getObjType() == TYPE_PC) then
-            killer:PrintToPlayer("A heavy aura can be sensed nearby...",0x15);
-	    end
-	    SpawnMob(pugil);               
-	end
+	salvageAmbient(mob,killer);
 end;

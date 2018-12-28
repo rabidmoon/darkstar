@@ -245,6 +245,13 @@ public:
 	void            SetLastMihliMagicTime(uint32 time);
 	void            SetLastMihliEnhanceTime(uint32 time);	
 	
+	void            SetLastRugVokeTime(uint32 time);
+	void            SetLastRugMagicTime(uint32 time);
+	void			SetLastRugTimeHeal(uint32 time);
+	void			SetLastRugFlash(uint32 time);
+	void            SetLastGadalarEleCast(uint32 time);
+	void			SetLastGadalarMagicTime(uint32 time);
+	
 	void            SetLastBPTime(uint32 time);
 	
 	void			SetCurrentAction(ACTIONTYPE Action, uint16 TargetID = 0);
@@ -384,6 +391,13 @@ protected:
 	
 	uint32          m_LastMihliMagicTime;
 	uint32			m_LastMihliEnhanceTime;	
+	
+	uint32          m_LastRugVokeTime;
+	uint32          m_LastRugMagicTime;
+	uint32			m_LastRugTimeHeal;
+	uint32			m_LastRugFlash;
+	uint32			m_LastGadalarEleCast;
+	uint32          m_LastGadalarMagicTime;
 	
 	uint32			m_LastEngageStart;
 	uint32 			m_LastSkillchainStart;

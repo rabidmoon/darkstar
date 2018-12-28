@@ -25,7 +25,7 @@ end;
 -----------------------------------
 
 function onMobSpawn(mob)
-    mob:setLocalVar("PartySize",6);  
+    mob:setLocalVar("PartySize",8);  
     mob:AnimationSub(0); -- Mouth closed
     mob:addStatusEffectEx(EFFECT_FLEE,0,100,0,60);
     mob:setMod(MOD_TRIPLE_ATTACK, 20);
@@ -95,13 +95,14 @@ function onMobDeath(mob, killer)
         firstPrudence:delMod(MOD_DEFP, -50);
     end;
 	if (killer:getObjType() == TYPE_PET) then
+	    local player = killer:getMaster();
         player:setVar("Prude_Win",1);
 	    player:addCurrency('zeni_point',700);
 	    player:PrintToPlayer("You obtain 700 Zeni Points.", 0x15);	
     elseif (killer:getObjType() == TYPE_PC) then
-        player:setVar("Prude_Win",1);
-	    player:addCurrency('zeni_point',700);
-	    player:PrintToPlayer("You obtain 700 Zeni Points.", 0x15);		
+        killer:setVar("Prude_Win",1);
+	    killer:addCurrency('zeni_point',700);
+	    killer:PrintToPlayer("You obtain 700 Zeni Points.", 0x15);		
     end
 
 end;

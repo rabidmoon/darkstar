@@ -23,13 +23,13 @@ function onTrade(player,npc,trade)
     and (Behemoth == ACTION_NONE or Behemoth == ACTION_SPAWN)) then
         -- Trade Beastly Shank
         if (trade:hasItemQty(3341,1) and trade:getItemCount() == 1 and (paragon == 1)) then
-            if (LandKingSystem_NQ ~= 1) then
+            if (LandKingSystem_NQ == 1) then
                 player:tradeComplete();
                 SpawnMob(17297440):updateClaim(player);
             end
         -- Trade Savory Shank
         elseif (trade:hasItemQty(3342,1) and trade:getItemCount() == 1 and (paragon == 1)) then
-            if (LandKingSystem_HQ ~= 1) then
+            if (LandKingSystem_HQ == 1) then
                 player:tradeComplete();
                 SpawnMob(17297441):updateClaim(player);
             end

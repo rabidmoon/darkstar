@@ -129,3 +129,28 @@ function pathfind.patrol(npc, points, flags)
 	end
 
 end;
+
+-- continusly runs the path
+function pathfind.patrolm(mob, points, flags)
+
+	if (mob:atPoint(pathfind.first(points)) or mob:atPoint(pathfind.last(points))) then
+		mob:pathThrough(pathfind.fromStart(points), flags);
+	else
+
+		local length = #points / 3;
+		local currentLength = 0;
+		local i = 51;
+		-- i'm some where inbetween
+		while(i <= length) do
+
+			if (mob:atPoint(pathfind.get(points, i))) then
+				mob:pathThrough(pathfind.fromStart(points, i), flags);
+				break;
+			end
+
+			i = i + 50;
+		end
+		
+	end
+
+end;

@@ -152,6 +152,13 @@ protected:
 	uint32 m_najelithSharpshotRecast;
 	uint32 m_najelithBarrageRecast;
 	
+	uint32 m_rugVokeRecast;
+	uint32 m_rugMagicRecast;
+	uint32 m_rugFlashRecast;
+	uint32 m_rugHealRecast;
+	uint32 m_gadalarEleRecast;
+	uint32 m_magicGadalarRecast;
+	
     uint32 m_shantottoEleRecast;
 	uint32 m_shantottoDebuffRecast;
 	
@@ -201,6 +208,8 @@ protected:
 	int16 ShantottoSpell();
 	int16 ShantottoSpellLowTier();	
 	int16 ShantottoSpellDebuff();
+	int16 RugSpell();
+	int16 GadalarSpell();
 	int16 LightIxionSpell();
 	int16 DarkIxionSpell();	
 	int16 SummonBloodPact();

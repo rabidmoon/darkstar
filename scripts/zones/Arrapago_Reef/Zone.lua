@@ -18,68 +18,11 @@ require("scripts/globals/keyitems");
 
 function onInitialize(zone)
 
---zone:registerRegion(1,-456,-3,-413,0,0,0);
--- Check for Astral Candy and General Capture
+    zone:registerRegion(1, -442, 5, -414, 0, 0, 0);
+    zone:registerRegion(2,-462,-4,-420,-455,-1,-392) -- approach the Cutter
+	
 
-    local posession = GetServerVariable("AC_Posession");
-	local rug = GetServerVariable("RughadjeenCapture");
-	local gad = GetServerVariable("GadalarCapture");
-	local zaz = GetServerVariable("ZazargCapture");
-	local mih = GetServerVariable("MihliCapture");
-	local naj = GetServerVariable("NajelithCapture");
-	-- Get Mirrors 
-	local mir1hp = GetServerVariable("[AR]Mirror1")
-	local mir2hp = GetServerVariable("[AR]Mirror2")
-	local mir3hp = GetServerVariable("[AR]Mirror3")	
-	
-	
-	-- Spawn Mirrors Prisoners Achieve and Blu Helper on Reboot
-	if (posession == 2) then
-	    if (rug == 1) then
-            GetNPCByID(16998975):setStatus(STATUS_NORMAL);
-		end      
-        if (gad == 1) then		
-            GetNPCByID(16998976):setStatus(STATUS_NORMAL);
-		end
-        if (mih == 1) then		
-            GetNPCByID(16998977):setStatus(STATUS_NORMAL);	
-		end
-        if (zaz == 1) then		
-            GetNPCByID(16998978):setStatus(STATUS_NORMAL);
-		end		
-		if (naj == 1) then
-            GetNPCByID(16998979):setStatus(STATUS_NORMAL);	
-	    end
-		
-		-- Spawn Mirrors
-		printf("AR Zone.lua - Start mirrors");
-		
-		if (mir1hp ~= 0) then
-	    SpawnMob(16998838);
-		end
-		
-		if (mir2hp > 0) then
-	    SpawnMob(16998839);
-		end
-		
-		if (mir3hp > 0) then
-	    SpawnMob(16998840);	
-		end
-		
-		printf("AR Zone.lua - end mirrors");		
-	    -- Spawn Achieve Master
-	    local achieve = GetNPCByID(16998895);
-	    achieve:setStatus(STATUS_NORMAL);
-	    -- Spawn BLU Helper
-	   DeterMob(16999067, false);
-	   printf("Mirrors");
-        GetMobByID(16999067):setRespawnTime(35);	   
-	   -- SpawnMob();	
-		
-    end
-	
-	zone:registerRegion(1, -462,-4,-420,-455,-1,-392);
-zone:registerRegion(2, -452,1,-424,-452,-6,-404);
+
 
 	
 end;
@@ -131,13 +74,14 @@ end;
 
 
 function onRegionEnter(player,region)
-    
-	if (region:GetRegionID() == 1) then
-	       print("Entered Region");
-            player:startEvent(14);
-			
-        printf("Player entered region!!!");
-    elseif (player:getCurrentMission(TOAU) ==  THE_BLACK_COFFIN and player:hasKeyItem(EPHRAMADIAN_GOLD_COIN) and player:getVar("TOAUM15") == 0) then
+    local regionId = region:GetRegionID();
+	if (regionId == 1) then
+	    player:PrintToPlayer("Zone ENtered 1");
+	end
+	if (regionId == 2) then
+	    player:PrintToPlayer("Zone ENtered 2");
+	end
+	if (player:getCurrentMission(TOAU) == THE_BLACK_COFFIN and player:hasKeyItem(EPHRAMADIAN_GOLD_COIN) and player:getVar("TOAUM15") == 0) then
             player:startEvent(0x0008);
     elseif (player:getCurrentMission(TOAU) == PREVALENCE_OF_PIRATES and player:getVar("AhtUrganStatus") == 1) then
             player:startEvent(14);
@@ -151,7 +95,7 @@ end;
 -----------------------------------
 
 function onEventUpdate(player,csid,option)
-    -- printf("CSID: %u",csid);
+    printf("CSID: %u",csid);
     -- printf("RESULT: %u",option);
 end;
 
@@ -160,7 +104,7 @@ end;
 -----------------------------------
 
 function onEventFinish(player,csid,option)
-    -- printf("CSID: %u",csid);
+    printf("CSID: %u",csid);
     -- printf("RESULT: %u",option);
     if (csid == 0x0008) then
         player:setVar("TOAUM15",1);
@@ -179,8 +123,11 @@ function onEventFinish(player,csid,option)
         player:setVar("AhtUrganStatus",0);
         player:addKeyItem(PERIQIA_ASSAULT_AREA_ENTRY_PERMIT);
         player:messageSpecial(KEYITEM_OBTAINED,PERIQIA_ASSAULT_AREA_ENTRY_PERMIT);
-        player:addMission(TOAU,SHADES_OF_VENGEANCE);		
-    elseif (csid == 90) then -- enter instance: the ashu talif
+        player:addMission(TOAU,SHADES_OF_VENGEANCE);	
+    elseif (csid == 15) then
+        player:setVar("AhtUrganStatus",1)
+        player:setPos(0,0,0,0,57)		
+	elseif (csid == 90) then -- enter instance: the ashu talif
         player:setPos(0,0,0,0,60);		
     end    
 end;

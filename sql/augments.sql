@@ -115,12 +115,12 @@ INSERT INTO `augments` VALUES ('76', '0', '0', '0', '0'); -- DMG+33 Unsure if ma
 INSERT INTO `augments` VALUES ('77', '0', '0', '0', '0'); -- Delay -33% Unsure if main hand or off hand so leaving values blank for now, goes up in increments of 1 after the initial 33.
 
 -- 78 to 95 currently unused. Leave at zero.
-INSERT INTO `augments` VALUES ('78', '0', '0', '0', '0');
-INSERT INTO `augments` VALUES ('79', '0', '0', '0', '0');
-INSERT INTO `augments` VALUES ('80', '0', '0', '0', '0');
-INSERT INTO `augments` VALUES ('81', '0', '0', '0', '0');
-INSERT INTO `augments` VALUES ('82', '0', '0', '0', '0');
-INSERT INTO `augments` VALUES ('83', '0', '0', '0', '0');
+INSERT INTO `augments` VALUES ('78', '0', '0', '0', '0');  -- HP+2
+INSERT INTO `augments` VALUES ('79', '0', '0', '0', '0');  -- HP+3
+INSERT INTO `augments` VALUES ('80', '0', '0', '0', '0');  -- Magic/Acc/Magic Dmg +1
+INSERT INTO `augments` VALUES ('81', '0', '0', '0', '0');  -- Eva+1/Magic Eva+1
+INSERT INTO `augments` VALUES ('82', '0', '0', '0', '0');  -- MP+2
+INSERT INTO `augments` VALUES ('83', '0', '0', '0', '0');  -- MP+3
 INSERT INTO `augments` VALUES ('84', '0', '0', '0', '0');
 INSERT INTO `augments` VALUES ('85', '0', '0', '0', '0');
 INSERT INTO `augments` VALUES ('86', '0', '0', '0', '0');
@@ -999,7 +999,7 @@ INSERT INTO `augments` VALUES ('796', '0', '61', '-1', '0'); -- Cont.
 -- 798 to 927 currently unused. Leave at zero.
 INSERT INTO `augments` VALUES ('798', '0', '0', '0', '0');
 INSERT INTO `augments` VALUES ('799', '0', '0', '0', '0');
-INSERT INTO `augments` VALUES ('800', '0', '0', '0', '0');
+INSERT INTO `augments` VALUES ('800', '0', '0', '0', '0'); -- Enhances Mighty Strikes
 INSERT INTO `augments` VALUES ('801', '0', '0', '0', '0');
 INSERT INTO `augments` VALUES ('802', '0', '0', '0', '0');
 INSERT INTO `augments` VALUES ('803', '0', '0', '0', '0');
@@ -1018,9 +1018,9 @@ INSERT INTO `augments` VALUES ('815', '0', '0', '0', '0');
 INSERT INTO `augments` VALUES ('816', '0', '0', '0', '0');
 INSERT INTO `augments` VALUES ('817', '0', '0', '0', '0');
 INSERT INTO `augments` VALUES ('818', '0', '0', '0', '0');
-INSERT INTO `augments` VALUES ('819', '0', '0', '0', '0');
-INSERT INTO `augments` VALUES ('820', '0', '0', '0', '0');
-INSERT INTO `augments` VALUES ('821', '0', '0', '0', '0');
+INSERT INTO `augments` VALUES ('819', '0', '0', '0', '0');  
+INSERT INTO `augments` VALUES ('820', '0', '0', '0', '0');  -- Enhances Bolster
+INSERT INTO `augments` VALUES ('821', '0', '0', '0', '0');  -- Elemental Sforzo
 INSERT INTO `augments` VALUES ('822', '0', '0', '0', '0');
 INSERT INTO `augments` VALUES ('823', '0', '0', '0', '0');
 INSERT INTO `augments` VALUES ('824', '0', '0', '0', '0');
@@ -1564,29 +1564,29 @@ INSERT INTO `augments` VALUES ('1279', '0', '0', '0', '0');
 INSERT INTO `augments` VALUES ('1280', '0', '0', '0', '0'); -- Enhances Mighty Strikes effect
 INSERT INTO `augments` VALUES ('1281', '0', '0', '0', '0'); -- Enhances Hundred Fists effect
 INSERT INTO `augments` VALUES ('1282', '0', '0', '0', '0'); -- Enhances Benediction effect
-INSERT INTO `augments` VALUES ('1283', '0', '0', '0', '0'); -- Enhances Manafont effect
-INSERT INTO `augments` VALUES ('1284', '0', '0', '0', '0'); -- Enhances Chainspell effect
-INSERT INTO `augments` VALUES ('1285', '0', '0', '0', '0'); -- Enhances Perfect Dodge effect
-INSERT INTO `augments` VALUES ('1286', '0', '0', '0', '0'); -- Enhances Invincible effect
-INSERT INTO `augments` VALUES ('1287', '0', '0', '0', '0'); -- Enhances Blood Weapon effect
-INSERT INTO `augments` VALUES ('1288', '0', '0', '0', '0'); -- Enhances Familiar effect
-INSERT INTO `augments` VALUES ('1289', '0', '0', '0', '0'); -- Enhances Soul Voice effect
-INSERT INTO `augments` VALUES ('1290', '0', '0', '0', '0'); -- Enhances Eagle Eye Shot effect
-INSERT INTO `augments` VALUES ('1291', '0', '0', '0', '0'); -- Enhances Meikyo Shisui effect
-INSERT INTO `augments` VALUES ('1292', '0', '0', '0', '0'); -- Enhances Mijin Gakure effect
+INSERT INTO `augments` VALUES ('1283', '0', '0', '0', '0'); -- TP Gained when landing critical hits %+d%
+INSERT INTO `augments` VALUES ('1284', '0', '0', '0', '0'); -- Drain Potency +
+INSERT INTO `augments` VALUES ('1285', '0', '0', '0', '0'); -- Magic Burst Damage %+d%
+INSERT INTO `augments` VALUES ('1286', '0', '0', '0', '0'); -- Magic Burst Damage II
+INSERT INTO `augments` VALUES ('1287', '0', '0', '0', '0'); -- Magic Burst Accuracy 
+INSERT INTO `augments` VALUES ('1288', '0', '0', '0', '0'); -- Additional Ammo Damage
+INSERT INTO `augments` VALUES ('1289', '0', '0', '0', '0'); -- Additional Ammo Accuracy
+INSERT INTO `augments` VALUES ('1290', '0', '0', '0', '0'); -- "Dagan" potency
+INSERT INTO `augments` VALUES ('1291', '0', '0', '0', '0'); -- "Myrkr" potency
+INSERT INTO `augments` VALUES ('1292', '0', '0', '0', '0'); -- "Atonement" enmity +
 INSERT INTO `augments` VALUES ('1293', '0', '0', '0', '0'); -- Enhances Spirit Surge effect
 INSERT INTO `augments` VALUES ('1294', '0', '0', '0', '0'); -- Enhances Astral Flow effect
 INSERT INTO `augments` VALUES ('1295', '0', '0', '0', '0'); -- Enhances Azure Lore effect
-INSERT INTO `augments` VALUES ('1296', '0', '0', '0', '0'); -- Enhances Wild Card effect
-INSERT INTO `augments` VALUES ('1297', '0', '0', '0', '0'); -- Enhances Overdrive effect
-INSERT INTO `augments` VALUES ('1298', '0', '0', '0', '0'); -- Enhances Trance effect
-INSERT INTO `augments` VALUES ('1299', '0', '0', '0', '0'); -- Enhances Tablua Rasa effect
+INSERT INTO `augments` VALUES ('1296', '0', '0', '0', '0'); -- Chance of double damage +%
+INSERT INTO `augments` VALUES ('1297', '0', '0', '0', '0'); -- Chance of double ranged dmage
+INSERT INTO `augments` VALUES ('1298', '0', '0', '0', '0'); -- Chance of followup attack
+INSERT INTO `augments` VALUES ('1299', '0', '0', '0', '0'); -- Chance of ranged followup attack
 INSERT INTO `augments` VALUES ('1300', '0', '0', '0', '0'); -- Enhances Bolster effect
 INSERT INTO `augments` VALUES ('1301', '0', '0', '0', '0'); -- Enhances Elemental Sforzo effect
 
  -- 1302 to 1327 currently unused. Leave at zero.
-INSERT INTO `augments` VALUES ('1302', '0', '0', '0', '0');
-INSERT INTO `augments` VALUES ('1303', '0', '0', '0', '0');
+INSERT INTO `augments` VALUES ('1302', '0', '0', '0', '0'); -- Double attack damage +
+INSERT INTO `augments` VALUES ('1303', '0', '0', '0', '0'); -- Counter attack Damage +
 INSERT INTO `augments` VALUES ('1304', '0', '0', '0', '0');
 INSERT INTO `augments` VALUES ('1305', '0', '0', '0', '0');
 INSERT INTO `augments` VALUES ('1306', '0', '0', '0', '0');
@@ -2404,3 +2404,56 @@ INSERT INTO `augments` VALUES ('2046', '0', '0', '0', '0');
 -- End unused block
 
 INSERT INTO `augments` VALUES ('2047', '0', '0', '0', '0'); -- ??? (it literally just says "???")
+INSERT INTO `augments` VALUES ('2048', '0', '0', '0', '0'); 
+INSERT INTO `augments` VALUES ('2049', '0', '0', '0', '0'); 
+INSERT INTO `augments` VALUES ('2050', '0', '0', '0', '0'); 
+INSERT INTO `augments` VALUES ('2051', '0', '0', '0', '0'); 
+INSERT INTO `augments` VALUES ('2052', '0', '0', '0', '0'); 
+INSERT INTO `augments` VALUES ('2053', '0', '0', '0', '0'); 
+INSERT INTO `augments` VALUES ('2054', '0', '0', '0', '0'); 
+INSERT INTO `augments` VALUES ('2055', '0', '0', '0', '0'); 
+INSERT INTO `augments` VALUES ('2056', '0', '0', '0', '0'); 
+INSERT INTO `augments` VALUES ('2057', '0', '0', '0', '0'); 
+INSERT INTO `augments` VALUES ('2058', '0', '0', '0', '0'); 
+INSERT INTO `augments` VALUES ('2059', '0', '0', '0', '0'); 
+INSERT INTO `augments` VALUES ('2060', '0', '0', '0', '0'); 
+INSERT INTO `augments` VALUES ('2061', '0', '0', '0', '0'); 
+INSERT INTO `augments` VALUES ('2062', '0', '0', '0', '0'); 
+INSERT INTO `augments` VALUES ('2063', '0', '0', '0', '0'); 
+INSERT INTO `augments` VALUES ('2064', '0', '0', '0', '0'); 
+INSERT INTO `augments` VALUES ('2065', '0', '0', '0', '0'); 
+INSERT INTO `augments` VALUES ('2066', '0', '0', '0', '0'); 
+INSERT INTO `augments` VALUES ('2067', '0', '0', '0', '0'); 
+INSERT INTO `augments` VALUES ('2068', '0', '0', '0', '0'); 
+INSERT INTO `augments` VALUES ('2069', '0', '0', '0', '0'); 
+INSERT INTO `augments` VALUES ('2070', '0', '0', '0', '0'); 
+INSERT INTO `augments` VALUES ('2071', '0', '0', '0', '0'); 
+INSERT INTO `augments` VALUES ('2072', '0', '0', '0', '0'); 
+INSERT INTO `augments` VALUES ('2073', '0', '0', '0', '0'); 
+INSERT INTO `augments` VALUES ('2074', '0', '0', '0', '0'); 
+INSERT INTO `augments` VALUES ('2075', '0', '0', '0', '0'); 
+INSERT INTO `augments` VALUES ('2076', '0', '0', '0', '0'); 
+INSERT INTO `augments` VALUES ('2077', '0', '0', '0', '0'); 
+INSERT INTO `augments` VALUES ('2078', '0', '0', '0', '0'); 
+INSERT INTO `augments` VALUES ('2079', '0', '0', '0', '0'); 
+INSERT INTO `augments` VALUES ('2080', '0', '0', '0', '0'); 
+INSERT INTO `augments` VALUES ('2081', '0', '0', '0', '0'); 
+INSERT INTO `augments` VALUES ('2082', '0', '0', '0', '0'); 
+INSERT INTO `augments` VALUES ('2083', '0', '0', '0', '0'); 
+INSERT INTO `augments` VALUES ('2084', '0', '0', '0', '0'); 
+INSERT INTO `augments` VALUES ('2085', '0', '0', '0', '0'); 
+INSERT INTO `augments` VALUES ('2086', '0', '0', '0', '0'); 
+INSERT INTO `augments` VALUES ('2087', '0', '0', '0', '0'); 
+INSERT INTO `augments` VALUES ('2088', '0', '0', '0', '0'); 
+INSERT INTO `augments` VALUES ('2089', '0', '0', '0', '0'); 
+INSERT INTO `augments` VALUES ('2090', '0', '0', '0', '0'); 
+INSERT INTO `augments` VALUES ('2091', '0', '0', '0', '0'); 
+INSERT INTO `augments` VALUES ('2092', '0', '0', '0', '0'); 
+INSERT INTO `augments` VALUES ('2093', '0', '0', '0', '0'); 
+INSERT INTO `augments` VALUES ('2094', '0', '0', '0', '0'); 
+INSERT INTO `augments` VALUES ('2095', '0', '0', '0', '0'); 
+INSERT INTO `augments` VALUES ('2096', '0', '0', '0', '0'); 
+INSERT INTO `augments` VALUES ('2097', '0', '0', '0', '0'); 
+INSERT INTO `augments` VALUES ('2098', '0', '0', '0', '0'); 
+INSERT INTO `augments` VALUES ('2099', '0', '0', '0', '0'); 
+INSERT INTO `augments` VALUES ('2100', '0', '0', '0', '0'); 

@@ -80,9 +80,38 @@ end;
 -----------------------------------
 
 function onMobDeath(mob, killer)
-  printf("Mob Died");
-	
+    printf("Mob Died");
+    if (killer:getObjType() == TYPE_PET) then
+        local master = killer:getMaster();
+		local party = master:getParty();
+		if (party ~= nil) then
+		    for i,v in ipairs(party) do
+			    if (v:getCurrentMission(TOAU) == THE_BLACK_COFFIN and v:getVar("AhtUrganStatus") == 1) then
+                    v:setVar("AhtUrganStatus", 2);
+			        v:startEvent(102);
+				end
+			end
+		else
+		    master:startEvent(102);
+		end
+	elseif (killer:getObjType() == TYPE_PC) then
+	    local party = killer:getParty();
+		if (party ~= nil) then
+		    for i,v in ipairs(party) do
+			    if (v:getCurrentMission(TOAU) == THE_BLACK_COFFIN and v:getVar("AhtUrganStatus") == 1) then
+                    v:setVar("AhtUrganStatus", 2);
+			        v:startEvent(102);
+				end
+			end
+		else
+		    if (killer:getCurrentMission(TOAU) == THE_BLACK_COFFIN and killer:getVar("AhtUrganStatus") == 1) then
+		        killer:startEvent(102);
+				killer:setVar("AhtUrganStatus", 2);
+			end
+		end
+	end
 end;
+
 
 -----------------------------------
 -- onMobDespawn

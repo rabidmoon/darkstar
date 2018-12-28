@@ -66,8 +66,16 @@ local abuse = player:getVar("AHexploit");
 			
 			
 			
-	player:setVar("Player_Tips",1);			
-	end	
+	    player:setVar("Player_Tips",1);
+        local besieged = GetServerVariable("Besieged_Horde");		
+     	if (besieged > 0 and zone == 48) then
+	        printf("Apply Besieged");
+	        player:addStatusEffect(EFFECT_BESIEGED,3,3,3600);
+	    end
+		
+
+    end	
+
 	
 	
 	if (player:hasKeyItem(PORTAL_CHARM) == false) then
@@ -81,13 +89,28 @@ local abuse = player:getVar("AHexploit");
 
     if (zoning) then -- Things checked ONLY during zone in go here.
         -- Nothing here yet :P
+		printf("Zoning");
+		local prevZone = player:getPreviousZone();
 		local besieged = GetServerVariable("Besieged_Horde");
 		if ((player:getObjType() == TYPE_PC) and (player:hasStatusEffect(EFFECT_DYNA_RESTRICTION)) and (zone ~= 135) and (zone ~= 134) and (zone ~= 185) and (zone ~= 186) and (zone ~= 187) and (zone ~= 188)) then
 		player:delStatusEffect(EFFECT_DYNA_RESTRICTION);
 	    end	
 	    if ((player:getObjType() == TYPE_PC) and (zone == 48) and (besieged > 0)) then
-            player:addStatusEffect(EFFECT_BESIEGED,3,0,3600);
-        end			 
+		    printf("ADD BESEIGED ICON");
+            player:addStatusEffect(EFFECT_BESIEGED,3,3,3600);
+        end	
+   	    if ((prevZone == 48) and (player:hasStatusEffect(EFFECT_BESIEGED))) then
+		    player:delStatusEffect(EFFECT_BESIEGED);
+		end
+		if ((prevZone >= 73 and  prevZone <= 76)) then
+		    player:setVar("1st_Floor_NM",0);
+	        player:setVar("2nd_Floor_NM",0);
+	        player:setVar("3rd_Floor_NM",0);
+	        player:setVar("4th_Floor_NM",0);
+	        player:setVar("5th_Floor_NM",0);
+	        player:setVar("6th_Floor_NM",0);
+		    player:setVar("Salvage_Floor",0);
+		end
     end
 
     -- Things checked BOTH during logon AND zone in below this line.

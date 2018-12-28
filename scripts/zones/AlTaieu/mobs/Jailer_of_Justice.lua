@@ -19,7 +19,7 @@ end;
 -----------------------------------
 
 function onMobSpawn(mob)
-    mob:setLocalVar("PartySize",6);  
+    mob:setLocalVar("PartySize",8);  
 end;
 
 -----------------------------------
@@ -54,12 +54,13 @@ end;
 
 function onMobDeath(mob, killer)
 	if (killer:getObjType() == TYPE_PET) then
+	    local player = killer:getMaster();
         player:setVar("Justice_Win",1);
 	    player:addCurrency('zeni_point',700);
 	    player:PrintToPlayer("You obtain 700 Zeni Points.", 0x15);	
     elseif (killer:getObjType() == TYPE_PC) then
-        player:setVar("Justice_Win",1);
-	    player:addCurrency('zeni_point',700);
-	    player:PrintToPlayer("You obtain 700 Zeni Points.", 0x15);		
+        killer:setVar("Justice_Win",1);
+	    killer:addCurrency('zeni_point',700);
+	    killer:PrintToPlayer("You obtain 700 Zeni Points.", 0x15);		
     end
 end;

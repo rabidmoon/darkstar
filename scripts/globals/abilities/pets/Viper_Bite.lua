@@ -28,6 +28,15 @@ function onPetAbility(target, pet, skill)
 	local mnd_wsc = 0;
     skill:setSkillchain(38);
 	
+	local basew = pet:getWeaponDmg();
+	local basedex = pet:getStat(MOD_DEX);
+	printf("Base DEX:");
+	print(basedex);
+	if (pet:hasStatusEffect(EFFECT_TRUST_SNEAK_ATTACK)) then
+	    pet:setDamage(basedex + basew);
+		basemod = 3;
+	end
+	
 	
 
 

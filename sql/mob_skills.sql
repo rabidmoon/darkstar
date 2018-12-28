@@ -992,7 +992,7 @@ INSERT INTO `mob_skills` VALUES (943,801,'Gate_of_Tartarus',0,7.0,2000,1500,4,0,
 INSERT INTO `mob_skills` VALUES (944,804,'Namas_Arrow',0,18.0,2000,1500,4,0,0,0);          -- Animated_Longbow
 INSERT INTO `mob_skills` VALUES (945,805,'Coronach',0,18.0,2000,1500,4,0,0,0);            -- Animated_Gun
 INSERT INTO `mob_skills` VALUES (946,1617,'Trust_Ranged_Attack',0,15.0,2000,1500,4,0,0,0);
--- INSERT INTO `mob_skills` VALUES (947,947,'Ranged_Attack',0,7.0,2000,1500,4,0,0,0);
+INSERT INTO `mob_skills` VALUES (947,1617,'Ranged_Attack',0,15.0,2000,0,4,0,0,0);  -- Najelith Ranged Attack
 -- INSERT INTO `mob_skills` VALUES (948,948,'Ranged_Attack',0,7.0,2000,1500,4,0,0,0);
 -- INSERT INTO `mob_skills` VALUES (949,949,'Ranged_Attack',0,7.0,2000,1500,4,0,0,0);
 -- INSERT INTO `mob_skills` VALUES (950,950,'Ranged_Attack',0,7.0,2000,1500,4,0,0,0);
@@ -1823,7 +1823,7 @@ INSERT INTO `mob_skills` VALUES (1772,1386,'Fulmination',1,32.0,2000,1500,4,0,0,
 -- INSERT INTO `mob_skills` VALUES (1775,1775,'Reactive_Shield',0,7.0,2000,1500,4,0,0,0);
 -- INSERT INTO `mob_skills` VALUES (1776,1776,'Roller_Chain',0,7.0,2000,1500,4,0,0,0);
 -- INSERT INTO `mob_skills` VALUES (1777,1777,'Choke_Chain',0,7.0,2000,1500,4,0,0,0);
--- INSERT INTO `mob_skills` VALUES (1778,1778,'Reinforcements',0,7.0,2000,1500,4,0,0,0);
+INSERT INTO `mob_skills` VALUES (1778,1778,'Reinforcements',0,7.0,2000,1500,4,0,0,0);
 -- INSERT INTO `mob_skills` VALUES (1779,1779,'Biomagnet',0,7.0,2000,1500,4,0,0,0);
 -- INSERT INTO `mob_skills` VALUES (1780,1780,'Astral_Gate',0,7.0,2000,1500,4,0,0,0);
 -- INSERT INTO `mob_skills` VALUES (1781,1781,'Warp',0,7.0,2000,1500,4,0,0,0);
@@ -1832,7 +1832,7 @@ INSERT INTO `mob_skills` VALUES (1772,1386,'Fulmination',1,32.0,2000,1500,4,0,0,
 -- INSERT INTO `mob_skills` VALUES (1784,1784,'Rail_Cannon',0,7.0,2000,1500,4,0,0,0);
 INSERT INTO `mob_skills` VALUES (1785,1376,'PL_Restoral',0,7.0,2000,1500,1,0,0,0);
 -- INSERT INTO `mob_skills` VALUES (1786,1786,'Armature',0,7.0,2000,1500,4,0,0,0);
--- INSERT INTO `mob_skills` VALUES (1787,1787,'Artificial_Gravity',0,7.0,2000,1500,4,0,0,0);
+INSERT INTO `mob_skills` VALUES (1787,1387,'Artificial_Gravity',0,7.0,2000,1500,4,0,0,0);
 -- INSERT INTO `mob_skills` VALUES (1788,1788,'Antigravity',0,7.0,2000,1500,4,0,0,0);
 INSERT INTO `mob_skills` VALUES (1789,1373,'PL_Rail_Cannon',1,15.0,2000,1500,4,0,0,0);
 -- INSERT INTO `mob_skills` VALUES (1790,1790,'Artificial_Gravity',0,7.0,2000,1500,4,0,0,0);
@@ -3805,12 +3805,12 @@ INSERT INTO `mob_skills` VALUES (3756,3756,'Weapon_Bash',0,7.0,2000,1500,4,0,0,0
 INSERT INTO `mob_skills` VALUES (3757,3757,'Last_Resort',0,7.0,2000,1500,4,0,0,0);
 -- INSERT INTO `mob_skills` VALUES (3757,3757,'#2221',0,7.0,2000,1500,4,0,0,0);
 -- INSERT INTO `mob_skills` VALUES (3758,3758,'#2222',0,7.0,2000,1500,4,0,0,0);
--- INSERT INTO `mob_skills` VALUES (3759,3759,'#2223',0,7.0,2000,1500,4,0,0,0);
+INSERT INTO `mob_skills` VALUES (3759,3759,'Flaming_Arrow',0,15.0,2000,1500,4,0,0,0);
 INSERT INTO `mob_skills` VALUES (3760,3760,'Chain_Affinity',0,7.0,2000,1500,4,0,0,0);
--- INSERT INTO `mob_skills` VALUES (3761,3761,'#2225',0,7.0,2000,1500,4,0,0,0);
+INSERT INTO `mob_skills` VALUES (3761,3761,'Blast_Arrow',0,15.0,2000,1500,4,0,0,0);
 INSERT INTO `mob_skills` VALUES (3762,3762,'Cyclone',0,7.0,2000,1500,4,0,0,0);
-INSERT INTO `mob_skills` VALUES (3763,3763,'Sidewinder',0,7.0,2000,1500,4,0,0,0);
-INSERT INTO `mob_skills` VALUES (3764,3764,'Empyreal_Arrow',0,7.0,2000,1500,4,0,0,0);
+INSERT INTO `mob_skills` VALUES (3763,3763,'Sidewinder',0,15.0,2000,1500,4,0,0,0);
+INSERT INTO `mob_skills` VALUES (3764,3764,'Empyreal_Arrow',0,15.0,2000,1500,4,0,0,0);
 INSERT INTO `mob_skills` VALUES (3765,3765,'Sharpshot',0,7.0,2000,1500,4,0,0,0);
 INSERT INTO `mob_skills` VALUES (3766,3766,'Trust_Barrage',0,7.0,2000,1500,4,0,0,0);
 INSERT INTO `mob_skills` VALUES (3767,3767,'Solace',0,7.0,2000,1500,4,0,0,0);
@@ -3849,11 +3849,11 @@ INSERT INTO `mob_skills` VALUES (3795,3795,'Stardiver',0,7.0,2000,1500,4,0,0,0);
 INSERT INTO `mob_skills` VALUES (3800,3800,'Viper_Bite',0,7.0,2000,1500,4,0,0,0);
 INSERT INTO `mob_skills` VALUES (3801,3801,'Sneak_Attack',0,7.0,2000,1500,1,0,0,0);
 INSERT INTO `mob_skills` VALUES (3802,3802,'Trick_Attack',0,7.0,2000,1500,4,0,0,0);
--- INSERT INTO `mob_skills` VALUES (3803,3803,'#2267',0,7.0,2000,1500,4,0,0,0);
--- INSERT INTO `mob_skills` VALUES (3804,3804,'#2268',0,7.0,2000,1500,4,0,0,0);
--- INSERT INTO `mob_skills` VALUES (3805,3805,'#2269',0,7.0,2000,1500,4,0,0,0);
--- INSERT INTO `mob_skills` VALUES (3806,3806,'#2270',0,7.0,2000,1500,4,0,0,0);
--- INSERT INTO `mob_skills` VALUES (3807,3807,'#2271',0,7.0,2000,1500,4,0,0,0);
+INSERT INTO `mob_skills` VALUES (3803,3803,'Slice',0,7.0,2000,1500,4,0,0,0);
+INSERT INTO `mob_skills` VALUES (3804,3804,'Nightmare_Scythe',0,7.0,2000,1500,4,0,0,0);
+INSERT INTO `mob_skills` VALUES (3805,3805,'Guillotine',0,7.0,2000,1500,4,0,0,0);
+INSERT INTO `mob_skills` VALUES (3806,3806,'Cross_Reaper',0,7.0,2000,1500,4,0,0,0);
+INSERT INTO `mob_skills` VALUES (3807,3807,'Spiral_Hell',0,7.0,2000,1500,4,0,0,0);
 INSERT INTO `mob_skills` VALUES (3808,3808,'Combo',0,7.0,2000,1500,4,0,0,0);
 INSERT INTO `mob_skills` VALUES (3809,3809,'One_Inch_Punch',0,7.0,2000,1500,4,0,0,0);
 INSERT INTO `mob_skills` VALUES (3810,3810,'Raing_Fists',0,7.0,2000,1500,4,0,0,0);
