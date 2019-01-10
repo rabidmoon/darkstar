@@ -20,4 +20,17 @@
         TATEN_BILTEN_SHOP_DIALOG  = 7845; -- Weave something beautiful with the materials you buy here, okay?
         CHOCOBO_HAPPY             = 7848; -- The chocobo appears to be extremely happy.
         SANCTION                  = 7973; -- You have received the Empire's Sanction.
-    
+        -- Besieged Texts
+			 MAMOOL_MARCH = 8084;
+              TROLL_MARCH = 8085;          
+             UNDEAD_MARCH = 8086;
+             MAMOOL_START = 8087;
+			  TROLL_START = 8088; 
+             UNDEAD_START = 8089;  -- Al Zahbi is in Besieged!
+           BESIEGED_START = 8090;  -- Al Zahbi is in Besieged!
+		      MAMOOL_LOSE = 8093;
+		       TROLL_LOSE = 8094;
+		      UNDEAD_LOSE = 8095;  -- Undead has retreated		  
+			   MAMOOL_WIN = 8098;
+			    TROLL_WIN = 8099;
+               UNDEAD_WIN = 8100;  -- The Hall of Binding has been breached, The undead swarp has taken the astral candy

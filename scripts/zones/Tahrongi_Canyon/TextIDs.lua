@@ -1,5 +1,5 @@
     
-        CONQUEST_BASE                = 0,    -- Tallying conquest results...
+        CONQUEST_BASE                = 0;    -- Tallying conquest results...
         ITEM_CANNOT_BE_OBTAINED      = 6563; -- You cannot obtain the <item>. Come back after sorting your inventory.
         ITEM_OBTAINED                = 6569; -- Obtained: <item>.
         GIL_OBTAINED                 = 6570; -- Obtained <number> gil.

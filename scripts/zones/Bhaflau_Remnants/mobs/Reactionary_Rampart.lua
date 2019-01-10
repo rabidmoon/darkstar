@@ -160,8 +160,37 @@ end;
 
 function onMobDeath(mob, killer)
 	printf("MOB IS DOWN");
-
-	killer:startEvent(4);
+	-- Despawn mobs
+    local mobid = mob:getID();
+	local mobone = mob:getLocalVar("Mob1");
+	local mobtwo = mob:getLocalVar("Mob2");
+	local mobthree = mob:getLocalVar("Mob3");
+	local mobfour = mob:getLocalVar("Mob4");
+	local mobfive = mob:getLocalVar("Mob5");
+	local nm = mob:getLocalVar("RampNM",17084698);	
+	
+	if (GetMobAction(mobone) > 0) then
+	    GetMobByID(mobone):setHP(0);
+	end	
+	if (GetMobAction(mobtwo) > 0) then
+	    GetMobByID(mobtwo):setHP(0);
+	end	
+	if (GetMobAction(mobthree) > 0) then
+	    GetMobByID(mobthree):setHP(0);
+	end	
+	if (GetMobAction(mobfour) > 0) then
+	    GetMobByID(mobfour):setHP(0);
+	end	
+	if (GetMobAction(mobfive) > 0) then
+	    GetMobByID(mobfive):setHP(0);
+	end	
+	if (GetMobAction(nm) > 0) then
+	    GetMobByID(nm):setHP(0);
+	end		
+	
+    if (killer ~= nil) then
+	    killer:startEvent(4);
+	end
 	    
 	
 	
@@ -177,4 +206,13 @@ function onEventUpdate(player,csid,option)
         player:setPos(posx,posy,posz);
     end
 --printf("RESULT: %u",option);
+end;
+
+function onEventFinish(player,csid,option)
+	local posx = player:getVar("Bhaflau_X");
+    local posy = player:getVar("Bhaflau_Y");
+	local posz = player:getVar("Bhaflau_Z");
+    if (csid == 4) then
+        player:setPos(posx,posy,posz);
+    end
 end;

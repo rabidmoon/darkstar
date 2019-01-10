@@ -797,7 +797,7 @@ end
 			player:messageSpecial(ITEM_OBTAINED, 18702);
 end	
 
-end
+
 	if (job == 17) and (trade:hasItemQty(18702, 1)) and trade:hasItemQty( 2489, 1 ) and level >= 71 and (player:getVar("CORMythicWeapon") == 3) then
              -- Complete the trade..
             player:tradeComplete();

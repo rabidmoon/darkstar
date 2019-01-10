@@ -36,13 +36,13 @@ function onMobDeath(mob, killer)
     local killy = mob:getYPos();
     local killz = mob:getZPos();
     local nm = 17084481; -- Mad Bomber
-    local chance = 90;
+    local chance = 100;
 
 	salvageChest(mob, killer)
 	if (killer:getObjType() ~= TYPE_PC) then
 	    local master = killer:getMaster();
 		local level = master:getVar("Salvage_Level");
-		if (level >= 30 and level <= 35 and GetMobAction(nm) == 0) then
+		if (level >= 40 and level <= 45 and GetMobAction(nm) == 0) then
             if (math.random(0,99) < chance) then 
                 master:PrintToPlayer("You feel an unknown presense...",0x15);
 	            SpawnMob(nm):setPos(killx+1,killy,killz);
@@ -54,7 +54,7 @@ function onMobDeath(mob, killer)
     else
         local plvl = killer:getVar("Salvage_Level");
 		printf("Salvage Level %u",plvl);
-		if (plvl >= 30 and plvl <= 35) then
+		if (plvl >= 40 and plvl <= 45) then
             if (math.random(0,99) < chance) then 
 	            if (killer:getObjType() == TYPE_PC) then
                     killer:PrintToPlayer("You feel an unknown presense...",0x15);

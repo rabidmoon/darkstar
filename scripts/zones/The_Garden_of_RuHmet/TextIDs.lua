@@ -12,5 +12,4 @@
         SHEER_ANIMOSITY         = 7757; -- <name> is enveloped in sheer animosity!
         HOMEPOINT_SET           = 7762; -- Home point set!
     
-    mob =
     

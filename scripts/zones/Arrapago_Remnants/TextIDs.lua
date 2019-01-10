@@ -17,28 +17,4 @@
         DOOR_IS_SEALED_MYSTERIOUS  = 7464; -- The door is sealed by some mysterious force...
         CELL_OFFSET                = 7212; -- Main Weapon/Sub-Weapon restriction removed.
     
-    mob =
-    
-        [1] = 
-            [2] = 
-                mobs_start = 17080323,
-                mobs_end = 17080395,
-                rampart = 17080321,
-                sabotender = 17080322,
-            }
-        
-        [2] = 
-            [1] = 
-                mobs_start = 17080421,
-                mobs_end = 17080430,
-            
-            [2] = 
-                mobs_start = 17080413,
-                mobs_end = 17080420,
-            
-            [3] = 
-                mobs_start = 17080404,
-                mobs_end = 17080412,
-            
-            [4] = 
-                mobs_start = 17080396,
+  

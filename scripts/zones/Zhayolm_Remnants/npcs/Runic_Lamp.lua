@@ -32,7 +32,7 @@ printf("RESULT: %u",option);
     -- exit
 	local duration = player:getStatusEffect(EFFECT_LEVEL_RESTRICTION):getDuration();
 	if (csid >= 205 and csid <= 206 and option == 1) then
-	    player:setVar("Bhaflau_Floor",3);
+	    player:setVar("Zhayolm_Floor",4);
 		player:PrintToPlayer("Floor 4 - Max Cap: 55", 0x15);
 		player:setVar("Salvage_Level",45);
         player:addStatusEffect(EFFECT_LEVEL_RESTRICTION,45,3,duration);	
