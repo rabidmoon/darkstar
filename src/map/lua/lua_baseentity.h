@@ -588,6 +588,7 @@ public:
 
     int32 setPendingMessage(lua_State* L);
     int32 getConfrontationEffect(lua_State* L);
+    int32 hasHate(lua_State* L);	
     int32 copyConfrontationEffect(lua_State* L);    // copy confrontation effect, param = targetEntity:getShortID()
 	int32 isAlive(lua_State* L);
 	int32 engage(lua_State* L);

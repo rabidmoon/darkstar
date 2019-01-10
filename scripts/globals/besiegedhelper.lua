@@ -176,9 +176,9 @@ end;
 
 function undeadStrength(mob)
     local level = GetServerVariable("UndeadLevel");
-	local hpboost = (8 * level) + 30;
+	local hpboost = (10 * level) + 30;
 	local attboost = (50 * level);
-	local defboost = (70 * level);
+	local defboost = (80 * level);
 	local accboost = (50 * level);
 	local evaboost = (15 * level) + 30;
 	
@@ -192,9 +192,9 @@ end
 
 function trollStrength(mob)
     local level = GetServerVariable("TrollLevel");
-	local hpboost = (8 * level) + 30;
+	local hpboost = (10 * level) + 30;
 	local attboost = (50 * level);
-	local defboost = (70 * level);
+	local defboost = (80 * level);
 	local accboost = (50 * level);
 	local evaboost = (15 * level) + 30;
 	local magicatk = (4 * level);
@@ -210,9 +210,9 @@ end
 
 function mamoolStrength(mob)
     local level = GetServerVariable("MamoolLevel");
-	local hpboost = (8 * level) + 30;
+	local hpboost = (10 * level) + 30;
 	local attboost = (50 * level);
-	local defboost = (70 * level);
+	local defboost = (80 * level);
 	local accboost = (50 * level);
 	local evaboost = (15 * level) + 30;
 	local magicatk = (4 * level);
@@ -311,9 +311,9 @@ function undeadVictory(mob,killer)
 	kills = kills + 1;
 	SetServerVariable("UndeadKills",kills);
 	if (level <= 4) then
-	    win = 35;
+	    win = 15;
 	elseif (level > 4) then
-        win = 50;	
+        win = 20;	
 	end
 	
 	printf("Current Undead Kills %u",kills);
@@ -404,9 +404,9 @@ function trollLoss(mob,killer) -- Victory for Al Zahbi Loss for Trolls
 	kills = kills + 1;
 	SetServerVariable("TrollKills",kills);
 	if (level <= 4) then
-	    win = 35;
+	    win = 15;
 	elseif (level > 4) then
-        win = 50;	
+        win = 20;	
 	end
 	
 	printf("Current Kills %u",kills);
@@ -500,9 +500,9 @@ function mamoolLoss(mob,killer) -- Victory for Al Zahbi Loss for Mamool
 	kills = kills + 1;
 	SetServerVariable("MamoolKills",kills);
 	if (level <= 4) then
-	    win = 35;
+	    win = 15;
 	elseif (level > 4) then
-        win = 50;	
+        win = 20;	
 	end
 	
 	printf("Current Kills %u",kills);

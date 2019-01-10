@@ -284,8 +284,27 @@ INSERT INTO `abilities` VALUES ('294', 'deus_ex_automata', '18', '5', '1', '300'
 INSERT INTO `abilities` VALUES ('304', 'konzen-ittai', '12', '65', '4', '180', '132', '529', '0', '36', '4.4', '0', '1', '300', '0', '0','ABYSSEA');
 INSERT INTO `abilities` VALUES ('311', 'stymie', '5', '96', '1', '3600', '254', '0', '0', '275', '20.0', '0', '1', '0', '0', '0','SOA');
 INSERT INTO `abilities` VALUES ('319', 'mikage', '13', '96', '1', '3600', '254', '0', '0', '283', '20.0', '0', '1', '0', '0', '0','SOA');
-INSERT INTO `abilities` VALUES ('327', 'bolster', '21', '0', '1', '3600', '0', '0', '0', '33', '20.0', '0', '1', '300', '0', '0',null);
-INSERT INTO `abilities` VALUES ('329', 'full_circle', '21', '0', '5', '10', '0', '0', '0', '33', '20.0', '0', '1', '300', '0', '0',null);
+INSERT INTO `abilities` VALUES ('327', 'bolster', '21', '1', '1', '3600', '0', '0', '0', '303', '20.0', '0', '1', '300', '0', '0',null);
+INSERT INTO `abilities` VALUES ('329', 'full_circle', '21', '0', '5', '10', '0', '0', '0', '83', '20.0', '0', '1', '300', '0', '0',null);
+INSERT INTO `abilities` VALUES ('330', 'lasting_emanation', '21', '25', '1', '300', '0', '0', '0', '307', '20.0', '0', '1', '300', '0', '0',null);
+INSERT INTO `abilities` VALUES ('331', 'ecliptic_attrition', '21', '25', '1', '300', '0', '0', '0', '307', '20.0', '0', '1', '300', '0', '0',null);
+INSERT INTO `abilities` VALUES ('332', 'collimated_fervor', '21', '40', '1', '300', '0', '0', '0', '83', '20.0', '0', '1', '300', '0', '0',null);
+INSERT INTO `abilities` VALUES ('333', 'life_cycle', '21', '5', '50', '1', '300', '0', '0', '83', '20.0', '0', '1', '300', '0', '0',null);
+INSERT INTO `abilities` VALUES ('334', 'blaze_of_glory', '21', '60', '1', '300', '0', '0', '0', '308', '20.0', '0', '1', '300', '0', '0',null);
+INSERT INTO `abilities` VALUES ('335', 'dematerialize', '21', '70', '1', '300', '0', '0', '0', '310', '20.0', '0', '1', '300', '0', '0',null);
+-- INSERT INTO `abilities` VALUES ('336', 'theurgic_focus', '21', '0', '5', '300', '0', '0', '0', '83', '20.0', '0', '1', '300', '0', '0',null);
+INSERT INTO `abilities` VALUES ('337', 'concentric_pulse', '21', '55', '1', '300', '0', '0', '0', '83', '20.0', '0', '1', '300', '0', '0',null);
+INSERT INTO `abilities` VALUES ('338', 'mending_halation', '21', '45', '1', '300', '0', '0', '0', '83', '20.0', '0', '1', '300', '0', '0',null);
+-- 330 lasting 284
+-- Eclptic attriction 307
+-- collimated fervor
+-- lifecycle
+-- blaze of glory 308
+-- Demateralize 310
+-- Theruigic focus
+-- Concentric Pulse
+-- Mending Halatic whatever
+-- 338 Radial Arcana
 -- rune fencer
 INSERT INTO `abilities` VALUES ('340', 'elemental_sforzo', '22', '0', '1', '3600', '0', '0', '0', '302', '20.0', '0', '0', '0', '0', '0','SOA');
 INSERT INTO `abilities` VALUES ('341', 'Rune_enchantment', '22', '5', '1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0','SOA');

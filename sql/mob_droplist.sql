@@ -3752,6 +3752,7 @@ INSERT INTO `mob_droplist` VALUES (651,0,925,110);
 INSERT INTO `mob_droplist` VALUES (651,2,4370,0);
 INSERT INTO `mob_droplist` VALUES (651,0,4370,210);
 INSERT INTO `mob_droplist` VALUES (652,0,2612,1000);
+-- INSERT INTO `mob_droplist` VALUES (652,0,2373,1000);  -- Monkey Wine
 INSERT INTO `mob_droplist` VALUES (652,0,11377,410);
 INSERT INTO `mob_droplist` VALUES (652,0,11377,210);
 INSERT INTO `mob_droplist` VALUES (652,0,16343,330);
@@ -5081,6 +5082,7 @@ INSERT INTO `mob_droplist` VALUES (913,0,18595,390);
 INSERT INTO `mob_droplist` VALUES (913,0,18595,190);
 INSERT INTO `mob_droplist` VALUES (913,0,19032,560);
 INSERT INTO `mob_droplist` VALUES (913,0,19036,540);
+-- INSERT INTO `mob_droplist` VALUES (913,0,2373,1000);  -- Monkey Wine
 INSERT INTO `mob_droplist` VALUES (914,0,928,270);
 INSERT INTO `mob_droplist` VALUES (914,0,17316,80);
 INSERT INTO `mob_droplist` VALUES (915,2,928,0);
@@ -8346,6 +8348,7 @@ INSERT INTO `mob_droplist` VALUES (1536,0,19032,600);
 INSERT INTO `mob_droplist` VALUES (1536,0,19037,560);
 INSERT INTO `mob_droplist` VALUES (1536,0,19153,280);
 INSERT INTO `mob_droplist` VALUES (1536,0,19153,140);
+-- INSERT INTO `mob_droplist` VALUES (1536,0,2573,1000);   -- Monkey Wine
 INSERT INTO `mob_droplist` VALUES (1537,0,1450,10);
 INSERT INTO `mob_droplist` VALUES (1537,0,1453,10);
 INSERT INTO `mob_droplist` VALUES (1537,0,1456,10);

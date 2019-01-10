@@ -868,6 +868,11 @@ void CMagicState::CharAfterFinish()
     // only skill up if the effect landed
     if(m_PSpell->tookEffect()){
         charutils::TrySkillUP(PChar, (SKILLTYPE)m_PSpell->getSkillType(), m_PTarget->GetMLevel());
+		if (m_PSpell->getSkillType() == SKILL_GEO)
+		{
+		    charutils::TrySkillUP(PChar, SKILL_GEO, m_PTarget->GetMLevel());
+            charutils::TrySkillUP(PChar, SKILL_HND, m_PTarget->GetMLevel());		   
+		}
         if (m_PSpell->getSkillType() == SKILL_SNG)
         {
             CItemWeapon* PItem = (CItemWeapon*)PChar->getEquip(SLOT_RANGED);

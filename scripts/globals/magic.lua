@@ -19,6 +19,7 @@ require("scripts/globals/utils")
     WIND_SKILL             = 42;
     BLUE_SKILL             = 43;
 	GEO_SKILL              = 44;
+	BEL_SKILL              = 45;
 
     FIRESDAY      = 0;
     EARTHSDAY     = 1;
@@ -443,9 +444,26 @@ function getMagicHitRate(caster, target, skillType, element, percentBonus, bonus
     if (bonusAcc == nil) then
         bonusAcc = 0;
     end
+	
+	local cf = 1;
+	if (caster:hasStatusEffect(EFFECT_COLLIMATED_FERVOR)) then
+	    cf = 1.5;
+	end
+
+	-- Cardinal Chant modifier for Magic Attack Bonus Mob is to the South
+	local rot = caster:getRotPos();
+	local chant = caster:getMod(MOD_CARDINAL_CHANT);	
+	local chantacc = 0;
+	if (chant > 0 and rot >= 0 and rot <= 64) then
+	    if (spell:getID() >= 144 and spell:getID() <= 173) then -- Single Nukes
+		    chantacc = ((chant * 3) + 1) * cf;
+		elseif (spell:getID() >= 828 and spell:getID() <= 839) then -- ra Nukes
+		    chantacc = ((chant * 3) + 5) * cf;
+		end
+	end	
 
     -- Get the base acc (just skill + skill mod (79 + skillID = ModID) + magic acc mod)
-    local magicacc = caster:getMod(MOD_MACC) + caster:getILvlMacc();
+    local magicacc = caster:getMod(MOD_MACC) + caster:getILvlMacc() + chantacc;
 
     if (skillType ~= 0) then
 	    -- printf("MAX SKILL TYPE TRIGGERED");
@@ -775,6 +793,23 @@ function calculateMagicBurst(caster, spell, target)
             end
         end
     end
+	
+	-- Cardinal Chant modifier for Burst Bonus Mob is to the West
+	local cf = 1;
+	if (caster:hasStatusEffect(EFFECT_COLLIMATED_FERVOR)) then
+	    cf = 1.5;
+	end	
+	
+	
+	local rot = caster:getRotPos();
+	local chant = caster:getMod(MOD_CARDINAL_CHANT);
+	if (chant > 0 and rot >= 64 and rot <= 128) then
+	    if (spell:getID() >= 144 and spell:getID() <= 173) then -- Single Nukes
+		    burst = cf * (burst + ((chant * 5) / 100) + 0.2);
+		elseif (spell:getID() >= 828 and spell:getID() <= 839) then -- ra Nukes
+		    burst = cf * (burst + ((chant * 5) / 100) + 0.8);
+		end
+	end
 
     -- Add in Magic Burst Bonus Modifier
     if (burst > 1) then
@@ -866,9 +901,34 @@ function addBonuses(caster, spell, target, dmg, bonusmab)
         mabbonus = 1 + caster:getMod(MOD_ENH_DRAIN_ASPIR)/100;
 		-- print(mabbonus);
     else
+	    -- Cardinal Chant modifier for Magic Attack Bonus Mob is to the East
+	    local cf = 1;
+	    if (caster:hasStatusEffect(EFFECT_COLLIMATED_FERVOR)) then
+	        cf = 1.5;
+	    end		
+	    local rot = caster:getRotPos();
+	    local chant = caster:getMod(MOD_CARDINAL_CHANT);
+	    if (chant > 0 and rot >= 192 and rot <= 255) then
+	        if (spell:getID() >= 144 and spell:getID() <= 173) then -- Single Nukes
+		        bonusmab = (bonusmab + ((chant * 3) + 1)) * cf;
+		    elseif (spell:getID() >= 828 and spell:getID() <= 839) then -- ra Nukes
+		        bonusmab = (bonusmab + ((chant * 3) + 5)) * cf;
+		    end
+	    end
+	
+	
         local mab = caster:getMod(MOD_MATT) + bonusmab;
+	    -- Cardinal Chant modifier for Magic Attack Bonus Mob is to the North		
+		local chantcrit = 0;
+	    if (chant > 0 and rot >= 128 and rot <= 192) then
+	        if (spell:getID() >= 144 and spell:getID() <= 173) then -- Single Nukes
+		        chantcrit = ((chant * 2) + 3) * cf;
+		    elseif (spell:getID() >= 828 and spell:getID() <= 839) then -- ra Nukes
+		        chantcrit = ((chant * 2) + 8) * cf;
+		    end
+	    end		
 
-        local mab_crit = caster:getMod(MOD_MAGIC_CRITHITRATE);
+        local mab_crit = caster:getMod(MOD_MAGIC_CRITHITRATE) + chantcrit;
         if( math.random(1,100) < mab_crit ) then
            mab = mab + ( 10 + caster:getMod(MOD_MAGIC_CRIT_DMG_INCREASE ) );
         end
@@ -1215,6 +1275,10 @@ function doElementalNuke(caster, spell, target, spellParams)
 	calculateCascade(caster,spell);
 	
 	DMG = DMG * bonus;
+	
+	if (caster:hasStatusEffect(EFFECT_COLLIMATED_FERVOR)) then
+	    caster:delStatusEffect(EFFECT_COLLIMATED_FERVOR);
+	end	
 
     return DMG;
 end
@@ -1342,43 +1406,207 @@ function outputMagicHitRateInfo()
 end;
 
 
-function doLuopanPotency(caster, target, spell)
+function doGeoPotency(caster, target, spell)
     -- Potency Table
 	local spellId = spell:getID();
-    local skill = target:getSkillLevel(GEO_SKILL);
+    local skill = caster:getSkillLevel(GEO_SKILL);
+	local bell = caster:getSkillLevel(BEL_SKILL);
+	printf("SKill is %u",skill);
+	printf("Bell Skill is %u",bell);
 	local potency = 1;
 	local geobonus = 0;  -- Future use to look at if specific Geomancy+ items are equipped;
+	local bolster = 1;
+	local pet = caster:getPet();
 	
-	-- Acumen
-	-- Attunement
-	-- Barrier
-	-- Stat
-	-- Fend
-	-- Focus
-	-- Fury
-	-- Haste
-	-- Languor
-	-- Paralysis
-	if (spellId == 800 or spellId == 770) then -- Poison
-	    potency = ((skill * 2) / 20);
-		potency = utils.clamp(potency, 1, 30);
-		potency = potency + geobonus;
-	end	
-	-- Precision
-	if (spellId == 800 or spellId == 770) then -- Refresh
-	    potency = ((skill * 2) / 120);
-		potency = utils.clamp(potency, 1, 6);
-		potency = potency + geobonus;
-	end
-		
-		
 	
 	-- Regen
+	if (spellId == 768 or spellId == 798) then 
+	    potency = ((skill + bell) / 20);
+		potency = utils.clamp(potency, 1, 30);
+		potency = (potency + geobonus) * bolster;
+	end	
+	-- Poison
+	if (spell:getID() == 769 or spell:getID() == 799) then
+	    potency = ((skill + bell) / 20);
+		potency = utils.clamp(potency, 1, 30);
+		potency = (potency + geobonus) * bolster;
+	end		
+	-- Refresh
+	if (spellId == 770 or spellId == 800) then
+	    potency = ((skill + bell) / 120);
+		potency = utils.clamp(potency, 1, 6);
+		potency = (potency + geobonus) * bolster;
+	end
+	-- Boost STR
+	if (spellId == 772 or spellId == 802) then
+	    potency = ((skill + bell) / 36);
+		potency = utils.clamp(potency, 1, 25);
+		potency = (potency + geobonus) * bolster;
+	end	
+	-- Boost DEX
+	if (spellId == 773 or spellId == 803) then
+	    potency = ((skill + bell) / 36);
+		potency = utils.clamp(potency, 1, 25);
+		potency = (potency + geobonus) * bolster;
+	end	
+	-- Boost VIT
+	if (spellId == 774 or spellId == 804) then
+	    potency = ((skill + bell) / 36);
+		potency = utils.clamp(potency, 1, 25);
+		potency = (potency + geobonus) * bolster;
+	end	
+	-- Boost AGI
+	if (spellId == 775 or spellId == 805) then
+	    potency = ((skill + bell) / 36);
+		potency = utils.clamp(potency, 1, 25);
+		potency = (potency + geobonus) * bolster;
+	end	
+	-- Boost INT
+	if (spellId == 776 or spellId == 806) then
+	    potency = ((skill + bell) / 36);
+		potency = utils.clamp(potency, 1, 25);
+		potency = (potency + geobonus) * bolster;
+	end	
+	-- Boost MND
+	if (spellId == 777 or spellId == 807) then
+	    potency = ((skill + bell) / 36);
+		potency = utils.clamp(potency, 1, 25);
+		potency = (potency + geobonus) * bolster;
+	end
+	-- Boost CHR
+	if (spellId == 778 or spellId == 808) then
+	    potency = ((skill + bell) / 36);
+		potency = utils.clamp(potency, 1, 25);
+		potency = (potency + geobonus) * bolster;
+	end		
+	-- Fury
+	if (spell:getID() == 779 or spell:getID() == 809) then 
+	    potency = ((skill + bell) / 26);
+		potency = utils.clamp(potency, 4, 35);
+		potency = (potency + geobonus) * bolster;
+	end
+	-- Barrier (Defense)
+	if (spell:getID() == 780 or spell:getID() == 810) then 
+	    potency = ((skill + bell) / 23);
+		potency = utils.clamp(potency, 9, 40);
+		potency = (potency + geobonus) * bolster;
+	end		
+	-- Acumen
+	if (spell:getID() == 781 or spell:getID() == 811) then -- Max of 20
+	    potency = ((skill + bell) / 45);
+		potency = utils.clamp(potency, 3, 20);
+		potency = (potency + geobonus) * bolster;
+	end		
+	-- Fend (Magic Def Bonus)
+	if (spell:getID() == 782 or spell:getID() == 812) then 
+	    potency = ((skill + bell) / 18);
+		potency = utils.clamp(potency, 1, 50);
+		potency = (potency + geobonus) * bolster;
+	end	
+	-- Precision (Accuracy)
+	if (spell:getID() == 783 or spell:getID() == 813) then 
+	    potency = ((skill + bell) / 18);
+		potency = utils.clamp(potency, 1, 50);
+		potency = (potency + geobonus) * bolster;
+	end		
+	-- Voidance
+	if (spell:getID() == 784 or spell:getID() == 814) then 
+	    potency = ((skill + bell) / 14);
+		potency = utils.clamp(potency, 1, 65);
+		potency = (potency + geobonus) * bolster;
+	end		
+	-- Focus (Magic Accuracy)
+	if (spell:getID() == 785 or spell:getID() == 815) then 
+	    potency = ((skill + bell) / 18);
+		potency = utils.clamp(potency, 1, 50);
+		potency = (potency + geobonus) * bolster;
+	end
+	-- Attunement
+	if (spell:getID() == 786 or spell:getID() == 816) then -- Max of 20
+	    potency = ((skill + bell) / 14);
+		potency = utils.clamp(potency, 1, 65);
+		potency = (potency + geobonus) * bolster;
+	end			
+	-- Wilt
+	if (spell:getID() == 787 or spell:getID() == 817) then -- NYI
+	    potency = ((skill + bell) / 36);
+		potency = utils.clamp(potency, 4, 25);
+		potency = (potency + geobonus) * bolster;
+	end			
+	-- Frailty
+	if (spell:getID() == 788 or spell:getID() == 818) then -- NYU
+	    potency = ((skill + bell) / 60);
+		potency = utils.clamp(potency, 3, 15);
+		potency = (potency + geobonus) * bolster;
+	end
+	-- Fade
+	if (spell:getID() == 789 or spell:getID() == 819) then  -- NYI
+	    potency = ((skill + bell) / 45);
+		potency = utils.clamp(potency, 5, 20);
+		potency = (potency + geobonus) * bolster;
+	end
+	-- Malaise
+	if (spell:getID() == 790 or spell:getID() == 820) then  -- NYI
+	    potency = ((skill + bell) / 60);
+		potency = utils.clamp(potency, 3, 15);
+		potency = (potency + geobonus) * bolster;
+	end
 	-- Slip
-	-- Slow
+	if (spell:getID() == 791 or spell:getID() == 821) then
+	    potency = ((skill + bell) / 65);
+		potency = utils.clamp(potency, 1, 14);
+		potency = (potency + geobonus) * bolster;
+	end
+	-- Torpor
+	if (spell:getID() == 792 or spell:getID() == 822) then
+	    potency = ((skill + bell) / 18);
+		potency = utils.clamp(potency, 1, 50);
+		potency = (potency + geobonus) * bolster;
+	end
+	-- Vex
+	if (spell:getID() == 793 or spell:getID() == 823) then
+	    potency = ((skill + bell) / 14);
+		potency = utils.clamp(potency, 1, 65);
+		potency = (potency + geobonus) * bolster;
+	end
+	-- Languor
+	if (spell:getID() == 794 or spell:getID() == 824) then  -- End
+	    potency = ((skill + bell) / 18);
+		potency = utils.clamp(potency, 1, 50);
+		potency = (potency + geobonus) * bolster;
+	end	
+	-- Slow	
+	if (spell:getID() == 795 or spell:getID() == 825) then
+	    potency = ((skill + bell) / 60);
+		potency = utils.clamp(potency, 1, 15);
+		potency = (potency + geobonus) * bolster;
+	end		
+	-- Paralysis
+	if (spell:getID() == 796 or spell:getID() == 826) then
+	    potency = ((skill + bell) / 60);
+		potency = utils.clamp(potency, 1, 15);
+		potency = (potency + geobonus) * bolster;
+	end		
+	-- Gravity
+	if (spellId == 797 or spellId == 826) then -- NYI
+	    potency = ((skill + bell) / 112);
+		potency = utils.clamp(potency, 4, 8);
+		potency = (potency + geobonus) * bolster;
+	end	
+	
+		
+		
+	
+
+	-- Slip
+
+	-- Boost STR
+
+	
 	-- Topor
 	-- Vex
-	-- Voidance
+
+	
 	-- Wilt
 
 
@@ -1388,32 +1616,97 @@ end
 -- outputMagicHitRateInfo();
 function spawnLuopan(caster, target, spell, geoBuff, dot, buffType)
     local pet = caster:getPet();
-    local potency = doLuopanPotency(caster, target, spell)
+    local potency = doGeoPotency(caster, target, spell)
 	local bufftype = buffType;
 	local finaldot = (dot + caster:getMainLvl())/4;
 	local pos = target:getPos();
-	    if (pet == nil) then
+	if (pet == nil) then
         caster:spawnPet(102);
-
+     
         pet = caster:getPet();
-		pet:setModelId(2855);
+		-- pet:setModelId(2856);
+		
 		pet:setPos(pos.x,pos.y,pos.z);
 		-- pull location of target
 		
 		pet:addStatusEffect(EFFECT_BIND,1,0,3000);
 		pet:setLocalVar("Potency",potency);
+		printf("Potency on spawn is %u",potency);
         pet:addStatusEffect(EFFECT_LUOPAN, 1, 3, 30000);
     end
 	
     
 	pet:setLocalVar("bufftype", buffType)
 	local hploss = math.floor((pet:getHP())/70);  -- Sets DoT
-	pet:setLocalVar(geoBuff,1);	  -- set buff type
+	pet:setLocalVar(geoBuff,1);	-- Turns the Buff ON
+	printf("THe current Luopan Bufftype is %u",bufftype);
 	pet:setLocalVar("dot",hploss);
 	
 	
+end
+
+function removeIndi(caster)
+    if (caster:hasStatusEffect(EFFECT_INDI_REGEN)) then
+	    caster:delStatusEffect(EFFECT_INDI_REGEN);
+	end
 	
+    if (caster:hasStatusEffect(EFFECT_INDI_REFRESH)) then
+	    caster:delStatusEffect(EFFECT_INDI_REFRESH);
+	end	
+
+	if (caster:hasStatusEffect(EFFECT_INDI_FURY)) then
+	    caster:delStatusEffect(EFFECT_INDI_FURY);
+	end	
+
+	if (caster:hasStatusEffect(EFFECT_INDI_BARRIER)) then
+	    caster:delStatusEffect(EFFECT_INDI_BARRIER);
+	end	
 	
+	if (caster:hasStatusEffect(EFFECT_INDI_ACUMEN)) then
+	    caster:delStatusEffect(EFFECT_INDI_ACUMEN);
+	end	
+
+	if (caster:hasStatusEffect(EFFECT_INDI_FEND)) then
+	    caster:delStatusEffect(EFFECT_INDI_FEND);
+	end	
+
+	if (caster:hasStatusEffect(EFFECT_INDI_PRECISION)) then
+	    caster:delStatusEffect(EFFECT_INDI_PRECISION);
+	end	
+
+	if (caster:hasStatusEffect(EFFECT_INDI_VOIDANCE)) then
+	    caster:delStatusEffect(EFFECT_INDI_VOIDANCE);
+	end		
+
+	if (caster:hasStatusEffect(EFFECT_INDI_FOCUS)) then
+	    caster:delStatusEffect(EFFECT_INDI_FOCUS);
+	end		
+	
+	if (caster:hasStatusEffect(EFFECT_INDI_PARALYSIS)) then
+	    caster:delStatusEffect(EFFECT_INDI_PARALYSIS);
+	end	
+
+	if (caster:hasStatusEffect(EFFECT_INDI_SLOW)) then
+	    caster:delStatusEffect(EFFECT_INDI_SLOW);
+	end	
+
+	if (caster:hasStatusEffect(EFFECT_INDI_POISON)) then
+	    caster:delStatusEffect(EFFECT_INDI_POISON);
+	end		
+end
+
+function bellCheck(caster,bell)
+    local bell = 0;
+    if (caster:getEquipID(SLOT_RANGED) == 21460) then
+        bell = 1;
+		-- printf("BELL IS EQUIPE");
+	else
+	    -- printf("BELL NOT EQUIPOPED");
+	    bell = 2;
+	end
+
+
+    return bell;
 end
 
 

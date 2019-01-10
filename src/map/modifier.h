@@ -611,6 +611,9 @@ enum MODIFIER
 	MOD_ELEMENTAL_CELERITY        = 840, // Quickens spells that are Elemental Magic Based
 	MOD_OCCULT_ACUMEN             = 841, // Adds % of TP based on spell cost
 	MOD_ALL_WSDMG_ALL_HITS	      = 842, // WS DMG +X%
+	MOD_CARDINAL_CHANT            = 850,
+	MOD_INDI_DURATION             = 851,
+	MOD_GEOMANCY                  = 852,
     // MOD_SPARE = 92, // stuff
     // MOD_SPARE = 93, // stuff
     // MOD_SPARE = 94, // stuff

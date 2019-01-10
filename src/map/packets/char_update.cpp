@@ -55,11 +55,57 @@ CCharUpdatePacket::CCharUpdatePacket(CCharEntity* PChar)
 	{
 		WBUFB(data,(0x38)) = 0x04;
 	}
-	if (PChar->StatusEffectContainer->HasStatusEffect(EFFECT_INDI_REFRESH))
+	// Enemey Geo Debuffs
+	if (PChar->StatusEffectContainer->HasStatusEffect(EFFECT_INDI_POISON))  // Water
+	{
+	    WBUFB(data, (0x58)) = 0x5D;	
+	}
+	if (PChar->StatusEffectContainer->HasStatusEffect(EFFECT_INDI_SLOW) || PChar->StatusEffectContainer->HasStatusEffect(EFFECT_INDI_SLIP))  // Earth
+    {
+	    WBUFB(data, (0x58)) = 0x5B;
+    }
+	if (PChar->StatusEffectContainer->HasStatusEffect(EFFECT_INDI_TOPOR) || PChar->StatusEffectContainer->HasStatusEffect(EFFECT_INDI_PARALYSIS))  // Ice
+    {
+	    WBUFB(data, (0x58)) = 0x59;
+    }
+	if (PChar->StatusEffectContainer->HasStatusEffect(EFFECT_INDI_LANGUOR))  // Dark
+	{
+	    WBUFB(data, (0x58)) = 0x57;	
+	}
+
+	
+	// Party Geo Buffs
+	
+	if (PChar->StatusEffectContainer->HasStatusEffect(EFFECT_INDI_REFRESH) || PChar->StatusEffectContainer->HasStatusEffect(EFFECT_INDI_REGEN) || 
+	    PChar->StatusEffectContainer->HasStatusEffect(EFFECT_INDI_ATTUNEMENT) || PChar->StatusEffectContainer->HasStatusEffect(EFFECT_INDI_CHR)) // Light
 	{
 	    WBUFB(data, (0x58)) = 0x56;
 	}
-
+    if (PChar->StatusEffectContainer->HasStatusEffect(EFFECT_INDI_FEND) || PChar->StatusEffectContainer->HasStatusEffect(EFFECT_INDI_MND)) // Water	
+	{
+	    WBUFB(data, (0x58)) = 0x55;
+	}
+    if (PChar->StatusEffectContainer->HasStatusEffect(EFFECT_INDI_PRECISION) || PChar->StatusEffectContainer->HasStatusEffect(EFFECT_INDI_DEX)) // Thunder	
+	{
+	    WBUFB(data, (0x58)) = 0x54;
+	}	
+    if (PChar->StatusEffectContainer->HasStatusEffect(EFFECT_INDI_BARRIER) || PChar->StatusEffectContainer->HasStatusEffect(EFFECT_INDI_VIT)) // Stone	
+	{
+	    WBUFB(data, (0x58)) = 0x53;
+	}	
+    if (PChar->StatusEffectContainer->HasStatusEffect(EFFECT_INDI_VOIDANCE) || PChar->StatusEffectContainer->HasStatusEffect(EFFECT_INDI_AGI)) // Wind	
+	{
+	    WBUFB(data, (0x58)) = 0x52;
+	}	
+    if (PChar->StatusEffectContainer->HasStatusEffect(EFFECT_INDI_ACUMEN) || PChar->StatusEffectContainer->HasStatusEffect(EFFECT_INDI_INT)) // Ice	
+	{
+	    WBUFB(data, (0x58)) = 0x51;
+	}
+    if (PChar->StatusEffectContainer->HasStatusEffect(EFFECT_INDI_FURY) || PChar->StatusEffectContainer->HasStatusEffect(EFFECT_INDI_STR)) // Fire	
+	{
+	    WBUFB(data, (0x58)) = 0x50;
+	}	
+	
     if (PChar->m_mentor >= 2)
         WBUFB(data,(0x38)) |= 0x10; // Mentor flag.
     if (PChar->m_isNewPlayer)

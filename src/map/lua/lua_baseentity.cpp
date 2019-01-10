@@ -111,6 +111,8 @@
 
 #include "../ai/ai_npc_dummy.h"
 #include "../ai/ai_mob_dummy.h"
+#include "../ai/ai_general.h"
+#include "../ai/helpers/targetfind.h"
 
 #include "../transport.h"
 
@@ -4564,6 +4566,34 @@ inline int32 CLuaBaseEntity::getPartyMember(lua_State* L)
     return 1;
 }
 
+inline int32 CLuaBaseEntity::getTargetsWithinArea(lua_State* L) {
+	DSP_DEBUG_BREAK_IF(m_PBaseEntity->objtype == TYPE_NPC);
+	CBattleEntity* PEntity = (CBattleEntity*)m_PBaseEntity;
+	CTargetFind* m_PTargetFind = new CTargetFind(PEntity);
+	
+	float radius = (float)lua_tonumber(L, 1);
+	uint16 flags = lua_isnil(L, 2) ? 0 : lua_tointeger(L, 2);
+	m_PTargetFind->reset();
+	m_PTargetFind->addNearby(PEntity, radius, flags);
+	uint16 size = m_PTargetFind->m_targets.size();
+	lua_createtable(L, size, 0);
+	int i = 1;
+
+
+	for (auto PTarget : m_PTargetFind->m_targets) {
+		lua_getglobal(L, CLuaBaseEntity::className);
+		lua_pushstring(L, "new");
+		lua_gettable(L, -2);
+		lua_insert(L, -2);
+		lua_pushlightuserdata(L, (void*)PTarget);
+		lua_pcall(L, 2, 1, 0);
+		lua_rawseti(L, -2, i++);
+	};
+	return true;
+};
+
+
+
 inline int32 CLuaBaseEntity::getPartySize(lua_State* L)
 {
     DSP_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
@@ -8321,6 +8351,7 @@ inline int32 CLuaBaseEntity::checkSoloPartyAlliance(lua_State *L)
     return 1;
 }
 
+
 /************************************************************************
 *                                                                       *
 *   TODO: Is this needed?                                               *
@@ -10446,6 +10477,7 @@ inline int32 CLuaBaseEntity::copyConfrontationEffect(lua_State* L)
 }
 
 
+
 int32 CLuaBaseEntity::getDropID(lua_State* L)
 {
     DSP_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
@@ -10928,6 +10960,7 @@ Lunar<CLuaBaseEntity>::Register_t CLuaBaseEntity::methods[] =
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,setPetMod),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,getDropID),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,setDropID),	
-    LUNAR_DECLARE_METHOD(CLuaBaseEntity,engage),	
+    LUNAR_DECLARE_METHOD(CLuaBaseEntity,engage),
+    LUNAR_DECLARE_METHOD(CLuaBaseEntity,getTargetsWithinArea),
     {nullptr,nullptr}
 };

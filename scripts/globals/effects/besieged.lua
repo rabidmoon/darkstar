@@ -91,7 +91,7 @@ function onEffectTick(target,effect)
 		
 		
 		target:setVar("Mercenary_Points",totalbes + mercpoint);
-		local totalpts = gettotal + mercpoint;
+		-- local totalpts = gettotal + mercpoint;
 		local finalpts = target:getVar("Mercenary_Points");
 		
 		-- add cap based on rank

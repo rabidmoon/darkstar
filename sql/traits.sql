@@ -110,6 +110,12 @@ INSERT INTO `traits` VALUES ('6','magic def. bonus','3','91','6','29','20','ABYS
 INSERT INTO `traits` VALUES ('6','magic def. bonus','5','25','1','29','10',null);
 INSERT INTO `traits` VALUES ('6','magic def. bonus','5','45','2','29','12',null);
 INSERT INTO `traits` VALUES ('6','magic def. bonus','5','96','3','29','14','ABYSSEA');
+-- Magic Def Tiers I ~ IV  RUN --
+INSERT INTO `traits` VALUES ('6','magic def. bonus','22','10','1','29','10','SOA');
+INSERT INTO `traits` VALUES ('6','magic def. bonus','22','30','2','29','12','SOA');
+INSERT INTO `traits` VALUES ('6','magic def. bonus','22','50','3','29','14','SOA');
+INSERT INTO `traits` VALUES ('6','magic def. bonus','22','70','4','29','16','SOA');
+
 INSERT INTO `traits` VALUES ('7','max hp boost','1','30','1','2','30','SOA');
 INSERT INTO `traits` VALUES ('7','max hp boost','1','50','2','2','60','SOA');
 INSERT INTO `traits` VALUES ('7','max hp boost','1','70','3','2','120','SOA');
@@ -140,21 +146,29 @@ INSERT INTO `traits` VALUES ('8','max mp boost','15','76','5','5','80','ABYSSEA'
 INSERT INTO `traits` VALUES ('8','max mp boost','15','96','6','5','100','ABYSSEA');
 INSERT INTO `traits` VALUES ('8','max mp boost','20','30','1','5','10','WOTG');
 INSERT INTO `traits` VALUES ('8','max mp boost','20','88','2','5','20','ABYSSEA');
+-- Max MP Boost Tiers I ~ II
+INSERT INTO `traits` VALUES ('8','max mp boost','21','30','1','5','10','SOA');
+INSERT INTO `traits` VALUES ('8','max mp boost','21','60','2','5','20','SOA');
+
 INSERT INTO `traits` VALUES ('9','auto regen','3','25','1','370','1',null);
 INSERT INTO `traits` VALUES ('9','auto regen','3','76','2','370','2','ABYSSEA');
+-- Auto Regen Tiers I ~ II --
+INSERT INTO `traits` VALUES ('9','auto regen','22','35','1','370','1','SOA');
+INSERT INTO `traits` VALUES ('9','auto regen','22','65','2','370','2','SOA');
+
 INSERT INTO `traits` VALUES ('10','auto refresh','7','35','1','369','1',null);  -- PLD Auto Ref
 INSERT INTO `traits` VALUES ('10','auto refresh','15','20','1','369','1',null); -- SMN Auto Ref
 INSERT INTO `traits` VALUES ('10','auto refresh','3','30','1','369','1',null); -- WHM Auto Ref
 INSERT INTO `traits` VALUES ('10','auto refresh','4','30','1','369','1',null); -- BLM Auto Ref
 INSERT INTO `traits` VALUES ('10','auto refresh','5','30','1','369','1',null); -- RDM Auto Ref
-INSERT INTO `traits` VALUES ('10','auto refresh','21','25','1','369','1',null); -- GEO Auto Ref
+INSERT INTO `traits` VALUES ('10','auto refresh','21','30','1','369','1',null); -- GEO Auto Ref
 INSERT INTO `traits` VALUES ('10','auto refresh','22','35','1','369','1','SOA'); -- RUN Auto Ref
 INSERT INTO `traits` VALUES ('10','auto refresh','8','30','1','369','1','SOA'); -- DRK Auto Ref
 INSERT INTO `traits` VALUES ('10','auto refresh','7','95','2','369','2',null);  -- PLD Auto Ref II
 INSERT INTO `traits` VALUES ('10','auto refresh','3','90','2','369','2',null); -- WHM Auto Ref II
 INSERT INTO `traits` VALUES ('10','auto refresh','4','90','2','369','2',null); -- BLM Auto Ref II
 INSERT INTO `traits` VALUES ('10','auto refresh','5','90','2','369','2',null); -- RDM Auto Ref II
-INSERT INTO `traits` VALUES ('10','auto refresh','21','60','2','369','2',null); -- GEO Auto Ref II
+INSERT INTO `traits` VALUES ('10','auto refresh','21','90','2','369','2',null); -- GEO Auto Ref II
 INSERT INTO `traits` VALUES ('10','auto refresh','22','95','2','369','2','SOA'); -- RUN Auto Ref II
 INSERT INTO `traits` VALUES ('10','auto refresh','15','55','2','369','2','ABYSSEA');  -- SMN Auto Ref II
 INSERT INTO `traits` VALUES ('10','auto refresh','21','95','3','369','3',null); -- GEO Auto Ref III
@@ -172,6 +186,13 @@ INSERT INTO `traits` VALUES ('12','fast cast','7','30','1','170','10',null); -- 
 INSERT INTO `traits` VALUES ('12','fast cast','7','75','2','170','15',null); -- PLD Fast Cast II
 INSERT INTO `traits` VALUES ('13','conserve mp','4','20','1','296','25',null);
 INSERT INTO `traits` VALUES ('13','conserve mp','20','25','1','296','25','WOTG');
+-- Conserve MP Tiers I ~ V --
+INSERT INTO `traits` VALUES ('13','conserve mp','21','10','1','296','25','SOA');
+INSERT INTO `traits` VALUES ('13','conserve mp','21','25','2','296','28','SOA');
+INSERT INTO `traits` VALUES ('13','conserve mp','21','40','3','296','31','SOA');
+INSERT INTO `traits` VALUES ('13','conserve mp','21','55','4','296','34','SOA');
+INSERT INTO `traits` VALUES ('13','conserve mp','21','70','5','296','37','SOA');
+
 INSERT INTO `traits` VALUES ('14','store tp','12','10','1','73','10',null); -- ROTZ
 INSERT INTO `traits` VALUES ('14','store tp','12','30','2','73','15',null); -- ROTZ
 INSERT INTO `traits` VALUES ('14','store tp','12','50','3','73','20',null); -- ROTZ
@@ -254,6 +275,12 @@ INSERT INTO `traits` VALUES ('24','clear mind','20','76','5','71','15','ABYSSEA'
 INSERT INTO `traits` VALUES ('24','clear mind','20','76','5','295','2','ABYSSEA');
 INSERT INTO `traits` VALUES ('24','clear mind','20','96','6','71','18','ABYSSEA');
 INSERT INTO `traits` VALUES ('24','clear mind','20','96','6','295','3','ABYSSEA');
+-- Clear Mind Tiers I ~ III GEO
+INSERT INTO `traits` VALUES ('24','clear mind','21','20','1','71','3','SOA');
+INSERT INTO `traits` VALUES ('24','clear mind','21','40','2','71','6','SOA');
+INSERT INTO `traits` VALUES ('24','clear mind','21','60','3','71','9','SOA');
+INSERT INTO `traits` VALUES ('24','clear mind','21','60','3','295','1','SOA');
+
 INSERT INTO `traits` VALUES ('25','shield mastery','5','87','10','485','1',null);
 INSERT INTO `traits` VALUES ('25','shield mastery','5','97','20','485','2',null);
 INSERT INTO `traits` VALUES ('25','shield mastery','7','15','10','485','1',null);
@@ -458,10 +485,17 @@ INSERT INTO `traits` VALUES ('112','elemental celerity','4','30','1','840','10',
 INSERT INTO `traits` VALUES ('112','elemental celerity','4','45','2','840','15',null);  -- BLM Elemental Celerity
 INSERT INTO `traits` VALUES ('112','elemental celerity','4','60','3','840','20',null);  -- BLM Elemental Celerity
 INSERT INTO `traits` VALUES ('112','elemental celerity','4','75','4','840','25',null);  -- BLM Elemental Celerity
+INSERT INTO `traits` VALUES ('112','elemental celerity','21','40','1','840','10',null);  -- GEO Elemental Celerity
+INSERT INTO `traits` VALUES ('112','elemental celerity','21','70','2','840','15',null);  -- GEO Elemental Celerity
 INSERT INTO `traits` VALUES ('114','tranquil heart','3','21','1','0','0','ABYSSEA');
 INSERT INTO `traits` VALUES ('114','tranquil heart','5','26','1','0','0','ABYSSEA');
 INSERT INTO `traits` VALUES ('114','tranquil heart','20','30','1','0','0','ABYSSEA');
 
+
+INSERT INTO `traits` VALUES ('116','cardinal_chant','21','10','1','850','1','SOA');
+INSERT INTO `traits` VALUES ('116','cardinal_chant','21','30','2','850','2','SOA');
+INSERT INTO `traits` VALUES ('116','cardinal_chant','21','50','3','850','3','SOA');
+INSERT INTO `traits` VALUES ('116','cardinal_chant','21','70','4','850','4','SOA');
 -- --- RUNE FENCER --- -- (Tenacity needs verifying)
 -- Tenacity Tier I
 INSERT INTO `traits` VALUES ('117','tenacity','22','5','1','240','5','SOA');
@@ -503,30 +537,13 @@ INSERT INTO `traits` VALUES ('117','tenacity','22','75','4','245','11','SOA');
 INSERT INTO `traits` VALUES ('117','tenacity','22','75','4','246','11','SOA');
 INSERT INTO `traits` VALUES ('117','tenacity','22','75','4','247','11','SOA');
 INSERT INTO `traits` VALUES ('117','tenacity','22','75','4','248','11','SOA');
--- Magic Def Tiers I ~ IV --
-INSERT INTO `traits` VALUES ('6','magic def. bonus','22','10','1','29','10','SOA');
-INSERT INTO `traits` VALUES ('6','magic def. bonus','22','30','2','29','12','SOA');
-INSERT INTO `traits` VALUES ('6','magic def. bonus','22','50','3','29','14','SOA');
-INSERT INTO `traits` VALUES ('6','magic def. bonus','22','70','4','29','16','SOA');
--- Auto Regen Tiers I ~ II --
-INSERT INTO `traits` VALUES ('9','auto regen','22','35','1','370','1','SOA');
-INSERT INTO `traits` VALUES ('9','auto regen','22','65','2','370','2','SOA');
+
+
 
 -- --- GEOMANCER --- --
--- Conserve MP Tiers I ~ V --
-INSERT INTO `traits` VALUES ('13','conserve mp','21','10','1','296','25','SOA');
-INSERT INTO `traits` VALUES ('13','conserve mp','21','25','2','296','28','SOA');
-INSERT INTO `traits` VALUES ('13','conserve mp','21','40','3','296','31','SOA');
-INSERT INTO `traits` VALUES ('13','conserve mp','21','55','4','296','34','SOA');
-INSERT INTO `traits` VALUES ('13','conserve mp','21','70','5','296','37','SOA');
--- Clear Mind Tiers I ~ III
-INSERT INTO `traits` VALUES ('24','clear mind','21','20','1','71','3','SOA');
-INSERT INTO `traits` VALUES ('24','clear mind','21','40','2','71','6','SOA');
-INSERT INTO `traits` VALUES ('24','clear mind','21','60','3','71','9','SOA');
-INSERT INTO `traits` VALUES ('24','clear mind','21','60','3','295','1','SOA');
--- Max MP Boost Tiers I ~ II
-INSERT INTO `traits` VALUES ('8','max mp boost','21','30','1','5','10','SOA');
-INSERT INTO `traits` VALUES ('8','max mp boost','21','60','2','5','20','SOA');
+
+
+
 
 -- Song Duration Bonus BRD Blank
 INSERT INTO `traits` VALUES ('128','song duration','10','30','1','454','45','SOA');

@@ -12313,7 +12313,7 @@ INSERT INTO `mob_groups` VALUES (16108,2539,73,300,0,0,0,0,43,45,0); -- Mamool L
 INSERT INTO `mob_groups` VALUES (16109,2541,73,300,0,0,0,0,43,45,0); -- Mamool Wyvern
 INSERT INTO `mob_groups` VALUES (16110,4281,73,300,0,0,0,0,53,53,0);  -- Wamouracampa north and south 3rd floor
 
-INSERT INTO `mob_groups` VALUES (16115,139,73,0,128,0,0,0,67,67,0); -- hecteyes Reinforement  439
+INSERT INTO `mob_groups` VALUES (16115,139,73,60,0,0,0,0,41,41,0); -- Hecteyes Floor 2 unlock for 3
 INSERT INTO `mob_groups` VALUES (16116,3976,73,0,128,0,0,0,67,67,0); -- Torama Reinforement
 INSERT INTO `mob_groups` VALUES (16117,439,73,0,128,0,0,0,67,67,0); -- Slime Reinforement  439
 INSERT INTO `mob_groups` VALUES (16118,4275,73,0,128,0,0,0,67,67,0); -- Tiger Reinforement  439
@@ -12399,6 +12399,8 @@ INSERT INTO `mob_groups` VALUES (17525,1494,62,1,128,0,80000,0,87,87,1);  -- Naj
 INSERT INTO `mob_groups` VALUES (17526,1426,62,1,128,0,10000,0,81,81,0); -- Siege Bomb
 INSERT INTO `mob_groups` VALUES (17527,4281,62,1,128,0,11000,0,81,82,0); -- Siege Wamoura
 
+-- Test
+INSERT INTO `mob_groups` VALUES (17600,7900,210,20,0,0,11000,0,75,75,0); -- Test Mob
 
 
 -- Dynamis Extra Mobs

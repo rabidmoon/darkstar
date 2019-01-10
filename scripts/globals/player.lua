@@ -95,6 +95,9 @@ local abuse = player:getVar("AHexploit");
 		if ((player:getObjType() == TYPE_PC) and (player:hasStatusEffect(EFFECT_DYNA_RESTRICTION)) and (zone ~= 135) and (zone ~= 134) and (zone ~= 185) and (zone ~= 186) and (zone ~= 187) and (zone ~= 188)) then
 		player:delStatusEffect(EFFECT_DYNA_RESTRICTION);
 	    end	
+		if (besieged > 0) then
+		    printf("There is a beseiged....try to implant icon!!!!!!!!!");
+		end
 	    if ((player:getObjType() == TYPE_PC) and (zone == 48) and (besieged > 0)) then
 		    printf("ADD BESEIGED ICON");
             player:addStatusEffect(EFFECT_BESIEGED,3,3,3600);

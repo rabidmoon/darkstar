@@ -2627,3 +2627,7 @@ INSERT INTO `mob_skill_lists` VALUES ('Gadalar',754,3806); -- Cross Reaper
 INSERT INTO `mob_skill_lists` VALUES ('Gadalar',754,3805); -- Guillotine
 INSERT INTO `mob_skill_lists` VALUES ('Gadalar',754,3804); -- Nightmare Scythe
 INSERT INTO `mob_skill_lists` VALUES ('Gadalar',754,3803); -- Slice
+
+INSERT INTO `mob_skill_lists` VALUES ('Luopan',755,2789); -- Slice
+INSERT INTO `mob_skill_lists` VALUES ('Luopan',755,2795); -- Slice
+INSERT INTO `mob_skill_lists` VALUES ('Luopan',755,2796); -- Slice

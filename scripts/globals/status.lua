@@ -726,6 +726,8 @@ EFFECT_FLURRY_II                = 581
 EFFECT_APOGEE                   = 583
 EFFECT_CASCADE   			    = 598
 
+EFFECT_COLURE                   = 612
+
 -- Effect icons in packet can go from 0-767, so no custom effects should go in that range.
 
 -- Purchased from Cruor Prospector
@@ -783,7 +785,35 @@ EFFECT_TRUST_BARRAGE              = 815
 EFFECT_NO_REST                    = 816
 EFFECT_TRUST_SENTINEL             = 819
 EFFECT_LUOPAN                     = 820
-EFFECT_INDI_REFRESH               = 821
+EFFECT_INDI_REGEN                 = 821
+EFFECT_INDI_POISON                = 822
+EFFECT_INDI_REFRESH               = 823
+EFFECT_INDI_STR                   = 824
+EFFECT_INDI_DEX                   = 825
+EFFECT_INDI_VIT                   = 826
+EFFECT_INDI_AGI                   = 827
+EFFECT_INDI_INT                   = 828
+EFFECT_INDI_MDN                   = 829
+EFFECT_INDI_CHR                   = 830
+EFFECT_INDI_FURY                 = 831
+EFFECT_INDI_BARRIER               = 832
+EFFECT_INDI_ACUMEN                = 833
+EFFECT_INDI_FEND                  = 834
+EFFECT_INDI_PRECISION             = 835
+EFFECT_INDI_VOIDANCE              = 836
+EFFECT_INDI_FOCUS                 = 837
+EFFECT_INDI_ATTUNEMENT            = 838
+EFFECT_INDI_WILT                  = 839
+EFFECT_INDI_FRAILTY               = 840
+EFFECT_INDI_FADE                  = 841
+EFFECT_INDI_MALAISE               = 842
+EFFECT_INDI_SLIP                  = 843
+EFFECT_INDI_TOPOR                 = 844
+EFFECT_INDI_VEX                   = 845
+EFFECT_INDI_LANGUOR               = 846
+EFFECT_INDI_SLOW                  = 847
+EFFECT_INDI_PARALYSIS             = 848
+EFFECT_INDI_GRAVITY               = 849
 EFFECT_LEVEL_TWO_SC               = 950
 EFFECT_LEVEL_THREE_SC             = 951
 EFFECT_LEVEL_FOUR_SC              = 952
@@ -1342,6 +1372,9 @@ MOD_JUG_LEVEL_RANGE    = 564 -- Decreases the level range of spawned jug pets. M
 MOD_ELEMENTAL_CELERITY = 840
 MOD_OCCULT_ACUMEN = 841
 MOD_ALL_WSDMG_ALL_HITS = 842
+MOD_CARDINAL_CHANT            = 850
+MOD_INDI_DURATION             = 851
+MOD_GEOMANCY                  = 852
 
 -- The entire mod list is in desperate need of kind of some organizing.
 -- The spares take care of finding the next ID to use so long as we don't forget to list IDs that have been freed up by refactoring.
@@ -2057,6 +2090,7 @@ SKILL_STR = 41
 SKILL_WND = 42
 SKILL_BLU = 43
 SKILL_GEO = 44
+SKILL_BEL = 45
 
 -- 45~47 unused
 
