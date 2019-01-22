@@ -2840,8 +2840,8 @@ INSERT INTO `mob_skills` VALUES (2789,2213,'Concentric_Pulse',4,7.0,2000,0,4,0,0
 -- INSERT INTO `mob_skills` VALUES (2792,2792,'Deadening_Haze',0,7.0,2000,1500,4,0,0,0);
 -- INSERT INTO `mob_skills` VALUES (2793,2793,'Sensilla_Blades',0,7.0,2000,1500,4,0,0,0);
 -- INSERT INTO `mob_skills` VALUES (2794,2794,'Tegmina_Buffet',0,7.0,2000,1500,4,0,0,0);
-INSERT INTO `mob_skills` VALUES (2795,2211,'Mending_Halation',4,7.0,2000,1500,4,0,0,0);
-INSERT INTO `mob_skills` VALUES (2796,2212,'Radial_Arcana',4,7.0,2000,1500,4,0,0,0);
+INSERT INTO `mob_skills` VALUES (2795,2211,'Mending_Halation',1,7.0,2000,1500,2,0,0,0);
+INSERT INTO `mob_skills` VALUES (2796,2212,'Radial_Arcana',1,7.0,2000,1500,2,0,0,0);
 -- INSERT INTO `mob_skills` VALUES (2797,2797,'Dynastic_Gravitas',0,7.0,2000,1500,4,0,0,0);
 -- INSERT INTO `mob_skills` VALUES (2798,2798,'.',0,7.0,2000,1500,4,0,0,0);
 -- INSERT INTO `mob_skills` VALUES (2799,2799,'.',0,7.0,2000,1500,4,0,0,0);
