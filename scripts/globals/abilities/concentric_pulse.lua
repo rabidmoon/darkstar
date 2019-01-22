@@ -24,5 +24,13 @@ end;
 
 function onUseAbility(player,target,ability)
     local pet = player:getPet();
-	pet:useMobAbility(2789);
+	local proxyMob = pet:getTargetsWithinArea(9.5, 16);
+
+	for i,monsters in ipairs(proxyMob) do
+	    if (monsters:getObjType() == TYPE_MOB) then
+            player:petAttack(monsters);		    
+		end
+	end	
+	
+	-- pet:useMobAbility(10);
 end;

@@ -1418,6 +1418,14 @@ function doGeoPotency(caster, target, spell)
 	local bolster = 1;
 	local pet = caster:getPet();
 	
+	if (caster:hasStatusEffect(EFFECT_BOLSTER)) then
+	    bolster = 2;
+	end
+	
+	if (caster:hasStatusEffect(EFFECT_BLAZE_OF_GLORY)) then
+	    bolster = 1.5;
+	end
+	
 	
 	-- Regen
 	if (spellId == 768 or spellId == 798) then 
@@ -1621,11 +1629,53 @@ function spawnLuopan(caster, target, spell, geoBuff, dot, buffType)
 	local finaldot = (dot + caster:getMainLvl())/4;
 	local pos = target:getPos();
 	if (pet == nil) then
+
         caster:spawnPet(102);
      
         pet = caster:getPet();
-		-- pet:setModelId(2856);
+		if (spell:getID() == 799) then
+		    pet:setModelId(2863);
+		end	
 		
+		pet:entityAnimationPacket("sp20");
+		
+		
+		
+		if (spell:getID() == 802 or spell:getID() == 809) then  -- Fire
+		    pet:setModelId(2850);
+		end
+
+		if (spell:getID() == 806 or spell:getID() == 811) then  -- Ice
+		    pet:setModelId(2851);
+		end	
+
+		if (spell:getID() == 805 or spell:getID() == 814) then  -- Wind
+		    pet:setModelId(2852);
+		end	
+
+		if (spell:getID() == 805 or spell:getID() == 810) then  -- Earth
+		    pet:setModelId(2853);
+		end	
+
+		if (spell:getID() == 803 or spell:getID() == 813) then  -- Thunder
+		    pet:setModelId(2854);
+		end
+
+		if (spell:getID() == 807 or spell:getID() == 819) then  -- Water
+		    pet:setModelId(2855);
+		end	
+
+
+		if (spell:getID() == 815) then  -- Dark
+		    pet:setModelId(2857);
+		end			
+		
+
+	    if (caster:hasStatusEffect(EFFECT_BLAZE_OF_GLORY)) then
+		    local halfhp = pet:getHP()/2;
+	        pet:setHP(halfhp);
+			caster:delStatusEffect(EFFECT_BLAZE_OF_GLORY);
+	    end		
 		pet:setPos(pos.x,pos.y,pos.z);
 		-- pull location of target
 		
@@ -1637,10 +1687,11 @@ function spawnLuopan(caster, target, spell, geoBuff, dot, buffType)
 	
     
 	pet:setLocalVar("bufftype", buffType)
-	local hploss = math.floor((pet:getHP())/70);  -- Sets DoT
+	local hploss = math.floor((pet:getMaxHP())/70);  -- Sets DoT
 	pet:setLocalVar(geoBuff,1);	-- Turns the Buff ON
 	printf("THe current Luopan Bufftype is %u",bufftype);
 	pet:setLocalVar("dot",hploss);
+	pet:setLocalVar("potboost",100);
 	
 	
 end
@@ -1662,37 +1713,74 @@ function removeIndi(caster)
 	    caster:delStatusEffect(EFFECT_INDI_BARRIER);
 	end	
 	
-	if (caster:hasStatusEffect(EFFECT_INDI_ACUMEN)) then
-	    caster:delStatusEffect(EFFECT_INDI_ACUMEN);
+	if (caster:hasStatusEffect(EFFECT_INDI_PRECISION)) then
+	    caster:delStatusEffect(EFFECT_INDI_PRECISION);
+	end		
+
+	if (caster:hasStatusEffect(EFFECT_INDI_VOIDANCE)) then
+	    caster:delStatusEffect(EFFECT_INDI_VOIDANCE);
 	end	
 
 	if (caster:hasStatusEffect(EFFECT_INDI_FEND)) then
 	    caster:delStatusEffect(EFFECT_INDI_FEND);
 	end	
-
-	if (caster:hasStatusEffect(EFFECT_INDI_PRECISION)) then
-	    caster:delStatusEffect(EFFECT_INDI_PRECISION);
-	end	
-
-	if (caster:hasStatusEffect(EFFECT_INDI_VOIDANCE)) then
-	    caster:delStatusEffect(EFFECT_INDI_VOIDANCE);
-	end		
-
+	
 	if (caster:hasStatusEffect(EFFECT_INDI_FOCUS)) then
 	    caster:delStatusEffect(EFFECT_INDI_FOCUS);
+	end		
+
+	if (caster:hasStatusEffect(EFFECT_INDI_ACUMEN)) then
+	    caster:delStatusEffect(EFFECT_INDI_ACUMEN);
+	end	
+
+	
+	if (caster:hasStatusEffect(EFFECT_INDI_ATTUNEMENT)) then
+	    caster:delStatusEffect(EFFECT_INDI_ATTUNEMENT);
+	end	
+
+
+
+
+	if (caster:hasStatusEffect(EFFECT_INDI_POISON)) then
+	    caster:delStatusEffect(EFFECT_INDI_POISON);
+	end		
+
+	if (caster:hasStatusEffect(EFFECT_INDI_SLOW)) then
+	    caster:delStatusEffect(EFFECT_INDI_SLOW);
 	end		
 	
 	if (caster:hasStatusEffect(EFFECT_INDI_PARALYSIS)) then
 	    caster:delStatusEffect(EFFECT_INDI_PARALYSIS);
 	end	
 
-	if (caster:hasStatusEffect(EFFECT_INDI_SLOW)) then
-	    caster:delStatusEffect(EFFECT_INDI_SLOW);
+	if (caster:hasStatusEffect(EFFECT_INDI_GRAVITY)) then
+	    caster:delStatusEffect(EFFECT_INDI_GRAVITY);
 	end	
 
-	if (caster:hasStatusEffect(EFFECT_INDI_POISON)) then
-	    caster:delStatusEffect(EFFECT_INDI_POISON);
+	if (caster:hasStatusEffect(EFFECT_INDI_SLIP)) then
+	    caster:delStatusEffect(EFFECT_INDI_SLIP);
+	end	
+
+	if (caster:hasStatusEffect(EFFECT_INDI_TORPOR)) then
+	    caster:delStatusEffect(EFFECT_INDI_TORPOR);
+	end	
+	
+	if (caster:hasStatusEffect(EFFECT_INDI_FADE)) then
+	    caster:delStatusEffect(EFFECT_INDI_FADE);
 	end		
+
+	if (caster:hasStatusEffect(EFFECT_INDI_MALAISE)) then
+	    caster:delStatusEffect(EFFECT_INDI_MALAISE);
+	end	
+	
+	if (caster:hasStatusEffect(EFFECT_INDI_VEX)) then
+	    caster:delStatusEffect(EFFECT_INDI_VEX);
+	end	
+	
+	if (caster:hasStatusEffect(EFFECT_INDI_LANGUOR)) then
+	    caster:delStatusEffect(EFFECT_INDI_LANGUOR);
+	end		
+	
 end
 
 function bellCheck(caster,bell)

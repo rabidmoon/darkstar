@@ -11,7 +11,7 @@ require("scripts/globals/status");
 -----------------------------------
 
 function onEffectGain(target,effect)
-	printf("EFFECT GAINED");
+	target:addMod(MOD_ATTP,effect:getPower());
 end;
 
 -----------------------------------
@@ -19,7 +19,7 @@ end;
 -----------------------------------
 
 function onEffectTick(target,effect)
-    printf("TIIICK");
+   
 end;
 
 -----------------------------------
@@ -27,5 +27,5 @@ end;
 -----------------------------------
 
 function onEffectLose(target,effect)
-	
+    target:delMod(MOD_ATTP,effect:getPower());	
 end;

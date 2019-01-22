@@ -2224,6 +2224,37 @@ void CAICharNormal::ActionJobAbilityFinish()
 					ShowWarning(CL_RED"SUPER JUMP TRIGGERED WITH WYVERN OUT!\n" CL_RESET);
 				}
             }
+			// Handle Geo Concentric Pulse
+			else if (m_PJobAbility->getID() == ABILITY_CONCENTRIC_PULSE)
+			{
+                if (m_PChar->PPet != nullptr && ((CPetEntity*)m_PChar->PPet)->getPetType() == PETTYPE_JUG_PET)
+				{
+				    ((CAIPetDummy*)m_PChar->PPet->PBattleAI)->m_MasterCommand = MASTERCOMMAND_PULSE;
+					m_PChar->PPet->PBattleAI->SetCurrentAction(ACTION_MOBABILITY_START);
+					ShowWarning(CL_RED"CONCENTRIC PULSE TRIGGERED!\n" CL_RESET);
+				}			
+			}
+			// Handle Geo Mending Halation
+			else if (m_PJobAbility->getID() == ABILITY_MENDING_HALATION)
+			{
+                if (m_PChar->PPet != nullptr && ((CPetEntity*)m_PChar->PPet)->getPetType() == PETTYPE_JUG_PET)
+				{
+				    ((CAIPetDummy*)m_PChar->PPet->PBattleAI)->m_MasterCommand = MASTERCOMMAND_HALATION;
+					m_PChar->PPet->PBattleAI->SetCurrentAction(ACTION_MOBABILITY_START);
+					ShowWarning(CL_RED"MENDING HALATION TRIGGERED!\n" CL_RESET);
+				}			
+			}
+			// Handle Geo Radial Arcana
+			else if (m_PJobAbility->getID() == ABILITY_RADIAL_ARCANA)
+			{
+                if (m_PChar->PPet != nullptr && ((CPetEntity*)m_PChar->PPet)->getPetType() == PETTYPE_JUG_PET)
+				{
+				    ((CAIPetDummy*)m_PChar->PPet->PBattleAI)->m_MasterCommand = MASTERCOMMAND_ARCANA;
+					m_PChar->PPet->PBattleAI->SetCurrentAction(ACTION_MOBABILITY_START);
+					ShowWarning(CL_RED"RADIAL ARCANA TRIGGERED!\n" CL_RESET);
+				}			
+			}
+
 
             // Handle Accomplice / Collabrator..
             if (m_PJobAbility->getID() == ABILITY_ACCOMPLICE || m_PJobAbility->getID() == ABILITY_COLLABORATOR)

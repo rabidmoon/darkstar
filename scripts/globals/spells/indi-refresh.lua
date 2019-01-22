@@ -21,9 +21,7 @@ end;
 
 function onSpellCast(caster,target,spell)
     removeIndi(caster)
-    local potency = doGeoPotency(caster, target, spell)
-	-- local duration = 180 + player:getMod(MOD_INDI_DURATION);NYI
-	local duration = 180;	
+	local duration = 180 + player:getMod(MOD_INDI_DURATION);
     caster:addStatusEffect(EFFECT_REFRESH_II,potency,0,duration)
 	return 0;	
 end;

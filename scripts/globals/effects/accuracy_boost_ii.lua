@@ -22,13 +22,7 @@ end;
 -----------------------------------
 
 function onEffectTick(target,effect)
-    printf("TICK");
-	-- the effect loses accuracy of 1 every 3 ticks depending on the source of the acc boost
-	local boostACC_effect_size = effect:getPower();
-	if (boostACC_effect_size > 0) then
-		effect:setPower(boostACC_effect_size - 1)
-		target:delMod(MOD_ACC,1); 
-	end
+ 
 end;
 
 -----------------------------------

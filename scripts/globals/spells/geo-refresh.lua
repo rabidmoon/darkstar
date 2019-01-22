@@ -1,7 +1,7 @@
 -----------------------------------------
--- Spell: Indi-Refresh
+-- Spell: Geo-Refresh
 -- Gradually restores target party member's MP
--- Composure increases duration 3x
+-- Bolster increases potency x2
 -----------------------------------------
 
 require("scripts/globals/status");

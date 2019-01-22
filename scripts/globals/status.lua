@@ -1424,8 +1424,8 @@ MCATEGORY_SCH_1 = 0x0640
 
 MCATEGORY_WS = 0x0680
 
-MCATEGORY_UNK_0 = 0x06C0
-MCATEGORY_UNK_1 = 0x0700
+MCATEGORY_GEO_1 = 0x06C0
+MCATEGORY_RUN_1 = 0x0700
 MCATEGORY_UNK_2 = 0x0740
 MCATEGORY_UNK_3 = 0x0780
 MCATEGORY_UNK_4 = 0x07C0
@@ -1450,9 +1450,11 @@ MCATEGORY_COR_2 = 0x0C00
 MCATEGORY_PUP_2 = 0x0C40
 MCATEGORY_DNC_2 = 0x0C80
 MCATEGORY_SCH_2 = 0x0CC0
+MCATEGORY_GEO_2 = 0x0D00
+MCATEGORY_RUN_2 = 0x0D40
 
 MCATEGORY_START = 0x0040
-MCATEGORY_COUNT = 0x0D00
+MCATEGORY_COUNT = 0x0D80
 
 --HP
 MERIT_MAX_HP = MCATEGORY_HP_MP + 0x00
@@ -1669,12 +1671,19 @@ MERIT_SHATTERSOUL   = MCATEGORY_WS + 0x16
 MERIT_APEX_ARROW    = MCATEGORY_WS + 0x18
 MERIT_LAST_STAND    = MCATEGORY_WS + 0x1A
 
--- unknown
---MERIT_UNKNOWN1 = MCATEGORY_UNK_0 + 0x00
---MERIT_UNKNOWN2 = MCATEGORY_UNK_1 + 0x00
---MERIT_UNKNOWN3 = MCATEGORY_UNK_2 + 0x00
---MERIT_UNKNOWN4 = MCATEGORY_UNK_3 + 0x00
---MERIT_UNKNOWN5 = MCATEGORY_UNK_4 + 0x00
+-- GEO 1
+MERIT_FULL_CIRCLE               = MCATEGORY_GEO_1 + 0x00
+MERIT_ECLIPTIC_ATT_RECAST       = MCATEGORY_GEO_1 + 0x02
+MERIT_LIFE_CYCLE_RECAST         = MCATEGORY_GEO_1 + 0x04
+MERIT_BLAZE_OF_GLORY_RECAST     = MCATEGORY_GEO_1 + 0x06
+MERIT_DEMATERIALIZE_RECAST      = MCATEGORY_GEO_1 + 0x08
+
+-- RUN 1
+MERIT_RUNE_ENHANCE              = MCATEGORY_RUN_1 + 0x00
+MERIT_VALLATION_EFFECT          = MCATEGORY_RUN_1 + 0x02
+MERIT_LUNGE_EFFECT              = MCATEGORY_RUN_1 + 0x04
+MERIT_PFLUG_EFFECT              = MCATEGORY_RUN_1 + 0x06
+MERIT_GAMBIT_EFFECT             = MCATEGORY_RUN_1 + 0x08
 
 --WAR 2
 MERIT_WARRIORS_CHARGE = MCATEGORY_WAR_2 + 0x00
@@ -1808,6 +1817,18 @@ MERIT_EQUANIMITY    = MCATEGORY_SCH_2 + 0x06
 MERIT_ENLIGHTENMENT = MCATEGORY_SCH_2 + 0x08
 MERIT_STORMSURGE    = MCATEGORY_SCH_2 + 0x0A
 
+-- GEO 2
+MERIT_MENDING_HALATION          = MCATEGORY_GEO_2 + 0x00
+MERIT_RADIAL_ARCANA             = MCATEGORY_GEO_2 + 0x02
+MERIT_CURATIVE_RECANTATION      = MCATEGORY_GEO_2 + 0x04
+MERIT_PRIMEVAL_ZEAL             = MCATEGORY_GEO_2 + 0x06
+
+-- RUN 2
+MERIT_BATTUTA                   = MCATEGORY_RUN_2 + 0x00
+MERIT_RAYKE                     = MCATEGORY_RUN_2 + 0x02
+MERIT_INSPIRATION               = MCATEGORY_RUN_2 + 0x04
+MERIT_SLEIGHT_OF_SWORD          = MCATEGORY_RUN_2 + 0x06
+
 
 ------------------------------------
 -- Slot Definitions
@@ -1878,6 +1899,7 @@ MSGBASIC_DEFEATS_TARG           = 6 -- The <player> defeats <target>.
 MSGBASIC_ALREADY_CLAIMED        = 12 -- Cannot attack. Your target is already claimed.
 MSGBASIC_IS_INTERRUPTED         = 16 -- The <player>'s casting is interrupted.
 MSGBASIC_UNABLE_TO_CAST         = 18 -- Unable to cast spells at this time.
+MSGBASIC_RECOVERS_HP            = 24 -- ${target} recovers ${number} HP.
 MSGBASIC_RECOVERS_MP            = 25 -- <target> recovers MP
 MSGBASIC_CANNOT_PERFORM         = 71 -- The <player> cannot perform that action.
 MSGBASIC_CANNOT_PERFORM_TARG    = 72 -- That action cannot be performed on <target>.
@@ -1895,6 +1917,8 @@ MSGBASIC_USES_RECOVERS_HP       = 102 -- The <player> uses .. <target> recovers 
 MSGBASIC_USES_JA_TAKE_DAMAGE    = 317 -- The <player> uses .. <target> takes .. points of damage.
 MSGBASIC_IS_INTIMIDATED         = 106 -- The <player> is intimidated by <target>'s presence.
 MSGBASIC_CANNOT_ON_THAT_TARG    = 155 -- You cannot perform that action on the specified target.
+MSGBASIC_NO_EFFECT              = 189 -- <user> uses <skill>. No effect on <target>.
+MSGBASIC_SELF_HEAL_SECONDARY    = 263 -- <target> recovers <amount> HP.
 MSGBASIC_CANNOT_ATTACK_TARGET   = 446 -- You cannot attack that target
 MSGBASIC_NEEDS_2H_WEAPON        = 307 -- That action requires a two-handed weapon.
 MSGBASIC_USES_BUT_MISSES        = 324 -- The <player> uses .. but misses <target>.

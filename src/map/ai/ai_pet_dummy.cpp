@@ -2859,6 +2859,60 @@ void CAIPetDummy::ActionAbilityStart()
 			return;
 		}
 	}
+	
+	if (m_PPet->m_PetID == PETID_LUOPAN) {
+			//Handle Concentric Pulse
+		if (m_MasterCommand == MASTERCOMMAND_PULSE)
+		{
+			m_MasterCommand = MASTERCOMMAND_NONE;
+			ShowWarning(CL_RED"Try Concentric Pulse\n" CL_RESET);
+		    int16 mobwsID = -1;
+		    for (int i = 0; i < m_PPet->PetSkills.size(); i++) {
+				auto PMobSkill = battleutils::GetMobSkill(m_PPet->PetSkills.at(i));
+				if (PMobSkill->getID() == 2789) { //Concentric Pulse
+					SetCurrentMobSkill(PMobSkill);
+					ShowWarning("Concentric Pulse Activated \n");
+					break;
+				}
+			}
+			preparePetAbility(m_PBattleSubTarget);
+		    return;
+        }
+		else if (m_MasterCommand == MASTERCOMMAND_HALATION)
+		{
+			m_MasterCommand = MASTERCOMMAND_NONE;
+			ShowWarning(CL_RED"Try Mending Halation\n" CL_RESET);
+		    int16 mobwsID = -1;
+		    for (int i = 0; i < m_PPet->PetSkills.size(); i++) {
+				auto PMobSkill = battleutils::GetMobSkill(m_PPet->PetSkills.at(i));
+				if (PMobSkill->getID() == 2795) { //Mending Halation
+					SetCurrentMobSkill(PMobSkill);
+					ShowWarning("Mending Halation Activated \n");
+					m_PBattleSubTarget = m_PPet;
+					break;
+				}
+			}
+			preparePetAbility(m_PBattleSubTarget);
+		    return;
+        }		
+		else if (m_MasterCommand == MASTERCOMMAND_ARCANA)
+		{
+			m_MasterCommand = MASTERCOMMAND_NONE;
+			ShowWarning(CL_RED"Try Radial Arcana\n" CL_RESET);
+		    int16 mobwsID = -1;
+		    for (int i = 0; i < m_PPet->PetSkills.size(); i++) {
+				auto PMobSkill = battleutils::GetMobSkill(m_PPet->PetSkills.at(i));
+				if (PMobSkill->getID() == 2796) { //Radial Arcanan
+					SetCurrentMobSkill(PMobSkill);
+					ShowWarning("Radial Arcana Activated \n");
+					m_PBattleSubTarget = m_PPet;
+					break;
+				}
+			}
+			preparePetAbility(m_PBattleSubTarget);
+		    return;
+        }			
+	}
 
 
 	if (m_PPet->getPetType() == PETTYPE_JUG_PET) {
@@ -2891,6 +2945,7 @@ void CAIPetDummy::ActionAbilityStart()
 		}
 		m_MasterCommand = MASTERCOMMAND_NONE;
 	}
+
 	else if (m_PPet->getPetType() == PETTYPE_WYVERN) {
 
 		WYVERNTYPE wyverntype = m_PPet->getWyvernType();
@@ -2942,7 +2997,7 @@ void CAIPetDummy::ActionAbilityStart()
 			preparePetAbility(m_PBattleSubTarget);
 			m_LastLuzafQuickTime = m_Tick;
 			return;	
-		}
+		}				
 		
 		else if (m_MasterCommand == MASTERCOMMAND_HEALING_BREATH && (wyverntype == WYVERNTYPE_DEFENSIVE || wyverntype == WYVERNTYPE_MULTIPURPOSE))
 		{
@@ -3911,7 +3966,7 @@ void CAIPetDummy::ActionJobAbilityFinish()
 		CBattleEntity* PTarget = *it;
 
 		Action.ActionTarget = PTarget;
-		if (m_PPet->isBstPet()) {
+		if (m_PPet->isBstPet() && m_PPet->m_PetID != PETID_LUOPAN) {
 			Action.param = luautils::OnMobWeaponSkill(PTarget, m_PPet, GetCurrentMobSkill());
 		}
 		else {
