@@ -1044,6 +1044,41 @@ end
 			player:setVar("SCHAFweapon", 3);
 			player:messageSpecial(ITEM_OBTAINED, 17098);
 end	
+
+
+
+--------------------------------------------------------
+--       GEO TRADE Matre Bell 21460                  --
+--------------------------------------------------------
+
+
+	if (job == 21) and (trade:hasItemQty(21460, 1)) and trade:hasItemQty( 1126, 15 ) and level >= 51 then
+             -- Complete the trade..
+            player:tradeComplete();
+			player:PrintToPlayer("Oboro : Thank you for the requested items. Come see me again when you are stronger.", 0xD);
+			player:addItem(17478, 1, 9, 14); -- MP+15
+			player:setVar("GEOAFweapon", 1);
+			player:messageSpecial(ITEM_OBTAINED, 21460);
+			
+end
+	if (job == 21) and (trade:hasItemQty(21460, 1)) and trade:hasItemQty( 1126, 30 ) and level >= 61 and (player:getVar("GEOAFweapon") == 1) then
+             -- Complete the trade..
+            player:tradeComplete();
+			player:PrintToPlayer("Oboro : Thank you for the requested items. Come see me again when you are stronger.", 0xD);
+			player:addItem(17478, 1, 9, 19, 1250, 9); -- MP+20, Indi Duration + 10
+			player:setVar("GEOAFweapon", 2);
+			player:messageSpecial(ITEM_OBTAINED, 21460);
+			
+end
+	if (job == 21) and (trade:hasItemQty(21460, 1)) and trade:hasItemQty( 1127, 15 ) and level >= 71 and (player:getVar("GEOAFweapon") == 2) then
+             -- Complete the trade..
+            player:tradeComplete();
+			player:PrintToPlayer("Oboro : Thank you for the requested items. Come see me again when you are stronger.", 0xD);
+			player:addItem(17478, 1, 9, 24, 1250, 14, 301, 4); -- MP+25, Indi Duration + 15, Bell Skill + 5
+			player:setVar("GEOAFweapon", 3);
+			player:messageSpecial(ITEM_OBTAINED, 21460);
+			
+end
 	
 	
 
