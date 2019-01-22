@@ -7,7 +7,7 @@ package.loaded["scripts/zones/Wajaom_Woodlands/TextIDs"] = nil;
 -----------------------------------
 require("scripts/zones/Wajaom_Woodlands/TextIDs");
 require("scripts/globals/status");
-require("scripts/zones/Davoi/TextIDs");
+require("scripts/globals/keyitems");
 
 -----------------------------------
 -- onTrade Action
@@ -24,6 +24,7 @@ function onTrade(player,npc,trade)
         if (GetMobAction(mobID) == ACTION_NONE) then
             player:tradeComplete();
             player:addKeyItem(MAROON_SEAL);
+			player:messageSpecial(KEYITEM_OBTAINED,MAROON_SEAL);			
         end		
     end
 end;

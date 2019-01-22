@@ -18,7 +18,7 @@ require("scripts/globals/keyitems");
 
 function onInitialize(zone)
 
-    zone:registerRegion(1, -442, 5, -414, 0, 0, 0);
+    zone:registerRegion(1, -433, 15, -413, 0, 0, 0);
     zone:registerRegion(2,-462,-4,-420,-455,-1,-392) -- approach the Cutter
 	
 

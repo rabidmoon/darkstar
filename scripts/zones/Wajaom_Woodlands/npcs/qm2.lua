@@ -19,6 +19,12 @@ function onTrade(player,npc,trade)
             player:tradeComplete();
             SpawnMob(mobID):updateClaim(player);
         end
+    elseif (trade:hasItemQty(2613,1) and trade:getItemCount() == 1) then -- Trade Iriz Ima's Hide
+        if (GetMobAction(mobID) == ACTION_NONE) then
+            player:tradeComplete();
+            player:addKeyItem(APPLE_GREEN_SEAL);
+			player:messageSpecial(KEYITEM_OBTAINED,APPLE_GREAN_SEAL);
+        end			
     end
 end;
 
@@ -27,7 +33,18 @@ end;
 -----------------------------------
 
 function onTrigger(player,npc)
-    player:messageSpecial(NOTHING_HAPPENS);
+    if (player:hasKeyItem(MAROON_SEAL)) then
+	    if (player:getFreeSlotsCount() == 0) then
+		    player:messageSpecial(ITEM_CANNOT_BE_OBTAINED,2577);
+	    else
+	        player:delKeyItem(MAROON_SEAL);
+			player:messageSpecial(KEYITEM_LOST,MAROON_SEAL);
+		    player:additem(2577,1);
+			player:messageSpecial(ITEM_OBTAINED,2577);			
+		end
+    else
+        player:messageSpecial(NOTHING_HAPPENS);
+	end
 end;
 
 -----------------------------------

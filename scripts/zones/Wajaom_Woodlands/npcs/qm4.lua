@@ -7,6 +7,7 @@ package.loaded["scripts/zones/Wajaom_Woodlands/TextIDs"] = nil;
 -----------------------------------
 require("scripts/zones/Wajaom_Woodlands/TextIDs");
 require("scripts/globals/status");
+require("scripts/globals/keyitems");
 
 -----------------------------------
 -- onTrade Action
@@ -27,7 +28,16 @@ end;
 -----------------------------------
 
 function onTrigger(player,npc)
-    player:messageSpecial(NOTHING_HAPPENS);
+    if (player:hasKeyItem(CHESTNUT_COLOR_SEAL)) then
+	    if (player:getFreeSlotsCount() == 0) then
+		    player:messageSpecial(ITEM_CANNOT_BE_OBTAINED,2573);
+	    else
+	        player:delKeyItem(CHESTNUT_COLOR_SEAL);
+		    player:additem(2573,1);
+		end
+    else
+        player:messageSpecial(NOTHING_HAPPENS);
+	end
 end;
 
 -----------------------------------

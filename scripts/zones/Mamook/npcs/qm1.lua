@@ -7,6 +7,7 @@ package.loaded["scripts/zones/Mamook/TextIDs"] = nil;
 -----------------------------------
 require("scripts/zones/Mamook/TextIDs");
 require("scripts/globals/status");
+require("scripts/globals/keyitems");
 
 -----------------------------------
 -- onTrade Action
@@ -19,6 +20,12 @@ function onTrade(player,npc,trade)
             player:tradeComplete();
             SpawnMob(mobID):updateClaim(player);
         end
+    elseif (trade:hasItemQty(2617,1) and trade:getItemCount() == 1) then -- Trade Chamrosh Beak
+        if (GetMobAction(mobID) == ACTION_NONE) then
+            player:tradeComplete();
+            player:addKeyItem(MAROON_SEAL);
+			player:messageSpecial(KEYITEM_OBTAINED,MAROON_SEAL);
+        end			
     end
 end;
 

@@ -7,6 +7,7 @@ package.loaded["scripts/zones/Wajaom_Woodlands/TextIDs"] = nil;
 -----------------------------------
 require("scripts/zones/Wajaom_Woodlands/TextIDs");
 require("scripts/globals/status");
+require("scripts/globals/keyitems");
 
 -----------------------------------
 -- onTrade Action
@@ -19,6 +20,12 @@ function onTrade(player,npc,trade)
             player:tradeComplete();
             SpawnMob(mobID):updateClaim(player);
         end
+    elseif (trade:hasItemQty(2611,1) and trade:getItemCount() == 1) then -- Trade Gotoh's Necklace
+        if (GetMobAction(mobID) == ACTION_NONE) then
+            player:tradeComplete();
+            player:addKeyItem(DEEP_PURPLE_SEAL);
+			player:messageSpecial(KEYITEM_OBTAINED,DEEP_PURPLE_SEAL);
+        end			
     end
 end;
 
@@ -27,7 +34,18 @@ end;
 -----------------------------------
 
 function onTrigger(player,npc)
-    player:messageSpecial(NOTHING_HAPPENS);
+    if (player:hasKeyItem(CHARCOAL_GREY_SEAL)) then
+	    if (player:getFreeSlotsCount() == 0) then
+		    player:messageSpecial(ITEM_CANNOT_BE_OBTAINED,2575);
+	    else
+	        player:delKeyItem(CHARCOAL_GREY_SEAL);
+			player:messageSpecial(KEYITEM_LOST,CHARCOAL_GREY_SEAL);			
+		    player:additem(2575,1);
+			player:messageSpecial(ITEM_OBTAINED,2575);			
+		end
+    else
+        player:messageSpecial(NOTHING_HAPPENS);
+	end
 end;
 
 -----------------------------------
