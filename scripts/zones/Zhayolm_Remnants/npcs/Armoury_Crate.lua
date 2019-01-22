@@ -19,32 +19,31 @@ function onTrigger(player,npc,trade)
 	    -- Determine Loot
 		
 		-- Gold Boxes contain Alexandrite very rare
-		local ptSize = player:getPartySize();
+		local chance = math.random(1,100);
 		local item = salvageLoot(player,npc)
+		local alex = 2488;
+		local purse = 5735; 
 		local chest = GetNPCByID(npcID);
 		-- player:addItem(item,1);
-		if (ptSize == 1) then
+		if (chance < 20) then 
 		    player:addTreasure(item,chest);
-		elseif (ptSize == 2) then
+			player:addTreasure(purse,chest);
+		elseif (chance < 50) then 
 		    player:addTreasure(item,chest);
-			player:addTreasure(item,chest);
-		elseif (ptSize == 3) then
-		    player:addTreasure(item,chest);
-			player:addTreasure(item,chest);
-			player:addTreasure(item,chest);
-		elseif (ptSize == 4) then
-		    player:addTreasure(item,chest);
-		    player:addTreasure(item,chest);
-			player:addTreasure(item,chest);
-			player:addTreasure(item,chest);
-		elseif (ptSize == 5) then
-		    player:addTreasure(item,chest);
-			player:addTreasure(item,chest);
-			player:addTreasure(item,chest);
-			player:addTreasure(item,chest);
-			player:addTreasure(item,chest);
+			player:addTreasure(alex,chest);
+			player:addTreasure(alex,chest);
+			player:addTreasure(alex,chest);
+			player:addTreasure(alex,chest);	
+			player:addTreasure(alex,chest);	
+			player:addTreasure(alex,chest);	
+			player:addTreasure(alex,chest);	
+			player:addTreasure(alex,chest);	
 		else
 		    player:addTreasure(item,chest);
+			player:addTreasure(alex,chest);
+			player:addTreasure(alex,chest);
+			player:addTreasure(alex,chest);
+			player:addTreasure(alex,chest);					
 		end
 	    -- player:messageSpecial(ITEM_OBTAINED,item);
 	    GetNPCByID(npcID):setAnimation(0);

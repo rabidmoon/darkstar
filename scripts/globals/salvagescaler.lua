@@ -40,13 +40,13 @@ function hpScaler(mob)
 
 end
 
-function salvageChest(mob, killer)
+function salvageChestZ(mob, killer)
 
     local killx = mob:getXPos();
     local killy = mob:getYPos();
     local killz = mob:getZPos();
 	
-	printf("Killer X Pos is: %s",killx);
+	
 	local blue1 = GetNPCByID(17076579);
 	local blue2 = GetNPCByID(17076580);
 	local blue3 = GetNPCByID(17076581);
@@ -69,7 +69,7 @@ function salvageChest(mob, killer)
 	-- Set chest frequency to 20%?
 	printf("CEST FREQUENCY IS: %s",chestdrop);
 	printf("CHEST TYPE IS: %s", chesttype);
-	if (chestdrop <= 30) then
+	if (chestdrop <= 15) then
 	    if (chesttype < 10) then
 		    printf("GOLD");
 	        if (gold1:getStatus() ~= STATUS_NORMAL) then
@@ -81,7 +81,265 @@ function salvageChest(mob, killer)
 	            -- gold2:setStatus(STATUS_NORMAL);
 				gold2:showNPC(60);
             end				
-	    elseif (chesttype < 35) then
+	    elseif (chesttype < 45) then
+		    printf("BROWN");		
+	        if (brown1:getStatus() ~= STATUS_NORMAL) then
+	            brown1:setPos(killx+1,killy,killz);
+	            -- brown1:setStatus(STATUS_NORMAL);
+				brown1:showNPC(60);
+		    elseif (brown2:getStatus() ~= STATUS_NORMAL) then
+	            brown2:setPos(killx+1,killy,killz);
+	            -- brown2:setStatus(STATUS_NORMAL);
+				brown2:showNPC(60);
+		    elseif (brown3:getStatus() ~= STATUS_NORMAL) then
+	            brown3:setPos(killx+1,killy,killz);
+	            -- brown3:setStatus(STATUS_NORMAL);	
+				brown3:showNPC(60);
+            end		
+	    else
+		    printf("BLUE");		
+	        if (blue1:getStatus() ~= STATUS_NORMAL) then
+	            blue1:setPos(killx+1,killy,killz);
+	            -- blue1:setStatus(STATUS_NORMAL);
+				blue1:showNPC(60);
+		    elseif (blue2:getStatus() ~= STATUS_NORMAL) then
+	            blue2:setPos(killx+1,killy,killz);
+	            -- blue2:setStatus(STATUS_NORMAL);	
+				blue2:showNPC(60);
+		    elseif (blue3:getStatus() ~= STATUS_NORMAL) then
+	            blue3:setPos(killx+1,killy,killz);
+	            -- blue3:setStatus(STATUS_NORMAL);	
+				blue3:showNPC(60);
+		    elseif (blue4:getStatus() ~= STATUS_NORMAL) then
+	            blue4:setPos(killx+1,killy,killz);
+	           -- blue4:setStatus(STATUS_NORMAL);	
+				blue4:showNPC(60);
+		    elseif (blue5:getStatus() ~= STATUS_NORMAL) then
+	            blue5:setPos(killx+1,killy,killz);
+	           -- blue5:setStatus(STATUS_NORMAL);
+				blue5:showNPC(60);				
+		    elseif (blue6:getStatus() ~= STATUS_NORMAL) then
+	            blue6:setPos(killx+1,killy,killz);
+	            -- blue6:setStatus(STATUS_NORMAL);
+				blue6:showNPC(60);
+            end			
+	    end
+    end
+end
+
+
+function salvageChestA(mob, killer)
+
+    local killx = mob:getXPos();
+    local killy = mob:getYPos();
+    local killz = mob:getZPos();
+	
+	
+	local blue1 = GetNPCByID(17080586);
+	local blue2 = GetNPCByID(17080587);
+	local blue3 = GetNPCByID(17080588);
+	local blue4 = GetNPCByID(17080589);
+	local blue5 = GetNPCByID(17080590);
+	local blue6 = GetNPCByID(17080591);
+	local brown1 = GetNPCByID(17080592);
+	local brown2 = GetNPCByID(17080593;
+	local brown3 = GetNPCByID(17080594);
+	local gold1 = GetNPCByID(17080595);
+	local gold2 = GetNPCByID(17080598);
+
+	-- Decide which chest to drop. 
+	-- Blue is low quality items
+	-- brown is HQ meds
+	-- Gold is Alexandrite
+	
+	local chestdrop = math.random(1,100);
+	local chesttype = math.random(1,100);
+	-- Set chest frequency to 20%?
+	printf("CEST FREQUENCY IS: %s",chestdrop);
+	printf("CHEST TYPE IS: %s", chesttype);
+	if (chestdrop <= 15) then
+	    if (chesttype < 10) then
+		    printf("GOLD");
+	        if (gold1:getStatus() ~= STATUS_NORMAL) then
+	            gold1:setPos(killx+1,killy,killz);
+	            -- gold1:setStatus(STATUS_NORMAL);
+				gold1:showNPC(60);
+		    elseif (gold2:getStatus() ~= STATUS_NORMAL) then
+	            gold2:setPos(killx+1,killy,killz);
+	            -- gold2:setStatus(STATUS_NORMAL);
+				gold2:showNPC(60);
+            end				
+	    elseif (chesttype < 45) then
+		    printf("BROWN");		
+	        if (brown1:getStatus() ~= STATUS_NORMAL) then
+	            brown1:setPos(killx+1,killy,killz);
+	            -- brown1:setStatus(STATUS_NORMAL);
+				brown1:showNPC(60);
+		    elseif (brown2:getStatus() ~= STATUS_NORMAL) then
+	            brown2:setPos(killx+1,killy,killz);
+	            -- brown2:setStatus(STATUS_NORMAL);
+				brown2:showNPC(60);
+		    elseif (brown3:getStatus() ~= STATUS_NORMAL) then
+	            brown3:setPos(killx+1,killy,killz);
+	            -- brown3:setStatus(STATUS_NORMAL);	
+				brown3:showNPC(60);
+            end		
+	    else
+		    printf("BLUE");		
+	        if (blue1:getStatus() ~= STATUS_NORMAL) then
+	            blue1:setPos(killx+1,killy,killz);
+	            -- blue1:setStatus(STATUS_NORMAL);
+				blue1:showNPC(60);
+		    elseif (blue2:getStatus() ~= STATUS_NORMAL) then
+	            blue2:setPos(killx+1,killy,killz);
+	            -- blue2:setStatus(STATUS_NORMAL);	
+				blue2:showNPC(60);
+		    elseif (blue3:getStatus() ~= STATUS_NORMAL) then
+	            blue3:setPos(killx+1,killy,killz);
+	            -- blue3:setStatus(STATUS_NORMAL);	
+				blue3:showNPC(60);
+		    elseif (blue4:getStatus() ~= STATUS_NORMAL) then
+	            blue4:setPos(killx+1,killy,killz);
+	           -- blue4:setStatus(STATUS_NORMAL);	
+				blue4:showNPC(60);
+		    elseif (blue5:getStatus() ~= STATUS_NORMAL) then
+	            blue5:setPos(killx+1,killy,killz);
+	           -- blue5:setStatus(STATUS_NORMAL);
+				blue5:showNPC(60);				
+		    elseif (blue6:getStatus() ~= STATUS_NORMAL) then
+	            blue6:setPos(killx+1,killy,killz);
+	            -- blue6:setStatus(STATUS_NORMAL);
+				blue6:showNPC(60);
+            end			
+	    end
+    end
+end
+
+
+function salvageChestB(mob, killer)
+
+    local killx = mob:getXPos();
+    local killy = mob:getYPos();
+    local killz = mob:getZPos();
+	
+	
+	local blue1 = GetNPCByID(17084417);
+	local blue2 = GetNPCByID(17084418);
+	local blue3 = GetNPCByID(17084419);
+	local blue4 = GetNPCByID(17084420);
+	local blue5 = GetNPCByID(17084421);
+	local brown1 = GetNPCByID(17084422);
+	local brown2 = GetNPCByID(17084423);
+	local brown3 = GetNPCByID(17084424);
+	local gold1 = GetNPCByID(17084425);
+	local gold2 = GetNPCByID(17084426);
+
+	-- Decide which chest to drop. 
+	-- Blue is low quality items
+	-- brown is HQ meds
+	-- Gold is Alexandrite
+	
+	local chestdrop = math.random(1,100);
+	local chesttype = math.random(1,100);
+	-- Set chest frequency to 20%?
+	printf("CEST FREQUENCY IS: %s",chestdrop);
+	printf("CHEST TYPE IS: %s", chesttype);
+	if (chestdrop <= 15) then
+	    if (chesttype < 10) then
+		    printf("GOLD");
+	        if (gold1:getStatus() ~= STATUS_NORMAL) then
+	            gold1:setPos(killx+1,killy,killz);
+	            -- gold1:setStatus(STATUS_NORMAL);
+				gold1:showNPC(60);
+		    elseif (gold2:getStatus() ~= STATUS_NORMAL) then
+	            gold2:setPos(killx+1,killy,killz);
+	            -- gold2:setStatus(STATUS_NORMAL);
+				gold2:showNPC(60);
+            end				
+	    elseif (chesttype < 45) then
+		    printf("BROWN");		
+	        if (brown1:getStatus() ~= STATUS_NORMAL) then
+	            brown1:setPos(killx+1,killy,killz);
+	            -- brown1:setStatus(STATUS_NORMAL);
+				brown1:showNPC(60);
+		    elseif (brown2:getStatus() ~= STATUS_NORMAL) then
+	            brown2:setPos(killx+1,killy,killz);
+	            -- brown2:setStatus(STATUS_NORMAL);
+				brown2:showNPC(60);
+		    elseif (brown3:getStatus() ~= STATUS_NORMAL) then
+	            brown3:setPos(killx+1,killy,killz);
+	            -- brown3:setStatus(STATUS_NORMAL);	
+				brown3:showNPC(60);
+            end		
+	    else
+		    printf("BLUE");		
+	        if (blue1:getStatus() ~= STATUS_NORMAL) then
+	            blue1:setPos(killx+1,killy,killz);
+	            -- blue1:setStatus(STATUS_NORMAL);
+				blue1:showNPC(60);
+		    elseif (blue2:getStatus() ~= STATUS_NORMAL) then
+	            blue2:setPos(killx+1,killy,killz);
+	            -- blue2:setStatus(STATUS_NORMAL);	
+				blue2:showNPC(60);
+		    elseif (blue3:getStatus() ~= STATUS_NORMAL) then
+	            blue3:setPos(killx+1,killy,killz);
+	            -- blue3:setStatus(STATUS_NORMAL);	
+				blue3:showNPC(60);
+		    elseif (blue4:getStatus() ~= STATUS_NORMAL) then
+	            blue4:setPos(killx+1,killy,killz);
+	           -- blue4:setStatus(STATUS_NORMAL);	
+				blue4:showNPC(60);
+		    elseif (blue5:getStatus() ~= STATUS_NORMAL) then
+	            blue5:setPos(killx+1,killy,killz);
+	           -- blue5:setStatus(STATUS_NORMAL);
+				blue5:showNPC(60);				
+            end			
+	    end
+    end
+end
+
+function salvageChestS(mob, killer)
+
+    local killx = mob:getXPos();
+    local killy = mob:getYPos();
+    local killz = mob:getZPos();
+	
+	
+	local blue1 = GetNPCByID(17088809);
+	local blue2 = GetNPCByID(17088810);
+	local blue3 = GetNPCByID(17088811);
+	local blue4 = GetNPCByID(17088812);
+	local blue5 = GetNPCByID(17088813);
+	local blue6 = GetNPCByID(17088814);
+	local brown1 = GetNPCByID(17088815);
+	local brown2 = GetNPCByID(17088816);
+	local brown3 = GetNPCByID(17088817);
+	local gold1 = GetNPCByID(17088818);
+	local gold2 = GetNPCByID(17088819);
+
+	-- Decide which chest to drop. 
+	-- Blue is low quality items
+	-- brown is HQ meds
+	-- Gold is Alexandrite
+	
+	local chestdrop = math.random(1,100);
+	local chesttype = math.random(1,100);
+	-- Set chest frequency to 20%?
+	printf("CEST FREQUENCY IS: %s",chestdrop);
+	printf("CHEST TYPE IS: %s", chesttype);
+	if (chestdrop <= 15) then
+	    if (chesttype < 10) then
+		    printf("GOLD");
+	        if (gold1:getStatus() ~= STATUS_NORMAL) then
+	            gold1:setPos(killx+1,killy,killz);
+	            -- gold1:setStatus(STATUS_NORMAL);
+				gold1:showNPC(60);
+		    elseif (gold2:getStatus() ~= STATUS_NORMAL) then
+	            gold2:setPos(killx+1,killy,killz);
+	            -- gold2:setStatus(STATUS_NORMAL);
+				gold2:showNPC(60);
+            end				
+	    elseif (chesttype < 45) then
 		    printf("BROWN");		
 	        if (brown1:getStatus() ~= STATUS_NORMAL) then
 	            brown1:setPos(killx+1,killy,killz);
@@ -127,7 +385,6 @@ function salvageChest(mob, killer)
     end
 end
 
-
 function salvageChestAlways(mob, killer)
 
     local killx = mob:getXPos();
@@ -154,10 +411,10 @@ function salvageChestAlways(mob, killer)
 	
 	local chestdrop = math.random(1,100);
 	local chesttype = math.random(1,100);
-	-- Set chest frequency to 20%?
+	-- Set chest frequency to 40%
 	printf("CHEST TYPE IS: %s", chesttype);
-	if (chestdrop <= 100) then
-	    if (chesttype < 5) then
+	if (chestdrop <= 40) then
+	    if (chesttype < 10) then
 		    printf("GOLD");
 	        if (gold1:getStatus() ~= STATUS_NORMAL) then
 	            gold1:setPos(killx+1,killy,killz);
@@ -166,7 +423,7 @@ function salvageChestAlways(mob, killer)
 	            gold2:setPos(killx+1,killy,killz);
 	            gold2:setStatus(STATUS_NORMAL);		
             end				
-	    elseif (chesttype < 25) then
+	    elseif (chesttype < 40) then
 		    printf("RED");		
 	        if (brown1:getStatus() ~= STATUS_NORMAL) then
 	            brown1:setPos(killx+1,killy,killz);
@@ -245,7 +502,8 @@ function salvageLoot(player,npc)
     local item = 0;
     local npcID = npc:getID();
 	local slvl = player:getVar("Salvage_Level");
-    if (npcID <= 17076584 and npcID >= 17076579) then -- Blue always Potions and Ethers based on floor
+    if ((npcID <= 17076584 and npcID >= 17076579) or (npcID <= 17080586 and npcID >= 17080591) or 
+	    (npcID <= 17084417 and npcID >= 17084421) or (npcID <= 17088809 and npcID >= 17088814)) or then -- Blue always Potions and Ethers based on floor
 	    local itemchance = math.random(1,100);
 		if (slvl <= 25) then
 		    if (itemchance < 5) then
@@ -292,7 +550,8 @@ function salvageLoot(player,npc)
 		end			
     end
 	
-    if (npcID <= 17076578 and npcID >= 17076585) then -- Red always HQ temp items 
+    if ((npcID <= 17076578 and npcID >= 17076585) or (npcID <= 17080592 and npcID >= 17080594) or
+	    (npcID <= 17084422 and npcID >= 17084424) or (npcID <= 17088815 and npcID >= 17088817)) then -- Red always HQ temp items 
 	    local itemchance = math.random(1,100);
 		if (slvl <= 25) then
 		    if (itemchance < 5) then
@@ -341,12 +600,11 @@ function salvageLoot(player,npc)
         end
     end		
 	
-	if (npcID >= 17076588 and npcID <= 17076589) then -- Gold
+	if ((npcID >= 17076588 and npcID <= 17076589) or (npcID == 17080595 or npcID == 17080598) or
+        (npcID >= 17084425 and npcID <= 17084426) or (npcID >= 17088818 and npcID <= 17088819)) then -- Gold
 	    local itemchance = math.random(1,100);
-		if (itemchance < 5) then
+		if (itemchance <= 100) then
 		    item = 5735;
-		else
-		    item = 2488;
 		end
 	end
 	return item;
