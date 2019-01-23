@@ -181,6 +181,10 @@ public:
 
     int32 addWeaponSkill(lua_State*);       //
     int32 delWeaponSkill(lua_State*);       //
+	
+    int32 addLearnedWeaponskill(lua_State*);
+    int32 hasLearnedWeaponskill(lua_State*);
+    int32 delLearnedWeaponskill(lua_State*);	
 
     int32 getMainJob(lua_State*);           // Returns Entity Main Job
     int32 getMainLvl(lua_State*);           // Gets Entity Main Job Level

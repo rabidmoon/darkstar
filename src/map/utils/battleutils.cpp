@@ -139,7 +139,7 @@ namespace battleutils
 
     void LoadWeaponSkillsList()
     {
-        const int8* fmtQuery = "SELECT weaponskillid, name, jobs, type, skilllevel, element, animation, `range`, aoe, primary_sc, secondary_sc, tertiary_sc, quaternary_sc, quinary_sc, senary_sc, main_only \
+        const int8* fmtQuery = "SELECT weaponskillid, name, jobs, type, skilllevel, element, animation, `range`, aoe, primary_sc, secondary_sc, tertiary_sc, quaternary_sc, quinary_sc, senary_sc, main_only, unlock_id \
 							FROM weapon_skills \
 							WHERE weaponskillid < %u \
 							ORDER BY type, skilllevel ASC";
@@ -167,6 +167,7 @@ namespace battleutils
                 PWeaponSkill->setQuinarySkillchain(Sql_GetIntData(SqlHandle, 13));
                 PWeaponSkill->setSenarySkillchain(Sql_GetIntData(SqlHandle, 14));				
                 PWeaponSkill->setMainOnly(Sql_GetIntData(SqlHandle, 15));
+				PWeaponSkill->setUnlockId(Sql_GetIntData(SqlHandle, 16));
 
                 g_PWeaponSkillList[PWeaponSkill->getID()] = PWeaponSkill;
                 g_PWeaponSkillsList[PWeaponSkill->getType()].push_back(PWeaponSkill);

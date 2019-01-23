@@ -142,7 +142,7 @@ function salvageChestA(mob, killer)
 	local blue5 = GetNPCByID(17080590);
 	local blue6 = GetNPCByID(17080591);
 	local brown1 = GetNPCByID(17080592);
-	local brown2 = GetNPCByID(17080593;
+	local brown2 = GetNPCByID(17080593);
 	local brown3 = GetNPCByID(17080594);
 	local gold1 = GetNPCByID(17080595);
 	local gold2 = GetNPCByID(17080598);
@@ -503,7 +503,7 @@ function salvageLoot(player,npc)
     local npcID = npc:getID();
 	local slvl = player:getVar("Salvage_Level");
     if ((npcID <= 17076584 and npcID >= 17076579) or (npcID <= 17080586 and npcID >= 17080591) or 
-	    (npcID <= 17084417 and npcID >= 17084421) or (npcID <= 17088809 and npcID >= 17088814)) or then -- Blue always Potions and Ethers based on floor
+	    (npcID <= 17084417 and npcID >= 17084421) or (npcID <= 17088809 and npcID >= 17088814)) then -- Blue always Potions and Ethers based on floor
 	    local itemchance = math.random(1,100);
 		if (slvl <= 25) then
 		    if (itemchance < 5) then
