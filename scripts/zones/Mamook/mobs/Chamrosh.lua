@@ -1,13 +1,12 @@
 -----------------------------------
--- Area: Wajaom Woodlands
---  NPC: Vulpangue(ZNM T1)
--- @pos -697 -7 -123 51
+-- Area: Mamook
+--  NPC: Chamrosh(ZNM T1)
+-- @pos ??
 -----------------------------------
-package.loaded["scripts/zones/Wajaom_Woodlands/TextIDs"] = nil;
+package.loaded["scripts/zones/Mamook/TextIDs"] = nil;
 -----------------------------------
-require("scripts/zones/Wajaom_Woodlands/TextIDs");
+require("scripts/zones/Mamook/TextIDs");
 require("scripts/globals/status");
-require("scripts/zones/Davoi/TextIDs");
 require("scripts/globals/mobscaler");
 
 -----------------------------------
@@ -33,6 +32,6 @@ end;
 -----------------------------------
 
 function onMobDeath(mob, killer)
-    local nm = 1;
+    local nm = 2;
     znmTherionT1(mob, killer, nm)	
 end;

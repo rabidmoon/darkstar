@@ -8,6 +8,7 @@
 
 require("scripts/globals/magic");
 require("scripts/globals/status");
+require("scripts/globals/mobscaler");
 
 -----------------------------------
 -- onMobInitialize Action
@@ -31,6 +32,7 @@ end;
 -----------------------------------
 
 function onMobFight(mob, target)
+    znmScalerT1(mob,target)
     if (mob:checkDistance(target) < 3) then    
         if (target:hasStatusEffect(EFFECT_POISON) == false) then
             target:addStatusEffect(EFFECT_POISON, 100, 3, math.random(3,6) * 3); -- Poison for 3-6 ticks.
@@ -48,4 +50,6 @@ end;
 -----------------------------------
 
 function onMobDeath(mob, killer)
+    local nm = 5;
+    znmTherionT1(mob, killer, nm)
 end;

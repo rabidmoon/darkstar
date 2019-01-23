@@ -6,6 +6,7 @@
 -----------------------------------
 
 require("scripts/globals/status");
+require("scripts/globals/mobscaler");
     
 -----------------------------------
 -- onMobInitialize Action
@@ -26,6 +27,7 @@ end;
 -----------------------------------
 
 function onMobFight(mob, target)
+    znmScalerT2(mob,target)
 end;
 
 -----------------------------------
@@ -44,4 +46,6 @@ end;
 -----------------------------------
 
 function onMobDeath(mob, killer)
+    local nm = 15;
+    znmTherionT2(mob, killer, nm)	
 end;

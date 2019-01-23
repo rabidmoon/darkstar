@@ -9,6 +9,7 @@
 
 require("scripts/globals/magic");
 require("scripts/globals/status");
+require("scripts/globals/mobscaler");
     
 -----------------------------------
 -- onMobInitialize Action
@@ -82,6 +83,7 @@ end;
 -----------------------------------
 
 function onMobFight(mob, target)
+    znmScalerT4(mob,target)
     local headTimer = mob:getLocalVar("headTimer");
     if (mob:AnimationSub() == 2 and os.time() > headTimer) then
         mob:AnimationSub(1);
@@ -159,4 +161,6 @@ end;
 -----------------------------------
 
 function onMobDeath(mob, killer)
+    local nm = 28;
+    znmTherionT4(mob, killer, nm)	
 end;

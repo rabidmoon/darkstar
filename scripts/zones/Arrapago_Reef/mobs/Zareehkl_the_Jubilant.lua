@@ -4,6 +4,7 @@
 -----------------------------------
 
 require("scripts/globals/status");
+require("scripts/globals/mobscaler");
     
 -----------------------------------
 -- onMobInitialize Action
@@ -24,6 +25,7 @@ end;
 -----------------------------------
 
 function onMobFight(mob, target)
+    znmScalerT2(mob,target)
     local swapTimer = mob:getLocalVar("swapTime");
     
     if (os.time() > swapTimer) then
@@ -58,4 +60,6 @@ end;
 -----------------------------------
 
 function onMobDeath(mob, killer)
+    local nm = 16;
+    znmTherionT2(mob, killer, nm)	
 end;

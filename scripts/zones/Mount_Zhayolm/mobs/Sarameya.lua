@@ -9,6 +9,7 @@
 
 require("scripts/globals/magic");
 require("scripts/globals/status");
+require("scripts/globals/mobscaler");
 
 -----------------------------------
 -- onMobInitialize Action
@@ -44,7 +45,7 @@ end;
 -----------------------------------
 
 function onMobFight(mob, target)
-
+    znmScalerT4(mob,target)
     local hpp = mob:getHPP();
     local useChainspell = false;
     if (hpp < 90 and mob:getLocalVar("chainspell89") == 0) then
@@ -117,4 +118,6 @@ end;
 -----------------------------------
 
 function onMobDeath(mob, killer)
+    local nm = 29;
+    znmTherionT4(mob, killer, nm)
 end;

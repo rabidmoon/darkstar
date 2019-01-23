@@ -1,13 +1,12 @@
 -----------------------------------
--- Area: Wajaom Woodlands
---  NPC: Vulpangue(ZNM T1)
--- @pos -697 -7 -123 51
+-- Area: Bhaflau Thickets
+--  NPC: Dea(ZNM T3)
+-- @pos F-7
 -----------------------------------
-package.loaded["scripts/zones/Wajaom_Woodlands/TextIDs"] = nil;
+package.loaded["scripts/zones/Bhaflau_Thickets/TextIDs"] = nil;
 -----------------------------------
-require("scripts/zones/Wajaom_Woodlands/TextIDs");
+require("scripts/zones/Bhaflau_Thickets/TextIDs");
 require("scripts/globals/status");
-require("scripts/zones/Davoi/TextIDs");
 require("scripts/globals/mobscaler");
 
 -----------------------------------
@@ -19,7 +18,7 @@ function onMobSpawn(mob)
 end;
 
 function onMobFight(mob, target)
-    znmScalerT1(mob,target)
+    znmScalerT3(mob,target)
 end;
 
 function onCriticalHit(mob)
@@ -33,6 +32,6 @@ end;
 -----------------------------------
 
 function onMobDeath(mob, killer)
-    local nm = 1;
-    znmTherionT1(mob, killer, nm)	
+    local nm = 21;
+    znmTherionT3(mob, killer, nm)	
 end;
