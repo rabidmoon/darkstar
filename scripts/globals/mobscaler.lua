@@ -650,6 +650,7 @@ function znmTherionT4(mob, killer, nm)
             killer:addCurrency("therion_ichor",points);
             killer:PrintToPlayer("You obtain "..points.." Zeni Points.", 0x15);
         end	
+	end
 end
 
 

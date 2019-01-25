@@ -8,6 +8,7 @@
         CONQUEST_BASE           = 6542; -- Tallying conquest results...
         MOG_LOCKER_OFFSET       = 6806; -- Your Mog Locker lease is valid until <timestamp>, kupo.
         FISHING_MESSAGE_OFFSET  = 6921; -- You can't fish here.
+		LEARN_WS                = 7126;
         STINKNIX_SHOP_DIALOG    = 7128; -- Hey, how ya doin'? We got the best junk in town.
         CREEPSTIX_SHOP_DIALOG   = 7128; -- Hey, how ya doin'? We got the best junk in town.
         SUSU_SHOP_DIALOG        = 7129; -- Welcome to Waag-Deeg's Magic Shop.

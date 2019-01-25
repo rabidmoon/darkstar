@@ -59,6 +59,16 @@ local job = player:getMainJob();
 			player:messageSpecial(ITEM_OBTAINED, 18214);
 			
     end	
+	
+	if (job == 1) and (trade:hasItemQty(18214, 1)) and trade:hasItemQty(3443, 1) and trade:hasItemQty(2571, 1) and level >= 71 and (player:getVar("WARMythicWeapon") == 4) then
+             -- Complete the trade..
+            player:tradeComplete();
+			player:PrintToPlayer("Sashosho : Here you go...this is definitely some of my best work!", 0xD);
+			player:addItem(18971, 1, 76, 1, 25, 9); -- Attack +10
+			player:setVar("WARMythicWeapon", 5);
+			player:messageSpecial(ITEM_OBTAINED, 18971);
+			
+    end		
 
 --------------------------------------------------------
 --       MONK TRADE Beat Cesti 17478                  --
@@ -104,6 +114,16 @@ end
 			
 end
 
+	if (job == 2) and (trade:hasItemQty(17478, 1)) and trade:hasItemQty(3443, 1) and trade:hasItemQty(2571, 1) and level >= 71 and (player:getVar("MNKMythicWeapon") == 4) then
+             -- Complete the trade..
+            player:tradeComplete();
+			player:PrintToPlayer("Sashosho : Here you go...this is definitely some of my best work!", 0xD);
+			player:addItem(18972, 1);
+			player:setVar("MNKMythicWeapon", 5);
+			player:messageSpecial(ITEM_OBTAINED, 18972);
+			
+end
+
 
 
 --------------------------------------------------------
@@ -146,6 +166,16 @@ end
 			player:addItem(17422, 1, 45, 12, 329, 11, 25, 9); -- Cure Potency +12%
 			player:setVar("WHMMythicWeapon", 4);
 			player:messageSpecial(ITEM_OBTAINED, 17422);
+			
+end
+
+	if (job == 3) and (trade:hasItemQty(17422, 1)) and trade:hasItemQty(3443, 1) and trade:hasItemQty(2571, 1) and level >= 71 and (player:getVar("WHMMythicWeapon") == 4) then
+             -- Complete the trade..
+            player:tradeComplete();
+			player:PrintToPlayer("Sashosho : Here you go...this is definitely some of my best work!", 0xD);
+			player:addItem(18973, 1); -- Cure Potency +12%
+			player:setVar("WHMMythicWeapon", 5);
+			player:messageSpecial(ITEM_OBTAINED, 18973);
 			
 end
 
@@ -195,6 +225,16 @@ end
 			
 end
 
+	if (job == 4) and (trade:hasItemQty(17572, 1)) and trade:hasItemQty(3443, 1) and trade:hasItemQty(2571, 1) and level >= 71 and (player:getVar("BLMMythicWeapon") == 4) then
+             -- Complete the trade..
+            player:tradeComplete();
+			player:PrintToPlayer("Sashosho : Here you go...this is definitely some of my best work!", 0xD);
+			player:addItem(18974, 1);
+			player:setVar("BLMMythicWeapon", 5);
+			player:messageSpecial(ITEM_OBTAINED, 18974);
+			
+end
+
 --------------------------------------------------------
 --      RED MAGE TRADE FENCING DEGEN 16829            --
 --------------------------------------------------------
@@ -237,6 +277,16 @@ end
 			player:addItem(16829, 1, 45, 14, 140, 3, 25, 9); -- Fast Cast +4
 			player:setVar("RDMMythicWeapon", 4);
 			player:messageSpecial(ITEM_OBTAINED, 16829);
+			
+end
+
+	if (job == 5) and (trade:hasItemQty(16829, 1)) and trade:hasItemQty(3443, 1) and trade:hasItemQty(2571, 1) and level >= 71 and (player:getVar("RDMMythicWeapon") == 4) then
+             -- Complete the trade..
+            player:tradeComplete();
+			player:PrintToPlayer("Sashosho : Here you go...this is definitely some of my best work!", 0xD);
+			player:addItem(18975, 1); -- Fast Cast +4
+			player:setVar("RDMMythicWeapon", 5);
+			player:messageSpecial(ITEM_OBTAINED, 18975);
 			
 end
 
@@ -286,6 +336,16 @@ end
 			
 end
 
+	if (job == 6) and (trade:hasItemQty(16764, 1)) and trade:hasItemQty(3443, 1) and trade:hasItemQty(2571, 1) and level >= 71 and (player:getVar("THFMythicWeapon") == 4) then
+             -- Complete the trade..
+            player:tradeComplete();
+			player:PrintToPlayer("Sashosho : Here you go...this is definitely some of my best work!", 0xD);
+			player:addItem(18976, 1, 45, 14, 41, 3, 25, 9);  -- Crit hitrate +4
+			player:setVar("THFMythicWeapon", 5);
+			player:messageSpecial(ITEM_OBTAINED, 18976);
+			
+end
+
 
 --------------------------------------------------------
 --      PLD TRADE HONOR SWORD 17643                   --
@@ -331,6 +391,17 @@ end
 			player:messageSpecial(ITEM_OBTAINED, 17643);
 			
 end
+
+	if (job == 7) and (trade:hasItemQty(17643, 1)) and trade:hasItemQty(3443, 1) and trade:hasItemQty(2571, 1) and level >= 71 and (player:getVar("PLDMythicWeapon") == 4) then
+             -- Complete the trade..
+            player:tradeComplete();
+			player:PrintToPlayer("Sashosho : Here you go...this is definitely some of my best work!", 0xD);
+			player:addItem(18977, 1); -- Attack +7 Enmity +4
+			player:setVar("PLDMythicWeapon", 5);
+			player:messageSpecial(ITEM_OBTAINED, 18977);
+			
+end
+
 
 
 
@@ -381,6 +452,16 @@ end
 			
 end
 
+	if (job == 8) and (trade:hasItemQty(16798, 1)) and trade:hasItemQty(3443, 1) and trade:hasItemQty(2571, 1) and level >= 71 and (player:getVar("DRKMythicWeapon") == 4) then
+             -- Complete the trade..
+            player:tradeComplete();
+			player:PrintToPlayer("Sashosho : Here you go...this is definitely some of my best work!", 0xD);
+			player:addItem(18978, 1);
+			player:setVar("DRKMythicWeapon", 5);
+			player:messageSpecial(ITEM_OBTAINED, 18978);
+			
+end
+
 
 
 --------------------------------------------------------
@@ -428,6 +509,16 @@ end
 			
 end
 
+	if (job == 9) and (trade:hasItemQty(16680, 1)) and trade:hasItemQty(3443, 1) and trade:hasItemQty(2571, 1) and level >= 71 and (player:getVar("BSTMythicWeapon") == 4) then
+             -- Complete the trade..
+            player:tradeComplete();
+			player:PrintToPlayer("Sashosho : Here you go...this is definitely some of my best work!", 0xD);
+			player:addItem(18979, 1);
+			player:setVar("BSTMythicWeapon", 5);
+			player:messageSpecial(ITEM_OBTAINED, 18979);
+			
+end
+
 
 
 --------------------------------------------------------
@@ -472,6 +563,16 @@ end
 			player:addItem(16766, 1, 45, 14, 337, 3, 25, 9);
 			player:setVar("BRDMythicWeapon", 4);
 			player:messageSpecial(ITEM_OBTAINED, 16766);
+			
+end
+
+	if (job == 10) and (trade:hasItemQty(16766, 1)) and trade:hasItemQty(3443, 1) and trade:hasItemQty(2571, 1) and level >= 71 and (player:getVar("BRDMythicWeapon") == 4) then
+             -- Complete the trade..
+            player:tradeComplete();
+			player:PrintToPlayer("Sashosho : Here you go...this is definitely some of my best work!", 0xD);
+			player:addItem(18980, 1, 45, 14, 337, 3, 25, 9);
+			player:setVar("BRDMythicWeapon", 5);
+			player:messageSpecial(ITEM_OBTAINED, 18980);
 			
 end
 
@@ -523,6 +624,16 @@ end
 			
 end
 
+	if (job == 11) and (trade:hasItemQty(17218, 1)) and trade:hasItemQty(3443, 1) and trade:hasItemQty(2571, 1) and level >= 71 and (player:getVar("RNGMythicWeaponxbow") == 4) then
+             -- Complete the trade..
+            player:tradeComplete();
+			player:PrintToPlayer("Sashosho : Here you go...this is definitely some of my best work!", 0xD);
+			player:addItem(18981, 1);
+			player:setVar("RNGMythicWeaponxbow", 5);
+			player:messageSpecial(ITEM_OBTAINED, 18981);
+			
+end
+
 
 
 --------------------------------------------------------
@@ -567,6 +678,16 @@ end
 			player:addItem(17812, 1, 45, 19, 142, 2, 25, 9);
 			player:setVar("SAMMythicWeapon", 4);
 			player:messageSpecial(ITEM_OBTAINED, 17812);
+			
+end
+
+	if (job == 12) and (trade:hasItemQty(17812, 1)) and trade:hasItemQty(3443, 1) and trade:hasItemQty(2571, 1) and level >= 71 and (player:getVar("SAMMythicWeapon") == 4) then
+             -- Complete the trade..
+            player:tradeComplete();
+			player:PrintToPlayer("Sashosho : Here you go...this is definitely some of my best work!", 0xD);
+			player:addItem(18982, 1);
+			player:setVar("SAMMythicWeapon", 5);
+			player:messageSpecial(ITEM_OBTAINED, 18982);
 			
 end
 
@@ -625,6 +746,16 @@ end
 			
 end
 
+	if (job == 13) and (trade:hasItemQty(17771, 1)) and trade:hasItemQty(3443, 1) and trade:hasItemQty(2571, 1) and level >= 71 and (player:getVar("NINMythicWeapon") == 4) then
+             -- Complete the trade..
+            player:tradeComplete();
+			player:PrintToPlayer("Sashosho : Here you go...this is definitely some of my best work!", 0xD);
+			player:addItem(18983, 1);
+			player:setVar("NINMythicWeapon", 5);
+			player:messageSpecial(ITEM_OBTAINED, 18983);
+			
+end
+
 
 --------------------------------------------------------
 --            DRG TRADE PEREGRINE 16887               --
@@ -668,6 +799,16 @@ end
 			player:addItem(16887, 1, 45, 22, 25, 9);
 			player:setVar("DRGMythicWeapon", 4);
 			player:messageSpecial(ITEM_OBTAINED, 16887);
+			
+end
+
+	if (job == 14) and (trade:hasItemQty(16887, 1)) and trade:hasItemQty(3443, 1) and trade:hasItemQty(2571, 1) and level >= 71 and (player:getVar("DRGMythicWeapon") == 4) then
+             -- Complete the trade..
+            player:tradeComplete();
+			player:PrintToPlayer("Sashosho : Here you go...this is definitely some of my best work!", 0xD);
+			player:addItem(18984, 1, 45, 22, 25, 9);
+			player:setVar("DRGMythicWeapon", 5);
+			player:messageSpecial(ITEM_OBTAINED, 18984);
 			
 end
 
@@ -717,6 +858,16 @@ end
 			
 end
 
+	if (job == 15) and (trade:hasItemQty(17597, 1)) and trade:hasItemQty(3443, 1) and trade:hasItemQty(2571, 1) and level >= 71 and (player:getVar("SMNMythicWeapon") == 4) then
+             -- Complete the trade..
+            player:tradeComplete();
+			player:PrintToPlayer("Sashosho : Here you go...this is definitely some of my best work!", 0xD);
+			player:addItem(18985, 1);
+			player:setVar("SMNMythicWeapon", 5);
+			player:messageSpecial(ITEM_OBTAINED, 18985);
+			
+end
+
 
 --------------------------------------------------------
 --         BLU TRADE IMMORTAL SCIMITAR  17717         --
@@ -759,6 +910,16 @@ end
 			player:addItem(16829, 1, 45, 13, 550, 5, 25, 9); -- STR/DEX+6
 			player:setVar("BLUMythicWeapon", 4);
 			player:messageSpecial(ITEM_OBTAINED, 17717);
+			
+end
+
+	if (job == 16) and (trade:hasItemQty(16829, 1)) and trade:hasItemQty(3443, 1) and trade:hasItemQty(2571, 1) and level >= 71 and (player:getVar("BLUMythicWeapon") == 4) then
+             -- Complete the trade..
+            player:tradeComplete();
+			player:PrintToPlayer("Sashosho : Here you go...this is definitely some of my best work!", 0xD);
+			player:addItem(18986, 1); -- STR/DEX+6
+			player:setVar("BLUMythicWeapon", 5);
+			player:messageSpecial(ITEM_OBTAINED, 18986);
 			
 end
 	
@@ -807,6 +968,15 @@ end
 			player:messageSpecial(ITEM_OBTAINED, 18702);
 end	
 
+	if (job == 17) and (trade:hasItemQty(18702, 1)) and trade:hasItemQty(3443, 1) and trade:hasItemQty(2571, 1) and level >= 71 and (player:getVar("CORMythicWeapon") == 4) then
+             -- Complete the trade..
+            player:tradeComplete();
+			player:PrintToPlayer("Sashosho : Here you go...this is definitely some of my best work!", 0xD);
+			player:addItem(18987, 1);
+			player:setVar("CORMythicWeapon", 5);
+			player:messageSpecial(ITEM_OBTAINED, 18987);
+end	
+
 
 --------------------------------------------------------
 --      PUP TRADE ADARGAS 18353                     --
@@ -847,6 +1017,16 @@ end
 			player:addItem(18353, 1, 45, 5, 25, 9); -- Attack +7
 			player:setVar("PUPMythicWeapon", 4);
 			player:messageSpecial(ITEM_OBTAINED, 18353);
+			
+end
+
+	if (job == 18) and (trade:hasItemQty(18353, 1)) and trade:hasItemQty(3443, 1) and trade:hasItemQty(2571, 1) and level >= 71 and (player:getVar("PUPMythicWeapon") == 4) then
+             -- Complete the trade..
+            player:tradeComplete();
+			player:PrintToPlayer("Sashosho : Here you go...this is definitely some of my best work!", 0xD);
+			player:addItem(18988,1); -- Attack +7
+			player:setVar("PUPMythicWeapon", 5);
+			player:messageSpecial(ITEM_OBTAINED, 18988);
 			
 end
 
@@ -891,6 +1071,15 @@ end
 			player:messageSpecial(ITEM_OBTAINED, 16467);
 end	
 
+	if (job == 19) and (trade:hasItemQty(16467, 1)) and trade:hasItemQty(3443, 1) and trade:hasItemQty(2571, 1) and level >= 71 and (player:getVar("DNCMythicWeapon") == 4) then
+             -- Complete the trade..
+            player:tradeComplete();
+			player:PrintToPlayer("Sashosho : Here you go...this is definitely some of my best work!", 0xD);
+			player:addItem(18969, 1);
+			player:setVar("DNCMythicWeapon", 5);
+			player:messageSpecial(ITEM_OBTAINED, 18969);
+end	
+
 
 
 --------------------------------------------------------
@@ -931,6 +1120,15 @@ end
 			player:addItem(17098, 1, 45, 30, 141, 6, 25, 9);
 			player:setVar("SCHMythicWeapon", 4);
 			player:messageSpecial(ITEM_OBTAINED, 17098);
+end	
+
+	if (job == 20) and (trade:hasItemQty(17098, 1)) and trade:hasItemQty(3443, 1) and trade:hasItemQty(2571, 1) and level >= 71 and (player:getVar("SCHMythicWeapon") == 4) then
+             -- Complete the trade..
+            player:tradeComplete();
+			player:PrintToPlayer("Sashosho : Here you go...this is definitely some of my best work!", 0xD);
+			player:addItem(18970, 1);
+			player:setVar("SCHMythicWeapon", 5);
+			player:messageSpecial(ITEM_OBTAINED, 18970);
 end	
 	
 
@@ -1034,7 +1232,53 @@ function onTrigger(player,npc)
 		((job == 20) and (player:getVar("SCHMythicWeapon") == 3)) then 
 		player:PrintToPlayer("Sashosho : Before we go further, I need something special.  The Mercenary Dealer who sells", 0xD); 
 		player:PrintToPlayer("Sashosho : questionable items has stolen my copy of The Wyrmseeker of Areuhat which I need to ", 0xD); 
-		player:PrintToPlayer("Sashosho : upgrade your weapon to a new and magcnificent form.  Please trade it and your weapon to me", 0xD); 		
+		player:PrintToPlayer("Sashosho : upgrade your weapon to a new and magcnificent form.  Please trade it and your weapon to me", 0xD); 	
+    elseif ((job == 1) and (player:getVar("WARMythicWeapon") == 4)) or
+		((job == 2) and (player:getVar("MNKMythicWeapon") == 4)) or
+		((job == 3) and (player:getVar("WHMMythicWeapon") == 4)) or
+		((job == 4) and (player:getVar("BLMMythicWeapon") == 4)) or
+		((job == 5) and (player:getVar("RDMMythicWeapon") == 4)) or
+		((job == 6) and (player:getVar("THFMythicWeapon") == 4)) or
+		((job == 7) and (player:getVar("PLDMythicWeapon") == 4)) or
+		((job == 8) and (player:getVar("DRKMythicWeapon") == 4)) or
+		((job == 9) and (player:getVar("BSTMythicWeapon") == 4)) or
+		((job == 10) and (player:getVar("BRDMythicWeapon") == 4)) or
+		((job == 11) and (player:getVar("RNGMythicWeaponbow") == 4)) or
+		((job == 15) and (player:getVar("SMNMythicWeapon") == 4)) or
+		((job == 13) and (player:getVar("NINMythicWeapon") == 4)) or
+		((job == 14) and (player:getVar("DRGMythicWeapon") == 4)) or
+		((job == 12) and (player:getVar("SAMMythicWeapon") == 4)) or
+		((job == 16) and (player:getVar("BLUMythicWeapon") == 4)) or
+		((job == 17) and (player:getVar("CORMythicWeapon") == 4)) or
+		((job == 18) and (player:getVar("PUPMythicWeapon") == 4)) or
+		((job == 19) and (player:getVar("DNCMythicWeapon") == 4)) or
+		((job == 20) and (player:getVar("SCHMythicWeapon") == 4)) then 
+		player:PrintToPlayer("Sashosho : After reading my book, I can upgrade your weapon to something special.  However", 0xD); 
+		player:PrintToPlayer("Sashosho : I will need some rare and expensive items.  I require Balrahn's Eyepatch and ", 0xD); 
+		player:PrintToPlayer("Sashosho : 1 Cat's Eye made from 30,000 Alexandrite.", 0xD); 
+    elseif ((job == 1) and (player:getVar("WARMythicWeapon") == 5)) or
+		((job == 2) and (player:getVar("MNKMythicWeapon") == 5)) or
+		((job == 3) and (player:getVar("WHMMythicWeapon") == 5)) or
+		((job == 4) and (player:getVar("BLMMythicWeapon") == 5)) or
+		((job == 5) and (player:getVar("RDMMythicWeapon") == 5)) or
+		((job == 6) and (player:getVar("THFMythicWeapon") == 5)) or
+		((job == 7) and (player:getVar("PLDMythicWeapon") == 5)) or
+		((job == 8) and (player:getVar("DRKMythicWeapon") == 5)) or
+		((job == 9) and (player:getVar("BSTMythicWeapon") == 5)) or
+		((job == 10) and (player:getVar("BRDMythicWeapon") == 5)) or
+		((job == 11) and (player:getVar("RNGMythicWeaponbow") == 5)) or
+		((job == 15) and (player:getVar("SMNMythicWeapon") == 5)) or
+		((job == 13) and (player:getVar("NINMythicWeapon") == 5)) or
+		((job == 14) and (player:getVar("DRGMythicWeapon") == 5)) or
+		((job == 12) and (player:getVar("SAMMythicWeapon") == 5)) or
+		((job == 16) and (player:getVar("BLUMythicWeapon") == 5)) or
+		((job == 17) and (player:getVar("CORMythicWeapon") == 5)) or
+		((job == 18) and (player:getVar("PUPMythicWeapon") == 5)) or
+		((job == 19) and (player:getVar("DNCMythicWeapon") == 5)) or
+		((job == 20) and (player:getVar("SCHMythicWeapon") == 5)) then 
+		player:PrintToPlayer("Sashosho : After consulting with my book, it appears that you can imbue the weapon with", 0xD); 
+		player:PrintToPlayer("Sashosho : the power of Balrahn by trading your weapon with Tinnin's Fang, Saramyea's Hide, ", 0xD); 
+		player:PrintToPlayer("Sashosho : and Tyger's Tail to the headstone in Caedarva Mire.", 0xD); 		
     end	
   
 end; 
