@@ -7,6 +7,7 @@ package.loaded["scripts/zones/Halvung/TextIDs"] = nil;
 -----------------------------------
 require("scripts/zones/Halvung/TextIDs");
 require("scripts/globals/status");
+require("scripts/globals/keyitems");
 
 -----------------------------------
 -- onTrade Action
@@ -19,6 +20,12 @@ function onTrade(player,npc,trade)
             player:tradeComplete();
             SpawnMob(mobID):updateClaim(player);
         end
+    elseif (trade:hasItemQty(2625,1) and trade:getItemCount() == 1) then -- Trade Dextrose Blubber
+        if (GetMobAction(mobID) == ACTION_NONE) then
+            player:tradeComplete();
+            player:addKeyItem(SALMON_SEAL);
+			player:messageSpecial(KEYITEM_OBTAINED,SALMON_SEAL);			
+        end		
     end
 end;
 

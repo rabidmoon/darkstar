@@ -20,7 +20,7 @@ end;
 -----------------------------------------
 
 function onItemUse(target)
-    local amount = math.random(50,75);
+    local amount = math.random(175,250);
 	target:addItem(2488,amount);
 	target:messageBasic(557,0,amount);    
 end;

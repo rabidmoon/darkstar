@@ -755,12 +755,18 @@ inline int32 CLuaBaseEntity::addTreasure(lua_State *L)
 
     if (PChar->PTreasurePool != nullptr)
     {
-        PChar->PTreasurePool->AddItem((uint16)lua_tointeger(L, 1), PChar);
-    }
-    else
-    {
-        ShowError(CL_RED"Lua::addTreasure: Tried to add item to a treasure pool that was nullptr! \n" CL_RESET);
-    }
+        if (!lua_isnil(L, 2) && lua_isuserdata(L, 2))
+        {
+            // The specified PEntity can be a Mob or NPC
+            CLuaBaseEntity* PLuaBaseEntity = Lunar<CLuaBaseEntity>::check(L, 2);
+            CBaseEntity* PEntity = PLuaBaseEntity->GetBaseEntity();
+            PChar->PTreasurePool->AddItem((uint16)lua_tointeger(L, 1), PEntity);
+        }
+        else // Entity can be nullptr - this is intentional
+        {
+            PChar->PTreasurePool->AddItem((uint16)lua_tointeger(L, 1), nullptr);
+        }
+	}
     return 0;
 }
 

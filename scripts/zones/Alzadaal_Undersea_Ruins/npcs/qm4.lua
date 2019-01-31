@@ -7,6 +7,7 @@ package.loaded["scripts/zones/Alzadaal_Undersea_Ruins/TextIDs"] = nil;
 -----------------------------------
 require("scripts/zones/Alzadaal_Undersea_Ruins/TextIDs");
 require("scripts/globals/status");
+require("scripts/globals/keyitems");
 
 -----------------------------------
 -- onTrade Action
@@ -19,6 +20,12 @@ function onTrade(player,npc,trade)
             player:tradeComplete();
             SpawnMob(mobID):updateClaim(player);
         end
+    elseif (trade:hasItemQty(2633,1) and trade:getItemCount() == 1) then -- Trade Wulgaru's Head
+        if (GetMobAction(mobID) == ACTION_NONE) then
+            player:tradeComplete();
+            player:addKeyItem(AMBER_SEAL);
+			player:messageSpecial(KEYITEM_OBTAINED,AMBER_SEAL);			
+        end		
     end
 end;
 

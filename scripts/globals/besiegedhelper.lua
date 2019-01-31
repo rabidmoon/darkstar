@@ -176,28 +176,42 @@ end;
 
 function undeadStrength(mob)
     local level = GetServerVariable("UndeadLevel");
-	local hpboost = (10 * level) + 30;
-	local attboost = (50 * level);
-	local defboost = (80 * level);
-	local accboost = (50 * level);
-	local evaboost = (15 * level) + 30;
+    local consecwins = GetServerVariable("Consecutive_BWins")
+    local mult = 1;	
+	if (consecwins >= 31) then
+	    mult = ((consecwins - 30) / 100) + 1;
+	end
+	    
+	local hpboost = ((10 * level) + 30) * mult;
+	local attboost = (50 * level) * mult;
+	local defboost = (80 * level) * mult;
+	local accboost = (50 * level) * mult;
+	local evaboost = ((15 * level) + 30) * mult;
+	local magicatk = (4 * level) *  mult;
 	
 	mob:addStatusEffect(EFFECT_MAX_HP_BOOST,hpboost,0,3600);
 	mob:addMod(MOD_ATT,attboost);
 	mob:addMod(MOD_DEF,defboost);
 	mob:addMod(MOD_ACC,accboost);
 	mob:addMod(MOD_EVA,evaboost);
+	mob:addMod(MOD_MATT,magicatk);		
     mob:addHP(19000);	
 end
 
 function trollStrength(mob)
     local level = GetServerVariable("TrollLevel");
-	local hpboost = (10 * level) + 30;
-	local attboost = (50 * level);
-	local defboost = (80 * level);
-	local accboost = (50 * level);
-	local evaboost = (15 * level) + 30;
-	local magicatk = (4 * level);
+    local consecwins = GetServerVariable("Consecutive_BWins")
+    local mult = 1;	
+	if (consecwins >= 31) then
+	    mult = ((consecwins - 30) / 100) + 1;
+	end
+	    
+	local hpboost = ((10 * level) + 30) * mult;
+	local attboost = (50 * level) * mult;
+	local defboost = (80 * level) * mult;
+	local accboost = (50 * level) * mult;
+	local evaboost = ((15 * level) + 30) * mult;
+	local magicatk = (4 * level) *  mult;
 	
 	mob:addStatusEffect(EFFECT_MAX_HP_BOOST,hpboost,0,3600);
 	mob:addMod(MOD_ATT,attboost);
@@ -210,12 +224,18 @@ end
 
 function mamoolStrength(mob)
     local level = GetServerVariable("MamoolLevel");
-	local hpboost = (10 * level) + 30;
-	local attboost = (50 * level);
-	local defboost = (80 * level);
-	local accboost = (50 * level);
-	local evaboost = (15 * level) + 30;
-	local magicatk = (4 * level);
+    local consecwins = GetServerVariable("Consecutive_BWins")
+    local mult = 1;	
+	if (consecwins >= 31) then
+	    mult = ((consecwins - 30) / 100) + 1;
+	end
+	    
+	local hpboost = ((10 * level) + 30) * mult;
+	local attboost = (50 * level) * mult;
+	local defboost = (80 * level) * mult;
+	local accboost = (50 * level) * mult;
+	local evaboost = ((15 * level) + 30) * mult;
+	local magicatk = (4 * level) *  mult;
 	
 	mob:addStatusEffect(EFFECT_MAX_HP_BOOST,hpboost,0,3600);
 	mob:addMod(MOD_ATT,attboost);

@@ -7,6 +7,7 @@ package.loaded["scripts/zones/Caedarva_Mire/TextIDs"] = nil;
 -----------------------------------
 require("scripts/zones/Caedarva_Mire/TextIDs");
 require("scripts/globals/status");
+require("scripts/globals/keyitems");
 
 -----------------------------------
 -- onTrade Action
@@ -19,6 +20,12 @@ function onTrade(player,npc,trade)
             player:tradeComplete();
             SpawnMob(mobID):updateClaim(player);
         end
+    elseif (trade:hasItemQty(2631,1) and trade:getItemCount() == 1) then -- Trade Experimental Lamia
+        if (GetMobAction(mobID) == ACTION_NONE) then
+            player:tradeComplete();
+            player:addKeyItem(TAUPE_COLORED_SEAL);
+			player:messageSpecial(KEYITEM_OBTAINED,TAUPE_COLORED_SEAL);			
+        end		
     end
 end;
 

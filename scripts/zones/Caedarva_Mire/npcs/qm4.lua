@@ -7,6 +7,7 @@ package.loaded["scripts/zones/Caedarva_Mire/TextIDs"] = nil;
 -----------------------------------
 require("scripts/zones/Caedarva_Mire/TextIDs");
 require("scripts/globals/status");
+require("scripts/globals/keyitems");
 
 -----------------------------------
 -- onTrade Action
@@ -19,6 +20,12 @@ function onTrade(player,npc,trade)
             player:tradeComplete();
             SpawnMob(mobID):updateClaim(player);
         end
+    elseif (trade:hasItemQty(2629,1) and trade:getItemCount() == 1) then -- Trade Tyger's Tail
+        if (GetMobAction(mobID) == ACTION_NONE) then
+            player:tradeComplete();
+            player:addKeyItem(LAVENDER_COLORED_SEAL);
+			player:messageSpecial(KEYITEM_OBTAINED,LAVENDER_COLORED_SEAL);			
+        end		
     end
 end;
 

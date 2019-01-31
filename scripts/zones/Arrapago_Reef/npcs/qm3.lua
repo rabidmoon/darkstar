@@ -7,6 +7,7 @@ package.loaded["scripts/zones/Arrapago_Reef/TextIDs"] = nil;
 -----------------------------------
 require("scripts/zones/Arrapago_Reef/TextIDs");
 require("scripts/globals/status");
+require("scripts/globals/keyitems");
 
 -----------------------------------
 -- onTrade Action
@@ -19,6 +20,12 @@ function onTrade(player,npc,trade)
             player:tradeComplete();
             SpawnMob(mobID):updateClaim(player);
         end
+    elseif (trade:hasItemQty(2634,1) and trade:getItemCount() == 1) then -- Trade Zareehkls Necklace
+        if (GetMobAction(mobID) == ACTION_NONE) then
+            player:tradeComplete();
+            player:addKeyItem(AMBER_SEAL);
+			player:messageSpecial(KEYITEM_OBTAINED,AMBER_SEAL);			
+        end		
     end
 end;
 

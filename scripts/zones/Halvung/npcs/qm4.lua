@@ -19,6 +19,12 @@ function onTrade(player,npc,trade)
             player:tradeComplete();
             SpawnMob(mobID):updateClaim(player);
         end
+    elseif (trade:hasItemQty(2622,1) and trade:getItemCount() == 1) then -- Trade Achamoth's Antenna
+        if (GetMobAction(mobID) == ACTION_NONE) then
+            player:tradeComplete();
+            player:addKeyItem(COPPER_COLORED_SEAL);
+			player:messageSpecial(KEYITEM_OBTAINED,COPPER_COLORED_SEAL);			
+        end		
     end
 end;
 

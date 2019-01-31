@@ -7,6 +7,7 @@ package.loaded["scripts/zones/Mount_Zhayolm/TextIDs"] = nil;
 -----------------------------------
 require("scripts/zones/Mount_Zhayolm/TextIDs");
 require("scripts/globals/status");
+require("scripts/globals/keyitems");
 
 -----------------------------------
 -- onTrade Action
@@ -19,6 +20,12 @@ function onTrade(player,npc,trade)
             player:tradeComplete();
             SpawnMob(mobID):updateClaim(player);
         end
+    elseif (trade:hasItemQty(2621,1) and trade:getItemCount() == 1) then -- Trade Bhurbolor's Vambrace
+        if (GetMobAction(mobID) == ACTION_NONE) then
+            player:tradeComplete();
+            player:addKeyItem(GOLD_COLORED_SEAL);
+			player:messageSpecial(KEYITEM_OBTAINED,GOLD_COLORED_SEAL);			
+        end		
     end
 end;
 

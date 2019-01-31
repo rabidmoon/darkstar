@@ -33,7 +33,7 @@ end;
 
 function onMobDeath(mob, killer)
 
-    
+    salvageLoot(player,npc)
 	if (killer:getObjType() ~= TYPE_PC) then
 	    local master = killer:getMaster();
         master:PrintToPlayer("The device emits a faint hum...",0x15);

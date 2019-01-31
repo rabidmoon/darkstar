@@ -7,6 +7,7 @@ package.loaded["scripts/zones/Arrapago_Reef/TextIDs"] = nil;
 -----------------------------------
 require("scripts/zones/Arrapago_Reef/TextIDs");
 require("scripts/globals/status");
+require("scripts/globals/keyitems");
 
 -----------------------------------
 -- onTrade Action
@@ -19,6 +20,12 @@ function onTrade(player,npc,trade)
             player:tradeComplete();
             SpawnMob(mobID):updateClaim(player);
         end
+    elseif (trade:hasItemQty(2632,1) and trade:getItemCount() == 1) then -- Trade Nuhns Esca
+        if (GetMobAction(mobID) == ACTION_NONE) then
+            player:tradeComplete();
+            player:addKeyItem(SIENNA_COLORED_SEAL);
+			player:messageSpecial(KEYITEM_OBTAINED,SIENNA_COLORED_SEAL);			
+        end		
     end
 end;
 

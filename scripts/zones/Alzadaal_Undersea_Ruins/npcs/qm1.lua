@@ -7,6 +7,7 @@ package.loaded["scripts/zones/Alzadaal_Undersea_Ruins/TextIDs"] = nil;
 -----------------------------------
 require("scripts/zones/Alzadaal_Undersea_Ruins/TextIDs");
 require("scripts/globals/status");
+require("scripts/globals/keyitems");
 
 -----------------------------------
 -- onTrade Action
@@ -14,11 +15,17 @@ require("scripts/globals/status");
 
 function onTrade(player,npc,trade)
     local mobID = 17072171;
-    if (trade:hasItemQty(2592,1) and trade:getItemCount() == 1) then -- Trade Coq Lubricant
+    if (trade:hasItemQty(2592,1) and trade:getItemCount() == 1) then -- Trade Cog Lubricant
         if (GetMobAction(mobID) == ACTION_NONE) then
             player:tradeComplete();
             SpawnMob(mobID):updateClaim(player);
         end
+    elseif (trade:hasItemQty(2628,1) and trade:getItemCount() == 1) then -- Trade Ob's Arm
+        if (GetMobAction(mobID) == ACTION_NONE) then
+            player:tradeComplete();
+            player:addKeyItem(CERISE_SEAL);
+			player:messageSpecial(KEYITEM_OBTAINED,CERISE_SEAL);			
+        end		
     end
 end;
 

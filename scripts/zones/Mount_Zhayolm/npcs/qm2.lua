@@ -7,6 +7,7 @@ package.loaded["scripts/zones/Mount_Zhayolm/TextIDs"] = nil;
 -----------------------------------
 require("scripts/zones/Mount_Zhayolm/TextIDs");
 require("scripts/globals/status");
+require("scripts/globals/keyitems");
 
 -----------------------------------
 -- onTrade Action
@@ -19,6 +20,12 @@ function onTrade(player,npc,trade)
             player:tradeComplete();
             SpawnMob(mobID):updateClaim(player);
         end
+    elseif (trade:hasItemQty(2627,1) and trade:getItemCount() == 1) then -- Trade Claret Globule
+        if (GetMobAction(mobID) == ACTION_NONE) then
+            player:tradeComplete();
+            player:addKeyItem(CERISE_SEAL);
+			player:messageSpecial(KEYITEM_OBTAINED,CERISE_SEAL);			
+        end		
     end
 end;
 

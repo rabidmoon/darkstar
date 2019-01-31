@@ -48,7 +48,7 @@ end;
 function onMobDeath(mob, killer)
     local size = mob:getLocalVar("Spikes");
 	local timestamp = os.time()
-
+    salvageChestB(mob, killer)
     local killx = mob:getXPos();
     local killy = mob:getYPos();
     local killz = mob:getZPos();

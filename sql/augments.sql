@@ -107,8 +107,8 @@ INSERT INTO `augments` VALUES ('69', '0', '25', '33', '0'); -- Cont.
 INSERT INTO `augments` VALUES ('70', '0', '30', '33', '0'); -- Mag. Acc.+33 Mag.Atk.Bns+33
 INSERT INTO `augments` VALUES ('70', '0', '28', '33', '0'); -- Cont.
 INSERT INTO `augments` VALUES ('71', '0', '160', '-1', '0'); -- Damage Taken -1%
-INSERT INTO `augments` VALUES ('72', '0', '0', '0', '0'); -- 72 currently unused. Leave at zero.
-INSERT INTO `augments` VALUES ('73', '0', '0', '0', '0'); -- 73 currently unused. Leave at zero.
+INSERT INTO `augments` VALUES ('72', '0', '0', '0', '0'); -- Experience Points +1%
+INSERT INTO `augments` VALUES ('73', '0', '0', '0', '0'); -- Experience Points +33%
 INSERT INTO `augments` VALUES ('74', '0', '0', '0', '0'); -- Cap. Point +1%
 INSERT INTO `augments` VALUES ('75', '0', '0', '0', '0'); -- Cap. Point +33%
 INSERT INTO `augments` VALUES ('76', '0', '0', '0', '0'); -- DMG+33 Unsure if main hand or off hand so leaving values blank for now, goes up in increments of 1 after the initial 33.
@@ -1336,77 +1336,67 @@ INSERT INTO `augments` VALUES ('1079', '0', '0', '0', '0'); -- Detonator:DMG+5% 
 INSERT INTO `augments` VALUES ('1080', '0', '0', '0', '0'); -- Weapon Skill:DMG+5% (increases by 5)
 
 -- 1081 to 1248 currently unused. Leave at zero.
-INSERT INTO `augments` VALUES ('1081', '0', '0', '0', '0');
-INSERT INTO `augments` VALUES ('1082', '0', '0', '0', '0');
-INSERT INTO `augments` VALUES ('1083', '0', '0', '0', '0');
-INSERT INTO `augments` VALUES ('1084', '0', '0', '0', '0');
-INSERT INTO `augments` VALUES ('1085', '0', '0', '0', '0');
-INSERT INTO `augments` VALUES ('1086', '0', '0', '0', '0');
-INSERT INTO `augments` VALUES ('1087', '0', '0', '0', '0');
-INSERT INTO `augments` VALUES ('1088', '0', '0', '0', '0');
-INSERT INTO `augments` VALUES ('1089', '0', '0', '0', '0');
-INSERT INTO `augments` VALUES ('1090', '0', '0', '0', '0');
-INSERT INTO `augments` VALUES ('1091', '0', '0', '0', '0');
-INSERT INTO `augments` VALUES ('1092', '0', '0', '0', '0');
-INSERT INTO `augments` VALUES ('1093', '0', '0', '0', '0');
-INSERT INTO `augments` VALUES ('1094', '0', '0', '0', '0');
-INSERT INTO `augments` VALUES ('1095', '0', '0', '0', '0');
-INSERT INTO `augments` VALUES ('1096', '0', '0', '0', '0');
-INSERT INTO `augments` VALUES ('1097', '0', '0', '0', '0');
-INSERT INTO `augments` VALUES ('1098', '0', '0', '0', '0');
-INSERT INTO `augments` VALUES ('1099', '0', '0', '0', '0');
-INSERT INTO `augments` VALUES ('1100', '0', '0', '0', '0');
-INSERT INTO `augments` VALUES ('1101', '0', '0', '0', '0');
-INSERT INTO `augments` VALUES ('1102', '0', '0', '0', '0');
-INSERT INTO `augments` VALUES ('1103', '0', '0', '0', '0');
-INSERT INTO `augments` VALUES ('1104', '0', '0', '0', '0');
-INSERT INTO `augments` VALUES ('1105', '0', '0', '0', '0');
-INSERT INTO `augments` VALUES ('1106', '0', '0', '0', '0');
-INSERT INTO `augments` VALUES ('1107', '0', '0', '0', '0');
-INSERT INTO `augments` VALUES ('1108', '0', '0', '0', '0');
-INSERT INTO `augments` VALUES ('1109', '0', '0', '0', '0');
-INSERT INTO `augments` VALUES ('1110', '0', '0', '0', '0');
-INSERT INTO `augments` VALUES ('1111', '0', '0', '0', '0');
-INSERT INTO `augments` VALUES ('1112', '0', '0', '0', '0');
-INSERT INTO `augments` VALUES ('1113', '0', '0', '0', '0');
-INSERT INTO `augments` VALUES ('1114', '0', '0', '0', '0');
-INSERT INTO `augments` VALUES ('1115', '0', '0', '0', '0');
-INSERT INTO `augments` VALUES ('1116', '0', '0', '0', '0');
-INSERT INTO `augments` VALUES ('1117', '0', '0', '0', '0');
-INSERT INTO `augments` VALUES ('1118', '0', '0', '0', '0');
-INSERT INTO `augments` VALUES ('1119', '0', '0', '0', '0');
-INSERT INTO `augments` VALUES ('1120', '0', '0', '0', '0');
-INSERT INTO `augments` VALUES ('1121', '0', '0', '0', '0');
-INSERT INTO `augments` VALUES ('1122', '0', '0', '0', '0');
-INSERT INTO `augments` VALUES ('1123', '0', '0', '0', '0');
-INSERT INTO `augments` VALUES ('1124', '0', '0', '0', '0');
-INSERT INTO `augments` VALUES ('1125', '0', '0', '0', '0');
-INSERT INTO `augments` VALUES ('1126', '0', '0', '0', '0');
-INSERT INTO `augments` VALUES ('1127', '0', '0', '0', '0');
-INSERT INTO `augments` VALUES ('1128', '0', '0', '0', '0');
-INSERT INTO `augments` VALUES ('1129', '0', '0', '0', '0');
-INSERT INTO `augments` VALUES ('1130', '0', '0', '0', '0');
-INSERT INTO `augments` VALUES ('1131', '0', '0', '0', '0');
-INSERT INTO `augments` VALUES ('1132', '0', '0', '0', '0');
-INSERT INTO `augments` VALUES ('1133', '0', '0', '0', '0');
-INSERT INTO `augments` VALUES ('1134', '0', '0', '0', '0');
-INSERT INTO `augments` VALUES ('1135', '0', '0', '0', '0');
-INSERT INTO `augments` VALUES ('1136', '0', '0', '0', '0');
-INSERT INTO `augments` VALUES ('1137', '0', '0', '0', '0');
-INSERT INTO `augments` VALUES ('1138', '0', '0', '0', '0');
-INSERT INTO `augments` VALUES ('1139', '0', '0', '0', '0');
-INSERT INTO `augments` VALUES ('1130', '0', '0', '0', '0');
-INSERT INTO `augments` VALUES ('1131', '0', '0', '0', '0');
-INSERT INTO `augments` VALUES ('1132', '0', '0', '0', '0');
-INSERT INTO `augments` VALUES ('1133', '0', '0', '0', '0');
-INSERT INTO `augments` VALUES ('1134', '0', '0', '0', '0');
-INSERT INTO `augments` VALUES ('1135', '0', '0', '0', '0');
-INSERT INTO `augments` VALUES ('1136', '0', '0', '0', '0');
-INSERT INTO `augments` VALUES ('1137', '0', '0', '0', '0');
-INSERT INTO `augments` VALUES ('1138', '0', '0', '0', '0');
-INSERT INTO `augments` VALUES ('1139', '0', '0', '0', '0');
-INSERT INTO `augments` VALUES ('1140', '0', '0', '0', '0');
-INSERT INTO `augments` VALUES ('1141', '0', '0', '0', '0');
+INSERT INTO `augments` VALUES ('1081', '0', '0', '0', '0');  -- Final Heaven: DMG+5% (increases by 5)
+INSERT INTO `augments` VALUES ('1082', '0', '0', '0', '0');  -- Ascetic's Fury: DMG+5% (increases by 5)
+INSERT INTO `augments` VALUES ('1083', '0', '0', '0', '0');  -- Stringing Pummel: DMG+5% (increases by 5)
+INSERT INTO `augments` VALUES ('1084', '0', '0', '0', '0');  -- Victory Smite: DMG+5% (increases by 5)
+INSERT INTO `augments` VALUES ('1085', '0', '0', '0', '0');  -- Mercey Stroke: DMG+5% (increases by 5)
+INSERT INTO `augments` VALUES ('1086', '0', '0', '0', '0');  -- Pyrrhic Kleos: DMG+5% (increases by 5)
+INSERT INTO `augments` VALUES ('1087', '0', '0', '0', '0');  -- Mandalic Stab: DMG+5% (increases by 5)
+INSERT INTO `augments` VALUES ('1088', '0', '0', '0', '0');  -- Mordant Rime: DMG+5% (increases by 5)
+INSERT INTO `augments` VALUES ('1089', '0', '0', '0', '0');  -- Rudra's Storm: DMG+5% (increases by 5)
+INSERT INTO `augments` VALUES ('1090', '0', '0', '0', '0');  -- Knights of Round: DMG+5% (increases by 5)
+INSERT INTO `augments` VALUES ('1091', '0', '0', '0', '0');  -- Death Blossom: DMG+5% (increases by 5)
+INSERT INTO `augments` VALUES ('1092', '0', '0', '0', '0');  -- Expiacion: DMG+5% (increases by 5)
+INSERT INTO `augments` VALUES ('1093', '0', '0', '0', '0');  -- Chant du Cygne: DMG+5% (increases by 5)
+INSERT INTO `augments` VALUES ('1094', '0', '0', '0', '0');  -- Randgrith: DMG+5% (increases by 5)
+INSERT INTO `augments` VALUES ('1095', '0', '0', '0', '0');  -- Mystic Boon: DMG+5% (increases by 5)
+INSERT INTO `augments` VALUES ('1096', '0', '0', '0', '0');  -- Scourge: DMG+5% (increases by 5)
+INSERT INTO `augments` VALUES ('1097', '0', '0', '0', '0');  -- Torcleaver: DMG+5% (increases by 5)
+INSERT INTO `augments` VALUES ('1098', '0', '0', '0', '0');  -- Onslaught: DMG+5% (increases by 5)
+INSERT INTO `augments` VALUES ('1099', '0', '0', '0', '0');  -- Primal Rend: DMG+5% (increases by 5)
+INSERT INTO `augments` VALUES ('1100', '0', '0', '0', '0');  -- Cloudsplitter: DMG+5% (increases by 5)
+INSERT INTO `augments` VALUES ('1101', '0', '0', '0', '0');  -- Metatron Torment: DMG+5% (increases by 5)
+INSERT INTO `augments` VALUES ('1102', '0', '0', '0', '0');  -- King's Justice: DMG+5% (increases by 5)
+INSERT INTO `augments` VALUES ('1103', '0', '0', '0', '0');  -- Ukko's Fury: DMG+5% (increases by 5)
+INSERT INTO `augments` VALUES ('1104', '0', '0', '0', '0');  -- Catastrophe: DMG+5% (increases by 5)
+INSERT INTO `augments` VALUES ('1105', '0', '0', '0', '0');  -- Insurgency: DMG+5% (increases by 5)
+INSERT INTO `augments` VALUES ('1106', '0', '0', '0', '0');  -- Quietus: DMG+5% (increases by 5)
+INSERT INTO `augments` VALUES ('1107', '0', '0', '0', '0');  -- Geirskogul: DMG+5% (increases by 5)
+INSERT INTO `augments` VALUES ('1108', '0', '0', '0', '0');  -- Drakesbane: DMG+5% (increases by 5)
+INSERT INTO `augments` VALUES ('1109', '0', '0', '0', '0');  -- Camlann's Torment: DMG+5% (increases by 5)
+INSERT INTO `augments` VALUES ('1110', '0', '0', '0', '0');  -- Blade: Metsu: DMG+5% (increases by 5)
+INSERT INTO `augments` VALUES ('1111', '0', '0', '0', '0');  -- Blade: Kamu: DMG+5% (increases by 5)
+INSERT INTO `augments` VALUES ('1112', '0', '0', '0', '0');  -- Blade: Hi: DMG+5% (increases by 5)
+INSERT INTO `augments` VALUES ('1113', '0', '0', '0', '0');  -- Tachi: Kaiten: DMG+5% (increases by 5)
+INSERT INTO `augments` VALUES ('1114', '0', '0', '0', '0');  -- Tachi: Rana: DMG+5% (increases by 5)
+INSERT INTO `augments` VALUES ('1115', '0', '0', '0', '0');  -- Tachi: Fudo: DMG+5% (increases by 5)
+INSERT INTO `augments` VALUES ('1116', '0', '0', '0', '0');  -- Gate of Tartarus: DMG+5% (increases by 5)
+INSERT INTO `augments` VALUES ('1117', '0', '0', '0', '0');  -- Omniscience: DMG+5% (increases by 5)
+INSERT INTO `augments` VALUES ('1118', '0', '0', '0', '0');  -- Vidohunir: DMG+5% (increases by 5)
+INSERT INTO `augments` VALUES ('1119', '0', '0', '0', '0');  -- Garland of Bliss: DMG+5% (increases by 5)
+INSERT INTO `augments` VALUES ('1120', '0', '0', '0', '0');  -- Namas Arrow: DMG+5% (increases by 5)
+INSERT INTO `augments` VALUES ('1121', '0', '0', '0', '0');  -- Jishunu's Radiance: DMG+5% (increases by 5)
+INSERT INTO `augments` VALUES ('1122', '0', '0', '0', '0');  -- Trueflight: DMG+5% (increases by 5)
+INSERT INTO `augments` VALUES ('1123', '0', '0', '0', '0');  -- Coronach: DMG+5% (increases by 5)
+INSERT INTO `augments` VALUES ('1124', '0', '0', '0', '0');  -- Leaden Salute: DMG+5% (increases by 5)
+INSERT INTO `augments` VALUES ('1125', '0', '0', '0', '0');  -- Wildfire: DMG+5% (increases by 5)
+INSERT INTO `augments` VALUES ('1126', '0', '0', '0', '0');  -- Dimidation: DMG+5% (increases by 5)
+INSERT INTO `augments` VALUES ('1127', '0', '0', '0', '0');  -- Exudiation: DMG+5% (increases by 5)
+INSERT INTO `augments` VALUES ('1128', '0', '0', '0', '0');  -- Shijin Spiral: DMG+5% (increases by 5)
+INSERT INTO `augments` VALUES ('1129', '0', '0', '0', '0');  -- Exenterator: DMG+5% (increases by 5)
+INSERT INTO `augments` VALUES ('1130', '0', '0', '0', '0');  -- Requiescat: DMG+5% (increases by 5)
+INSERT INTO `augments` VALUES ('1131', '0', '0', '0', '0');  -- Upheaval: DMG+5% (increases by 5)
+INSERT INTO `augments` VALUES ('1132', '0', '0', '0', '0');  -- Entropy: DMG+5% (increases by 5)
+INSERT INTO `augments` VALUES ('1133', '0', '0', '0', '0');  -- Stardiver: DMG+5% (increases by 5)
+INSERT INTO `augments` VALUES ('1134', '0', '0', '0', '0');  -- Blade: Shun: DMG+5% (increases by 5)
+INSERT INTO `augments` VALUES ('1135', '0', '0', '0', '0');  -- Tachi: Shoha: DMG+5% (increases by 5)
+INSERT INTO `augments` VALUES ('1136', '0', '0', '0', '0');  -- Realmrazer: DMG+5% (increases by 5)
+INSERT INTO `augments` VALUES ('1137', '0', '0', '0', '0');  -- Shattersoul: DMG+5% (increases by 5)
+INSERT INTO `augments` VALUES ('1138', '0', '0', '0', '0');  -- Resolution: DMG+5% (increases by 5)
+INSERT INTO `augments` VALUES ('1139', '0', '0', '0', '0');  -- Ruinator: DMG+5% (increases by 5)
+INSERT INTO `augments` VALUES ('1140', '0', '0', '0', '0');  -- Last Stand: DMG+5% (increases by 5)
+INSERT INTO `augments` VALUES ('1141', '0', '0', '0', '0');  -- Apex: Arrow: DMG+5% (increases by 5)
 INSERT INTO `augments` VALUES ('1142', '0', '0', '0', '0');
 INSERT INTO `augments` VALUES ('1143', '0', '0', '0', '0');
 INSERT INTO `augments` VALUES ('1144', '0', '0', '0', '0');

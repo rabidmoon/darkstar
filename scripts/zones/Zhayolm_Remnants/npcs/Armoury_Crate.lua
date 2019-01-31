@@ -23,9 +23,12 @@ function onTrigger(player,npc,trade)
 		local item = salvageLoot(player,npc)
 		local alex = 2488;
 		local purse = 5735; 
+		local purse2 = 5736;
 		local chest = GetNPCByID(npcID);
 		-- player:addItem(item,1);
-		if (chance < 20) then 
+		if (chance < 10) then
+		    player:addTreasure(purse2,chest);
+		elseif (chance < 25) then 
 		    player:addTreasure(item,chest);
 			player:addTreasure(purse,chest);
 		elseif (chance < 50) then 

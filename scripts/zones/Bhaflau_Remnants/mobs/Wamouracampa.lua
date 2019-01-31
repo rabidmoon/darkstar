@@ -32,7 +32,8 @@ end;
 
 function onMobDeath(mob, killer)
 
- 	salvageAmbient(mob,killer);   
+ 	salvageAmbient(mob,killer); 
+    salvageChestB(mob, killer)	
 	if (killer:getObjType() ~= TYPE_PC) then
 	    local master = killer:getMaster();
         master:PrintToPlayer("The device emits a faint hum...",0x15);

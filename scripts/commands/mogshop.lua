@@ -204,27 +204,30 @@ local aura = player:getVar("FerretoryAura");
         };
         showShop(player, STATIC, stock_6);
         player:PrintToPlayer("Merchant Moogle : Attachments Kupo", 0x1F);
-		elseif (page == 7 and aura >= 6 and player:hasKeyItem(CHOCOBO_LICENSE))) then
+		elseif (page == 7 and aura >= 6 and player:hasKeyItem(CHOCOBO_LICENSE)) then
 	    local stock_7 =
         {
-            10049,     50000,    -- Raptor
-			10051,     70000,     -- Crab
-			10050,    100000,    -- Tiger
+            10049,     25000,    -- Raptor
+			10051,     50000,     -- Crab
+			10050,     75000,    -- Tiger
+			10053,     75000,    -- Bomb
+			10056,     75000,    -- Crawler	
+			10058,     75000,    -- Beetle			
         };
         showShop(player, STATIC, stock_7);
         player:PrintToPlayer("Merchant Moogle : Mounts Kupo!", 0x1F);			
 		elseif (page == 7 and aura >= 4 and aura < 6 and player:hasKeyItem(CHOCOBO_LICENSE)) then
 	    local stock_7 =
         {
-            10049,     50000,    -- Raptor
-			10051,     70000     -- Crab
+            10049,     25000,    -- Raptor
+			10051,     50000     -- Crab
         };
         showShop(player, STATIC, stock_7);
         player:PrintToPlayer("Merchant Moogle : Mounts! Unlock more mount options with more Aura!", 0x1F);			
-		elseif (page == 7 and aura >= 2 and aura < 4 and player:hasKeyItem(CHOCOBO_LICENSE))) then
+		elseif (page == 7 and aura >= 2 and aura < 4 and player:hasKeyItem(CHOCOBO_LICENSE)) then
 	    local stock_7 =
         {
-            10049,     50000    -- Raptor
+            10049,     25000    -- Raptor
         };
         showShop(player, STATIC, stock_7);
         player:PrintToPlayer("Merchant Moogle : Mounts! Unlock more mount options with more Aura!", 0x1F);

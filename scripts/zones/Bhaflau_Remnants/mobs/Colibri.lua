@@ -5,6 +5,7 @@
 
 require("scripts/globals/status");
 require("scripts/globals/magic");
+require("scripts/globals/salvagescaler");
 
 function onMobSpawn(mob)
     
@@ -58,4 +59,7 @@ end;
 -----------------------------------
 
 function onMobDeath(mob,killer)
+    salvageAmbient(mob,killer);
+    salvageChestB(mob, killer)
+
 end;

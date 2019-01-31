@@ -30,7 +30,6 @@ end;
 
 function onMobDeath(mob, killer)
 	salvageAmbient(mob,killer);
- 
     -- Porogo Gent Spawn Chance
     local killx = mob:getXPos();
     local killy = mob:getYPos();
@@ -38,7 +37,7 @@ function onMobDeath(mob, killer)
     local nm = 17084481; -- Mad Bomber
     local chance = 100;
 
-	salvageChest(mob, killer)
+	salvageChestB(mob, killer)
 	if (killer:getObjType() ~= TYPE_PC) then
 	    local master = killer:getMaster();
 		local level = master:getVar("Salvage_Level");

@@ -7,6 +7,7 @@ package.loaded["scripts/zones/Caedarva_Mire/TextIDs"] = nil;
 -----------------------------------
 require("scripts/zones/Caedarva_Mire/TextIDs");
 require("scripts/globals/status");
+require("scripts/globals/keyitems");
 
 -----------------------------------
 -- onTrade Action
@@ -19,6 +20,12 @@ function onTrade(player,npc,trade)
             player:tradeComplete();
             SpawnMob(mobID):updateClaim(player);
         end
+    elseif (trade:hasItemQty(2630,1) and trade:getItemCount() == 1) then -- Trade Mahjlaef's Staff
+        if (GetMobAction(mobID) == ACTION_NONE) then
+            player:tradeComplete();
+            player:addKeyItem(FALLOW_COLORED_SEAL);
+			player:messageSpecial(KEYITEM_OBTAINED,FALLOW_COLORED_SEAL);			
+        end		
     end
 end;
 

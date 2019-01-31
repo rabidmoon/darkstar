@@ -24,6 +24,15 @@ function onTrade(player,npc,trade)
 	elseif (trade:hasItemQty(10050,1) and player:hasKeyItem(CHOCOBO_LICENSE) and player:getMainLvl() >= 20) then
 	    player:addKeyItem(TIGER_COMPANION);
 		player:messageSpecial(KEYITEM_OBTAINED,TIGER_COMPANION);
+	elseif (trade:hasItemQty(10053,1) and player:hasKeyItem(CHOCOBO_LICENSE) and player:getMainLvl() >= 20) then
+	    player:addKeyItem(BOMB_COMPANION);
+		player:messageSpecial(KEYITEM_OBTAINED,BOMB_COMPANION);
+	elseif (trade:hasItemQty(10056,1) and player:hasKeyItem(CHOCOBO_LICENSE) and player:getMainLvl() >= 20) then
+	    player:addKeyItem(CRAWLER_COMPANION);
+		player:messageSpecial(KEYITEM_OBTAINED,CRAWLER_COMPANION);
+	elseif (trade:hasItemQty(10058,1) and player:hasKeyItem(CHOCOBO_LICENSE) and player:getMainLvl() >= 20) then
+	    player:addKeyItem(BEETLE_COMPANION);
+		player:messageSpecial(KEYITEM_OBTAINED,BEETLE_COMPANION);		
     end		
 end;
 

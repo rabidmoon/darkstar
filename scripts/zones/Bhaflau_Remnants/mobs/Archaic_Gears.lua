@@ -35,7 +35,7 @@ end;
 function onMobDeath(mob, killer)
     local gear = mob:getLocalVar("Gears");
 	local timestamp = os.time()
-
+    salvageChestB(mob, killer)
     local killx = mob:getXPos();
     local killy = mob:getYPos();
     local killz = mob:getZPos();

@@ -4,6 +4,7 @@
 -----------------------------------
 
 require("scripts/globals/keyitems");
+require("scripts/globals/salvagescaler");
 
 -----------------------------------
 -- onMobSpawn Action
@@ -19,6 +20,6 @@ end;
 
 function onMobDeath(mob, killer)
 	salvageAmbient(mob,killer);
-
+    salvageChestB(mob, killer)
 
 end;

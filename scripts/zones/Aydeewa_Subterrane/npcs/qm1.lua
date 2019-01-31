@@ -7,6 +7,7 @@ package.loaded["scripts/zones/Aydeewa_Subterrane/TextIDs"] = nil;
 -----------------------------------
 require("scripts/zones/Aydeewa_Subterrane/TextIDs");
 require("scripts/globals/status");
+require("scripts/globals/keyitems");
 
 -----------------------------------
 -- onTrade Action
@@ -19,6 +20,12 @@ function onTrade(player,npc,trade)
             player:tradeComplete();
             SpawnMob(mobID):updateClaim(player);
         end
+    elseif (trade:hasItemQty(2620,1) and trade:getItemCount() == 1) then -- Trade Nosferatu's Claw
+        if (GetMobAction(mobID) == ACTION_NONE) then
+            player:tradeComplete();
+            player:addKeyItem(PURPLISH_GREY_SEAL);
+			player:messageSpecial(KEYITEM_OBTAINED,PURPLISH_GREY_SEAL);			
+        end		
     end
 end;
 

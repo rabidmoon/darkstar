@@ -244,7 +244,7 @@ function salvageChestB(mob, killer)
 	-- Set chest frequency to 20%?
 	printf("CEST FREQUENCY IS: %s",chestdrop);
 	printf("CHEST TYPE IS: %s", chesttype);
-	if (chestdrop <= 15) then
+	if (chestdrop <= 45) then
 	    if (chesttype < 10) then
 		    printf("GOLD");
 	        if (gold1:getStatus() ~= STATUS_NORMAL) then
