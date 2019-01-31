@@ -29,7 +29,8 @@ end;
 
 function onMobDeath(mob, killer)
 
-    salvageAmbient(mob,killer);
+    salvageAmbient(mob,killer)
+    salvageChestZ(mob, killer)
     -- Porogo Gent Spawn Chance
     local killx = mob:getXPos();
     local killy = mob:getYPos();

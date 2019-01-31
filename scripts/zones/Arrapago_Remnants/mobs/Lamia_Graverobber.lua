@@ -5,7 +5,7 @@
 -----------------------------------
 
 require("scripts/globals/titles");
-require("scripts/globals/salvageambiance");
+require("scripts/globals/salvagescaler");
 local Arrapago = require("scripts/zones/Arrapago_Remnants/IDs");
 
 -----------------------------------
@@ -21,5 +21,6 @@ end;
 -----------------------------------
 
 function onMobDeath(mob, killer)
-	salvageAmbient(mob,killer);
+    salvageAmbient(mob,killer)
+    salvageChestA(mob, killer)
 end;

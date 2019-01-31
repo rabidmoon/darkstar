@@ -31,7 +31,8 @@ end;
 -----------------------------------
 
 function onMobDeath(mob, killer)
-    salvageAmbient(mob,killer);
+    salvageAmbient(mob,killer)
+    salvageChestS(mob, killer)
     if (mob:getID() >= 17088558 and mob:getID() <= 17088637) then  
     -- Second Floor Ashu Talif Crew
 		local killx = mob:getXPos();

@@ -45,9 +45,11 @@ function onZoneIn(player,prevZone)
         else
             player:setPos(-180.028,-10.335,-559.987,182);
         end
+	elseif (prevZone == 79 and player:getCurrentMission(TOAU) == PREVALENCE_OF_PIRATES and player:getVar("AhtUrganStatus") ~= 1) then
+	    cs = 13;		
     elseif (player:getCurrentMission(TOAU) == PREVALENCE_OF_PIRATES and player:getVar("AhtUrganStatus") == 1) then
         player:startEvent(14);   
-   end
+    end
 	
 	-- Besieged
 	--if (GetServerVariable("Besieged_Horde") > 0) then

@@ -31,7 +31,8 @@ end;
 -----------------------------------
 
 function onMobDeath(mob, killer)
-	salvageAmbient(mob,killer);
+    salvageAmbient(mob,killer)
+    salvageChestZ(mob, killer)
     if (mob:getID() >= 17076426 and mob:getID() <= 17076473) then  
 		local killx = mob:getXPos();
 		local killy = mob:getYPos();

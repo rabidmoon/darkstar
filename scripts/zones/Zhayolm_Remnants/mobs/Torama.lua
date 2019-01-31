@@ -64,7 +64,8 @@ end
 -----------------------------------
 
 function onMobDeath(mob, killer)
-    salvageChestRed(mob, killer)
+    salvageAmbient(mob,killer)
+    salvageChestZ(mob, killer)
 	
 
 end;

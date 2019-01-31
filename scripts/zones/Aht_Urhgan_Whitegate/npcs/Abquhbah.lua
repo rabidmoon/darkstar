@@ -123,6 +123,8 @@ printf("RESULT: %u",option);
 		player:killcs();
  	elseif (points < 1000 and player:hasKeyItem(PSC_WILDCAT_BADGE) == true) then
 	    player:PrintToPlayer("Abquhbah : Hmmm...it seems you only have "..points.." Besieged Points.  You need a total of 1000 to rank up.",0xD);
+		player:setVar("Besieged_Cap",150);
+		printf("Player has been assigned cap 150!!!!!!!!");
         player:killcs();		
  	elseif (player:hasKeyItem(PSC_WILDCAT_BADGE) == false) then
 	    player:PrintToPlayer("Abquhbah : Looks like you haven't done any Besieged...help out the capital and gain some ranks.  Here is your first Wildcat Badge!",0xD);

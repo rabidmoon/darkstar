@@ -26,8 +26,10 @@ end;
 function onTrigger(player,npc)
     if (player:getCurrentMission(TOAU) == THE_BLACK_COFFIN) then
         player:startEvent(221, 53, -6, 0, 99, 6, 0);
-    elseif (player:getCurrentMission(TOAU) == TESTING_THE_WATERS and player:hasKeyItem(EPHRAMADIAN_GOLD_COIN)) then
+    elseif (player:getCurrentMission(TOAU) == TESTING_THE_WATERS) then
             player:startEvent(15);
+    elseif (player:getCurrentMission(TOAU) == PREVALENCE_OF_PIRATES and player:getVar("AhtUrganStatus") == 1) then
+            player:startEvent(14);			
 	else
         player:messageSpecial(YOU_NO_REQS);
 		player:PrintToPlayer("You have no key item");
@@ -64,11 +66,17 @@ end;
 
 function onEventFinish(player,csid,option)
 
-    if(csid == 221 and option == 4) then
+    if (csid == 221 and option == 4) then
         player:setPos(0,-22,27,66,60);
     elseif (csid == 15) then
         player:setVar("AhtUrganStatus",1)
         player:setPos(0,0,0,0,57)
+	elseif (csid == 14) then	
+	    player:completeMission(TOAU,PREVALENCE_OF_PIRATES)
+        player:setVar("AhtUrganStatus",0)
+        player:addKeyItem(PERIQIA_ASSAULT_AREA_ENTRY_PERMIT)
+        player:messageSpecial(KEYITEM_OBTAINED,PERIQIA_ASSAULT_AREA_ENTRY_PERMIT)
+        player:addMission(TOAU,SHADES_OF_VENGEANCE)	
 	end
 end;
 

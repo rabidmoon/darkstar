@@ -157,7 +157,7 @@ function salvageChestA(mob, killer)
 	-- Set chest frequency to 20%?
 	printf("CEST FREQUENCY IS: %s",chestdrop);
 	printf("CHEST TYPE IS: %s", chesttype);
-	if (chestdrop <= 15) then
+	if (chestdrop <= 35) then
 	    if (chesttype < 10) then
 		    printf("GOLD");
 	        if (gold1:getStatus() ~= STATUS_NORMAL) then
@@ -244,7 +244,7 @@ function salvageChestB(mob, killer)
 	-- Set chest frequency to 20%?
 	printf("CEST FREQUENCY IS: %s",chestdrop);
 	printf("CHEST TYPE IS: %s", chesttype);
-	if (chestdrop <= 45) then
+	if (chestdrop <= 35) then
 	    if (chesttype < 10) then
 		    printf("GOLD");
 	        if (gold1:getStatus() ~= STATUS_NORMAL) then
@@ -327,7 +327,7 @@ function salvageChestS(mob, killer)
 	-- Set chest frequency to 20%?
 	printf("CEST FREQUENCY IS: %s",chestdrop);
 	printf("CHEST TYPE IS: %s", chesttype);
-	if (chestdrop <= 15) then
+	if (chestdrop <= 35) then
 	    if (chesttype < 10) then
 		    printf("GOLD");
 	        if (gold1:getStatus() ~= STATUS_NORMAL) then
@@ -413,7 +413,7 @@ function salvageChestAlways(mob, killer)
 	local chesttype = math.random(1,100);
 	-- Set chest frequency to 40%
 	printf("CHEST TYPE IS: %s", chesttype);
-	if (chestdrop <= 40) then
+	if (chestdrop <= 35) then
 	    if (chesttype < 10) then
 		    printf("GOLD");
 	        if (gold1:getStatus() ~= STATUS_NORMAL) then

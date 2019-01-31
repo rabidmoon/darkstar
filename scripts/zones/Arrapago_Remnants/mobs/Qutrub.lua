@@ -32,7 +32,7 @@ end;
 
 function onMobDeath(mob, killer)
 	salvageAmbient(mob,killer);
-
+    salvageChestA(mob, killer)
 
     
     -- Qiqirin Astrologer

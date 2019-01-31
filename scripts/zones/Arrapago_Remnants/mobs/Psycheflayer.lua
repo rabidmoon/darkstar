@@ -32,7 +32,7 @@ end;
 -----------------------------------
 
 function onMobDeath(mob, killer)
-
+    salvageChestA(mob, killer)
     if (mob:getID() >= 17080440 and mob:getID() <= 17080451) then
         -- 3rd Floor Psycheflayers
         local killx = mob:getXPos();

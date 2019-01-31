@@ -33,7 +33,8 @@ end;
 
 function onMobDeath(mob, killer)
 
-    
+     salvageAmbient(mob,killer)
+    salvageChestA(mob, killer)   
     -- Qiqirin Astrologer
     local killx = mob:getXPos();
     local killy = mob:getYPos();
