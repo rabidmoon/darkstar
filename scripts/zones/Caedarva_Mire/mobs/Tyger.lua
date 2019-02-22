@@ -17,6 +17,7 @@ function onMobSpawn(mob)
     mob:addMod(MOD_BINDRES,30);
     mob:addMod(MOD_GRAVITYRES,30);
     mob:addMod(MOD_ATT, 200);
+	znmT4Size(mob)
 end;
 
 

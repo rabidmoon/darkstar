@@ -15,7 +15,7 @@ require("scripts/globals/mobscaler");
 -----------------------------------
 
 function onMobSpawn(mob)
-  
+   znmT1Size(mob)
 end;
 
 function onMobFight(mob, target)

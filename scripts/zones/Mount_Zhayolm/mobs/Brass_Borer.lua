@@ -12,6 +12,7 @@ require("scripts/globals/mobscaler");
 -----------------------------------
 
 function onMobSpawn(mob)
+    znmT1Size(mob)
 	mob:setLocalVar("formTime", os.time() + math.random(43,47));
 end;
 

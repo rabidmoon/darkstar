@@ -76,11 +76,27 @@ function mobScaler(mob,target)
 	end	
 end
 
+function znmT1Size(mob)
+    mob:setLocalVar("PartySize",8);
+end
+
+function znmT2Size(mob)
+    mob:setLocalVar("PartySize",12);
+end
+
+function znmT3Size(mob)
+    mob:setLocalVar("PartySize",15);
+end
+
+function znmT4Size(mob)
+    mob:setLocalVar("PartySize",18);
+end
+
 
 
 function znmScalerT1(mob,target)
 
-	local storedsize = 6;
+	local storedsize = mob:getLocalVar("PartySize");
 	local currentsize = target:getPartySize();
 	local partycalc = math.ceil(target:getPartySize()/3);
 	local sizecalc = math.ceil(currentsize/3);
@@ -133,9 +149,9 @@ end
 
 
 
-function znmScalerT1(mob,target)
+function znmScalerT2(mob,target)
 
-	local storedsize = 7;
+	local storedsize = mob:getLocalVar("PartySize");
 	local currentsize = target:getPartySize();
 	local partycalc = math.ceil(target:getPartySize()/3);
 	local sizecalc = math.ceil(currentsize/3);
@@ -189,7 +205,7 @@ end
 
 function znmScalerT3(mob,target)
 
-	local storedsize = 8;
+	local storedsize = mob:getLocalVar("PartySize");
 	local currentsize = target:getPartySize();
 	local partycalc = math.ceil(target:getPartySize()/3);
 	local sizecalc = math.ceil(currentsize/3);
@@ -244,7 +260,7 @@ end
 
 function znmScalerT4(mob,target)
 
-	local storedsize = 10;
+	local storedsize = mob:getLocalVar("PartySize");
 	local currentsize = target:getPartySize();
 	local partycalc = math.ceil(target:getPartySize()/3);
 	local sizecalc = math.ceil(currentsize/3);

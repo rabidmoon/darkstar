@@ -18,6 +18,7 @@ require("scripts/globals/mobscaler");
 function onMobInitialize(mob)
     mob:setMobMod(MOBMOD_GA_CHANCE, 50);
     mob:setMobMod(MOBMOD_ADD_EFFECT, mob:getShortID());
+    znmT4Size(mob)
 end;
 
 -----------------------------------

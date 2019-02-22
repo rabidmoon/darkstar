@@ -22,6 +22,7 @@ end;
 -----------------------------------
 
 function onMobSpawn(mob)
+    znmT1Size(mob) 
     mob:addMod(MOD_REGEN, math.floor(mob:getMaxHP()*.004));
     mob:addMod(MOD_BINDRES, 40);
     mob:SetAutoAttackEnabled(false);

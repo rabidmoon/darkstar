@@ -40,6 +40,7 @@ function onMobSpawn(mob)
     -- Number of crits to lose a head
     mob:setLocalVar("CritToTheFace", math.random(10,30));
     mob:setLocalVar("crits", 0);
+    znmT4Size(mob)
 end;
 
 -----------------------------------
