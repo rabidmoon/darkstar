@@ -33,7 +33,8 @@ function onTrigger(player,npc)
 		    player:messageSpecial(ITEM_CANNOT_BE_OBTAINED,2573);
 	    else
 	        player:delKeyItem(CHESTNUT_COLOR_SEAL);
-		    player:additem(2573,1);
+		    player:addItem(2573,1);
+			player:messageSpecial(ITEM_OBTAINED,2573);
 		end
     else
         player:messageSpecial(NOTHING_HAPPENS);

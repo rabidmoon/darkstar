@@ -39,7 +39,7 @@ function onTrigger(player,npc)
 	    else
 	        player:delKeyItem(MAROON_SEAL);
 			player:messageSpecial(KEYITEM_LOST,MAROON_SEAL);
-		    player:additem(2577,1);
+		    player:addItem(2577,1);
 			player:messageSpecial(ITEM_OBTAINED,2577);			
 		end
     else

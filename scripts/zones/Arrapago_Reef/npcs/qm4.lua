@@ -34,7 +34,18 @@ end;
 -----------------------------------
 
 function onTrigger(player,npc)
-    player:messageSpecial(NOTHING_HAPPENS);
+    if (player:hasKeyItem(TAUPE_COLORED_SEAL)) then
+	    if (player:getFreeSlotsCount() == 0) then
+		    player:messageSpecial(ITEM_CANNOT_BE_OBTAINED,2596);
+	    else
+	        player:delKeyItem(TAUPE_COLORED_SEAL);
+			player:messageSpecial(KEYITEM_LOST,TAUPE_COLORED_SEAL);
+		    player:addItem(2596,1);
+			player:messageSpecial(ITEM_OBTAINED,2596);
+		end
+    else
+        player:messageSpecial(NOTHING_HAPPENS);
+	end
 end;
 
 -----------------------------------

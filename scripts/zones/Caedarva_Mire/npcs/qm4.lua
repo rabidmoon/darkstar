@@ -34,7 +34,18 @@ end;
 -----------------------------------
 
 function onTrigger(player,npc)
-    player:messageSpecial(NOTHING_HAPPENS);
+    if (player:hasKeyItem(SIENNA_COLORED_SEAL)) then
+	    if (player:getFreeSlotsCount() == 0) then
+		    player:messageSpecial(ITEM_CANNOT_BE_OBTAINED,2593);
+	    else
+	        player:delKeyItem(SIENNA_COLORED_SEAL);
+			player:messageSpecial(KEYITEM_LOST,SIENNA_COLORED_SEAL);
+		    player:addItem(2593,1);
+			player:messageSpecial(ITEM_OBTAINED,2593);
+		end
+    else
+        player:messageSpecial(NOTHING_HAPPENS);
+	end
 end;
 
 -----------------------------------

@@ -34,7 +34,18 @@ end;
 -----------------------------------
 
 function onTrigger(player,npc)
-    player:messageSpecial(NOTHING_HAPPENS);
+    if (player:hasKeyItem(CERISE_SEAL)) then
+	    if (player:getFreeSlotsCount() == 0) then
+		    player:messageSpecial(ITEM_CANNOT_BE_OBTAINED,2587);
+	    else
+	        player:delKeyItem(MAROON_SEAL);
+			player:messageSpecial(KEYITEM_LOST,CERISE_SEAL);
+		    player:addItem(2587,1);
+			player:messageSpecial(ITEM_OBTAINED,2587);
+		end
+    else
+        player:messageSpecial(NOTHING_HAPPENS);
+	end
 end;
 
 -----------------------------------
